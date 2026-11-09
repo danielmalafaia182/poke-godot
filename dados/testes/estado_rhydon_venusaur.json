@@ -1,0 +1,307 @@
+{
+ "balls": {
+  "catalog": [
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 1,
+    "iconUrl": "/assets/markitems/pokeball.png",
+    "id": 1,
+    "infinite": false,
+    "name": "Poké Ball",
+    "priceGold": 5
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 2,
+    "iconUrl": "/assets/markitems/greatball.png",
+    "id": 2,
+    "infinite": false,
+    "name": "Great Ball",
+    "priceGold": 20
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 3,
+    "iconUrl": "/assets/markitems/superball.png",
+    "id": 3,
+    "infinite": false,
+    "name": "Super Ball",
+    "priceGold": 50
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 4,
+    "iconUrl": "/assets/markitems/ultraball.png",
+    "id": 4,
+    "infinite": false,
+    "name": "Ultra Ball",
+    "priceGold": 130
+   },
+   {
+    "bound": false,
+    "buyable": false,
+    "catchRate": 5,
+    "iconUrl": "/assets/markitems/idleball.png",
+    "id": 6,
+    "infinite": false,
+    "name": "Idle Ball",
+    "priceGold": 400
+   },
+   {
+    "bound": true,
+    "buyable": false,
+    "catchRate": 5,
+    "iconUrl": "/assets/markitems/idleball_gold.png",
+    "id": 7,
+    "infinite": true,
+    "name": "Golden Idle Ball",
+    "priceGold": 400
+   },
+   {
+    "bound": false,
+    "buyable": false,
+    "catchRate": 255,
+    "iconUrl": null,
+    "id": 5,
+    "infinite": false,
+    "name": "Master Ball",
+    "priceGold": 0
+   }
+  ],
+  "counts": {
+   "1": 96,
+   "2": 6,
+   "3": 10928,
+   "6": 100
+  },
+  "expires": {},
+  "gold": 12695,
+  "selected": 1
+ },
+ "cadaveres": {
+  "112": 2858,
+  "115": 6073
+ },
+ "fieldInit": {
+  "bike": false,
+  "cols": 107,
+  "heroStepMs": 500,
+  "huntKey": "rhydon:1794193271335:r1",
+  "minTx": -46,
+  "minTy": -45,
+  "mobStepMs": 1000,
+  "rows": 93,
+  "slug": "rhydon",
+  "tickMs": 200,
+  "trainerStepMs": 500,
+  "type": "field-init"
+ },
+ "fonte": "gravacoes_unicas_2026-11-09.jsonl",
+ "formato": "poke-estado-inicial-v1",
+ "huntKey": "rhydon:1794193271335:r1",
+ "inventario": [
+  {
+   "itemId": 39,
+   "quantity": 26244
+  },
+  {
+   "itemId": 68,
+   "quantity": 12
+  },
+  {
+   "itemId": 69,
+   "quantity": 1
+  },
+  {
+   "itemId": 81,
+   "quantity": 7
+  },
+  {
+   "itemId": 109,
+   "quantity": 100
+  },
+  {
+   "itemId": 112,
+   "quantity": 2099
+  },
+  {
+   "itemId": 120,
+   "quantity": 77946
+  },
+  {
+   "itemId": 126,
+   "quantity": 12628
+  },
+  {
+   "itemId": 128,
+   "quantity": 347
+  },
+  {
+   "itemId": 140,
+   "quantity": 74
+  },
+  {
+   "itemId": 200,
+   "quantity": 60
+  },
+  {
+   "itemId": 201,
+   "quantity": 911
+  },
+  {
+   "itemId": 203,
+   "quantity": 9996
+  },
+  {
+   "itemId": 240,
+   "quantity": 22
+  },
+  {
+   "itemId": 5309,
+   "quantity": 931
+  },
+  {
+   "itemId": 5310,
+   "quantity": 1082
+  },
+  {
+   "itemId": 6352,
+   "quantity": 2
+  },
+  {
+   "itemId": 11560,
+   "quantity": 518
+  },
+  {
+   "itemId": 13115,
+   "quantity": 6
+  },
+  {
+   "itemId": 21287,
+   "quantity": 2
+  },
+  {
+   "itemId": 37288,
+   "quantity": 11
+  }
+ ],
+ "pokeDelta": {
+  "barLooktype": 22,
+  "finalStage": true,
+  "hp": 1452,
+  "id": "cmu9y6y5cntw5iiyrt3u78fys",
+  "ivTotal": 98,
+  "leader": true,
+  "level": 109,
+  "looktype": 22,
+  "maxHp": 1452,
+  "name": "Venusaur",
+  "power": 562,
+  "quality": 0.835,
+  "sellValue": 18000,
+  "shiny": false,
+  "slot": 0,
+  "speciesId": 3,
+  "starter": true,
+  "stats": {
+   "atk": 87,
+   "def": 86,
+   "hp": 121,
+   "spAtk": 128,
+   "spDef": 126,
+   "speed": 125
+  },
+  "team": true,
+  "type1": "GRASS",
+  "type2": "POISON",
+  "xp": 20427943
+ },
+ "primeiroField": {
+  "bossActiveIdx": 0,
+  "bossTeam": [
+   {
+    "hp": 1440,
+    "maxHp": 1440
+   },
+   {
+    "hp": 24,
+    "maxHp": 24
+   },
+   {
+    "hp": 24,
+    "maxHp": 24
+   }
+  ],
+  "heroHp": 1440,
+  "heroLooktype": 22,
+  "heroMaxHp": 1440,
+  "heroName": "Venusaur",
+  "mobsMaxHp": [
+   4305,
+   4375,
+   4690,
+   4305,
+   4060,
+   5250,
+   4130,
+   4235,
+   6090,
+   5250,
+   4445,
+   6125,
+   5670,
+   4410,
+   4620
+  ],
+  "seq": 190,
+  "serverNow": 1794193309309
+ },
+ "primeiroFieldKill": {
+  "level": 109,
+  "pokeXp": {
+   "level": 108,
+   "parts": {
+    "base": 3848,
+    "boost": 0,
+    "event": 0,
+    "gym": 0,
+    "mentor": 0,
+    "typeDay": 0,
+    "vip": 1924
+   },
+   "speciesId": 3,
+   "xpGained": 5772
+  },
+  "speciesId": 112,
+  "totalXp": 20474874,
+  "xpGained": 5772,
+  "xpParts": {
+   "base": 3848,
+   "boost": 0,
+   "event": 0,
+   "gym": 0,
+   "streak": 0,
+   "typeDay": 0,
+   "vip": 1924
+  }
+ },
+ "primeiroPokeXp": {
+  "id": "cmu9y6y5cntw5iiyrt3u78fys",
+  "level": 108,
+  "leveledUp": false,
+  "speciesId": 3,
+  "type": "poke-xp",
+  "xp": 20416399,
+  "xpGained": 5772
+ },
+ "sessao": "2026-11-09T02-57-09-181Z",
+ "slug": "rhydon",
+ "vip": {
+  "type": "vip",
+  "until": 1796135385546
+ }
+}
