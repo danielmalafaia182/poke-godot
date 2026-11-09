@@ -10,7 +10,7 @@ Uso:
 
 Saída (JSON determinístico, chaves ordenadas):
   slug, huntKey (primeiro field-init), sessao, fieldInit (sem a grade), primeiroField (resumo),
-  pokeDelta (primeiro poke-delta da sessão), primeiroPokeXp, primeiroFieldKill (resumo),
+  pokeDelta (primeiro poke-delta do herói do primeiro field), primeiroPokeXp, primeiroFieldKill (resumo),
   inventario (primeiro inventory), balls (primeiro balls), vip, cadaveres {speciesId: corpse}.
 """
 import json
@@ -41,6 +41,7 @@ def main():
     ultimo_field = None
     cadaveres = {}
     mortos_pendentes = {}
+    deltas = []
     for o in linhas(origem):
         if o["dir"] != "in":
             continue
@@ -58,8 +59,8 @@ def main():
             continue
         if t == "vip" and "vip" not in est:
             est["vip"] = m
-        if t == "poke-delta" and "pokeDelta" not in est:
-            est["pokeDelta"] = m["poke"]
+        if t == "poke-delta":
+            deltas.append(m["poke"])
         if not dentro:
             continue
         if t == "field":
@@ -89,6 +90,12 @@ def main():
         elif t == "balls" and "balls" not in est:
             est["balls"] = {k: v for k, v in m.items() if k != "type"}
     est["cadaveres"] = cadaveres
+    # poke-delta do herói: o primeiro com o nome do herói do primeiro field (A: na gravação de 1 h o primeiro
+    # poke-delta é de um Pokémon nível 1 vindo de pacote de cartas, não do Venusaur)
+    heroi = est.get("primeiroField", {}).get("heroName")
+    escolhido = next((d for d in deltas if d.get("name") == heroi and d.get("team")), None)         or next((d for d in deltas if d.get("name") == heroi), None) or (deltas[0] if deltas else None)
+    if escolhido is not None:
+        est["pokeDelta"] = escolhido
     with open(destino, "w", encoding="utf-8", newline="\n") as f:
         json.dump(est, f, ensure_ascii=False, indent=1, sort_keys=True)
         f.write("\n")

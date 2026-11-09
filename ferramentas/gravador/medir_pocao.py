@@ -115,6 +115,37 @@ def resumir(curas, cat):
     return r
 
 
+def cruzamentos(caminhos):
+    """Fields consecutivos (Δseq = 2) em que o HP passa de > 50% para ≤ 50%: houve auto-heal no mesmo tick
+    (chegando < 100 ms depois do field, antes do próximo)? Devolve (no mesmo tick, sem cura, ms desde a última cura
+    nos casos sem cura)."""
+    msgs = list(ler_linhas(caminhos))
+    ant, ultima, sim, nao, desde = None, None, 0, 0, []
+    for i, (t, m) in enumerate(msgs):
+        tp = m["type"]
+        if tp == "field-init":
+            ant = None
+        elif tp == "auto-heal":
+            ultima = t
+        elif tp == "field":
+            if (ant and m["seq"] - ant["seq"] == 2 and m["heroHp"] > 0 and ant["heroName"] == m["heroName"]
+                    and ant["heroHp"] > 0.5 * ant["heroMaxHp"] and m["heroHp"] <= 0.5 * m["heroMaxHp"]):
+                h = None
+                for t2, m2 in msgs[i + 1:i + 8]:
+                    if m2["type"] == "field":
+                        break
+                    if m2["type"] == "auto-heal":
+                        h = t2 - t
+                        break
+                if h is not None and h < 100:
+                    sim += 1
+                else:
+                    nao += 1
+                    desde.append(None if ultima is None else t - ultima)
+            ant = m
+    return sim, nao, desde
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("arquivos", nargs="+")
@@ -123,6 +154,8 @@ def main():
     sys.stdout.reconfigure(encoding="utf-8")
     curas, cat = coletar(a.arquivos)
     r = resumir(curas, cat)
+    s_, n_, d_ = cruzamentos(a.arquivos)
+    r["cruzamentos_50"] = {"cura_no_mesmo_tick": s_, "sem_cura": n_, "ms_desde_ultima_cura_sem_cura": d_}
     print(json.dumps(r, ensure_ascii=False, indent=1))
     if a.json:
         with open(a.json, "w", encoding="utf-8") as f:

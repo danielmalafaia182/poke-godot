@@ -669,7 +669,7 @@ func _pos_dano() -> void:
 		_golpes_cache.clear()
 		return
 	# Auto-Potion (A, medir_pocao.py em 209 curas reais): dispara no MESMO tick em que o HP fica ≤ 50% do máximo
-	# (42/42 cruzamentos com cobertura contínua; HP exato no instante da cura nunca passa de 0,50). Nenhuma cura
+	# (91/91 cruzamentos com cobertura contínua, antigas + rhydon-1h; HP exato na cura nunca passa de 0,50). Nenhuma cura
 	# adiada observada, então a recarga padrão é 0 (menor intervalo real entre curas: 1988 ms).
 	if not cfg.get("auto_potion", false) or tick < proxima_pocao_tick:
 		return
@@ -692,7 +692,7 @@ func _pos_dano() -> void:
 
 
 func _escolher_pocao(falta: int) -> int:
-	## A (208/208 curas com inventário conhecido): a menor poção do inventário cuja cura cobre o que falta;
+	## A (408/408 curas com inventário conhecido; Auto-Helper "Automatic (best)"): a menor poção do inventário cuja cura cobre o que falta;
 	## se nenhuma cobre, a maior disponível. Empate de cura → menor id (F; não houve empate nas gravações).
 	var menor_que_cobre := -1
 	var maior := -1
