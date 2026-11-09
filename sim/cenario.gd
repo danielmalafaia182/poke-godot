@@ -57,7 +57,6 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int) -
 		"auto_catch": est.has("primeiroCatchResult"),
 		"bola_auto_catch": int(est.get("primeiroCatchResult", {}).get("ballId", 0)),  # A: não é balls.selected
 		"auto_potion": true,
-		"pocao_id": 203,                                   # A: Hyper Potion nas curas da hunt do Rhydon
 		"equipe": equipe,
 		"treinador": {"xp": xp_treinador},
 		"inventario": est.get("inventario", []),

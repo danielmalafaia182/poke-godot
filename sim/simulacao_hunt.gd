@@ -38,6 +38,9 @@ var desmaiado: bool = false
 var encerrada: bool = false
 var _saida: Array = []
 var _golpes_cache := {}
+var _campo_mob := PackedInt32Array()
+var _campo_mob_caixa := Rect2i()
+var _campo_mob_chave := Vector2i(-99999, -99999)
 var estatisticas := {"abates": 0, "hits_aliado": 0, "hits_selvagem": 0, "curas": 0, "capturas": 0, "kos": 0}
 
 
@@ -64,7 +67,7 @@ func _celula(x: int, y: int) -> Vector2i:
 func _montar() -> void:
 	var ini: Dictionary = cfg["inicio"]
 	var c := _celula(int(ini["x"]), int(ini["y"]))
-	heroi = {"pos": c, "de": c, "passo_ms": inicio_ms, "facing": "south", "prox_passo": 0, "alvo": -1, "prox_ataque": 0, "passo_dur_ms": int(p.hero_step_ms)}
+	heroi = {"pos": c, "de": c, "passo_ms": inicio_ms, "facing": "south", "ultimo_passo_tick": -1000, "alvo": -1, "prox_ataque": 0, "passo_dur_ms": int(p.hero_step_ms)}
 	equipe = []
 	for e in cfg["equipe"]:
 		equipe.append(_criar_poke(e))
@@ -87,7 +90,7 @@ func _montar() -> void:
 		var st := Regras.calcular_stats(esp["base"], ivs, nivel_selv, q)
 		var mhp := Regras.hp_combate_selvagem(int(st["hp"]), p)
 		mobs.append({"slot": slot, "especie": esp, "species_id": int(s["pokeId"]), "spawn": sp, "pos": sp, "de": sp,
-			"passo_ms": inicio_ms, "facing": "south", "prox_passo": 0, "hp": mhp, "max_hp": mhp, "stats": st,
+			"passo_ms": inicio_ms, "facing": "south", "ultimo_passo_tick": -1000, "hp": mhp, "max_hp": mhp, "stats": st,
 			"ivs": ivs, "qualidade": q, "nivel": nivel_selv, "dead": false, "morte_tick": -1, "prox_ataque": -1,
 			"shiny": false})
 		slot += 1
@@ -203,7 +206,7 @@ func _respawns() -> void:
 			m["passo_ms"] = agora_ms() - int(p.mob_step_ms)
 			m["facing"] = "south"
 			m["prox_ataque"] = -1
-			m["prox_passo"] = tick
+			m["ultimo_passo_tick"] = tick
 
 
 func _expirar_cadaveres() -> void:
@@ -242,65 +245,186 @@ func _turno_heroi() -> void:
 	if alvo < 0:
 		return
 	var m: Dictionary = mobs[alvo]
-	if _cheb(m["pos"], heroi["pos"]) > 1 and tick >= int(heroi["prox_passo"]):
+	if _cheb(m["pos"], heroi["pos"]) > 1 and _espera_minima_ok(heroi, int(p.hero_step_ms)):
 		_passo_heroi(m["pos"])
 	if _cheb(m["pos"], heroi["pos"]) <= 1 and tick >= int(heroi["prox_ataque"]):
 		_ataque_aliado(m)
 
 
 func _passo_heroi(destino: Vector2i) -> void:
-	var prox := _primeiro_passo_bfs(heroi["pos"], destino)
+	var prox := _proximo_tile_heroi(destino)   # herói: recalcula a cada tick (sem _plano; ver comentário lá)
 	if prox == heroi["pos"]:
 		return
 	var d: Vector2i = prox - heroi["pos"]
+	var diagonal := d.x != 0 and d.y != 0
+	if not _espera_ok(heroi, diagonal, int(p.hero_step_ms),
+			float(p.passo_extra_prob_heroi_diagonal if diagonal else p.passo_extra_prob_heroi_reto)):
+		return
 	heroi["de"] = heroi["pos"]
 	heroi["pos"] = prox
 	heroi["passo_ms"] = agora_ms()
 	heroi["facing"] = _facing(d, heroi["facing"])
-	var custo := int(p.passo_heroi_ticks)
-	if d.x != 0 and d.y != 0:
-		custo *= int(p.fator_diagonal_heroi)
-	heroi["prox_passo"] = tick + custo
+	heroi["ultimo_passo_tick"] = tick
 
 
-func _primeiro_passo_bfs(origem: Vector2i, alvo_pos: Vector2i) -> Vector2i:
-	## BFS 8 direções até qualquer tile vizinho (Chebyshev 1) do alvo, sem atravessar selvagens vivos (F).
-	var cols: int = mapa.cols
-	var rows: int = mapa.rows
-	var bloqueado := PackedByteArray()
-	bloqueado.resize(cols * rows)
+func _plano(a: Dictionary, centro: Vector2i, calcular: Callable, pode_pisar: Callable) -> Vector2i:
+	## O próximo tile é escolhido uma vez por passo (no 1º tick em que um passo reto já seria possível) e mantido
+	## enquanto a espera corre, mesmo que o alvo ande, se o tile continuar livre (F: re-sortear quando o alvo anda
+	## favorece o passo reto, que fica pronto antes da diagonal; e o original mostra passos que não aproximam).
+	var pl = a.get("plano")
+	if pl != null and int(pl["ultimo"]) == int(a["ultimo_passo_tick"]) and pode_pisar.call(pl["tile"]):
+		return pl["tile"]
+	var t: Vector2i = calcular.call()
+	if t != a["pos"]:          # "ficar parado" não é guardado: no tick seguinte procura de novo
+		a["plano"] = {"ultimo": int(a["ultimo_passo_tick"]), "centro": centro, "tile": t}
+	return t
+
+
+func _espera_minima_ok(a: Dictionary, step_ms: int) -> bool:
+	## Atalho: antes da espera de um passo reto nenhum passo é possível (evita o BFS a cada tick).
+	return tick - int(a["ultimo_passo_tick"]) >= ceili(float(step_ms) / float(p.tick_ms))
+
+
+func _espera_ok(a: Dictionary, diagonal: bool, step_ms: int, prob_extra: float) -> bool:
+	## A (medir_passos.py): a espera desde o passo anterior depende do passo que VAI ser dado: reto = stepMs,
+	## diagonal = 2 × stepMs (o mesmo custo que o cliente usa na animação, dS), arredondada para cima ao tick.
+	## Herói: reto 600 ms (500 → 3 ticks), diagonal 1000/1200; selvagem: reto 1000/1200, diagonal 2000.
+	## Quando a espera cai exatamente num tick, o passo às vezes sai 1 tick depois (taxa medida, A; mecanismo F:
+	## provavelmente o servidor compara relógio real, que varia ±1 ms por tick). Sorteio feito uma vez, no tick exato.
+	var custo_ms := step_ms * (int(p.fator_diagonal_passo) if diagonal else 1)
+	var base := ceili(float(custo_ms) / float(p.tick_ms))
+	var desde := tick - int(a["ultimo_passo_tick"])
+	if desde < base:
+		return false
+	if desde == base and custo_ms % int(p.tick_ms) == 0 and prob_extra > 0.0 and rng.randf() < prob_extra:
+		return false
+	return true
+
+
+# ---------------------------------------------------------------- caminho de tempo mínimo
+# A (medir_passos.py + escolha de direção nas gravações): a espera antes de um passo é stepMs (reto) ou 2 × stepMs
+# (diagonal). Herói fora do eixo do alvo: reto no eixo maior 475, diagonal 146, reto no eixo menor 26; com o alvo na
+# diagonal exata: diagonal 77 de 88. É o que um caminho de tempo mínimo produz (para o herói, diagonal 5 ticks <
+# 2 retos 6 ticks; reto no eixo menor nunca é ótimo). Selvagens fora do eixo: eixo maior 385, diagonal 232, eixo
+# menor 143 — para eles diagonal (10 ticks) = 2 retos, então os três empatam. F: caminho = Dijkstra com esses custos
+# em ticks; empates sorteados com pesos iguais às frequências medidas (PARAMETROS desempate_*).
+
+const INF := 1 << 30
+
+
+func _custos(step_ms: int) -> Vector2i:
+	var t := int(p.tick_ms)
+	return Vector2i(ceili(float(step_ms) / t), ceili(float(step_ms * int(p.fator_diagonal_passo)) / t))
+
+
+func _campo_tempo(centro: Vector2i, caixa: Rect2i, custos: Vector2i, bloqueados: Dictionary) -> PackedInt32Array:
+	## Tempo mínimo (ticks) de cada tile da caixa até um tile vizinho (Chebyshev 1) de `centro`, sem pisar em
+	## `bloqueados` nem em `centro`. Dial (fila por baldes): os custos são inteiros pequenos.
+	var w := caixa.size.x
+	var h := caixa.size.y
+	var dist := PackedInt32Array()
+	dist.resize(w * h)
+	dist.fill(INF)
+	var baldes: Array = [PackedInt32Array()]
+	for d in DIRECOES:
+		var g: Vector2i = centro + d
+		if caixa.has_point(g) and _livre(g) and not bloqueados.has(g):
+			var gi := (g.y - caixa.position.y) * w + (g.x - caixa.position.x)
+			dist[gi] = 0
+			baldes[0].append(gi)
+	var k := 0
+	while k < baldes.size():
+		var balde: PackedInt32Array = baldes[k]
+		for idx in balde:
+			if dist[idx] != k:
+				continue
+			var c := Vector2i(idx % w + caixa.position.x, idx / w + caixa.position.y)
+			for d in DIRECOES:
+				var n: Vector2i = c + d
+				if not caixa.has_point(n) or n == centro or not _livre(n) or bloqueados.has(n):
+					continue
+				var nd := k + (custos.y if d.x != 0 and d.y != 0 else custos.x)
+				var ni := (n.y - caixa.position.y) * w + (n.x - caixa.position.x)
+				if nd < dist[ni]:
+					dist[ni] = nd
+					while baldes.size() <= nd:
+						baldes.append(PackedInt32Array())
+					baldes[nd].append(ni)
+		k += 1
+	return dist
+
+
+func _escolher_passo(origem: Vector2i, centro: Vector2i, campo: PackedInt32Array, caixa: Rect2i, custos: Vector2i,
+		pode_pisar: Callable, pesos: Array) -> Vector2i:
+	## Entre os vizinhos que realizam o tempo mínimo (custo do passo + campo), sorteia pela classe do passo
+	## (0 = reto no eixo maior, 1 = diagonal, 2 = reto no eixo menor) com `pesos`. Só anda se houver progresso.
+	var w := caixa.size.x
+	var atual := INF
+	if caixa.has_point(origem):
+		atual = campo[(origem.y - caixa.position.y) * w + (origem.x - caixa.position.x)]
+	var melhor := INF
+	var opcoes: Array = []
+	for d in DIRECOES:
+		var n: Vector2i = origem + d
+		if not caixa.has_point(n) or not pode_pisar.call(n):
+			continue
+		var dn := campo[(n.y - caixa.position.y) * w + (n.x - caixa.position.x)]
+		if dn >= INF or dn >= atual:
+			continue
+		var total := dn + (custos.y if d.x != 0 and d.y != 0 else custos.x)
+		if total < melhor:
+			melhor = total
+			opcoes = [d]
+		elif total == melhor:
+			opcoes.append(d)
+	if opcoes.is_empty():
+		return origem
+	if opcoes.size() == 1:
+		return origem + opcoes[0]
+	var delta := centro - origem
+	var soma := 0.0
+	var ps: Array = []
+	for d in opcoes:
+		var classe := 1
+		if d.x == 0 or d.y == 0:
+			var eixo_maior_x := absi(delta.x) > absi(delta.y)
+			var eixo_maior_y := absi(delta.y) > absi(delta.x)
+			classe = 0 if (d.x != 0 and eixo_maior_x) or (d.y != 0 and eixo_maior_y) else 2
+		var pw := float(pesos[classe])
+		ps.append(pw)
+		soma += pw
+	var r: float = rng.randf() * soma
+	for i in opcoes.size():
+		r -= float(ps[i])
+		if r < 0.0:
+			return origem + opcoes[i]
+	return origem + opcoes[opcoes.size() - 1]
+
+
+func _caixa(a: Vector2i, b: Vector2i, margem_x: int, margem_y: int) -> Rect2i:
+	var x0 := maxi(0, mini(a.x, b.x) - margem_x)
+	var y0 := maxi(0, mini(a.y, b.y) - margem_y)
+	var x1 := mini(int(mapa.cols) - 1, maxi(a.x, b.x) + margem_x)
+	var y1 := mini(int(mapa.rows) - 1, maxi(a.y, b.y) + margem_y)
+	return Rect2i(x0, y0, x1 - x0 + 1, y1 - y0 + 1)
+
+
+func _proximo_tile_heroi(destino: Vector2i) -> Vector2i:
+	var bloq := {}
 	for m in mobs:
 		if not m["dead"]:
-			var q: Vector2i = m["pos"]
-			if q.x >= 0 and q.y >= 0 and q.x < cols and q.y < rows:
-				bloqueado[q.y * cols + q.x] = 1
-	var pai := PackedInt32Array()
-	pai.resize(cols * rows)
-	pai.fill(-1)
-	var ini := origem.y * cols + origem.x
-	pai[ini] = ini
-	var fila := PackedInt32Array([ini])
-	var i := 0
-	while i < fila.size():
-		var atual := fila[i]
-		i += 1
-		var c := Vector2i(atual % cols, atual / cols)
-		if _cheb(c, alvo_pos) <= 1 and c != alvo_pos:
-			# reconstrói até o primeiro passo
-			var k := atual
-			while pai[k] != ini and k != ini:
-				k = pai[k]
-			return Vector2i(k % cols, k / cols) if k != ini else origem
-		for d in DIRECOES:
-			var n: Vector2i = c + d
-			if n.x < 0 or n.y < 0 or n.x >= cols or n.y >= rows:
-				continue
-			var idx := n.y * cols + n.x
-			if pai[idx] != -1 or bloqueado[idx] == 1 or not mapa.grade[n.y][n.x]:
-				continue
-			pai[idx] = atual
-			fila.append(idx)
-	return origem
+			bloq[m["pos"]] = true
+	var custos := _custos(int(p.hero_step_ms))
+	var pode := func(n): return _livre(n) and not bloq.has(n)
+	var caixa := _caixa(heroi["pos"], destino, int(p.caminho_margem), int(p.caminho_margem))
+	var campo := _campo_tempo(destino, caixa, custos, bloq)
+	var t := _escolher_passo(heroi["pos"], destino, campo, caixa, custos, pode, p.desempate_heroi)
+	if t == heroi["pos"]:
+		# sem caminho dentro da caixa (parede no meio): procura no mapa inteiro
+		caixa = Rect2i(0, 0, int(mapa.cols), int(mapa.rows))
+		campo = _campo_tempo(destino, caixa, custos, bloq)
+		t = _escolher_passo(heroi["pos"], destino, campo, caixa, custos, pode, p.desempate_heroi)
+	return t
 
 
 func _golpe(poke_ou_mob: Dictionary, especie_def: Dictionary, stats_def: Dictionary, chave_def: String) -> Dictionary:
@@ -466,36 +590,36 @@ func _turno_selvagens() -> void:
 				m["prox_ataque"] = tick + int(p.ataque_selvagem_ticks) + extra
 		else:
 			m["prox_ataque"] = -1
-			if _na_visao(m["pos"]) and tick >= int(m["prox_passo"]):
+			if _na_visao(m["pos"]) and _espera_minima_ok(m, int(p.mob_step_ms)):
 				_passo_mob(m)
 	_pos_dano()
 
 
 func _passo_mob(m: Dictionary) -> void:
-	# F: anda para o vizinho que mais reduz (Chebyshev, depois euclidiana) a distância ao herói; só se melhorar.
+	# Caminho de tempo mínimo até um vizinho do herói (ver _campo_tempo). O campo depende só da posição do herói
+	# (cache); os outros selvagens bloqueiam só na escolha do passo (F).
 	var h: Vector2i = heroi["pos"]
 	var atual: Vector2i = m["pos"]
-	var melhor := atual
-	var chave := Vector2i(_cheb(atual, h), _dist2(atual, h))
-	for d in DIRECOES:
-		var n: Vector2i = atual + d
-		if not _livre(n) or n == h or _ocupado_por_mob(n, m["slot"]):
-			continue
-		var k := Vector2i(_cheb(n, h), _dist2(n, h))
-		if k.x < chave.x or (k.x == chave.x and k.y < chave.y):
-			chave = k
-			melhor = n
+	if _campo_mob_chave != h:
+		_campo_mob_chave = h
+		_campo_mob_caixa = _caixa(h, h, int(p.visao_meia_largura) + int(p.caminho_margem), int(p.visao_meia_altura) + int(p.caminho_margem))
+		_campo_mob = _campo_tempo(h, _campo_mob_caixa, _custos(int(p.mob_step_ms)), {})
+	var slot: int = m["slot"]
+	var pode := func(n): return _livre(n) and n != h and not _ocupado_por_mob(n, slot)
+	var melhor := _plano(m, h, func(): return _escolher_passo(atual, h, _campo_mob, _campo_mob_caixa,
+		_custos(int(p.mob_step_ms)), pode, p.desempate_mob), pode)
 	if melhor == atual:
 		return
 	var dd: Vector2i = melhor - atual
+	var diagonal := dd.x != 0 and dd.y != 0
+	if not _espera_ok(m, diagonal, int(p.mob_step_ms),
+			float(p.passo_extra_prob_mob_diagonal if diagonal else p.passo_extra_prob_mob_reto)):
+		return
 	m["de"] = atual
 	m["pos"] = melhor
 	m["passo_ms"] = agora_ms()
 	m["facing"] = _facing(dd, m["facing"])
-	var custo := int(p.passo_mob_ticks)
-	if dd.x != 0 and dd.y != 0:
-		custo *= int(p.fator_diagonal_mob)
-	m["prox_passo"] = tick + custo
+	m["ultimo_passo_tick"] = tick
 
 
 func _ataque_selvagem(m: Dictionary) -> void:
@@ -529,16 +653,19 @@ func _pos_dano() -> void:
 		ativo = vivos[rng.randi_intervalo(0, vivos.size() - 1)]
 		_golpes_cache.clear()
 		return
-	# Auto-Potion (F: limiar e recarga parametrizados).
+	# Auto-Potion (A, medir_pocao.py em 209 curas reais): dispara no MESMO tick em que o HP fica ≤ 50% do máximo
+	# (42/42 cruzamentos com cobertura contínua; HP exato no instante da cura nunca passa de 0,50). Nenhuma cura
+	# adiada observada, então a recarga padrão é 0 (menor intervalo real entre curas: 1988 ms).
 	if not cfg.get("auto_potion", false) or tick < proxima_pocao_tick:
 		return
 	if float(poke["hp"]) > float(poke["max_hp"]) * float(p.pocao_limiar):
 		return
-	var pid := int(cfg.get("pocao_id", 0))
-	if int(inventario.get(pid, 0)) <= 0:
+	var falta := int(poke["max_hp"]) - int(poke["hp"])
+	var pid := _escolher_pocao(falta)
+	if pid < 0:
 		return
 	var item: Dictionary = dados.itens.get(pid, {})
-	var cura := mini(int(item.get("cura", 0)), int(poke["max_hp"]) - int(poke["hp"]))  # A: limitado ao que falta
+	var cura := mini(int(item.get("cura", 0)), falta)  # A: limitado ao que falta
 	if cura <= 0:
 		return
 	poke["hp"] = int(poke["hp"]) + cura
@@ -549,14 +676,39 @@ func _pos_dano() -> void:
 	_emitir(_msg_inventario())
 
 
+func _escolher_pocao(falta: int) -> int:
+	## A (208/208 curas com inventário conhecido): a menor poção do inventário cuja cura cobre o que falta;
+	## se nenhuma cobre, a maior disponível. Empate de cura → menor id (F; não houve empate nas gravações).
+	var menor_que_cobre := -1
+	var maior := -1
+	for id in inventario:
+		if int(inventario[id]) <= 0:
+			continue
+		var it: Dictionary = dados.itens.get(int(id), {})
+		if String(it.get("categoria", "")) != "heal" or int(it.get("cura", 0)) <= 0:
+			continue
+		var c := int(it["cura"])
+		if c >= falta and (menor_que_cobre < 0 or c < _cura(menor_que_cobre) or (c == _cura(menor_que_cobre) and int(id) < menor_que_cobre)):
+			menor_que_cobre = int(id)
+		if maior < 0 or c > _cura(maior) or (c == _cura(maior) and int(id) < maior):
+			maior = int(id)
+	return menor_que_cobre if menor_que_cobre >= 0 else maior
+
+
+func _cura(id: int) -> int:
+	return int(dados.itens.get(id, {}).get("cura", 0))
+
+
 # ======================================================================== field
 
-func _ator(pos: Vector2i, de: Vector2i, passo_ms: int, dur_ms: int, facing: String) -> Dictionary:
+func _ator(pos: Vector2i, de: Vector2i, passo_ms: int, facing: String, anda: bool = true) -> Dictionary:
+	## A (4046 fields reais): stepStartAt == serverNow sempre; walkFrom ≠ posição só no field do tick em que o passo
+	## começou (no field seguinte já volta a ser a posição). O treinador nunca mostra walkFrom ≠ posição (anda=false).
 	var agora := agora_ms()
-	var andando := de != pos and agora < passo_ms + dur_ms
+	var andando := anda and de != pos and passo_ms == agora
 	return {"row": pos.y, "col": pos.x, "facing": facing,
 		"walkFrom": {"row": de.y if andando else pos.y, "col": de.x if andando else pos.x},
-		"stepStartAt": passo_ms if andando else agora}
+		"stepStartAt": agora}
 
 
 func _montar_field() -> Dictionary:
@@ -564,12 +716,12 @@ func _montar_field() -> Dictionary:
 	var time: Array = []
 	for e in equipe:
 		time.append({"hp": e["hp"], "maxHp": e["max_hp"]})
-	var hero := _ator(heroi["pos"], heroi["de"], int(heroi["passo_ms"]), int(p.hero_step_ms), heroi["facing"])
-	var trainer := _ator(heroi["pos"], heroi["de"], int(heroi["passo_ms"]), int(p.trainer_step_ms), heroi["facing"])
+	var hero := _ator(heroi["pos"], heroi["de"], int(heroi["passo_ms"]), heroi["facing"])
+	var trainer := _ator(heroi["pos"], heroi["de"], int(heroi["passo_ms"]), heroi["facing"], false)  # A: treinador = herói
 	var lista: Array = []
 	var todos_mortos := true
 	for m in mobs:
-		var a := _ator(m["pos"], m["de"], int(m["passo_ms"]), int(p.mob_step_ms), m["facing"])
+		var a := _ator(m["pos"], m["de"], int(m["passo_ms"]), m["facing"])
 		a["slot"] = m["slot"]
 		a["speciesId"] = m["species_id"]
 		a["hp"] = m["hp"]

@@ -9,10 +9,19 @@ const PARAMETROS := {
 	"hero_step_ms": 500,                    # A: field-init.heroStepMs (duração da animação)
 	"mob_step_ms": 1000,                    # A: field-init.mobStepMs
 	"trainer_step_ms": 500,                 # A: field-init.trainerStepMs
-	"passo_heroi_ticks": 3,                 # F: 500 ms arredondado ao tick (velocidade medida ~754 ms/tile com diagonais)
-	"fator_diagonal_heroi": 2,              # F: passo diagonal custa 2x (explica os ~754 ms/tile medidos)
-	"passo_mob_ticks": 5,                   # A: 1000 ms (medido ~1090 ms/tile perseguindo)
-	"fator_diagonal_mob": 1,                # F
+	# Passos (A, ferramentas/gravador/medir_passos.py, 45 instâncias reais): espera antes de cada passo =
+	# stepMs × (2 se o passo é diagonal), arredondada para cima ao tick. Herói →reto 600 ms (113/121),
+	# →diagonal 1000 (40) ou 1200 (19); selvagem →reto 1000 (167) ou 1200 (93), →diagonal 2000 (89) ou 2200 (4).
+	"fator_diagonal_passo": 2,              # A (e C: o cliente anima a diagonal com o mesmo custo, dS)
+	"passo_extra_prob_heroi_reto": 0.0,     # A: 500 ms não cai num tick exato; 600 em 113/121
+	"passo_extra_prob_heroi_diagonal": 0.32,  # A: 19/59 esperas de 1000 ms saíram em 1200
+	"passo_extra_prob_mob_reto": 0.36,      # A: 93/260 esperas de 1000 ms saíram em 1200
+	"passo_extra_prob_mob_diagonal": 0.04,  # A: 4/93 esperas de 2000 ms saíram em 2200
+	# Caminho (F: Dijkstra de tempo mínimo com os custos acima). Desempate entre passos igualmente ótimos, por classe
+	# [reto no eixo maior, diagonal, reto no eixo menor], com pesos = frequências medidas fora do eixo (A).
+	"desempate_heroi": [475, 146, 26],
+	"desempate_mob": [385, 232, 143],
+	"caminho_margem": 6,                    # F: folga da caixa de busca em volta do herói/alvo (tiles)
 	"ataque_aliado_ticks": 8,               # A: 1600 ms, grade fixa (as variações de 1200/2000 vêm de field não recebido)
 	"ataque_selvagem_ticks": 10,            # A: ~2000 ms por selvagem
 	"ataque_selvagem_extra_prob": 0.25,     # F: às vezes +1 tick (média medida ~2050 ms no Kangaskhan)
@@ -28,8 +37,8 @@ const PARAMETROS := {
 	"piso_aliado": 2,                       # A: Gastly × Rattata
 	"piso_selvagem": 1,                     # A: 880 hits do Rattata no Geodude
 	"arredondamento_dano": "round",         # F: round (Math.round) ou floor; sem evidência
-	"pocao_limiar": 0.5,                    # F: curas observadas com HP ≤ 0,50 do máximo (67 casos)
-	"pocao_recarga_ms": 2000,               # F: menor intervalo frequente entre curas
+	"pocao_limiar": 0.5,                    # A: HP ≤ 50% dispara no mesmo tick (42/42; HP exato na cura ≤ 0,50 em 209)
+	"pocao_recarga_ms": 0,                  # A/F: nenhuma cura adiada observada; menor intervalo real 1988 ms
 	"vip_fracao": 0.5,                      # A: parcela vip = 50% da base
 	"hp_selvagem_por_stat": 35,             # A
 	"hp_selvagem_minimo": 120,              # A

@@ -27,11 +27,12 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/coletor/coletor_poke.js` | Coleta um snapshot do servidor (rodar no navegador; modo "Baixar como ZIPs") |
 | `ferramentas/gravador/gravador_ws.user.js` | Grava mensagens WS do jogo original (userscript ou console) |
 | `ferramentas/gravador/analisar_gravacao.py` | Resume gravações: cadência, faixas de dano, XP, loot, capturas |
-| `ferramentas/protocolo/gerar_protocolo.py` | Gera `dados/protocolo.json` |
+| `ferramentas/protocolo/gerar_protocolo.py`, `regenerar.sh` | Gera `dados/protocolo.json` (`regenerar.sh` fixa as fontes: 5 chunks do jogo + todas as gravações) |
+| `ferramentas/gravador/medir_passos.py`, `medir_pocao.py` | Medem nas gravações a duração dos passos (por tick exato) e o gatilho/escolha do Auto-Potion |
 | `ferramentas/importador/importar_snapshot.py` | Snapshot → `dados/gerados/*.json` (determinístico) |
 | `ferramentas/importador/diff_snapshots.py` | Diferenças entre snapshots |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
-| `dados/protocolo.json` | 136 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta |
+| `dados/protocolo.json` | 139 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 28 vistos nas gravações |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
 
@@ -78,7 +79,8 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 | Regra | Evidência |
 | --- | --- |
 | Servidor em ticks de 200 ms; snapshot `field` a cada 2 ticks (400 ms); `seq` conta ticks | todos os logs |
-| Passo: herói e treinador 500 ms; selvagem 1000 ms (`field-init`: heroStepMs, trainerStepMs, mobStepMs) | todos os logs |
+| `field-init` anuncia heroStepMs 500, trainerStepMs 500, mobStepMs 1000. Espera real antes de cada passo = stepMs × (2 se diagonal), arredondada para cima ao tick: herói →reto 600 ms, →diagonal 1000/1200; selvagem →reto 1000/1200, →diagonal 2000. Treinador = posição do herói, sempre | `medir_passos.py`, 45 instâncias |
+| Em todo `field`, stepStartAt = serverNow; walkFrom ≠ posição só no field do tick em que o passo começou | 4046 fields |
 | Ritmo de ataque: aliado ~1600 ms; cada selvagem ~2000 ms (às vezes +1 tick) | 557 hits de Solar Beam, 532 selvagens, Gastly, Bulbasaur |
 | HP de combate do aliado = max(24, 12 × stat de HP) | Venusaur 120→1440, 121→1452; Geodude 2→24, 3→36 |
 | HP do selvagem = max(120, 35 × stat de HP) | todos os maxHp de Rhyhorn, Rhydon, Kangaskhan, Blastoise; Geodude nível 1 no piso |
@@ -90,6 +92,7 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 | XP acumulada = round(50/3 × (L³ − 6L² + 17L − 12)) → 100/200/400/800 para níveis 2–5 | (B) + Geodude subiu com 102, 210; nível 4 com 714 |
 | Loot: tabela de `creatures.json`, chance em 1/100.000, quantidade min–max | Rhydon 60 abates: Horn 83,3% vs 83,32% |
 | Hyper Potion cura até 1000, limitado ao HP que falta | 60+ auto-heals |
+| Auto-Potion dispara no mesmo tick em que o HP fica ≤ 50% (sem recarga observada); usa a menor poção do inventário que cobre o que falta, ou a maior se nenhuma cobre | `medir_pocao.py`: 42/42 cruzamentos; 208/208 escolhas |
 | Golpes: o mesmo nome tem cooldown diferente por espécie (234 de 407 variam) | catálogo; por isso golpes ficam dentro de cada espécie |
 | Captura com Super Ball: 59% em Rattata nível 1 (35/59); 0% em 167 tentativas no nível 80+ | gravações; `hunt-config.catchChance` é 0 em todas |
 | 15 spawns por hunt em Kanto/Outland, 16 em Orre, até 56 em Nightmare | `hunt-config` |
@@ -202,3 +205,20 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   sim 1035–1126 → bloqueios na perseguição). Sensibilidade (não adotada): sem recarga de poção ou com limiar 0,6 as curas sobem,
   mas o limiar 0,6 derruba a cura média. Não feito: o critério de pronto da fase (cliente original via `poke-local` desenhando a
   hunt simulada) e 1 h de gravação real para o diferencial ter amostra maior.
+- 09/11/2026 — Protocolo regenerado (`ferramentas/protocolo/regenerar.sh`): 5 chunks do jogo + as 12 gravações que existem
+  (9 do gravador novo, deduplicadas por sessão+instante+conteúdo, e 3 logs crus antigos da raiz). 139 tipos, 28 vistos.
+  O `--referencia` saiu do validador: a gravação real e 1 h simulada passam no esquema gerado (0 erro, 0 aviso).
+- 09/11/2026 — Medições diretas (A) e ajuste da sim. `medir_passos.py` reconstrói o tick exato de cada passo
+  (stepStartAt = serverNow sempre; walkFrom só no tick do passo — encadear walkFrom de fields diferentes perdia os passos
+  dos ticks ímpares). A espera antes de cada passo depende do passo que vai ser dado: herói →reto 600 ms (113/121),
+  →diagonal 1000 (40) ou 1200 (19); selvagem →reto 1000 (167) ou 1200 (93), →diagonal 2000 (89) ou 2200 (4). A sim usa
+  stepMs × (1 ou 2) arredondado ao tick, mais 1 tick com a taxa medida quando a espera cai num tick exato (mecanismo F).
+  `medir_pocao.py` (209 curas): gatilho HP ≤ 50% no mesmo tick (42/42), HP exato na cura nunca > 0,50, sem recarga
+  observada (menor intervalo 1988 ms); poção = menor que cobre o que falta, senão a maior (208/208). Sim ajustada.
+  Caminho (F): Dijkstra de tempo mínimo com esses custos, desempate pelas frequências medidas (herói fora do eixo: reto no
+  eixo maior 475, diagonal 146, eixo menor 26). Teste novo `test_sim_caminho.gd` 8/8. 1 h simulada agora em ~15 s.
+  Diferencial **22/26**. Fora: hits do aliado por abate (real 4,05; sim 3,08–3,96) e, por consequência, curas/min (real
+  7,22; sim 3,09–5,54) — o dano recebido por cura é igual (real 883; sim 890–918), mas a sim luta 4,3–5,7 s por abate
+  contra 6,7 s no real (fase 3: dano/HP). ms/tile do herói (real 754; sim 792–849) e do selvagem (real 1018; sim
+  1277–1362): métrica grossa (posição a cada 400 ms) que mistura escolha de caminho (F) com o ritmo já medido; na única
+  instância real do Rhydon o selvagem anda em 37% dos intervalos, em todas as gravações em 28% e na sim em 30%.
