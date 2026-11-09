@@ -1,0 +1,91 @@
+COMPARADOR DE COMBATE — ORIGINAL × HIPÓTESE LOCAL
+Base: projeto atualizado com barra_hp_cooldown_troca.zip.
+
+INSTALAÇÃO E ABERTURA
+1. Pare o jogo e faça backup.
+2. Extraia este ZIP na pasta que contém project.godot, mesclando pastas e substituindo os scripts.
+3. Preserve os .gd.uid existentes e aguarde a importação. Não precisa criar nós ou conectar sinais.
+4. Abra comparador_combate.tscn no Godot e execute F6.
+Também pode abrir laboratorio_combate.tscn com F6 e usar Abrir comparador de confrontos.
+F5 continua abrindo o jogo normalmente. A cena principal e project.godot não foram alterados.
+
+O QUE ESTÁ PRONTO
+- Três referências dos logs recebidos: Geodude × Geodude, Exeggutor × Blastoise e Gyarados × Blastoise.
+- Comparação de atributos/HP/Power do aliado, HP observado do selvagem, golpes escolhidos dos dois lados,
+  dano físico/especial, efetividade e intervalos entre pacotes de golpes.
+- Perfis V2 atual e V1 anterior, com a mesma função de dano usada na caça.
+- Entradas independentes para nível, HP máximo e seis atributos de combate do selvagem.
+- Sensibilidade de dano à defesa: metade, valor atual e dobro de Def ou SpDef, conforme a categoria.
+- Estimativa de quantidade de golpes para KO na hipótese, sem cura ou outros eventos.
+- Importação de diagnóstico local JSONL, com filtro de confronto compatível.
+- Exportação JSON e TXT, contendo referência, hipótese, resultados, diferenças e pendências.
+
+COMO USAR
+Selecione um confronto no topo. A hipótese inicial do selvagem usa o nível da hunt no protótipo,
+IV16 em cada atributo, qualidade1 e HP calculado×5. Isso é uma referência fixa para experimentar;
+não representa os IVs/qualidade de todos os selvagens sorteados nem os atributos do original.
+
+Comece por Gyarados × Blastoise. No perfil padrão, Thrash local fica na faixa amostrada; Skull Bash
+recebido e HP máximo divergem. A tabela também mostra se a escolha de golpe é compatível nesta hipótese.
+Para investigar físico, altere Def ou Atk do selvagem. Para especial, use Exeggutor × Blastoise e altere SpDef.
+Alterar Atk não modifica Leaf Storm; alterar Def não deve reduzir um golpe especial.
+Geodude está no piso de dano: pequenas mudanças de defesa podem não mudar seus2/1 pontos de dano.
+
+Nível, HP máximo e atributos são entradas independentes. Alterar o nível NÃO recalcula automaticamente
+todos os atributos: essa independência permite testar se o nível efetivo do selvagem é diferente do
+nível usado em outra hipótese. Use Restaurar hipótese para voltar ao ponto inicial do caso.
+Speed não altera dano nem cadência neste modelo. O atributo HP também não recalcula HP máximo sozinho.
+
+REFERÊNCIA CAPTURÁVEL × PERFIL DE COMBATE
+A referência capturável exibida no relatório é um Pokémon LOCAL Lv1, qualidade1, IV16.
+O perfil de combate é um snapshot independente. Editá-lo não altera a referência capturável, o time,
+o líder, os IVs, os níveis ou o save. O Lv1 desse exemplo não é atribuído ao selvagem do log original.
+A comparação prepara essa separação para experimentos; não impõe uma regra nova de geração nas hunts.
+
+COMO INTERPRETAR A TABELA
+COINCIDE: o número calculado coincide com o que foi observado naquele campo/caso.
+COMPATÍVEL SOB HIPÓTESE: este perfil produz um valor compatível, mas faltam entradas originais.
+DIVERGE: esta hipótese fixa não reproduz o valor/faixa observada.
+NÃO VALIDÁVEL: falta observação ou atributo original necessário.
+INCONCLUSIVO: os horários dos pacotes não provam a cadência individual de execução.
+Clique numa linha ou passe o mouse sobre uma célula para ler valores completos e a nota.
+Coincidir em um dano ou HP não comprova fórmula, distribuição de IV/qualidade ou comportamento global.
+A diferença de dano é a distância até a FAIXA amostrada, não um erro médio contra cada golpe.
+A simulação é de atributos fixos; os logs de Blastoise contêm vários selvagens e deslocamento.
+As datas, atributos, valores e hashes das referências estão em dados/combate/casos_comparador.json.
+Os IVs do Geodude são sintéticos compatíveis. Os dos outros aliados são inferências condicionadas
+à fórmula do cliente. Sua natureza fica explícita na tela e nos arquivos exportados.
+
+IMPORTAR LOG LOCAL
+Na hunt, Ctrl+Shift+L inicia a gravação; pressione novamente para exportar o JSONL.
+No comparador, selecione o confronto e use Importar log local para escolher esse arquivo.
+O filtro exige a mesma espécie, nível, seis atributos, HP máximo, Power e qualidade compatível do aliado,
+e a espécie inimiga do caso. Qualidade usa tolerância0,005, pois a referência Geodude tem precisão exibida.
+Um Larvitar12 contra Rattata1 não é comparado diretamente com Geodude1 contra Geodude1.
+Eventos incompatíveis são contabilizados como descartados, sem atribuí-los ao caso errado.
+Os valores do log importado aparecem no relatório inferior, junto das faixas e modelos locais encontrados.
+Editar a hipótese não reescreve o log importado. Trocar o caso limpa a importação.
+Essa opção aceita o diagnóstico JSONL do NOSSO jogo. As duas sessões WS do original já estão incluídas
+como referências processadas; não precisam ser importadas novamente.
+Não se removem golpes de dano igual: vários atacantes podem produzir eventos iguais.
+Os intervalos de inimigos do diagnóstico local são separados pela identidade real do atacante.
+No WS original, slot identifica a vítima; não se inventa a identidade de atacantes a partir dele.
+
+EXPORTAR
+Use Exportar JSON + texto. O caminho aparece na tela e no console.
+Pasta: user://diagnosticos_combate/comparador_<data>_<id>.json e .txt.
+A exportação inclui somente os resultados, hipóteses e resumo do diagnóstico importado, sem chat do original.
+Arquivos de execuções diferentes têm nomes diferentes. O botão também serve para guardar uma hipótese
+antes de selecionar outro caso. Hipóteses editadas nesta tela não são aplicadas ao combate real.
+
+DADOS QUE AINDA FALTAM
+Nível efetivo e atributos ofensivos/defensivos dos selvagens originais; relação com o Pokémon capturado;
+cadência por espécie/golpe; efeitos de crítico, STAB, sorte e buffs; política de TMs aprendidas.
+A ferramenta marca essas pendências. Não ajusta multiplicadores automaticamente para esconder divergências.
+
+VALIDAÇÃO
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT"
+Teste focado:
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT" --teste test_comparador_combate
+O executor usa cópia temporária e perfil isolado por teste. A versão testada é Godot4.6.3 headless.
+O teste de tela cobre criação, edição, importação e exportação; não substitui conferir o layout no seu4.7.2.

@@ -1,0 +1,42 @@
+Godot 4.6.3 — execução sem interface gráfica
+Scripts de teste: 36; todos aprovados: True
+Laboratório: 43 verificações; 0 falhas.
+Inicialização real: aprovada.
+Reinício dos 3 cenários e exportação: aprovados.
+
+test_laboratorio_pronto
+test_comparador_combate
+test_cooldown_troca
+test_troca_hunt_barras
+test_calibracao_combate
+test_laboratorio_combate
+test_registro_combate
+test_evolucao_pokemon
+test_loot_hunts
+test_progressao_treinador
+test_dificuldade_hunts
+test_mapa_entre_hunts
+test_melhor_golpe
+test_togepi_last_resort
+test_cerco_acesso
+test_importacao_especies
+test_configuracao_hunts
+test_hunt_generica
+test_hunt_larvitar
+test_mapa_fiel
+test_ataques_independentes
+test_dano_atributos
+test_ajustes_hunt
+test_loot_combate_fiel
+test_depot_cidade_fiel
+test_team_fiel
+test_ui_fiel
+test_revisao
+test_movimento_selvagens
+test_hunt_referencias
+test_qualidade
+test_cidade_qualidade
+test_compatibilidade_save
+test_consistencia
+test_golpes_combate
+test_combate_rapido

@@ -1,0 +1,4 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+LABORATORIO EXPORTADO: /home/agent/.local/share/godot/app_userdata/PokeIdle_QA_a2691d9afdeb462e875f815af97d9159/diagnosticos_combate/laboratorio_geodude.json
+LABORATORIO COMBATE: 8 verificações; 0 falhas

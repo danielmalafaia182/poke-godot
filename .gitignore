@@ -1,0 +1,22 @@
+# Godot
+.godot/
+*.translation
+
+# Arquivos compactados grandes (originais ficam fora do git)
+*.rar
+*.7z
+
+# Dados externos grandes / de terceiros (ver CLAUDE.md: o snapshot nunca vai para o git)
+/poke har/
+/poke-local/
+/laboratorio_validacao/
+
+# Capturas HAR podem conter cookies e tokens da conta
+*.har
+
+# Python
+__pycache__/
+*.pyc
+
+# Saídas de teste da simulação
+/saida_testes/

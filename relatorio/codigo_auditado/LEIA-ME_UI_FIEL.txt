@@ -1,0 +1,58 @@
+TIME E AUTO-HELPER — AJUSTE VISUAL
+Base exata: poke-idle(2).rar enviado em 06/11/2026.
+
+COMO INSTALAR
+1. Feche o jogo e o editor. Faça uma cópia do projeto atual.
+2. Extraia este ZIP na pasta que contém project.godot, mesclando assets e
+   validacao_qualidade e substituindo os arquivos solicitados.
+3. Preserve os .gd.uid existentes. O Godot gera os dos novos scripts.
+4. Reabra o projeto, aguarde a importação das fontes e execute com F5.
+
+Não precisa alterar cenas, criar nós ou conectar sinais.
+O ZIP é uma atualização do projeto enviado, não um projeto independente.
+
+O QUE MUDA
+- Painel do time com 208px, cabeçalho, pesos de fonte e espaçamentos ajustados
+  pelos recortes e pelo CSS do cliente original.
+- Cinzel Bold e Barlow Regular/Bold extraídos dos arquivos já fornecidos.
+- Retratos centralizados, com o tipo pequeno no canto inferior esquerdo,
+  à frente do Pokémon. A cor do anel segue o tipo das espécies atuais.
+- HP/EXP com cápsulas e gradientes; HP muda de cor quando está baixo/crítico.
+- A atualização de HP/XP continua conservando os nós dos cartões.
+- Auto-Helper central de 236px, camada escurecida, cabeçalho arrastável,
+  seletores compactos e chips de Pokébolas com ícones/quantidades.
+- Estoque com separador de milhar e infinito. Bolas sem estoque desaparecem
+  da lista; se a configurada esgotar, um aviso solicita escolher outra.
+- Auto-Potion e Auto-Catch recolhem suas seções ao serem desligados.
+- Fecha por X, Esc ou clique fora. A sombra acompanha janela.hide() usado
+  pelas cenas existentes. Janelas baixas passam a ter rolagem interna.
+
+OPÇÕES AINDA INDISPONÍVEIS
+Evolve e Auto-Catch Shiny aparecem desativados, com tooltip informativo.
+A versão enviada ainda não contém evolução ou indivíduos shiny; este ajuste
+visual não apresenta esses botões como funções disponíveis.
+O filtro continua funcionando para a captura normal implementada.
+
+FIDELIDADE
+Usamos os estilos/fontes/assets extraídos e os prints como referência.
+As prévias dentro de referencias_ui são renderizações reais do Godot,
+com dados sintéticos de demonstração. O pacote não adiciona estoque nem
+Pokémon ao progresso do jogador.
+A janela está mais próxima da referência, mas não é equivalência pixel a pixel:
+CSS e Godot rasterizam fontes/bordas de forma diferente; brilho contínuo das
+barras, animações CSS completas e evolução/Shiny ainda não foram reproduzidos.
+A Golden Idle Ball usa um recorte visível da textura dourada original que já
+existe no projeto, pois não há ícone de inventário dourado no material enviado.
+
+PARA COMPARAR
+Compare a mesma área útil do jogo. O monitor 1920x1080 inclui áreas ocupadas
+pelo navegador/sistema; o print original da cidade tem área útil 1920x960.
+As prévias foram renderizadas em 1920x960, sem ampliar todo o HUD.
+No Godot, use uma janela independente; não use a prévia fixa 1152x648 para
+avaliar o espaço disponível em Full HD.
+
+VALIDAÇÃO
+Godot 4.6.3 Linux: nove testes de regressão e um teste novo de UI com 41
+verificações passaram. Renderização OpenGL Compatibility conferida visualmente.
+Windows/Godot 4.7.2 não foi executado neste ambiente.
+Detalhes em referencias_ui/VALIDACAO.txt.

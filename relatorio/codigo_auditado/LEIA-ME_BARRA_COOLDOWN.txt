@@ -1,0 +1,61 @@
+BARRA DE HP DIRETA + COOLDOWN DE TROCA DE 5 SEGUNDOS
+Base: projeto atualizado com correcao_troca_hunt_barras.zip.
+
+INSTALAÇÃO
+Pare o jogo, faça backup e extraia este ZIP na pasta de project.godot.
+Mescle as pastas e substitua os scripts. Preserve seus .gd.uid existentes.
+Os scripts novos barra_vida_mundo.gd, mascara_cooldown.gd e efeito_troca.gd são necessários.
+Não precisa criar nós nem conectar sinais. Aguarde a importação e execute F5.
+Não inclui um save nem substitui seu inventário/time por dados de teste.
+
+BARRA
+O vídeo do protótipo confirmou o ciclo visual relatado. O ajuste anterior não foi suficiente.
+Esta atualização troca o desenho nativo do preenchimento por dois retângulos: fundo preto e HP verde.
+O desenho usa somente o HP atual e máximo, sem relógio, Tween, progresso de golpe ou ciclo de animação.
+Conserva a API ProgressBar/Range para o HUD, diagnóstico e indicadores já existentes.
+São32x4 pixels:30 pixels úteis de largura, com borda preta e preenchimento verde de2 pixels de altura.
+Enquanto HP>0, mostra no mínimo1 pixel verde. HP zero não mostra preenchimento.
+A proporção desenhada é arredondada para cima para pixels inteiros; não inventa HP nem modifica os
+números do encontro. Em uma barra pequena é normal vários pontos de HP corresponderem ao mesmo pixel.
+A barra continua acompanhando a posição e a identidade do encontro, acima dos efeitos de ataque.
+O KO oculta o indicador. Um novo encontro após respawn começa com a própria vida e identidade.
+Não se alterou a fórmula de dano, HP máximo, recompensas ou tempo de respawn.
+
+TROCA DURANTE A HUNT
+A primeira troca é permitida imediatamente. Cada troca aceita inicia um bloqueio de5000ms.
+Funciona tanto nos cartões do HUD quanto no Summon do Team.
+O serviço valida antes de alterar o líder, evitando trocar e depois desfazer ou emitir sinais de troca rejeitada.
+Cliques durante o bloqueio não reiniciam o relógio. Clicar no Pokémon já ativo também não reinicia.
+O prazo usa relógio monotônico, não contagem de frames: FPS baixo não alonga o cooldown.
+O prazo restante é mantido ao sair de uma hunt e entrar em outra durante a mesma execução do jogo.
+O prazo é transitório, não integra o save. A seleção na cidade continua com o comportamento anterior.
+Pokémon sem HP continua bloqueado. Os HPs individuais e relógios de ataque são preservados.
+O cooldown de troca é independente do intervalo/cooldown dos golpes; a batalha continua normalmente.
+
+ANIMAÇÃO DE COOLDOWN
+Referência: vídeo original enviado, com máscara e contagem sobre os retratos inativos.
+Nos cartões do HUD: retrato escurecido, máscara radial regressiva, contagem5→4→3→2→1 e cartão atenuado.
+O Pokémon ativo conserva seu retrato sem máscara.
+No Team: Summon fica bloqueado com o tempo restante; é possível continuar consultando outros Pokémon.
+Ao terminar o prazo, máscara/contagem somem e os controles liberam a troca.
+Na entrada do novo aliado, reproduz também o clarão rosa de abertura da Pokébola, usando o gráfico
+já existente pokeball_broke.png (trecho de8 quadros, cerca de0,6s). O enquadramento e o tempo são
+aproximações do vídeo, não parâmetros extraídos do servidor. O efeito acompanha o aliado, não
+consome bolas, não captura e não interfere no HP, no cooldown ou na execução de ataques.
+
+VERIFICAÇÃO
+O teste específico cobre bloqueio aos4,999s, liberação aos5,000s, clique no ativo, cliques repetidos,
+Summon, HUD, ausência de sinais em troca rejeitada, nova hunt e preenchimento de HP120 até0.
+O teste anterior também cobre o duelo de60 golpes de2HP, KO, respawn e preservação do HP do time.
+Resultados da regressão estão em validacao_qualidade/resultados/barra_cooldown.
+Godot usado:4.6.3 sem interface gráfica. A correção do desenho foi verificada pela regra de pixels;
+não foi possível validar a renderização final no seu Godot4.7.2. Compare novamente com os vídeos.
+
+Executar todos os testes:
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT"
+Teste específico:
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT" --teste test_cooldown_troca
+
+VALIDAÇÃO DESTA ENTREGA:regressão geral de34 suítes aprovada; importação e fixture de save aprovadas.
+Após integrar o efeito visual de troca,4 suítes focadas também aprovadas (cooldown, troca/HP, calibração e loot/HUD).
+Configuração do projeto preservada. Logs completos incluídos.

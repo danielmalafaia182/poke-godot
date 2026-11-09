@@ -1,0 +1,65 @@
+COMBATE, XP E LOOT — atualização sobre refino_autohelper_depot.zip
+
+INSTALAÇÃO
+1. Pare o jogo, feche o Godot e faça uma cópia completa do projeto atual.
+2. Extraia na pasta que contém project.godot, mesclando as pastas e substituindo
+   os scripts solicitados. Preserve os .gd.uid existentes.
+3. Abra o Godot, aguarde a importação dos novos sprites e execute F5.
+Não é necessário criar nós ou conectar sinais. Este é um patch sobre a última
+versão; não contém project.godot, cenas substitutas ou saves de teste.
+
+NOMES E HP
+Aliado e selvagens usam a mesma fonte bitmap extraída, nome verde, contorno
+escuro, barra verde 32x5 e a mesma ancoragem. A barra usa HP de combate real,
+não o atributo bruto de HP da ficha do TEAM. Não há texto numérico na barra.
+Os indicadores acompanham a posição interpolada e desaparecem após o KO.
+O respawn reutiliza os controles, apontando para o novo encontro.
+
+Por padrão, todos os selvagens vivos têm indicador. Para mostrar somente o
+alvo e os feridos, desative mostrar_indicadores_todos_selvagens no Inspector
+da raiz Caca. Não foram alterados dano, golpes, alcance ou cadência de 1,5 s.
+
+A caça aplica a mesma configuração de pixels reais já usada na cidade.
+Aumentar a janela revela mais mapa e preserva o tamanho do HUD; isso também
+funciona ao executar a cena da caça diretamente pelo editor.
+
+RESULTADO
+Cartão de 340 px, fundo em gradiente azul-escuro/verde/dourado, retrato frontal,
+cabeçalho com contador de abates, linhas TRAINER e POKÉMON com ícones originais,
+totais branco/vermelho, cápsulas Base e chips de loot com sprites reais.
+Agrupa abates próximos com as janelas existentes de 700/1500 ms; espécies
+diferentes não são somadas no mesmo cartão. Um clique expande e outro descarta.
+A apresentação não concede XP ou itens; somente mostra o evento já aplicado.
+
+XP
+8 XP base por Geodude para o Pokémon ativo e para o contador do treinador.
+Quatro abates agrupados mostram +32 e Base 32. O bônus VIP existente continua
+opcional e desligado por padrão; não é necessário ativá-lo para usar o visual.
+Os números do print não foram fixados no código.
+
+LOOT FUNCIONAL
+Os sorteios usam o catálogo extraído e os sprites do HAR. Os materiais entram
+na BAG, aparecem na aba Items do Depot (categoria Materials), podem ser
+transferidos para o Depot e ficam salvos. Bolas e poções mantêm seus estoques.
+Cada encontro reserva sua recompensa uma única vez, inclusive com Auto-Catch.
+Reapresentar ou agrupar um cartão não sorteia e não concede nada novamente.
+
+O save v1 recebe o campo opcional materiais. Saves anteriores continuam
+aceitos, iniciando esse campo vazio. O patch não zera estoques existentes.
+
+FONTES E LIMITES
+Leia REFERENCIAS_LOOT_GEODUDE.md: a página indicada abriu sem a tabela neste
+ambiente. As chances vêm dos arquivos já extraídos, com a conversão confirmada
+no código da Pokepedia. Não foi possível confirmar se a tabela online mudou.
+Rolagens independentes e distribuição uniforme da quantidade são a política
+local do protótipo, ainda sem confirmação do algoritmo interno do servidor.
+Não há bônus de loot, regras de shiny ou outras espécies implementados aqui.
+
+VALIDAÇÃO
+Godot 4.6.3 Linux: 13 testes aprovados no executor isolado; novo teste de loot
+com 25 verificações, incluindo 5000 sorteios determinísticos, limites,
+concessão única, transferências, overflow, persistência e save anterior.
+Cliques de expandir/descartar conferidos após o acabamento dos controles.
+Renderização nativa OpenGL conferida em 1920x960, sem ampliar o HUD.
+Prévias do jogo incluídas, usando um perfil e seeds exclusivos de QA.
+Godot 4.7.2 não executado neste ambiente.

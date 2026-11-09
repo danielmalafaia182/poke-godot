@@ -1,0 +1,199 @@
+[
+ {
+  "slug": "cerulean",
+  "nome": "Cerulean",
+  "area": "kanto",
+  "nivel": 0,
+  "looktype": 1309,
+  "pixel": [
+   589,
+   355
+  ],
+  "range": [
+   3976,
+   3432,
+   4119,
+   3523,
+   7
+  ],
+  "inicio": null,
+  "spawns": [],
+  "lures": [],
+  "catchChance": 0,
+  "mapa": {
+   "arquivo": "game/maps/cerulean_novo.json",
+   "formato": "stonegy-map-compact-v1",
+   "tiles": 92132,
+   "meta": {
+    "range": [
+     3976,
+     3432,
+     4119,
+     3523,
+     7
+    ],
+    "center": [
+     4066,
+     3491
+    ],
+    "walk": [
+     -90,
+     -59,
+     53,
+     32
+    ],
+    "tileCount": 92132,
+    "groundZ": 7
+   }
+  },
+  "npcs": [
+   {
+    "id": "npc_nurse_-3_-10",
+    "kind": "nurse",
+    "x": -3,
+    "y": -10
+   },
+   {
+    "id": "npc_market_18_8",
+    "kind": "market",
+    "x": 18,
+    "y": 8
+   },
+   {
+    "id": "npc_pokedepot_-8_-14",
+    "kind": "pokedepot",
+    "x": -8,
+    "y": -14
+   },
+   {
+    "id": "npc_shop_22_8",
+    "kind": "shop",
+    "x": 22,
+    "y": 8
+   },
+   {
+    "id": "npc_fishing_7_-10",
+    "kind": "fishing",
+    "x": 7,
+    "y": -10
+   }
+  ]
+ },
+ {
+  "slug": "pewter",
+  "nome": "Lavender",
+  "area": "kanto",
+  "nivel": 0,
+  "looktype": 1309,
+  "pixel": [
+   785,
+   515
+  ],
+  "range": [
+   4236,
+   3608,
+   4286,
+   3638,
+   5
+  ],
+  "inicio": null,
+  "spawns": [],
+  "lures": [],
+  "catchChance": 0,
+  "mapa": {
+   "arquivo": "game/maps/pewter.json",
+   "formato": "stonegy-map-compact-v1",
+   "tiles": 32151,
+   "meta": {
+    "range": [
+     4236,
+     3608,
+     4286,
+     3638,
+     5
+    ],
+    "center": [
+     4261,
+     3623
+    ],
+    "walk": [
+     -25,
+     -15,
+     25,
+     15
+    ],
+    "tileCount": 32151,
+    "groundZ": 5
+   }
+  },
+  "npcs": []
+ },
+ {
+  "slug": "viridian",
+  "nome": "Viridian",
+  "area": "kanto",
+  "nivel": 0,
+  "looktype": 1309,
+  "pixel": [
+   215,
+   600
+  ],
+  "range": [
+   3684,
+   3687,
+   3762,
+   3735,
+   7
+  ],
+  "inicio": null,
+  "spawns": [],
+  "lures": [],
+  "catchChance": 0,
+  "mapa": {
+   "arquivo": "game/maps/viridian.json",
+   "formato": "stonegy-map-compact-v1",
+   "tiles": 25725,
+   "meta": {
+    "range": [
+     3684,
+     3687,
+     3762,
+     3735,
+     7
+    ],
+    "center": [
+     3723,
+     3711
+    ],
+    "walk": [
+     -39,
+     -24,
+     39,
+     24
+    ],
+    "tileCount": 25725,
+    "groundZ": 7
+   }
+  },
+  "npcs": [
+   {
+    "id": "npc_nurse_0_0",
+    "kind": "nurse",
+    "x": 0,
+    "y": 0
+   },
+   {
+    "id": "npc_shop_2_0",
+    "kind": "shop",
+    "x": 2,
+    "y": 0
+   },
+   {
+    "id": "npc_pokedepot_-2_0",
+    "kind": "pokedepot",
+    "x": -2,
+    "y": 0
+   }
+  ]
+ }
+]

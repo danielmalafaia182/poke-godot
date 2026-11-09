@@ -1,0 +1,80 @@
+extends SceneTree
+var falhas: int = 0
+var checks: int = 0
+func checar(ok: bool, descricao: String) -> void:
+	checks += 1
+	if not ok:
+		falhas += 1
+		push_error(descricao)
+func _initialize() -> void:
+	call_deferred("executar")
+func executar() -> void:
+	var e: Node = root.get_node("EstadoJogo")
+	var s: RefCounted = load("res://salvamento_local.gd").new()
+	var anterior: Dictionary = s.decodificar(FileAccess.get_file_as_string("user://fixture_anterior.json"))["dados"]
+	var atual: Dictionary = JSON.parse_string(JSON.stringify(s.construir_dados(e)))
+	anterior.erase("salvo_em_unix")
+	atual.erase("salvo_em_unix")
+	checar(atual.get("materiais",{}).is_empty(),"save anterior inicia materiais vazios")
+	atual.erase("materiais")
+	checar(atual.has("experiencia_base_migracao"),"migração registra base sem alterar XP histórica")
+	atual.erase("experiencia_base_migracao")
+	var esperado: Dictionary=anterior.duplicate(true)
+	for registro in esperado["team"]:
+		if registro["id"]!=esperado["inicial_id"]: continue
+		var antigo_p: DadosPokemon=s._criar_pokemon(registro)
+		if antigo_p.obter_total_ivs()!=6: continue
+		var hp: int=antigo_p.obter_vida_atual()
+		var maximo: int=antigo_p.obter_vida_maxima()
+		var modelo: DadosPokemon=load("res://dados/pokemons/larvitar_inicial.tres")
+		for campo in s.CAMPOS_IV:
+			registro[campo]=modelo.get(campo)
+			antigo_p.set(campo,modelo.get(campo))
+		registro["vida_atual"]=0 if hp==0 else clampi(roundi(float(hp)/maxi(1,maximo)*antigo_p.obter_vida_maxima()),1,antigo_p.obter_vida_maxima())
+	# JSON representa todos os números da mesma forma na comparação estrutural.
+	esperado=JSON.parse_string(JSON.stringify(esperado))
+	checar(esperado==atual,"save preservado exceto IVs/HP do inicial migrado")
+	checar(e.time_pokemon.size()==3 and e.pokemons_capturados.size()==2,"TEAM/BOX anteriores")
+	checar(e.obter_lider()==e.time_pokemon[1],"identidade do líder anterior")
+	checar(e.salvar_agora(),"grava com módulos novos")
+	var id: String = e.obter_lider().id_persistente
+	checar(s.carregar(e) and s.carregar(e),"recarrega duas vezes")
+	checar(e.time_pokemon.size()==3 and e.pokemons_capturados.size()==2 and e.obter_lider().id_persistente==id,"não duplica e mantém líder")
+	# Corrupção: principal quebrado, backup válido.
+	var arquivo: FileAccess = FileAccess.open(s.caminho,FileAccess.WRITE)
+	arquivo.store_string("corrompido")
+	arquivo.close()
+	var recuperador: RefCounted = load("res://salvamento_local.gd").new()
+	checar(recuperador.carregar(e) and not recuperador.aviso.is_empty(),"recupera backup")
+	checar(recuperador.salvar(e),"repara principal")
+	# Campos opcionais de versões mais antigas ainda são aceitos.
+	var antigo: Dictionary = anterior.duplicate(true)
+	antigo.erase("lider_id")
+	antigo.erase("perfil")
+	antigo.erase("experiencia_treinador_acumulada")
+	for grupo in ["team","box"]:
+		for p in antigo[grupo]:
+			for campo in ["vida_atual","experiencia_total","experiencia_percentual","versao_atributos"]:
+				p.erase(campo)
+	checar(s._validar(antigo)=="","campos opcionais preservados")
+	s._restaurar(e,antigo)
+	checar(e.obter_lider()==e.pokemon_inicial and e.time_pokemon.size()==3,"migração usa inicial sem perder coleção")
+	# Duas cópias inválidas: não sobrescrever nenhuma.
+	var invalido: RefCounted = load("res://salvamento_local.gd").new()
+	invalido.caminho = "user://invalido.json"
+	for sufixo in ["", ".bak"]:
+		arquivo = FileAccess.open(invalido.caminho+sufixo,FileAccess.WRITE)
+		arquivo.store_string("preservar")
+		arquivo.close()
+	checar(not invalido.carregar(e) and invalido.bloqueado and not invalido.salvar(e),"corrupção total suspende gravação")
+	checar(FileAccess.get_file_as_string(invalido.caminho)=="preservar","bytes inválidos preservados")
+	# I/O negado: não fingir sucesso.
+	var io: RefCounted = load("res://salvamento_local.gd").new()
+	io.caminho = "user://pasta_inexistente/progresso.json"
+	checar(not io.salvar(e) and not io.erro.is_empty(),"falha de I/O reportada")
+	# Validação da mesma identidade em recursos distintos.
+	var duplicado: Dictionary = anterior.duplicate(true)
+	duplicado["box"][0]["id"] = duplicado["team"][0]["id"]
+	checar(not s._validar(duplicado).is_empty(),"save duplicado rejeitado")
+	print("COMPATIBILIDADE: ",checks," verificações; ",falhas," falhas")
+	quit(1 if falhas else 0)

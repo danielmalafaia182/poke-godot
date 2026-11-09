@@ -1,0 +1,2572 @@
+{
+ "formato": "poke-protocolo-v1",
+ "nota": "Gerado automaticamente. 'enviado' = cliente -> servidor; 'assinado' = evento que o cliente escuta. Esquemas vêm só dos logs: campo ausente não prova que o servidor nunca o envie.",
+ "fontes_cliente": [
+  "0gx72gz9qjk5j.js",
+  "26sc7h-33qbis.js",
+  "2nsq1ek51g625.js",
+  "329j824l1odqw.js",
+  "3vooh2axx98am.js"
+ ],
+ "fontes_logs": [
+  "6611fa39-loogs.txt",
+  "cb61e549-logs_rhyhorn.txt",
+  "f4a55b8a-logs_hitmonlee.txt",
+  "poke_ws_2026-11-08T22-11-28-609Z.txt",
+  "poke_ws_2026-11-08T02-41-10-198Z.txt"
+ ],
+ "totais": {
+  "tipos": 136,
+  "enviados_no_cliente": 65,
+  "assinados_no_cliente": 72,
+  "vistos_em_logs": 24
+ },
+ "mensagens": {
+  "addon-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "analyzer": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "analyzer-clear": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "analyzer-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "announce": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "auto-boss": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "auto-boss-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "auto-boss-start": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "bossKey",
+     "count"
+    ]
+   }
+  },
+  "auto-boss-stop": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "auto-heal": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 12,
+    "fontes": [
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "heal": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 150
+     },
+     "kind": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "potion"
+     },
+     "name": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Great Potion"
+     }
+    }
+   }
+  },
+  "autocatch-refused": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "autohelper": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 2,
+    "fontes": [
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "autoCatch": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "autoCatchBallId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 3
+     },
+     "autoCatchNames": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": ""
+     },
+     "autoCatchShiny": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "autoCatchShinyBallId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 6
+     },
+     "autoPotion": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "autoPotionItemId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "autoPotionThreshold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 90
+     },
+     "balls": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "iconUrl": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/pokeball.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "infinite": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Poké Ball"
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 398
+        }
+       }
+      }
+     },
+     "isCreator": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "isVip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "pokeCapacity": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 3000
+     },
+     "pokeCount": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 135
+     },
+     "potions": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "healAmount": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 60
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/small_potion.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 200
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Small Potion"
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 8
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "autohelper-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 2,
+    "fontes": [
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {}
+   }
+  },
+  "autohelper-refresh": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "badge-refresh": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 315,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {}
+   }
+  },
+  "balls": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 21,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "catalog": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "bound": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "buyable": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "catchRate": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "iconUrl": {
+         "tipos": [
+          "null",
+          "str"
+         ],
+         "exemplo": "/assets/markitems/pokeball.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "infinite": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "PokÃ© Ball"
+        },
+        "priceGold": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 5
+        }
+       }
+      }
+     },
+     "counts": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "1": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 99
+       },
+       "2": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 6
+       },
+       "3": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 5767
+       },
+       "4": {
+        "tipos": [
+         "int"
+        ],
+        "opcional": true,
+        "exemplo": 3936
+       },
+       "6": {
+        "tipos": [
+         "int"
+        ],
+        "opcional": true,
+        "exemplo": 3205
+       }
+      }
+     },
+     "expires": {
+      "tipos": [
+       "object"
+      ]
+     },
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 364739
+     },
+     "selected": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     }
+    }
+   }
+  },
+  "balls-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {}
+   }
+  },
+  "berry-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "boosts": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "boosts": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "extra": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "key": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "loot"
+        },
+        "pct": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 40
+        },
+        "until": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1794177072234
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "boosts-refresh": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 3,
+    "fontes": [
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {}
+   }
+  },
+  "borage-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "boss": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "candy-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "catch": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "ballId",
+     "pendingId"
+    ]
+   }
+  },
+  "catch-cooldown": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "catch-result": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 15,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt"
+    ],
+    "esquema": {
+     "auto": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "ballId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 3
+     },
+     "ballName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Super Ball"
+     },
+     "col": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 43
+     },
+     "row": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 46
+     },
+     "speciesName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Geodude"
+     },
+     "success": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     }
+    }
+   }
+  },
+  "chat": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 9,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "msg": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "at": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "2026-11-05T19:52:48.663Z"
+       },
+       "body": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "TvNN se tu acha que o jogo Ã© ruim e n tem ngm, pq ta jogand"
+       },
+       "channel": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "world"
+       },
+       "fromName": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "Tasukete"
+       },
+       "guildTag": {
+        "tipos": [
+         "null",
+         "str"
+        ],
+        "exemplo": "IDT"
+       },
+       "id": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "cmw3yq42ef8gx12mydzhff00d"
+       },
+       "isAdmin": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "isCm": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "isCreator": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "isTutor": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "isVip": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "level": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 273
+       }
+      }
+     }
+    }
+   }
+  },
+  "chat-blocked": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "chat-delete": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "id"
+    ]
+   }
+  },
+  "chat-deleted": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "currency": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "dm": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "body",
+     "to"
+    ],
+    "assinado": true
+   }
+  },
+  "enter-hunt": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "resume",
+     "slug"
+    ]
+   },
+   "visto_out": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "resume": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "slug": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "geodude"
+     }
+    }
+   }
+  },
+  "error": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "events": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "events": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "desc": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "ApariÃ§Ã£o de shinies Ã2"
+        },
+        "emoji": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "â¨"
+        },
+        "key": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "shiny-double"
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "â¨ Shiny Ã2"
+        },
+        "pct": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "until": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1794625140000
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "family": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "family-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "field": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 204,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "f4a55b8a-logs_hitmonlee.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "allMobsDead": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "bossActiveIdx": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "bossTeam": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "hp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 345
+        },
+        "maxHp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 348
+        }
+       }
+      }
+     },
+     "corpses": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "col": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 43
+        },
+        "corpse": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 6071
+        },
+        "row": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 46
+        }
+       }
+      }
+     },
+     "fainted": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "fighting": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "hero": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "col": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 50
+       },
+       "facing": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "west"
+       },
+       "row": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 46
+       },
+       "stepStartAt": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1793908356217
+       },
+       "walkFrom": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "col": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 51
+         },
+         "row": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 46
+         }
+        }
+       }
+      }
+     },
+     "heroHp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 345
+     },
+     "heroLooktype": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 25
+     },
+     "heroMaxHp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 348
+     },
+     "heroName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Bulbasaur"
+     },
+     "hits": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "amount": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 2688
+        },
+        "eff": {
+         "tipos": [
+          "float",
+          "int"
+         ],
+         "exemplo": 5.5
+        },
+        "move": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Razor Leaf"
+        },
+        "slot": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 11
+        },
+        "type": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "GRASS"
+        }
+       }
+      }
+     },
+     "mobs": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "col": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 82
+        },
+        "dead": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "facing": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "south"
+        },
+        "hp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 120
+        },
+        "maxHp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 120
+        },
+        "respawning": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "row": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 58
+        },
+        "shiny": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "slot": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 74
+        },
+        "stepStartAt": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1793908356217
+        },
+        "walkFrom": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "col": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 82
+          },
+          "row": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 58
+          }
+         }
+        }
+       }
+      }
+     },
+     "reviveInMs": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "seq": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 4
+     },
+     "serverNow": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1793908356217
+     },
+     "targetSlot": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 11
+     },
+     "trainer": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "col": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 50
+       },
+       "facing": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "west"
+       },
+       "row": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 46
+       },
+       "stepStartAt": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1793908356217
+       },
+       "walkFrom": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "col": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 50
+         },
+         "row": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 46
+         }
+        }
+       }
+      }
+     },
+     "waveRespawnAt": {
+      "tipos": [
+       "null"
+      ]
+     }
+    }
+   }
+  },
+  "field-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "field-init": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "bike": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "cols": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 109
+     },
+     "grid": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "list"
+       ],
+       "itens": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       }
+      }
+     },
+     "heroStepMs": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 500
+     },
+     "huntKey": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "geodude:1793908355535"
+     },
+     "minTx": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": -54
+     },
+     "minTy": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": -43
+     },
+     "mobStepMs": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1000
+     },
+     "rows": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 88
+     },
+     "slug": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "geodude"
+     },
+     "tickMs": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 200
+     },
+     "trainerStepMs": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 500
+     }
+    }
+   }
+  },
+  "field-kill": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 15,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt"
+    ],
+    "esquema": {
+     "col": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 43
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 36
+     },
+     "leveledUp": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "looktype": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 196
+     },
+     "loot": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "itemId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 120
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Small Stone"
+        },
+        "qty": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 4
+        }
+       }
+      }
+     },
+     "pokeXp": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "level": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 36
+       },
+       "parts": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "base": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 8
+         },
+         "boost": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "event": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "guild": {
+          "tipos": [
+           "int"
+          ],
+          "opcional": true,
+          "exemplo": 169
+         },
+         "gym": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "mentor": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "typeDay": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "vip": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 4
+         }
+        }
+       },
+       "speciesId": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "xpGained": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 12
+       }
+      }
+     },
+     "row": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 46
+     },
+     "shiny": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "slot": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 11
+     },
+     "speciesId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 74
+     },
+     "speciesName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Geodude"
+     },
+     "totalXp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 714292
+     },
+     "xpGained": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 12
+     },
+     "xpParts": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "base": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 8
+       },
+       "boost": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "event": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "guild": {
+        "tipos": [
+         "int"
+        ],
+        "opcional": true,
+        "exemplo": 169
+       },
+       "gym": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "streak": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "typeDay": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "vip": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 4
+       }
+      }
+     }
+    }
+   }
+  },
+  "field-lost": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "field-none": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "field-teleport-city": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "fishing": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "fishing-cooldown": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "fishing-levelup": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "forfeit": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "golden-stars-refresh": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "guild": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "guild-dirty": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "guild-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "withList"
+    ]
+   }
+  },
+  "guild-history": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "guild-history-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "gym-global": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "heal-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "held-replace-confirm": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "held-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "hunt-bike-off": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "hunt-cooldown": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "hunt-resume": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "inv-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "inventory": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 27,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "items": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "itemId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 39
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 6626
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "joy-heal": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "leave-hunt": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 1,
+    "fontes": [
+     "6611fa39-loogs.txt"
+    ],
+    "esquema": {}
+   }
+  },
+  "license-refresh": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "mail-badge": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "move": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "moveIndex"
+    ]
+   }
+  },
+  "pass-progress": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "patchnote": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pending": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "list": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": []
+      }
+     }
+    }
+   }
+  },
+  "pending-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {}
+   }
+  },
+  "poke-delta": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "6611fa39-loogs.txt"
+    ],
+    "esquema": {
+     "poke": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "barLooktype": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 196
+       },
+       "evolveNeedLevel": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 40
+       },
+       "evolvesToName": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "Graveler"
+       },
+       "hasEvolution": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "hp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 24
+       },
+       "id": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "cmw3yq3mdfkgf12ih566etdtx"
+       },
+       "ivTotal": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 76
+       },
+       "leader": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "level": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "looktype": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 196
+       },
+       "maxHp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 24
+       },
+       "name": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "Geodude"
+       },
+       "power": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 11
+       },
+       "quality": {
+        "tipos": [
+         "float"
+        ],
+        "exemplo": 1.394
+       },
+       "sellValue": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 300
+       },
+       "shiny": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "slot": {
+        "tipos": [
+         "null"
+        ]
+       },
+       "speciesId": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 74
+       },
+       "starter": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "stats": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "atk": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 2
+         },
+         "def": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 2
+         },
+         "hp": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "spAtk": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "spDef": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "speed": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         }
+        }
+       },
+       "team": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "type1": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "ROCK"
+       },
+       "type2": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "GROUND"
+       },
+       "xp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       }
+      }
+     }
+    }
+   }
+  },
+  "poke-store": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "pokeId"
+    ]
+   }
+  },
+  "poke-summon": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "pokeId"
+    ]
+   }
+  },
+  "poke-swap-cooldown": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "poke-withdraw": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "pokeId"
+    ]
+   }
+  },
+  "poke-xp": {
+   "no_cliente": {
+    "assinado": true
+   },
+   "visto_in": {
+    "vezes": 15,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt"
+    ],
+    "esquema": {
+     "id": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "cmu9y6y5cntw5iiyrt3u78fys"
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 36
+     },
+     "leveledUp": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "speciesId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "xp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 712226
+     },
+     "xpGained": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 12
+     }
+    }
+   }
+  },
+  "pokecard-pack-opened": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pokes": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "list"
+    ],
+    "assinado": true
+   }
+  },
+  "pokes-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "profession-gather": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "profession-photo": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-accept": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "challengeId",
+     "teamSlot"
+    ]
+   }
+  },
+  "pvp-action": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "action",
+     "battleId"
+    ]
+   }
+  },
+  "pvp-challenge": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "teamSlot",
+     "to"
+    ]
+   }
+  },
+  "pvp-challenge-end": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-challenge-in": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-challenge-sent": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-decline": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "challengeId"
+    ]
+   }
+  },
+  "pvp-error": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-leave": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "battleId"
+    ]
+   }
+  },
+  "pvp-queue": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "on"
+    ]
+   }
+  },
+  "pvp-queue-state": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-reject": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-start": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-state": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [],
+    "assinado": true
+   }
+  },
+  "pvp-unwatch": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "battleId"
+    ]
+   }
+  },
+  "pvp-update": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-waiting": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "pvp-watch": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "battleId"
+    ]
+   }
+  },
+  "pvp-watch-start": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "random-held-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "restart-freeze": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "restart-resume": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "restart-resumed": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "restart-state": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "set-addon": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "addonKey",
+     "pokeId"
+    ]
+   }
+  },
+  "set-city": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "slug"
+    ]
+   },
+   "visto_out": {
+    "vezes": 1,
+    "fontes": [
+     "6611fa39-loogs.txt"
+    ],
+    "esquema": {
+     "slug": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "cerulean"
+     }
+    }
+   }
+  },
+  "shiny-global": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "sleep-mode": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "sleep-ok": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "switch": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "teamIndex"
+    ]
+   }
+  },
+  "tm-replace-confirm": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "tm-used": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "trade": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "trade-cancel": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "tradeId"
+    ]
+   }
+  },
+  "trade-confirm": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "tradeId",
+     "version"
+    ]
+   }
+  },
+  "trade-get": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "trade-invite": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "toName"
+    ],
+    "assinado": true
+   }
+  },
+  "trade-money": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "diamonds",
+     "gold",
+     "tradeId"
+    ]
+   }
+  },
+  "trade-respond": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "accept",
+     "tradeId"
+    ]
+   }
+  },
+  "trade-settled": {
+   "no_cliente": {
+    "assinado": true
+   }
+  },
+  "trade-slot": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "slot",
+     "slotIndex",
+     "tradeId"
+    ]
+   }
+  },
+  "trade-unconfirm": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "tradeId"
+    ]
+   }
+  },
+  "use-addon": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "itemId",
+     "pokeId"
+    ]
+   }
+  },
+  "use-berry": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "itemId",
+     "pokeId"
+    ]
+   }
+  },
+  "use-borage": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "use-candy": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "itemId",
+     "pokeId"
+    ]
+   }
+  },
+  "use-heal": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "itemId"
+    ]
+   }
+  },
+  "use-held": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "confirmReplace",
+     "itemId",
+     "pokeId"
+    ]
+   }
+  },
+  "use-pokecard-pack": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "use-random-held": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": []
+   }
+  },
+  "use-tm": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "confirmReplace",
+     "itemId",
+     "pokeId"
+    ]
+   }
+  },
+  "view": {
+   "no_cliente": {
+    "enviado": true,
+    "chaves_literal": [
+     "hc",
+     "hr"
+    ]
+   },
+   "visto_out": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "cb61e549-logs_rhyhorn.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "hc": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 27
+     },
+     "hr": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 15
+     }
+    }
+   }
+  },
+  "vip": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 4,
+    "fontes": [
+     "6611fa39-loogs.txt",
+     "poke_ws_2026-11-08T02-41-10-198Z.txt",
+     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+    ],
+    "esquema": {
+     "until": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1796135385546
+     }
+    }
+   }
+  }
+ }
+}

@@ -1,0 +1,21 @@
+{
+ "iv": {
+  "min": 1,
+  "max": 32,
+  "total_max": 192,
+  "fonte": "correcao:iv-teto-32"
+ },
+ "selvagem": {
+  "hpPorStat": 35,
+  "hpMinimo": 120,
+  "fonte": "observado nos logs (Rhyhorn, Geodude)"
+ },
+ "tickMs": 200,
+ "snapshotACadaTicks": 2,
+ "efetividadeAmplificada": {
+  "1.5": 1.75,
+  "2": 2.5,
+  "4": 5.5,
+  "fonte": "Pokepedia: combat"
+ }
+}

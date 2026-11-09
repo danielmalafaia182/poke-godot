@@ -1,0 +1,66 @@
+RETRATOS FRONTAIS, TIPOS E TEAM
+Aplicar sobre o projeto atualizado com cidade_time_autohelper_fiel.zip.
+Base: poke-idle(2).rar + atualização visual anterior validada nesta conversa.
+
+INSTALAÇÃO
+1. Feche o jogo e o editor Godot. Faça uma cópia do projeto atual.
+2. Extraia este ZIP na pasta que contém project.godot, mesclando as pastas
+   assets, validacao_qualidade e referencias_team e substituindo os arquivos.
+3. Preserve os .gd.uid existentes. O editor gera os dos novos scripts.
+4. Reabra, espere a importação dos assets/fontes e execute com F5.
+Não precisa alterar cenas, Autoload, criar nós ou conectar sinais.
+
+AJUSTES
+- Retratos do HUD lateral e dos slots/ficha TEAM sempre voltados para baixo.
+- A ficha anima apenas quadros dessa mesma direção, sem girar o Pokémon.
+- Paleta TYPE_COLOR original dos 18 tipos; insígnias /assets/types originais.
+- Anel, insígnia, selos e marca d'água usam o tipo primário real do indivíduo.
+- Pedra (ROCK) e Terra (GROUND) são tipos distintos. Larvitar e Geodude têm
+  ROCK como primário e GROUND como secundário no catálogo atual; por isso
+  seus anéis usam o bege de Pedra e o segundo selo usa o tom terroso de Terra.
+- Janela TEAM de 533x620px, fundo e borda arredondados, seis slots com Pokébola,
+  indicador de líder e marca de inicial, caixa de retrato de 124x124px,
+  nome/power/selos, ação de invocação e barras de HP/EXP/atributos coloridos.
+- A escala do sprite dentro da caixa segue a referência de outfit de 64px,
+  evitando ampliar o corpo do Pokémon até preencher a caixa inteira.
+- Cores de atributo calculadas pela mesma proporção e faixas do cliente.
+- Consulta de slots preserva o líder. O botão de invocação solicita a troca
+  na cidade, e o bloqueio durante a caça continua respeitado.
+- HP/XP atualizam a ficha existente, sem recriar seus controles.
+- Janela arrastável, fechamento por X/Esc/clique fora e rolagem em telas baixas.
+
+CONTEXTO
+A orientação frontal se aplica aos retratos de interface. No mapa, os Pokémon
+continuam virando na direção em que caminham, como parte da movimentação.
+Os dados exibidos são os do projeto. As prévias usam dados sintéticos de QA;
+o pacote não importa Pokémon, níveis, HP ou estoques da conta fotografada.
+O formato de save e os scripts de domínio/combate não foram alterados.
+
+EVOLUÇÃO
+O rodapé mostra o destino e a restrição visual, mas continua desativado.
+A evolução ainda não existe no protótipo. Os níveis exibidos vêm do catálogo
+extraído: Larvitar -> Pupitar no nível 60; Geodude -> Graveler no nível 40.
+O selo de qualidade mostra o rótulo e a cor de qualityInfo do cliente original;
+nenhum IV, qualidade, nível ou atributo individual é alterado pela apresentação.
+
+ASSETS E LIMITES DE FIDELIDADE
+Há insígnias pequenas dos 18 tipos. O material extraído contém as marcas d'água
+maiores apenas de Grass, Rock e Ground. Se faltar a imagem grande de um tipo,
+a interface a omite sem usar o símbolo de outro tipo; os selos e a insígnia
+pequena continuam corretos.
+As fontes e imagens são as já extraídas do original. Fonte Cinzel ExtraBold
+foi instanciada em peso 800 a partir do mesmo arquivo variável fornecido.
+Ainda pode haver diferença de rasterização de fontes, sombras, brilho e
+transições entre CSS e Godot. Não se afirma equivalência pixel a pixel.
+
+VERIFICAÇÃO
+Godot 4.6.3 Linux: dez testes existentes passaram e o novo test_team_fiel.gd
+passou em 98 verificações. TEAM renderizado com OpenGL Compatibility e
+conferido em 1920x960; testes de redimensionamento em quatro resoluções.
+O Windows/Godot 4.7.2 não foi executado neste ambiente.
+Veja referencias_team/VALIDACAO.txt e os recortes renderizados.
+
+REPETIR TESTE ISOLADO
+python validacao_qualidade/executar.py CAMINHO_DO_GODOT --teste test_team_fiel
+O runner copia o projeto e usa perfis PokeIdle_QA_*, separados do progresso.
+Não rode test_*.gd diretamente no perfil do jogador: os testes alteram dados.

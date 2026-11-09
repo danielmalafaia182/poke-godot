@@ -1,0 +1,70 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+Recortes consultados (chão apenas): 74
+Peças bloqueadoras carregadas: 19000
+Formato do mapa: stonegy-map-compact-v1
+Registros totais: 50281
+Primeiro registro: [-52.0, -42.0, 1.0, 415.0, []]
+Piso da caça: 7
+Registros no piso da caça: 9592
+Registros de chão desenhados: 9592
+Total de objetos: 7308
+Objetos desenhados: 7308
+Identificadores sem recorte: []
+Recortes consultados: 429
+Páginas de textura consultadas: 12
+Células existentes: 9592
+Células bloqueadas: 6703
+Células sem bloqueio: 2889
+Navegação original: 757 células livres; passo 500.0ms
+Células acessíveis ao aliado: 754
+Posição inicial da caça: (-3, 3)
+População configurada: 3
+Pontos originais validados: 3
+COMBATE EXPORTADO: /home/agent/.local/share/godot/app_userdata/PokeIdle_QA_03bb7120206641f08ed4cf1f4228e95c/diagnosticos_combate/combate_1794150918_1845400.jsonl
+Recortes consultados (chão apenas): 74
+Peças bloqueadoras carregadas: 19000
+Formato do mapa: stonegy-map-compact-v1
+Registros totais: 50281
+Primeiro registro: [-52.0, -42.0, 1.0, 415.0, []]
+Piso da caça: 7
+Registros no piso da caça: 9592
+Registros de chão desenhados: 9592
+Total de objetos: 7308
+Objetos desenhados: 7308
+Identificadores sem recorte: []
+Recortes consultados: 429
+Páginas de textura consultadas: 12
+Células existentes: 9592
+Células bloqueadas: 6703
+Células sem bloqueio: 2889
+Navegação original: 757 células livres; passo 500.0ms
+Células acessíveis ao aliado: 754
+Posição inicial da caça: (-3, 3)
+População configurada: 3
+Pontos originais validados: 3
+COMBATE EXPORTADO: /home/agent/.local/share/godot/app_userdata/PokeIdle_QA_03bb7120206641f08ed4cf1f4228e95c/diagnosticos_combate/combate_1794150919_3149278.jsonl
+Recortes consultados (chão apenas): 74
+Peças bloqueadoras carregadas: 19000
+Formato do mapa: stonegy-map-compact-v1
+Registros totais: 50281
+Primeiro registro: [-52.0, -42.0, 1.0, 415.0, []]
+Piso da caça: 7
+Registros no piso da caça: 9592
+Registros de chão desenhados: 9592
+Total de objetos: 7308
+Objetos desenhados: 7308
+Identificadores sem recorte: []
+Recortes consultados: 429
+Páginas de textura consultadas: 12
+Células existentes: 9592
+Células bloqueadas: 6703
+Células sem bloqueio: 2889
+Navegação original: 757 células livres; passo 500.0ms
+Células acessíveis ao aliado: 754
+Posição inicial da caça: (-3, 3)
+População configurada: 3
+Pontos originais validados: 3
+COMBATE EXPORTADO: /home/agent/.local/share/godot/app_userdata/PokeIdle_QA_03bb7120206641f08ed4cf1f4228e95c/diagnosticos_combate/combate_1794150923_6726681.jsonl
+CERCO RESULTADO: {"checks":30,"falhas":0,"formula_original_comprovada":false,"loop_normal_atacantes":[0,1,2],"primeira_rodada":[{"alvo":false,"dano":54,"frame":132,"slot":0,"tempo_atacante":2.2},{"alvo":true,"dano":50,"frame":132,"slot":1,"tempo_atacante":2.2},{"alvo":false,"dano":54,"frame":132,"slot":2,"tempo_atacante":2.2}],"schema":1}
+CERCO CONTROLADO: 30 verificações; 0 falhas

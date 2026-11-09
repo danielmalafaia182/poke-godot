@@ -1,0 +1,56 @@
+LABORATÓRIO DE COMBATE — TIME PRONTO
+
+Este é um projeto completo e separado. NÃO extraia sobre o seu jogo.
+
+COMO ABRIR
+1. Extraia este ZIP em uma pasta nova.
+2. No Godot, importe o project.godot dentro de laboratorio_validacao.
+3. Aguarde a importação e pressione F5.
+
+O time de teste já contém Gyarados nível 214 e Exeggutor nível 406,
+com os atributos de referência configurados. Há também um Larvitar inicial
+normal para manter compatibilidade com o formato de salvamento.
+Não é necessário subir níveis, editar Resources ou mudar seu time real.
+
+CONTROLES E CENÁRIOS
+- O projeto inicia na população de 15 Blastoise.
+- Os botões inferiores permitem selecionar dois duelos controlados:
+  Blastoise com 3780 HP ou com 3815 HP.
+- Clique no retrato para trocar de aliado. O cooldown de 5 segundos continua.
+- Cada reinício restaura o time e o estoque de teste.
+- Auto-Potion está ligado, com Hyper Potion e estoque de teste.
+- Auto-Catch está desligado para permitir repetição dos combates.
+
+REGISTRO
+A gravação começa automaticamente em cada cenário.
+Clique em Exportar JSONL para encerrar e salvar o registro atual.
+Clique em Abrir pasta para localizar o arquivo.
+Mudar de cenário exporta o registro ativo e começa outro automaticamente.
+Para retomar uma gravação encerrada, reinicie ou escolha outro cenário.
+
+DADOS SEPARADOS
+O perfil deste laboratório se chama PokeIdle_Lab_Combate_20261108.
+O projeto não utiliza a pasta de salvamento do seu jogo principal.
+Não copie os scripts do laboratório para o jogo principal.
+
+O QUE ESTAMOS MEDINDO
+Os duelos fixam o perfil adversário para comparar dano, primeiro ataque,
+intervalos e HP. A população permite observar ataques independentes de
+vários selvagens. O código de combate vem da base e dos patches recentes.
+Os valores candidatos continuam hipóteses de calibração: estes testes
+não demonstram que a fórmula é idêntica à do jogo original.
+
+VALIDAÇÃO
+Godot 4.6.3, sem interface gráfica:
+- 36 scripts da suíte de regressão aprovados.
+- 43 verificações específicas do laboratório, nenhuma falha.
+- Inicialização pela configuração real do projeto aprovada.
+- Reinício nos três cenários, perfil separado e exportação aprovados.
+O acabamento visual desta barra de laboratório ainda não foi conferido
+em uma janela gráfica.
+
+CORREÇÃO DO PACOTE
+Esta revisão inclui dados/referencias (mapa, loot e referências de encontros),
+ausente no primeiro ZIP. Corrige também os avisos de divisão inteira,
+variável de nome ambíguo e ternários com tipos incompatíveis relatados.
+O carregamento do mapa agora verifica arquivo, JSON e tipo antes de usá-lo.

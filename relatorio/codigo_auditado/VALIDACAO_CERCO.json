@@ -1,0 +1,42 @@
+{
+  "godot": "4.6.3",
+  "execucao_sem_interface_grafica": true,
+  "pacote_extraido_e_testado": true,
+  "scripts_aprovados": 37,
+  "cerco": {
+    "checks": 30,
+    "falhas": 0,
+    "formula_original_comprovada": false,
+    "loop_normal_atacantes": [
+      0,
+      1,
+      2
+    ],
+    "primeira_rodada": [
+      {
+        "alvo": false,
+        "dano": 54,
+        "frame": 132,
+        "slot": 0,
+        "tempo_atacante": 2.2
+      },
+      {
+        "alvo": true,
+        "dano": 47,
+        "frame": 132,
+        "slot": 1,
+        "tempo_atacante": 2.2
+      },
+      {
+        "alvo": false,
+        "dano": 51,
+        "frame": 132,
+        "slot": 2,
+        "tempo_atacante": 2.2
+      }
+    ],
+    "schema": 1
+  },
+  "combate_principal_alterado": false,
+  "limite": "Valida o comportamento local; não comprova a fidelidade das regras ao original."
+}

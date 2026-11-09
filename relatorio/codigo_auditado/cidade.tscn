@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://dlin33mnayurm"]
+
+[ext_resource type="Script" uid="uid://cop0wh7r3em" path="res://cidade.gd" id="1_om6oj"]
+[ext_resource type="PackedScene" uid="uid://cc0vblgv0abb5" path="res://mapa_mundi.tscn" id="2_ntijq"]
+
+[node name="Cidade" type="Control" unique_id=1474174375]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_om6oj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1995085630]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 76.0
+offset_right = 220.0
+offset_bottom = 150.0
+
+[node name="Titulo" type="Label" parent="VBoxContainer" unique_id=1415066205]
+layout_mode = 2
+text = "CERULEAN"
+
+[node name="ResumoDepot" type="Label" parent="VBoxContainer" unique_id=1176772044]
+layout_mode = 2
+
+[node name="BotaoCacar" type="Button" parent="VBoxContainer" unique_id=1029145812]
+layout_mode = 2
+text = "Caçar"
+
+[node name="Interface" type="CanvasLayer" parent="." unique_id=1518260761]
+
+[node name="MapaMundi" parent="Interface" unique_id=619239966 instance=ExtResource("2_ntijq")]
+visible = false
+
+[connection signal="pressed" from="VBoxContainer/BotaoCacar" to="." method="_on_botao_cacar_pressed"]

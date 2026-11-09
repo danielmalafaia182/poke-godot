@@ -1,0 +1,51 @@
+[gd_scene format=3 uid="uid://cbghs71kh2h0q"]
+
+[ext_resource type="Script" uid="uid://bvp3tag4mftyo" path="res://caca.gd" id="1_h56ib"]
+[ext_resource type="Texture2D" uid="uid://bp7sguq5401pv" path="res://assets/pokemon/geodude/outfits-male-196-00-bfa20f0b6fde.webp" id="2_cr7yr"]
+[ext_resource type="Resource" uid="uid://b6nhj80r3usxn" path="res://dados/pokemons/larvitar_inicial.tres" id="2_y2of5"]
+[ext_resource type="Script" uid="uid://b8exh8jei4va3" path="res://animacao_larvitar.gd" id="3_vvkog"]
+[ext_resource type="PackedScene" uid="uid://b5m6tlm21buja" path="res://cenario_caca.tscn" id="3_y2of5"]
+[ext_resource type="Texture2D" uid="uid://d2044jqr7gqr7" path="res://assets/pokemon/larvitar/outfits-male-400-00-9bea9479fb83.webp" id="4_cr7yr"]
+
+[node name="Caca" type="Node2D" unique_id=660687211]
+script = ExtResource("1_h56ib")
+spritesheet_geodude = ExtResource("2_cr7yr")
+intervalo_respawn = 10.0
+pokemon_aliado = ExtResource("2_y2of5")
+
+[node name="ImagemAliado" type="Sprite2D" parent="." unique_id=1045377002]
+texture_filter = 1
+position = Vector2(400, 320)
+script = ExtResource("3_vvkog")
+spritesheet = ExtResource("4_cr7yr")
+
+[node name="Camera" type="Camera2D" parent="ImagemAliado" unique_id=844768926]
+position_smoothing_enabled = true
+
+[node name="ImagemSelvagem" type="Sprite2D" parent="." unique_id=206618342]
+texture_filter = 1
+position = Vector2(700, 450)
+
+[node name="Interface" type="CanvasLayer" parent="." unique_id=2129818783]
+
+[node name="Titulo" type="Label" parent="Interface" unique_id=6018639]
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 60.0
+offset_bottom = 43.0
+
+[node name="BotaoVoltarCidade" type="Button" parent="Interface" unique_id=1560582455]
+offset_left = 20.0
+offset_top = 110.0
+offset_right = 144.0
+offset_bottom = 141.0
+text = "Voltar à cidade"
+
+[node name="TimerCombate" type="Timer" parent="." unique_id=1040382329]
+
+[node name="TimerRespawn" type="Timer" parent="." unique_id=1919360117]
+wait_time = 2.0
+one_shot = true
+
+[node name="CenarioCaca" parent="." unique_id=750756084 instance=ExtResource("3_y2of5")]
+z_index = -10

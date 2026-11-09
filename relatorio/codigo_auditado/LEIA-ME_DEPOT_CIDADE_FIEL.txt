@@ -1,0 +1,63 @@
+DEPOT E INTERAÇÕES DA CIDADE — atualização sobre team_frontal_tipos_fiel.zip
+
+INSTALAÇÃO
+1. Pare o jogo, feche o Godot e faça uma cópia do projeto atual.
+2. Extraia este ZIP na pasta que contém project.godot.
+3. Mescle assets e validacao_qualidade; substitua cidade.gd, painel_depot.gd e o executor de testes.
+4. Adicione os cinco scripts novos: fonte_mundo.gd, placa_interacao.gd,
+   cartao_pokemon_depot.gd, ficha_pokemon_depot.gd e test_depot_cidade_fiel.gd.
+5. Preserve todos os .gd.uid existentes. Abra o Godot e aguarde a importação.
+6. Execute F5. Não é necessário criar nós ou conectar sinais.
+
+Este pacote depende da última atualização de TEAM, tipos e sprites frontais.
+Não contém project.godot, cenas substitutas, saves ou configuração de estoque.
+
+CIDADE
+Nurse Joy/Talk e Depot/Open Depot usam nomes bitmap do cliente extraído,
+contorno escuro, cor dourada e botões compactos com gradiente dourado.
+A âncora da imagem da Nurse Joy foi corrigida mantendo a célula original (-3,-10).
+O deslocamento horizontal indevido de 16 px foi removido; a âncora vertical
+reproduz a fórmula do cliente (11,52 px de compensação inferior).
+
+As duas placas ficam sempre visíveis no mapa quando não há modal aberto,
+independentemente da distância. A câmera continua determinando o que cabe na tela.
+Cliques abrem a interação de qualquer ponto desta cidade, com o treinador parado.
+Movimento continua bloqueado durante os modais. Não há nova tecla de interação.
+
+No Inspector da cidade, alcance_interacao_cidade = 0 significa alcance ilimitado.
+Um valor positivo limita a interação em pixels do mundo; a placa permanece visível.
+O limite também é revalidado na confirmação da cura.
+
+Somente os serviços já implementados de Nurse Joy e Depot foram modificados.
+Não foram criados botões sem ação para NPCs que ainda não têm serviço implementado.
+
+DEPOT / POKÉMON
+Janela compacta 600 x 784 px em desktop, redimensionada em telas menores.
+TEAM/BOX lado a lado; cartões com retrato frontal, nome, nível, IV total,
+qualidade colorida e seta de transferência. Líder ativo é destacado corretamente.
+O inicial continua protegido pelas regras existentes.
+
+Passe o mouse sobre um cartão para ver tipos, posição TEAM/BOX, nível,
+qualidade, total dos seis IVs, atributos calculados e Power.
+A linha adicional de IVs individuais segue HP, Atk, Def, SpA, SpD, Vel.
+Os atributos calculados NÃO são os IVs; Power também não é HP de combate.
+Zeros calculados nas espécies registradas são valores reais da fórmula no nível
+baixo e não placeholders. Para uma espécie sem base registrada, usa-se “—”.
+
+Filtros reais: busca, tipo primário OU secundário, intervalos Lv/IV/Q e qualidade.
+Ordens adicionais: Power e Quality decrescentes.
+Família, Shiny e Held mostram “—”; filtros sem dados ficam desativados.
+Não há fórmulas inventadas para esses campos. Veja PRIORIDADES_DEPOT.md.
+As abas sem implementação permanecem desativadas, como antes.
+
+VALIDAÇÃO
+Godot 4.6.3 Linux: 11 testes existentes aprovados antes do acabamento final;
+novo teste de integração com 25 verificações aprovado após o acabamento.
+Inclui alcance, abertura, tooltip, filtros, transferência por clique, conservação
+de indivíduos/IVs/estoque e encaixe em 1920x1080, 1152x648 e 800x450.
+Renderização nativa OpenGL conferida em 1920x960; prévias em previas_depot_cidade.
+A prévia usa indivíduos sintéticos exclusivos de QA, não incluídos no save.
+Godot 4.7.2 não foi executado neste ambiente.
+
+A aproximação visual usa assets/fontes existentes e o cliente extraído como
+referência; ícones e metadados não confirmados continuam explicitamente pendentes.

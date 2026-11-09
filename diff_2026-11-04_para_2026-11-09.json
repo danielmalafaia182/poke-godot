@@ -1,0 +1,48 @@
+{
+ "novas": [],
+ "removidas": [],
+ "alteradas": {
+  "225": [
+   "golpes + Drill Peck: ('FLYING', 'PHYSICAL', 80, 12000, 30)",
+   "golpes + Powder Snow: ('ICE', 'SPECIAL', 40, 15000, 1)"
+  ],
+  "273": [
+   "golpes + Razor Leaf: ('GRASS', 'PHYSICAL', 55, 10000, 1)"
+  ],
+  "288": [
+   "~ evolvesToId: 0 → 289",
+   "~ evolveLevel: 0 → 600"
+  ],
+  "289": [
+   "loot ~ Power Banana: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "349": [
+   "golpes + Brine: ('WATER', 'SPECIAL', 65, 20000, 33)"
+  ],
+  "350": [
+   "loot ~ Prism Scale: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "376": [
+   "loot ~ Metal Coat: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "464": [
+   "loot ~ Protector: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "465": [
+   "loot ~ Gaia Tentacles: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "466": [
+   "loot ~ Electirizer: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "467": [
+   "loot ~ Magmarizer: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "477": [
+   "loot ~ Reaper Cloth: (1.33, 1, 1) → (1000, 1, 1)"
+  ],
+  "13273": [
+   "golpes + Razor Leaf: ('GRASS', 'PHYSICAL', 55, 10000, 1)"
+  ]
+ },
+ "itens": {}
+}

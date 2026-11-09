@@ -1,0 +1,35 @@
+CERCO CONTROLADO — ATUALIZAÇÃO DO LABORATÓRIO
+
+INSTALAÇÃO
+1. Pare a execução do laboratório.
+2. Extraia este ZIP DENTRO da pasta laboratorio_validacao, ao lado do project.godot.
+3. Substitua os arquivos solicitados, aguarde a importação e execute F5.
+Aplique ao laboratório separado, não ao seu projeto principal.
+
+O laboratório agora inicia em Cerco · 3 juntos.
+Os três Blastoise nascem em posições distintas, livres e em alcance do aliado.
+O passeio está desligado apenas neste cenário. Cada um tem 3780 HP e perfil
+separado; o respawn preserva seu perfil e recebe uma agenda nova.
+Não há multiplicação artificial do HP nem alteração nas fórmulas de dano.
+
+Trocar alvo muda o alvo do aliado sem reiniciar as agendas.
+Duelo · 3780 HP, Duelo · 3815 HP e População · 15 continuam disponíveis.
+Exportar JSONL e Abrir pasta funcionam como antes; gravação começa sozinha.
+O time de referência e a pasta de dados separada permanecem os mesmos.
+
+VERIFICAÇÕES
+O teste usa o processamento de combate existente. Verifica três golpes
+no mesmo frame, ataques dos dois não selecionados, troca de alvo, ausência
+de golpes duplicados, intervalos individuais de 1/2/3s e KO/respawn.
+Os intervalos de 1/2/3s são aplicados somente dentro do teste automatizado;
+na cena jogável os três usam o intervalo atual de 2s.
+Também verifica o loop normal da cena sem chamar ataques manualmente.
+
+Não é necessário fazer nova coleta para provar estes comportamentos.
+O resultado não comprova as fórmulas nem a fidelidade ao original.
+Validação sem janela gráfica, Godot 4.6.3.
+
+Resultado final: 37 scripts aprovados; 30 verificações do cerco, 0 falhas.
+Os três primeiros golpes ocorreram no frame 132 (relógio de combate 2,2s).
+Dois desses golpes vieram de adversários que não eram o alvo.
+O código do combate principal não precisou ser alterado.

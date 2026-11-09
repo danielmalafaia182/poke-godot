@@ -1,0 +1,1 @@
+Abra RELATORIO_COMBATE.html no navegador. Este pacote é um relatório, não uma atualização para instalar no jogo. CSV e JSON detalham critérios e resultados. codigo_auditado contém scripts para rastreabilidade, sem assets. Não substitua seu projeto com estes arquivos. Casos de aceitação não são todos testes executados.

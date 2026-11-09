@@ -1,0 +1,30 @@
+VALIDAÇÃO — SALVAMENTO LOCAL V1
+
+Ambiente: Godot 4.6.1 oficial, Linux, user:// isolado por caso de teste.
+Nenhum save de teste é distribuído neste pacote.
+
+PASSOU
+- Novo jogo cria um único inicial e os arquivos principal/cópia.
+- Capturas e consumo geram autosave sem chamada manual do jogador.
+- Em novo processo, todos os atributos/IDs, estoques, configurações e posição coincidem com o estado anterior.
+- Indivíduos com espécie e atributos iguais mantêm IDs distintos.
+- Releitura substitui coleções em vez de duplicá-las.
+- Inicial restaurado permanece protegido e é a instância usada pela caça.
+- Célula e direção restauradas na cidade; posição fora do mapa retorna a célula livre.
+- Principal corrompido recupera cópia validada e permite reparar o principal.
+- Principal ausente recupera cópia.
+- Temporário válido recupera uma primeira gravação interrompida.
+- Principal e cópia inválidos bloqueiam gravação; bytes dos arquivos permanecem iguais.
+- Versão futura não é sobrescrita, mesmo com backup de versão atual disponível.
+- Falha de escrita é informada e preserva principal anterior.
+- Falha ao promover o temporário é detectada e mantém cópia válida.
+- Fechamento normal confirma mudanças feitas antes do próximo frame.
+- Captura executada pela caça real salva coleção e consumo de bola juntos.
+- Checksum válido não permite IDs duplicados, IV fracionado, estoque negativo, caminho de script no lugar de espécie, ausência do inicial ou configuração com tipo incorreto.
+- Navegação real da cidade: percurso de ida/volta até o depot, ocultação do telhado, bloqueio do balcão, painéis e configurações sem regressão.
+- Conferência visual do aviso global de erro, sem depender da cena estar na cidade.
+
+NÃO EXECUTADO
+- Godot 4.7.2 em Windows.
+- Corte físico de energia ou falhas reais de hardware.
+- Sessões online, migração de versões futuras e alternância de líder de combate.

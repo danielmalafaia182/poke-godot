@@ -1,0 +1,197 @@
+{
+  "base": "calibracao_combate_v2.zip",
+  "arquivos": [
+    {
+      "caminho": "LEIA-ME_CORRECAO_HUNT.txt",
+      "sha256": "e5fb0ce7d2616cb0709d75f9acf74d932fb74fe68b3e7693ef9013655c12a986"
+    },
+    {
+      "caminho": "animacao_larvitar.gd",
+      "sha256": "1bd8b2b96998284ee00dad0c593148b06f1ecfcb29302b4aa9afd624383d2bf0"
+    },
+    {
+      "caminho": "caca_base.gd",
+      "sha256": "ed9b345c303c4a0b3f85ddcd26affeae8a49e9cc204a42c8d88ed2cc1b455b6f"
+    },
+    {
+      "caminho": "encontro_selvagem.gd",
+      "sha256": "886128161add8ecfa95c82d9cee59e686c71bf1ffbd0ec7586fea2d92af9ba9d"
+    },
+    {
+      "caminho": "estilo_combate.gd",
+      "sha256": "7c44592f0bebbd69569b3884a99eda208bc2cd42951fa21e60270dabdb464c8e"
+    },
+    {
+      "caminho": "hud_caca.gd",
+      "sha256": "e7d8a49fe7f4b6e65139dc04ec2e764be0fbaf8e97b2eeea3593ae5b138f7d5c"
+    },
+    {
+      "caminho": "indicador_selvagem.gd",
+      "sha256": "b56b1ff5fabe1cec448010680febb217723c078f44fa1c5f9969b4e89a895d67"
+    },
+    {
+      "caminho": "painel_my_pokes.gd",
+      "sha256": "27c1eee60e1c21d57a17fd1873a55e9bb2eb96a1c440b5fde8f9a50033e87ffb"
+    },
+    {
+      "caminho": "registro_combate.gd",
+      "sha256": "77065ac6f2506aaf78543872e5b6fe42281028881096a5510808e45a19265e1f"
+    },
+    {
+      "caminho": "test_troca_hunt_barras.gd",
+      "sha256": "ad0e0fb9e55ea8e970b745b87e369217937e955ccf8365f0600aaaacf50ef27a"
+    },
+    {
+      "caminho": "validacao_qualidade/executar.py",
+      "sha256": "d08d3019828b1ad4e0adf5aca296f6d0ccb1a1306f060ca60ad22bebfc16f0ba"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_ajustes_hunt.txt",
+      "sha256": "b8b4402f82a11f0fe6ac86cfaa7b5ac9cb5645568cb630a45fdbd303c0269d05"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_ataques_independentes.txt",
+      "sha256": "8a581fd8b4984629e33e927a0b3ef6a1c27a5bf0220bf42b21942eea3fb11d9c"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_calibracao_combate.txt",
+      "sha256": "8a20d7bf522b5920e4c328cae9fa405e733833f884b966ed667c01a580b90ccb"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_cerco_acesso.txt",
+      "sha256": "72541ccaa2aa6d002fb5f06a3763b8690f30f83c3f30cd8f96847eec3f4d332b"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_cidade_qualidade.txt",
+      "sha256": "b7ac9be7dee3e18f89e290e8f40a0815a14b20c2e583b26b249c3960827b9759"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_combate_rapido.txt",
+      "sha256": "11f800176cd8044b51fbe32869c9e5e54b65dcb2c0a80c41472addcdc48bdb52"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_compatibilidade_save.txt",
+      "sha256": "0917bbd77675b7f648fec082ae628cad2e1330e22c42ddd488b8b631877b4c49"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_compatibilidade_save_fixture.txt",
+      "sha256": "9a64dd4aa91a884c3d38b15fcf36c7c198a5da1d5322466e3fde7acb0e007326"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_configuracao_hunts.txt",
+      "sha256": "25c329da5f8391d88b84f4e2e36e943d14e8f59f0c7c743838e2a539b03988a8"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_consistencia.txt",
+      "sha256": "423578fb574e3d5f22ed8c5547862512699e30a0ede32411b91af328842ecf9a"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_dano_atributos.txt",
+      "sha256": "d36cc86eaff323ee8850fa68222b90a294707d5f740410626df513769b0df048"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_depot_cidade_fiel.txt",
+      "sha256": "0b66c06a25243d234ab72b42fe78a7f3cf392e54f43160bf853cf6fb4d5d7d01"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_dificuldade_hunts.txt",
+      "sha256": "eba9b7cd9ca6342f3c61ab0b580a6121769fbea9107ac19108f051a28e4f8176"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_evolucao_pokemon.txt",
+      "sha256": "c9b285ac8dfea051b3c0c4bb66348f6619f7672ffe5a22e9bdd0eea313a0ce24"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_golpes_combate.txt",
+      "sha256": "194265c2cd9c90f791c26c7efe8830d4ea12a471654a08b5ffa15d5bda821bf9"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_hunt_generica.txt",
+      "sha256": "b5e949d784234553ec1e49ca34bf7472e39301169357ff690ad592be3e3cf079"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_hunt_larvitar.txt",
+      "sha256": "9e71ac1cbc4031266cb0652d2963896341a0fb7a12f916ca2433d8c39c287f2c"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_hunt_referencias.txt",
+      "sha256": "404b0238f925be91c7a253b65cf2eac5945498c5161e087e8b23035f0e664a9f"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_importacao_especies.txt",
+      "sha256": "a0e2e6420b171bf435206d6c53862b0e6fb6273824f9b284f3fb4c17f2d97b22"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_laboratorio_combate.txt",
+      "sha256": "199b9abf68579fc2c42057dfd449188d4e15c75adc3e2b99ed787fb8cec2f923"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_loot_combate_fiel.txt",
+      "sha256": "60972e3fc40167e6e86c3cd30d73b773a2c9c09400925608dea9899983f2d1cf"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_loot_hunts.txt",
+      "sha256": "10f078dd5f7db128db989ef0afc30d8d10a23650bc15f418380f4778fcbbf7e7"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_mapa_entre_hunts.txt",
+      "sha256": "0833e13b0ae5f0b57ee5433dd17b7f6534cb59d3fb5611895e0d00ec39cdac2b"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_mapa_fiel.txt",
+      "sha256": "805bd90826642882c98167ebaebe68761ef3b69714c5ebdc72264836382024da"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_melhor_golpe.txt",
+      "sha256": "43f86211f457146480e7183ed67afa369f9e3e6a811c96dfce2754dc49236170"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_movimento_selvagens.txt",
+      "sha256": "fa2689d0d83d1f8d1520bb675c35c5050d17f2364ec62b33c2666b1b33afbeba"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_progressao_treinador.txt",
+      "sha256": "f887f1d50217ceab3852c1439210ec9a7822b0c9de28e3db8ee1c724be452b1d"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_qualidade.txt",
+      "sha256": "bcbbd08812c5571bacf11289407be0fc339636b51dc8cec31143c63bd1a83c02"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_registro_combate.txt",
+      "sha256": "7780bde897d2f56e4233069cc3195ee9eaa3ef2bfff4dd6f2fe806519c34a097"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_revisao.txt",
+      "sha256": "60e5c952ac7dd3e363a9a008f35cb7d87e2c6b6ff140e2c0a84f6ea843c46021"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_team_fiel.txt",
+      "sha256": "a502ddc1d76b6f22896c251dbd1666cc0ec45c1b205711e0a1cf171d97edf520"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_togepi_last_resort.txt",
+      "sha256": "078901d8a1f6d79d18b5652b16a99c3710b77d2bdacc27fa65c768dfce9214ff"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_troca_hunt_barras.txt",
+      "sha256": "b9586587d802df1837e861fb38832a69c6e39f719faf3d9f88536d76d065eff9"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/01_test_ui_fiel.txt",
+      "sha256": "5689e89d440e9fd8ce5465a4b10ffda7be2911bdbb758e533f90811700ff14d8"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/RESUMO.md",
+      "sha256": "41e51607e86881ec501417d5e94f81e89de341964433b64e85a4088d8c562ff2"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/importacao.txt",
+      "sha256": "7a51a28e67fe4847e6471ca78640d1ec26997f5dbf1a72d0027389d2ff3c4d1f"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_troca_barras/resumo.json",
+      "sha256": "c12a3c73c6f264d0f35148e3cec05ea95a9887b821f31ace02c640388de41dc1"
+    }
+  ]
+}

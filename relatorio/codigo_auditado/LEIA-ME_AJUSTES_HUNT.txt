@@ -1,0 +1,61 @@
+AJUSTES DA HUNT — aplicar após combate_hp_xp_loot_fiel.zip
+
+Pare o jogo, feche o Godot e faça backup. Extraia este ZIP na pasta que contém
+project.godot, substituindo os scripts e mesclando as pastas. Preserve os .gd.uid.
+Não precisa criar nós ou conectar sinais. Não contém saves nem muda estoques.
+
+PAINEL DE DERROTA
+Um painel por vez. Novos abates enquanto ele aparece ou desaparece não o
+atualizam, não prolongam sua duração e não entram em fila. Após desaparecer
+completamente, somente um NOVO abate pode abrir outro painel.
+Máximo de 30 painéis por instância de hunt. Entrar novamente reinicia o limite.
+A regra limita apenas a apresentação: XP, loot e Auto-Catch continuam funcionando.
+O painel dura 4,5 segundos e desaparece em 0,22 s; primeiro clique abre os detalhes,
+segundo clique inicia o desaparecimento. Não agrupa mais abates.
+
+GEODUDE
+O asset original tem pixels brancos opacos nos olhos. Reduzir o recorte de 35px
+para um ícone por vizinho mais próximo descartava parte desses pixels. O retrato
+do resultado agora usa redução filtrada em cache, preservando sua contribuição,
+e área útil de 28px. Não altera cores, alpha ou spritesheets do Pokémon no mundo.
+
+NOMES E VIDA
+Fonte bitmap original mantida nos Pokémon e aplicada também ao treinador.
+Barras de 32x4, verde #00c000 com contorno preto de 1px. Não alteram HP.
+
+CAPTURE
+Painel de 262px à direita (12px de margem), com o topo 250px acima da base
+da área do jogo, próximo do enquadramento do print. A altura acompanha o conteúdo.
+Contém somente ícone, título Capture, contador de wilds e chips das bolas possuídas.
+Bolas têm sprite recortado pela área visível, números com separador de milhar
+e símbolo infinito para uma bola infinita possuída. Mais tipos quebram em linhas.
+Não mostra Shop, mensagens de sucesso/falha ou texto de fila vazia.
+
+“wilds” significa capturas BEM-SUCEDIDAS nesta entrada, como solicitado; não é
+uma fila de Pokémon aguardando captura. Falhas não incrementam. Evento de mesma
+captura não conta duas vezes. Voltar à cidade e entrar de novo, inclusive na
+mesma hunt, cria nova contagem zerada. Estoques continuam persistentes.
+
+COMBATE LIMPO
+Painel de depuração dos golpes e cooldowns oculto. Mensagem flutuante de captura
+oculta, preservando a animação da bola. O nome do golpe aparece acima do número
+do dano, sem o sufixo do tipo e sem prefixo “-”. O grupo sobe 28px e desaparece
+em 0,95s. O sinal legado não produz um segundo texto do mesmo ataque.
+
+A cor é calculada usando tipo do golpe e os dois tipos do defensor:
+maior que 1 = amarelo #ffe65a; igual a 1 = branco; menor que 1 = vermelho #ff6666.
+A mesma regra vale para ataques do aliado e do selvagem. A fórmula de dano
+continua provisória; esta atualização muda sua apresentação, não o balanceamento.
+
+ANIMAÇÕES AINDA PARCIAIS
+Impactos NORMAL e DARK usam os spritesheets já disponíveis. Outros tipos não
+recebem uma animação de tipo errado: mostram nome e dano. Seed Bomb/efeito de
+planta do vídeo ainda precisa ter asset, recortes e temporização identificados.
+Veja PENDENCIAS_HUNT.md. Bulbasaur não foi adicionado ao catálogo de espécies.
+
+As prévias são renderizações do jogo em perfil de QA. A imagem de texto usa um
+evento sintético Seed Bomb/2103 apenas para conferir layout/cor, não demonstra
+animação de planta ou dano real do protótipo. Estoques de QA não são instalados.
+
+Godot usado na validação: 4.6.3 Linux. A versão 4.7.2 não foi executada aqui.
+Evidências e instruções do executor acompanham o pacote.
