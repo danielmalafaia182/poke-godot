@@ -193,7 +193,7 @@ def main():
         },
         "mensagens": mensagens,
     }
-    with open(a.saida, "w", encoding="utf-8") as f:
+    with open(a.saida, "w", encoding="utf-8", newline="\n") as f:
         json.dump(saida, f, ensure_ascii=False, indent=1)
     print(json.dumps(saida["totais"], ensure_ascii=False))
 

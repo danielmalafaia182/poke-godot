@@ -17,16 +17,17 @@
   "poke_ws_todas(2)(20.jsonl",
   "poke_ws_todas(2).jsonl",
   "poke_ws_todas(3).jsonl",
+  "rhydon-1h.jsonl",
   "geodude-3.jsonl",
   "loogs.txt",
   "logs rhyhorn.txt",
   "logs hitmonlee.txt"
  ],
  "totais": {
-  "tipos": 139,
+  "tipos": 140,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 28
+  "vistos_em_logs": 34
  },
  "mensagens": {
   "addon-used": {
@@ -85,13 +86,14 @@
   "auto-heal": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 214,
+    "vezes": 414,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
-     "logs rhyhorn.txt"
+     "logs rhyhorn.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "heal": {
@@ -143,14 +145,15 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 4703,
+    "vezes": 12060,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {}
    }
@@ -160,14 +163,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 273,
+    "vezes": 883,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "catalog": {
@@ -296,10 +300,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 2,
+    "vezes": 4,
     "fontes": [
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {}
    }
@@ -314,10 +319,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 3,
+    "vezes": 5,
     "fontes": [
      "geodude-10min.jsonl",
-     "gravacoes_unicas_2026-11-09.jsonl"
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "boosts": {
@@ -359,12 +365,13 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 53,
+    "vezes": 83,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
-     "gravacoes_unicas_2026-11-09.jsonl"
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {}
    }
@@ -403,14 +410,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 273,
+    "vezes": 881,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "auto": {
@@ -594,11 +602,12 @@
     ]
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 4,
     "fontes": [
      "geodude-10min.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "resume": {
@@ -626,13 +635,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 56,
+    "vezes": 86,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "events": {
@@ -702,7 +712,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 4120,
+    "vezes": 10733,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
@@ -710,7 +720,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs hitmonlee.txt",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "allMobsDead": {
@@ -1032,7 +1043,8 @@
      },
      "targetSlot": {
       "tipos": [
-       "int"
+       "int",
+       "null"
       ],
       "exemplo": 10
      },
@@ -1102,12 +1114,13 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 44,
+    "vezes": 71,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
-     "gravacoes_unicas_2026-11-09.jsonl"
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {}
    }
@@ -1117,14 +1130,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 47,
+    "vezes": 75,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "bike": {
@@ -1217,14 +1231,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 264,
+    "vezes": 872,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "col": {
@@ -1551,6 +1566,138 @@
   "gym-global": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 3,
+    "fontes": [
+     "rhydon-1h.jsonl"
+    ],
+    "esquema": {
+     "attacker": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "look": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "body": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 114
+         },
+         "feet": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 114
+         },
+         "head": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 114
+         },
+         "legs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 114
+         },
+         "lookType": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 642
+         }
+        }
+       },
+       "name": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "BDS - Lokiivlr"
+       }
+      }
+     },
+     "city": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "spikemuth"
+     },
+     "gymId": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "spikemuth"
+     },
+     "gymType": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "DARK"
+     },
+     "previous": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "isNpc": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "look": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "body": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "feet": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "head": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "legs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 0
+         },
+         "lookType": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 21002
+         }
+        }
+       },
+       "name": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "Piers"
+       }
+      }
+     }
+    }
    }
   },
   "heal-used": {
@@ -1588,14 +1735,45 @@
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 3,
+    "fontes": [
+     "rhydon-1h.jsonl"
+    ],
+    "esquema": {}
+   }
+  },
+  "invasion-announce": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "rhydon-1h.jsonl"
+    ],
+    "esquema": {
+     "text": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "ATENÇÃO A CIDADE DE CERULEAN ESTÁ SENDO INVADIDA POR MEMBROS"
+     },
+     "until": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794243629008
+     }
+    }
    }
   },
   "invasion-energy": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 68,
+    "vezes": 108,
     "fontes": [
-     "gravacoes_unicas_2026-11-09.jsonl"
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "endsAt": {
@@ -1640,9 +1818,10 @@
   "invasion-energy-get": {
    "no_cliente": {},
    "visto_out": {
-    "vezes": 68,
+    "vezes": 108,
     "fontes": [
-     "gravacoes_unicas_2026-11-09.jsonl"
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {}
    }
@@ -1650,10 +1829,11 @@
   "invasion-state": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 141,
+    "vezes": 262,
     "fontes": [
      "geodude-10min.jsonl",
-     "gravacoes_unicas_2026-11-09.jsonl"
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "endsAt": {
@@ -1688,14 +1868,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 485,
+    "vezes": 1295,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "items": {
@@ -1754,6 +1935,32 @@
   "mail-badge": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "rhydon-1h.jsonl"
+    ],
+    "esquema": {
+     "count": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 5
+     },
+     "gifts": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 5
+     },
+     "unread": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     }
+    }
    }
   },
   "move": {
@@ -1779,14 +1986,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 46,
+    "vezes": 74,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "list": {
@@ -1806,10 +2014,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 2,
+    "vezes": 3,
     "fontes": [
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {}
    }
@@ -1817,13 +2026,14 @@
   "poke-delta": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 73,
+    "vezes": 83,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "poke": {
@@ -2070,14 +2280,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 264,
+    "vezes": 872,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "id": {
@@ -2122,6 +2333,50 @@
   "pokecard-pack-opened": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 2,
+    "fontes": [
+     "rhydon-1h.jsonl"
+    ],
+    "esquema": {
+     "cardId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 159
+     },
+     "count": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "isNew": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "packsLeft": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "qty": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "total": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 430
+     }
+    }
    }
   },
   "pokes": {
@@ -2133,9 +2388,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2,
+    "vezes": 3,
     "fontes": [
-     "geodude-10min.jsonl"
+     "geodude-10min.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "list": {
@@ -2358,9 +2614,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 2,
+    "vezes": 3,
     "fontes": [
-     "geodude-10min.jsonl"
+     "geodude-10min.jsonl",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {}
    }
@@ -2726,6 +2983,13 @@
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 2,
+    "fontes": [
+     "rhydon-1h.jsonl"
+    ],
+    "esquema": {}
    }
   },
   "use-random-held": {
@@ -2753,14 +3017,15 @@
     ]
    },
    "visto_out": {
-    "vezes": 47,
+    "vezes": 75,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "hc": {
@@ -2781,13 +3046,14 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 55,
+    "vezes": 85,
     "fontes": [
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
-     "loogs.txt"
+     "loogs.txt",
+     "rhydon-1h.jsonl"
     ],
     "esquema": {
      "until": {
