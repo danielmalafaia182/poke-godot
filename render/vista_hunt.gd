@@ -29,6 +29,8 @@ var nomes_especie: Dictionary = {}     # speciesId -> nome
 var looktype_especie: Dictionary = {}  # speciesId -> looktype
 var nome_treinador := "Treinador"
 var looktype_treinador := 5759
+# E: o save não guarda as cores do outfit do treinador; padrão = as do personagem do poke-local (head 94, body 95)
+var cores_treinador := {"head": 94, "body": 95, "legs": 0, "feet": 0}
 var _ents: Dictionary = {}             # chave -> {rid, looktype}
 var _cadaveres: Dictionary = {}        # "row,col" -> rid
 var _corpses_assets: Dictionary = {}
@@ -155,7 +157,7 @@ func _entidade(chave: String, looktype: int, vista: Dictionary, ox: float, oy: f
 	RenderingServer.canvas_item_set_visible(rid, visivel)
 	if not visivel:
 		return
-	var o: Dictionary = outfits.obter(looktype)
+	var o: Dictionary = outfits.obter(looktype, cores_treinador if chave == "treinador" else {})
 	if o.is_empty():
 		return
 	var dir := int(Outfits.DIRECAO.get(String(vista["dir"]), 3))

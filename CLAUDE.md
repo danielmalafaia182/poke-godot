@@ -79,7 +79,7 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 - Captura manual e efeito de Speed na cadência: adiados.
 - Fase 2: a hunt jogável é uma cena nova (`caca_sim.tscn`) em vez de reescrever `caca.gd`/`caca_base.gd` por dentro: ~30 testes antigos
   dependem da lógica interna da cena antiga. O mapa-múndi decide qual abrir (simulada se houver mapa e hunt-config no snapshot).
-- Outfits (sprites de todos os Pokémon) ficaram fora do snapshot por ora; usar um sprite só no offline é aceitável.
+- Outfits: desde 09/11 o snapshot tem os 846 do índice (545 categorias); o substituto (200) só entra se faltar algum.
 
 ## Fatos confirmados (fonte A, salvo indicação)
 
@@ -349,3 +349,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   33,7). Limites: HUD mínima (time, Capture, cartões, voltar) — os painéis da cena antiga (hud_caca, Auto-Helper na hunt)
   não foram ligados; filtro de nomes e bola shiny do Auto-Catch não repassados; cadáver só das espécies vistas nas
   gravações (Rhydon, Kangaskhan); sprites substitutos (E) até baixarmos os outfits.
+- 09/11/2026 — 2b.1 (sprites reais): `render/outfits.gd` lê primeiro os outfits do snapshot (545 categorias, 846 no índice)
+  e porta a colorização do treinador (colorizeFrame/getOutfitColor, C): máscara amarela/vermelha/verde/azul = cabeça/
+  corpo/pernas/pés, cor multiplicada por pixel, paleta de 133 índices. `testes/test_outfits.sh`: paleta igual à do
+  original (Node) em 0..140; treinador 5759 colorido; **0 outfits faltando** entre as 453 espécies das 451 hunts e o
+  time. Cores do treinador: o save não as tem — padrão E = as do personagem do poke-local (head 94, body 95, 0, 0).
+  Não portado: sprite shiny (o field manda `shiny`; a vista ainda usa o outfit normal).
