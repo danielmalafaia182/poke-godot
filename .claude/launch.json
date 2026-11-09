@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ponte-poke-local",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-u", "ferramentas/ponte/ponte_poke_local.py", "--semente", "1"],
+      "port": 8000,
+      "url": "http://127.0.0.1:8000"
+    }
+  ]
+}

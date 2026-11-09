@@ -124,15 +124,30 @@ func agora_ms() -> int:
 func iniciar() -> Array:
 	## Equivale a enter-hunt: devolve field-init e o primeiro field (tick 0).
 	_saida = []
-	var grade: Array = []
-	for linha in mapa.grade:
-		grade.append(linha.duplicate())
-	_emitir({"type": "field-init", "huntKey": hunt_key, "slug": slug, "rows": mapa.rows, "cols": mapa.cols,
-		"minTx": mapa.min_tx, "minTy": mapa.min_ty, "grid": grade, "heroStepMs": int(p.hero_step_ms), "bike": false,
-		"mobStepMs": int(p.mob_step_ms), "trainerStepMs": int(p.trainer_step_ms), "tickMs": int(p.tick_ms)})
+	_emitir(msg_field_init())
 	heroi["alvo"] = _escolher_alvo()  # A: targetSlot nunca é null nos 2009 fields gravados
 	_emitir(_montar_field())
 	return _saida
+
+
+func msg_field_init() -> Dictionary:
+	## field-init desta instância (também serve para retomar: enter-hunt com resume).
+	var grade: Array = []
+	for linha in mapa.grade:
+		grade.append(linha.duplicate())
+	return {"type": "field-init", "huntKey": hunt_key, "slug": slug, "rows": mapa.rows, "cols": mapa.cols,
+		"minTx": mapa.min_tx, "minTy": mapa.min_ty, "grid": grade, "heroStepMs": int(p.hero_step_ms), "bike": false,
+		"mobStepMs": int(p.mob_step_ms), "trainerStepMs": int(p.trainer_step_ms), "tickMs": int(p.tick_ms)}
+
+
+func msg_field_atual() -> Dictionary:
+	## Retrato do estado atual (resposta a field-get), sem os hits acumulados: eles saem no próximo field
+	## regular, para o cliente não desenhar o mesmo dano duas vezes (F: resposta real ao field-get não gravada).
+	var guardados := hits
+	hits = []
+	var f := _montar_field()
+	hits = guardados
+	return f
 
 
 func passo(intencoes: Array = []) -> Array:

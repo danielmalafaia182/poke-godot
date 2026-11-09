@@ -29,6 +29,8 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/analisar_gravacao.py` | Resume gravações: cadência, faixas de dano, XP, loot, capturas |
 | `ferramentas/protocolo/gerar_protocolo.py`, `regenerar.sh` | Gera `dados/protocolo.json` (`regenerar.sh` fixa as fontes: 5 chunks do jogo + todas as gravações) |
 | `ferramentas/gravador/medir_passos.py`, `medir_pocao.py` | Medem nas gravações a duração dos passos (por tick exato) e o gatilho/escolha do Auto-Potion |
+| `ferramentas/gravador/relatorio_individuos.py` | Por indivíduo selvagem: maxHp → stat HP → faixa de IV/Quality → dano previsto × observado (para a fase 3) |
+| `ponte/servidor_sim.gd`, `ferramentas/ponte/ponte_poke_local.py` | Ponte: o cliente original (poke-local) desenha a hunt da simulação. `python ferramentas/ponte/ponte_poke_local.py` e abrir http://127.0.0.1:8000 |
 | `ferramentas/importador/importar_snapshot.py` | Snapshot → `dados/gerados/*.json` (determinístico) |
 | `ferramentas/importador/diff_snapshots.py` | Diferenças entre snapshots |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
@@ -222,3 +224,15 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   contra 6,7 s no real (fase 3: dano/HP). ms/tile do herói (real 754; sim 792–849) e do selvagem (real 1018; sim
   1277–1362): métrica grossa (posição a cada 400 ms) que mistura escolha de caminho (F) com o ritmo já medido; na única
   instância real do Rhydon o selvagem anda em 37% dos intervalos, em todas as gravações em 28% e na sim em 30%.
+- 09/11/2026 — **Critério de pronto da fase 1 cumprido**: o cliente original (poke-local) desenhou por 10 min a hunt do
+  Rhydon gerada pela simulação. `ponte/servidor_sim.gd` (Godot headless, TCP 127.0.0.1:8765, JSON por linha; dá só o
+  relógio real à sim pura) + `ferramentas/ponte/ponte_poke_local.py` (subclasse do Handler do `serve.py`, que fica
+  inalterado; encaminha enter-hunt/leave-hunt/field-get/view; o resto continua nas fixtures). Mapa, atlas 06563563679b,
+  creatures/items, hunt-config e ícones vêm do snapshot. E: sem outfit/imagem local, o Venusaur (22) aparece com o sprite
+  do Rhydon (200) e o retrato com o do Snorlax (143), só na tela. Sessão: 608 s, 0 erro no console e 0 recurso falho
+  (monitor injetado `ferramentas/ponte/monitor_erros.js`), 64 abates, 56 respawns (60 s), 39 curas, loot e captura no
+  cartão; as 1923 mensagens da hunt que o navegador recebeu (gravador injetado) são idênticas, na ordem, às que a sim
+  emitiu. `analisar_gravacao.py` lê a gravação; o validador acusa 1 erro, na mensagem `balls` da fixture do serve.py
+  (sem a bola 2), não da sim. Teste `testes/test_ponte_tcp.py` 11/11. Limites: o painel do time vem de `pokes-get`
+  (fixture: Rhydon Lv 50) e não bate com o time da sim; o poke-local não tem outfits/retratos fora Rhydon/Snorlax;
+  trade-get, restart-state e auto-boss-get respondem "não implementada" (fixture).
