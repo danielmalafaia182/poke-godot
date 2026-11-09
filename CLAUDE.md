@@ -315,3 +315,16 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   Rhydon: 2,6 s para carregar, ~32 mil sprites no ar. `render/interpolacao.gd` porta dT/dI/dM/dL/dS/dk/dy/dC/dE e o relógio
   dc/dm/dh (C); `testes/test_render_interpolacao.sh` compara com o original sobre 1500 fields reais da rhydon-1h:
   388.560 amostras iguais (tol. 1e-5 tile, float32). Não portado ainda: sombras e iluminação do Pixi (efeito visual).
+- 09/11/2026 — Fase 2, passo 2 (entidades): `render/estado_vista.gd` porta o laço por quadro do cliente (C: quando chamar
+  dT/dI/dM, treinador seguindo o tile anterior do herói por BFS, selvagem morto parado onde caiu, efeito de respawn de
+  1,2 s, direção por dP/dj); `render/outfits.gd` lê o formato de outfit original (índice → manifest → página;
+  "{quadro}_…_{dir}"; quadro 0 parado, passos pela fase) com substituto (E: 200/Rhydon) para o que não existe localmente
+  (hoje: Venusaur 22, Geodude 196, Steelix 369; o treinador 5759 é real); colorização do treinador ainda não portada.
+  `render/vista_hunt.gd` junta mapa, entidades (draw_index pelo zIndex original de criatura e cadáver), placas (nome +
+  barra 31×4/29×2, C) e números de dano (950 ms, sobe 60 px, entra em 16%, dmgDelayMs, C; cores das classes CSS: F).
+  `testes/ver_hunt.gd` roda a sim em processo e em tempo real numa janela sem borda de 1920×1080 e mede o frame time
+  (capturas fora da medição). RTX 4060, vsync ligado, 60 s: **rhydon** média 7,7 ms, p99 **11,1 ms**, máx 16,1, 0 quadros
+  acima de 16,7 ms em 7364; **nightmare_steelix** (56 spawns, 301.712 sprites) média 7,6, p99 **10,8 ms**, máx 14,7, 0 acima
+  de 16,7 em 7469. Para chegar aí: páginas do atlas decodificadas na carga e chunks montados por fila com orçamento de
+  3 ms/quadro (F de desempenho; o original monta de uma vez). Limite: carga do Nightmare leva 10 s (montar() em GDScript).
+  O projeto foi importado uma vez (`godot --headless --import`, `.godot/` fora do git).

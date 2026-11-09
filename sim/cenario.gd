@@ -6,9 +6,11 @@ const Fontes := preload("res://sim/fontes.gd")
 const Regras := preload("res://sim/regras.gd")
 
 
-static func de_estado(caminho_estado: String, dados: RefCounted, semente: int) -> Dictionary:
+static func de_estado(caminho_estado: String, dados: RefCounted, semente: int, outra_hunt: String = "") -> Dictionary:
+	## `outra_hunt`: reaproveita o time/inventário do estado real numa hunt diferente (testes de desenho e desempenho;
+	## os selvagens, spawns e nível vêm do hunt-config e do catálogo dessa hunt).
 	var est: Dictionary = Fontes.ler_json(caminho_estado)
-	var slug := String(est["slug"])
+	var slug := outra_hunt if outra_hunt != "" else String(est["slug"])
 	var hc: Dictionary = Fontes.ler_hunt_config(slug)
 	var hunt: Dictionary = dados.hunts.get(slug, {})
 	var pd: Dictionary = est["pokeDelta"]

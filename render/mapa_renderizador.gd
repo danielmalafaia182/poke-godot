@@ -33,6 +33,10 @@ var _ret_chunks := Rect2i()
 var centro_tile := Vector2(0, 0)   # tile (fracionário) no centro da tela: o herói interpolado
 var primeiro_andar_visivel := 0
 var estatisticas := {"sprites_carregados": 0, "chunks": 0}
+var orcamento_ms := 3.0            # tempo máximo por quadro montando/desmontando chunks
+var _fila_carregar: Array = []
+var _fila_descarregar: Array = []
+var _primeira_carga := true
 
 
 func carregar(slug_mapa: String) -> void:
@@ -79,6 +83,10 @@ func carregar(slug_mapa: String) -> void:
 			if not _chunks_tiles.has(chave):
 				_chunks_tiles[chave] = []
 			_chunks_tiles[chave].append(i)
+	# páginas do atlas decodificadas já na carga: decodificar uma página webp de 2046×2040 no meio da hunt custa
+	# dezenas de ms (pico de frame time)
+	for pg in paginas_necessarias():
+		dados.pagina(int(pg))
 	primeiro_andar_visivel = _primeiro_andar_visivel()
 	for z in _andares:
 		_aplicar_alpha(int(z), 1.0 if int(z) >= primeiro_andar_visivel else 0.0)
@@ -127,6 +135,8 @@ func _process(delta: float) -> void:
 		if a != alvo:
 			a = minf(1.0, a + ms / 180.0) if alvo > a else maxf(0.0, a - ms / 180.0)
 			_aplicar_alpha(int(z), a)
+	if not _fila_carregar.is_empty() or not _fila_descarregar.is_empty():
+		_drenar(orcamento_ms)
 	if animacao_ligada:
 		_animar(ms)
 
@@ -175,12 +185,42 @@ func _stream() -> void:
 				var chave := "%d|%d,%d" % [int(z), cx, cy]
 				if _chunks_tiles.has(chave):
 					manter[chave] = true
+	# F (desempenho): o original monta os chunks novos de uma vez; aqui eles entram numa fila, os mais perto do
+	# herói primeiro, e cada quadro gasta no máximo `orcamento_ms` montando/desmontando (a margem de 10 tiles dá tempo).
+	_fila_descarregar = []
 	for chave in _carregados.keys():
 		if not manter.has(chave):
-			_descarregar(chave)
+			_fila_descarregar.append(chave)
+	var faltam: Array = []
 	for chave in manter:
 		if not _carregados.has(chave):
+			faltam.append(chave)
+	var c := centro_tile
+	faltam.sort_custom(func(a, b): return _dist_chunk(a, c) < _dist_chunk(b, c))
+	_fila_carregar = faltam
+	if _primeira_carga:
+		_primeira_carga = false
+		_drenar(1.0e9)
+
+
+func _dist_chunk(chave: String, c: Vector2) -> float:
+	var partes := chave.split("|")
+	var d := int(partes[0]) - ground_z
+	var xy := partes[1].split(",")
+	var centro := Vector2(int(xy[0]) * CHUNK + d + CHUNK / 2.0, int(xy[1]) * CHUNK + d + CHUNK / 2.0)
+	return centro.distance_squared_to(c)
+
+
+func _drenar(orcamento: float) -> void:
+	var t0 := Time.get_ticks_usec()
+	while not _fila_carregar.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < orcamento:
+		var chave: String = _fila_carregar.pop_front()
+		if not _carregados.has(chave):
 			_carregar_chunk(chave)
+	while not _fila_descarregar.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < orcamento:
+		var chave: String = _fila_descarregar.pop_front()
+		if _carregados.has(chave):
+			_descarregar(chave)
 	estatisticas["chunks"] = _carregados.size()
 
 
