@@ -1,0 +1,39 @@
+{
+  "execucao": "20261107_110937_bc81bece",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_comparador_combate",
+    "test_calibracao_combate"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 33.036,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_comparador_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 1.049,
+      "motivo": "",
+      "log": "01_test_comparador_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_4dfe9a7d259745749a160de1bd26034b"
+    },
+    {
+      "etapa": "01_test_calibracao_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 6.393,
+      "motivo": "",
+      "log": "01_test_calibracao_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_c755c6f9eebf42489cd92e54a5738317"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

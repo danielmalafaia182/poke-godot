@@ -1,0 +1,18 @@
+{
+  "base": "laboratorio_pareado_pronto.zip instalado",
+  "regressao": "20261107_203537_161867b0",
+  "suites": 37,
+  "aprovado": true,
+  "candidata_padrao": true,
+  "fidelidade_comprovada": false,
+  "arquivos": {
+    "caca_base.gd": "9a193f594438b7994c86f6480e6baaf159e3d1d4818caaa8c763372df28f902d",
+    "registro_combate.gd": "4276bab2aa62ca46fbcfa283547fa7b9913ae669cbf55c8b17873c46459ec308",
+    "regras_dano.gd": "5a0c1d078996ef829d09496fc7747e2088f82a616432ead436b9d81c8796c719",
+    "regras_dano_candidato.gd": "0b9a0d18e1fdfbe97cdba8cd7270bae882976edd97ab69ca69f3ba2a1cf68e94",
+    "test_dano_candidato.gd": "c662f77899a3945b44e1b3b5d72a2176c95e56890a2a3847504151d574e3406c",
+    "test_calibracao_combate.gd": "882446e67599702ff2b39799277ab446b8e416e5b216fe6220efefb66ce8e65e",
+    "test_dano_atributos.gd": "994a4a5bbad6dd564ea63857c7938c93a9f6eb66c502d0119e3c70beab8790df",
+    "validacao_qualidade/executar.py": "2f6b940ad918f960d2ed4b6121c393603fd2acffdd3475bff4bd86730c863c10"
+  }
+}

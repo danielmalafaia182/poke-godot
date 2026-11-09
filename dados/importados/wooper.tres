@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-380-00-2440caf47983.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(342,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Wooper"
+textura=SubResource("A")
+base_hp=55
+base_atk=45
+base_def=45
+base_sp_atk=25
+base_sp_def=25
+base_speed=15
+tipo_primario="WATER"
+tipo_secundario="GROUND"

@@ -1,0 +1,357 @@
+{
+  "execucao": "20261106_202136_6f4a13eb",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_troca_hunt_barras",
+    "test_calibracao_combate",
+    "test_laboratorio_combate",
+    "test_registro_combate",
+    "test_evolucao_pokemon",
+    "test_loot_hunts",
+    "test_progressao_treinador",
+    "test_dificuldade_hunts",
+    "test_mapa_entre_hunts",
+    "test_melhor_golpe",
+    "test_togepi_last_resort",
+    "test_cerco_acesso",
+    "test_importacao_especies",
+    "test_configuracao_hunts",
+    "test_hunt_generica",
+    "test_hunt_larvitar",
+    "test_mapa_fiel",
+    "test_ataques_independentes",
+    "test_dano_atributos",
+    "test_ajustes_hunt",
+    "test_loot_combate_fiel",
+    "test_depot_cidade_fiel",
+    "test_team_fiel",
+    "test_ui_fiel",
+    "test_revisao",
+    "test_movimento_selvagens",
+    "test_hunt_referencias",
+    "test_qualidade",
+    "test_cidade_qualidade",
+    "test_compatibilidade_save",
+    "test_consistencia",
+    "test_golpes_combate",
+    "test_combate_rapido"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 16.127,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_troca_hunt_barras",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.217,
+      "motivo": "",
+      "log": "01_test_troca_hunt_barras.txt",
+      "perfil_isolado": "PokeIdle_QA_36d6ce5e9451436387b08e7a658bd8b7"
+    },
+    {
+      "etapa": "01_test_calibracao_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.035,
+      "motivo": "",
+      "log": "01_test_calibracao_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_7ec3c570a75d484f96b4bb69533627de"
+    },
+    {
+      "etapa": "01_test_laboratorio_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.444,
+      "motivo": "",
+      "log": "01_test_laboratorio_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_b3c1f4fe9ae8422fb81f9d45b529f73f"
+    },
+    {
+      "etapa": "01_test_registro_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.22,
+      "motivo": "",
+      "log": "01_test_registro_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_f2adc99b3452473cadb334e6d1855a0b"
+    },
+    {
+      "etapa": "01_test_evolucao_pokemon",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.506,
+      "motivo": "",
+      "log": "01_test_evolucao_pokemon.txt",
+      "perfil_isolado": "PokeIdle_QA_c07a940dc1a9499591d2aab173d54b7c"
+    },
+    {
+      "etapa": "01_test_loot_hunts",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.632,
+      "motivo": "",
+      "log": "01_test_loot_hunts.txt",
+      "perfil_isolado": "PokeIdle_QA_8a40ee2a1b5a45748de532f6879b262a"
+    },
+    {
+      "etapa": "01_test_progressao_treinador",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.779,
+      "motivo": "",
+      "log": "01_test_progressao_treinador.txt",
+      "perfil_isolado": "PokeIdle_QA_e95acc196d0d492da7e0c0df7adec4ef"
+    },
+    {
+      "etapa": "01_test_dificuldade_hunts",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.42,
+      "motivo": "",
+      "log": "01_test_dificuldade_hunts.txt",
+      "perfil_isolado": "PokeIdle_QA_1996ed6ce66b4717a6346512091423f4"
+    },
+    {
+      "etapa": "01_test_mapa_entre_hunts",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 5.297,
+      "motivo": "",
+      "log": "01_test_mapa_entre_hunts.txt",
+      "perfil_isolado": "PokeIdle_QA_0fbd1108d99e4d61ba5c4bdf2dab84af"
+    },
+    {
+      "etapa": "01_test_melhor_golpe",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.461,
+      "motivo": "",
+      "log": "01_test_melhor_golpe.txt",
+      "perfil_isolado": "PokeIdle_QA_46b529a6a1634174acb9971396e5c0c2"
+    },
+    {
+      "etapa": "01_test_togepi_last_resort",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.45,
+      "motivo": "",
+      "log": "01_test_togepi_last_resort.txt",
+      "perfil_isolado": "PokeIdle_QA_2f9cb7a72ba44f9bacc80afc6ef11d95"
+    },
+    {
+      "etapa": "01_test_cerco_acesso",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 5.195,
+      "motivo": "",
+      "log": "01_test_cerco_acesso.txt",
+      "perfil_isolado": "PokeIdle_QA_ebfd8c24450e46ed911fdb710c1ec281"
+    },
+    {
+      "etapa": "01_test_importacao_especies",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 4.649,
+      "motivo": "",
+      "log": "01_test_importacao_especies.txt",
+      "perfil_isolado": "PokeIdle_QA_22bb62570b7048f093b1378b910fa611"
+    },
+    {
+      "etapa": "01_test_configuracao_hunts",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.683,
+      "motivo": "",
+      "log": "01_test_configuracao_hunts.txt",
+      "perfil_isolado": "PokeIdle_QA_348d96b4bd6a4132b68b528029740d0f"
+    },
+    {
+      "etapa": "01_test_hunt_generica",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.409,
+      "motivo": "",
+      "log": "01_test_hunt_generica.txt",
+      "perfil_isolado": "PokeIdle_QA_3472ded4323a45e2b6604ea6bd6ee79c"
+    },
+    {
+      "etapa": "01_test_hunt_larvitar",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 4.098,
+      "motivo": "",
+      "log": "01_test_hunt_larvitar.txt",
+      "perfil_isolado": "PokeIdle_QA_3a88d859098849afa9f779199f7df4b5"
+    },
+    {
+      "etapa": "01_test_mapa_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 4.464,
+      "motivo": "",
+      "log": "01_test_mapa_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_fe340d1f00d44b6f946cee8e7bb9c6e2"
+    },
+    {
+      "etapa": "01_test_ataques_independentes",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 3.816,
+      "motivo": "",
+      "log": "01_test_ataques_independentes.txt",
+      "perfil_isolado": "PokeIdle_QA_bbcdbe507a3f4a15b07124d2144ff88b"
+    },
+    {
+      "etapa": "01_test_dano_atributos",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.142,
+      "motivo": "",
+      "log": "01_test_dano_atributos.txt",
+      "perfil_isolado": "PokeIdle_QA_77d53e20a69543598d0bc1b2a4a334f2"
+    },
+    {
+      "etapa": "01_test_ajustes_hunt",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 3.621,
+      "motivo": "",
+      "log": "01_test_ajustes_hunt.txt",
+      "perfil_isolado": "PokeIdle_QA_9f285c67349f4e4f90d483386894f89c"
+    },
+    {
+      "etapa": "01_test_loot_combate_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.52,
+      "motivo": "",
+      "log": "01_test_loot_combate_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_65c318202cb64375a167e9ff59a88f65"
+    },
+    {
+      "etapa": "01_test_depot_cidade_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.879,
+      "motivo": "",
+      "log": "01_test_depot_cidade_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_411c5a46584640f8a32e2d056ff9e148"
+    },
+    {
+      "etapa": "01_test_team_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.982,
+      "motivo": "",
+      "log": "01_test_team_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_44c011bfc6c34ddbb0e62202adc895d2"
+    },
+    {
+      "etapa": "01_test_ui_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.696,
+      "motivo": "",
+      "log": "01_test_ui_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_e85aa853214e4c5da528d14d31665b5e"
+    },
+    {
+      "etapa": "01_test_revisao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.225,
+      "motivo": "",
+      "log": "01_test_revisao.txt",
+      "perfil_isolado": "PokeIdle_QA_be996198d50a4a2582f16d6b860584aa"
+    },
+    {
+      "etapa": "01_test_movimento_selvagens",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 3.079,
+      "motivo": "",
+      "log": "01_test_movimento_selvagens.txt",
+      "perfil_isolado": "PokeIdle_QA_7988cfdc28154772a0918009fe5a12d1"
+    },
+    {
+      "etapa": "01_test_hunt_referencias",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.512,
+      "motivo": "",
+      "log": "01_test_hunt_referencias.txt",
+      "perfil_isolado": "PokeIdle_QA_d2927c390d4044feba73d88a85846f96"
+    },
+    {
+      "etapa": "01_test_qualidade",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.609,
+      "motivo": "",
+      "log": "01_test_qualidade.txt",
+      "perfil_isolado": "PokeIdle_QA_4f78ce0d6c7244d98dfae34e19b616a1"
+    },
+    {
+      "etapa": "01_test_cidade_qualidade",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 5.268,
+      "motivo": "",
+      "log": "01_test_cidade_qualidade.txt",
+      "perfil_isolado": "PokeIdle_QA_128c9e10eaa94fe78dce17bea9e8d319"
+    },
+    {
+      "etapa": "01_test_compatibilidade_save_fixture",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.264,
+      "motivo": "",
+      "log": "01_test_compatibilidade_save_fixture.txt"
+    },
+    {
+      "etapa": "01_test_compatibilidade_save",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.445,
+      "motivo": "",
+      "log": "01_test_compatibilidade_save.txt",
+      "perfil_isolado": "PokeIdle_QA_8ecf787fcd5d40c78cdb0594dcaab3c7"
+    },
+    {
+      "etapa": "01_test_consistencia",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.037,
+      "motivo": "",
+      "log": "01_test_consistencia.txt",
+      "perfil_isolado": "PokeIdle_QA_cd20f617451247f497d4245568d9145c"
+    },
+    {
+      "etapa": "01_test_golpes_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.317,
+      "motivo": "",
+      "log": "01_test_golpes_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_a825898c8ca7412f86d3ed74e7c38a9c"
+    },
+    {
+      "etapa": "01_test_combate_rapido",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.223,
+      "motivo": "",
+      "log": "01_test_combate_rapido.txt",
+      "perfil_isolado": "PokeIdle_QA_754fe29dbccf45e3b58df7f411580182"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

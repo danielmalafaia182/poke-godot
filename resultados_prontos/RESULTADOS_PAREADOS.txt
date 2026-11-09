@@ -1,0 +1,68 @@
+ANÁLISE PRONTA — NOVA SESSÃO ORIGINAL
+
+Curva local + defesas inteiras de1a5000, constantes por encontro; livre escolha de um perfil diferente por encontro.
+Todos os resultados abaixo são compatibilidade matemática sob hipóteses, não validação da fórmula real.
+
+Família | dano nos4pares | dano+escolha nos4pares | dano+escolha em todos os encontros
+Sem STAB · sem variação | 0/4 | 0/4 | 0/12
+Sem STAB · ±5% | 3/4 | 2/4 | 8/12
+Sem STAB · ±10% | 3/4 | 3/4 | 11/12
+Sem STAB · ±15% | 3/4 | 3/4 | 11/12
+Sem STAB · ±20% | 3/4 | 3/4 | 11/12
+Sem STAB · ±25% | 4/4 | 4/4 | 12/12
+Sem STAB · ±30% | 4/4 | 4/4 | 12/12
+Sem STAB · 85–100% | 3/4 | 2/4 | 10/12
+STAB×1,5 · sem variação | 0/4 | 0/4 | 0/12
+STAB×1,5 · ±5% | 4/4 | 4/4 | 10/12
+STAB×1,5 · ±10% | 4/4 | 4/4 | 12/12
+STAB×1,5 · ±15% | 4/4 | 4/4 | 12/12
+STAB×1,5 · ±20% | 4/4 | 4/4 | 12/12
+STAB×1,5 · ±25% | 4/4 | 4/4 | 12/12
+STAB×1,5 · ±30% | 4/4 | 4/4 | 12/12
+STAB×1,5 · 85–100% | 4/4 | 4/4 | 12/12
+
+LEITURA DOS RESULTADOS
+Sem bônus de tipo, ±25% é a primeira faixa simétrica TESTADA que admite os4pares e os12encontros.
+Com STAB hipotético×1,5, ±5% admite os4pares, mas falha em2controles com vários golpes sem troca.
+Com STAB hipotético×1,5, tanto ±10% quanto85–100% admitem os12encontros desta sessão.
+Isso não identifica o RNG, a distribuição, sua causa, o STAB ou a fórmula. Também pode haver poderes efetivos, buffs ou outros multiplicadores diferentes.
+A mesma amostra foi usada para ajustar e conferir as hipóteses; não é validação independente.
+
+ENCONTROS PAREADOS
+slot_14_vida_1
+Limites marginais: Def78–91 (observado pelo dano:True); SpDef87–101 (observado pelo dano:True).
+Exemplo sob STAB×1,5 e85–100%, com dano+escolha nominal: {'def': 78, 'spDef': 87}
+O exemplo não é defesa original descoberta. Os limites marginais não garantem todas as combinações.
+
+slot_10_vida_2
+Limites marginais: Def169–189 (observado pelo dano:True); SpDef166–194 (observado pelo dano:True).
+Exemplo sob STAB×1,5 e85–100%, com dano+escolha nominal: {'def': 169, 'spDef': 166}
+O exemplo não é defesa original descoberta. Os limites marginais não garantem todas as combinações.
+
+slot_2_vida_2
+Limites marginais: Def134–147 (observado pelo dano:True); SpDef122–142 (observado pelo dano:True).
+Exemplo sob STAB×1,5 e85–100%, com dano+escolha nominal: {'def': 134, 'spDef': 122}
+O exemplo não é defesa original descoberta. Os limites marginais não garantem todas as combinações.
+
+slot_13_vida_2
+Limites marginais: Def1–5000 (observado pelo dano:False); SpDef109–124 (observado pelo dano:True).
+Exemplo sob STAB×1,5 e85–100%, com dano+escolha nominal: {'def': 153, 'spDef': 109}
+O exemplo não é defesa original descoberta. Os limites marginais não garantem todas as combinações.
+
+OBSERVAÇÃO COMPLEMENTAR DE HP
+Os HPs máximos dos12encontros aproveitados são múltiplos de35: [2835, 2975, 3010, 3185, 3640, 3955, 4025, 5705]
+Isso torna max(120,35×atributoHP) uma hipótese futura a investigar; atributoHP original dos selvagens ainda não é conhecido.
+Não comprova a geração por nível/IV/qualidade, nem essa fórmula. Não foi aplicado ao jogo nem usado para ajustar as defesas acima.
+
+LIMITES
+Def e SpDef inteiras entre1 e5000, fixas dentro de cada encontro e diferentes entre encontros.
+STAB×1,5 também é uma hipótese: só para golpe do mesmo tipo observado do atacante. Não é aplicado no jogo real.
+Multiplicador aplicado ao dano bruto (após o STAB hipotético) antes do arredondamento e do piso local. Só compara compatibilidade, não frequência/distribuição.
+A política adicional testa maior dano nominal antes da variação, sem TMs; não está comprovada como regra universal do original.
+As faixas marginais não significam que toda combinação Def/SpDef satisfaça a escolha de golpe.
+A busca não impõe uma fórmula original de geração por nível/IV/qualidade; existência matemática não prova um Pokémon possível no servidor.
+Nenhum ajuste é aplicado ao combate real ou ao save.
+Identidades são inferidas por slot, morte e continuidade de HP; horários são dos pacotes.
+Buffs, críticos, categoria/power diferentes ou outra fórmula também podem explicar variação; RNG não foi demonstrado.
+
+Nenhuma regra experimental foi aplicada à caça ou ao save. A cadência dos pacotes não foi convertida em attack rate individual.

@@ -1,0 +1,38 @@
+{
+  "execucao": "20261105_204105_490f029d",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_qualidade"
+  ],
+  "repeticoes": 2,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 15.752,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_qualidade",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 1.656,
+      "motivo": "",
+      "log": "01_test_qualidade.txt",
+      "perfil_isolado": "PokeIdle_QA_6271d9d8bdd4400bbbd3beb3a34eb227"
+    },
+    {
+      "etapa": "02_test_qualidade",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 1.748,
+      "motivo": "",
+      "log": "02_test_qualidade.txt",
+      "perfil_isolado": "PokeIdle_QA_4279549965714f4f92636aac1944ac4f"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

@@ -1,0 +1,76 @@
+PERFIS CONJUNTOS: HP, DEFESA, DEFESA ESPECIAL E ESCOLHA DE GOLPE
+
+RESULTADO
+24 encontros de Blastoise, reconstruídos de duas sessões WS já recebidas.
+Para CADA um dos níveis94,95,96,97,98 e99, encontramos24 exemplos de perfis que
+satisfazem simultaneamente as restrições abaixo. Total144 exemplos condicionais.
+Nenhum desses níveis foi identificado como sendo o nível verdadeiro do original.
+A mesma evidência admite múltiplas explicações. Não é justificável escolher95,
+99 ou outro número e apresentá-lo como descoberto.
+
+RESTRIÇÕES DO MESMO INDIVÍDUO
+1. Nível de combate fixo escolhido entre94 e99, o mesmo em todos os encontros
+   naquela execução. Não há nível separado para explicar dano e HP.
+2. Uma única qualidade por indivíduo, entre os valores que o gerador local pode
+   sortear:0,800–1,599,1,700–1,799 e1,800.
+3. IVs de HP/Def/SpDef inteiros1–32; cada atributo usa a fórmula local de atributos.
+4. HP máximo = max(120,atributoHP*35), reproduzindo o máximo observado no encontro.
+5. TODOS os danos aplicados pelos aliados naquele encontro ficam na faixa da
+   candidata fixa: STABx1,5, efetividade observada, variação85–100%, arredondamento.
+   Def é compartilhada por todos os golpes físicos; SpDef por todos os especiais.
+6. A escolha do golpe de cada aliado coincide com o maior dano nominal, antes da
+   variação, entre os ataques comuns disponíveis, sem TM e com a ordem do catálogo.
+Isso inclui os encontros com troca de aliado: as duas observações precisam caber
+nas MESMAS Def/SpDef e na mesma qualidade do selvagem reconstruído.
+
+O QUE OS EXEMPLOS NÃO SÃO
+Não são IVs revelados do jogo original. Não são perfis únicos ou necessariamente
+os mais prováveis. O script escolhe o primeiro exemplo que satisfaz as restrições.
+Atk, SpAtk e Speed do selvagem continuam LIVRES: não foram determinados.
+Power e IV total do selvagem também não foram determinados; não os inventamos.
+O teste não valida a probabilidade da distribuição de danos ou dos atributos.
+Ajustamos dados já conhecidos: isso não é validação independente em nova coleta.
+Identidade do encontro foi inferida por slot/continuidade de HP e morte/respawn;
+não temos UUID original do selvagem.
+
+POR QUE NÃO AJUSTAMOS A FORÇA AUTOMATICAMENTE NESTA ENTREGA
+A auditoria anterior já mostrou que o nível80, com as demais premissas atuais,
+não reproduz os maiores danos recebidos do original. O cruzamento agora mostra
+que94–99 continuam viáveis quanto a HP/Def/SpDef e golpes dos aliados.
+Os44 danos recebidos usados na auditoria ofensiva anterior NÃO foram atribuídos
+a esses24 indivíduos: o WS informa slot=-1 para o aliado atingido, sem identificar
+qual selvagem atacou. Usá-los como se fossem do alvo atual inventaria uma relação.
+Uma fórmula ofensiva diferente, outra distribuição de IV/qualidade ou níveis
+variáveis também pode explicar parte das diferenças. Esta análise não os descarta.
+
+PRÓXIMA COLETA NECESSÁRIA
+Precisamos vincular o dano causado e recebido ao MESMO selvagem.
+No original, usando Gyarados na hunt Blastoise:
+1. Inicie a captura WS e uma gravação de tela antes de entrar na hunt.
+2. Deixe o combate automático funcionar; não precisa forçar Hyper Beam ou Thrash.
+3. Registre um trecho em que apenas um selvagem esteja causando dano, para que
+   possamos identificá-lo no vídeo, junto de sua vida máxima e dos golpes recebidos.
+4. Preferencialmente obtenha alguns golpes dos dois lados antes do KO. Se o
+   selvagem morrer antes, preserve o trecho completo mesmo assim.
+5. Envie o WS completo e o vídeo da mesma sessão. Uma gravação de60–90s pode
+   conter uma janela curta suficiente de1x1; o importante é a identificação.
+Se houver vários atacantes, os trechos continuam úteis para limites agregados,
+mas não permitem atribuir Atk/SpAtk a um indivíduo com a mesma segurança.
+Uma troca visível de aliado ajuda a sincronizar o vídeo com o WS, se necessária;
+não é exigência trocar para Exeggutor nem selecionar manualmente o golpe.
+
+USO DO PACOTE
+NÃO precisa instalar no Godot nem substituir arquivos do jogo.
+Resultados prontos: resultados/perfis_conjuntos.json e esta explicação.
+Para repetir a busca com Python3, sem bibliotecas externas:
+  python gerar_perfis_conjuntos.py
+O script usa entradas/ e regrava apenas seu próprio resultado, sem tocar no jogo.
+
+VALIDAÇÃO
+Reprodução Python idêntica ao conjunto de exemplos conferido no Godot.
+Os144 exemplos foram verificados no Godot4.6.3 usando as próprias regras atuais
+para atributos, HP, dano e escolha nominal.728 verificações passaram,0 falhas.
+Uma suíte nova de análise foi executada em cópia/perfil isolados; os39 testes
+anteriores não foram repetidos porque não houve alteração no código de produção.
+Código e log da conferência estão em validacao_godot/, para auditoria.
+O projeto jogável permanece na versão ofensiva_selvagens_comparador.zip.

@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DadosEspecie" format=3 uid="uid://t0nfdiu781v5"]
+
+[ext_resource type="Script" uid="uid://bvtv4irhnubtl" path="res://dados_especie.gd" id="1_eotgx"]
+[ext_resource type="Texture2D" uid="uid://bp7sguq5401pv" path="res://assets/pokemon/geodude/outfits-male-196-00-bfa20f0b6fde.webp" id="2_6o4lx"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3aje"]
+atlas = ExtResource("2_6o4lx")
+region = Rect2(413.26874, 24.359573, 57.099976, 42.824966)
+
+[resource]
+script = ExtResource("1_eotgx")
+nome = "Geodude"
+vida_maxima = 15
+textura = SubResource("AtlasTexture_g3aje")
+dano_base = 3
+base_hp = 40
+base_atk = 80
+base_def = 100
+base_sp_atk = 30
+base_sp_def = 30
+base_speed = 20
+tipo_primario = "ROCK"
+tipo_secundario = "GROUND"
+metadata/_custom_type_script = "uid://bvtv4irhnubtl"

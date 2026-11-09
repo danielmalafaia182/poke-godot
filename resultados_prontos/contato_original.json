@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "fonte": {
+    "arquivo": "poke_ws_2026-11-08T02-41-10-198Z.txt",
+    "sha256": "eb90251b25047b38e202bb7f1e1d818d496d5d6864811a4bf8de871d6babe261"
+  },
+  "casos": [
+    {
+      "slot": 11,
+      "primeiro_seq_adjacente": 14,
+      "seq_primeiro_hit_considerado": 24,
+      "delta_snapshots_ms": 1999,
+      "primeiro_adjacente_em_movimento": false,
+      "janela_ultima_nao_adjacencia_ms": 2801
+    },
+    {
+      "slot": 12,
+      "primeiro_seq_adjacente": 42,
+      "seq_primeiro_hit_considerado": 58,
+      "delta_snapshots_ms": 3200,
+      "primeiro_adjacente_em_movimento": true,
+      "janela_ultima_nao_adjacencia_ms": 3601
+    },
+    {
+      "slot": 13,
+      "primeiro_seq_adjacente": 122,
+      "seq_primeiro_hit_considerado": 132,
+      "delta_snapshots_ms": 2000,
+      "primeiro_adjacente_em_movimento": true,
+      "janela_ultima_nao_adjacencia_ms": 2400
+    },
+    {
+      "slot": 4,
+      "primeiro_seq_adjacente": 150,
+      "seq_primeiro_hit_considerado": 160,
+      "delta_snapshots_ms": 1999,
+      "primeiro_adjacente_em_movimento": false,
+      "janela_ultima_nao_adjacencia_ms": 2800
+    },
+    {
+      "slot": 6,
+      "primeiro_seq_adjacente": 190,
+      "seq_primeiro_hit_considerado": 196,
+      "delta_snapshots_ms": 1201,
+      "primeiro_adjacente_em_movimento": false,
+      "janela_ultima_nao_adjacencia_ms": 3201
+    },
+    {
+      "slot": 14,
+      "primeiro_seq_adjacente": 250,
+      "seq_primeiro_hit_considerado": 258,
+      "delta_snapshots_ms": 1599,
+      "primeiro_adjacente_em_movimento": false,
+      "janela_ultima_nao_adjacencia_ms": 2400
+    },
+    {
+      "slot": 10,
+      "primeiro_seq_adjacente": 346,
+      "seq_primeiro_hit_considerado": 356,
+      "delta_snapshots_ms": 2000,
+      "primeiro_adjacente_em_movimento": true,
+      "janela_ultima_nao_adjacencia_ms": 3199
+    }
+  ],
+  "limites": [
+    "Adjacência usa coordenadas dos snapshots; não é a distância renderizada nem o instante exato de contato.",
+    "Os pacotes podem agrupar eventos; não há timestamp individual de execução de cada golpe.",
+    "O caso slot12 não é explicado por uma espera uniforme de2s a partir do primeiro snapshot adjacente.",
+    "A candidata implementada aguarda um intervalo próprio a partir de alcance válido no protótipo; é uma escolha reversível, não fórmula temporal comprovada."
+  ]
+}

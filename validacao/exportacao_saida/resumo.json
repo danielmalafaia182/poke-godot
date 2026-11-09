@@ -1,0 +1,29 @@
+{
+  "execucao": "20261106_170023_d6b2729e",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_registro_combate"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 15.667,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_registro_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.127,
+      "motivo": "",
+      "log": "01_test_registro_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_d2c4f788be1e44dfa8e1d9809c19cd98"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

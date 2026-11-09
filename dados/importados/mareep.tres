@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-349-00-62e980873f94.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(398,2,64,32)
+[resource]
+script=ExtResource("1")
+nome="Mareep"
+textura=SubResource("A")
+base_hp=55
+base_atk=40
+base_def=40
+base_sp_atk=65
+base_sp_def=45
+base_speed=35
+tipo_primario="ELECTRIC"
+tipo_secundario=""

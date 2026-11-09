@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "confirmacao_usuario": {
+    "atk_gyarados": 647,
+    "def_gyarados": 428
+  },
+  "nivel_gyarados": 214,
+  "casos": [
+    {
+      "slot": 4,
+      "hp_maximo": 3780,
+      "seqs_recebidos": [
+        160,
+        170
+      ],
+      "recebidos": [
+        54,
+        55
+      ],
+      "causados": [
+        982,
+        901,
+        925,
+        1045
+      ],
+      "exemplo_candidato": {
+        "nivel_atributos": 80,
+        "nivel_formula": 150,
+        "qualidade": 1.247,
+        "iv_hp": 15,
+        "iv_def": 18,
+        "iv_atk": 32
+      },
+      "outros_ivs": "não inferidos",
+      "fonte_atribuicao": "vídeo e coordenadas dos snapshots, não targetSlot"
+    },
+    {
+      "slot": 13,
+      "hp_maximo": 3815,
+      "seqs_recebidos": [
+        132,
+        142
+      ],
+      "recebidos": [
+        30,
+        30
+      ],
+      "causados": [
+        1104,
+        1108,
+        1132,
+        1048
+      ],
+      "exemplo_candidato": {
+        "nivel_atributos": 80,
+        "nivel_formula": 150,
+        "qualidade": 0.946,
+        "iv_hp": 32,
+        "iv_def": 23,
+        "iv_atk": 7
+      },
+      "outros_ivs": "não inferidos",
+      "fonte_atribuicao": "vídeo e coordenadas dos snapshots, não targetSlot"
+    },
+    {
+      "slot": 6,
+      "hp_maximo": 3535,
+      "seqs_recebidos": [
+        196,
+        210
+      ],
+      "recebidos": [
+        36,
+        36
+      ],
+      "causados": [
+        905,
+        984,
+        937,
+        895
+      ],
+      "exemplo_candidato": {
+        "nivel_atributos": 80,
+        "nivel_formula": 150,
+        "qualidade": 0.989,
+        "iv_hp": 24,
+        "iv_def": 32,
+        "iv_atk": 15
+      },
+      "outros_ivs": "não inferidos",
+      "fonte_atribuicao": "vídeo e coordenadas dos snapshots, não targetSlot"
+    }
+  ],
+  "fidelidade_comprovada": false,
+  "limites": [
+    "Exemplos ajustados aos dados conhecidos; não são os IVs verdadeiros.",
+    "Dados também admitem níveis variáveis por indivíduo.",
+    "Uso de huntLevel como nível ofensivo não está comprovado."
+  ]
+}

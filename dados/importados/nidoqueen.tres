@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-79-00-742a7edeaa19.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(398,2,64,64)
+[resource]
+script=ExtResource("1")
+nome="Nidoqueen"
+textura=SubResource("A")
+base_hp=90
+base_atk=92
+base_def=87
+base_sp_atk=75
+base_sp_def=85
+base_speed=76
+tipo_primario="POISON"
+tipo_secundario="GROUND"

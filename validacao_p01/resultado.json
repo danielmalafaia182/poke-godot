@@ -1,0 +1,100 @@
+{
+  "correcao": "P01 — recuperação ao entrar com líder derrotado",
+  "base": "poke-idle(3).rar",
+  "base_sha256": "3459f688a8c19a8d4d01f4335d92f2800decc8494de95568239155f330d96e2f",
+  "godot_validacao": "4.6.3 Linux headless",
+  "suites": [
+    {
+      "teste": "test_entrada_lider_ko.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "P01 ENTRADA LIDER KO: 50 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_cooldown_troca.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "COOLDOWN TROCA: 269 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_troca_hunt_barras.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "TROCA HUNT E BARRAS: 199 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_cerco_acesso.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "CERCO E ACESSO: 13 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_ataques_independentes.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "ATAQUES INDEPENDENTES: 24 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_mapa_entre_hunts.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "MAPA ENTRE HUNTS: 8 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_loot_combate_fiel.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "LOOT COMBATE FIEL: 25 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_hunt_larvitar.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "ATAQUES INDEPENDENTES: 24 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_consistencia.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "CONSISTÊNCIA: 37 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_revisao.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "REVISÃO: 14 verificações; 0 falhas"
+      ]
+    }
+  ],
+  "arquivos": [
+    {
+      "nome": "caca_base.gd",
+      "sha256_anterior": "f8a5c29c77a8b06f45a1620fa037b789b4b62e1546be9c99b41109e1a0787b84",
+      "sha256_novo": "0cc1bba2e07f34edacfde2c76d29d068ec349cf0812ed9d477ad17a252b04884"
+    },
+    {
+      "nome": "caca.gd",
+      "sha256_anterior": "ef784296c93270e22832f4b00a4e334a0aff5690a7e0857e1117d0a10440cf93",
+      "sha256_novo": "cfe5f10bfb0237d33127f236ed82fc33ae478d5e059538d0a9aecebf5571eda1"
+    }
+  ]
+}

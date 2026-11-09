@@ -1,0 +1,2482 @@
+{
+  "schema": 1,
+  "fidelidade_comprovada": false,
+  "fontes": [
+    {
+      "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+      "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+    },
+    {
+      "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+      "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+    }
+  ],
+  "resultados_por_nivel": {
+    "94": [
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.959,
+          "iv_hp": 18,
+          "iv_def": 15,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.83,
+          "iv_hp": 32,
+          "iv_def": 21,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.8,
+          "iv_hp": 17,
+          "iv_def": 1,
+          "iv_sp_def": 8,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.995,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.801,
+          "iv_hp": 16,
+          "iv_def": 1,
+          "iv_sp_def": 3,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_10_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 1.222,
+          "iv_hp": 32,
+          "iv_def": 27,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_0_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.845,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_7_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.8,
+          "iv_hp": 17,
+          "iv_def": 4,
+          "iv_sp_def": 18,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_2_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.841,
+          "iv_hp": 11,
+          "iv_def": 32,
+          "iv_sp_def": 22,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.8,
+          "iv_hp": 17,
+          "iv_def": 12,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.993,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.83,
+          "iv_hp": 32,
+          "iv_def": 3,
+          "iv_sp_def": 16,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_1_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.828,
+          "iv_hp": 24,
+          "iv_def": 32,
+          "iv_sp_def": 7,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_3_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.802,
+          "iv_hp": 12,
+          "iv_def": 30,
+          "iv_sp_def": 17,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_4_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.8,
+          "iv_hp": 23,
+          "iv_def": 29,
+          "iv_sp_def": 4,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.85,
+          "iv_hp": 32,
+          "iv_def": 23,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_8_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.8,
+          "iv_hp": 25,
+          "iv_def": 26,
+          "iv_sp_def": 2,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_9_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.931,
+          "iv_hp": 32,
+          "iv_def": 22,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_10_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.993,
+          "iv_hp": 32,
+          "iv_def": 9,
+          "iv_sp_def": 25,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.804,
+          "iv_hp": 25,
+          "iv_def": 6,
+          "iv_sp_def": 21,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.884,
+          "iv_hp": 32,
+          "iv_def": 14,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 1.087,
+          "iv_hp": 32,
+          "iv_def": 1,
+          "iv_sp_def": 8,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 0.8,
+          "iv_hp": 3,
+          "iv_def": 5,
+          "iv_sp_def": 19,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_11_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 94,
+          "qualidade": 1.135,
+          "iv_hp": 32,
+          "iv_def": 20,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      }
+    ],
+    "95": [
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.946,
+          "iv_hp": 18,
+          "iv_def": 15,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.82,
+          "iv_hp": 32,
+          "iv_def": 21,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.802,
+          "iv_hp": 16,
+          "iv_def": 1,
+          "iv_sp_def": 7,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.982,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.8,
+          "iv_hp": 16,
+          "iv_def": 1,
+          "iv_sp_def": 2,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_10_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 1.208,
+          "iv_hp": 32,
+          "iv_def": 27,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_0_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.836,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_7_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.802,
+          "iv_hp": 16,
+          "iv_def": 4,
+          "iv_sp_def": 17,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_2_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.832,
+          "iv_hp": 11,
+          "iv_def": 32,
+          "iv_sp_def": 22,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.802,
+          "iv_hp": 16,
+          "iv_def": 12,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.982,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.82,
+          "iv_hp": 32,
+          "iv_def": 3,
+          "iv_sp_def": 16,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_1_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.817,
+          "iv_hp": 24,
+          "iv_def": 32,
+          "iv_sp_def": 7,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_3_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.8,
+          "iv_hp": 12,
+          "iv_def": 29,
+          "iv_sp_def": 17,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_4_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.8,
+          "iv_hp": 22,
+          "iv_def": 28,
+          "iv_sp_def": 4,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.839,
+          "iv_hp": 32,
+          "iv_def": 23,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_8_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.8,
+          "iv_hp": 24,
+          "iv_def": 26,
+          "iv_sp_def": 2,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_9_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.92,
+          "iv_hp": 32,
+          "iv_def": 22,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_10_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.982,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 24,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.8,
+          "iv_hp": 25,
+          "iv_def": 6,
+          "iv_sp_def": 21,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.874,
+          "iv_hp": 32,
+          "iv_def": 14,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 1.075,
+          "iv_hp": 32,
+          "iv_def": 1,
+          "iv_sp_def": 8,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 0.8,
+          "iv_hp": 3,
+          "iv_def": 4,
+          "iv_sp_def": 18,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_11_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 95,
+          "qualidade": 1.122,
+          "iv_hp": 32,
+          "iv_def": 20,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      }
+    ],
+    "96": [
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.935,
+          "iv_hp": 18,
+          "iv_def": 15,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.811,
+          "iv_hp": 32,
+          "iv_def": 21,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.8,
+          "iv_hp": 16,
+          "iv_def": 1,
+          "iv_sp_def": 7,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.971,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.8,
+          "iv_hp": 15,
+          "iv_def": 1,
+          "iv_sp_def": 2,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_10_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 1.195,
+          "iv_hp": 32,
+          "iv_def": 27,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_0_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.827,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_7_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.8,
+          "iv_hp": 16,
+          "iv_def": 4,
+          "iv_sp_def": 17,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_2_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.814,
+          "iv_hp": 12,
+          "iv_def": 32,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.8,
+          "iv_hp": 16,
+          "iv_def": 11,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.971,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.811,
+          "iv_hp": 32,
+          "iv_def": 3,
+          "iv_sp_def": 16,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_1_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.808,
+          "iv_hp": 24,
+          "iv_def": 32,
+          "iv_sp_def": 7,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_3_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.801,
+          "iv_hp": 11,
+          "iv_def": 28,
+          "iv_sp_def": 16,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_4_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.805,
+          "iv_hp": 21,
+          "iv_def": 27,
+          "iv_sp_def": 3,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.828,
+          "iv_hp": 32,
+          "iv_def": 23,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_8_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.804,
+          "iv_hp": 23,
+          "iv_def": 25,
+          "iv_sp_def": 2,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_9_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.91,
+          "iv_hp": 32,
+          "iv_def": 22,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_10_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.972,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 24,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.8,
+          "iv_hp": 24,
+          "iv_def": 5,
+          "iv_sp_def": 20,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.865,
+          "iv_hp": 32,
+          "iv_def": 13,
+          "iv_sp_def": 31,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 1.064,
+          "iv_hp": 32,
+          "iv_def": 1,
+          "iv_sp_def": 8,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 0.801,
+          "iv_hp": 2,
+          "iv_def": 4,
+          "iv_sp_def": 17,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_11_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 96,
+          "qualidade": 1.11,
+          "iv_hp": 32,
+          "iv_def": 20,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      }
+    ],
+    "97": [
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.925,
+          "iv_hp": 18,
+          "iv_def": 15,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.803,
+          "iv_hp": 32,
+          "iv_def": 21,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 15,
+          "iv_def": 1,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.96,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.806,
+          "iv_hp": 14,
+          "iv_def": 1,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_10_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 1.182,
+          "iv_hp": 32,
+          "iv_def": 26,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_0_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.818,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_7_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 15,
+          "iv_def": 3,
+          "iv_sp_def": 16,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_2_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.804,
+          "iv_hp": 12,
+          "iv_def": 32,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 15,
+          "iv_def": 11,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.949,
+          "iv_hp": 10,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.803,
+          "iv_hp": 32,
+          "iv_def": 2,
+          "iv_sp_def": 16,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_1_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 24,
+          "iv_def": 32,
+          "iv_sp_def": 7,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_3_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 11,
+          "iv_def": 27,
+          "iv_sp_def": 15,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_4_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 21,
+          "iv_def": 27,
+          "iv_sp_def": 3,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.818,
+          "iv_hp": 32,
+          "iv_def": 23,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_8_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 23,
+          "iv_def": 24,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_9_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.901,
+          "iv_hp": 32,
+          "iv_def": 21,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_10_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.961,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 24,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.804,
+          "iv_hp": 23,
+          "iv_def": 4,
+          "iv_sp_def": 19,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.855,
+          "iv_hp": 32,
+          "iv_def": 13,
+          "iv_sp_def": 31,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 1.052,
+          "iv_hp": 32,
+          "iv_def": 1,
+          "iv_sp_def": 8,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 0.8,
+          "iv_hp": 2,
+          "iv_def": 4,
+          "iv_sp_def": 17,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_11_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 97,
+          "qualidade": 1.098,
+          "iv_hp": 32,
+          "iv_def": 20,
+          "iv_sp_def": 22,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      }
+    ],
+    "98": [
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.915,
+          "iv_hp": 18,
+          "iv_def": 15,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 32,
+          "iv_def": 20,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 15,
+          "iv_def": 1,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.95,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 14,
+          "iv_def": 1,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_10_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 1.169,
+          "iv_hp": 32,
+          "iv_def": 26,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_0_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.809,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_7_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 15,
+          "iv_def": 2,
+          "iv_sp_def": 15,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_2_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.805,
+          "iv_hp": 11,
+          "iv_def": 32,
+          "iv_sp_def": 22,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 15,
+          "iv_def": 10,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.937,
+          "iv_hp": 10,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 32,
+          "iv_def": 2,
+          "iv_sp_def": 15,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_1_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.804,
+          "iv_hp": 23,
+          "iv_def": 31,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_3_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.801,
+          "iv_hp": 10,
+          "iv_def": 26,
+          "iv_sp_def": 15,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_4_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.802,
+          "iv_hp": 20,
+          "iv_def": 26,
+          "iv_sp_def": 2,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.809,
+          "iv_hp": 32,
+          "iv_def": 23,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_8_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 22,
+          "iv_def": 23,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_9_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.891,
+          "iv_hp": 32,
+          "iv_def": 21,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_10_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.951,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 24,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.8,
+          "iv_hp": 23,
+          "iv_def": 4,
+          "iv_sp_def": 19,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.846,
+          "iv_hp": 32,
+          "iv_def": 13,
+          "iv_sp_def": 31,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 1.041,
+          "iv_hp": 32,
+          "iv_def": 1,
+          "iv_sp_def": 8,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 0.804,
+          "iv_hp": 1,
+          "iv_def": 3,
+          "iv_sp_def": 16,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_11_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 98,
+          "qualidade": 1.086,
+          "iv_hp": 32,
+          "iv_def": 20,
+          "iv_sp_def": 22,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      }
+    ],
+    "99": [
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.905,
+          "iv_hp": 18,
+          "iv_def": 15,
+          "iv_sp_def": 32,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 31,
+          "iv_def": 20,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 14,
+          "iv_def": 1,
+          "iv_sp_def": 5,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.94,
+          "iv_hp": 9,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.805,
+          "iv_hp": 13,
+          "iv_def": 1,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_10_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 1.157,
+          "iv_hp": 32,
+          "iv_def": 26,
+          "iv_sp_def": 22,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_0_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 23,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_7_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 14,
+          "iv_def": 2,
+          "iv_sp_def": 15,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_2_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 11,
+          "iv_def": 31,
+          "iv_sp_def": 21,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 14,
+          "iv_def": 9,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_13_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.925,
+          "iv_hp": 10,
+          "iv_def": 32,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 31,
+          "iv_def": 2,
+          "iv_sp_def": 15,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_1_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 23,
+          "iv_def": 30,
+          "iv_sp_def": 6,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_3_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 10,
+          "iv_def": 26,
+          "iv_sp_def": 14,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_4_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 20,
+          "iv_def": 25,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_5_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 32,
+          "iv_def": 23,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_8_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.806,
+          "iv_hp": 21,
+          "iv_def": 22,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_9_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.881,
+          "iv_hp": 32,
+          "iv_def": 21,
+          "iv_sp_def": 1,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_10_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.941,
+          "iv_hp": 32,
+          "iv_def": 8,
+          "iv_sp_def": 24,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_13_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 22,
+          "iv_def": 3,
+          "iv_sp_def": 18,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_14_vida_1",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.837,
+          "iv_hp": 32,
+          "iv_def": 13,
+          "iv_sp_def": 30,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_6_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 1.03,
+          "iv_hp": 32,
+          "iv_def": 1,
+          "iv_sp_def": 7,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_12_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 0.8,
+          "iv_hp": 1,
+          "iv_def": 2,
+          "iv_sp_def": 15,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      },
+      {
+        "fonte": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "encontro": "slot_11_vida_2",
+        "compativel": true,
+        "exemplo": {
+          "nivel": 99,
+          "qualidade": 1.074,
+          "iv_hp": 32,
+          "iv_def": 19,
+          "iv_sp_def": 22,
+          "ivs_livres": [
+            "atk",
+            "spAtk",
+            "speed"
+          ]
+        }
+      }
+    ]
+  },
+  "limites": [
+    "Exemplos condicionais, não IVs revelados.",
+    "Atk, SpAtk e Speed do selvagem continuam livres.",
+    "Golpes recebidos não têm atacante identificado e não entram neste ajuste por indivíduo.",
+    "Ajuste aos dados conhecidos; não é validação com nova amostra."
+  ]
+}

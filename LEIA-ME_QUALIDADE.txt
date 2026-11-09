@@ -1,0 +1,61 @@
+REVISÃO DE QUALIDADE — 05/11/2026
+Base exata: poke-idle(1).rar enviado nesta conversa.
+Este ZIP é uma atualização do projeto, não um projeto independente.
+
+INSTALAÇÃO
+1. Feche o jogo e o editor Godot. Faça uma cópia do projeto atual.
+2. Faça também uma cópia do progresso: no Godot, Projeto > Abrir pasta de dados
+   do usuário. Copie progresso_v1.json e sua cópia .bak antes da atualização.
+3. Extraia o ZIP na pasta que contém project.godot, mesclando a pasta
+   validacao_qualidade e substituindo os arquivos existentes.
+4. Reabra o projeto, espere a importação dos novos scripts e execute com F5.
+
+Os scripts são completos. Não copie trechos nem duplique funções.
+Não precisa criar nós, conectar sinais ou alterar Autoload, cenas ou assets.
+Mantenha os .uid existentes. O editor gera os dos novos scripts.
+O formato progresso_v1.json e os nomes públicos de EstadoJogo foram preservados.
+
+O QUE MUDOU
+- Selvagens agora são Array[EncontroSelvagem], com propriedades tipadas.
+- Cada nascimento tem identidade própria, HP máximo/atual e estado explícito.
+- Alvo, Pokémon e sprite consultam o mesmo encontro. Recalcular ou perder um
+  caminho não reinicia HP nem a marca de recompensa.
+- Recompensa e tentativa de captura têm proteção contra repetição.
+- Respawn troca o encontro inteiro, mesmo reutilizando o Sprite.
+- Eventos de recompensa/captura incluem encontro_id e slot; animações continuam
+  apenas apresentando o resultado, sem controlar dano, estoque ou respawn.
+- HP do aliado é lido do DadosPokemon persistente: não há outra cópia na caça.
+- EstadoJogo virou fachada para inventário, coleção/time, Auto-Helper, perfil e
+  coordenação do salvamento. A serialização continua em salvamento_local.gd.
+- O HUD conserva cartões, retratos, estilos e barras durante atualizações de
+  HP/XP. Ao mudar a composição, cria/remove somente os membros necessários.
+- A barra sobre o aliado também é atualizada por sinal, sem consulta por frame.
+- A coleção rejeita duas instâncias com o mesmo ID persistente.
+
+ESCOPO VISUAL E REGRAS
+Esta entrega refatora a base atual e preserva a apresentação existente.
+O print é referência de layout; não é uma reprodução visual final pixel a pixel.
+A captura ainda usa chance provisória. Dano, decisões da IA e Auto-Potion
+mantêm as regras locais já existentes. Não foram inventadas probabilidades de
+loot, bônus ou fórmulas com base nas três derrotas do log.
+O log enviado é idêntico ao referencias/loogs_original.txt já existente.
+A grade recebida também coincide com a incorporada no projeto.
+
+CHECAGEM MANUAL RÁPIDA
+- Cidade: caminhe até o depot, abra por clique e feche.
+- Mova um Pokémon BOX/TEAM, escolha líder, confira seguidores e Nurse Joy.
+- Entre na caça: confira movimento, HP, XP, cura e resultado das capturas.
+- Saia e reabra normalmente: confira líder, indivíduos, estoques e Auto-Helper.
+
+TESTES AUTOMATIZADOS
+A pasta validacao_qualidade contém um runner Python 3 que copia o projeto para
+um temporário e usa nomes exclusivos de aplicação, isolando o progresso de QA.
+Uso: python validacao_qualidade/executar.py "CAMINHO_COMPLETO_DO_GODOT"
+Não rode os test_*.gd diretamente contra o nome de aplicação do jogador:
+esses testes alteram estoque, time, HP e arquivos de teste.
+A fixture de save anterior contém apenas dados sintéticos de QA. Não é seu save.
+Os dados de QA ficam em pastas PokeIdle_QA_* separadas; o runner não as apaga.
+
+VALIDAÇÃO
+Executado em Godot 4.6.1 Linux. Não executado no Windows/Godot 4.7.2.
+Veja VALIDACAO_QUALIDADE.txt e ARQUITETURA_QUALIDADE.md.

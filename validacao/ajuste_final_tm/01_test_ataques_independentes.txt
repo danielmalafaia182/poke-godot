@@ -1,0 +1,43 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+Recortes consultados (chão apenas): 74
+Peças bloqueadoras carregadas: 19000
+Formato do mapa: stonegy-map-compact-v1
+Registros totais: 50281
+Primeiro registro: [-52.0, -42.0, 1.0, 415.0, []]
+Piso da caça: 7
+Registros no piso da caça: 9592
+Registros de chão desenhados: 9592
+Total de objetos: 7308
+Objetos desenhados: 7308
+Identificadores sem recorte: []
+Recortes consultados: 429
+Páginas de textura consultadas: 12
+Células existentes: 9592
+Células bloqueadas: 6703
+Células sem bloqueio: 2889
+Navegação original: 757 células livres; passo 500.0ms
+Células acessíveis ao aliado: 754
+Posição inicial da caça: (-2, 3)
+População configurada: 15
+Pontos originais validados: 15
+ATAQUE slot=0; encontro=6106b2cc514ba4ac3188ac6c2d7dfff6; tempo=0.000; dano=1; hp_removido=1
+ATAQUE slot=1; encontro=86a790a1c08227b0bac6d594bfd4eddd; tempo=0.000; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=0.000; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=0.500; dano=1; hp_removido=1
+ATAQUE slot=0; encontro=6106b2cc514ba4ac3188ac6c2d7dfff6; tempo=1.000; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=1.000; dano=1; hp_removido=1
+ATAQUE slot=0; encontro=6106b2cc514ba4ac3188ac6c2d7dfff6; tempo=2.000; dano=1; hp_removido=1
+ATAQUE slot=1; encontro=86a790a1c08227b0bac6d594bfd4eddd; tempo=2.000; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=2.000; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=2.500; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=3.000; dano=1; hp_removido=1
+ATAQUE slot=0; encontro=6106b2cc514ba4ac3188ac6c2d7dfff6; tempo=3.000; dano=1; hp_removido=1
+ATAQUE slot=1; encontro=86a790a1c08227b0bac6d594bfd4eddd; tempo=4.000; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=4.000; dano=1; hp_removido=1
+ATAQUE slot=2; encontro=15ccfe8daeaaa2da5c8a2ec14d800672; tempo=5.000; dano=1; hp_removido=1
+ATAQUE slot=0; encontro=6106b2cc514ba4ac3188ac6c2d7dfff6; tempo=5.000; dano=1; hp_removido=1
+ATAQUE slot=0; encontro=7457fbb20c54d23d93660fedf4bf3e42; tempo=0.000; dano=1; hp_removido=1
+ATAQUE slot=0; encontro=7457fbb20c54d23d93660fedf4bf3e42; tempo=0.000; dano=1; hp_removido=1
+Cerulean: células=4615; bloqueadas=1782; peças técnicas ocultadas=20; recortes ausentes=[]
+ATAQUES INDEPENDENTES: 24 verificações; 0 falhas

@@ -1,0 +1,59 @@
+{
+  "execucao": "20261106_150855_0f344afd",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_dificuldade_hunts",
+    "test_melhor_golpe",
+    "test_ataques_independentes",
+    "test_golpes_combate"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 20.405,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_dificuldade_hunts",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.522,
+      "motivo": "",
+      "log": "01_test_dificuldade_hunts.txt",
+      "perfil_isolado": "PokeIdle_QA_891a3182aec5410c801cd55476575c7a"
+    },
+    {
+      "etapa": "01_test_melhor_golpe",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.574,
+      "motivo": "",
+      "log": "01_test_melhor_golpe.txt",
+      "perfil_isolado": "PokeIdle_QA_51e30459f0ae47ea8eddc83bd6ce0edf"
+    },
+    {
+      "etapa": "01_test_ataques_independentes",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 4.016,
+      "motivo": "",
+      "log": "01_test_ataques_independentes.txt",
+      "perfil_isolado": "PokeIdle_QA_8c86c09396d04b2a8ca67bfd0aa84558"
+    },
+    {
+      "etapa": "01_test_golpes_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.615,
+      "motivo": "",
+      "log": "01_test_golpes_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_d583df2ac21245988cbcb9c5f9e13314"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

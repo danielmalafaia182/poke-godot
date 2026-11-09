@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="DadosEspecie" format=3 uid="uid://h3iupkjqdcha"]
+
+[ext_resource type="Script" uid="uid://bvtv4irhnubtl" path="res://dados_especie.gd" id="1_gyaa5"]
+[ext_resource type="Texture2D" uid="uid://d2044jqr7gqr7" path="res://assets/pokemon/larvitar/outfits-male-400-00-9bea9479fb83.webp" id="2_a48vi"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hoe1w"]
+atlas = ExtResource("2_a48vi")
+region = Rect2(278.263, 4.2558746, 23.905487, 28.68657)
+
+[resource]
+script = ExtResource("1_gyaa5")
+nome = "Larvitar"
+vida_maxima = 20
+textura = SubResource("AtlasTexture_hoe1w")
+dano_base = 4
+base_hp = 50
+base_atk = 64
+base_def = 50
+base_sp_atk = 45
+base_sp_def = 50
+base_speed = 41
+tipo_primario = "ROCK"
+tipo_secundario = "GROUND"
+metadata/_custom_type_script = "uid://bvtv4irhnubtl"

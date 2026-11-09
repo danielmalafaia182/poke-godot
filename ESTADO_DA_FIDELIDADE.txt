@@ -1,0 +1,36 @@
+BASE DE EVIDÊNCIAS E PRÓXIMAS CORREÇÕES
+
+NÃO ESTAMOS AFIRMANDO FIDELIDADE INTEGRAL NESTE PACOTE.
+Ele prepara a medição e inclui um mapeamento de apresentação conferido no cliente extraído. As regras de gameplay anteriores foram mantidas.
+
+CONFERIDO NO CÓDIGO DO CLIENTE FORNECIDO
+O consumidor de mensagens field usa hits com slot, amount, move, eff, crit e blocked. slot=-1 aponta o aliado; demais slots apontam o selvagem que recebe o efeito/texto. O cliente não permite concluir a identidade do atacante somente pelo slot.
+Há suporte a fx/fx2 e fxHit/fxHit2 com atrasos próprios, fxAt e dmgDelayMs. O cliente trata atraso de apresentação sem que isso comprove um atraso equivalente na aplicação de HP pelo servidor.
+Textos de dano são removidos após 950 ms. O código também trata field-lost e agenda reentrada; a dinâmica completa de derrota exige observação do servidor.
+As fórmulas de atributos/Power, os dados do catálogo e a apresentação do cliente não revelam por si só a fórmula de dano do servidor.
+A fonte e o hash do trecho conferido estão em evidencias/fonte_hits.json. É o arquivo extraído fornecido, com adaptações de conexão local já existentes, não uma auditoria do servidor nem consulta da versão online atual.
+
+OBSERVADO PELO USUÁRIO NO ORIGINAL
+- Vários selvagens atacam independentemente no mesmo período.
+- Togepi nível 1 usa Last Resort, apesar do requisito diferente no catálogo.
+Essas observações têm valor, mas ainda precisamos de amostras temporizadas para comparar dano e cadência.
+
+CONTINUA PROVISÓRIO NO NOSSO JOGO
+- Cadência padrão 1,5 s e cooldowns do catálogo desligados.
+- Nível do mapa usado como nível do selvagem.
+- Fórmula local de dano, HP selvagem x5, dano selvagem x1,8 e amplificação local da efetividade.
+- Aliado alternando golpes; selvagem escolhe o maior dano previsto, com TM não presumida aprendida.
+- Raios de perseguição/passeio, reação ao cerco, alcance geral e regras de atacar durante movimento.
+- Chance de captura, respawn, política de poções e comportamento de derrota/reentrada.
+- Mecânicas de status, críticos, bloqueios, buffs, cura de golpes e recoil ainda sem reprodução integral.
+
+CRITÉRIO PARA UMA REGRA SER MARCADA COMO VALIDADA
+1. Identificar a origem da evidência: código, observação em vídeo ou mensagem de servidor.
+2. Reproduzir no protótipo condições comparáveis de atributos, tipos e bônus.
+3. Comparar separadamente HP inicial, escolha de golpe, dano, intervalos de ataque, alcance e resposta ao cerco.
+4. Testar mais de um caso, incluindo uma combinação que possa contradizer a hipótese.
+5. Documentar a tolerância/limites da amostra e manter como desconhecido o que ela não demonstra.
+Não basta um resultado de vitória/derrota parecido nem ajustar um multiplicador até uma única luta coincidir.
+
+VALIDAÇÃO DESTA ENTREGA
+Testes do observador, preservação de estado/RNG, JSONL, exportação ao sair da hunt, analisador e regressão dirigida no Godot 4.6.3. Godot 4.7.2 ainda precisa de conferência no seu ambiente.

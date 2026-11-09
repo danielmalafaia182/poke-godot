@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-3674-00-8741f3ef87a5.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(398,2,64,64)
+[resource]
+script=ExtResource("1")
+nome="Elekid"
+textura=SubResource("A")
+base_hp=45
+base_atk=63
+base_def=37
+base_sp_atk=65
+base_sp_def=55
+base_speed=95
+tipo_primario="ELECTRIC"
+tipo_secundario=""

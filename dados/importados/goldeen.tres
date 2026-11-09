@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-274-00-9925d41313c1.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(546,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Goldeen"
+textura=SubResource("A")
+base_hp=45
+base_atk=67
+base_def=60
+base_sp_atk=35
+base_sp_def=50
+base_speed=63
+tipo_primario="WATER"
+tipo_secundario=""

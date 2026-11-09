@@ -1,0 +1,29 @@
+{
+  "suites": 39,
+  "aprovado": true,
+  "regressao": "20261107_205600_9109964c",
+  "nivel_padrao_alterado": false,
+  "fidelidade_comprovada": false,
+  "arquivos": {
+    "catalogo_hunts.gd": "3d9087a309b45d72768dc8087791ed4c631622065cac7cb87a81d5b88483ca32",
+    "caca.gd": "ef784296c93270e22832f4b00a4e334a0aff5690a7e0857e1117d0a10440cf93",
+    "caca_base.gd": "90c816aefb10cede8bb34e4576f6620ad8d65b3abe5ae188d8ab362bf3fa09d7",
+    "registro_combate.gd": "39c31cb39de494ee393bf1499718500276339c80715c4f259ba62783d04fb510",
+    "encontro_selvagem.gd": "c2d8016130b9b35dc7ce20219d1c60e6bb5ade05e7a6e022f71e5a4f77777cb8",
+    "regras_dano.gd": "5a0c1d078996ef829d09496fc7747e2088f82a616432ead436b9d81c8796c719",
+    "regras_dano_candidato.gd": "0b9a0d18e1fdfbe97cdba8cd7270bae882976edd97ab69ca69f3ba2a1cf68e94",
+    "regras_vida_selvagem.gd": "9a1ac3133f8701d03c84a996961a31a0cfaae123d333efc21250bff4d9ef2a82",
+    "auditoria_ofensiva_selvagens.gd": "d3467dd66cd148fb0a003e5b4ff2da02cb8b0918cfc49481bfbab53023804325",
+    "laboratorio_ofensiva_selvagens.gd": "07e67c694851cdbbdb444e008317cddff2442747b6d90ad5e730ac9ec11b1b04",
+    "laboratorio_ofensiva_selvagens.tscn": "55e4a59e8cf7135ea485d4ce3f0356ec7efc7778348a83ce6344c623903bf227",
+    "test_ofensiva_selvagens.gd": "8160c5e3ec1d40a07fdef309e9f246bcda26cef8c64fc84f8391ad6fc95e58d8",
+    "test_vida_selvagem_candidato.gd": "be3a288a9408f37676dd5d6e1527d5b7c4584415d99016a981959b43e50e788a",
+    "test_dano_candidato.gd": "c662f77899a3945b44e1b3b5d72a2176c95e56890a2a3847504151d574e3406c",
+    "test_dano_atributos.gd": "437e0bc1b98b31f5fe1b56b1efa886c16f1e4b836a543111f8ab3878062a5532",
+    "test_calibracao_combate.gd": "882446e67599702ff2b39799277ab446b8e416e5b216fe6220efefb66ce8e65e",
+    "validacao_qualidade/executar.py": "a9cd8bf8764eee97fe4b6a1832517926a644e27aa4603673a01d748932448f59",
+    "dados/combate/amostra_ofensiva_selvagens.json": "63f0eb57f44fc5c497fb8e3cb4bc5f67c4e0ed341c0faba9524f5a592a793fef",
+    "dados/combate/hp_selvagens_observados.json": "6967260e842b2fe8e412ec10d37b3b97e94b424be0d533039c0cd0b0d19abde9",
+    "dados/combate/auditoria_hp_selvagens.json": "1a99d0d5df658cc0bfada80ff1ac660c98651f1b2031da16362f19784c775679"
+  }
+}

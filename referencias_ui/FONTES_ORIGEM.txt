@@ -1,0 +1,18 @@
+barlow_regular.ttf
+0: Copyright 2017 The Barlow Project Authors (https://github.com/jpt/barlow)
+1: Barlow
+2: Regular
+14: http://scripts.sil.org/OFL
+
+barlow_bold.ttf
+0: Copyright 2017 The Barlow Project Authors (https://github.com/jpt/barlow)
+1: Barlow
+2: Bold
+14: http://scripts.sil.org/OFL
+
+cinzel_bold.ttf
+0: Copyright 2020 The Cinzel Project Authors (https://github.com/NDISCOVER/Cinzel)
+1: Cinzel
+2: Regular
+14: https://scripts.sil.org/OFL
+

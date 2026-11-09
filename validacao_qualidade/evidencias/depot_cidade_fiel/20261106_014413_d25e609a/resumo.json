@@ -1,0 +1,29 @@
+{
+  "execucao": "20261106_014413_d25e609a",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_depot_cidade_fiel"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 13.682,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_depot_cidade_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.048,
+      "motivo": "",
+      "log": "01_test_depot_cidade_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_a4c5150ea07d4e5581df84b80eeb2a28"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

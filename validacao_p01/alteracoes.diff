@@ -1,0 +1,119 @@
+--- caca_base.gd (antes)
++++ caca_base.gd (P01)
+@@ -56,6 +56,11 @@
+ # Relógio monotônico; injetável somente para testes sem esperas reais.
+ var relogio_troca: Callable=Time.get_ticks_msec
+ var registro_combate: Node
++# A navegação e os serviços podem ficar prontos mesmo com o líder derrotado.
++# A população só começa quando houver um líder saudável, uma única vez.
++var _navegacao_preparada: bool = false
++var _atividade_iniciada: bool = false
++var _saida_solicitada: bool = false
+ 
+ signal dano_aplicado(
+ 	posicao_global: Vector2,
+@@ -217,13 +222,8 @@
+ 	# Alteração: mantém HP entre caça e cidade. Cura ocorre por poção ou Nurse Joy.
+ 	vida_aliado = pokemon_aliado.obter_vida_atual()
+ 	EstadoJogo.registrar_vida_pokemon(pokemon_aliado,vida_aliado)
+-
+-	# Novo: um líder derrotado não inicia combates nem consome poções automaticamente.
+-	if vida_aliado <= 0:
+-		titulo.text = "Seu líder está sem HP. Volte à cidade e fale com Nurse Joy, ou escolha outro líder saudável."
+-		return
+-	gerar_selvagem()
+-	# Novo: inicia apenas após validar o aliado e a navegação.
++	_navegacao_preparada = true
++	# Conectar antes de aguardar uma reserva: o HUD já pode solicitar a troca.
+ 	timer_auto_potion = Timer.new()
+ 	timer_auto_potion.name = "TimerAutoPotion"
+ 	timer_auto_potion.wait_time = INTERVALO_AUTO_POTION
+@@ -231,9 +231,29 @@
+ 	add_child(timer_auto_potion)
+ 	timer_auto_potion.timeout.connect(_on_timer_auto_potion_timeout)
+ 	cura_aplicada.connect(_apresentar_cura)
+-	timer_auto_potion.start()
+ 	EstadoJogo.lider_alterado.connect(_sincronizar_lider_caca)
+ 	EstadoJogo.validador_troca_lider=_validar_troca_lider_hunt
++	if vida_aliado <= 0:
++		titulo.text = "Seu líder está sem HP. Escolha outro membro saudável ou volte à cidade e fale com Nurse Joy."
++		return
++	_tentar_iniciar_atividade()
++
++
++func _tentar_iniciar_atividade() -> void:
++	if _atividade_iniciada or not _navegacao_preparada or _saida_solicitada:
++		return
++	if not is_inside_tree() or is_queued_for_deletion() or vida_aliado <= 0:
++		return
++	# Reserva antes de gerar/emitir sinais, inclusive contra chamadas reentrantes.
++	_atividade_iniciada = true
++	gerar_selvagem()
++	timer_auto_potion.start()
++	_ao_iniciar_atividade()
++
++
++# A população e a apresentação específica pertencem à subclasse da hunt.
++func _ao_iniciar_atividade() -> void:
++	pass
+ 
+ 
+ # Alteração: valida os dados necessários ao combate.
+@@ -446,6 +466,7 @@
+ 
+ 
+ func _on_botao_voltar_cidade_pressed() -> void:
++	_saida_solicitada = true
+ 	# Alteração: encerra a atividade antes de trocar de cena.
+ 	aproximando = false
+ 	batalha_encerrada = true
+@@ -1021,9 +1042,10 @@
+ 
+ # Troca só o aliado. População, HP inimigo, rota e contadores da hunt permanecem.
+ func _sincronizar_lider_caca() -> void:
++	if _saida_solicitada or not is_inside_tree() or is_queued_for_deletion(): return
+ 	var novo: DadosPokemon=EstadoJogo.obter_lider()
+ 	if novo==pokemon_aliado: return
+-	if novo==null or novo.obter_vida_atual()<=0 or not especie_valida(novo.especie):
++	if novo==null or not especie_valida(novo.especie) or novo.obter_vida_atual()<=0:
+ 		# O clique no HUD também passa por aqui; não permite invocar um derrotado.
+ 		EstadoJogo.selecionar_lider(pokemon_aliado)
+ 		return
+@@ -1043,14 +1065,20 @@
+ 	imagem_aliado.call("_iniciar_animacao")
+ 	atualizar_interface()
+ 	aliado_alterado.emit(novo)
++	_tentar_iniciar_atividade()
+ 
+ func obter_troca_restante() -> float:
+ 	return maxf(0.0,float(EstadoJogo.prazo_troca_hunt_ms-int(relogio_troca.call()))/1000.0)
+ 
+ func _validar_troca_lider_hunt(novo: DadosPokemon) -> bool:
+-	return novo!=null and novo.obter_vida_atual()>0 and especie_valida(novo.especie) and obter_troca_restante()<=0.0
++	return not _saida_solicitada and is_inside_tree() and not is_queued_for_deletion() and novo!=null and especie_valida(novo.especie) and novo.obter_vida_atual()>0 and obter_troca_restante()<=0.0
+ 
+ func _exit_tree() -> void:
++	_saida_solicitada = true
++	if EstadoJogo.lider_alterado.is_connected(_sincronizar_lider_caca):
++		EstadoJogo.lider_alterado.disconnect(_sincronizar_lider_caca)
++	if is_instance_valid(timer_auto_potion):
++		timer_auto_potion.stop()
+ 	# Uma cena antiga nunca remove o validador de uma nova hunt já iniciada.
+ 	if EstadoJogo.validador_troca_lider.is_valid() and EstadoJogo.validador_troca_lider.get_object()==self:
+ 		EstadoJogo.validador_troca_lider=Callable()
+--- caca.gd (antes)
++++ caca.gd (P01)
+@@ -459,7 +459,12 @@
+ 	hud.controlador = self
+ 	get_node("Interface").add_child(hud)
+ 
+-	if populacao_iniciada:
++func _ao_iniciar_atividade() -> void:
++	if not populacao_iniciada:
++		return
++	# Também executa na recuperação tardia, depois que o HUD já existe.
++	titulo.hide()
++	if get_node_or_null("TreinadorCaca") == null:
+ 		var treinador: Node2D = load("res://treinador_caca.gd").new()
+ 		treinador.name = "TreinadorCaca"
+ 		add_child(treinador)

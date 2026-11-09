@@ -1,0 +1,28 @@
+DIFICULDADE DAS HUNTS — REGRA LOCAL PROVISÓRIA V1
+
+INSTALAÇÃO
+Aplicar após mapa_mundi_entre_hunts.zip. Pare o jogo, faça backup e extraia na pasta de project.godot. Substitua arquivos, preserve .gd.uid e execute novamente.
+
+REGRA
+Para esta versão local, o nível indicado no mapa é usado como nível efetivo do selvagem. Hunt 1 gera Lv1, hunt 30 gera Lv30, hunt 80 gera Lv80. É uma aproximação de balanceamento, não uma descoberta da fórmula do original.
+Atributos, HP, Power e disponibilidade de golpes passam a usar esse nível junto aos atributos da espécie, IVs e qualidade. Não se trata apenas de mudar um texto na interface.
+A entrada livre em hunts continua. Seu treinador não ganha níveis artificialmente e viajar não cura.
+Togepi permanece nível 1 e mantém Last Resort disponível conforme observação do original.
+Pokémon já capturados mantêm seus níveis salvos. Novas capturas conservam o nível do encontro; capturar um selvagem forte exige derrotá-lo antes.
+A regra está em dados/caca/hunts.json, nos campos nivel, dificuldade e regra_nivel. O importador também foi atualizado para preservar essa escala em futuras importações.
+
+GOLPES TM
+Selvagens não consideram automaticamente aprendidos os golpes marcados como tm no catálogo. Essas entradas podem ser muito mais fortes que golpes comuns. Até termos dados de aprendizado por indivíduo, a previsão de dano retorna zero para esses candidatos e escolhe o melhor golpe comum disponível. Isso é uma política local explícita, não confirmação do comportamento do servidor.
+Os dados brutos de TM continuam no catálogo. A política do aliado não foi alterada neste pacote.
+
+LIMITES
+A fórmula local de dano, o HP selvagem x5, o dano selvagem x1,8, sorteio de IVs/qualidade e cadência anterior continuam provisórios. Speed continua sem efeito na cadência.
+Cenários reutilizados e loot ainda pendente das outras espécies permanecem como antes. XP base continua a do catálogo, sem novo multiplicador por nível.
+A nova escala resolve o erro de todas as hunts terem inimigos Lv1; não comprova fidelidade total ou equilíbrio para todas as combinações.
+
+VALIDAÇÃO
+Godot 4.6.3; testes em perfis isolados. Regressão completa mais repetição dos testes de dano/seleção/cadência após excluir TMs dos selvagens.
+Teste compara Larvitar Lv8, IV16 em todos os atributos e qualidade1, contra cada uma das 39 hunts Lv80 disponíveis, nas mesmas condições de IV/qualidade. Simulação 1x1 sem cura, usando melhor golpe e aliado agindo primeiro em cada rodada. Todos os cenários altos precisam resultar em derrota do Larvitar; não é uma medição do jogo original nem uma simulação de posicionamento.
+Também verifica nível no nascimento real da cena, preservação do nível na captura e vantagem de atributos do Lv8 sobre Geodude Lv1.
+Os valores da comparação estão no relatório de teste e no CSV. Danos são os valores completos calculados; remoção de HP no jogo é limitada ao HP restante.
+Godot 4.7.2 não executado neste ambiente.

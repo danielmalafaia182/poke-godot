@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://cc0vblgv0abb5"]
+[ext_resource type="Script" path="res://mapa_mundi.gd" id="1"]
+[ext_resource type="Script" path="res://dados_destino_caca.gd" id="2"]
+[ext_resource type="Resource" path="res://dados/destinos/geodude.tres" id="3"]
+[ext_resource type="Resource" path="res://dados/destinos/larvitar.tres" id="4"]
+[node name="MapaMundi" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+destinos = Array[ExtResource("2")]([ExtResource("3"), ExtResource("4")])

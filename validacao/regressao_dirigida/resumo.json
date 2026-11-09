@@ -1,0 +1,67 @@
+{
+  "execucao": "20261106_165852_ce61a757",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_registro_combate",
+    "test_ui_fiel",
+    "test_mapa_entre_hunts",
+    "test_compatibilidade_save"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 16.292,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_registro_combate",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.123,
+      "motivo": "",
+      "log": "01_test_registro_combate.txt",
+      "perfil_isolado": "PokeIdle_QA_754854b30e0a47ed856b5249b9ef64cd"
+    },
+    {
+      "etapa": "01_test_ui_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.591,
+      "motivo": "",
+      "log": "01_test_ui_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_bc3c22579c4849b48278f827f43049ed"
+    },
+    {
+      "etapa": "01_test_mapa_entre_hunts",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 4.734,
+      "motivo": "",
+      "log": "01_test_mapa_entre_hunts.txt",
+      "perfil_isolado": "PokeIdle_QA_d5c50d61eeff4375b21ef6fb83161652"
+    },
+    {
+      "etapa": "01_test_compatibilidade_save_fixture",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.262,
+      "motivo": "",
+      "log": "01_test_compatibilidade_save_fixture.txt"
+    },
+    {
+      "etapa": "01_test_compatibilidade_save",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 0.459,
+      "motivo": "",
+      "log": "01_test_compatibilidade_save.txt",
+      "perfil_isolado": "PokeIdle_QA_98dea8605d57405893d037fefb51b4a5"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

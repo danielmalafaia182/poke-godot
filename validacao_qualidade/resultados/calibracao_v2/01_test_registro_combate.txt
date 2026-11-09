@@ -1,0 +1,27 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+Recortes consultados (chão apenas): 74
+Peças bloqueadoras carregadas: 19000
+Formato do mapa: stonegy-map-compact-v1
+Registros totais: 50281
+Primeiro registro: [-52.0, -42.0, 1.0, 415.0, []]
+Piso da caça: 7
+Registros no piso da caça: 9592
+Registros de chão desenhados: 9592
+Total de objetos: 7308
+Objetos desenhados: 7308
+Identificadores sem recorte: []
+Recortes consultados: 429
+Páginas de textura consultadas: 12
+Células existentes: 9592
+Células bloqueadas: 6703
+Células sem bloqueio: 2889
+Navegação original: 757 células livres; passo 500.0ms
+Células acessíveis ao aliado: 754
+Posição inicial da caça: (-2, 3)
+População configurada: 15
+Pontos originais validados: 15
+COMBATE EXPORTADO: /home/agent/.local/share/godot/app_userdata/PokeIdle_QA_bc042c8232ad4b8a91ba727e5258736c/diagnosticos_combate/combate_1793999334_1933648.jsonl
+COMBATE EXPORTADO: /home/agent/.local/share/godot/app_userdata/PokeIdle_QA_bc042c8232ad4b8a91ba727e5258736c/diagnosticos_combate/combate_1793999334_1936195.jsonl
+COMBATE EXPORTADO: /home/agent/.local/share/godot/app_userdata/PokeIdle_QA_bc042c8232ad4b8a91ba727e5258736c/diagnosticos_combate/combate_1793999334_1941784.jsonl
+REGISTRO COMBATE: 8 verificações; 0 falhas

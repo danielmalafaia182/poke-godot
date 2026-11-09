@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-197-00-56b0ba4838ec.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(206,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Marowak"
+textura=SubResource("A")
+base_hp=60
+base_atk=80
+base_def=110
+base_sp_atk=50
+base_sp_def=80
+base_speed=45
+tipo_primario="GROUND"
+tipo_secundario=""

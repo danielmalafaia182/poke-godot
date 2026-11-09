@@ -1,0 +1,196 @@
+RESULTADOS INICIAIS DO COMPARADOR
+
+Hipótese fixa: IV16, qualidade1, nível da hunt no protótipo e HP calculado×5.
+Não é distribuição de todos os selvagens, nem atributo comprovado do original.
+Os perfis de combate são experimentos independentes dos Pokémon capturados.
+
+Geodude × Geodude — v2
+Perfil selvagem hipotético: {"atributos": {"atk": 1, "def": 1, "hp": 1, "spAtk": 1, "spDef": 1, "speed": 1}, "especie": "Geodude", "nivel": 1, "origem": "hipotese_local_nao_confirmada", "vida_maxima": 120}
+
+Aliado · hp_maximo | COINCIDE
+Original: 24.0
+Local: 24
+IVs da fixture: sintéticos compatíveis; não são os IVs reais da conta
+
+Aliado · power | COINCIDE
+Original: 8.0
+Local: 8
+IVs da fixture: sintéticos compatíveis; não são os IVs reais da conta
+
+Aliado · atributos | COINCIDE
+Original: {"atk": 1.0, "def": 2.0, "hp": 1.0, "spAtk": 1.0, "spDef": 1.0, "speed": 1.0}
+Local: {"atk": 1, "def": 2, "hp": 1, "spAtk": 1, "spDef": 1, "speed": 1}
+IVs da fixture: sintéticos compatíveis; não são os IVs reais da conta
+
+Selvagem · HP máximo | DIVERGE
+Original: [120.0]
+Local: 120
+Esta hipótese fixa é comparada aos HPs amostrados, sem validar a distribuição de IV/qualidade. Um HP não determina nível, Def ou SpDef.
+
+Selvagem · nível e atributos | NÃO VALIDÁVEL
+Original: "desconhecidos"
+Local: {"atributos": {"atk": 1, "def": 1, "hp": 1, "spAtk": 1, "spDef": 1, "speed": 1}, "nivel": 1}
+Entradas hipotéticas independentes do Pokémon capturável.
+
+Golpe do aliado | COMPATÍVEL SOB HIPÓTESE
+Original: ["Tackle"]
+Local: "Tackle"
+Seleção avaliada nesta hipótese. Ausência de golpe recebido no log não comprova que o selvagem não ataca.
+
+Golpe do selvagem | COMPATÍVEL SOB HIPÓTESE
+Original: ["Tackle"]
+Local: "Tackle"
+Seleção avaliada nesta hipótese. Ausência de golpe recebido no log não comprova que o selvagem não ataca.
+
+causado · Tackle · PHYSICAL | COMPATÍVEL SOB HIPÓTESE
+Original: {"eventos": 31, "max": 2, "min": 2}
+Local: 2
+Faltam os atributos originais do selvagem. Compatibilidade numérica não valida a fórmula.
+
+Efetividade · Tackle | COINCIDE
+Original: [0.333333333333333]
+Local: 0.333333333333333
+
+Intervalos · Tackle | INCONCLUSIVO
+Original: {"intervalos_zero_ms": 1, "menor_pacote_ms": 400.0}
+Local: 1600.0
+Intervalos de pacotes incluem movimento/trocas e agrupamentos; não medem execução individual. Há intervalo positivo menor que o perfil local: investigar.
+
+recebido · Tackle · PHYSICAL | COMPATÍVEL SOB HIPÓTESE
+Original: {"eventos": 58, "max": 1, "min": 1}
+Local: 1
+Faltam os atributos originais do selvagem. Compatibilidade numérica não valida a fórmula.
+
+Efetividade · Tackle | COINCIDE
+Original: [0.333333333333333]
+Local: 0.333333333333333
+
+Intervalos · Tackle | INCONCLUSIVO
+Original: {"intervalos_zero_ms": 9, "menor_pacote_ms": 399.0}
+Local: 2000.0
+Intervalos de pacotes incluem movimento/trocas e agrupamentos; não medem execução individual. Há intervalo positivo menor que o perfil local: investigar.
+
+Pendências: As observações não revelam os atributos nem o nível de combate dos selvagens.; Alterar o perfil neste laboratório não muda a caça nem o Pokémon capturado.; O dano usa a regra local da caça. Compatibilidade sob hipótese não identifica uma fórmula única.; As faixas originais contêm vários selvagens; a simulação é um duelo de atributos fixos.; O nível1 da referência capturável é um exemplo local, sem vínculo demonstrado com o inimigo observado.
+
+Exeggutor × Blastoise — v2
+Perfil selvagem hipotético: {"atributos": {"atk": 92, "def": 106, "hp": 89, "spAtk": 94, "spDef": 110, "speed": 88}, "especie": "Blastoise", "nivel": 80, "origem": "hipotese_local_nao_confirmada", "vida_maxima": 5340}
+
+Aliado · hp_maximo | COINCIDE
+Original: 12444.0
+Local: 12444
+IVs da fixture: inferência condicionada à fórmula do cliente e atributos arredondados
+
+Aliado · power | COINCIDE
+Original: 9346.0
+Local: 9346
+IVs da fixture: inferência condicionada à fórmula do cliente e atributos arredondados
+
+Aliado · atributos | COINCIDE
+Original: {"atk": 975.0, "def": 796.0, "hp": 1037.0, "spAtk": 1178.0, "spDef": 796.0, "speed": 410.0}
+Local: {"atk": 975, "def": 796, "hp": 1037, "spAtk": 1178, "spDef": 796, "speed": 410}
+IVs da fixture: inferência condicionada à fórmula do cliente e atributos arredondados
+
+Selvagem · HP máximo | DIVERGE
+Original: [2380.0, 2520.0, 2625.0, 2975.0, 3150.0, 3360.0, 3430.0, 3465.0, 3780.0, 3885.0, 3920.0, 3990.0, 4585.0, 4690.0, 4725.0]
+Local: 5340
+Esta hipótese fixa é comparada aos HPs amostrados, sem validar a distribuição de IV/qualidade. Um HP não determina nível, Def ou SpDef.
+
+Selvagem · nível e atributos | NÃO VALIDÁVEL
+Original: "desconhecidos"
+Local: {"atributos": {"atk": 92, "def": 106, "hp": 89, "spAtk": 94, "spDef": 110, "speed": 88}, "nivel": 80}
+Entradas hipotéticas independentes do Pokémon capturável.
+
+Golpe do aliado | COMPATÍVEL SOB HIPÓTESE
+Original: ["Leaf Storm"]
+Local: "Leaf Storm"
+Seleção avaliada nesta hipótese. Ausência de golpe recebido no log não comprova que o selvagem não ataca.
+
+Golpe do selvagem | NÃO VALIDÁVEL
+Original: []
+Local: "Bite"
+Seleção avaliada nesta hipótese. Ausência de golpe recebido no log não comprova que o selvagem não ataca.
+
+causado · Leaf Storm · SPECIAL | DIVERGE
+Original: {"eventos": 10, "max": 20567, "min": 11306}
+Local: 11226
+Faltam os atributos originais do selvagem. Compatibilidade numérica não valida a fórmula.
+
+Efetividade · Leaf Storm | COINCIDE
+Original: [2.5]
+Local: 2.5
+
+Intervalos · Leaf Storm | INCONCLUSIVO
+Original: {"intervalos_zero_ms": 0, "menor_pacote_ms": 1200.0}
+Local: 1600.0
+Intervalos de pacotes incluem movimento/trocas e agrupamentos; não medem execução individual. Há intervalo positivo menor que o perfil local: investigar.
+
+Pendências: As observações não revelam os atributos nem o nível de combate dos selvagens.; Alterar o perfil neste laboratório não muda a caça nem o Pokémon capturado.; O dano usa a regra local da caça. Compatibilidade sob hipótese não identifica uma fórmula única.; As faixas originais contêm vários selvagens; a simulação é um duelo de atributos fixos.; O nível1 da referência capturável é um exemplo local, sem vínculo demonstrado com o inimigo observado.
+
+Gyarados × Blastoise — v2
+Perfil selvagem hipotético: {"atributos": {"atk": 92, "def": 106, "hp": 89, "spAtk": 94, "spDef": 110, "speed": 88}, "especie": "Blastoise", "nivel": 80, "origem": "hipotese_local_nao_confirmada", "vida_maxima": 5340}
+
+Aliado · hp_maximo | COINCIDE
+Original: 6324.0
+Local: 6324
+IVs da fixture: inferência condicionada à fórmula do cliente e atributos arredondados
+
+Aliado · power | COINCIDE
+Original: 5386.0
+Local: 5386
+IVs da fixture: inferência condicionada à fórmula do cliente e atributos arredondados
+
+Aliado · atributos | COINCIDE
+Original: {"atk": 647.0, "def": 428.0, "hp": 527.0, "spAtk": 370.0, "spDef": 500.0, "speed": 520.0}
+Local: {"atk": 647, "def": 428, "hp": 527, "spAtk": 370, "spDef": 500, "speed": 520}
+IVs da fixture: inferência condicionada à fórmula do cliente e atributos arredondados
+
+Selvagem · HP máximo | DIVERGE
+Original: [2380.0, 2520.0, 2625.0, 2975.0, 3150.0, 3360.0, 3430.0, 3465.0, 3780.0, 3885.0, 3920.0, 3990.0, 4585.0, 4690.0, 4725.0]
+Local: 5340
+Esta hipótese fixa é comparada aos HPs amostrados, sem validar a distribuição de IV/qualidade. Um HP não determina nível, Def ou SpDef.
+
+Selvagem · nível e atributos | NÃO VALIDÁVEL
+Original: "desconhecidos"
+Local: {"atributos": {"atk": 92, "def": 106, "hp": 89, "spAtk": 94, "spDef": 110, "speed": 88}, "nivel": 80}
+Entradas hipotéticas independentes do Pokémon capturável.
+
+Golpe do aliado | COMPATÍVEL SOB HIPÓTESE
+Original: ["Thrash"]
+Local: "Thrash"
+Seleção avaliada nesta hipótese. Ausência de golpe recebido no log não comprova que o selvagem não ataca.
+
+Golpe do selvagem | COMPATÍVEL SOB HIPÓTESE
+Original: ["Skull Bash"]
+Local: "Skull Bash"
+Seleção avaliada nesta hipótese. Ausência de golpe recebido no log não comprova que o selvagem não ataca.
+
+causado · Thrash · PHYSICAL | COMPATÍVEL SOB HIPÓTESE
+Original: {"eventos": 12, "max": 1300, "min": 1012}
+Local: 1285
+Faltam os atributos originais do selvagem. Compatibilidade numérica não valida a fórmula.
+
+Efetividade · Thrash | COINCIDE
+Original: [1.0]
+Local: 1.0
+
+Intervalos · Thrash | INCONCLUSIVO
+Original: {"intervalos_zero_ms": 1, "menor_pacote_ms": 399.0}
+Local: 1600.0
+Intervalos de pacotes incluem movimento/trocas e agrupamentos; não medem execução individual. Há intervalo positivo menor que o perfil local: investigar.
+
+recebido · Skull Bash · PHYSICAL | DIVERGE
+Original: {"eventos": 6, "max": 37, "min": 34}
+Local: 21
+Faltam os atributos originais do selvagem. Compatibilidade numérica não valida a fórmula.
+
+Efetividade · Skull Bash | COINCIDE
+Original: [1.0]
+Local: 1.0
+
+Intervalos · Skull Bash | INCONCLUSIVO
+Original: {"intervalos_zero_ms": 0, "menor_pacote_ms": 2000.0}
+Local: 2000.0
+Intervalos de pacotes incluem movimento/trocas e agrupamentos; não medem execução individual. 
+
+Pendências: As observações não revelam os atributos nem o nível de combate dos selvagens.; Alterar o perfil neste laboratório não muda a caça nem o Pokémon capturado.; O dano usa a regra local da caça. Compatibilidade sob hipótese não identifica uma fórmula única.; As faixas originais contêm vários selvagens; a simulação é um duelo de atributos fixos.; O nível1 da referência capturável é um exemplo local, sem vínculo demonstrado com o inimigo observado.
+

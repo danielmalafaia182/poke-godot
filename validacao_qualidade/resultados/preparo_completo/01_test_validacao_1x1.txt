@@ -1,0 +1,9 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+TETO 1X1: nivel94 = 47
+TETO 1X1: nivel95 = 47
+TETO 1X1: nivel96 = 48
+TETO 1X1: nivel97 = 48
+TETO 1X1: nivel98 = 49
+TETO 1X1: nivel99 = 50
+VALIDACAO 1X1: 20 verificações; 0 falhas

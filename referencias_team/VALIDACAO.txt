@@ -1,0 +1,51 @@
+TEAM FRONTAL / TIPOS — VALIDAÇÃO
+Base: RAR atualizado e último pacote cidade_time_autohelper_fiel.
+Motor: Godot 4.6.3 stable Linux x86_64.
+
+DEZ TESTES EXISTENTES
+Passaram test_ui_fiel, test_revisao, test_movimento_selvagens,
+test_hunt_referencias, test_qualidade, test_cidade_qualidade,
+test_compatibilidade_save, test_consistencia, test_golpes_combate e
+test_combate_rapido. Os logs do runner verificam conclusão explícita e rejeitam
+SCRIPT ERROR/ERROR mesmo com código de saída zero.
+
+TESTE NOVO
+TEAM FIEL: 98 verificações, 0 falhas.
+- Região sul correta dos spritesheets de Larvitar e Geodude em todos os quadros.
+- Quadros com pixels visíveis e cache de retratos.
+- Água azul, Terra e Pedra distintas, 18 cores/insígnias reais distintas.
+- Marcas d'água presentes carregadas; marcas ausentes sem erro ou troca de tipo.
+- HUD usa retratos frontais e o tipo primário real.
+- Menu abre TEAM; seis slots; medidas 533x620; sem rolagem desnecessária desktop.
+- Slots vazios desativados; ficha com escala de outfit e selos correspondentes.
+- Evolução continua indisponível.
+- Identidade dos nós preservada em 20 mudanças de HP/XP.
+- Barras refletem o estado real, atributos individuais e proporções corretas.
+- Consultar outro slot não troca o líder; invocar muda o líder na cidade.
+- Troca bloqueada quando a janela é usada durante a caça.
+- Nenhum consumo de itens ao consultar/invocar.
+- Remover o selecionado pelo depot restaura a ficha de um membro válido.
+- Janela cabe em 1920x1080, 1280x720, 1152x648 e 800x450.
+- Rolagem disponível em janela baixa; fechamento por X, Esc e clique exterior.
+- O estado continua salvável.
+
+RENDERIZAÇÃO
+Captura real do Godot com OpenGL Compatibility/Mesa llvmpipe, 1920x960.
+TEAM 533x620; ficha 497x206; desktop sem barra de rolagem.
+Dados sintéticos: Larvitar nível 3, HP 18/24, XP 60%; segundo membro Geodude.
+As imagens do ZIP são recortes dessa renderização; não são imagens ilustrativas
+produzidas por IA e não contêm dados importados da conta do original.
+
+ORIGEM DOS PARÂMETROS VISUAIS
+Chunk original 0fllz2m_ktm3s.js: TYPE_COLOR, typeIconUrl, qualityInfo.
+Chunk original 0gx72gz9qjk5j.js: composição TEAM, proporções/cores dos atributos.
+CSS extraído: .team-window, .team-pit, .team-sprite, .team-bars, .team-slot,
+.team-active-tag, .dex-stat, .pp-type.
+Assets fornecidos: /types/*.png, /elements/{grass,ground,rock}.png,
+pokeball_open_v2.png e spritesheets dos dois Pokémon.
+A direção sul dos retratos é a preferência solicitada pelo usuário; o cliente
+extraído originalmente usava direção lateral para alguns retratos.
+
+LIMITES
+Não é teste de Windows/4.7.2, benchmark de FPS ou auditoria exaustiva.
+Evolução e novas espécies não foram implementadas nesta revisão visual.

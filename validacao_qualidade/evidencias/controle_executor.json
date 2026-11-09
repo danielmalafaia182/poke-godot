@@ -1,0 +1,26 @@
+[
+  {
+    "etapa": "saida_zero_sem_conclusao",
+    "aprovado": false,
+    "codigo_saida": 0,
+    "duracao_segundos": 0.013,
+    "motivo": "Mensagem final de conclusão ausente ou inválida.",
+    "log": "saida_zero_sem_conclusao.txt"
+  },
+  {
+    "etapa": "erro_com_saida_zero",
+    "aprovado": false,
+    "codigo_saida": 0,
+    "duracao_segundos": 0.021,
+    "motivo": "Godot registrou erro, mesmo com saída zero.",
+    "log": "erro_com_saida_zero.txt"
+  },
+  {
+    "etapa": "tempo_limite",
+    "aprovado": false,
+    "codigo_saida": null,
+    "duracao_segundos": 0.051,
+    "motivo": "Tempo limite de 0.05s excedido.",
+    "log": "tempo_limite.txt"
+  }
+]

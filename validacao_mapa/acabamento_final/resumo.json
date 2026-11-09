@@ -1,0 +1,29 @@
+{
+  "execucao": "20261106_135734_a54cde34",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_mapa_fiel"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 17.695,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_mapa_fiel",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 4.371,
+      "motivo": "",
+      "log": "01_test_mapa_fiel.txt",
+      "perfil_isolado": "PokeIdle_QA_650ce226ced4441f9019100784d1d6be"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

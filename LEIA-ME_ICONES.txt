@@ -1,0 +1,24 @@
+ÍCONES ORIGINAIS DO LOOT
+Aplicar após loot_hunts_integrado.zip.
+
+INSTALAÇÃO
+1. Pare o jogo e faça backup.
+2. Extraia na pasta que contém project.godot, mesclando pastas e substituindo arquivos.
+3. Preserve os .gd.uid existentes e aguarde a importação das imagens no Godot.
+4. Execute com F5.
+Não precisa executar importadores, criar nós ou conectar sinais.
+
+RESULTADO
+Recuperados os 161 ícones que faltavam, pelos caminhos públicos de items.json e pela regra /assets/items/ usada no cliente original. Os 183 itens distintos do catálogo de loot agora têm imagens originais disponíveis.
+O painel de derrota e a listagem de itens do depot usam essas imagens a partir da tabela atualizada. Não foi redesenhado nenhum ícone.
+A imagem referencia_visual/conferencia_icones.png permite conferir todos os itens pelo ID original. IDs locais conflitantes continuam com os aliases documentados na etapa anterior.
+Os ícones PNG mantêm a resolução original. Arquivos GIF foram convertidos para PNG estático com transparência, usando o primeiro quadro: a animação de GIF ainda não foi reproduzida.
+A origem pública, dimensões e hashes dos 161 arquivos estão em dados/referencias/icones_loot_recuperados.json. O arquivo contém URLs públicas de imagens, sem dados de sessão.
+
+IMPORTADOR
+ferramentas/importar_loot.py foi ajustado para reaproveitar imagens já recuperadas no projeto, além das extrações originais. Repetir a importação não volta os itens para o marcador neutro quando o PNG local está presente. A geração final registrou zero ícones pendentes.
+
+VALIDAÇÃO
+Godot 4.6.3: suítes test_loot_hunts, test_loot_combate_fiel, test_depot_cidade_fiel e test_compatibilidade_save aprovadas, além da importação e fixture anterior. Relatórios em validacao.
+Imagens verificadas por decodificação, dimensões, identidade dos itens e folha de conferência.
+Godot 4.7.2 não executado neste ambiente. Conferir a apresentação no seu projeto após a importação.

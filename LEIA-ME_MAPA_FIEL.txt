@@ -1,0 +1,38 @@
+MAPA-MÚNDI — VISUAL FIEL AO ORIGINAL
+
+INSTALAÇÃO
+Aplicar sobre o projeto atualizado com ataques_selvagens_independentes.zip.
+1. Pare o jogo e faça uma cópia do projeto.
+2. Extraia este ZIP na pasta que contém project.godot.
+3. Mescle as pastas e substitua os arquivos existentes.
+4. Preserve os arquivos .gd.uid existentes. Aguarde a importação do Godot e execute com F5.
+Não precisa criar nós nem conectar sinais. Este pacote não substitui project.godot.
+
+O QUE MUDOU
+- Janela com moldura dourada, cabeçalho, fontes, cores e banners das quatro regiões.
+- Imagem e atlas de marcadores extraídos dos arquivos fornecidos do original.
+- Catálogo de 227 localizações de Kanto, com posições, nomes, níveis e tipos da extração.
+- Busca por nome, níveis mínimo/máximo, filtro por tipo e Clear.
+- Com geod, o contador mostra 1 of 227, como na referência.
+- Arraste do mapa, roda do mouse, botões de zoom, arraste pelo cabeçalho e fechamento por X, Esc ou clique fora.
+- Janela adaptada à área disponível; ícones continuam legíveis ao aproximar e afastar.
+- Cliques no Geodude entram na caça existente.
+
+ESCOPO REAL
+Somente a caça do Geodude está implementada. As outras localizações são referências visuais do catálogo, sem viagem habilitada. Outland, Orre e Nightmare exibem os banners, mas ainda não têm navegação implementada.
+O contador 227 representa o catálogo de Kanto, e não 227 caças disponíveis.
+Os dados refletem os arquivos fornecidos, sem consulta ao estado atual do servidor.
+O tooltip é simplificado: não foram inventados atributos ou recompensas para destinos indisponíveis.
+Efeitos de borda animada e desfoque do navegador não foram reproduzidos integralmente.
+
+VALIDAÇÃO
+17 suítes aprovadas no Godot 4.6.3, com regressão de combate, ataques independentes, atributos, depot, time, interface e saves.
+O teste novo do mapa cobre 28 verificações: filtros, coordenadas, zoom, arraste, fechamento, reabertura e entrada na caça preservando estoque/configurações.
+Redimensionamento verificado em 1920x1080, 1152x648 e 800x450.
+Renderização nativa conferida em 1920x960. As imagens em referencia_visual são capturas reais do projeto, com perfil de teste.
+Acabamento final do marcador e tooltip também passou por nova execução do teste do mapa.
+Godot 4.7.2 não foi executado neste ambiente.
+
+ARQUIVOS
+Scripts do mapa, cena mapa_mundi.tscn, referência de Kanto, posição do destino Geodude, assets específicos do mapa e teste/runner de validação.
+As fórmulas de combate e a estrutura dos saves permanecem as do projeto anterior.

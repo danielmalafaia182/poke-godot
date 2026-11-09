@@ -1,0 +1,33 @@
+OBJETIVO: MEDIR ANTES DE AFIRMAR FIDELIDADE
+
+INSTALAÇÃO
+Aplicar após evolucao_larvitar_geodude.zip. Pare o jogo, faça backup e extraia na pasta de project.godot, substituindo arquivos e preservando .gd.uid. Não precisa alterar project.godot, criar nós ou conectar sinais.
+
+REGISTRO DO NOSSO JOGO
+1. Entre em uma hunt e deixe o jogo com foco, sem campo de texto aberto.
+2. Pressione Ctrl+Shift+L. A indicação de registro ativo aparece na tela.
+3. Observe de 20 a 30 segundos de combate.
+4. Pressione Ctrl+Shift+L novamente para encerrar e exportar.
+5. O caminho completo do arquivo .jsonl aparece na tela e no painel de saída do Godot. A pasta é diagnosticos_combate dentro da pasta de dados do usuário do projeto (não é a pasta res:// dos scripts).
+6. Envie o arquivo aqui. Ele contém dados do combate, não cookies, credenciais ou o save completo.
+Se sair da hunt com registro ativo, a sessão também será exportada. Cada entrada em hunt possui seu próprio registrador. O limite de 10000 registros encerra a captura e marca o arquivo como limitado. Em falha de escrita, os dados ficam em memória para tentar novamente com o mesmo atalho antes de sair.
+
+O QUE É REGISTRADO
+Configuração local de cadência, cooldown e multiplicadores; estados a cada 0,2 s; identidade dos encontros, posição, deslocamento, alvo, HP, IVs, qualidade, atributos e Power; eventos de golpe, cura, derrota e captura. Cada golpe inclui dano bruto, HP realmente removido, efetividade e relógio individual do atacante.
+O observador não altera vida, atributos, cooldowns, seleção, movimento ou RNG. O registro fica desligado até usar o atalho. Como qualquer diagnóstico, gerar arquivos e capturar dados pode ter algum custo de desempenho.
+A captura de estados a cada 0,2 s não serve para reconstruir cada frame de movimento; ela não é replay determinístico completo.
+
+AMOSTRA DO ORIGINAL QUE PRECISAMOS PRIMEIRO
+Use Geodude como referência inicial, com o aliado que você já possui no original. Não precisa ter o mesmo aliado no protótipo nesta primeira coleta; precisamos dos atributos dele para montar a comparação depois.
+- Print de TEAM: espécie, nível, IVs, qualidade, atributos, Power e HP máximo. Identifique buffs/equipamentos e poções ligadas.
+- Vídeo de 20 a 30 s em 1x1, seguido de uma amostra com vários inimigos ao redor.
+- Se possível, mensagens completas field-init e field contendo hits do mesmo período. Inclua eventos de cura/derrota relevantes.
+No Firefox, abra Ferramentas do Desenvolvedor -> Rede -> WS, selecione a conexão do jogo e a aba Mensagens. Copie o conteúdo das mensagens daquele período. Não precisa exportar um HAR completo nem reenviar catálogo ou sprites.
+Pode colar as mensagens completas aqui sem organizar em arquivo; eu normalizo. Se salvar para usar o analisador, aceite objeto JSON, lista JSON ou uma mensagem JSON compacta por linha (JSONL), sem cabeçalhos de console.
+Quando a primeira comparação estiver correta, repetimos com outra combinação de tipos e uma hunt mais difícil. Uma luta só não comprova a regra para todo Kanto.
+
+ANALISADOR OPCIONAL
+Não precisa executar Python para jogar ou registrar. Para análise local, Python 3 e biblioteca padrão:
+python ferramentas/analisar_combate.py NOSSO.jsonl --original ORIGINAL.json --saida comparacao.json
+O relatório separa dados locais e originais. Nunca marca fidelidade como comprovada automaticamente. Sem hits ou sem identificação de atacante, deixa essas lacunas explícitas.
+O slot original identifica o ALVO: -1 é aliado; >=0 aponta o selvagem. Não deve ser tratado como identificação de quem atacou. O slot do evento local tem semântica diferente conforme o campo aliado; o registro preserva ambos sem misturar formatos.

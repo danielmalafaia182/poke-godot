@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-323-00-c15acb868598.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(662,2,64,64)
+[resource]
+script=ExtResource("1")
+nome="Typhlosion"
+textura=SubResource("A")
+base_hp=78
+base_atk=84
+base_def=78
+base_sp_atk=109
+base_sp_def=85
+base_speed=100
+tipo_primario="FIRE"
+tipo_secundario=""

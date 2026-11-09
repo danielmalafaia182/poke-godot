@@ -1,0 +1,41 @@
+EXPANSÃO DAS HUNTS DE KANTO — IMPORTAÇÃO EM LOTE
+
+INSTALAÇÃO
+Requer hunts_configuradas_etapa2.zip aplicado.
+1. Pare o jogo e faça uma cópia do projeto.
+2. Extraia este ZIP na pasta de project.godot, mesclando pastas e substituindo arquivos.
+3. Preserve os .gd.uid existentes e aguarde a importação de novos sprites no Godot.
+4. Execute com F5 e abra o mapa-múndi.
+Não precisa executar Python para jogar; os dados e sprites já estão importados.
+
+DISPONÍVEL
+211 espécies de Kanto suportadas, incluindo Geodude e Larvitar: 209 espécies adicionais.
+As espécies novas usam os atributos, tipos, golpes e XP base extraídos de creatures.json. Larvitar passa de XP provisória zero para 548 XP base.
+Sprites dos quatro lados são recortados pelas coordenadas dos manifestos originais. Isso atende animação do selvagem, líder, retratos do time e depot.
+Registro de capturas e salvamento passam a aceitar explicitamente os recursos importados. O save continua aceitando somente nomes do catálogo local, sem carregar caminhos enviados dentro do arquivo de progresso.
+O nível de acesso do treinador permanece o indicado no mapa original. Há caças disponíveis no nível 1: Caterpie, Weedle, Pidgey, Rattata, Oddish, Paras, Bellsprout, Geodude e Sunkern.
+
+PROVISÓRIO
+Todas as hunts novas usam o cenário, grade e posições do Geodude, com 15 selvagens nível 1 e respawn de 10 segundos. O nível exigido para entrar na hunt é diferente do nível provisório dos selvagens.
+XP base vem do catálogo. Bônus VIP para as espécies novas não foi inferido: está em zero.
+Somente Geodude mantém loot funcional. Os drops brutos das outras espécies foram preservados em dados/importados/catalogo_fonte.json; ainda falta confirmar interpretação das chances, associação com IDs de itens e regras do servidor antes de habilitá-los.
+As fórmulas de dano e captura continuam as do protótipo. Status e efeitos dos golpes mantêm o suporte anterior; importar o golpe não significa implementar toda sua mecânica ou animação original.
+Esta expansão não reproduz os cenários próprios das 211 hunts nem todas as 647 criaturas do catálogo extraído.
+
+PENDÊNCIAS
+Metapod, Kakuna, Jigglypuff, Poliwag, Machop, Cubone, Igglybuff, Togepi, Hoppip e Misdreavus não foram habilitados porque não possuem golpe ofensivo no nível provisório 1. Precisam de um nível/regra de ataque confirmado, sem inventar Tackle para todos.
+Demais regiões continuam indisponíveis.
+A listagem completa está em relatorio_importacao.json.
+
+IMPORTADOR REUTILIZÁVEL
+Python 3, somente biblioteca padrão.
+Simulação: python ferramentas/importar_especies.py --origem PASTA_EXTRACOES --projeto PASTA_PROJETO
+Aplicação: mesmo comando com --aplicar.
+A origem precisa conter creatures.json, os manifestos outfits-male-*.json e suas páginas .webp. O importador considera os destinos Pokémon do mapa Kanto já existente. As integrações de runtime deste pacote são necessárias.
+Execute em cópia do projeto e com Godot fechado. A aplicação recria catálogos gerados de visuais/espécies e atualiza atributos, golpes e hunts; alterações manuais nesses dados podem ser substituídas. Não remove arquivos antigos da pasta.
+
+VALIDAÇÃO
+Regressão completa no Godot 4.6.3: 21 suítes aprovadas, além da importação e fixture de compatibilidade.
+Teste de importação: 4550 verificações sem falhas, cobrindo recursos, atributos, recortes, golpes, registro das 211 espécies e recuperação dos dados individuais de captura, além de cenas funcionais Bulbasaur/Charmander/Squirtle.
+Conferência nativa com Bulbasaur líder e Charmander selvagem. Imagem em referencia_visual é captura real com perfil de teste.
+Godot 4.7.2 não executado neste ambiente.

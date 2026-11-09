@@ -1,0 +1,89 @@
+PREPARAÇÃO DO PRIMEIRO ATAQUE SELVAGEM
+
+INSTALAÇÃO
+Pare o jogo, faça backup e extraia na pasta de project.godot, substituindo os
+scripts incluídos e mesclando as pastas. Preserve os .gd.uid existentes.
+Use sobre perfis_combate_respawn.zip ou versão posterior. Não precisa criar nós
+nem conectar sinais. Entre novamente na hunt para comparar.
+
+COMPORTAMENTO CANDIDATO
+Escopo atual: Blastoise, com atributos/calibração ligados.
+A opção Preparar Primeiro Ataque Selvagem vem ativada na raiz de Caca.tscn.
+No primeiro contato válido para ataque daquela vida, o selvagem reserva um
+intervalo próprio antes de golpear. O padrão é2s, o mesmo intervalo que ele usa
+entre golpes. Overrides individuais de intervalo também determinam a preparação.
+Depois do primeiro golpe, continua usando a mesma agenda independente que já tinha.
+
+O QUE CONTA COMO CONTATO NO PROTÓTIPO
+O selvagem precisa estar vivo, fora do movimento de passo, com Sprite válido,
+próximo ao aliado e com passagem permitida pela navegação. A reserva começa
+quando essa condição é observada pelo controlador. É um instante local, não
+um timestamp extraído diretamente dos pacotes do original.
+Não é necessário que o selvagem seja o alvo escolhido pelo aliado.
+Cada inimigo prepara e ataca por sua própria agenda; não há fila global.
+Dois que chegam juntos podem atacar no mesmo tick. Dois que chegam em momentos
+diferentes têm prazos diferentes. Trocar o alvo não reinicia a preparação.
+O tempo da agenda transcorrido antes do primeiro contato não elimina a espera.
+
+SAÍDA DE ALCANCE E RESPAWN
+Sair do alcance bloqueia o golpe, mas o prazo não é reiniciado ao voltar.
+Assim, um inimigo que já estava preparado pode atacar logo na reentrada.
+Um respawn cria novo encontro e reinicia a preparação. O perfil do slot permanece
+estável conforme a candidata anterior, mas ele não herda o estado da vida derrotada.
+Não é aplicada nova espera extra a cada golpe: a cadência seguinte é a já existente.
+Não vinculamos a aplicação de dano à duração de animações ou efeitos.
+
+VOLTAR AO COMPORTAMENTO ANTERIOR
+Desmarque Preparar Primeiro Ataque Selvagem e entre novamente na hunt.
+A opção desligada usa a agenda anterior, cujo primeiro uso pode ser imediato.
+Desligar a opção no meio de uma preparação não cancela a reserva que já foi feita.
+Espécies diferentes de Blastoise mantêm o comportamento anterior nesta entrega.
+
+EVIDÊNCIA E LIMITES
+No WS da última gravação, os primeiros hits de slots11,13,4 e10 apareceram em
+snapshots aproximadamente2s após o primeiro snapshot com coordenadas adjacentes.
+Slots6 e14 mostraram1,201s e1,599s; as janelas entre snapshots também contêm2s.
+Slot12 mostrou3,2s, e não é explicado por uma regra uniforme a partir daquele
+primeiro snapshot adjacente.
+Coordenadas de destino não são a posição renderizada durante o passo. Eventos
+podem estar agrupados e não trazem timestamps individuais de execução.
+Portanto, uma espera exata de2s após contato físico NÃO está comprovada no original.
+A implementação é uma candidata reversível que elimina o primeiro golpe imediato
+quando a agenda já envelheceu fora de combate. A extrapolação de uma preparação
+para todo Blastoise ainda precisa de validação visual/comportamental.
+Os dados estão em resultados_prontos/contato_original.json, incluindo a exceção.
+
+COMO CONFERIR EM JOGO
+Na hunt de Blastoise, observe a aproximação de um inimigo que ainda não entrou
+em alcance naquela vida. O primeiro golpe deve aguardar seu intervalo.
+Quando há outros por perto, eles não precisam esperar o aliado selecioná-los.
+Não conte a espera a partir da troca de alvo: um inimigo já pode estar preparado
+por ter entrado em alcance enquanto o aliado enfrentava outro.
+Veja também um respawn: mesma força/perfil do slot, novo preparo e nova agenda.
+
+DIAGNÓSTICO
+Ctrl+Shift+L inicia/encerra o registro. O estado e os eventos informam:
+primeiro_ataque_preparado, inicio_preparo_primeiro_ataque e prazo_primeiro_ataque.
+Os valores de início/prazo usam o relógio da agenda do próprio inimigo; não são
+horários absolutos nem o tempo da animação. O tempo do golpe permite medir o atraso.
+A sessão informa a opção configurada; o escopo ativo desta candidata é Blastoise.
+
+VALIDAÇÃO
+44 suítes aprovadas no Godot4.6.3, em cópia/perfil isolados.
+O teste novo cobre prazos individuais, espera inicial, troca de alvo, ataques
+simultâneos, reserva sem duplicação, saída/reentrada, override350ms, respawn,
+rollback, metadados e agenda já envelhecida fora de combate.
+Após ampliar a verificação da agenda envelhecida, executamos o teste focado novamente;
+os dois relatórios estão incluídos. A fixture numérica de ofensiva desativa esta
+opção explicitamente para continuar verificando o cálculo sem a espera inicial.
+
+AUDITORIA LOCAL ATUALIZADA
+Também repetimos2048 duelos com a candidata de preparo em contato frio:
+aliado inicia imediatamente, selvagem só após2s, sem deslocamento, prioridade
+estável do aliado, agendas1,6s/2s, sem cooldown herdado de outro alvo.
+A duração ideal mediana local continua4,8s, e a contagem mediana é4 golpes paraKO.
+Não são medidas do tempo real do original. A distribuição de dano por golpe muda
+um pouco pela exposição: inimigos que morrem antes dos2s não chegam a atacar.
+As fórmulas numéricas de dano não foram alteradas nesta entrega.
+Resultados completos em resultados_prontos/auditoria_local_preparo.json.
+Conferência visual no ambiente do usuário ainda necessária.

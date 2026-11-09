@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-39-00-d3dce35b5720.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(982,2,96,96)
+[resource]
+script=ExtResource("1")
+nome="Arbok"
+textura=SubResource("A")
+base_hp=60
+base_atk=85
+base_def=69
+base_sp_atk=65
+base_sp_def=79
+base_speed=80
+tipo_primario="POISON"
+tipo_secundario=""

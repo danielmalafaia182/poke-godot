@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://iir56ftaf1jp"]
+
+[ext_resource type="Script" uid="uid://b1rrtqrqvgx06" path="res://batalha.gd" id="1_d20q3"]
+[ext_resource type="Texture2D" uid="uid://d2044jqr7gqr7" path="res://assets/pokemon/larvitar/outfits-male-400-00-9bea9479fb83.webp" id="2_tvyxv"]
+[ext_resource type="Resource" uid="uid://b6nhj80r3usxn" path="res://dados/pokemons/larvitar_inicial.tres" id="3_1ghfo"]
+[ext_resource type="Texture2D" uid="uid://bp7sguq5401pv" path="res://assets/pokemon/geodude/outfits-male-196-00-bfa20f0b6fde.webp" id="3_vcxlu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hoe1w"]
+atlas = ExtResource("2_tvyxv")
+region = Rect2(278.263, 4.2558746, 23.905487, 28.68657)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g3aje"]
+atlas = ExtResource("3_vcxlu")
+region = Rect2(413.26874, 24.359573, 57.099976, 42.824966)
+
+[node name="Batalha" type="Control" unique_id=1674374376]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_d20q3")
+pokemon_aliado = ExtResource("3_1ghfo")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=23999809]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DadosAliado" type="Label" parent="VBoxContainer" unique_id=573912748]
+layout_mode = 2
+text = "Larvitar — Vida: 20/20"
+
+[node name="BarraVidaAliado" type="ProgressBar" parent="VBoxContainer" unique_id=1652363521]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="ImagemAliado" type="TextureRect" parent="VBoxContainer" unique_id=477208876]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = SubResource("AtlasTexture_hoe1w")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DadosSelvagem" type="Label" parent="VBoxContainer" unique_id=354873914]
+layout_mode = 2
+text = "Geodude — Vida: 15/15"
+
+[node name="BarraVidaSelvagem" type="ProgressBar" parent="VBoxContainer" unique_id=1664242833]
+custom_minimum_size = Vector2(0, 16)
+layout_mode = 2
+show_percentage = false
+
+[node name="ImagemSelvagem" type="TextureRect" parent="VBoxContainer" unique_id=2105745928]
+custom_minimum_size = Vector2(128, 128)
+layout_mode = 2
+texture = SubResource("AtlasTexture_g3aje")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ResultadoBatalha" type="Label" parent="VBoxContainer" unique_id=1402872599]
+layout_mode = 2
+
+[node name="BotaoAtacar" type="Button" parent="VBoxContainer" unique_id=625061360]
+layout_mode = 2
+disabled = true
+text = "Atacar"
+
+[node name="BotaoReiniciar" type="Button" parent="VBoxContainer" unique_id=591768241]
+layout_mode = 2
+text = "Reiniciar"
+
+[node name="BotaoCapturar" type="Button" parent="VBoxContainer" unique_id=589551735]
+layout_mode = 2
+text = "Capturar"
+
+[node name="DadosPokemon" type="Label" parent="VBoxContainer" unique_id=21314123]
+layout_mode = 2
+
+[node name="BotaoVoltarCidade" type="Button" parent="VBoxContainer" unique_id=1495395761]
+layout_mode = 2
+text = "Voltar à cidade"
+
+[node name="TimerCombate" type="Timer" parent="." unique_id=1466317172]
+
+[connection signal="pressed" from="VBoxContainer/BotaoAtacar" to="." method="_on_botao_atacar_pressed"]
+[connection signal="pressed" from="VBoxContainer/BotaoReiniciar" to="." method="_on_botao_reiniciar_pressed"]
+[connection signal="pressed" from="VBoxContainer/BotaoCapturar" to="." method="capturar"]
+[connection signal="pressed" from="VBoxContainer/BotaoVoltarCidade" to="." method="_on_botao_voltar_cidade_pressed"]
+[connection signal="timeout" from="TimerCombate" to="." method="_on_timer_combate_timeout"]

@@ -1,0 +1,73 @@
+{
+  "fields": 109,
+  "duracao_s": 79.226,
+  "hunt": "blastoise",
+  "herois": [
+    {
+      "name": "Gyarados",
+      "level": 214,
+      "maxHp": 6324,
+      "stats": {
+        "hp": 527,
+        "atk": 647,
+        "def": 428,
+        "spAtk": 370,
+        "spDef": 500,
+        "speed": 520
+      },
+      "quality": 1.8,
+      "ivTotal": 154,
+      "power": 5386
+    },
+    {
+      "name": "Exeggutor",
+      "level": 398,
+      "maxHp": 12444,
+      "stats": {
+        "hp": 1037,
+        "atk": 975,
+        "def": 796,
+        "spAtk": 1178,
+        "spDef": 796,
+        "speed": 410
+      },
+      "quality": 1.8,
+      "ivTotal": 138,
+      "power": 9346
+    }
+  ],
+  "hp_maximos_selvagens": [
+    2380,
+    2520,
+    2625,
+    2975,
+    3150,
+    3360,
+    3430,
+    3465,
+    3780,
+    3885,
+    3920,
+    3990,
+    4585,
+    4690,
+    4725
+  ],
+  "golpes_aliados": {
+    "Leaf Storm": 10,
+    "Thrash": 12
+  },
+  "golpes_recebidos": {
+    "Skull Bash": 6
+  },
+  "danos_recebidos": {
+    "34": 3,
+    "36": 2,
+    "37": 1
+  },
+  "efetividades": [
+    1,
+    2.5
+  ],
+  "conclusao": "Amostra com troca de líder, deslocamento e variação entre selvagens. Não é um único duelo de atributos constantes. Não identifica fórmula de dano nem attack rate por intervalos de pacotes."
+}

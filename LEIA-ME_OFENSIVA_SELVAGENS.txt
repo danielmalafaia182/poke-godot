@@ -1,0 +1,76 @@
+OFENSIVA DOS SELVAGENS: LIMITES E NÍVEL DE COMBATE
+
+INSTALAÇÃO
+Pare o jogo, faça backup e extraia na pasta de project.godot, mesclando as pastas
+e substituindo os scripts incluídos. Preserve os .gd.uid existentes.
+Inclui dependências das candidatas de dano e HP anteriores. Requer a base com
+laboratorio_pareado_pronto.zip ou posteriores instalada.
+Não precisa criar nós nem conectar sinais.
+
+USAR
+Abra laboratorio_ofensiva_selvagens.tscn no editor e pressioneF6.
+O painel já contém a nova amostra do original. Não precisa coletar nem importar
+outros logs para ver estes resultados. Selecione o nível hipotético e compare
+os envelopes de dano; Exportar JSON salva em user://diagnosticos_combate.
+A consulta não altera configuração, time, HP, níveis ou saves.
+
+RESULTADO PRINCIPAL
+Blastoise nível80 do gerador atual, IVs1–32, qualidades0,8–1,8, curva candidataV3:
+- Skull Bash contra Gyarados214: máximo41. Original27–55;11 dos34 golpes acima.
+- Bite contra Exeggutor406: máximo29. Original25–34;5 dos10 golpes acima.
+Foram excluídos3 eventos em pacotes de transição de aliado, restando44.
+Duplicatas são preservadas: dois hits iguais podem ser dois ataques reais.
+
+A combinação atual de premissas não consegue reproduzir esses16 danos.
+Isso não identifica isoladamente a causa: nível selvagem, geração de atributos,
+fórmula de dano ou multiplicador exclusivo dos selvagens podem estar diferentes.
+O código não acrescenta um multiplicador para compensar essa diferença.
+
+BUSCA DE LIMITES
+Na busca de níveis1–200, níveis94–130 não são refutados pelos envelopes de dano.
+Se também mantivermos a candidata HP=max(120,atributoHP*35), IV mínimo1 e qualidade
+mínima0,8, apenas94–99 não são refutados pelo menor HP máximo observado,2275.
+No nível100, mesmo o menor HP permitido nessas premissas já é2310.
+Isso é uma INTERSEÇÃO DE CONDIÇÕES NECESSÁRIAS; NÃO prova que o original use94–99,
+nem que exista um perfil único que satisfaça HP, Atk, Def e todos os demais dados.
+A distribuição de qualidade/IV e o nível real do selvagem permanecem desconhecidos.
+Ficar dentro de um envelope não comprova que todos os valores interiores sejam
+alcançáveis; ultrapassar seu máximo refuta a combinação das premissas testadas.
+
+ATAQUES RECEBIDOS
+No WS, slot=-1 indica o aliado atingido, não o atacante. Não juntamos os44 golpes
+como se viessem de um único Blastoise. Cada um pode ter IV/qualidade diferentes.
+O teste limita-se a Blastoise, Skull Bash e Bite, contra os perfis observados de
+Gyarados214 e Exeggutor406. Efetividade é a informada nos eventos originais.
+Não valida cadência, crítico, buffs, nem política de escolha dos golpes.
+Os extremos ofensivos vêm das mesmas regras de atributos usadas pelo protótipo.
+O painel usa resolver determinístico nos extremos de variação: não consome RNG.
+
+ALTERAÇÃO ESTRUTURAL ENTREGUE
+Agora a configuração da hunt aceita nivel_combate, separado de nivel.
+- nivel continua sendo o nível de acesso/exibição da hunt.
+- nivel_combate controla o nível usado ao gerar cada selvagem.
+- Quando o campo não existe, usa nivel e identifica o fallback como proxy não
+  confirmado. Assim, esta entrega preserva os níveis atuais das hunts.
+- Valores fracionários, negativos, não numéricos e maiores que100000 são rejeitados.
+O catálogo não é regravado pelo painel. Não escolhemos um novo nível padrão
+apenas para fazer os danos caberem. O valor só deve ser calibrado após decidir
+quais premissas vamos manter e validar.
+O diagnóstico perfil_hp de cada encontro agora informa nivel_acesso_hunt,
+nivel_combate_local e regra_nivel_combate. Esses campos acompanham o encontro
+até sua resolução; respawns recebem uma nova procedência.
+Não há migração ou alteração dos níveis de Pokémon capturados já salvos.
+
+VALIDAÇÃO
+Godot4.6.3, sem interface gráfica;39 suítes aprovadas, logs incluídos.
+Novo teste verifica os44 eventos, exclusões, tetos41/29,16 divergências, busca,
+independência dos níveis em uma caça real, configuração inválida, painel e
+exportação, sem alteração da configuração final. A fixture usa nível94 só dentro
+da cópia isolada de testes e restaura o arquivo original antes de concluir.
+Ainda falta conferir visualmente no Godot do usuário.
+
+PRÓXIMA DECISÃO DE CALIBRAÇÃO
+Cruzar o mesmo indivíduo original em três direções: HP máximo, dano que recebe
+e dano que causa. Com vários selvagens atacando e slot=-1, faltam identidades
+para esse cruzamento por indivíduo. A análise atual delimita possibilidades e
+mostra que apenas mudar HP não resolve a força ofensiva das hunts.

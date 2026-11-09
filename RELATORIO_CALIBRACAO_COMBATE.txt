@@ -1,0 +1,74 @@
+EVIDÊNCIA, ESCOLHAS LOCAIS E PENDÊNCIAS
+
+1. Referência Geodude Lv1
+Original: qualidade exibida 1,13; Power 8; HP 24; HPstat1 Atk1 Def2 SpAtk1 SpDef1 Speed1.
+IV total exibido:173. IVs individuais não são conhecidos.
+Fixture possível:32/28/32/32/32/17. Somente um conjunto compatível com a informação disponível.
+79 fields em 54,023 s; 31 Tackle causados de 2; 58 Tackle recebidos de 1; efetividade 1/3.
+Conservação de HP: alvo 120 - 31*2 = 58; aliado 24 + 4*12 - 58*1 = 14.
+Não foram removidos eventos iguais: mensagens podem conter ataques simultâneos de inimigos diferentes.
+slot identifica a vítima, e não identifica cada atacante recebido. Não se inferiu um attack rate por inimigo
+para todo o cerco a partir desse campo.
+Primeiros intervalos dos pacotes aliados:1601/1600/1601/1600/1600 ms.
+Primeiros dois intervalos recebidos no trecho inicial:2001/2002 ms.
+A frequência interna dos golpes não é necessariamente a frequência de publicação dos pacotes.
+
+Comparação no duelo local sintético compatível:
+Modelo v1: causado1 / recebido2.
+Modelo v2: causado2 / recebido1.
+O v2 usa piso aliado2 e retira o bônus selvagem1,8; os demais termos da curva seguem provisórios.
+Outras fórmulas poderiam reproduzir o mesmo par 2/1. Este acerto é calibração parcial, não identificação
+única da fórmula. A cura/HP contabilizados acima são evidência do log; o teste local de relógios não é
+um replay integral de todos os movimentos/ataques dessa sessão.
+
+2. Referência Exeggutor/Gyarados contra Blastoise
+109 fields em 79,226 s; troca de líder e movimentação. Não é um duelo de atributos constantes.
+Exeggutor Lv398 q1,8: HPstat1037 Atk975 Def796 SpAtk1178 SpDef796 Speed410; Power9346; HP12444.
+Gyarados Lv214 q1,8: HPstat527 Atk647 Def428 SpAtk370 SpDef500 Speed520; Power5386; HP6324.
+Fixtures condicionadas à fórmula do cliente:
+Exeggutor IV27/29/20/30/30/2, total138.
+Gyarados IV23/32/23/24/23/29, total154.
+A reprodução dos atributos, Power, HP e totais de IV é verificada automaticamente.
+Não se apresenta essa inferência como IVs individuais revelados pela API.
+
+Original: Leaf Storm10 vezes, dano11306–20567, efetividade2,5.
+Original: Thrash12 vezes, dano1012–1300, efetividade1.
+Original: Skull Bash recebido6 vezes, dano34–37, efetividade1.
+Novo seletor escolhe Leaf Storm para Exeggutor e Thrash para Gyarados contra um Blastoise de referência.
+Leaf Storm tem cooldown catalogado80000ms e Thrash50000ms; as repetições em menos de80s contradizem
+aplicar esses cooldowns como bloqueio de todo ataque automático observado.
+Isso valida a seleção nesses exemplos, não valida o dano numérico nem os atributos do Blastoise.
+Os HP máximos originais variam2380–4725. Mantivemos a regra local de HP selvagem anterior, sem inventar
+uma defesa a partir desses HP ou de um multiplicador global para encaixar os danos.
+Thrash aparece em pacotes separados por cerca de1200ms em alguns trechos: o perfil temporal global
+candidato de1,5s/200ms não explica todos os casos. Cadência por espécie/golpe permanece pendente.
+
+3. O que o patch verifica em produção
+Seleção ofensiva dos dois lados; nenhum uso automático de TM/status; reserva antes de aplicar dano;
+relógios inimigos independentes; retarget sem reset; ausência de rajada após frame longo; KO sem
+retaliação do indivíduo derrotado; HP real descontado; diagnóstico com modelo/cooldown aplicado.
+O teste novo exercita a cena Caca real com o duelo2/1, além de testar os cálculos isolados.
+Compatibilidade com saves e as funcionalidades existentes é coberta pela suíte de regressão incluída.
+A suíte não prova fidelidade visual, desempenho no computador do usuário ou todas as regras do original.
+
+4. Próxima coleta dirigida
+Antes de novo ajuste global, registrar um trecho 1x1 do MESMO Pokémon/nível/qualidade no original e
+no protótipo, e um trecho cercado. Manter auto-potion e auto-catch registrados (desligar quando possível).
+Enviar também screenshot dos seis atributos, HP máximo, nível, qualidade e Power do aliado.
+Selecionar selvagem capturável de identificação conhecida e observar seus dados após captura pode
+ajudar, mas não assumir que o nível capturado é o nível/atributo de combate do selvagem.
+Precisamos distinguir diferença de atributos selvagens, curva de dano e relógios. Não usar a amostra
+Larvitar12 contra Rattata1 como comparação direta com Geodude1 contra Geodude1.
+No original, manter a captura WS normal; lags ficam marcados na análise. Não precisa desconectar a internet.
+
+5. Prioridades técnicas
+A. Identificar geração dos atributos e nível efetivo dos selvagens nas hunts de Kanto.
+B. Validar dano físico e especial em mais de um nível/qualidade e com Def/SpDef diferentes.
+C. Verificar taxa por espécie/golpe, fases de cada atacante e mensagens agrupadas sem deduplicar golpes.
+D. Só então decidir sobre STAB, crítico, variação aleatória, buffs e TMs aprendidas.
+E. Distinguir melhorias deliberadas do protótipo de comportamentos efetivamente observados no original.
+Os resumos numéricos e hashes dos dois arquivos de origem estão em dados/combate/referencias_calibracao_v2.json.
+Dados de chat, identidade de contas, tokens e mensagens sem relação com combate não integram o pacote.
+
+VALIDAÇÃO DESTA ENTREGA: 32 suítes aprovadas, 42135 verificações; importação e fixture de save aprovadas.
+Configuração de projeto preservada. Godot4.6.3 headless. Logs completos incluídos.

@@ -1,0 +1,71 @@
+ATRIBUTOS REAIS NO COMBATE — aplicar após ajustes_hunt_captura_combate.zip
+
+INSTALAÇÃO
+Pare o jogo, feche o Godot e faça backup do projeto e do progresso local.
+Extraia na pasta que contém project.godot, substituindo os scripts e os três
+recursos .tres solicitados. Mescle as pastas e preserve os .gd.uid existentes.
+Abra o Godot e aguarde a importação. Não precisa criar nós ou conectar sinais.
+O pacote não contém saves, project.godot ou quantidades de estoque.
+
+EFEITO DOS ATRIBUTOS
+Golpes PHYSICAL usam Atk do atacante / Def do defensor.
+Golpes SPECIAL usam SpAtk do atacante / SpDef do defensor.
+HP vem do atributo HP calculado; IVs, nível e qualidade alimentam esses atributos.
+Power do golpe também entra na curva. Golpes de status/poder zero não causam dano.
+Imunidade elemental causa zero. Um golpe danoso não imune causa no mínimo 1.
+Speed não altera dano, ordem ou intervalo. A cadência existente é preservada.
+
+Power do POKÉMON é um resumo dos seis atributos multiplicado pela qualidade.
+Não é o Power do GOLPE e não é multiplicado de novo no dano. Isso evitaria contar
+os mesmos atributos duas vezes e impediria manter Speed fora da batalha.
+
+REGRAS CONFIRMADAS DO ORIGINAL
+- Atributo = round((base + 2*IV) * nível/100 * qualidade^expoente).
+- Expoentes: 0,95 HP/Speed e 0,8 nos outros atributos.
+- Power do Pokémon = round(soma dos seis atributos * qualidade).
+- HP de combate usa a conversão já portada: máximo entre 24 e HP calculado *12.
+- Selvagens na hunt têm HP x5 e dano x1,8.
+- Elementos são amplificados na hunt: vantagem acima de 1 vira
+  1 + (multiplicador - 1)*1,5. Resistência abaixo de 1 é dividida por 1,5.
+  Exemplo: x4 -> x5,5; x0,5 -> x0,333...; neutro e imunidade não mudam.
+
+O QUE AINDA É PROVISÓRIO
+A fórmula COMPLETA de dano do servidor não foi publicada nas fontes consultadas.
+A curva local está isolada em regras_dano.gd e identificada nos eventos como
+atributos_local_v1. Ela faz os atributos atuarem de verdade, mas não comprova
+paridade numérica com o original. Veja FORMULA_E_PENDENCIAS.md.
+
+LARVITAR INICIAL
+O recurso agora referencia dados/especies/larvitar.tres, sem espécie mockada
+embutida. Seus atributos base são HP50, Atk64, Def50, SpAtk45, SpDef50, Speed41;
+tipos ROCK/GROUND. Os dados do Geodude também estão explícitos no recurso.
+
+O perfil inicial local tem IVs 27/19/22/14/30/25, total137/192, nível1,
+qualidade1,5 e vida atual24, com versão de atributos atualizada. Esses IVs são
+um perfil válido escolhido para o protótipo, não IVs oficiais fixos da espécie.
+No original, IVs pertencem ao indivíduo; a espécie tem atributos BASE fixos.
+Qualidade e nível do perfil inicial existente não foram substituídos.
+
+Os campos vida_maxima e dano_base antigos da espécie são mantidos SOMENTE para
+compatibilidade e testes legados, ocultos no Inspector com export_storage.
+No modo normal, eles não determinam HP ou dano. O Inspector mostra os atributos
+base verdadeiros no grupo Atributos base reais.
+
+MIGRAÇÃO DO INICIAL ANTIGO
+Somente o Larvitar INICIAL com os seis IVs ainda em1 recebe o novo perfil de IVs.
+São preservados ID, nível, XP, qualidade, time, capturados, estoques e proporção
+de HP. Um inicial derrotado continua derrotado. Inicial com IVs já personalizados
+e outros Pokémon não são rerrolados. A correção é gravada e não se repete.
+Vida -1 era um marcador de vida ainda não inicializada, não HP negativo em combate.
+O novo recurso e o inicial migrado passam a ter vida concreta.
+
+EXPECTATIVA DE BALANCEAMENTO
+No nível1, os arredondamentos e o piso de HP limitam diferenças entre IVs.
+Subir um único ponto de IV não garante alterar imediatamente um atributo inteiro.
+Números de nível37 do vídeo não são comparáveis aos de um Larvitar nível1.
+O reforço x5/x1,8 torna os selvagens mais resistentes que antes; poções continuam
+funcionando. Não foram fabricados números altos para imitar o vídeo.
+
+VALIDAÇÃO
+Godot4.6.3 Linux, testes headless e perfis exclusivos de QA. Evidências incluídas.
+A versão4.7.2 não foi executada neste ambiente. Nenhum ajuste visual nesta etapa.

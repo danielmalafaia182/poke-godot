@@ -1,0 +1,38 @@
+REFINO AUTO-HELPER E DEPOT
+
+Aplicar após depot_cidade_fiel.zip, mantendo a atualização anterior de TEAM.
+
+INSTALAÇÃO
+Pare o jogo, feche o Godot e faça backup. Extraia na pasta de project.godot,
+substituindo os scripts e mesclando as pastas. Adicione estilo_depot_fiel.gd.
+Preserve os .gd.uid existentes. Abra o Godot, aguarde a importação e execute F5.
+Não é necessário criar nós ou conectar sinais.
+
+AUTO-HELPER
+Ícone e texto claro centralizados juntos, separação de 5px, fonte Barlow Bold
+13px, engrenagem 12px, fundo azul-escuro em gradiente, borda dourada discreta,
+medidas 190x34 e cantos arredondados. Inclui normal, hover e pressionado.
+Estilo compartilhado entre o botão da cidade e o botão próprio do painel,
+usado nos contextos em que ele já aparecia, incluindo a caça.
+
+DEPOT
+Cartões em gradiente azul-escuro; borda dourada no líder e no hover.
+Nomes claros, informações secundárias azul-acinzentadas e qualidade colorida.
+Ficha com fundo #08101cfa, contorno #c8aa6e, título 13px, tipos coloridos,
+Stored roxo em cápsula, separador dourado discreto, qualidade colorida e
+Power verde #5bf08a. Atributos diferenciam rótulos cinza e valores claros.
+O quadro padrão de tooltip do Godot foi removido para evitar moldura dupla.
+
+Os valores exibidos são os do indivíduo real. O Power do exemplo visual não
+é fixado no código. Fórmulas, saves, estoque, captura e transferências não mudam.
+Os seis IVs individuais e os placeholders continuam disponíveis na ficha;
+por isso ela tem linhas adicionais em relação ao recorte original.
+Família, Shiny e Held continuam “—”, com as prioridades do pacote anterior.
+O emblema azul do original continua pendente de identificação; não foi usado
+como decoração para afirmar um estado que o modelo ainda não representa.
+
+VALIDAÇÃO
+Godot 4.6.3 Linux: testes test_depot_cidade_fiel, test_ui_fiel e test_team_fiel
+aprovados; evidências incluídas. Renderização nativa OpenGL inspecionada,
+com prévias do próprio jogo em previas. Dados das prévias são sintéticos.
+Godot 4.7.2 não executado neste ambiente.

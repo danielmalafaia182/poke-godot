@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <!-- 📺 Bônus de Live (dock): Twitch na diagonal de cima (esquerda) + Kick na diagonal de baixo (direita).
+       Vetorial: nítido nos 28px do dock, nos 26px do celular e nos 16px do chip da HUD. -->
+  <g transform="translate(2.5 2) scale(1.5)">
+    <!-- silhueta escura atrás do glitch: separa do fundo e do K -->
+    <path d="M6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0z" fill="#12061f" stroke="#12061f" stroke-width="2.2" stroke-linejoin="round"/>
+    <!-- miolo branco do balão -->
+    <path d="M6.857 1.714h13.714v9.429l-3.428 3.428h-3.429l-3 3v-3H6.857z" fill="#fff"/>
+    <!-- moldura + olhos (Simple Icons, CC0) -->
+    <path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z" fill="#9146ff"/>
+  </g>
+  <!-- K da Kick em blocos (o mesmo desenho do ícone da janela), contorno escuro por baixo -->
+  <g transform="translate(29.5 26) scale(4)">
+    <path d="M0 0h3v2h1V1h1V0h3v1H7v1H6v1H5v1H4v1h1v1h1v1h1v1h1v1H5V8H4V7H3v2H0z" fill="#06140a" stroke="#06140a" stroke-width="0.75" stroke-linejoin="miter"/>
+    <path d="M0 0h3v2h1V1h1V0h3v1H7v1H6v1H5v1H4v1h1v1h1v1h1v1h1v1H5V8H4V7H3v2H0z" fill="#53fc18"/>
+  </g>
+</svg>

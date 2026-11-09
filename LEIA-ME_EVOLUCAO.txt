@@ -1,0 +1,30 @@
+EVOLUÇÃO DOS POKÉMON — PRIMEIRAS LINHAS
+Aplicar após icones_loot_originais.zip.
+
+INSTALAÇÃO
+Pare o jogo, faça backup e extraia na pasta de project.godot. Substitua arquivos e preserve .gd.uid. Execute com F5.
+
+DISPONÍVEL EM CERULEAN
+Larvitar -> Pupitar: nível 60.
+Pupitar -> Tyranitar: nível 100.
+Geodude -> Graveler: nível 40.
+Graveler -> Golem: nível 80.
+Destinos e níveis vêm dos campos evolvesToId/evolveLevel de creatures.json fornecido.
+Abra TEAM, selecione o Pokémon e clique em Evolve. O botão do cartão compacto também fica disponível quando os requisitos forem satisfeitos.
+Requer Pokémon vivo, no time e na cena da cidade. O backend valida essas condições, inclusive se a função for invocada diretamente.
+
+PRESERVAÇÃO
+A mesma instância mantém ID persistente, IVs, qualidade, nível, XP e posição no time. A espécie é substituída: atributos, Power, tipos, golpes e visuais passam a consultar a forma evoluída.
+Não há cura de evolução: HP absoluto anterior é mantido, limitado ao máximo da nova forma.
+O líder continua líder. O inicial continua protegido contra depósito e é reconhecido no save como Larvitar, Pupitar ou Tyranitar. Espécies fora dessa linhagem continuam rejeitadas para o inicial.
+Pokémon capturados dessas linhas também podem evoluir se estiverem no time.
+
+ESCOPO E REGRAS LOCAIS
+Somente essas duas linhas foram habilitadas nesta entrega. Outras evoluções, pedras, trocas e ramificações continuam pendentes.
+A operação é instantânea, sem uma animação específica de evolução.
+A exigência de cidade e a ausência de cobrança de itens/dinheiro são a política local desta etapa. Os dados disponíveis confirmam destino e nível, mas não comprovam todos os custos e requisitos do servidor original.
+Não há evolução automática ao subir de nível: o jogador escolhe quando clicar.
+
+VALIDAÇÃO
+Godot 4.6.3: teste funcional de botão TEAM, limites de nível, quatro transformações, preservação de dados, save/reload do inicial evoluído, bloqueio de espécie alheia à linhagem e exigência de cidade; regressão completa em validacao.
+Godot 4.7.2 não executado neste ambiente. Conferir a apresentação no seu projeto.

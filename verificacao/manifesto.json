@@ -1,0 +1,27 @@
+{
+  "base": "P03",
+  "alterados": {
+    "agenda_golpes.gd": "32dc352312b3a5795c58fcf65051d71514a31d1d98e18683fea644166a9bb19e",
+    "caca_base.gd": "464ae26604e1dc98916a789b8546f79a8bf1b172f152c2492eb7d287da84358f",
+    "caca.gd": "4eb77f8ad8ec716baf3bd34ee94a6ae84390487c09aae55d159d51244bb7bc10",
+    "encontro_selvagem.gd": "4ab1062cd1b71ea4686e4213dfe7bc00e893886123cb42c20af34376f677a47b",
+    "hud_caca.gd": "a18a3d85f80f4d0f01493a3ec6078e564e827f55bd0994ab37bab26295288f05",
+    "registro_combate.gd": "50c2f45c6d3d5ed125d482d07edcbbf1d61bc6823eeca372516a7fdf37b6252e"
+  },
+  "preservados": {
+    "movimento_selvagens.gd": "ec8c11b6da8fd327a96d47e2b8dfd7e3cef631e5ba117791838d48b8354147d5",
+    "busca_caminho_selvagem.gd": "3e5a25a218efaa6e732c3c5f43af10b89a3acce2225c10eac3a1847aaf297ea5",
+    "regras_dano.gd": "5a0c1d078996ef829d09496fc7747e2088f82a616432ead436b9d81c8796c719",
+    "regras_dano_candidato.gd": "4735eba6176a65a43b2ea81c568a8382d9d80ad98f4f31db2a765ba961a87a7b",
+    "regras_pokemon.gd": "2a1dd775558bcca2cf4eb5aea44ce3d92525c041759e74f0b90b309b510d38a8",
+    "regras_vida_selvagem.gd": "9a1ac3133f8701d03c84a996961a31a0cfaae123d333efc21250bff4d9ef2a82",
+    "dados/combate/golpes_originais.json": "3127d548464054b1d2561ddce7459f794f8337172c0ccfaa097fc4b29510cc0c",
+    "dados/combate/efetividade_original.json": "c7697915f8e0dad465d291017af257494203f46af91086fe105a5df46cc68faa",
+    "estado_jogo.gd": "e09703ec0538f875170d94a24deaf0337baba264f1d9fc0182ab3d587b22bb27",
+    "salvamento_local.gd": "567ae2c82cb97d1266db1fb99d5ea5b863bd7b6906d2004d779cad8e4d9d27cf"
+  },
+  "suites": 21,
+  "assercoes": 29468,
+  "perfil": "calibrado em uso",
+  "godot": "4.6.3 Linux headless"
+}

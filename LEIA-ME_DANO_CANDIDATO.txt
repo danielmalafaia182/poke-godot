@@ -1,0 +1,66 @@
+DANO CANDIDATO V3 — STAB E VARIAÇÃO
+
+INSTALAÇÃO
+1. Pare o jogo e faça uma cópia do projeto.
+2. Extraia este ZIP na pasta que contém project.godot, mesclando as pastas.
+3. Substitua caca_base.gd, registro_combate.gd e regras_dano.gd.
+4. Adicione regras_dano_candidato.gd. Preserve os arquivos .gd.uid existentes.
+5. As pastas de testes e validação são opcionais para jogar.
+Não precisa alterar caca.gd, cenas, recursos de Pokémon ou conectar sinais.
+Requer a versão já instalada com laboratorio_pareado_pronto.zip.
+
+O QUE MUDA
+A caça passa a usar a candidata por padrão, quando Usar Atributos Combate e Usar
+Calibracao Combate estão ligados. A fórmula contínua anterior recebe STABx1,5
+quando o tipo do golpe é um dos tipos do atacante, uma única vez. Depois recebe
+um multiplicador entre0,85 e1,0, seguido de arredondamento e piso de dano.
+A distribuição uniforme é uma escolha provisória; os logs apoiam a faixa, não
+comprovam sua distribuição nem a fórmula completa do original.
+
+A regra é aplicada a aliado e selvagens. A evidência nova que a apoia diretamente
+é de danos físicos causados pelo aliado. O uso em golpes especiais e danos
+recebidos continua sendo uma generalização candidata, a validar.
+Pisamos em2 para aliado e1 para selvagens somente se o dano contínuo é positivo.
+Imunidade e golpes de status continuam com dano0.
+
+ESCOLHA DE GOLPE
+A escolha compara dano nominal com STAB, antes da variação. Portanto, não fica
+sorteando o melhor golpe a cada avaliação. Def/SpDef e tipos do defensor podem
+mudar qual golpe vence a comparação. Apenas ataques executados consomem sorteios.
+Agenda/cooldowns/disponibilidade seguem as regras existentes.
+RNG de dano é exclusivo desta instância de caça; não consome os sorteios de
+captura ou loot. A nova sequência é inicializada a cada entrada na caça.
+
+COMPARAR OU VOLTAR À REGRA ATUAL
+No editor, abra Caca.tscn, selecione a raiz e procure Usar Dano Candidato.
+Desmarque para voltar à V2, mantendo Usar Calibracao Combate ligado.
+Para a V1, desligue Usar Calibracao Combate; para mock legado, desligue os atributos.
+regras_dano.gd continua com V1/V2 inalteradas. Os laboratórios/comparador existentes
+continuam analisando as versões anteriores: a V3 está integrada à caça e ao log.
+Não se migram saves nem IVs/níveis/Power/atributos. Este pacote não altera a geração
+de atributos/HP dos selvagens nem sua cadência.
+
+REGISTRO PARA COMPARAÇÃO
+Dentro da caça, Ctrl+Shift+L inicia o registro; repita para exportar.
+Em user://diagnosticos_combate/combate_*.jsonl, cada golpe registra:
+- curva candidata, tipo, categoria e efetividade;
+- nível, atributo ofensivo e defensivo utilizados;
+- bruto sem STAB, STAB, nominal, variação, bruto final, piso e dano;
+- dano que V2 daria com os mesmos atributos, sem bônus/variação;
+- HP realmente removido (diferente do dano completo em golpe fatal).
+A abertura registra seed/estado do RNG de dano como strings, preservando inteiros64
+no JSON. Cada evento contém o multiplicador efetivamente usado.
+O log é opt-in e não gera texto técnico sobre cada ataque na tela do jogo.
+
+VERIFICAÇÃO
+Godot4.6.3, sem interface gráfica. Veja validacao_qualidade/resultados/dano_candidato.
+Os testes históricos de V2 selecionam explicitamente V2 nas respectivas fixtures.
+O novo teste verifica candidata ativa na caça, HP, eventos, exportação, rollback,
+RNG reproduzível, independência de previews, extremos previstos da amostra,
+Atk/Def físico, SpAtk/SpDef especial, STAB, imunidades e pisos.
+Acabamento visual no Godot do usuário ainda requer conferência.
+
+PRÓXIMA VALIDAÇÃO
+Usar o log V3 para conferir componentes dos ataques. Comparar danos recebidos
+com atacante identificável no original e validar geração de HP/atributos dos
+selvagens. STAB sozinho não corrige uma hunt de nível alto subdimensionada.

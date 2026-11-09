@@ -1,0 +1,105 @@
+LABORATÓRIO DE ENCONTROS PAREADOS — NOVA SESSÃO ORIGINAL
+Base: comparador_combate_pronto.zip com correcao_comparador_hp.zip aplicado.
+
+INSTALAÇÃO E ABERTURA
+1. Pare o jogo e faça backup do projeto.
+2. Extraia este ZIP na pasta de project.godot, mesclando pastas e substituindo os scripts.
+3. Preserve os .gd.uid existentes e aguarde a importação.
+4. Abra laboratorio_pareado.tscn e execute F6.
+Também há o botão Nova sessão pareada no comparador anterior.
+A amostra e os resultados calculados acompanham o pacote. Não precisa repetir a coleta nem exportar
+os mesmos cenários para eu analisá-los. F6 serve para explorar hipóteses e guardar experimentos próprios.
+
+NOVA EVIDÊNCIA
+Arquivo original:poke_ws_2026-11-07T14-21-54-705Z.txt.
+119 mensagens field;89,643segundos;12encontros com dano e KO observados;4pareados.
+Gyarados Lv214 e Exeggutor Lv404 têm atributos observados em pokes.list.
+O Exeggutor anterior Lv398 permanece no comparador anterior, separado da referência Lv404.
+Não se inferem IVs individuais. O total de IVs observado é apenas metadado.
+As oito mensagens de cooldown informam totalMs5000; não se usa leftMs como duração total.
+
+MESMO SELVAGEM, NÃO APENAS MESMA ESPÉCIE
+Cada vida é acompanhada por slot, HP máximo, sequência de HP e morte/respawn observado.
+O identificador slot_13_vida_2 é LOCAL à extração: não é UUID nem contador global do servidor.
+A morte seguida de vida nova separa encontros mesmo se o mesmo slot reaparece com o mesmo HP máximo.
+No slot13, a primeira vida recebe vários Hyper Beam. A segunda recebe766 e, após a troca,15312.
+Essas duas vidas não são misturadas.
+São conservados danos fatais completos, mesmo quando excedem o HP restante.
+HP antes/depois é do pacote. Não se inventam snapshots intermediários para múltiplos golpes no mesmo pacote.
+As verificações de continuidade rejeitam como duelo estável eventos tardios após KO, aumento de HP sem
+morte/respawn, mudança de máximo, perfil ambíguo ou dano que não fecha a redução de HP.
+Nenhum golpe é descartado só por ter dano igual a outro.
+
+PERFIS
+Os atributos e tipos dos aliados são os informados na sessão, não exemplos sintéticos do depósito.
+A associação exige espécie e HP máximo únicos nos perfis observados na sessão. Há associação retrospectiva
+quando o snapshot do perfil chega depois do primeiro golpe; os dados não revelam todas as modificações temporárias.
+Nome do treinador, chat, inventário e IDs de conta não são incluídos na evidência normalizada.
+
+COMO USAR A TELA
+A seleção lista4encontros pareados primeiro e8controles sem troca depois.
+Ela abre por padrão o Blastoise de5705HP: Thrash689/720/690 e Leaf Storm9820 após a troca.
+Def e SpDef são compartilhadas por todos os ataques daquele encontro; não são uma defesa diferente por golpe.
+O painel de famílias mostra compatibilidade do dano nos4pares, dano+escolha nominal nos4pares e
+compatibilidade de dano+escolha nos12encontros elegíveis da sessão, incluindo os controles sem troca.
+Escolha uma família, ajuste Def/SpDef ou clique Usar exemplo compatível.
+O exemplo altera apenas os campos desta tela. Não é uma estimativa confirmada dos atributos do selvagem.
+A tabela compara cada golpe com sua própria faixa prevista, preservando os valores observados.
+O relatório inferior mostra perfis, hipóteses, limites marginais e continuidade do HP.
+Exportar JSON+texto grava em user://diagnosticos_combate/pareado_<data>_<id> e mostra o caminho no console.
+
+HIPÓTESES COMPARADAS
+Sem variação;±5%,±10%,±15%,±20%,±25%,±30%; e multiplicador85–100%.
+Cada faixa é testada sem STAB e com STAB hipotético×1,5:16famílias ao todo.
+STAB significa bônus para golpe do mesmo tipo do atacante. Aqui afeta Leaf Storm do Exeggutor,
+mas não Hyper Beam/Thrash do Gyarados. Não é um bônus confirmado para o jogo original.
+Ordem testada: fórmula local contínua → STAB hipotético → multiplicador hipotético → arredondamento → piso.
+Não se sorteia nenhum número. O teste verifica se os danos observados cabem no suporte de uma hipótese.
+Cabem na faixa não significa que tenham a distribuição, frequência, independência ou causa corretas.
+A variação também pode vir de buffs, críticos, poder efetivo diferente ou outra fórmula.
+
+DEF/SpDEF E ESCOLHA DE GOLPE
+A busca usa Def e SpDef INTEIRAS de1a5000, fixas dentro do encontro e independentes entre encontros.
+Os intervalos mostrados são marginais de compatibilidade de DANO; nem toda combinação dentro deles
+satisfaz também a política de escolha de golpe.
+A política adicional é a mesma maior estimativa de dano nominal do protótipo, antes da variação,
+com os ataques comuns disponíveis, sem assumir TMs aprendidas e com desempate estável do catálogo.
+Essa política é outra hipótese, não uma regra universal do original já comprovada.
+O exemplo fornecido satisfaz dano e escolha nesta hipótese. Se uma defesa não é observada pelo dano,
+o exemplo é reduzido para evitar mostrar5000 apenas por ser extremo da busca. Isso não identifica
+seu verdadeiro valor. Um encontro com dois golpes especiais não determina a Def física pelo dano.
+A busca de escolha tem limite de20000combinações. Se ele é atingido sem exemplo, o resultado é
+INCONCLUSIVO, não uma alegação de inexistência. Nenhum perfil encontrado significa apenas ausência
+naquela curva, grade inteira, faixa e política; não refuta todas as fórmulas possíveis.
+A busca não restringe Def/SpDef pela geração original por nível/IV/qualidade, que ainda é desconhecida.
+Existência matemática não comprova que o servidor gere aquele Pokémon.
+
+O QUE NÃO SE DEVE CONCLUIR
+Uma hipótese ajustada aos mesmos dados não está validada em uma amostra independente.
+A menor faixa dentre as testadas não é medida do RNG original nem demonstra que exista RNG.
+O comparador não aplica STAB, variação aleatória, novas defesas ou novo balanceamento à caça real.
+O código de dano só ganhou acesso ao valor anterior ao arredondamento, preservando os resultados da caça.
+Pisos, multiplicadores, ataque e vida do jogo continuam com os valores existentes.
+Golpes RECEBIDOS permanecem separados: slot=-1 identifica a vítima, não o atacante selvagem.
+O tempo de cada hit é o do pacote field, não horário exato de execução individual.
+
+REPRODUZIR A EXTRAÇÃO
+Usa somente a biblioteca padrão do Python:
+python ferramentas/extrair_encontros_pareados.py "CAMINHO_DO_LOG.txt" "SAIDA.json"
+O log bruto não é incluído neste pacote. A evidência extraída traz seu nome e hash SHA-256.
+A ferramenta pode extrair outros arquivos, mas a análise desta tela é específica da referência Blastoise.
+Não substitua a amostra por outra sem conferir espécies, perfis únicos e alertas.
+Testes da extração:
+python ferramentas/test_extrair_encontros_pareados.py
+
+VALIDAÇÃO GODOT
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT"
+Teste focado:
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT" --teste test_laboratorio_pareado
+A validação usa cópia temporária e perfil isolado. Godot usado:4.6.3 sem interface gráfica.
+Criação da tela, alteração dos campos e exportação são verificadas. O acabamento no seu4.7.2 ainda
+precisa de conferência visual. A análise não modifica HP, XP, time, IVs, estoque ou save.
+
+VALIDAÇÃO DESTA ENTREGA:36 suítes Godot aprovadas, mais4testes Python do extrator.
+Importação e fixture de save aprovadas; configuração de projeto preservada.
+Resultados já calculados em resultados_prontos; não é necessário exportar os cenários novamente.

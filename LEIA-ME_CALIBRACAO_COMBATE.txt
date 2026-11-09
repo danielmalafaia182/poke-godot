@@ -1,0 +1,55 @@
+CALIBRAÇÃO PARCIAL DO COMBATE — v2
+
+Instalar sobre o projeto atualizado com laboratorio_combate_geodude.zip.
+1. Pare o jogo e faça uma cópia do projeto.
+2. Extraia o pacote na pasta de project.godot; mescle pastas e substitua os arquivos.
+3. Preserve os .gd.uid existentes. Não há troca de project.godot, criação manual de nós ou sinais.
+4. Aguarde a importação e execute F5.
+O patch não reescreve o time, os IVs, os níveis, o inventário ou o save.
+
+O QUE MUDA NA CAÇA REAL
+- Aliado e selvagens avaliam o dano previsto contra o defensor atual e usam o maior.
+- Golpes de status e TMs sem aprendizado implementado não entram nessa seleção.
+- Empates mantêm a ordem estável do catálogo; o Power do Pokémon não é usado como dano de golpe.
+- Ataque automático repete o golpe escolhido sem aguardar os cooldowns longos do catálogo.
+- O modo opcional aplicar_cooldowns_catalogo continua disponível para testar habilidades com cooldown.
+  As duas vias compartilham o intervalo do combatente; trocar a via não permite ataque duplo.
+- Cada selvagem mantém a própria agenda, mesmo sem ser o alvo do aliado. Trocar alvo não reinicia agenda.
+- Perfil temporal candidato: aliado com intervalo-base 1,5 s, selvagens 2 s, consulta em passos de 200 ms.
+  No caso estável iniciado no tick, o aliado repete aos 1,6 s. Não é uma taxa universal comprovada.
+  Uma entrada em alcance entre ticks também respeita o intervalo mínimo, sem antecipar o próximo golpe.
+  Overrides individuais de intervalo_ataque mantêm relógio contínuo para permitir intervalos menores.
+  Movimento e animações continuam atualizados normalmente; não passam a rodar a 5 FPS.
+- Dano v2: piso de 2 para aliado em golpe ofensivo não imune e remoção do bônus selvagem 1,8 do protótipo.
+  O piso selvagem permanece 1. Imunidade e status continuam em 0.
+  Isso reproduz o caso controlado Geodude Lv1: 2 causado e 1 recebido.
+  O piso é uma escolha local provisória, NÃO uma fórmula descoberta no servidor.
+  Retirar o bônus 1,8 também reduz dano recebido nas outras hunts; seu equilíbrio ainda requer calibração.
+- Atk/Def e SpAtk/SpDef seguem separados; nível, IVs, espécie e qualidade continuam entrando pelos atributos.
+  Speed ainda não altera a cadência. A curva acima do piso para o aliado foi preservada.
+
+COMO CONFERIR
+- Abra laboratorio_combate.tscn e execute F6: compara o dano legado com o perfil novo sem editar seu time.
+  Os IVs do Geodude da fixture são sintéticos compatíveis, não os IVs reais do Pokémon da conta original.
+- Para testar seu Pokémon na caça: F5, entre na hunt e pressione Ctrl+Shift+L.
+  Observe 30–60 segundos, incluindo um trecho cercado, e pressione Ctrl+Shift+L novamente.
+  O console informa o caminho user://diagnosticos_combate/combate_*.jsonl.
+  O registro informa modelo, tick, via, cooldown do catálogo, cooldown aplicado, atacante, HP e atributos.
+- Para comparar com a versão anterior: na cena Caca, desative usar_calibracao_combate e reinicie a hunt.
+  Isso restaura seleção/tempos/dano v1; não precisa restaurar save nem reinstalar o pacote.
+  Em modo novo, o padrão inimigo é intervalo_selvagem_calibrado; intervalo_ataques_selvagem é o padrão legado.
+  Mantenha usar_atributos_combate ligado e aplicar_cooldowns_catalogo desligado para a caça comum.
+
+VALIDAÇÃO AUTOMÁTICA
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT"
+Teste focado:
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT" --teste test_calibracao_combate
+O executor usa cópia temporária e perfil exclusivo por teste. O resultado desta entrega acompanha o pacote.
+Godot usado: 4.6.3, sem interface gráfica. Acabamento e fluidez devem ser conferidos no seu 4.7.2.
+
+PRÓXIMA PRIORIDADE
+Calibrar os atributos/nível de combate dos selvagens e a curva de dano fora do caso mínimo.
+A segunda amostra fornece HPs e danos, mas não os atributos defensivos/ofensivos dos Blastoise.
+Também há intervalos de pacotes de Thrash próximos de 1,2 s: a regra global candidata de 1,6 s não explica
+isso. Investigar cadência por espécie/golpe e agrupamento de mensagens antes de afirmar fidelidade temporal.
+Consulte RELATORIO_CALIBRACAO_COMBATE.txt para os resultados, limites e coleta seguinte.

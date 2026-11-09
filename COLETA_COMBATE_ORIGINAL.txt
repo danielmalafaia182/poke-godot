@@ -1,0 +1,13 @@
+COLETA PARA CALIBRAR A DIFICULDADE
+
+Precisamos do nome da hunt de nível 80 e de uma comparação com uma hunt fácil, usando o MESMO aliado sem mudar nível, IVs, qualidade, equipamentos ou bônus entre as amostras, quando possível.
+
+1. Antes de cada amostra, registre a tela TEAM do aliado: espécie, nível, IVs, qualidade, Power, HP máximo e todos os atributos. Registre bônus ativos. Se não conseguir manter o mesmo aliado, envie os dados completos de cada um.
+2. Na conexão WebSocket do original, copie a mensagem field-init da entrada e as mensagens field com hits de aproximadamente 10 a 20 segundos. Preserve mensagens completas e horários; não renomeie campos.
+3. Inclua eventos de golpe/dano caso venham separados. Precisamos de atacante/alvo, nome do golpe, dano, HP antes/depois e timestamps. Se parte disso só estiver visível na tela, grave um vídeo junto.
+4. Tente começar em combate 1x1 para separar dano por golpe de vários inimigos batendo juntos. Depois, uma amostra com vários inimigos ajuda a comparar cadência.
+5. Identifique poções, cura, troca de líder ou morte ocorridas durante a amostra, para não confundir mudança de HP com dano.
+
+Não precisa coletar tudo novamente: catálogo e sprites já estão extraídos. Sem captura de dados de servidor suficiente, podemos ajustar uma curva local, mas não afirmar que ela é a fórmula do original.
+
+Metas: comparar HP dos selvagens, dano causado, dano recebido e intervalos de ataque. Depois verificar tempo para matar/morrer em cenários de níveis diferentes antes de propagar a calibração para todas as hunts.

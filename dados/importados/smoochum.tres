@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-402-00-59c7e387dd76.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(206,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Smoochum"
+textura=SubResource("A")
+base_hp=45
+base_atk=30
+base_def=15
+base_sp_atk=85
+base_sp_def=65
+base_speed=65
+tipo_primario="ICE"
+tipo_secundario="PSYCHIC"

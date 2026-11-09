@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-369-00-0517db860c7c.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(590,2,96,96)
+[resource]
+script=ExtResource("1")
+nome="Steelix"
+textura=SubResource("A")
+base_hp=75
+base_atk=85
+base_def=200
+base_sp_atk=55
+base_sp_def=65
+base_speed=30
+tipo_primario="STEEL"
+tipo_secundario="GROUND"

@@ -1,0 +1,214 @@
+{
+  "base": "barra_hp_cooldown_troca.zip",
+  "fidelidade_global_comprovada": false,
+  "arquivos": [
+    {
+      "caminho": "LEIA-ME_COMPARADOR_COMBATE.txt",
+      "sha256": "6b3f59e9ae054fffee08b8ef7a22af3f9d506c0b19bc0810771007c4d8eb4b6f"
+    },
+    {
+      "caminho": "comparador_combate.gd",
+      "sha256": "48b6e21f691021c7ce36f184a9a5eba3901e9ec82d7911fc95f88b4461d0f6c1"
+    },
+    {
+      "caminho": "comparador_combate.tscn",
+      "sha256": "84abb629a10aa8576e3549e475bbe80e9e1ec9663b1885f53d05d981b2ab8558"
+    },
+    {
+      "caminho": "comparador_regras_combate.gd",
+      "sha256": "a4cb5b528b3e7fee7a70c23d797f79514e105d487f9e4d5cf05aa81fcd8a203c"
+    },
+    {
+      "caminho": "dados/combate/casos_comparador.json",
+      "sha256": "7bddf48527e04be33929305c3fa435b5e6beaaeffc73d178affc6252c91b7613"
+    },
+    {
+      "caminho": "exemplos_comparador/RESULTADOS_INICIAIS.txt",
+      "sha256": "c3e86863b02193d47ba0e3d6a85a9a72f70db3e572f64cd7e560272d3a4a4311"
+    },
+    {
+      "caminho": "exemplos_comparador/resultados_referencias_v2.json",
+      "sha256": "c196296c775994fddb49e8ae26684ac6812d532221115119d8147b7ed93c5a71"
+    },
+    {
+      "caminho": "importador_registro_combate.gd",
+      "sha256": "0f0265c91b7e4a737566385c7dbd7d4a6d64df8197331c32f2481fb4a8907441"
+    },
+    {
+      "caminho": "laboratorio_combate.gd",
+      "sha256": "2e1d2ebead857519a2336eec7b652ccd954dbabf0057eb4c58030a1dc3603bc3"
+    },
+    {
+      "caminho": "perfil_combate_laboratorio.gd",
+      "sha256": "3a24de41dd7bcefb369a50e900f5b12c857804cfa67e6238df1b854edad70688"
+    },
+    {
+      "caminho": "regras_dano.gd",
+      "sha256": "e8c07c98b5a6cf571b81c3d6547d25b5f46878f7ce757bf6bd6e247f5aaa2535"
+    },
+    {
+      "caminho": "test_comparador_combate.gd",
+      "sha256": "ed3f2f076cebbb6bdcc1944db8d5c3eb82c7ad185b7f3db98514c03c744c2a0d"
+    },
+    {
+      "caminho": "validacao_qualidade/executar.py",
+      "sha256": "46525e1344e8f38ddf81f9c0d1b1d355e23f52964cbb28305ff969cae7add6b7"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_ajustes_hunt.txt",
+      "sha256": "b8b4402f82a11f0fe6ac86cfaa7b5ac9cb5645568cb630a45fdbd303c0269d05"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_ataques_independentes.txt",
+      "sha256": "c46415c43c91c9d3dec4e157759883e33136b0870755f55952cac1276b96081b"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_calibracao_combate.txt",
+      "sha256": "8a20d7bf522b5920e4c328cae9fa405e733833f884b966ed667c01a580b90ccb"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_cerco_acesso.txt",
+      "sha256": "72541ccaa2aa6d002fb5f06a3763b8690f30f83c3f30cd8f96847eec3f4d332b"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_cidade_qualidade.txt",
+      "sha256": "b7ac9be7dee3e18f89e290e8f40a0815a14b20c2e583b26b249c3960827b9759"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_combate_rapido.txt",
+      "sha256": "11f800176cd8044b51fbe32869c9e5e54b65dcb2c0a80c41472addcdc48bdb52"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_comparador_combate.txt",
+      "sha256": "80f66b15a1efcb8104a9c281b90b74ae31721e9d2bdb7c18f7a16b21ac7dd853"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_compatibilidade_save.txt",
+      "sha256": "0917bbd77675b7f648fec082ae628cad2e1330e22c42ddd488b8b631877b4c49"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_compatibilidade_save_fixture.txt",
+      "sha256": "9a64dd4aa91a884c3d38b15fcf36c7c198a5da1d5322466e3fde7acb0e007326"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_configuracao_hunts.txt",
+      "sha256": "25c329da5f8391d88b84f4e2e36e943d14e8f59f0c7c743838e2a539b03988a8"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_consistencia.txt",
+      "sha256": "423578fb574e3d5f22ed8c5547862512699e30a0ede32411b91af328842ecf9a"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_cooldown_troca.txt",
+      "sha256": "1dce87757df05b411ee0496d1556cec937684edf9b3efdd12dc911cb6d0d1a2d"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_dano_atributos.txt",
+      "sha256": "d36cc86eaff323ee8850fa68222b90a294707d5f740410626df513769b0df048"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_depot_cidade_fiel.txt",
+      "sha256": "0b66c06a25243d234ab72b42fe78a7f3cf392e54f43160bf853cf6fb4d5d7d01"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_dificuldade_hunts.txt",
+      "sha256": "eba9b7cd9ca6342f3c61ab0b580a6121769fbea9107ac19108f051a28e4f8176"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_evolucao_pokemon.txt",
+      "sha256": "c9b285ac8dfea051b3c0c4bb66348f6619f7672ffe5a22e9bdd0eea313a0ce24"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_golpes_combate.txt",
+      "sha256": "194265c2cd9c90f791c26c7efe8830d4ea12a471654a08b5ffa15d5bda821bf9"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_hunt_generica.txt",
+      "sha256": "b5e949d784234553ec1e49ca34bf7472e39301169357ff690ad592be3e3cf079"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_hunt_larvitar.txt",
+      "sha256": "da8833775a1208cbb4623f2eafdb8bca24c6b1e6395ca8282a270235ae15eeeb"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_hunt_referencias.txt",
+      "sha256": "404b0238f925be91c7a253b65cf2eac5945498c5161e087e8b23035f0e664a9f"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_importacao_especies.txt",
+      "sha256": "a0e2e6420b171bf435206d6c53862b0e6fb6273824f9b284f3fb4c17f2d97b22"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_laboratorio_combate.txt",
+      "sha256": "25a2320604bed6f2ea7966e1628b62394a96bb3524f1a973cccb71f2128c349a"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_loot_combate_fiel.txt",
+      "sha256": "60972e3fc40167e6e86c3cd30d73b773a2c9c09400925608dea9899983f2d1cf"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_loot_hunts.txt",
+      "sha256": "10f078dd5f7db128db989ef0afc30d8d10a23650bc15f418380f4778fcbbf7e7"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_mapa_entre_hunts.txt",
+      "sha256": "0833e13b0ae5f0b57ee5433dd17b7f6534cb59d3fb5611895e0d00ec39cdac2b"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_mapa_fiel.txt",
+      "sha256": "805bd90826642882c98167ebaebe68761ef3b69714c5ebdc72264836382024da"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_melhor_golpe.txt",
+      "sha256": "43f86211f457146480e7183ed67afa369f9e3e6a811c96dfce2754dc49236170"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_movimento_selvagens.txt",
+      "sha256": "fa2689d0d83d1f8d1520bb675c35c5050d17f2364ec62b33c2666b1b33afbeba"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_progressao_treinador.txt",
+      "sha256": "f887f1d50217ceab3852c1439210ec9a7822b0c9de28e3db8ee1c724be452b1d"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_qualidade.txt",
+      "sha256": "bcbbd08812c5571bacf11289407be0fc339636b51dc8cec31143c63bd1a83c02"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_registro_combate.txt",
+      "sha256": "ef176a0797c4d7e313e95841e07d5724f8132714179e11ca9f226a2f95b9f1ba"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_revisao.txt",
+      "sha256": "60e5c952ac7dd3e363a9a008f35cb7d87e2c6b6ff140e2c0a84f6ea843c46021"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_team_fiel.txt",
+      "sha256": "a502ddc1d76b6f22896c251dbd1666cc0ec45c1b205711e0a1cf171d97edf520"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_togepi_last_resort.txt",
+      "sha256": "078901d8a1f6d79d18b5652b16a99c3710b77d2bdacc27fa65c768dfce9214ff"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_troca_hunt_barras.txt",
+      "sha256": "b9586587d802df1837e861fb38832a69c6e39f719faf3d9f88536d76d065eff9"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/01_test_ui_fiel.txt",
+      "sha256": "5689e89d440e9fd8ce5465a4b10ffda7be2911bdbb758e533f90811700ff14d8"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/RESUMO.md",
+      "sha256": "5ca393f95918fc8cc1d0b1c860b9343598ec8a8b93277a962a90051b937a1ac5"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/importacao.txt",
+      "sha256": "d47fcf39492c3782b2eb5b7e0f546f0546c88e6d3f7d10627d769385c0915c3a"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/comparador_combate/resumo.json",
+      "sha256": "8b4d2efa400dd713c9937f16caa72f04a0296b3032d03412fc0bbf0192408d81"
+    }
+  ]
+}

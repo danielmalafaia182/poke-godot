@@ -1,0 +1,43 @@
+Motor: Godot 4.6.3 stable Linux x86_64.
+Base: poke-idle(2).rar. Testes em cópias com nomes exclusivos PokeIdle_QA_*.
+
+REGRESSÃO
+Os nove testes do runner enviado no RAR passaram:
+test_revisao, test_movimento_selvagens, test_hunt_referencias, test_qualidade,
+test_cidade_qualidade, test_compatibilidade_save, test_consistencia,
+test_golpes_combate e test_combate_rapido.
+O runner rejeita erros GDScript mesmo quando o processo termina com saída zero.
+
+NOVO TESTE: test_ui_fiel.gd
+41 verificações; 0 falhas.
+- Painel 208px, retrato e insígnia de tipo; evolução explicitamente desativada.
+- Mesmo cartão após alterações de HP/XP; barras com os valores reais.
+- Clique no botão do menu abre a janela e a sombra acima do HUD.
+- Janela 236px centralizada; seletor de poção 130px.
+- Ícones presentes, inclusive um quadro visível da Golden Idle Ball.
+- Quantidade 9.999 / infinito; largura de chip reserva lugar para o ícone.
+- Cliques de Auto-Potion recolhem/expandem os controles e redimensionam a janela.
+- Cliques nas bolas atualizam a seleção, sem consumir itens.
+- Esgotamento oculta o chip e mostra aviso, preservando a seleção configurada.
+- Filtro e limite de HP encaminhados ao estado persistente.
+- Shiny desativado; clique fora não atravessa para o perfil do treinador.
+- Esc e janela.hide() removem também a sombra.
+- Arraste no cabeçalho desloca a janela.
+- Cabe em 1920x1080, 1280x720, 1152x648 e 800x450; usa rolagem na menor altura.
+- As configurações continuam serializáveis.
+
+IMAGEM
+Renderização real com OpenGL Compatibility/Mesa llvmpipe em 1920x960.
+Conferidos manualmente cabeçalho, cartões, insígnias, fontes, barras, ícones,
+seletores, chips e modal sobre o cenário.
+Prévia com time de teste e estoques sintéticos; não modifica o save do jogador.
+
+LIMITES
+Esta entrega não implementa evolução, Shiny, auto-loot, captura manual, nova
+IA ou fórmulas de combate. O painel fotografado é Auto-Helper (poção/captura).
+Não é um teste de FPS, equivalência CSS completa ou validação do Godot 4.7.2.
+
+REPETIR
+python validacao_qualidade/executar.py CAMINHO_DO_GODOT --teste test_ui_fiel
+O runner completo inclui este novo teste junto dos nove anteriores.
+Evite rodar test_*.gd diretamente com o perfil do jogador: eles alteram dados.

@@ -1,0 +1,50 @@
+TROCA DE POKÉMON NA HUNT E SINCRONIZAÇÃO DE HP
+Base: projeto atualizado com calibracao_combate_v2.zip.
+
+INSTALAR
+1. Pare o jogo e faça uma cópia do projeto.
+2. Extraia este ZIP na pasta de project.godot, mesclando pastas e substituindo os scripts.
+3. Preserve os .gd.uid existentes. Aguarde a importação e execute F5.
+Não precisa criar nós ou conectar sinais. Não inclui um save nem altera seu inventário.
+
+TROCAR DURANTE A HUNT
+- Clique no cartão de outro Pokémon no HUD lateral, ou abra Team, escolha o Pokémon e clique Summon.
+- Sprite, nome, barra de vida, atributos e golpes passam a usar o novo indivíduo na mesma instância da hunt.
+- Cada Pokémon conserva seu HP. Trocar não cura, não transfere vida e não ressuscita derrotados.
+- O Team bloqueia Summon para quem está sem HP. Um clique no cartão de um derrotado mantém o líder atual.
+- Posição, caminho atual, alvo, população, HP inimigo e contadores da hunt são preservados.
+- Os relógios de aliados já usados continuam avançando no banco. Seus cooldowns não são apagados.
+- Trocar de Pokémon não permite antecipar o prazo de ataque que já estava reservado.
+- Frames e animação são reconfigurados, inclusive ao sair do Larvitar (4 quadros) para Geodude (3 quadros).
+
+BARRAS DOS SELVAGENS
+- O indicador escuta a mudança de vida do encontro e atualiza imediatamente quando o dano é aplicado.
+- Não guarda uma cópia independente do HP; continua consultando vida/vida_maxima do encontro.
+- O controle usa preenchimento determinado pelo HP; o modo de animação indeterminada fica desligado.
+- O máximo da barra só é reconfigurado quando muda. Não há tween de HP competindo com atualizações.
+- Nome e barra de ambos os lados ficam em camada acima dos impactos visuais.
+- No KO, o controle recebe zero e fica oculto. No respawn, escuta apenas a nova identidade do encontro.
+- No teste de dano baixo, o mesmo selvagem recebe60 golpes de2:120→118→116...→2→0.
+  HP e valor da barra são comparados a cada golpe, antes e depois do processamento visual.
+
+LIMITE DA VERIFICAÇÃO
+A validação automática usa Godot4.6.3 sem interface gráfica. Não foi possível reproduzir visualmente
+neste ambiente o ciclo específico de esvaziar/recarregar relatado no seu4.7.2. O patch corrige a
+sincronização e protege a leitura contra sobreposição, mas esse comportamento visual precisa ser
+conferido novamente no seu ambiente. Não se alterou a fórmula de dano para esconder o problema.
+
+DIAGNÓSTICO SE O CICLO VISUAL PERSISTIR
+Ctrl+Shift+L na hunt inicia a gravação; pressione novamente depois de observar o comportamento.
+Além do HP real e da identidade de cada selvagem, o log agora inclui indicador_hp com valor/máximo,
+proporção, visibilidade e identidade do encontro mostrado. Isso permite distinguir valor incorreto,
+novo respawn ou problema de desenho. O console informa o caminho do JSONL exportado.
+
+TESTES
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT"
+Teste focado:
+python validacao_qualidade/executar.py "CAMINHO_DO_GODOT" --teste test_troca_hunt_barras
+O executor usa cópia temporária e perfil isolado por teste. Os resultados desta entrega acompanham o pacote.
+
+VALIDAÇÃO DESTA ENTREGA:33 suítes aprovadas no Godot4.6.3 headless;
+importação e fixture de compatibilidade de save também aprovadas.
+Configuração do projeto preservada. Logs completos incluídos no pacote.

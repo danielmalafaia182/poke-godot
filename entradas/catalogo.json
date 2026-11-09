@@ -1,0 +1,487 @@
+{
+  "Gyarados": {
+    "pokeId": 130,
+    "name": "Gyarados",
+    "looktype": 117,
+    "description": "a gyarados",
+    "type1": "WATER",
+    "type2": "FLYING",
+    "rarity": "COMMON",
+    "baseHp": 95,
+    "baseAtk": 125,
+    "baseDef": 79,
+    "baseSpAtk": 60,
+    "baseSpDef": 100,
+    "baseSpeed": 81,
+    "huntLevel": 100,
+    "evolvesToId": 0,
+    "evolveLevel": 0,
+    "priceNpc": 27500,
+    "sellValue": 27500,
+    "experience": 6008,
+    "loot": [
+      {
+        "name": "Strange Pheromone",
+        "chance": 0,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Straw",
+        "chance": 95000,
+        "minCount": 1,
+        "maxCount": 5
+      },
+      {
+        "name": "Water Gem",
+        "chance": 95000,
+        "minCount": 1,
+        "maxCount": 3
+      },
+      {
+        "name": "Water Pendant",
+        "chance": 95000,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Gyarados Tail",
+        "chance": 2382.94,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Water Stone",
+        "chance": 193.17,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Crystal Stone",
+        "chance": 64.39,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Air Tank",
+        "chance": 2383.5,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Diving Mask",
+        "chance": 2382.94,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Fins",
+        "chance": 2382.94,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Aqua Tail",
+        "power": 90,
+        "type": "WATER",
+        "category": "PHYSICAL",
+        "cooldownMs": 15000,
+        "learnLevel": 35
+      },
+      {
+        "name": "Crunch",
+        "power": 80,
+        "type": "DARK",
+        "category": "PHYSICAL",
+        "cooldownMs": 15000,
+        "learnLevel": 41
+      },
+      {
+        "name": "Ice Fang",
+        "power": 65,
+        "type": "ICE",
+        "category": "PHYSICAL",
+        "cooldownMs": 20000,
+        "learnLevel": 32
+      },
+      {
+        "name": "Hydro Pump",
+        "power": 110,
+        "type": "WATER",
+        "category": "SPECIAL",
+        "cooldownMs": 50000,
+        "learnLevel": 44
+      },
+      {
+        "name": "Massive Hurricane",
+        "power": 600,
+        "type": "FLYING",
+        "category": "PHYSICAL",
+        "cooldownMs": 10000,
+        "learnLevel": 1,
+        "tm": "FLYING"
+      },
+      {
+        "name": "Cyclonic Tide",
+        "power": 600,
+        "type": "WATER",
+        "category": "SPECIAL",
+        "cooldownMs": 10000,
+        "learnLevel": 1,
+        "tm": "WATER"
+      },
+      {
+        "name": "Thrash",
+        "power": 120,
+        "type": "NORMAL",
+        "category": "PHYSICAL",
+        "cooldownMs": 50000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Bite",
+        "power": 60,
+        "type": "DARK",
+        "category": "PHYSICAL",
+        "cooldownMs": 20000,
+        "learnLevel": 20
+      },
+      {
+        "name": "Twister",
+        "power": 40,
+        "type": "DRAGON",
+        "category": "SPECIAL",
+        "cooldownMs": 15000,
+        "learnLevel": 29
+      },
+      {
+        "name": "Hyper Beam",
+        "power": 150,
+        "type": "NORMAL",
+        "category": "SPECIAL",
+        "cooldownMs": 50000,
+        "learnLevel": 50
+      }
+    ]
+  },
+  "Exeggutor": {
+    "pokeId": 103,
+    "name": "Exeggutor",
+    "looktype": 46,
+    "description": "a exeggutor",
+    "type1": "GRASS",
+    "type2": "PSYCHIC",
+    "rarity": "COMMON",
+    "baseHp": 95,
+    "baseAtk": 95,
+    "baseDef": 85,
+    "baseSpAtk": 125,
+    "baseSpDef": 65,
+    "baseSpeed": 55,
+    "huntLevel": 100,
+    "evolvesToId": 0,
+    "evolveLevel": 0,
+    "priceNpc": 10000,
+    "sellValue": 10000,
+    "experience": 6008,
+    "loot": [
+      {
+        "name": "Strange Pheromone",
+        "chance": 0,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Enchanted Gem",
+        "chance": 95000,
+        "minCount": 1,
+        "maxCount": 14
+      },
+      {
+        "name": "Seed",
+        "chance": 95000,
+        "minCount": 1,
+        "maxCount": 14
+      },
+      {
+        "name": "Leaves",
+        "chance": 95000,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Plant Foot",
+        "chance": 61344.71,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Leaf Stone",
+        "chance": 842.18,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Egg Bomb",
+        "power": 100,
+        "type": "NORMAL",
+        "category": "PHYSICAL",
+        "cooldownMs": 10000,
+        "learnLevel": 27
+      },
+      {
+        "name": "Hypnosis",
+        "power": 0,
+        "type": "PSYCHIC",
+        "category": "STATUS",
+        "cooldownMs": 30000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Seed Bomb",
+        "power": 80,
+        "type": "GRASS",
+        "category": "PHYSICAL",
+        "cooldownMs": 25000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Wood Hammer",
+        "power": 120,
+        "type": "GRASS",
+        "category": "PHYSICAL",
+        "cooldownMs": 30000,
+        "learnLevel": 37
+      },
+      {
+        "name": "Confusion",
+        "power": 50,
+        "type": "PSYCHIC",
+        "category": "SPECIAL",
+        "cooldownMs": 30000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Psyshock",
+        "power": 80,
+        "type": "PSYCHIC",
+        "category": "SPECIAL",
+        "cooldownMs": 40000,
+        "learnLevel": 17
+      },
+      {
+        "name": "Leaf Storm",
+        "power": 130,
+        "type": "GRASS",
+        "category": "SPECIAL",
+        "cooldownMs": 80000,
+        "learnLevel": 47
+      },
+      {
+        "name": "Petal Bloom",
+        "power": 600,
+        "type": "GRASS",
+        "category": "SPECIAL",
+        "cooldownMs": 10000,
+        "learnLevel": 1,
+        "tm": "GRASS"
+      },
+      {
+        "name": "Barrage",
+        "power": 15,
+        "type": "NORMAL",
+        "category": "PHYSICAL",
+        "cooldownMs": 15000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Stomp",
+        "power": 65,
+        "type": "NORMAL",
+        "category": "PHYSICAL",
+        "cooldownMs": 20000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Uproar",
+        "power": 90,
+        "type": "NORMAL",
+        "category": "SPECIAL",
+        "cooldownMs": 22000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Bullet Seed",
+        "power": 25,
+        "type": "GRASS",
+        "category": "PHYSICAL",
+        "cooldownMs": 15000,
+        "learnLevel": 17
+      },
+      {
+        "name": "Solar Beam",
+        "power": 120,
+        "type": "GRASS",
+        "category": "SPECIAL",
+        "cooldownMs": 50000,
+        "learnLevel": 43
+      },
+      {
+        "name": "Extrasensory",
+        "power": 80,
+        "type": "PSYCHIC",
+        "category": "SPECIAL",
+        "cooldownMs": 22000,
+        "learnLevel": 47
+      }
+    ]
+  },
+  "Blastoise": {
+    "pokeId": 10001,
+    "name": "Blastoise",
+    "looktype": 55,
+    "description": "a blastoise",
+    "type1": "WATER",
+    "rarity": "COMMON",
+    "baseHp": 79,
+    "baseAtk": 83,
+    "baseDef": 100,
+    "baseSpAtk": 85,
+    "baseSpDef": 105,
+    "baseSpeed": 78,
+    "huntLevel": 150,
+    "evolvesToId": 0,
+    "evolveLevel": 0,
+    "priceNpc": 18000,
+    "sellValue": 18000,
+    "captureBase": 9,
+    "experience": 3848,
+    "loot": [
+      {
+        "name": "Strange Pheromone",
+        "chance": 0,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Water Gem",
+        "chance": 80000,
+        "minCount": 1,
+        "maxCount": 43
+      },
+      {
+        "name": "Water Pendant",
+        "chance": 40500,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Squirtle Hull",
+        "chance": 4300,
+        "minCount": 1,
+        "maxCount": 1
+      },
+      {
+        "name": "Water Stone",
+        "chance": 500,
+        "minCount": 1,
+        "maxCount": 1
+      }
+    ],
+    "attacks": [
+      {
+        "name": "Water Gun",
+        "power": 40,
+        "type": "WATER",
+        "category": "SPECIAL",
+        "cooldownMs": 18000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Water Pulse",
+        "power": 60,
+        "type": "WATER",
+        "category": "SPECIAL",
+        "cooldownMs": 60000,
+        "learnLevel": 28
+      },
+      {
+        "name": "Hydro Pump",
+        "power": 110,
+        "type": "WATER",
+        "category": "SPECIAL",
+        "cooldownMs": 50000,
+        "learnLevel": 60
+      },
+      {
+        "name": "Cyclonic Tide",
+        "power": 600,
+        "type": "WATER",
+        "category": "SPECIAL",
+        "cooldownMs": 10000,
+        "learnLevel": 1,
+        "tm": "WATER"
+      },
+      {
+        "name": "Tackle",
+        "power": 50,
+        "type": "NORMAL",
+        "category": "PHYSICAL",
+        "cooldownMs": 15000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Flash Cannon",
+        "power": 80,
+        "type": "STEEL",
+        "category": "SPECIAL",
+        "cooldownMs": 22000,
+        "learnLevel": 1
+      },
+      {
+        "name": "Bubble",
+        "power": 40,
+        "type": "WATER",
+        "category": "SPECIAL",
+        "cooldownMs": 15000,
+        "learnLevel": 13
+      },
+      {
+        "name": "Bite",
+        "power": 60,
+        "type": "DARK",
+        "category": "PHYSICAL",
+        "cooldownMs": 20000,
+        "learnLevel": 16
+      },
+      {
+        "name": "Rapid Spin",
+        "power": 20,
+        "type": "NORMAL",
+        "category": "PHYSICAL",
+        "cooldownMs": 15000,
+        "learnLevel": 20
+      },
+      {
+        "name": "Aqua Tail",
+        "power": 90,
+        "type": "WATER",
+        "category": "PHYSICAL",
+        "cooldownMs": 22000,
+        "learnLevel": 32
+      },
+      {
+        "name": "Skull Bash",
+        "power": 130,
+        "type": "NORMAL",
+        "category": "PHYSICAL",
+        "cooldownMs": 50000,
+        "learnLevel": 39
+      }
+    ]
+  }
+}

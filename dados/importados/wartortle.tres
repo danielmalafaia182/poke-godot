@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-6-00-f9c285dcb70b.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(206,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Wartortle"
+textura=SubResource("A")
+base_hp=59
+base_atk=63
+base_def=80
+base_sp_atk=65
+base_sp_def=80
+base_speed=58
+tipo_primario="WATER"
+tipo_secundario=""

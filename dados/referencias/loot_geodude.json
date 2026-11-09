@@ -1,0 +1,73 @@
+{
+  "especie": "Geodude",
+  "denominador": 100000,
+  "fonte": "creatures.json + items.json da extração; Pokepedia divide chance por 1000 para exibir %",
+  "itens": [
+    {
+      "id": 44417,
+      "nome": "Strange Pheromone",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/strange_pheromone.png",
+      "vinculado": false,
+      "raro": false,
+      "chance_catalogo": 0,
+      "minimo": 1,
+      "maximo": 1
+    },
+    {
+      "id": 120,
+      "nome": "Small Stone",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/small_stone.png",
+      "vinculado": false,
+      "raro": false,
+      "chance_catalogo": 95000,
+      "minimo": 1,
+      "maximo": 4
+    },
+    {
+      "id": 39,
+      "nome": "Earth Ball",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/earth_ball.png",
+      "vinculado": false,
+      "raro": false,
+      "chance_catalogo": 95000,
+      "minimo": 1,
+      "maximo": 4
+    },
+    {
+      "id": 126,
+      "nome": "Stone Orb",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/stone_orb.png",
+      "vinculado": false,
+      "raro": false,
+      "chance_catalogo": 28352.11,
+      "minimo": 1,
+      "maximo": 1
+    },
+    {
+      "id": 128,
+      "nome": "Strange Rock",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/strange_rock.png",
+      "vinculado": false,
+      "raro": true,
+      "chance_catalogo": 973.84,
+      "minimo": 1,
+      "maximo": 1
+    },
+    {
+      "id": 109,
+      "nome": "Rock Stone",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/rock_stone.png",
+      "vinculado": false,
+      "raro": true,
+      "chance_catalogo": 95.3,
+      "minimo": 1,
+      "maximo": 1
+    }
+  ]
+}

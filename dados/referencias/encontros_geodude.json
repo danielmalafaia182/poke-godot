@@ -1,0 +1,206 @@
+[
+  {
+    "type": "field-kill",
+    "xpGained": 12,
+    "totalXp": 714292,
+    "level": 36,
+    "leveledUp": false,
+    "loot": [
+      {
+        "itemId": 120,
+        "name": "Small Stone",
+        "qty": 4
+      },
+      {
+        "itemId": 39,
+        "name": "Earth Ball",
+        "qty": 1
+      }
+    ],
+    "speciesId": 74,
+    "looktype": 196,
+    "speciesName": "Geodude",
+    "shiny": false,
+    "xpParts": {
+      "base": 8,
+      "streak": 0,
+      "boost": 0,
+      "vip": 4,
+      "event": 0,
+      "gym": 0,
+      "typeDay": 0
+    },
+    "pokeXp": {
+      "xpGained": 12,
+      "parts": {
+        "base": 8,
+        "boost": 0,
+        "vip": 4,
+        "event": 0,
+        "mentor": 0,
+        "gym": 0,
+        "typeDay": 0
+      },
+      "speciesId": 1,
+      "level": 36
+    },
+    "row": 46,
+    "col": 43,
+    "slot": 11
+  },
+  {
+    "type": "poke-xp",
+    "id": "cmu9y6y5cntw5iiyrt3u78fys",
+    "speciesId": 1,
+    "xpGained": 12,
+    "xp": 712226,
+    "level": 36,
+    "leveledUp": false
+  },
+  {
+    "type": "catch-result",
+    "auto": true,
+    "success": false,
+    "speciesName": "Geodude",
+    "ballName": "Super Ball",
+    "ballId": 3,
+    "row": 46,
+    "col": 43
+  },
+  {
+    "type": "field-kill",
+    "xpGained": 12,
+    "totalXp": 714304,
+    "level": 36,
+    "leveledUp": false,
+    "loot": [
+      {
+        "itemId": 39,
+        "name": "Earth Ball",
+        "qty": 2
+      }
+    ],
+    "speciesId": 74,
+    "looktype": 196,
+    "speciesName": "Geodude",
+    "shiny": false,
+    "xpParts": {
+      "base": 8,
+      "streak": 0,
+      "boost": 0,
+      "vip": 4,
+      "event": 0,
+      "gym": 0,
+      "typeDay": 0
+    },
+    "pokeXp": {
+      "xpGained": 12,
+      "parts": {
+        "base": 8,
+        "boost": 0,
+        "vip": 4,
+        "event": 0,
+        "mentor": 0,
+        "gym": 0,
+        "typeDay": 0
+      },
+      "speciesId": 1,
+      "level": 36
+    },
+    "row": 44,
+    "col": 38,
+    "slot": 6
+  },
+  {
+    "type": "poke-xp",
+    "id": "cmu9y6y5cntw5iiyrt3u78fys",
+    "speciesId": 1,
+    "xpGained": 12,
+    "xp": 712238,
+    "level": 36,
+    "leveledUp": false
+  },
+  {
+    "type": "catch-result",
+    "auto": true,
+    "success": false,
+    "speciesName": "Geodude",
+    "ballName": "Super Ball",
+    "ballId": 3,
+    "row": 44,
+    "col": 38
+  },
+  {
+    "type": "field-kill",
+    "xpGained": 12,
+    "totalXp": 714316,
+    "level": 36,
+    "leveledUp": false,
+    "loot": [
+      {
+        "itemId": 120,
+        "name": "Small Stone",
+        "qty": 3
+      },
+      {
+        "itemId": 39,
+        "name": "Earth Ball",
+        "qty": 3
+      },
+      {
+        "itemId": 126,
+        "name": "Stone Orb",
+        "qty": 1
+      }
+    ],
+    "speciesId": 74,
+    "looktype": 196,
+    "speciesName": "Geodude",
+    "shiny": false,
+    "xpParts": {
+      "base": 8,
+      "streak": 0,
+      "boost": 0,
+      "vip": 4,
+      "event": 0,
+      "gym": 0,
+      "typeDay": 0
+    },
+    "pokeXp": {
+      "xpGained": 12,
+      "parts": {
+        "base": 8,
+        "boost": 0,
+        "vip": 4,
+        "event": 0,
+        "mentor": 0,
+        "gym": 0,
+        "typeDay": 0
+      },
+      "speciesId": 1,
+      "level": 36
+    },
+    "row": 40,
+    "col": 35,
+    "slot": 13
+  },
+  {
+    "type": "poke-xp",
+    "id": "cmu9y6y5cntw5iiyrt3u78fys",
+    "speciesId": 1,
+    "xpGained": 12,
+    "xp": 712250,
+    "level": 36,
+    "leveledUp": false
+  },
+  {
+    "type": "catch-result",
+    "auto": true,
+    "success": true,
+    "speciesName": "Geodude",
+    "ballName": "Super Ball",
+    "ballId": 3,
+    "row": 40,
+    "col": 35
+  }
+]

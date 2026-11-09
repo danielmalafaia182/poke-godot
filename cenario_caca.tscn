@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://b5m6tlm21buja"]
+
+[ext_resource type="Script" uid="uid://mk31fejq03ok" path="res://cenario_caca.gd" id="1_vaqqc"]
+
+[node name="CenarioCaca" type="Node2D" unique_id=750756084]
+script = ExtResource("1_vaqqc")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1307494962]
+visible = false

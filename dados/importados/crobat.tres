@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-338-00-53d8e2e4ebf7.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(530,2,64,64)
+[resource]
+script=ExtResource("1")
+nome="Crobat"
+textura=SubResource("A")
+base_hp=85
+base_atk=90
+base_def=80
+base_sp_atk=70
+base_sp_def=80
+base_speed=130
+tipo_primario="POISON"
+tipo_secundario="FLYING"

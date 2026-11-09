@@ -1,0 +1,24 @@
+{
+  "suites": 38,
+  "aprovado": true,
+  "fidelidade_comprovada": false,
+  "regressao": "20261107_204324_0691cbc3",
+  "hp_candidato_padrao": true,
+  "arquivos": {
+    "caca.gd": "e23085fc49d5b6e91121297b75ae5cd30c5a4772807df266a41857870276aa5d",
+    "caca_base.gd": "dc0f44fde9a130e8288df11aca4b4e04bc464a64688018b7ac96762ce33e0f8a",
+    "encontro_selvagem.gd": "c2d8016130b9b35dc7ce20219d1c60e6bb5ade05e7a6e022f71e5a4f77777cb8",
+    "registro_combate.gd": "39c31cb39de494ee393bf1499718500276339c80715c4f259ba62783d04fb510",
+    "regras_vida_selvagem.gd": "9a1ac3133f8701d03c84a996961a31a0cfaae123d333efc21250bff4d9ef2a82",
+    "regras_dano_candidato.gd": "0b9a0d18e1fdfbe97cdba8cd7270bae882976edd97ab69ca69f3ba2a1cf68e94",
+    "regras_dano.gd": "5a0c1d078996ef829d09496fc7747e2088f82a616432ead436b9d81c8796c719",
+    "test_vida_selvagem_candidato.gd": "be3a288a9408f37676dd5d6e1527d5b7c4584415d99016a981959b43e50e788a",
+    "test_dano_atributos.gd": "437e0bc1b98b31f5fe1b56b1efa886c16f1e4b836a543111f8ab3878062a5532",
+    "test_calibracao_combate.gd": "882446e67599702ff2b39799277ab446b8e416e5b216fe6220efefb66ce8e65e",
+    "test_dano_candidato.gd": "c662f77899a3945b44e1b3b5d72a2176c95e56890a2a3847504151d574e3406c",
+    "validacao_qualidade/executar.py": "0122b5411d41a6ab08750b67be23620b74f5ea520f2a4268530940daef5ce8e6",
+    "ferramentas/auditar_hp_selvagens.py": "dfc025dd7a1292110f0b34966131d84fc9f6c8622407c1ec7a87e011a990d1f0",
+    "dados/combate/hp_selvagens_observados.json": "6967260e842b2fe8e412ec10d37b3b97e94b424be0d533039c0cd0b0d19abde9",
+    "dados/combate/auditoria_hp_selvagens.json": "1a99d0d5df658cc0bfada80ff1ac660c98651f1b2031da16362f19784c775679"
+  }
+}

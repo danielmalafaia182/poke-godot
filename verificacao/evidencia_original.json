@@ -1,0 +1,17 @@
+{
+  "origem": "analise_amostra/mensagens_combate_originais.json",
+  "quantidade_field": 79,
+  "duracao_ms": 54023,
+  "field_init": {
+    "slug": "geodude",
+    "rows": 88,
+    "cols": 109,
+    "minTx": -54,
+    "minTy": -43,
+    "heroStepMs": 500,
+    "mobStepMs": 1000,
+    "trainerStepMs": 500,
+    "tickMs": 200
+  },
+  "limite_da_evidencia": "Os frames mostram resultados do servidor. Não revelam algoritmo, objetivo escolhido, aggro, prioridade ou motivos de espera."
+}

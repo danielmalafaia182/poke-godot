@@ -1,0 +1,100 @@
+{
+  "correcao": "P02 — substituição aleatória por KO",
+  "base": "poke-idle(3).rar + correção P01",
+  "godot_validacao": "4.6.3 Linux headless",
+  "regra": "KO → reserva viva e válida aleatória do time → cooldown manual 5s. Outro KO ignora cooldown e reinicia prazo. Cidade somente sem reserva apta.",
+  "suites": [
+    {
+      "teste": "test_ko_troca_aleatoria.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "P02 KO E TROCA ALEATORIA: 99 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_entrada_lider_ko.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "P01 ENTRADA LIDER KO: 50 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_cooldown_troca.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "COOLDOWN TROCA: 269 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_troca_hunt_barras.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "TROCA HUNT E BARRAS: 199 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_cerco_acesso.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "CERCO E ACESSO: 13 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_ataques_independentes.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "ATAQUES INDEPENDENTES: 24 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_mapa_entre_hunts.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "MAPA ENTRE HUNTS: 8 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_loot_combate_fiel.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "LOOT COMBATE FIEL: 25 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_consistencia.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "CONSISTÊNCIA: 37 verificações; 0 falhas"
+      ]
+    },
+    {
+      "teste": "test_revisao.gd",
+      "exit_code": 0,
+      "sem_erros": true,
+      "resumos": [
+        "REVISÃO: 14 verificações; 0 falhas"
+      ]
+    }
+  ],
+  "arquivos": [
+    {
+      "nome": "caca_base.gd",
+      "sha256_p01": "0cc1bba2e07f34edacfde2c76d29d068ec349cf0812ed9d477ad17a252b04884",
+      "sha256_p02": "8734d1d9c87e37010a4610baab56a72615020b80b4e81c5886dc1eaac9258672"
+    },
+    {
+      "nome": "caca.gd",
+      "sha256_p01": "cfe5f10bfb0237d33127f236ed82fc33ae478d5e059538d0a9aecebf5571eda1",
+      "sha256_p02": "cfe5f10bfb0237d33127f236ed82fc33ae478d5e059538d0a9aecebf5571eda1"
+    }
+  ]
+}

@@ -1,0 +1,167 @@
+[
+  {
+    "chave": "pokemon",
+    "nome": "Pokémon",
+    "icone": "pokemon.png"
+  },
+  {
+    "chave": "profile",
+    "nome": "Perfil",
+    "icone": "icon_profile_player.png"
+  },
+  {
+    "chave": "pokedex",
+    "nome": "Pokédex",
+    "icone": "pokedex.png"
+  },
+  {
+    "chave": "pokecards",
+    "nome": "Álbum",
+    "icone": "icon_album.png"
+  },
+  {
+    "chave": "ranking",
+    "nome": "Ranking",
+    "icone": "icon_ranking3.png"
+  },
+  {
+    "chave": "bosses",
+    "nome": "Bosses",
+    "icone": "boss2.png"
+  },
+  {
+    "chave": "professions",
+    "nome": "Profissões",
+    "icone": "menu_professions.png"
+  },
+  {
+    "chave": "clans",
+    "nome": "Clãs",
+    "icone": "clan_icon.png"
+  },
+  {
+    "chave": "guild",
+    "nome": "Guilda",
+    "icone": "guild.png"
+  },
+  {
+    "chave": "breeding",
+    "nome": "Breeding",
+    "icone": "breeding.png"
+  },
+  {
+    "chave": "home",
+    "nome": "Cidade",
+    "icone": "icon_home_center.png"
+  },
+  {
+    "chave": "map",
+    "nome": "Mapa-Múndi",
+    "icone": "icon_map_globe_lens.png"
+  },
+  {
+    "chave": "patchnotes",
+    "nome": "Novidades",
+    "icone": "playerWarning.png"
+  },
+  {
+    "chave": "pokepedia",
+    "nome": "Pokepedia",
+    "icone": "pokepedia.png"
+  },
+  {
+    "chave": "pvp",
+    "nome": "PvP",
+    "icone": "pvp_crest.png"
+  },
+  {
+    "chave": "gyms",
+    "nome": "Ginásios",
+    "icone": "icon_gym.png"
+  },
+  {
+    "chave": "inventory",
+    "nome": "Inventário",
+    "icone": "inventory.png"
+  },
+  {
+    "chave": "trade",
+    "nome": "Troca",
+    "icone": "duel.png"
+  },
+  {
+    "chave": "usedballs",
+    "nome": "Bolas usadas",
+    "icone": "usedballs.png"
+  },
+  {
+    "chave": "analyzer",
+    "nome": "Hunt Analyser",
+    "icone": "analyzer.png"
+  },
+  {
+    "chave": "seasonpass",
+    "nome": "Season Pass",
+    "icone": "seasonpass_badge.png"
+  },
+  {
+    "chave": "quest",
+    "nome": "Quests",
+    "icone": "questlog.png"
+  },
+  {
+    "chave": "streak",
+    "nome": "Talentos",
+    "icone": "talents.png"
+  },
+  {
+    "chave": "sleep",
+    "nome": "Descanso",
+    "icone": "sleep.png"
+  },
+  {
+    "chave": "daily",
+    "nome": "Diário",
+    "icone": "icon_daily.png"
+  },
+  {
+    "chave": "viplist",
+    "nome": "VIP",
+    "icone": "icon_viplist.png"
+  },
+  {
+    "chave": "mail",
+    "nome": "Correio",
+    "icone": "mail.png"
+  },
+  {
+    "chave": "store",
+    "nome": "Loja",
+    "icone": "icon_store.png"
+  },
+  {
+    "chave": "referral",
+    "nome": "Comunidade",
+    "icone": "community.png"
+  },
+  {
+    "chave": "streams",
+    "nome": "Streams",
+    "icone": "icon_stream_bonus.svg"
+  },
+  {
+    "chave": "pip",
+    "nome": "PiP",
+    "icone": "icon_pip.svg"
+  },
+  {
+    "chave": "config",
+    "nome": "Configurações",
+    "icone": "icon_config.png"
+  },
+  {
+    "chave": "logout",
+    "nome": "Sair",
+    "icone": "icon_logout.png"
+  }
+]

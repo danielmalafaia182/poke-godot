@@ -1,0 +1,17 @@
+ARQUIVO: dados/caca/hunts.json
+
+Cada chave é o nome exato da espécie, igual a DadosEspecie.nome.
+Campos:
+nivel: nível dos selvagens (não é o nível de acesso do treinador).
+xp: XP base por derrota.
+vip: parcela adicional de XP quando a opção VIP do protótipo está ligada.
+cenario: caminho res:// de uma PackedScene que disponibilize celulas_existentes e celulas_bloqueadas.
+navegacao: JSON de grade compatível com dados_navegacao.gd e com o cenário.
+inicio: [x,y] da célula inicial do aliado.
+pontos: lista de células [x,y] distintas, transitáveis e acessíveis.
+populacao: número de pontos utilizados, de 1 até o tamanho da lista.
+respawn: segundos até tentar repor um indivíduo derrotado.
+provisorio: registro documental de dados ainda não confirmados.
+
+Use a entrada Geodude como exemplo funcional. Para testar população diferente, escolha um número menor que 15 em uma cópia do projeto. O controlador não precisa ser alterado.
+Atenção: a cena e a grade atuais são do Geodude. Para novos cenários, é necessário fornecer geometria e grade compatíveis antes de testar.

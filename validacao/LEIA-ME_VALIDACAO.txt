@@ -1,0 +1,1 @@
+Consolidação de 29 suítes: 25 resultados da regressão e 4 da conferência final após corrigir a atualização de cartões removidos. A conferência final repetiu evolução, UI, TEAM e compatibilidade de saves. Os arquivos JSON identificam a execução de origem de cada resultado. Importação e fixture também aprovadas.

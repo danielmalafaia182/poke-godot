@@ -1,0 +1,454 @@
+{
+  "schema": 1,
+  "casos": [
+    {
+      "id": "geodude_vs_geodude",
+      "titulo": "Geodude × Geodude",
+      "aliado": {
+        "especie": "Geodude",
+        "nivel": 1,
+        "qualidade": 1.13,
+        "ivs": [
+          32,
+          28,
+          32,
+          32,
+          32,
+          17
+        ],
+        "origem_ivs": "sintéticos compatíveis; não são os IVs reais da conta",
+        "atributos": {
+          "hp": 1,
+          "atk": 1,
+          "def": 2,
+          "spAtk": 1,
+          "spDef": 1,
+          "speed": 1
+        },
+        "power": 8,
+        "hp_maximo": 24
+      },
+      "inimigo": {
+        "especie": "Geodude",
+        "nivel_original": null,
+        "atributos_originais": null,
+        "hp_maximos_observados": [
+          120
+        ]
+      },
+      "golpes": [
+        {
+          "direcao": "causado",
+          "nome": "Tackle",
+          "danos": [
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2,
+            2
+          ],
+          "efetividades": [
+            0.3333333333333333
+          ],
+          "intervalos_pacotes_ms": [
+            1601,
+            1600,
+            1601,
+            1600,
+            1600,
+            1602,
+            2400,
+            2000,
+            2001,
+            400,
+            1607,
+            2402,
+            1599,
+            2401,
+            0,
+            1599,
+            2001,
+            2000,
+            800,
+            1600,
+            1601,
+            1600,
+            1600,
+            1601,
+            1601,
+            1999,
+            1601,
+            2001,
+            1200,
+            1601
+          ],
+          "atacante_individual_identificado": true
+        },
+        {
+          "direcao": "recebido",
+          "nome": "Tackle",
+          "danos": [
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1,
+            1
+          ],
+          "efetividades": [
+            0.3333333333333333
+          ],
+          "intervalos_pacotes_ms": [
+            2001,
+            2002,
+            2399,
+            2002,
+            0,
+            1600,
+            400,
+            1600,
+            400,
+            1601,
+            400,
+            1607,
+            400,
+            2002,
+            0,
+            1599,
+            401,
+            2000,
+            0,
+            0,
+            1599,
+            0,
+            401,
+            1600,
+            0,
+            401,
+            1599,
+            0,
+            401,
+            799,
+            800,
+            1200,
+            0,
+            801,
+            800,
+            400,
+            801,
+            1199,
+            0,
+            801,
+            800,
+            400,
+            800,
+            800,
+            400,
+            800,
+            800,
+            401,
+            800,
+            800,
+            401,
+            800,
+            800,
+            400,
+            800,
+            801,
+            399
+          ],
+          "atacante_individual_identificado": false
+        }
+      ],
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-06T20-25-55-050Z.txt",
+        "sha256": "236bc030e526e2b86e4cfd762f70088b670b2817472eeb335ddaf93a2e51f96e",
+        "fields_do_aliado": 79
+      },
+      "fidelidade_global_comprovada": false
+    },
+    {
+      "id": "exeggutor_vs_blastoise",
+      "titulo": "Exeggutor × Blastoise",
+      "aliado": {
+        "especie": "Exeggutor",
+        "nivel": 398,
+        "qualidade": 1.8,
+        "ivs": [
+          27,
+          29,
+          20,
+          30,
+          30,
+          2
+        ],
+        "origem_ivs": "inferência condicionada à fórmula do cliente e atributos arredondados",
+        "atributos": {
+          "hp": 1037,
+          "atk": 975,
+          "def": 796,
+          "spAtk": 1178,
+          "spDef": 796,
+          "speed": 410
+        },
+        "power": 9346,
+        "hp_maximo": 12444
+      },
+      "inimigo": {
+        "especie": "Blastoise",
+        "nivel_original": null,
+        "atributos_originais": null,
+        "hp_maximos_observados": [
+          2380,
+          2520,
+          2625,
+          2975,
+          3150,
+          3360,
+          3430,
+          3465,
+          3780,
+          3885,
+          3920,
+          3990,
+          4585,
+          4690,
+          4725
+        ]
+      },
+      "golpes": [
+        {
+          "direcao": "causado",
+          "nome": "Leaf Storm",
+          "danos": [
+            20567,
+            17658,
+            11701,
+            14400,
+            16689,
+            13889,
+            13955,
+            16576,
+            12088,
+            11306
+          ],
+          "efetividades": [
+            2.5
+          ],
+          "intervalos_pacotes_ms": [
+            7203,
+            6801,
+            4802,
+            1600,
+            7603,
+            1200,
+            2000,
+            14002,
+            2401
+          ],
+          "atacante_individual_identificado": true
+        }
+      ],
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-06T20-43-57-501Z.txt",
+        "sha256": "d1bcaf85bc9c833ed57a8299c899f763a8e239a61ca1d92b13cde942469925a8",
+        "fields_do_aliado": 81
+      },
+      "fidelidade_global_comprovada": false
+    },
+    {
+      "id": "gyarados_vs_blastoise",
+      "titulo": "Gyarados × Blastoise",
+      "aliado": {
+        "especie": "Gyarados",
+        "nivel": 214,
+        "qualidade": 1.8,
+        "ivs": [
+          23,
+          32,
+          23,
+          24,
+          23,
+          29
+        ],
+        "origem_ivs": "inferência condicionada à fórmula do cliente e atributos arredondados",
+        "atributos": {
+          "hp": 527,
+          "atk": 647,
+          "def": 428,
+          "spAtk": 370,
+          "spDef": 500,
+          "speed": 520
+        },
+        "power": 5386,
+        "hp_maximo": 6324
+      },
+      "inimigo": {
+        "especie": "Blastoise",
+        "nivel_original": null,
+        "atributos_originais": null,
+        "hp_maximos_observados": [
+          2380,
+          2520,
+          2625,
+          2975,
+          3150,
+          3360,
+          3430,
+          3465,
+          3780,
+          3885,
+          3920,
+          3990,
+          4585,
+          4690,
+          4725
+        ]
+      },
+      "golpes": [
+        {
+          "direcao": "causado",
+          "nome": "Thrash",
+          "danos": [
+            1126,
+            1039,
+            1025,
+            1012,
+            1230,
+            1183,
+            1300,
+            1014,
+            1145,
+            1103,
+            1130,
+            1093
+          ],
+          "efetividades": [
+            1
+          ],
+          "intervalos_pacotes_ms": [
+            1201,
+            2000,
+            1199,
+            1601,
+            3201,
+            0,
+            2002,
+            2003,
+            1199,
+            2803,
+            399
+          ],
+          "atacante_individual_identificado": true
+        },
+        {
+          "direcao": "recebido",
+          "nome": "Skull Bash",
+          "danos": [
+            34,
+            36,
+            34,
+            34,
+            36,
+            37
+          ],
+          "efetividades": [
+            1
+          ],
+          "intervalos_pacotes_ms": [
+            2000,
+            3201,
+            6006,
+            2000,
+            2002
+          ],
+          "atacante_individual_identificado": false
+        }
+      ],
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-06T20-43-57-501Z.txt",
+        "sha256": "d1bcaf85bc9c833ed57a8299c899f763a8e239a61ca1d92b13cde942469925a8",
+        "fields_do_aliado": 28
+      },
+      "fidelidade_global_comprovada": false
+    }
+  ]
+}

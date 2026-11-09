@@ -1,0 +1,32 @@
+LOOT DAS HUNTS
+
+INSTALAÇÃO
+Aplicar após progressao_treinador_xp.zip. Pare o jogo, faça backup e extraia na pasta de project.godot, substituindo arquivos e preservando .gd.uid. Aguarde a importação dos ícones.
+
+DISPONÍVEL
+As 212 espécies habilitadas passam a sortear seus próprios drops: 1254 entradas de tabela, 183 itens distintos. Estoque é recebido na BAG, aparece no resultado da derrota e pode ser transferido para o depot pela interface existente. Persistência usa o catálogo ampliado. Limite anterior de exibição dos cartões de derrota continua funcionando; deixar de mostrar um cartão não impede a entrega do loot.
+A tabela original do Geodude foi preservada.
+IDs, nomes, chances e quantidades vêm de creatures.json + items.json das extrações fornecidas. Todos os nomes de drop das espécies implementadas encontraram correspondência única no catálogo de itens.
+
+IMAGENS
+Há 22 ícones reais disponíveis; 161 itens usam um marcador neutro '?' até recuperarmos os arquivos originais. Não são imagens inventadas dos itens. O nome correto permanece visível. O relatório lista cada entrada de drop com imagem pendente; o mesmo item pode aparecer em muitas espécies.
+GIFs disponíveis são convertidos para PNG estático, preservando o primeiro quadro. Animações de ícones não foram implementadas.
+
+CHANCES
+Mantida a interpretação já utilizada no Geodude: chance_catalogo / 100000; 95000 equivale a 95%. Quantidade inteira uniforme entre minCount e maxCount e rolagens independentes por entrada são regras locais do protótipo. Isso não comprova o RNG, modificadores ou restrições de drops do servidor original.
+Chance zero não gera drop.
+Não foram adicionados multiplicadores VIP, streak, evento, Power ou nível ao loot.
+
+IDENTIDADE DOS ITENS
+O protótipo usa IDs locais 1..7 para Pokébolas, mas o catálogo original reutiliza alguns desses números para materiais, como Bag of Pollen (4). Para não alterar Pokébolas ao receber materiais, somente IDs conflitantes recebem alias local 1000000 + ID original. id_original registra a identidade da fonte. Nome e imagem continuam sendo os do material correto.
+O alias é uma adaptação do inventário local, não um ID novo do jogo original. A longo prazo, os estoques devem usar tipo + ID como identidade.
+As novas entradas são tratadas como materiais armazenáveis. Seus efeitos de uso, venda, crafting, evolução ou serviços ainda não foram implementados. Receber uma pedra não implementa automaticamente seu uso na evolução.
+
+IMPORTADOR
+ferramentas/importar_loot.py --origem PASTA_INSPECT --projeto PASTA_PROJETO
+Requer Python 3 + Pillow. A origem deve manter o caminho stage3/poke-local/public/game/items.json e os assets extraídos; as criaturas vêm de dados/importados/catalogo_fonte.json do projeto. Já entregamos os resultados prontos, sem necessidade de executar Python.
+Execute somente em uma cópia e com Godot fechado. O script substitui a tabela gerada e o relatório.
+
+VALIDAÇÃO
+Godot 4.6.3. Testes em perfis temporários: sorteio das 212 espécies, IDs únicos, ícone/marcador disponível, ausência de colisões com consumíveis, transferência BAG->depot e restauração do estoque salvo; regressão completa em validacao.
+Godot 4.7.2 não executado. Falta conferir o acabamento visual dos novos itens no seu projeto.

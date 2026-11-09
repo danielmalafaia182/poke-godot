@@ -1,0 +1,63 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+BALANCO Venusaur Lv80: HP=5400; dano causado=3; recebido=61185; rodadas=1
+BALANCO Charizard Lv80: HP=5280; dano causado=3; recebido=3953; rodadas=1
+BALANCO Blastoise Lv80: HP=5340; dano causado=2; recebido=54260; rodadas=1
+BALANCO Pidgeot Lv80: HP=5520; dano causado=3; recebido=3149; rodadas=1
+BALANCO Raichu Lv80: HP=4440; dano causado=3; recebido=458; rodadas=1
+BALANCO Nidoqueen Lv80: HP=5880; dano causado=3; recebido=25975; rodadas=1
+BALANCO Nidoking Lv80: HP=5400; dano causado=3; recebido=28074; rodadas=1
+BALANCO Clefable Lv80: HP=6120; dano causado=1; recebido=5905; rodadas=1
+BALANCO Wigglytuff Lv80: HP=8280; dano causado=1; recebido=2518; rodadas=1
+BALANCO Golduck Lv80: HP=5400; dano causado=3; recebido=58877; rodadas=1
+BALANCO Poliwrath Lv80: HP=5880; dano causado=1; recebido=47336; rodadas=1
+BALANCO Machamp Lv80: HP=5880; dano causado=1; recebido=34106; rodadas=1
+BALANCO Tentacruel Lv80: HP=5400; dano causado=3; recebido=51952; rodadas=1
+BALANCO Golem Lv80: HP=5400; dano causado=2; recebido=5342; rodadas=1
+BALANCO Rapidash Lv80: HP=4680; dano causado=3; recebido=3149; rodadas=1
+BALANCO Magneton Lv80: HP=3960; dano causado=2; recebido=4276; rodadas=1
+BALANCO Muk Lv80: HP=6600; dano causado=3; recebido=2225; rodadas=1
+BALANCO Rhydon Lv80: HP=6600; dano causado=2; recebido=34106; rodadas=1
+BALANCO Kangaskhan Lv80: HP=6600; dano causado=3; recebido=2144; rodadas=1
+BALANCO Starmie Lv80: HP=4440; dano causado=6; recebido=61185; rodadas=1
+BALANCO Mr. Mime Lv80: HP=3480; dano causado=3; recebido=11125; rodadas=1
+BALANCO Omastar Lv80: HP=4920; dano causado=2; recebido=12503; rodadas=1
+BALANCO Kabutops Lv80: HP=4440; dano causado=2; recebido=4559; rodadas=1
+BALANCO Dragonair Lv80: HP=4440; dano causado=3; recebido=8069; rodadas=1
+BALANCO Meganium Lv80: HP=5400; dano causado=2; recebido=53106; rodadas=1
+BALANCO Typhlosion Lv80: HP=5280; dano causado=3; recebido=3953; rodadas=1
+BALANCO Feraligatr Lv80: HP=5640; dano causado=2; recebido=51375; rodadas=1
+BALANCO Crobat Lv80: HP=5640; dano causado=3; recebido=3428; rodadas=1
+BALANCO Lanturn Lv80: HP=7560; dano causado=3; recebido=49644; rodadas=1
+BALANCO Xatu Lv80: HP=4680; dano causado=7; recebido=10705; rodadas=1
+BALANCO Ampharos Lv80: HP=5880; dano causado=3; recebido=1757; rodadas=1
+BALANCO Girafarig Lv80: HP=4920; dano causado=7; recebido=1546; rodadas=1
+BALANCO Forretress Lv80: HP=5160; dano causado=2; recebido=10285; rodadas=1
+BALANCO Granbull Lv80: HP=5880; dano causado=1; recebido=3476; rodadas=1
+BALANCO Magcargo Lv80: HP=3960; dano causado=2; recebido=3550; rodadas=1
+BALANCO Piloswine Lv80: HP=6360; dano causado=3; recebido=19418; rodadas=1
+BALANCO Donphan Lv80: HP=5880; dano causado=2; recebido=32008; rodadas=1
+BALANCO Miltank Lv80: HP=6120; dano causado=2; recebido=2763; rodadas=1
+BALANCO Togetic Lv80: HP=4200; dano causado=1; recebido=5213; rodadas=1
+Recortes consultados (chão apenas): 74
+Peças bloqueadoras carregadas: 19000
+Formato do mapa: stonegy-map-compact-v1
+Registros totais: 50281
+Primeiro registro: [-52.0, -42.0, 1.0, 415.0, []]
+Piso da caça: 7
+Registros no piso da caça: 9592
+Registros de chão desenhados: 9592
+Total de objetos: 7308
+Objetos desenhados: 7308
+Identificadores sem recorte: []
+Recortes consultados: 429
+Páginas de textura consultadas: 12
+Células existentes: 9592
+Células bloqueadas: 6703
+Células sem bloqueio: 2889
+Navegação original: 757 células livres; passo 500.0ms
+Células acessíveis ao aliado: 754
+Posição inicial da caça: (-2, 3)
+População configurada: 15
+Pontos originais validados: 15
+DIFICULDADE HUNTS: 255 verificações; 0 falhas

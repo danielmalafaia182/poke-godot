@@ -1,0 +1,38 @@
+CORREÇÃO DA COMPARAÇÃO NUMÉRICA DE HP
+Base: comparador_combate_pronto.zip.
+
+INSTALAÇÃO
+Pare o jogo e extraia este pacote na pasta de project.godot, substituindo os scripts incluídos.
+Preserve os .gd.uid existentes. Não precisa alterar cenas, criar nós ou resetar o save.
+
+O QUE FOI CORRIGIDO
+O JSON contém120.0 como float; o perfil usa120 como int. No Godot, Array.has distingue esses tipos.
+Isso fez o comparador marcar incorretamente Geodude HP120 contra120 como DIVERGE.
+Agora a busca compara valores numéricos sem truncar frações. Esse caso fica COMPATÍVEL SOB HIPÓTESE.
+A busca de efetividades recebeu a mesma normalização de tipos numéricos.
+Isso não altera HP real, dano, atributos ou equilíbrio das hunts; corrige a classificação do relatório.
+5340 continua divergente dos valores de HP de Blastoise presentes na amostra.
+
+CONFERÊNCIA DOS JSONS RECEBIDOS
+Foram recebidos os três casos V2 com os valores padrão e nenhum diagnóstico local importado.
+O arquivo de Geodude foi enviado duas vezes, com bytes idênticos.
+HP máximo, Power e seis atributos dos aliados coincidem com as referências em todos os casos.
+Geodude: Tackle causado2 e recebido1, compatível sob a hipótese de selvagem usada.
+Exeggutor: Leaf Storm11226 contra faixa11306–20567 da amostra.
+Gyarados: Thrash1285 contra1012–1300, compatível sob hipótese.
+Gyarados: Skull Bash recebido21 contra34–37, divergente nesta hipótese.
+Blastoise hipotético:5340HP; observados2380–4725 nos logs do original.
+Essas conclusões são de uma hipótese fixa de IV16/qualidade1, não da distribuição inteira do protótipo.
+Os JSONs recebidos confirmam a execução do comparador no ambiente do usuário; não são novas medições
+feitas durante batalhas do original. A cadência continua inconclusiva por agrupamento dos pacotes.
+
+PRÓXIMA EVIDÊNCIA ÚTIL
+Um teste pareado no original, com dois aliados de atributos conhecidos atacando o mesmo selvagem
+antes de ele morrer, ajuda a separar o efeito dos atributos do atacante da defesa daquele inimigo.
+Preferir dano acima do piso de2 e vários golpes antes do KO. Registrar os seis atributos, HP máximo,
+nível, qualidade e Power de cada aliado, além das mensagens WS com os horários e o momento da troca.
+Não tratar o nível/IV do Pokémon capturado como atributo de combate do selvagem sem verificar essa relação.
+Não é necessário repetir as três exportações padrão já recebidas.
+
+VALIDAÇÃO:duas suítes focadas aprovadas no Godot4.6.3 headless (comparador e calibração).
+Exemplos com classificação corrigida incluídos, sem modificar os JSONs enviados pelo usuário.

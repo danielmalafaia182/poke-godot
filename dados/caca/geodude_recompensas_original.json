@@ -1,0 +1,41 @@
+{
+  "experience": 8,
+  "loot": [
+    {
+      "name": "Strange Pheromone",
+      "chance": 0,
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "name": "Small Stone",
+      "chance": 95000,
+      "minCount": 1,
+      "maxCount": 4
+    },
+    {
+      "name": "Earth Ball",
+      "chance": 95000,
+      "minCount": 1,
+      "maxCount": 4
+    },
+    {
+      "name": "Stone Orb",
+      "chance": 28352.11,
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "name": "Strange Rock",
+      "chance": 973.84,
+      "minCount": 1,
+      "maxCount": 1
+    },
+    {
+      "name": "Rock Stone",
+      "chance": 95.3,
+      "minCount": 1,
+      "maxCount": 1
+    }
+  ]
+}

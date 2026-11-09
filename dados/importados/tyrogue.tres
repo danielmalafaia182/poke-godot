@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-384-00-5ae5733c811d.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(342,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Tyrogue"
+textura=SubResource("A")
+base_hp=35
+base_atk=35
+base_def=35
+base_sp_atk=35
+base_sp_def=35
+base_speed=35
+tipo_primario="FIGHTING"
+tipo_secundario=""

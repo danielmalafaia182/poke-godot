@@ -1,0 +1,25 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+BUSCA OFENSIVA: {"aviso":"Interseção de condições necessárias sob as premissas candidatas. Não valida um perfil conjunto de HP/Atk/Def nem identifica nível real.","limite_busca":200,"menor_hp_maximo_observado":2275,"niveis_nao_refutados_dano_e_hp_minimo":[94,95,96,97,98,99],"niveis_nao_refutados_pelos_envelopes":[94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130],"nivel_original_identificado":false}
+Recortes consultados (chão apenas): 74
+Peças bloqueadoras carregadas: 19000
+Formato do mapa: stonegy-map-compact-v1
+Registros totais: 50281
+Primeiro registro: [-52.0, -42.0, 1.0, 415.0, []]
+Piso da caça: 7
+Registros no piso da caça: 9592
+Registros de chão desenhados: 9592
+Total de objetos: 7308
+Objetos desenhados: 7308
+Identificadores sem recorte: []
+Recortes consultados: 429
+Páginas de textura consultadas: 12
+Células existentes: 9592
+Células bloqueadas: 6703
+Células sem bloqueio: 2889
+Navegação original: 757 células livres; passo 500.0ms
+Células acessíveis ao aliado: 754
+Posição inicial da caça: (-2, 3)
+População configurada: 15
+Pontos originais validados: 15
+OFENSIVA SELVAGENS: 54 verificações; 0 falhas

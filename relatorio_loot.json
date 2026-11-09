@@ -1,0 +1,71 @@
+{
+  "especies": 212,
+  "itens": 183,
+  "drops_mapeados": 1254,
+  "pendencias": [],
+  "aliases_colisao": [
+    {
+      "id": 1000004,
+      "id_original": 4,
+      "nome": "Bag of Pollen",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/importados/4.png",
+      "vinculado": false,
+      "raro": false
+    },
+    {
+      "id": 1000007,
+      "id_original": 7,
+      "nome": "Bee Sting",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/importados/7.png",
+      "vinculado": false,
+      "raro": true
+    },
+    {
+      "id": 1000002,
+      "id_original": 2,
+      "nome": "Ancient Stone",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/importados/2.png",
+      "vinculado": false,
+      "raro": true
+    },
+    {
+      "id": 1000003,
+      "id_original": 3,
+      "nome": "Armadillo Claw",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/importados/3.png",
+      "vinculado": false,
+      "raro": false
+    },
+    {
+      "id": 1000006,
+      "id_original": 6,
+      "nome": "Bat Wing",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/importados/6.png",
+      "vinculado": false,
+      "raro": false
+    },
+    {
+      "id": 1000001,
+      "id_original": 1,
+      "nome": "Air Tank",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/importados/1.png",
+      "vinculado": false,
+      "raro": true
+    },
+    {
+      "id": 1000005,
+      "id_original": 5,
+      "nome": "Band Aid",
+      "categoria": "Materials",
+      "icone": "res://assets/interface/loot/importados/5.png",
+      "vinculado": false,
+      "raro": false
+    }
+  ]
+}

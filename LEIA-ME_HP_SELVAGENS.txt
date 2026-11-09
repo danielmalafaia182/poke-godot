@@ -1,0 +1,77 @@
+HP DOS SELVAGENS — CANDIDATA REVERSÍVEL
+
+INSTALAÇÃO
+Pare o jogo e faça backup. Extraia na pasta de project.godot e substitua os scripts,
+mesclando as pastas. Preserve os .gd.uid. Adicione regras_vida_selvagem.gd.
+Este pacote inclui as dependências do dano candidato anterior. Use sobre o projeto
+que já tem laboratorio_pareado_pronto.zip ou dano_candidato_stab_variacao.zip.
+Não precisa criar nós nem conectar sinais.
+Entre novamente na hunt para gerar os encontros com a nova regra.
+
+ENTREGA
+Regra candidata, ativada por padrão com atributos/calibração ligados:
+  HP máximo do selvagem = máximo(120, atributo HP *35)
+Anterior:
+  HP máximo do selvagem = máximo(24, atributo HP *12) *5
+A regra anterior e a candidata estão isoladas em regras_vida_selvagem.gd.
+Usar HP Selvagem Candidato, na raiz de Caca.tscn, permite voltar à regra anterior.
+O toggle afeta encontros novos/respawn. Não cura nem muda a vida de encontros vivos.
+Para comparar sem misturar regras numa população, saia e entre novamente na hunt.
+Desligar Usar Calibracao Combate também desativa esta candidata.
+O toggle de HP é separado do toggle de dano, para comparar uma hipótese por vez.
+
+EVIDÊNCIA
+24 encontros de Blastoise em duas sessões do original.
+Considerando o gerador local atual: nível80, IVs1–32 e todos os901 valores possíveis
+de qualidade que DadosPokemon.sortear_qualidade pode produzir:
+- Regra anterior: reproduz exatamente1 dos24 HP máximos.
+- Candidata: reproduz exatamente24 dos24 HP máximos.
+- Suporte de HP anterior neste gerador:3120–12000.
+- Suporte candidato neste gerador:1820–7000.
+- Menor/maior HP máximo observados nestes24 encontros:2275 e5705.
+Esses extremos são da amostra, não limites globais do original.
+A auditoria contém um exemplo de IV HP e qualidade que reproduz cada máximo.
+Esses exemplos NÃO identificam o IV ou a qualidade verdadeiros do original.
+Todos os exemplos foram conferidos usando o cálculo real de atributos no Godot.
+
+ALCANCE E LIMITES
+A evidência direta desta candidata é de Blastoise. A aplicação às demais espécies
+é uma generalização provisória, ainda a validar; o piso120 preserva o caso Geodude1.
+Compatibilidade dos máximos não prova que HP*35 seja a fórmula única do servidor,
+nem valida pesos de sorteio, nível dos selvagens ou correlação entre atributos.
+A implementação NÃO altera atributos, IVs, qualidade, nível, Power ou HP aliado.
+Não altera velocidade/agenda, comportamento, recompensas ou captura.
+A vida de batalha é propriedade do encontro; ao capturar, o Pokémon mantém o modelo
+de HP aliado, sem receber os milhares de HP da batalha selvagem.
+A redução do HP aproxima esta amostra, mas não demonstra dificuldade correta das hunts.
+Atk/Def/SpAtk/SpDef e danos RECEBIDOS continuam exigindo calibração própria.
+
+NÍVEL DO SELVAGEM: PENDÊNCIA PRIORITÁRIA
+O protótipo usa o nível de acesso como proxy para gerar atributos. Isso não foi
+confirmado como regra do original. Blastoise está configurado localmente em80;
+o catálogo bruto de criaturas consultado indica huntLevel150. Não substituímos
+um pelo outro como nível de combate: ambos podem representar acesso, e não o nível
+real do selvagem. Essa divergência deve ser investigada separadamente.
+
+DIAGNÓSTICO
+Ctrl+Shift+L dentro da hunt inicia o registro; repita para exportar.
+Cada selvagem passa a levar um perfil_hp imutável, criado junto do encontro, com:
+- regra usada, nível local, atributo HP, HP aliado e HP máximo aplicado;
+- indicação explícita de que o nível original e a fidelidade não estão confirmados.
+A configuração da sessão registra se a candidata está ativa. O perfil de cada
+indivíduo continua correto mesmo se o toggle for alterado antes do respawn.
+O multiplicador legado hp_selvagem_multiplicador fica null na candidata, pois35
+multiplica o ATRIBUTO HP e não o HP aliado. O campo fator_atributo_hp explica a unidade.
+
+REPRODUÇÃO DA AUDITORIA
+Python3, sem dependências externas, na raiz do projeto:
+  python ferramentas/auditar_hp_selvagens.py auditoria_hp.json
+Entradas: dados/combate/hp_selvagens_observados.json.
+Resultado pronto: dados/combate/auditoria_hp_selvagens.json.
+O script enumera suporte, não amostra probabilidades; não altera o jogo.
+
+VALIDAÇÃO
+Veja validacao_qualidade/resultados/hp_selvagens.
+Testes em Godot4.6.3, sem interface gráfica. Conferência visual no ambiente do usuário
+continua necessária. Testes históricos da regra de HP anterior a selecionam
+explicitamente na respectiva fixture.

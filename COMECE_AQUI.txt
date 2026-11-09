@@ -1,0 +1,27 @@
+COMO EXECUTAR O TESTE CONTROLADO
+
+Este pacote acrescenta uma cena separada de diagnóstico. Aplicar no projeto que já recebeu diagnostico_fidelidade_combate.zip e os pacotes anteriores.
+
+1. Pare o jogo e faça uma cópia do projeto.
+2. Extraia o ZIP na pasta que contém project.godot. Preserve .gd.uid existentes.
+3. No painel Arquivos do Godot, abra laboratorio_combate.tscn com duplo clique.
+4. Pressione F6 (executar a cena atual), em vez de F5 (executar o jogo principal).
+5. O teste já executa ao abrir. O botão Executar teste controlado permite repeti-lo.
+6. Confira: atributos1/1/2/1/1/1, Power8, HP24 e total de IV173. O dano previsto local deve ser1, contra2 registrados no original.
+7. Clique em Exportar resultado do teste. O caminho completo de laboratorio_geodude.json aparecerá na tela e na saída do Godot. Envie esse JSON ou um print da tela se o resultado divergir.
+8. Feche a janela e volte a usar F5 para jogar normalmente.
+
+Você não precisa alterar o nível, os IVs, o líder ou o save. O laboratório cria novos DadosPokemon para cada execução e não os registra no seu time. O autoload normal do projeto ainda inicializa ao abrir qualquer cena, mas o laboratório não concede XP, evolui, cura ou modifica seus Pokémon.
+
+IMPORTANTE SOBRE A REFERÊNCIA
+Usamos um conjunto sintético de IVs32/28/32/32/32/17, soma173, que produz os atributos exibidos no Geodude do original com qualidade1,13. Não é uma estimativa de quais são os IVs verdadeiros daquela conta. Em nível1, vários conjuntos produzem os mesmos atributos por arredondamento.
+O defensor local usa atributos de referência sintéticos e defesa1. Os atributos reais do selvagem original não vieram no log. Como a fórmula local limita a defesa a no mínimo1, esse é o caso mais favorável ao dano do atacante; mesmo assim, dá1, enquanto observamos2. Não inferimos uma fórmula substituta única disso.
+O HP120 do selvagem é observado no log, não resultado de uma nova fórmula provada de geração de encontros.
+
+CADÊNCIA
+O laboratório compara três hipóteses: intervalo1,5 s com simulação60fps; intervalo1,5 s com ticks200ms; intervalo2,0 s com ticks200ms. Mostra como1,5 s pode aparecer como1,6 s ao consultar a agenda em passos de200ms.
+Isso não prova que o servidor original use intervalo1,5 s ou2,0 s. O relógio de mensagens e a execução de ataques podem ser diferentes; deslocamento e troca de alvo também alteram a distância entre eventos recebidos.
+Nenhuma dessas hipóteses foi aplicada globalmente às hunts por este pacote.
+
+O QUE PRECISAMOS DE VOCÊ AGORA
+Só executar o laboratório, se quiser conferir no seu Godot4.7.2. Não precisa repetir a coleta de Geodude ou descobrir IV exato para este primeiro teste. Já conseguimos executar o teste numérico aqui e usar seus logs para o próximo ajuste.

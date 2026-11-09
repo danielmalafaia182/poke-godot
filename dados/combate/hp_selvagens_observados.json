@@ -1,0 +1,205 @@
+{
+  "schema": 1,
+  "especie": "Blastoise",
+  "nivel_local": 80,
+  "base_hp": 79,
+  "casos": [
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_5_vida_1",
+      "hp_maximo": 3640
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_6_vida_1",
+      "hp_maximo": 3955
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_12_vida_1",
+      "hp_maximo": 3010
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_13_vida_1",
+      "hp_maximo": 3185
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_14_vida_1",
+      "hp_maximo": 2975
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_10_vida_2",
+      "hp_maximo": 5705
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_0_vida_2",
+      "hp_maximo": 4025
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_7_vida_2",
+      "hp_maximo": 3010
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_2_vida_2",
+      "hp_maximo": 2835
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_12_vida_2",
+      "hp_maximo": 3010
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_13_vida_2",
+      "hp_maximo": 3185
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+        "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+      },
+      "encontro": "slot_6_vida_2",
+      "hp_maximo": 3955
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_1_vida_1",
+      "hp_maximo": 3500
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_3_vida_1",
+      "hp_maximo": 2765
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_4_vida_1",
+      "hp_maximo": 3325
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_5_vida_1",
+      "hp_maximo": 4025
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_8_vida_1",
+      "hp_maximo": 3430
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_9_vida_1",
+      "hp_maximo": 4410
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_10_vida_1",
+      "hp_maximo": 4690
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_13_vida_1",
+      "hp_maximo": 3465
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_14_vida_1",
+      "hp_maximo": 4200
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_6_vida_2",
+      "hp_maximo": 5110
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_12_vida_2",
+      "hp_maximo": 2275
+    },
+    {
+      "fonte": {
+        "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+        "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+      },
+      "encontro": "slot_11_vida_2",
+      "hp_maximo": 5320
+    }
+  ],
+  "limites": [
+    "Nível80 é o proxy atual do protótipo; não é nível confirmado do selvagem original.",
+    "Compatibilidade matemática não revela IV ou qualidade reais.",
+    "Qualidades possíveis locais foram enumeradas, sem ajustar pesos ou frequências."
+  ]
+}

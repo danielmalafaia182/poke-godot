@@ -1,0 +1,59 @@
+ATAQUES INDEPENDENTES DOS SELVAGENS
+Aplicar após atributos_combate_larvitar.zip.
+
+INSTALAÇÃO
+Pare o jogo, feche o Godot e faça backup. Extraia este ZIP na pasta que contém
+project.godot. Substitua os scripts e mescle validacao_qualidade. Preserve os
+.gd.uid existentes. Aguarde a importação e execute F5. Não é necessário criar
+nós, timers adicionais ou conectar sinais. Não contém project.godot ou saves.
+
+CORREÇÃO
+Antes: todos os selvagens possuíam uma agenda, mas o combate só consultava a
+agenda do alvo selecionado. Os demais ficavam sem executar seus ataques.
+Agora: o passo de simulação consulta cada selvagem vivo ao alcance e com passagem
+livre. Cada um reserva e executa seu próprio golpe, mesmo quando o aliado está
+caminhando, entre alvos ou atacando outro Pokémon. Vários podem atingir o aliado
+no MESMO frame. Todos os danos são aplicados ao indivíduo persistente do aliado.
+
+O alvo atual não é trocado temporariamente para simular um ataque: cada evento
+leva ID do encontro, slot, origem e relógio do ATACANTE correto. Os efeitos usam
+esse snapshot, evitando desenhar o ataque de outro selvagem como se fosse o alvo.
+
+Os relógios não reiniciam ao selecionar outro alvo, sair/voltar ao alcance ou
+consultar a agenda novamente no mesmo instante. Cada respawn cria uma nova agenda.
+Golpes atrasados não viram uma rajada acumulada após um frame longo.
+
+Só atacam selvagens vivos, ao alcance, sem parede/quina bloqueada e com o próprio
+passo concluído. O aliado pode ser atingido durante seu deslocamento. O morto pelo
+aliado não revida; os outros selvagens continuam elegíveis. No KO do aliado,
+o lote para imediatamente e segue a saída para a cidade já implementada.
+
+CADÊNCIA
+O padrão continua sendo 1,5 segundo por indivíduo, regra provisória da caça.
+Isso NÃO significa turnos em grupo nem um ataque total a cada 1,5 segundo:
+três selvagens presentes podem aplicar três ataques em um mesmo ciclo.
+Inimigos que entram em alcance em momentos diferentes iniciam fases diferentes.
+
+Cada EncontroSelvagem também aceita intervalo_ataque positivo para definir uma
+cadência própria no modo rápido. Valor <=0 usa intervalo_ataques_selvagem da hunt.
+Nenhuma variação aleatória foi inventada para imitar o vídeo.
+
+No modo de cooldowns originais, cada inimigo usa os cooldowns de seus golpes,
+com o limite mínimo de ataque do indivíduo. Consultar a cada frame não dispara
+todos os golpes disponíveis de uma vez. Os timers existentes foram preservados,
+mas já não são a autorização global para o ataque dos selvagens.
+
+Preservados: atributos/IVs/Power, dano, XP, loot, Auto-Potion, Auto-Catch, limites
+dos painéis, contagem por hunt, movimento e regras de navegação existentes.
+Com mais inimigos batendo, o dano recebido TOTAL aumenta naturalmente.
+
+VALIDAÇÃO
+Novo teste com três selvagens em ritmos de 0,5s / 1s / 2s (fixture de QA).
+Confere hits simultâneos, dano somado, IDs/origens corretos, agendas preservadas,
+paredes, alcance, movimento, respawn, ausência de alvo, duplicação e KO.
+Outros testes incluem atributos, combate 1x1, golpes, save, loot e UI.
+Evidências em validacao_qualidade/evidencias/ataques_independentes.
+Executado no Godot4.6.3 Linux sem interface gráfica. Godot4.7.2 não executado.
+
+O vídeo foi usado para conferir o comportamento de vários inimigos. Os intervalos
+exatos de cada atacante no servidor ainda precisam de logs; veja COLETA_LOGS.md.

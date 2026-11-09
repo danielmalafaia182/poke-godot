@@ -1,0 +1,93 @@
+P04 — COLETA CONTROLADA NO POKE IDLE WORLD ORIGINAL
+Objetivo: observar como o original trata ausência de dano positivo.
+Não é uma coleta para recalibrar dano, IV, Power ou velocidade de ataque.
+Não é necessária para corrigir o silêncio do nosso jogo: a política local já
+foi implementada e testada. Esta coleta decide o que podemos chamar de fiel.
+
+COMPOSIÇÃO QUE JÁ FOI MOSTRADA NA CONVERSA
+
+Você já mostrou um Geodude nível 1 e um Bulbasaur no original. Se aquele
+Geodude ainda estiver no nível 1, podemos usá-lo. Não precisa capturar Gastly,
+upar um Pokémon para enfrentar Blastoise nem escolher golpes manualmente.
+Se essa composição mudou, não faça uma coleta substituta às cegas: ela precisa
+preservar a condição de nenhum golpe ofensivo não imune disponível.
+
+PREPARAÇÃO
+
+1. Faça um print do Team do Geodude e do Bulbasaur, com nome e nível legíveis.
+   IV exato não é necessário para este ensaio de imunidade/seleção.
+2. Use o coletor WS que você já tem. Preserve as mensagens recebidas completas
+   da conexão do jogo, incluindo field-init e field. Não filtre apenas dano
+   positivo ou um único nome de golpe: isso pode apagar exatamente o caso zero.
+3. Mantenha a configuração de Auto-Potion anotada. Pode deixá-la ligada para
+   proteger o Geodude. Precisamos das mensagens de cura para interpretar HP.
+4. Anote o horário aproximado das trocas/entradas. Preserve serverNow, seq e
+   os horários do coletor quando existirem. Tempo do servidor e horário de
+   chegada no navegador são medidas diferentes.
+5. Grave junto um vídeo curto, se possível. Alguns efeitos de status ou avisos
+   podem aparecer na tela sem um evento explícito na amostra WS que conhecemos.
+
+TRECHO A — CONTROLE POSITIVO
+
+- No original, use o Geodude nível 1 na hunt do Geodude.
+- Capture aproximadamente 10 segundos com inimigo ao alcance e troca de golpes.
+- Não precisa derrotar o inimigo. O controle serve para provar que o coletor
+  registra combate normal com esse aliado e que a sessão está respondendo.
+
+TRECHO B — CONDIÇÃO DE IMUNIDADE
+
+- Ainda com o mesmo Geodude nível 1, entre na hunt do Gastly.
+- O catálogo extraído disponível no projeto lista Tackle como golpe natural
+  ofensivo do Geodude nesse nível; golpes Normal não causam dano em Ghost.
+- Isso é a condição esperada do teste, não garantia de que o servidor não
+  tenha outra regra ou golpe: a coleta existe precisamente para verificar isso.
+- Observe só 5 a 10 segundos com Gastly próximo. Saia ou troque se necessário
+  para proteger o time. Não precisa vencer, esperar minutos ou deixar todos KO.
+- Queremos saber se o original tenta Tackle com zero, usa outro golpe,
+  muda de alvo, avisa, aguarda ou executa outro comportamento.
+
+TRECHO C — RECUPERAÇÃO NA MESMA HUNT
+
+- Se for seguro e o original permitir, troque manualmente para o Bulbasaur
+  sem sair da hunt do Gastly; aguarde o cooldown normal do jogo.
+- Capture cerca de 10 segundos depois de ele assumir e entrar em alcance.
+- Não tente selecionar o golpe: a escolha automática é o objeto da observação.
+- Esse trecho verifica se a mesma sessão volta a produzir ataques úteis com
+  outro aliado, separando incompatibilidade de um coletor/sessão travados.
+- Se não for seguro completar, envie o que conseguiu e indique o ponto de saída.
+
+O QUE ENVIAR
+
+- Log bruto dos trechos A, B e C, de preferência no mesmo arquivo ou com nomes.
+- Print do Team do Geodude e Bulbasaur usados.
+- Vídeo curto/horário anotado da troca, se disponível.
+- Configuração de Auto-Potion e informação de qualquer KO ou cura observado.
+- Não envie cookies, senha, tokens de autenticação nem cabeçalhos de login.
+
+CAMPOS QUE ANALISAREMOS
+
+No field-init: slug/huntKey, tickMs, parâmetros da sessão.
+No field: serverNow, seq, heroName, heroHp/heroMaxHp, bossTeam,
+hero/mobs com posições e HP, targetSlot, fighting, fainted e hits.
+Nos hits da amostra anterior: slot, amount, eff, move e type.
+Naquela amostra, slot=-1 representou dano ao aliado; slots de selvagens
+representaram o alvo atingido. Vamos revalidar essa correspondência no novo log.
+Curas/trocas/avisos: preservar a mensagem completa, mesmo que o type seja outro.
+
+CRITÉRIO DE CONCLUSÃO
+
+- Tackle com eff=0 e HP do Gastly estável, sem cura concorrente: evidência
+  direta de imunidade daquela execução, quando o evento estiver registrado.
+- Outro golpe com dano e nome explícito: evidência de que o learnset/política
+  usado pelo servidor difere da nossa hipótese; não adicionar fallback arbitrário.
+- Troca de alvo durante impossibilidade: descrever a sequência observada,
+  sem presumir regra universal a partir de um único caso.
+- Campos de combate contínuos, nenhum dano útil em B e retomada em C: evidência
+  compatível com bloqueio ofensivo, mas não prova isoladamente que nenhum
+  efeito de status foi aplicado ou que o servidor usa o mesmo algoritmo local.
+- Apenas ausência de hits, grandes lacunas ou sessão sem atualização: resultado
+  inconclusivo. Não converter ausência de mensagem em certeza de uma regra.
+- Seq não precisa avançar de um em um entre mensagens field: outros tipos
+  podem ocupar a sequência. Não chamar isso, sozinho, de perda ou lag.
+- Uma observação demonstra aquele cenário. Só estender para outras espécies,
+  níveis ou status depois de verificar condições equivalentes.

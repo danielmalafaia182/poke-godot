@@ -1,0 +1,1523 @@
+{
+  "schema": 1,
+  "fonte": {
+    "arquivo": "poke_ws_2026-11-07T14-21-54-705Z.txt",
+    "sha256": "fadf5c6e881ab568e453b9a49ac06b4dff94cb1f0d3c25701d8116be3dc07f0e"
+  },
+  "fields": 119,
+  "duracao_s": 89.643,
+  "linhas_invalidas": 0,
+  "golpes_sem_slot_no_snapshot": 0,
+  "perfis": {
+    "Gyarados_L214_0ef76cb0cd": {
+      "id": "Gyarados_L214_0ef76cb0cd",
+      "especie": "Gyarados",
+      "nivel": 214,
+      "qualidade": 1.8,
+      "atributos": {
+        "hp": 527,
+        "atk": 647,
+        "def": 428,
+        "spAtk": 370,
+        "spDef": 500,
+        "speed": 520
+      },
+      "power": 5386,
+      "hp_maximo": 6324,
+      "iv_total": 154,
+      "tipos": [
+        "WATER",
+        "FLYING"
+      ],
+      "origem": "pokes.list observado; IVs individuais não revelados"
+    },
+    "Exeggutor_L404_34f2448ddb": {
+      "id": "Exeggutor_L404_34f2448ddb",
+      "especie": "Exeggutor",
+      "nivel": 404,
+      "qualidade": 1.8,
+      "atributos": {
+        "hp": 1052,
+        "atk": 989,
+        "def": 808,
+        "spAtk": 1196,
+        "spDef": 808,
+        "speed": 417
+      },
+      "power": 9486,
+      "hp_maximo": 12624,
+      "iv_total": 138,
+      "tipos": [
+        "GRASS",
+        "PSYCHIC"
+      ],
+      "origem": "pokes.list observado; IVs individuais não revelados"
+    }
+  },
+  "encontros": [
+    {
+      "id_local": "slot_5_vida_1",
+      "slot": 5,
+      "geracao_observada": 1,
+      "species_id": 9,
+      "hp_maximo": 3640,
+      "inicio_s": 0.0,
+      "golpes": [
+        {
+          "t_s": 28.815,
+          "seq_field": 105906,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 10578,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 3640,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 0.0,
+          "hp": 3640,
+          "hp_maximo": 3640,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 7.402,
+          "hp": 3640,
+          "hp_maximo": 3640,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 3640,
+          "hp_maximo": 3640,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 28.815,
+          "hp": 0,
+          "hp_maximo": 3640,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 0,
+          "hp_maximo": 3640,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 0,
+          "hp_maximo": 3640,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 0,
+          "hp_maximo": 3640,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 0,
+          "hp_maximo": 3640,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 3640,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 0,
+          "hp_maximo": 3640,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 28.815,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_6_vida_1",
+      "slot": 6,
+      "geracao_observada": 1,
+      "species_id": 9,
+      "hp_maximo": 3955,
+      "inicio_s": 0.0,
+      "golpes": [
+        {
+          "t_s": 15.603,
+          "seq_field": 105840,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1043,
+          "efetividade": 1,
+          "hp_antes_pacote": 3955,
+          "hp_depois_pacote": 2912,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 17.604,
+          "seq_field": 105850,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1010,
+          "efetividade": 1,
+          "hp_antes_pacote": 2912,
+          "hp_depois_pacote": 1902,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 19.603,
+          "seq_field": 105860,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1155,
+          "efetividade": 1,
+          "hp_antes_pacote": 1902,
+          "hp_depois_pacote": 747,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 20.413,
+          "seq_field": 105864,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1079,
+          "efetividade": 1,
+          "hp_antes_pacote": 747,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 0.0,
+          "hp": 3955,
+          "hp_maximo": 3955,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 7.402,
+          "hp": 3955,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 15.603,
+          "hp": 2912,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 17.604,
+          "hp": 1902,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 19.603,
+          "hp": 747,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 20.413,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Gyarados_L214_0ef76cb0cd"
+      ],
+      "fim_s": 20.413,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_12_vida_1",
+      "slot": 12,
+      "geracao_observada": 1,
+      "species_id": 9,
+      "hp_maximo": 3010,
+      "inicio_s": 0.0,
+      "golpes": [
+        {
+          "t_s": 4.401,
+          "seq_field": 105784,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 17243,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 3010,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 0.0,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 4.401,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 7.402,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 4.401,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_13_vida_1",
+      "slot": 13,
+      "geracao_observada": 1,
+      "species_id": 9,
+      "hp_maximo": 3185,
+      "inicio_s": 0.0,
+      "golpes": [
+        {
+          "t_s": 9.602,
+          "seq_field": 105810,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Hyper Beam",
+          "tipo": "NORMAL",
+          "dano": 802,
+          "efetividade": 1,
+          "hp_antes_pacote": 3185,
+          "hp_depois_pacote": 2383,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 11.602,
+          "seq_field": 105820,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Hyper Beam",
+          "tipo": "NORMAL",
+          "dano": 768,
+          "efetividade": 1,
+          "hp_antes_pacote": 2383,
+          "hp_depois_pacote": 1615,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 12.402,
+          "seq_field": 105824,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Hyper Beam",
+          "tipo": "NORMAL",
+          "dano": 755,
+          "efetividade": 1,
+          "hp_antes_pacote": 1615,
+          "hp_depois_pacote": 860,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 14.003,
+          "seq_field": 105832,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Hyper Beam",
+          "tipo": "NORMAL",
+          "dano": 868,
+          "efetividade": 1,
+          "hp_antes_pacote": 860,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 0.0,
+          "hp": 3185,
+          "hp_maximo": 3185,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 7.402,
+          "hp": 3185,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 9.602,
+          "hp": 2383,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 11.602,
+          "hp": 1615,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 12.402,
+          "hp": 860,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 14.003,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Gyarados_L214_0ef76cb0cd"
+      ],
+      "fim_s": 14.003,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_14_vida_1",
+      "slot": 14,
+      "geracao_observada": 1,
+      "species_id": 9,
+      "hp_maximo": 2975,
+      "inicio_s": 0.0,
+      "golpes": [
+        {
+          "t_s": 24.814,
+          "seq_field": 105886,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1487,
+          "efetividade": 1,
+          "hp_antes_pacote": 2975,
+          "hp_depois_pacote": 1488,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 27.215,
+          "seq_field": 105898,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 18753,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 1488,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 0.0,
+          "hp": 2975,
+          "hp_maximo": 2975,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 7.402,
+          "hp": 2975,
+          "hp_maximo": 2975,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 24.814,
+          "hp": 1488,
+          "hp_maximo": 2975,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 1488,
+          "hp_maximo": 2975,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 27.215,
+          "hp": 0,
+          "hp_maximo": 2975,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 0,
+          "hp_maximo": 2975,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 0,
+          "hp_maximo": 2975,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 0,
+          "hp_maximo": 2975,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 0,
+          "hp_maximo": 2975,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 2975,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 0,
+          "hp_maximo": 2975,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Gyarados_L214_0ef76cb0cd",
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 27.215,
+      "encerrado_em_ko": true,
+      "pareado": true,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_10_vida_2",
+      "slot": 10,
+      "geracao_observada": 2,
+      "species_id": 9,
+      "hp_maximo": 5705,
+      "inicio_s": 0.4,
+      "golpes": [
+        {
+          "t_s": 32.416,
+          "seq_field": 105924,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 689,
+          "efetividade": 1,
+          "hp_antes_pacote": 5705,
+          "hp_depois_pacote": 5016,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 34.016,
+          "seq_field": 105932,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 720,
+          "efetividade": 1,
+          "hp_antes_pacote": 5016,
+          "hp_depois_pacote": 4296,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 35.616,
+          "seq_field": 105940,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 690,
+          "efetividade": 1,
+          "hp_antes_pacote": 4296,
+          "hp_depois_pacote": 3606,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 38.416,
+          "seq_field": 105954,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 9820,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 3606,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 0.4,
+          "hp": 5705,
+          "hp_maximo": 5705,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 7.402,
+          "hp": 5705,
+          "hp_maximo": 5705,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 5705,
+          "hp_maximo": 5705,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 5705,
+          "hp_maximo": 5705,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 32.416,
+          "hp": 5016,
+          "hp_maximo": 5705,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 34.016,
+          "hp": 4296,
+          "hp_maximo": 5705,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 35.616,
+          "hp": 3606,
+          "hp_maximo": 5705,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 3606,
+          "hp_maximo": 5705,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 38.416,
+          "hp": 0,
+          "hp_maximo": 5705,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 0,
+          "hp_maximo": 5705,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 0,
+          "hp_maximo": 5705,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 5705,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 0,
+          "hp_maximo": 5705,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Gyarados_L214_0ef76cb0cd",
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 38.416,
+      "encerrado_em_ko": true,
+      "pareado": true,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_0_vida_2",
+      "slot": 0,
+      "geracao_observada": 2,
+      "species_id": 9,
+      "hp_maximo": 4025,
+      "inicio_s": 9.602,
+      "golpes": [
+        {
+          "t_s": 67.229,
+          "seq_field": 106098,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 13172,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 4025,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 9.602,
+          "hp": 4025,
+          "hp_maximo": 4025,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 4025,
+          "hp_maximo": 4025,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 4025,
+          "hp_maximo": 4025,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 4025,
+          "hp_maximo": 4025,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 4025,
+          "hp_maximo": 4025,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 4025,
+          "hp_maximo": 4025,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.229,
+          "hp": 0,
+          "hp_maximo": 4025,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 4025,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 0,
+          "hp_maximo": 4025,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 67.229,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_7_vida_2",
+      "slot": 7,
+      "geracao_observada": 2,
+      "species_id": 9,
+      "hp_maximo": 3010,
+      "inicio_s": 11.602,
+      "golpes": [
+        {
+          "t_s": 60.025,
+          "seq_field": 106062,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 14674,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 3010,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 11.602,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 60.025,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 60.025,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_2_vida_2",
+      "slot": 2,
+      "geracao_observada": 2,
+      "species_id": 9,
+      "hp_maximo": 2835,
+      "inicio_s": 19.603,
+      "golpes": [
+        {
+          "t_s": 46.817,
+          "seq_field": 105996,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 869,
+          "efetividade": 1,
+          "hp_antes_pacote": 2835,
+          "hp_depois_pacote": 1966,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 47.618,
+          "seq_field": 106000,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 889,
+          "efetividade": 1,
+          "hp_antes_pacote": 1966,
+          "hp_depois_pacote": 1077,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 49.619,
+          "seq_field": 106010,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 927,
+          "efetividade": 1,
+          "hp_antes_pacote": 1077,
+          "hp_depois_pacote": 150,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 52.02,
+          "seq_field": 106022,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 13351,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 150,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 19.603,
+          "hp": 2835,
+          "hp_maximo": 2835,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 25.415,
+          "hp": 2835,
+          "hp_maximo": 2835,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 30.815,
+          "hp": 2835,
+          "hp_maximo": 2835,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 36.616,
+          "hp": 2835,
+          "hp_maximo": 2835,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 42.017,
+          "hp": 2835,
+          "hp_maximo": 2835,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 46.817,
+          "hp": 1966,
+          "hp_maximo": 2835,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 47.618,
+          "hp": 1077,
+          "hp_maximo": 2835,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 49.619,
+          "hp": 150,
+          "hp_maximo": 2835,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 50.418,
+          "hp": 150,
+          "hp_maximo": 2835,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 52.02,
+          "hp": 0,
+          "hp_maximo": 2835,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 0,
+          "hp_maximo": 2835,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 0,
+          "hp_maximo": 2835,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Gyarados_L214_0ef76cb0cd",
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 52.02,
+      "encerrado_em_ko": true,
+      "pareado": true,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_12_vida_2",
+      "slot": 12,
+      "geracao_observada": 2,
+      "species_id": 9,
+      "hp_maximo": 3010,
+      "inicio_s": 64.828,
+      "golpes": [
+        {
+          "t_s": 78.437,
+          "seq_field": 106154,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1189,
+          "efetividade": 1,
+          "hp_antes_pacote": 3010,
+          "hp_depois_pacote": 1821,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 80.438,
+          "seq_field": 106164,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1265,
+          "efetividade": 1,
+          "hp_antes_pacote": 1821,
+          "hp_depois_pacote": 556,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 82.439,
+          "seq_field": 106174,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Thrash",
+          "tipo": "NORMAL",
+          "dano": 1236,
+          "efetividade": 1,
+          "hp_antes_pacote": 556,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 64.828,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 67.629,
+          "hp": 3010,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 78.437,
+          "hp": 1821,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 80.438,
+          "hp": 556,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 82.439,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 0,
+          "hp_maximo": 3010,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Gyarados_L214_0ef76cb0cd"
+      ],
+      "fim_s": 82.439,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_13_vida_2",
+      "slot": 13,
+      "geracao_observada": 2,
+      "species_id": 9,
+      "hp_maximo": 3185,
+      "inicio_s": 74.434,
+      "golpes": [
+        {
+          "t_s": 84.039,
+          "seq_field": 106182,
+          "perfil_id": "Gyarados_L214_0ef76cb0cd",
+          "aliado": "Gyarados",
+          "golpe": "Hyper Beam",
+          "tipo": "NORMAL",
+          "dano": 766,
+          "efetividade": 1,
+          "hp_antes_pacote": 3185,
+          "hp_depois_pacote": 2419,
+          "golpes_no_pacote": 1
+        },
+        {
+          "t_s": 86.441,
+          "seq_field": 106194,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 15312,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 2419,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 74.434,
+          "hp": 3185,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.039,
+          "hp": 2419,
+          "hp_maximo": 3185,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 2419,
+          "hp_maximo": 3185,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 86.441,
+          "hp": 0,
+          "hp_maximo": 3185,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Gyarados_L214_0ef76cb0cd",
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 86.441,
+      "encerrado_em_ko": true,
+      "pareado": true,
+      "elegivel_ajuste": true
+    },
+    {
+      "id_local": "slot_6_vida_2",
+      "slot": 6,
+      "geracao_observada": 2,
+      "species_id": 9,
+      "hp_maximo": 3955,
+      "inicio_s": 80.438,
+      "golpes": [
+        {
+          "t_s": 88.441,
+          "seq_field": 106204,
+          "perfil_id": "Exeggutor_L404_34f2448ddb",
+          "aliado": "Exeggutor",
+          "golpe": "Leaf Storm",
+          "tipo": "GRASS",
+          "dano": 14639,
+          "efetividade": 2.5,
+          "hp_antes_pacote": 3955,
+          "hp_depois_pacote": 0,
+          "golpes_no_pacote": 1
+        }
+      ],
+      "curva_hp": [
+        {
+          "t_s": 80.438,
+          "hp": 3955,
+          "hp_maximo": 3955,
+          "aliado": "Gyarados"
+        },
+        {
+          "t_s": 84.639,
+          "hp": 3955,
+          "hp_maximo": 3955,
+          "aliado": "Exeggutor"
+        },
+        {
+          "t_s": 88.441,
+          "hp": 0,
+          "hp_maximo": 3955,
+          "aliado": "Exeggutor"
+        }
+      ],
+      "alertas": [],
+      "perfil_ids": [
+        "Exeggutor_L404_34f2448ddb"
+      ],
+      "fim_s": 88.441,
+      "encerrado_em_ko": true,
+      "pareado": false,
+      "elegivel_ajuste": true
+    }
+  ],
+  "recebidos_sem_atacante": [
+    {
+      "t_s": 10.402,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 34,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 12.402,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 16.004,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 19.603,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 26.815,
+      "perfil_id": "Exeggutor_L404_34f2448ddb",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 28,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 34.417,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 50,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 36.417,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 50,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 49.619,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 39,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 50.418,
+      "perfil_id": "Exeggutor_L404_34f2448ddb",
+      "aliado": "Exeggutor",
+      "golpe": "Skull Bash",
+      "dano": 37,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": true
+    },
+    {
+      "t_s": 52.02,
+      "perfil_id": "Exeggutor_L404_34f2448ddb",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 28,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 85.642,
+      "perfil_id": "Exeggutor_L404_34f2448ddb",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 27,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    }
+  ],
+  "trocas_observadas": [
+    {
+      "t_s": 0.0,
+      "aliado": "Exeggutor",
+      "perfil_id": "Exeggutor_L404_34f2448ddb"
+    },
+    {
+      "t_s": 7.402,
+      "aliado": "Gyarados",
+      "perfil_id": "Gyarados_L214_0ef76cb0cd"
+    },
+    {
+      "t_s": 25.415,
+      "aliado": "Exeggutor",
+      "perfil_id": "Exeggutor_L404_34f2448ddb"
+    },
+    {
+      "t_s": 30.815,
+      "aliado": "Gyarados",
+      "perfil_id": "Gyarados_L214_0ef76cb0cd"
+    },
+    {
+      "t_s": 36.616,
+      "aliado": "Exeggutor",
+      "perfil_id": "Exeggutor_L404_34f2448ddb"
+    },
+    {
+      "t_s": 42.017,
+      "aliado": "Gyarados",
+      "perfil_id": "Gyarados_L214_0ef76cb0cd"
+    },
+    {
+      "t_s": 50.418,
+      "aliado": "Exeggutor",
+      "perfil_id": "Exeggutor_L404_34f2448ddb"
+    },
+    {
+      "t_s": 67.629,
+      "aliado": "Gyarados",
+      "perfil_id": "Gyarados_L214_0ef76cb0cd"
+    },
+    {
+      "t_s": 84.639,
+      "aliado": "Exeggutor",
+      "perfil_id": "Exeggutor_L404_34f2448ddb"
+    }
+  ],
+  "cooldowns_troca": [
+    {
+      "leftMs": 4945,
+      "totalMs": 5000
+    },
+    {
+      "leftMs": 4988,
+      "totalMs": 5000
+    },
+    {
+      "leftMs": 4988,
+      "totalMs": 5000
+    },
+    {
+      "leftMs": 4987,
+      "totalMs": 5000
+    },
+    {
+      "leftMs": 4970,
+      "totalMs": 5000
+    },
+    {
+      "leftMs": 4964,
+      "totalMs": 5000
+    },
+    {
+      "leftMs": 4987,
+      "totalMs": 5000
+    },
+    {
+      "leftMs": 4990,
+      "totalMs": 5000
+    }
+  ],
+  "fidelidade_global_comprovada": false,
+  "limites": [
+    "Identidade do selvagem inferida por slot e continuidade de HP/morte/respawn; não é UUID do servidor.",
+    "Tempos são dos pacotes field, não de cada execução individual.",
+    "Perfis associados por espécie e HP máximo únicos nos snapshots da sessão; não se inferem IVs individuais.",
+    "HP antes/depois pertence ao pacote; múltiplos golpes no mesmo pacote não têm snapshots intermediários.",
+    "Golpes recebidos têm slot=-1 e não são atribuídos a um selvagem específico.",
+    "Uma compatibilidade de modelo não identifica a fórmula real nem comprova aleatoriedade."
+  ]
+}

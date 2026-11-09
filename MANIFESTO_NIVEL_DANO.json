@@ -1,0 +1,20 @@
+{
+  "base": "ofensiva_selvagens_comparador.zip",
+  "suites": 41,
+  "aprovado": true,
+  "reteste_focado_aprovado": true,
+  "candidata_nivel_catalogo_padrao": true,
+  "fidelidade_comprovada": false,
+  "arquivos": {
+    "caca_base.gd": "1a2b5dd9419bc4d470b7081c214c9b3f47cba535fa8981ab13f8564cea72305f",
+    "regras_dano_candidato.gd": "4735eba6176a65a43b2ea81c568a8382d9d80ad98f4f31db2a765ba961a87a7b",
+    "registro_combate.gd": "cb0595d9b3dba1f185406d60cec87673e839097baeb5462b6053651a769ec3c5",
+    "laboratorio_ofensiva_selvagens.gd": "ca8463ab0eb6b4e8455785dc7647b80bb24e096ec4fbcbd4c792f2e153a6b073",
+    "test_nivel_formula_selvagem.gd": "be182c72041abff4ab8f9f0e46765d232ba6d182d716483b68ae7f638ce0bfbf",
+    "test_validacao_1x1.gd": "e1c43bcbd09e3aee9988cad28dbad97ae3f57331d1f4bd2fed7c5b436b251139",
+    "validacao_qualidade/executar.py": "2b464590a2599e1266021b7819c14ecabc2f8c74b12f4b48bebf25ad09b663e5",
+    "dados/combate/cenarios_nivel_formula.json": "795c8b847f9a4b1c7965962b7f4014ccd6172663b87dbac3dfea6a632bca041f",
+    "dados/combate/historico_atributos80.json": "6aef0df60e64419311db8239613f953fedfabedfcf00d76237f19ed8a5c2938f",
+    "dados/combate/caso_1x1_video.json": "3214de47ddcbf90d0241ecdc7815f9fc66dacb1bd2deea818f980760038d3dca"
+  }
+}

@@ -1,0 +1,30 @@
+CORREÇÕES DE CERCO, TOGEPI E ACESSO ÀS HUNTS
+
+INSTALAÇÃO
+Aplicar sobre hunts_kanto_importacao.zip.
+Pare o jogo, faça backup e extraia na pasta de project.godot. Substitua arquivos e preserve os .gd.uid. Aguarde a importação do sprite do Togepi. Não precisa criar nós.
+
+CERCO
+O aliado verifica selvagens efetivamente ao alcance antes de continuar uma rota. Se o alvo atual está distante e outro inimigo já está adjacente, passa a combater o adjacente. Se o alvo já está ao alcance, retoma o combate sem caminhar até a célula ocupada.
+Essa reação ocorre no centro da célula para não interromper a interpolação no meio de um passo. Respeita passagem por paredes/quinas e não altera HP, identidade nem cooldowns dos indivíduos. A opção reagir_ao_cerco fica ligada por padrão.
+O vídeo indica o sintoma; a validação usa uma reprodução determinística de cerco junto a obstáculo, não as coordenadas exatas da gravação.
+
+ACESSO
+O mapa abre qualquer hunt IMPLEMENTADA independentemente do nível do treinador. Seu nível salvo continua o mesmo. Níveis originais permanecem nos rótulos e filtros como referência. acesso_hunts_sem_limite, no script do mapa, permite voltar à exigência anterior se necessário.
+Isso não habilita regiões, serviços ou espécies sem suporte. Há agora 212 espécies habilitadas em Kanto.
+
+TOGEPI
+O catálogo extraído só fornece golpes ofensivos a partir do nível 33: Ancient Power. O Togepi foi habilitado provisoriamente como selvagem nível 33, com seus sprites, atributos, tipos e XP base 8 do catálogo. Não foi criado um golpe fictício de nível 1.
+O nível 33 do encontro é uma escolha provisória do protótipo, não um nível selvagem confirmado do servidor. Um Pokémon de nível baixo pode morrer rapidamente nessa hunt.
+Ajuste incluído também no importador, para não perder o Togepi ao repetir a importação.
+
+CONTINUA PROVISÓRIO
+Cenário, população e navegação reutilizados do Geodude. Drops novos permanecem desabilitados. As nove espécies restantes continuam pendentes de regra ofensiva compatível: Metapod, Kakuna, Jigglypuff, Poliwag, Machop, Cubone, Igglybuff, Hoppip e Misdreavus.
+
+VALIDAÇÃO
+Godot 4.6.3, testes em cópias temporárias com perfis isolados. Relatórios em validacao.
+Teste novo: reação ao cerco, dano real do aliado, preservação de identidade/cooldown, respeito a parede/quina, posição intermediária do passo, spawn Togepi e entrada em Dragonite com treinador nível 1 sem adulterar seu nível.
+Os testes de relógios inimigos mantêm o aliado artificialmente pausado para isolar a cadência; a reação ao cerco fica ligada nos testes novos e no jogo.
+Godot 4.7.2 não executado. Falta conferir no seu projeto se o ponto específico do vídeo deixou de reproduzir o problema.
+
+Resultado: 22 suítes selecionadas aprovadas, além de importação e fixture de compatibilidade.

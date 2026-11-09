@@ -1,0 +1,531 @@
+{
+  "schema": 1,
+  "fonte": {
+    "arquivo": "poke_ws_2026-11-07T23-20-45-263Z.txt",
+    "sha256": "678bb3eed08e347f338d68540b3ad34a84bfe67c1efcf148140d16bf595c951a"
+  },
+  "especie_selvagem": "Blastoise",
+  "perfis": {
+    "Exeggutor_L406_8b70f09e1f": {
+      "id": "Exeggutor_L406_8b70f09e1f",
+      "especie": "Exeggutor",
+      "nivel": 406,
+      "qualidade": 1.8,
+      "atributos": {
+        "hp": 1057,
+        "atk": 994,
+        "def": 812,
+        "spAtk": 1202,
+        "spDef": 812,
+        "speed": 419
+      },
+      "power": 9533,
+      "hp_maximo": 12684,
+      "iv_total": 138,
+      "tipos": [
+        "GRASS",
+        "PSYCHIC"
+      ],
+      "origem": "pokes.list observado; IVs individuais não revelados"
+    },
+    "Gyarados_L214_0ef76cb0cd": {
+      "id": "Gyarados_L214_0ef76cb0cd",
+      "especie": "Gyarados",
+      "nivel": 214,
+      "qualidade": 1.8,
+      "atributos": {
+        "hp": 527,
+        "atk": 647,
+        "def": 428,
+        "spAtk": 370,
+        "spDef": 500,
+        "speed": 520
+      },
+      "power": 5386,
+      "hp_maximo": 6324,
+      "iv_total": 154,
+      "tipos": [
+        "WATER",
+        "FLYING"
+      ],
+      "origem": "pokes.list observado; IVs individuais não revelados"
+    }
+  },
+  "recebidos": [
+    {
+      "t_s": 0.0,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 34,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": true
+    },
+    {
+      "t_s": 0.799,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 43,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 2.0,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 34,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 4.802,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 34,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 6.803,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 36,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 6.803,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 41,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 8.002,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 8.002,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 43,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 10.003,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 43,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 10.003,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 30,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 12.005,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 43,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 12.005,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 34,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 13.605,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 45,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 14.006,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 39,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 14.006,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 30,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 15.607,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 39,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 16.406,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Skull Bash",
+      "dano": 41,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": true
+    },
+    {
+      "t_s": 16.406,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Skull Bash",
+      "dano": 30,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": true
+    },
+    {
+      "t_s": 17.608,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 34,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 18.008,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 32,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 18.008,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 25,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 19.609,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 30,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 20.809,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 27,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 22.009,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 27,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 24.009,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 26.01,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 41,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 26.01,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 34,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 28.013,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 41,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 28.013,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 30.014,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 27,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 30.014,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 25,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 32.015,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 32,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 38.816,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 28,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 40.817,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 27,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 44.018,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 46.018,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 32,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 55.219,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 55,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 57.619,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 54,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 59.22,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 52,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 60.82,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 39,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 62.42,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 41,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 64.819,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 39,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 66.821,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 39,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 70.825,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 43,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 72.825,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 50,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 74.824,
+      "perfil_id": "Gyarados_L214_0ef76cb0cd",
+      "aliado": "Gyarados",
+      "golpe": "Skull Bash",
+      "dano": 43,
+      "efetividade": 1,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    },
+    {
+      "t_s": 76.825,
+      "perfil_id": "Exeggutor_L406_8b70f09e1f",
+      "aliado": "Exeggutor",
+      "golpe": "Bite",
+      "dano": 34,
+      "efetividade": 2.5,
+      "atacante_identificado": false,
+      "pacote_de_transicao": false
+    }
+  ],
+  "limites": [
+    "slot=-1 identifica o aliado atingido; não identifica o atacante.",
+    "Cada evento pode vir de um indivíduo diferente; não ajustamos todos a um único atacante.",
+    "Pacotes de transição são excluídos da análise de dano recebido."
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "dano_causado": {
+    "maximo": 1961,
+    "media": 1030.96746022251,
+    "minimo": 574,
+    "n": 8359,
+    "p10": 788,
+    "p50": 1004,
+    "p90": 1318
+  },
+  "dano_recebido": {
+    "maximo": 72,
+    "media": 40.7267690757995,
+    "minimo": 22,
+    "n": 3971,
+    "p10": 30,
+    "p50": 40,
+    "p90": 52
+  },
+  "dano_recebido_politica_anterior_mesmo_sorteio": {
+    "maximo": 40,
+    "media": 23.1657013346764,
+    "minimo": 13,
+    "n": 3971,
+    "p10": 17,
+    "p50": 23,
+    "p90": 30
+  },
+  "duracao_ideal_ms": {
+    "maximo": 16000,
+    "media": 4930.46875,
+    "minimo": 1600,
+    "n": 2048,
+    "p10": 3200,
+    "p50": 4800,
+    "p90": 8000
+  },
+  "fidelidade_comprovada": false,
+  "golpes_ate_ko": {
+    "maximo": 11,
+    "media": 4.08154296875,
+    "minimo": 2,
+    "n": 2048,
+    "p10": 3,
+    "p50": 4,
+    "p90": 6
+  },
+  "hp_maximo": {
+    "maximo": 6720,
+    "media": 3669.03564453125,
+    "minimo": 1855,
+    "n": 2048,
+    "p10": 2625,
+    "p50": 3605,
+    "p90": 4830
+  },
+  "limites": [
+    "Novos indivíduos independentes; não conta respawns estáveis como perfis novos.",
+    "Contato imediato, aliado com primeira ação imediata, selvagem com preparo inicial de2s e sem deslocamento.",
+    "Relógio local de200ms, aliado1,6s efetivos, selvagem2s; não é medição de cadência original.",
+    "Duração de um duelo local novo, sem cooldown carregado de alvo anterior, sem auto-potion ou aliados adicionais.",
+    "Estatísticas por golpe dão mais peso aos indivíduos que sobrevivem mais tempo.",
+    "Não é validação independente: a candidata foi escolhida com parte destes dados originais."
+  ],
+  "n_individuos": 2048,
+  "qualidade": {
+    "maximo": 1.8,
+    "media": 1.17835400390625,
+    "minimo": 0.801,
+    "n": 2048,
+    "p10": 0.999,
+    "p50": 1.134,
+    "p90": 1.458
+  },
+  "schema": 1,
+  "seed_dano": "20261109",
+  "seed_geracao": "20261108"
+}

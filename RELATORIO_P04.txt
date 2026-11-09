@@ -1,0 +1,192 @@
+P04 — POLÍTICA DE SAÍDA PARA AUSÊNCIA DE DANO POSITIVO
+Data: 2026-11-08
+Base de aplicação: projeto com P01, P02 e P03 instalados.
+
+DECISÃO ADOTADA
+
+No perfil calibrado atualmente usado pelo jogo, um aliado sem golpe ofensivo
+capaz de ferir o alvo não insiste silenciosamente nesse encontro. Procura
+outro selvagem vivo, compatível e alcançável. Mantém o critério anterior de
+menor comprimento de caminho entre os candidatos elegíveis.
+
+Se não houver saída ofensiva, aguarda com um aviso visível e diagnóstico
+estruturado. O jogador pode abrir o time ou o Mapa-Múndi pelo aviso.
+A troca manual continua obedecendo aos cinco segundos existentes.
+Não há substituição automática por incompatibilidade: a troca automática
+aleatória continua reservada ao KO, conforme P02.
+
+Esta é uma regra LOCAL explícita. Não está comprovado que o servidor original
+usa a mesma seleção ou o mesmo aviso. A imunidade não é um erro a corrigir:
+zero continua zero. Não foi criado Struggle, Tackle extra ou dano mínimo em
+alvo imune, nem foram liberados golpes de níveis superiores ou TMs não aprendidas.
+
+POR QUE O CÓDIGO ANTERIOR PARAVA SEM EXPLICAR
+
+retirar_calibrado() retornava o mesmo dicionário vazio para situações diferentes:
+intervalo global em andamento, habilidade em cooldown, dano nulo por imunidade,
+somente status e lista de golpes vazia. O controlador sabia que nenhum golpe
+saíra, mas não sabia se precisava esperar ou procurar outra solução.
+
+A seleção de alvo considerava caminho/distância, sem verificar viabilidade
+ofensiva. A reação ao cerco também podia retomar o mesmo alvo impossível.
+O resumo textual principal era ocultado pelo HUD; não bastava escrever nele.
+O defeito envolvia agenda, seleção, recuperação e apresentação juntos.
+
+TRATAMENTO POR SITUAÇÃO
+
+1. Há um golpe ofensivo pronto com dano positivo:
+   executar o melhor pela regra anterior; empates mantêm a ordem do catálogo.
+2. Há golpe positivo, mas seu uso aguarda prazo finito conhecido:
+   estado aguardando_cooldown; manter o alvo e os prazos. Não tratar como
+   imunidade e não procurar outro alvo para ganhar ataque imediato.
+3. Todo golpe ofensivo disponível é imune contra o defensor:
+   estado bloqueado, motivo todos_imunes; descartar esse alvo para a busca.
+   Status misturado no learnset não se torna dano nem remove a imunidade.
+4. Apenas golpes de status disponíveis:
+   motivo somente_status. Informar que seus efeitos ainda não estão
+   implementados. Não simular Hypnosis sem definir duração, aplicação,
+   resistência, interação com dano e demais regras dessa funcionalidade.
+5. Nenhum golpe no nível:
+   motivo sem_golpe_no_nivel. Reconsultar depois; subir de nível pode liberar
+   um golpe, sem apagar os cooldowns que já existiam.
+6. Nenhum golpe no catálogo da espécie:
+   motivo sem_golpe_catalogado. Explicitar falta de dados, sem supor que a
+   espécie nunca ataca no original. Corrigir a fonte quando houver evidência.
+7. Só habilidades não disponíveis, incluindo TM apenas listada:
+   motivo habilidades_indisponiveis; não equipar/aprender automaticamente.
+8. Valor de dano zero sem efetividade zero:
+   motivo sem_dano_positivo, distinguido de imunidade elemental.
+9. Avaliador ausente, NaN, infinito, cooldown infinito ou categoria não suportada:
+   motivo avaliador_indisponivel ou dados_invalidos, com detalhes por golpe.
+   Não traduzir uma espera impossível em cooldown silencioso sem fim.
+10. Há alvo compatível, mas não há caminho livre para ele:
+    motivo sem_rota_para_alvo_compativel. Aguardar passagem; não chamar isso
+    de falta de golpe nem atacar através de corpos ou paredes.
+11. Não há selvagens vivos:
+    estado aguardando_respawn. A nova identidade é reavaliada quando aparecer.
+12. Vários alvos bloqueados por motivos diferentes:
+    diagnóstico agregado mantém motivos por encontro; o aviso explica as causas,
+    em vez de atribuir a todos apenas o último motivo encontrado.
+
+QUEM PODE RECUPERAR A CAÇA
+
+- Uma troca manual válida para um Pokémon com ofensiva útil.
+- A liberação de golpe por mudança de nível ou atualização dos dados disponíveis.
+- Um novo encontro compatível após respawn.
+- A saída de um bloqueador que impedia o caminho para um alvo compatível.
+- Uma mudança do defensor ou perfil que altere efetividade/dano previsto.
+
+A revisão da viabilidade ocorre a cada 0,2 s durante atividade da hunt.
+Esse intervalo é uma regra local de controle, não uma descoberta sobre o original.
+Se o aliado está no meio de um passo, o abandono da rota espera o centro da
+próxima célula: não corta reserva, não teleporta nem deixa o sprite entre tiles.
+
+A busca normal após KO não ganhou um intervalo novo de 0,2 s: permanece no
+frame seguinte. Só a espera problemática limita a frequência de reconsulta.
+A existência de cooldown finito não deixa o alvo ser excluído da seleção.
+
+INIMIGOS, POÇÕES E RISCO
+
+Os selvagens seguem processando seus próprios ataques enquanto o aliado está
+bloqueado. Não recebem a capacidade de ferir uma imunidade; cada um também
+possui diagnostico_ofensivo consultável quando sua tentativa não produz golpe.
+A indisponibilidade ofensiva do aliado não concede invulnerabilidade, pausa do
+mundo ou cura. Se ele sofrer KO, P02 atua normalmente.
+
+Auto-Potion continua obedecendo às regras de estoque, HP e cadência existentes.
+O jogador pode continuar sofrendo dano e consumindo poções enquanto não muda
+uma composição incapaz de vencer. O aviso dá acesso às ações necessárias.
+
+DIAGNÓSTICO E HUD
+
+Agenda: diagnosticar_calibrado() consulta sem reservar ataque ou consumir RNG.
+Retirada: retirar_calibrado() usa os mesmos critérios quando chega a hora de
+executar, e mantém o retorno barato durante o cooldown global.
+Campos: estado, motivo, próximo prazo de liberação, dano previsto e detalhes
+por golpe. O valor de previsão é nominal, não um sorteio de dano executado.
+
+Controlador: diagnostico_ofensivo_aliado contém aliado, nível, alvo/encontro,
+política p04_sem_dano_sem_fallback_v1 e mensagem legível.
+População: cada EncontroSelvagem tem seu diagnostico_ofensivo.
+HUD: aviso sob o time somente para bloqueio/ausência de rota compatível;
+não vira texto flutuante sobre o combate nem exibe alerta por cooldown normal.
+Botões: Ver time e Mapa-Múndi abrem os painéis existentes. Não selecionam
+Pokémon nem viajam sozinhos e não ignoram os validadores existentes.
+
+O evento ofensiva_aliado_alterada é emitido quando muda a situação relevante,
+não em todo frame de uma espera estável. O observador de combate inclui esse
+evento e os diagnósticos nos snapshots exportados por Ctrl+Shift+L.
+Não é preciso ativar o registro para o aviso aparecer ao jogador.
+
+PRESERVAÇÃO DE BALANCEAMENTO
+
+Não foram alterados: fórmulas de dano/atributos, STAB, efetividade, pisos,
+variação de dano, HP, IVs, qualidade, níveis, Power, learnsets, cooldowns de
+catálogo, intervalos de ataque, tick de simulação, loot, XP, chance de captura,
+estoques, curas ou sorteio de substituto após KO.
+
+Trocar ou consultar alvo não reinicia agendas. Consultar dano nominal não
+consome RNG de dano, captura ou loot. A procura de alvo compatível pode
+mudar quem o aliado enfrenta; essa é a alteração funcional deliberada.
+Não é possível prometer que isso nunca mudará o resultado de uma batalha:
+parar de insistir num alvo impossível é precisamente a finalidade da regra.
+
+A comparação com a versão P03 cobriu 256 configurações (oito espécies,
+quatro níveis, quatro defensores, dois modos de cooldown), por 30 ticks cada.
+As mesmas entradas produziram os mesmos golpes, metadados e reservas de
+cooldown. Isso é evidência de paridade na matriz ensaiada, não prova de todas
+as batalhas possíveis nem confirmação da fórmula completa do original.
+
+As opções antigas não calibradas usadas pelos laboratórios continuam com seu
+comportamento histórico; esta política está integrada ao perfil calibrado ativo.
+Desligar a calibração para comparar modelos não significa que todas as regras
+novas foram estendidas aos modos antigos de laboratório.
+
+EVIDÊNCIA DO ORIGINAL E O QUE NÃO ESTÁ CRAVADO
+
+A página pública Combat on the Hunt mantém imunidade em x0:
+https://poke.idleworld.online/pokepedia/systems/combat
+Consulta: 2026-11-08.
+
+O catálogo extraído local lista Hypnosis e Lick para Gastly nível 1. No nosso
+cálculo, Lick é Ghost e Rattata é Normal: dano zero. Hypnosis está classificado
+como STATUS e seus efeitos não são executados por esta implementação.
+
+A documentação consultada não determina a política exata para ausência de
+ofensiva útil, fallback, insistência em golpe imune ou seleção automática de
+status. Não foi obtido, nesta correção, um novo log pareado desse caso no original.
+A página de Gastly aberta pela busca exibiu apenas a estrutura de navegação,
+não uma confirmação independente de todos os ataques do servidor atual.
+
+Não usamos regras de outros jogos/sites como se fossem do Poke Idle World.
+O protocolo COLETA_ORIGINAL_P04.txt define um ensaio curto com a composição
+que já foi mostrada, sem exigir captura nova, escolha manual de golpe ou vitória.
+
+TESTES E LIMITES
+
+- Ensaio real da cena: Gastly1 x Rattata, imunidade recíproca por dez segundos,
+  nenhum dano/XP/captura/bola inventado, aviso estável e diagnóstico dos dois lados.
+- Alternativa compatível mais distante e proteção contra reseleção pelo cerco.
+- Ausência de rota, saída do bloqueador e espera no meio do passo.
+- Cooldown finito, cooldown de habilidade, dados não finitos e avaliador ausente.
+- Somente status, TM não aprendida e catálogo/learnset ofensivo vazio.
+  Os casos sem learnset/status usam fixtures explícitas; não afirmam que o
+  original deixará essas espécies sem ataque.
+- Troca manual aos cinco segundos e dano real depois da recuperação.
+- Liberação por nível sem reiniciar a agenda, respawn e nenhuma blacklist permanente.
+- Exportação JSONL real contendo os motivos e snapshots.
+- Matriz de paridade com o algoritmo anterior e retorno barato entre ataques.
+- HUD com time de seis, texto e ações em 1152x648, 1280x720 e 1920x1080,
+  verificado por geometria/layout e abertura dos painéis, sem inspeção visual.
+- Regressões de P01/P02/P03, ataques independentes, dano, HP, loot, mapas e barras.
+
+Ambiente: Godot 4.6.3 Linux, sem interface gráfica, perfis de dados isolados por
+ensaio e por execução. Godot 4.7.2 Windows e aparência/fluidez na sua máquina
+não foram conferidos aqui. Os resultados e logs finais acompanham o pacote.
+
+P04 fica encerrado como regra local explícita para o perfil ativo e cenários
+validados. Permanecem separados: comprovação da política do original,
+implementação dos efeitos de status e complementação de catálogos sem dados.
+
+RESULTADO FINAL: 21 suítes; 29468 asserções; zero falhas.
+Asserções repetidas na matriz não são cenários independentes de gameplay.

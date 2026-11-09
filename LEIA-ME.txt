@@ -1,0 +1,65 @@
+P04 — SAÍDA EXPLÍCITA PARA AUSÊNCIA DE DANO POSITIVO
+
+BASE: projeto atual com P01, P02 e P03 instalados.
+
+INSTALAÇÃO
+1. Pare o jogo e faça uma cópia do projeto.
+2. Extraia este ZIP na pasta que contém project.godot.
+3. Substitua os seis scripts da raiz, por inteiro:
+   agenda_golpes.gd
+   caca_base.gd
+   caca.gd
+   encontro_selvagem.gd
+   hud_caca.gd
+   registro_combate.gd
+4. Preserve os .gd.uid existentes.
+5. Aguarde a importação e execute com F5.
+
+Não precisa criar nós, conectar sinais ou mudar recursos/atributos no Inspetor.
+Não há novos assets, fórmulas de dano, learnsets ou migração de saves.
+
+COMO FUNCIONA
+- Golpe útil em cooldown: mantém o alvo e espera o prazo normal.
+- Alvo imune ou sem ofensiva disponível: busca outro selvagem compatível.
+- Sem alvo compatível alcançável: aviso sob o time explica a espera.
+- Ver time e Mapa-Múndi abrem os painéis existentes para você agir.
+- Troca manual mantém os cinco segundos; não troca o aliado automaticamente
+  por imunidade. A troca automática após KO continua sendo a de P02.
+- Inimigos e Auto-Potion continuam funcionando durante a espera.
+- Não inventa dano em imunidade, Struggle, golpes extras ou efeito de status.
+- A próxima seleção depois de um KO normal continua no frame seguinte.
+
+O aviso é local e funcional: não está apresentado como interface comprovada
+do original. Esta política atua no perfil calibrado que está ativo no projeto;
+os modos antigos de comparação dos laboratórios foram preservados.
+
+O QUE CONFERIR AO JOGAR
+Você pode jogar normalmente. Se ocorrer incompatibilidade ofensiva, o aviso
+deve explicar a situação e permitir abrir o time/mapa. Trocando para um aliado
+que consiga causar dano, o aviso some e a mesma hunt continua, sem recriar
+os selvagens ou curá-los. Os cooldowns não são zerados para conceder ataque.
+
+DOCUMENTAÇÃO
+RELATORIO_P04.txt: causas, decisões, diagnósticos, paridade e limites.
+COLETA_ORIGINAL_P04.txt: comparação curta e precisa usando a composição já
+mostrada no original, sem exigir vitória ou captura de um Pokémon novo.
+verificacao/: logs finais, fontes dos testes, fixture de HP e hashes.
+
+VERIFICAÇÃO OPCIONAL
+Você não precisa executar os testes para instalar/jogar.
+Eles alteram time/HP/estoque de fixtures: não os rode sobre seu save principal.
+Para repetir, use uma cópia do projeto com Application > Config > Name
+exclusivo de teste e Use Custom User Dir desligado, ou um perfil de dados
+inteiramente isolado. Os logs incluídos usaram isolamento por teste/execução.
+Na pasta dessa cópia, com o executável Godot disponível no terminal:
+  godot --headless --path . --script res://verificacao/scripts/test_p04_sem_ofensiva.gd
+  godot --headless --path . --script res://verificacao/scripts/test_p04_paridade.gd
+  godot --headless --path . --script res://verificacao/scripts/test_p04_hud.gd
+Os outros scripts de teste seguem o mesmo formato.
+
+AMBIENTE
+Godot 4.6.3 Linux headless. Layout do aviso verificado por geometria em três
+resoluções; aparência e fluidez no Godot 4.7.2 Windows ainda não verificadas.
+
+RESULTADO FINAL: 21 suítes; 29468 asserções; zero falhas.
+Asserções repetidas na matriz não são cenários independentes de gameplay.

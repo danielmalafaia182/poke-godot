@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-396-00-dddcc329e7f9.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(342,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Slugma"
+textura=SubResource("A")
+base_hp=40
+base_atk=40
+base_def=40
+base_sp_atk=70
+base_sp_def=40
+base_speed=20
+tipo_primario="FIRE"
+tipo_secundario=""

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-395-00-c4caae026349.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(982,2,96,64)
+[resource]
+script=ExtResource("1")
+nome="Houndoom"
+textura=SubResource("A")
+base_hp=75
+base_atk=90
+base_def=50
+base_sp_atk=110
+base_sp_def=80
+base_speed=95
+tipo_primario="DARK"
+tipo_secundario="FIRE"

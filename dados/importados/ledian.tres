@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-335-00-988402a08edb.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(530,2,64,64)
+[resource]
+script=ExtResource("1")
+nome="Ledian"
+textura=SubResource("A")
+base_hp=55
+base_atk=35
+base_def=50
+base_sp_atk=55
+base_sp_def=110
+base_speed=85
+tipo_primario="BUG"
+tipo_secundario="FLYING"

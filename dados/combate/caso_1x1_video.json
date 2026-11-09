@@ -1,0 +1,1634 @@
+{
+  "schema": 1,
+  "fonte_log": {
+    "arquivo": "poke_ws_2026-11-08T02-41-10-198Z.txt",
+    "sha256": "eb90251b25047b38e202bb7f1e1d818d496d5d6864811a4bf8de871d6babe261"
+  },
+  "fonte_video": {
+    "arquivo": "Poke Idle World — Mozilla Firefox 2026-11-07 23-39-41.mp4",
+    "sha256": "9b6f8c2e2104cab61f858fa9021bb5412bf9aa239e93d8988e159c7cd286732d",
+    "quadros_inspecionados_segundos": [
+      0,
+      15,
+      35,
+      40,
+      42,
+      44,
+      46,
+      60
+    ]
+  },
+  "atribuicao": {
+    "slot": 4,
+    "species": "Blastoise",
+    "maxHp": 3780,
+    "metodo": "Inspeção visual42s/44s com um único atacante próximo, conferida com coordenadas e HP nos snapshots. Não é ID do agressor fornecido pelo WS.",
+    "seqs_incoming_aceitos": [
+      160,
+      170
+    ],
+    "danos_recebidos_aceitos": [
+      54,
+      55
+    ],
+    "dano48_pacote180_excluido_do_ajuste": true
+  },
+  "perfil_aliado_assumido": {
+    "id": "Gyarados_L214_0ef76cb0cd",
+    "especie": "Gyarados",
+    "nivel": 214,
+    "qualidade": 1.8,
+    "atributos": {
+      "hp": 527,
+      "atk": 647,
+      "def": 428,
+      "spAtk": 370,
+      "spDef": 500,
+      "speed": 520
+    },
+    "power": 5386,
+    "hp_maximo": 6324,
+    "iv_total": 154,
+    "tipos": [
+      "WATER",
+      "FLYING"
+    ],
+    "origem": "pokes.list observado; IVs individuais não revelados"
+  },
+  "origem_perfil_aliado": "pokes.list das coletas anteriores, mesmo Gyarados214/6324HP. Novo WS não contém pokes; seis atributos não foram reconfirmados.",
+  "snapshots": [
+    {
+      "seq": 154,
+      "hora": "2026-11-08T02:40:21.654Z",
+      "logger_ms": 38831,
+      "serverNow": 1794105694378,
+      "hero_hp_antes_pacote": 6062,
+      "hero_hp_depois_pacote": 6062,
+      "selvagem_hp_antes_pacote": 3780,
+      "selvagem_hp_depois_pacote": 2798,
+      "selvagem_hp_maximo": 3780,
+      "targetSlot_atual": 4,
+      "golpes": [
+        {
+          "slot": 4,
+          "amount": 982,
+          "eff": 1,
+          "move": "Thrash",
+          "type": "NORMAL"
+        }
+      ],
+      "distancia_outro_selvagem_mais_proximo": 7
+    },
+    {
+      "seq": 160,
+      "hora": "2026-11-08T02:40:22.854Z",
+      "logger_ms": 40033,
+      "serverNow": 1794105695577,
+      "hero_hp_antes_pacote": 6062,
+      "hero_hp_depois_pacote": 6008,
+      "selvagem_hp_antes_pacote": 2798,
+      "selvagem_hp_depois_pacote": 2798,
+      "selvagem_hp_maximo": 3780,
+      "targetSlot_atual": 4,
+      "golpes": [
+        {
+          "slot": -1,
+          "amount": 54,
+          "eff": 1,
+          "move": "Skull Bash",
+          "type": "NORMAL"
+        }
+      ],
+      "distancia_outro_selvagem_mais_proximo": 6
+    },
+    {
+      "seq": 166,
+      "hora": "2026-11-08T02:40:24.030Z",
+      "logger_ms": 41208,
+      "serverNow": 1794105696778,
+      "hero_hp_antes_pacote": 6008,
+      "hero_hp_depois_pacote": 6008,
+      "selvagem_hp_antes_pacote": 2798,
+      "selvagem_hp_depois_pacote": 1897,
+      "selvagem_hp_maximo": 3780,
+      "targetSlot_atual": 4,
+      "golpes": [
+        {
+          "slot": 4,
+          "amount": 901,
+          "eff": 1,
+          "move": "Thrash",
+          "type": "NORMAL"
+        }
+      ],
+      "distancia_outro_selvagem_mais_proximo": 5
+    },
+    {
+      "seq": 170,
+      "hora": "2026-11-08T02:40:24.838Z",
+      "logger_ms": 42016,
+      "serverNow": 1794105697580,
+      "hero_hp_antes_pacote": 6008,
+      "hero_hp_depois_pacote": 5953,
+      "selvagem_hp_antes_pacote": 1897,
+      "selvagem_hp_depois_pacote": 1897,
+      "selvagem_hp_maximo": 3780,
+      "targetSlot_atual": 4,
+      "golpes": [
+        {
+          "slot": -1,
+          "amount": 55,
+          "eff": 1,
+          "move": "Skull Bash",
+          "type": "NORMAL"
+        }
+      ],
+      "distancia_outro_selvagem_mais_proximo": 5
+    },
+    {
+      "seq": 180,
+      "hora": "2026-11-08T02:40:26.885Z",
+      "logger_ms": 44064,
+      "serverNow": 1794105699579,
+      "hero_hp_antes_pacote": 5953,
+      "hero_hp_depois_pacote": 5905,
+      "selvagem_hp_antes_pacote": 1897,
+      "selvagem_hp_depois_pacote": 0,
+      "selvagem_hp_maximo": 3780,
+      "targetSlot_atual": 6,
+      "golpes": [
+        {
+          "slot": 4,
+          "amount": 925,
+          "eff": 1,
+          "move": "Thrash",
+          "type": "NORMAL"
+        },
+        {
+          "slot": -1,
+          "amount": 48,
+          "eff": 1,
+          "move": "Skull Bash",
+          "type": "NORMAL"
+        },
+        {
+          "slot": 4,
+          "amount": 1045,
+          "eff": 1,
+          "move": "Thrash",
+          "type": "NORMAL"
+        }
+      ],
+      "distancia_outro_selvagem_mais_proximo": 3
+    }
+  ],
+  "ajuste_exploratorio": {
+    "perfil_assumido": {
+      "id": "Gyarados_L214_0ef76cb0cd",
+      "especie": "Gyarados",
+      "nivel": 214,
+      "qualidade": 1.8,
+      "atributos": {
+        "hp": 527,
+        "atk": 647,
+        "def": 428,
+        "spAtk": 370,
+        "spDef": 500,
+        "speed": 520
+      },
+      "power": 5386,
+      "hp_maximo": 6324,
+      "iv_total": 154,
+      "tipos": [
+        "WATER",
+        "FLYING"
+      ],
+      "origem": "pokes.list observado; IVs individuais não revelados"
+    },
+    "saida": [
+      982,
+      901,
+      925,
+      1045
+    ],
+    "entrada": [
+      54,
+      55
+    ],
+    "defesas_condicionais": [
+      129,
+      130
+    ],
+    "resultados": [
+      {
+        "nivel_atributos": 80,
+        "nivel_formula_dano": 80,
+        "maximo_condicional": 39,
+        "exemplo_maximo": {
+          "level": 80,
+          "attacklevel": 80,
+          "q": 1.704,
+          "hpIV": 1,
+          "defIV": 3,
+          "atkIV": 32,
+          "atk": 180
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 81,
+        "nivel_formula_dano": 81,
+        "maximo_condicional": 38,
+        "exemplo_maximo": {
+          "level": 81,
+          "attacklevel": 81,
+          "q": 1.56,
+          "hpIV": 4,
+          "defIV": 6,
+          "atkIV": 32,
+          "atk": 170
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 82,
+        "nivel_formula_dano": 82,
+        "maximo_condicional": 39,
+        "exemplo_maximo": {
+          "level": 82,
+          "attacklevel": 82,
+          "q": 1.578,
+          "hpIV": 3,
+          "defIV": 5,
+          "atkIV": 32,
+          "atk": 174
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 83,
+        "nivel_formula_dano": 83,
+        "maximo_condicional": 40,
+        "exemplo_maximo": {
+          "level": 83,
+          "attacklevel": 83,
+          "q": 1.598,
+          "hpIV": 2,
+          "defIV": 4,
+          "atkIV": 32,
+          "atk": 178
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 84,
+        "nivel_formula_dano": 84,
+        "maximo_condicional": 41,
+        "exemplo_maximo": {
+          "level": 84,
+          "attacklevel": 84,
+          "q": 1.586,
+          "hpIV": 2,
+          "defIV": 3,
+          "atkIV": 32,
+          "atk": 179
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 85,
+        "nivel_formula_dano": 85,
+        "maximo_condicional": 42,
+        "exemplo_maximo": {
+          "level": 85,
+          "attacklevel": 85,
+          "q": 1.599,
+          "hpIV": 1,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 182
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 86,
+        "nivel_formula_dano": 86,
+        "maximo_condicional": 43,
+        "exemplo_maximo": {
+          "level": 86,
+          "attacklevel": 86,
+          "q": 1.594,
+          "hpIV": 1,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 184
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 87,
+        "nivel_formula_dano": 87,
+        "maximo_condicional": 43,
+        "exemplo_maximo": {
+          "level": 87,
+          "attacklevel": 87,
+          "q": 1.56,
+          "hpIV": 1,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 183
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 88,
+        "nivel_formula_dano": 88,
+        "maximo_condicional": 44,
+        "exemplo_maximo": {
+          "level": 88,
+          "attacklevel": 88,
+          "q": 1.549,
+          "hpIV": 1,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 184
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 89,
+        "nivel_formula_dano": 89,
+        "maximo_condicional": 44,
+        "exemplo_maximo": {
+          "level": 89,
+          "attacklevel": 89,
+          "q": 1.523,
+          "hpIV": 1,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 183
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 90,
+        "nivel_formula_dano": 90,
+        "maximo_condicional": 44,
+        "exemplo_maximo": {
+          "level": 90,
+          "attacklevel": 90,
+          "q": 1.467,
+          "hpIV": 2,
+          "defIV": 3,
+          "atkIV": 32,
+          "atk": 180
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 91,
+        "nivel_formula_dano": 91,
+        "maximo_condicional": 45,
+        "exemplo_maximo": {
+          "level": 91,
+          "attacklevel": 91,
+          "q": 1.488,
+          "hpIV": 1,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 184
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 92,
+        "nivel_formula_dano": 92,
+        "maximo_condicional": 46,
+        "exemplo_maximo": {
+          "level": 92,
+          "attacklevel": 92,
+          "q": 1.482,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 93,
+        "nivel_formula_dano": 93,
+        "maximo_condicional": 46,
+        "exemplo_maximo": {
+          "level": 93,
+          "attacklevel": 93,
+          "q": 1.462,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 94,
+        "nivel_formula_dano": 94,
+        "maximo_condicional": 47,
+        "exemplo_maximo": {
+          "level": 94,
+          "attacklevel": 94,
+          "q": 1.443,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 95,
+        "nivel_formula_dano": 95,
+        "maximo_condicional": 47,
+        "exemplo_maximo": {
+          "level": 95,
+          "attacklevel": 95,
+          "q": 1.424,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 96,
+        "nivel_formula_dano": 96,
+        "maximo_condicional": 48,
+        "exemplo_maximo": {
+          "level": 96,
+          "attacklevel": 96,
+          "q": 1.408,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 97,
+        "nivel_formula_dano": 97,
+        "maximo_condicional": 48,
+        "exemplo_maximo": {
+          "level": 97,
+          "attacklevel": 97,
+          "q": 1.391,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 98,
+        "nivel_formula_dano": 98,
+        "maximo_condicional": 49,
+        "exemplo_maximo": {
+          "level": 98,
+          "attacklevel": 98,
+          "q": 1.377,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 99,
+        "nivel_formula_dano": 99,
+        "maximo_condicional": 50,
+        "exemplo_maximo": {
+          "level": 99,
+          "attacklevel": 99,
+          "q": 1.373,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 100,
+        "nivel_formula_dano": 100,
+        "maximo_condicional": 50,
+        "exemplo_maximo": {
+          "level": 100,
+          "attacklevel": 100,
+          "q": 1.348,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 101,
+        "nivel_formula_dano": 101,
+        "maximo_condicional": 50,
+        "exemplo_maximo": {
+          "level": 101,
+          "attacklevel": 101,
+          "q": 1.334,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 102,
+        "nivel_formula_dano": 102,
+        "maximo_condicional": 51,
+        "exemplo_maximo": {
+          "level": 102,
+          "attacklevel": 102,
+          "q": 1.32,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 103,
+        "nivel_formula_dano": 103,
+        "maximo_condicional": 51,
+        "exemplo_maximo": {
+          "level": 103,
+          "attacklevel": 103,
+          "q": 1.306,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 104,
+        "nivel_formula_dano": 104,
+        "maximo_condicional": 52,
+        "exemplo_maximo": {
+          "level": 104,
+          "attacklevel": 104,
+          "q": 1.293,
+          "hpIV": 1,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 105,
+        "nivel_formula_dano": 105,
+        "maximo_condicional": 52,
+        "exemplo_maximo": {
+          "level": 105,
+          "attacklevel": 105,
+          "q": 1.259,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 106,
+        "nivel_formula_dano": 106,
+        "maximo_condicional": 52,
+        "exemplo_maximo": {
+          "level": 106,
+          "attacklevel": 106,
+          "q": 1.241,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 107,
+        "nivel_formula_dano": 107,
+        "maximo_condicional": 53,
+        "exemplo_maximo": {
+          "level": 107,
+          "attacklevel": 107,
+          "q": 1.23,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 108,
+        "nivel_formula_dano": 108,
+        "maximo_condicional": 53,
+        "exemplo_maximo": {
+          "level": 108,
+          "attacklevel": 108,
+          "q": 1.213,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 109,
+        "nivel_formula_dano": 109,
+        "maximo_condicional": 54,
+        "exemplo_maximo": {
+          "level": 109,
+          "attacklevel": 109,
+          "q": 1.201,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 110,
+        "nivel_formula_dano": 110,
+        "maximo_condicional": 54,
+        "exemplo_maximo": {
+          "level": 110,
+          "attacklevel": 110,
+          "q": 1.188,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": null
+      },
+      {
+        "nivel_atributos": 111,
+        "nivel_formula_dano": 111,
+        "maximo_condicional": 55,
+        "exemplo_maximo": {
+          "level": 111,
+          "attacklevel": 111,
+          "q": 1.182,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 111,
+          "attacklevel": 111,
+          "q": 1.182,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        }
+      },
+      {
+        "nivel_atributos": 112,
+        "nivel_formula_dano": 112,
+        "maximo_condicional": 55,
+        "exemplo_maximo": {
+          "level": 112,
+          "attacklevel": 112,
+          "q": 1.166,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 112,
+          "attacklevel": 112,
+          "q": 1.166,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        }
+      },
+      {
+        "nivel_atributos": 113,
+        "nivel_formula_dano": 113,
+        "maximo_condicional": 56,
+        "exemplo_maximo": {
+          "level": 113,
+          "attacklevel": 113,
+          "q": 1.156,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 113,
+          "attacklevel": 113,
+          "q": 1.133,
+          "hpIV": 3,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 184
+        }
+      },
+      {
+        "nivel_atributos": 114,
+        "nivel_formula_dano": 114,
+        "maximo_condicional": 56,
+        "exemplo_maximo": {
+          "level": 114,
+          "attacklevel": 114,
+          "q": 1.144,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 114,
+          "attacklevel": 114,
+          "q": 1.116,
+          "hpIV": 3,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 183
+        }
+      },
+      {
+        "nivel_atributos": 115,
+        "nivel_formula_dano": 115,
+        "maximo_condicional": 57,
+        "exemplo_maximo": {
+          "level": 115,
+          "attacklevel": 115,
+          "q": 1.134,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 115,
+          "attacklevel": 115,
+          "q": 1.086,
+          "hpIV": 4,
+          "defIV": 3,
+          "atkIV": 32,
+          "atk": 181
+        }
+      },
+      {
+        "nivel_atributos": 116,
+        "nivel_formula_dano": 116,
+        "maximo_condicional": 57,
+        "exemplo_maximo": {
+          "level": 116,
+          "attacklevel": 116,
+          "q": 1.124,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 116,
+          "attacklevel": 116,
+          "q": 1.069,
+          "hpIV": 4,
+          "defIV": 3,
+          "atkIV": 32,
+          "atk": 180
+        }
+      },
+      {
+        "nivel_atributos": 117,
+        "nivel_formula_dano": 117,
+        "maximo_condicional": 58,
+        "exemplo_maximo": {
+          "level": 117,
+          "attacklevel": 117,
+          "q": 1.114,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 117,
+          "attacklevel": 117,
+          "q": 1.041,
+          "hpIV": 5,
+          "defIV": 4,
+          "atkIV": 32,
+          "atk": 178
+        }
+      },
+      {
+        "nivel_atributos": 118,
+        "nivel_formula_dano": 118,
+        "maximo_condicional": 58,
+        "exemplo_maximo": {
+          "level": 118,
+          "attacklevel": 118,
+          "q": 1.104,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 118,
+          "attacklevel": 118,
+          "q": 1.025,
+          "hpIV": 5,
+          "defIV": 4,
+          "atkIV": 32,
+          "atk": 177
+        }
+      },
+      {
+        "nivel_atributos": 119,
+        "nivel_formula_dano": 119,
+        "maximo_condicional": 59,
+        "exemplo_maximo": {
+          "level": 119,
+          "attacklevel": 119,
+          "q": 1.094,
+          "hpIV": 2,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 119,
+          "attacklevel": 119,
+          "q": 1.0,
+          "hpIV": 6,
+          "defIV": 4,
+          "atkIV": 32,
+          "atk": 175
+        }
+      },
+      {
+        "nivel_atributos": 120,
+        "nivel_formula_dano": 120,
+        "maximo_condicional": 58,
+        "exemplo_maximo": {
+          "level": 120,
+          "attacklevel": 120,
+          "q": 1.057,
+          "hpIV": 3,
+          "defIV": 2,
+          "atkIV": 32,
+          "atk": 184
+        },
+        "exemplo_ajuste": {
+          "level": 120,
+          "attacklevel": 120,
+          "q": 0.984,
+          "hpIV": 6,
+          "defIV": 5,
+          "atkIV": 32,
+          "atk": 174
+        }
+      },
+      {
+        "nivel_atributos": 121,
+        "nivel_formula_dano": 121,
+        "maximo_condicional": 59,
+        "exemplo_maximo": {
+          "level": 121,
+          "attacklevel": 121,
+          "q": 1.052,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": {
+          "level": 121,
+          "attacklevel": 121,
+          "q": 0.957,
+          "hpIV": 7,
+          "defIV": 5,
+          "atkIV": 32,
+          "atk": 172
+        }
+      },
+      {
+        "nivel_atributos": 122,
+        "nivel_formula_dano": 122,
+        "maximo_condicional": 59,
+        "exemplo_maximo": {
+          "level": 122,
+          "attacklevel": 122,
+          "q": 1.041,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": {
+          "level": 122,
+          "attacklevel": 122,
+          "q": 0.948,
+          "hpIV": 7,
+          "defIV": 5,
+          "atkIV": 32,
+          "atk": 172
+        }
+      },
+      {
+        "nivel_atributos": 123,
+        "nivel_formula_dano": 123,
+        "maximo_condicional": 60,
+        "exemplo_maximo": {
+          "level": 123,
+          "attacklevel": 123,
+          "q": 1.031,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": {
+          "level": 123,
+          "attacklevel": 123,
+          "q": 0.917,
+          "hpIV": 8,
+          "defIV": 6,
+          "atkIV": 32,
+          "atk": 169
+        }
+      },
+      {
+        "nivel_atributos": 124,
+        "nivel_formula_dano": 124,
+        "maximo_condicional": 61,
+        "exemplo_maximo": {
+          "level": 124,
+          "attacklevel": 124,
+          "q": 1.03,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 124,
+          "attacklevel": 124,
+          "q": 0.909,
+          "hpIV": 8,
+          "defIV": 6,
+          "atkIV": 32,
+          "atk": 169
+        }
+      },
+      {
+        "nivel_atributos": 125,
+        "nivel_formula_dano": 125,
+        "maximo_condicional": 61,
+        "exemplo_maximo": {
+          "level": 125,
+          "attacklevel": 125,
+          "q": 1.013,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 125,
+          "attacklevel": 125,
+          "q": 0.885,
+          "hpIV": 9,
+          "defIV": 7,
+          "atkIV": 32,
+          "atk": 167
+        }
+      },
+      {
+        "nivel_atributos": 126,
+        "nivel_formula_dano": 126,
+        "maximo_condicional": 62,
+        "exemplo_maximo": {
+          "level": 126,
+          "attacklevel": 126,
+          "q": 1.009,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 126,
+          "attacklevel": 126,
+          "q": 0.863,
+          "hpIV": 10,
+          "defIV": 8,
+          "atkIV": 32,
+          "atk": 165
+        }
+      },
+      {
+        "nivel_atributos": 127,
+        "nivel_formula_dano": 127,
+        "maximo_condicional": 62,
+        "exemplo_maximo": {
+          "level": 127,
+          "attacklevel": 127,
+          "q": 0.996,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 127,
+          "attacklevel": 127,
+          "q": 0.848,
+          "hpIV": 10,
+          "defIV": 8,
+          "atkIV": 32,
+          "atk": 164
+        }
+      },
+      {
+        "nivel_atributos": 128,
+        "nivel_formula_dano": 128,
+        "maximo_condicional": 63,
+        "exemplo_maximo": {
+          "level": 128,
+          "attacklevel": 128,
+          "q": 0.996,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 128,
+          "attacklevel": 128,
+          "q": 0.842,
+          "hpIV": 10,
+          "defIV": 8,
+          "atkIV": 32,
+          "atk": 164
+        }
+      },
+      {
+        "nivel_atributos": 129,
+        "nivel_formula_dano": 129,
+        "maximo_condicional": 63,
+        "exemplo_maximo": {
+          "level": 129,
+          "attacklevel": 129,
+          "q": 0.98,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 129,
+          "attacklevel": 129,
+          "q": 0.819,
+          "hpIV": 11,
+          "defIV": 9,
+          "atkIV": 32,
+          "atk": 162
+        }
+      },
+      {
+        "nivel_atributos": 130,
+        "nivel_formula_dano": 130,
+        "maximo_condicional": 64,
+        "exemplo_maximo": {
+          "level": 130,
+          "attacklevel": 130,
+          "q": 0.977,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 130,
+          "attacklevel": 130,
+          "q": 0.811,
+          "hpIV": 11,
+          "defIV": 9,
+          "atkIV": 32,
+          "atk": 162
+        }
+      },
+      {
+        "nivel_atributos": 131,
+        "nivel_formula_dano": 131,
+        "maximo_condicional": 64,
+        "exemplo_maximo": {
+          "level": 131,
+          "attacklevel": 131,
+          "q": 0.964,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 131,
+          "attacklevel": 131,
+          "q": 0.804,
+          "hpIV": 11,
+          "defIV": 9,
+          "atkIV": 31,
+          "atk": 160
+        }
+      },
+      {
+        "nivel_atributos": 132,
+        "nivel_formula_dano": 132,
+        "maximo_condicional": 65,
+        "exemplo_maximo": {
+          "level": 132,
+          "attacklevel": 132,
+          "q": 0.959,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 132,
+          "attacklevel": 132,
+          "q": 0.8,
+          "hpIV": 11,
+          "defIV": 9,
+          "atkIV": 30,
+          "atk": 158
+        }
+      },
+      {
+        "nivel_atributos": 133,
+        "nivel_formula_dano": 133,
+        "maximo_condicional": 65,
+        "exemplo_maximo": {
+          "level": 133,
+          "attacklevel": 133,
+          "q": 0.949,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 133,
+          "attacklevel": 133,
+          "q": 0.808,
+          "hpIV": 10,
+          "defIV": 8,
+          "atkIV": 29,
+          "atk": 158
+        }
+      },
+      {
+        "nivel_atributos": 134,
+        "nivel_formula_dano": 134,
+        "maximo_condicional": 65,
+        "exemplo_maximo": {
+          "level": 134,
+          "attacklevel": 134,
+          "q": 0.941,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 134,
+          "attacklevel": 134,
+          "q": 0.802,
+          "hpIV": 10,
+          "defIV": 8,
+          "atkIV": 28,
+          "atk": 156
+        }
+      },
+      {
+        "nivel_atributos": 135,
+        "nivel_formula_dano": 135,
+        "maximo_condicional": 66,
+        "exemplo_maximo": {
+          "level": 135,
+          "attacklevel": 135,
+          "q": 0.934,
+          "hpIV": 3,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 135,
+          "attacklevel": 135,
+          "q": 0.8,
+          "hpIV": 10,
+          "defIV": 7,
+          "atkIV": 27,
+          "atk": 155
+        }
+      },
+      {
+        "nivel_atributos": 136,
+        "nivel_formula_dano": 136,
+        "maximo_condicional": 66,
+        "exemplo_maximo": {
+          "level": 136,
+          "attacklevel": 136,
+          "q": 0.911,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 136,
+          "attacklevel": 136,
+          "q": 0.809,
+          "hpIV": 9,
+          "defIV": 6,
+          "atkIV": 26,
+          "atk": 155
+        }
+      },
+      {
+        "nivel_atributos": 137,
+        "nivel_formula_dano": 137,
+        "maximo_condicional": 66,
+        "exemplo_maximo": {
+          "level": 137,
+          "attacklevel": 137,
+          "q": 0.901,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": {
+          "level": 137,
+          "attacklevel": 137,
+          "q": 0.802,
+          "hpIV": 9,
+          "defIV": 6,
+          "atkIV": 25,
+          "atk": 153
+        }
+      },
+      {
+        "nivel_atributos": 138,
+        "nivel_formula_dano": 138,
+        "maximo_condicional": 67,
+        "exemplo_maximo": {
+          "level": 138,
+          "attacklevel": 138,
+          "q": 0.895,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 138,
+          "attacklevel": 138,
+          "q": 0.8,
+          "hpIV": 9,
+          "defIV": 6,
+          "atkIV": 25,
+          "atk": 154
+        }
+      },
+      {
+        "nivel_atributos": 139,
+        "nivel_formula_dano": 139,
+        "maximo_condicional": 67,
+        "exemplo_maximo": {
+          "level": 139,
+          "attacklevel": 139,
+          "q": 0.885,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 185
+        },
+        "exemplo_ajuste": {
+          "level": 139,
+          "attacklevel": 139,
+          "q": 0.806,
+          "hpIV": 8,
+          "defIV": 5,
+          "atkIV": 23,
+          "atk": 151
+        }
+      },
+      {
+        "nivel_atributos": 140,
+        "nivel_formula_dano": 140,
+        "maximo_condicional": 68,
+        "exemplo_maximo": {
+          "level": 140,
+          "attacklevel": 140,
+          "q": 0.879,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 140,
+          "attacklevel": 140,
+          "q": 0.8,
+          "hpIV": 8,
+          "defIV": 5,
+          "atkIV": 23,
+          "atk": 151
+        }
+      },
+      {
+        "nivel_atributos": 141,
+        "nivel_formula_dano": 141,
+        "maximo_condicional": 68,
+        "exemplo_maximo": {
+          "level": 141,
+          "attacklevel": 141,
+          "q": 0.871,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 141,
+          "attacklevel": 141,
+          "q": 0.8,
+          "hpIV": 8,
+          "defIV": 5,
+          "atkIV": 22,
+          "atk": 150
+        }
+      },
+      {
+        "nivel_atributos": 142,
+        "nivel_formula_dano": 142,
+        "maximo_condicional": 69,
+        "exemplo_maximo": {
+          "level": 142,
+          "attacklevel": 142,
+          "q": 0.869,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 142,
+          "attacklevel": 142,
+          "q": 0.806,
+          "hpIV": 7,
+          "defIV": 4,
+          "atkIV": 20,
+          "atk": 147
+        }
+      },
+      {
+        "nivel_atributos": 143,
+        "nivel_formula_dano": 143,
+        "maximo_condicional": 69,
+        "exemplo_maximo": {
+          "level": 143,
+          "attacklevel": 143,
+          "q": 0.858,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 186
+        },
+        "exemplo_ajuste": {
+          "level": 143,
+          "attacklevel": 143,
+          "q": 0.8,
+          "hpIV": 7,
+          "defIV": 4,
+          "atkIV": 20,
+          "atk": 147
+        }
+      },
+      {
+        "nivel_atributos": 144,
+        "nivel_formula_dano": 144,
+        "maximo_condicional": 70,
+        "exemplo_maximo": {
+          "level": 144,
+          "attacklevel": 144,
+          "q": 0.854,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 144,
+          "attacklevel": 144,
+          "q": 0.8,
+          "hpIV": 7,
+          "defIV": 4,
+          "atkIV": 19,
+          "atk": 146
+        }
+      },
+      {
+        "nivel_atributos": 145,
+        "nivel_formula_dano": 145,
+        "maximo_condicional": 71,
+        "exemplo_maximo": {
+          "level": 145,
+          "attacklevel": 145,
+          "q": 0.852,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 145,
+          "attacklevel": 145,
+          "q": 0.806,
+          "hpIV": 6,
+          "defIV": 3,
+          "atkIV": 18,
+          "atk": 145
+        }
+      },
+      {
+        "nivel_atributos": 146,
+        "nivel_formula_dano": 146,
+        "maximo_condicional": 71,
+        "exemplo_maximo": {
+          "level": 146,
+          "attacklevel": 146,
+          "q": 0.839,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 146,
+          "attacklevel": 146,
+          "q": 0.801,
+          "hpIV": 6,
+          "defIV": 3,
+          "atkIV": 18,
+          "atk": 145
+        }
+      },
+      {
+        "nivel_atributos": 147,
+        "nivel_formula_dano": 147,
+        "maximo_condicional": 71,
+        "exemplo_maximo": {
+          "level": 147,
+          "attacklevel": 147,
+          "q": 0.833,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 147,
+          "attacklevel": 147,
+          "q": 0.8,
+          "hpIV": 6,
+          "defIV": 3,
+          "atkIV": 17,
+          "atk": 144
+        }
+      },
+      {
+        "nivel_atributos": 148,
+        "nivel_formula_dano": 148,
+        "maximo_condicional": 72,
+        "exemplo_maximo": {
+          "level": 148,
+          "attacklevel": 148,
+          "q": 0.827,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 148,
+          "attacklevel": 148,
+          "q": 0.808,
+          "hpIV": 5,
+          "defIV": 2,
+          "atkIV": 16,
+          "atk": 144
+        }
+      },
+      {
+        "nivel_atributos": 149,
+        "nivel_formula_dano": 149,
+        "maximo_condicional": 72,
+        "exemplo_maximo": {
+          "level": 149,
+          "attacklevel": 149,
+          "q": 0.822,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 187
+        },
+        "exemplo_ajuste": {
+          "level": 149,
+          "attacklevel": 149,
+          "q": 0.802,
+          "hpIV": 5,
+          "defIV": 2,
+          "atkIV": 15,
+          "atk": 141
+        }
+      },
+      {
+        "nivel_atributos": 150,
+        "nivel_formula_dano": 150,
+        "maximo_condicional": 73,
+        "exemplo_maximo": {
+          "level": 150,
+          "attacklevel": 150,
+          "q": 0.817,
+          "hpIV": 4,
+          "defIV": 1,
+          "atkIV": 32,
+          "atk": 188
+        },
+        "exemplo_ajuste": {
+          "level": 150,
+          "attacklevel": 150,
+          "q": 0.8,
+          "hpIV": 5,
+          "defIV": 2,
+          "atkIV": 15,
+          "atk": 142
+        }
+      }
+    ],
+    "alternativa": {
+      "nivel_atributos": 80,
+      "nivel_formula_dano": 150,
+      "maximo_condicional": 70,
+      "exemplo_maximo": {
+        "level": 80,
+        "attacklevel": 150,
+        "q": 1.704,
+        "hpIV": 1,
+        "defIV": 3,
+        "atkIV": 32,
+        "atk": 180
+      },
+      "exemplo_ajuste": {
+        "level": 80,
+        "attacklevel": 150,
+        "q": 1.247,
+        "hpIV": 15,
+        "defIV": 18,
+        "atkIV": 32,
+        "atk": 140
+      }
+    }
+  },
+  "fidelidade_comprovada": false
+}

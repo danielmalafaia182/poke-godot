@@ -1,0 +1,766 @@
+Godot Engine v4.6.3.stable.official.7d41c59c4 - https://godotengine.org
+
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Started Project initialization (5 steps)[39m[0m
+[   0% ] [90m[1mfirst_scan_filesystem[22m | Scanning file structure...[39m[0m
+[  16% ] [90m[1mfirst_scan_filesystem[22m | Loading global class names...[39m[0m
+[  33% ] [90m[1mfirst_scan_filesystem[22m | Verifying GDExtensions...[39m[0m
+[  50% ] [90m[1mfirst_scan_filesystem[22m | Creating autoload scripts...[39m[0m
+[  66% ] [90m[1mfirst_scan_filesystem[22m | Initializing plugins...[39m[0m
+[  83% ] [90m[1mfirst_scan_filesystem[22m | Starting file scan...[39m[0m
+[92m[ DONE ][39m [1mfirst_scan_filesystem[22m
+[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | Started Registering global classes... (79 steps)[39m[0m
+[   0% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   1% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   2% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   3% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   5% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   6% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   7% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[   8% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  10% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  11% ] [90m[1mupdate_scripts_classes[22m | CartaoPokemonDepot[39m[0m
+[  12% ] [90m[1mupdate_scripts_classes[22m | CartaoPokemonHud[39m[0m
+[  13% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  15% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  16% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  17% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  18% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  20% ] [90m[1mupdate_scripts_classes[22m | ColecaoPokemon[39m[0m
+[  21% ] [90m[1mupdate_scripts_classes[22m | ConfiguracaoAutoHelper[39m[0m
+[  22% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  23% ] [90m[1mupdate_scripts_classes[22m | CoordenadorSalvamento[39m[0m
+[  25% ] [90m[1mupdate_scripts_classes[22m | DadosDestinoCaca[39m[0m
+[  26% ] [90m[1mupdate_scripts_classes[22m | DadosEspecie[39m[0m
+[  27% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  28% ] [90m[1mupdate_scripts_classes[22m | DadosPokemon[39m[0m
+[  30% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  31% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  32% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  33% ] [90m[1mupdate_scripts_classes[22m | EncontroSelvagem[39m[0m
+[  35% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  36% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  37% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  38% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  40% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  41% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  42% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  43% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  45% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  46% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  47% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  48% ] [90m[1mupdate_scripts_classes[22m | InventarioJogo[39m[0m
+[  50% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  51% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  52% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  53% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  55% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  56% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  57% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  58% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  60% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  61% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  62% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  63% ] [90m[1mupdate_scripts_classes[22m | PerfilTreinador[39m[0m
+[  65% ] [90m[1mupdate_scripts_classes[22m | PlacaInteracao[39m[0m
+[  66% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  67% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  68% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  70% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  71% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  72% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  73% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  75% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  76% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  77% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  78% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  80% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  81% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  82% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  83% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  85% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  86% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  87% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  88% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  90% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  91% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  92% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  93% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  95% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  96% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[  97% ] [90m[1mupdate_scripts_classes[22m | [39m[0m
+[92m[ DONE ][39m [1mupdate_scripts_classes[22m
+[0m
+[   0% ] [90m[1m_update_scan_actions[22m | Started Scanning actions... (220 steps)[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | map-items-00-6d34a1e696f1.webp[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | map-items-01-31b79255858f.webp[39m[0m
+[   0% ] [90m[1m_update_scan_actions[22m | map-items-02-9f025cfd1f20.webp[39m[0m
+[   1% ] [90m[1m_update_scan_actions[22m | map-items-03-e056de6d208c.webp[39m[0m
+[   1% ] [90m[1m_update_scan_actions[22m | map-items-04-cf3b4a5783f2.webp[39m[0m
+[   2% ] [90m[1m_update_scan_actions[22m | map-items-05-3cbaa6a00d0a.webp[39m[0m
+[   2% ] [90m[1m_update_scan_actions[22m | map-items-06-722f4780175f.webp[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | map-items-07-8be7a83e1301.webp[39m[0m
+[   3% ] [90m[1m_update_scan_actions[22m | map-items-08-fff49d906afd.webp[39m[0m
+[   4% ] [90m[1m_update_scan_actions[22m | map-items-09-115ff698384b.webp[39m[0m
+[   4% ] [90m[1m_update_scan_actions[22m | map-items-10-fe3b5b227c9d.webp[39m[0m
+[   4% ] [90m[1m_update_scan_actions[22m | map-items-11-97f1c8217940.webp[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | map-items-12-5fdddf6fe575.webp[39m[0m
+[   5% ] [90m[1m_update_scan_actions[22m | map-items-13-f3bf31db4a06.webp[39m[0m
+[   6% ] [90m[1m_update_scan_actions[22m | map-items-14-4a422a90b1b6.webp[39m[0m
+[   6% ] [90m[1m_update_scan_actions[22m | map-items-15-302a652324c0.webp[39m[0m
+[   7% ] [90m[1m_update_scan_actions[22m | map-items-16-347544eaa9d0.webp[39m[0m
+[   7% ] [90m[1m_update_scan_actions[22m | map-items-17-564da83fc992.webp[39m[0m
+[   8% ] [90m[1m_update_scan_actions[22m | map-items-18-b4d5ea0f8e25.webp[39m[0m
+[   8% ] [90m[1m_update_scan_actions[22m | map-items-19-731dad8a95f8.webp[39m[0m
+[   9% ] [90m[1m_update_scan_actions[22m | map-items-20-3bfff251314b.webp[39m[0m
+[   9% ] [90m[1m_update_scan_actions[22m | map-items-21-b5dc907cb907.webp[39m[0m
+[   9% ] [90m[1m_update_scan_actions[22m | map-items-22-7040c1ff63f1.webp[39m[0m
+[  10% ] [90m[1m_update_scan_actions[22m | map-items-23-317348b20887.webp[39m[0m
+[  10% ] [90m[1m_update_scan_actions[22m | map-items-24-da0e29d136ce.webp[39m[0m
+[  11% ] [90m[1m_update_scan_actions[22m | map-items-25-43d826227c54.webp[39m[0m
+[  11% ] [90m[1m_update_scan_actions[22m | map-items-26-08763e159215.webp[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | map-items-27-7fd1af91f6b6.webp[39m[0m
+[  12% ] [90m[1m_update_scan_actions[22m | map-items-28-f875b6b19fc2.webp[39m[0m
+[  13% ] [90m[1m_update_scan_actions[22m | map-items-29-dd865ff1d90e.webp[39m[0m
+[  13% ] [90m[1m_update_scan_actions[22m | map-items-30-d04146598a63.webp[39m[0m
+[  14% ] [90m[1m_update_scan_actions[22m | map-items-31-c918a64e0acd.webp[39m[0m
+[  14% ] [90m[1m_update_scan_actions[22m | map-items-32-d7515c72013a.webp[39m[0m
+[  14% ] [90m[1m_update_scan_actions[22m | map-items-33-59d7eb5d3528.webp[39m[0m
+[  15% ] [90m[1m_update_scan_actions[22m | map-items-34-1dde0b1ebe81.webp[39m[0m
+[  15% ] [90m[1m_update_scan_actions[22m | map-items-35-66cdfe5efcf8.webp[39m[0m
+[  16% ] [90m[1m_update_scan_actions[22m | map-items-36-53cf5ee7bdf9.webp[39m[0m
+[  16% ] [90m[1m_update_scan_actions[22m | map-items-37-d510da28015b.webp[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | map-items-38-a53b0a2be76d.webp[39m[0m
+[  17% ] [90m[1m_update_scan_actions[22m | map-items-39-1dcac822b6b7.webp[39m[0m
+[  18% ] [90m[1m_update_scan_actions[22m | map-items-40-4d5e6bc92bc6.webp[39m[0m
+[  18% ] [90m[1m_update_scan_actions[22m | map-items-41-c55e344f575f.webp[39m[0m
+[  19% ] [90m[1m_update_scan_actions[22m | map-items-42-b30d4ed4489f.webp[39m[0m
+[  19% ] [90m[1m_update_scan_actions[22m | map-items-43-6f2e9792873b.webp[39m[0m
+[  19% ] [90m[1m_update_scan_actions[22m | map-items-44-d6c212493a1c.webp[39m[0m
+[  20% ] [90m[1m_update_scan_actions[22m | map-items-45-97e1cc317fcf.webp[39m[0m
+[  20% ] [90m[1m_update_scan_actions[22m | map-items-46-5b2e280e1055.webp[39m[0m
+[  21% ] [90m[1m_update_scan_actions[22m | map-items-47-ddbed536f7f0.webp[39m[0m
+[  21% ] [90m[1m_update_scan_actions[22m | map-items-48-60d0019bd6ba.webp[39m[0m
+[  22% ] [90m[1m_update_scan_actions[22m | map-items-49-242beece9e1a.webp[39m[0m
+[  22% ] [90m[1m_update_scan_actions[22m | map-items-50-d82d462f3e7a.webp[39m[0m
+[  23% ] [90m[1m_update_scan_actions[22m | map-items-51-a70d06668518.webp[39m[0m
+[  23% ] [90m[1m_update_scan_actions[22m | map-items-52-49503a89e50f.webp[39m[0m
+[  23% ] [90m[1m_update_scan_actions[22m | map-items-53-e9b93966f635.webp[39m[0m
+[  24% ] [90m[1m_update_scan_actions[22m | map-items-54-a123df244f44.webp[39m[0m
+[  24% ] [90m[1m_update_scan_actions[22m | map-items-55-ae3e034d758c.webp[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | map-items-56-2d393ff1b617.webp[39m[0m
+[  25% ] [90m[1m_update_scan_actions[22m | map-items-57-b27ec40c1706.webp[39m[0m
+[  26% ] [90m[1m_update_scan_actions[22m | map-items-58-f3b534d565a0.webp[39m[0m
+[  26% ] [90m[1m_update_scan_actions[22m | map-items-59-ea289cfd357f.webp[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | map-items-60-4a931c21ea9f.webp[39m[0m
+[  27% ] [90m[1m_update_scan_actions[22m | map-items-61-5b60035a0d8b.webp[39m[0m
+[  28% ] [90m[1m_update_scan_actions[22m | map-items-62-e81449b47c5a.webp[39m[0m
+[  28% ] [90m[1m_update_scan_actions[22m | map-items-63-ea289cfd357f.webp[39m[0m
+[  28% ] [90m[1m_update_scan_actions[22m | map-items-64-29d582e36eb1.webp[39m[0m
+[  29% ] [90m[1m_update_scan_actions[22m | map-items-65-393f4cc21c38.webp[39m[0m
+[  29% ] [90m[1m_update_scan_actions[22m | map-items-66-6356e1bb953e.webp[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | map-items-67-5a70e760c8e9.webp[39m[0m
+[  30% ] [90m[1m_update_scan_actions[22m | map-items-68-63fb6a562f1d.webp[39m[0m
+[  31% ] [90m[1m_update_scan_actions[22m | map-items-69-45cd9b5936d4.webp[39m[0m
+[  31% ] [90m[1m_update_scan_actions[22m | map-items-70-d8477781cad8.webp[39m[0m
+[  32% ] [90m[1m_update_scan_actions[22m | map-items-71-ad2b232711b8.webp[39m[0m
+[  32% ] [90m[1m_update_scan_actions[22m | map-items-72-813393f1f0f2.webp[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | map-items-73-1bb0abca3846.webp[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | map-items-74-ee4a9a04a40b.webp[39m[0m
+[  33% ] [90m[1m_update_scan_actions[22m | map-items-75-c74419681cb2.webp[39m[0m
+[  34% ] [90m[1m_update_scan_actions[22m | map-items-76-acb9a562dd0a.webp[39m[0m
+[  34% ] [90m[1m_update_scan_actions[22m | map-items-77-1a69e4d27f70.webp[39m[0m
+[  35% ] [90m[1m_update_scan_actions[22m | map-items-78-2e9dcf7d7b0e.webp[39m[0m
+[  35% ] [90m[1m_update_scan_actions[22m | map-items-79-96aab79990e2.webp[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | map-items-80-91458e14c692.webp[39m[0m
+[  36% ] [90m[1m_update_scan_actions[22m | map-items-81-d7b4e5cc7e0b.webp[39m[0m
+[  37% ] [90m[1m_update_scan_actions[22m | map-items-82-abeb067d9db4.webp[39m[0m
+[  37% ] [90m[1m_update_scan_actions[22m | map-items-83-a7ced8eadff2.webp[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | map-items-84-64accc8194a5.webp[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | map-items-85-8693b7011346.webp[39m[0m
+[  38% ] [90m[1m_update_scan_actions[22m | map-items-86-bab0651dc520.webp[39m[0m
+[  39% ] [90m[1m_update_scan_actions[22m | map-items-87-0dd34029d446.webp[39m[0m
+[  39% ] [90m[1m_update_scan_actions[22m | map-items-88-39580b742298.webp[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | map-items-89-07f9d723b216.webp[39m[0m
+[  40% ] [90m[1m_update_scan_actions[22m | map-items-90-504d029e62c1.webp[39m[0m
+[  41% ] [90m[1m_update_scan_actions[22m | map-items-91-e51664c623fb.webp[39m[0m
+[  41% ] [90m[1m_update_scan_actions[22m | map-items-92-db446ca77a9d.webp[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | map-items-93-cd80e9688125.webp[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | map-items-94-ce1ce3eba082.webp[39m[0m
+[  42% ] [90m[1m_update_scan_actions[22m | greatball.png[39m[0m
+[  43% ] [90m[1m_update_scan_actions[22m | idleball.png[39m[0m
+[  43% ] [90m[1m_update_scan_actions[22m | idleball_gold.png[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | pokeball.png[39m[0m
+[  44% ] [90m[1m_update_scan_actions[22m | superball.png[39m[0m
+[  45% ] [90m[1m_update_scan_actions[22m | ultraball.png[39m[0m
+[  45% ] [90m[1m_update_scan_actions[22m | greatball_broke.png[39m[0m
+[  46% ] [90m[1m_update_scan_actions[22m | greatball_catch.png[39m[0m
+[  46% ] [90m[1m_update_scan_actions[22m | idleball_broke.png[39m[0m
+[  47% ] [90m[1m_update_scan_actions[22m | idleball_catch.png[39m[0m
+[  47% ] [90m[1m_update_scan_actions[22m | idleball_gold_broke.png[39m[0m
+[  47% ] [90m[1m_update_scan_actions[22m | idleball_gold_catch.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | pokeball_broke.png[39m[0m
+[  48% ] [90m[1m_update_scan_actions[22m | pokeball_catch.png[39m[0m
+[  49% ] [90m[1m_update_scan_actions[22m | superball_broke.png[39m[0m
+[  49% ] [90m[1m_update_scan_actions[22m | superball_catch.png[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | ultraball_broke.png[39m[0m
+[  50% ] [90m[1m_update_scan_actions[22m | ultraball_catch.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | dark.png[39m[0m
+[  51% ] [90m[1m_update_scan_actions[22m | normal.png[39m[0m
+[  52% ] [90m[1m_update_scan_actions[22m | greatball.png[39m[0m
+[  52% ] [90m[1m_update_scan_actions[22m | idleball.png[39m[0m
+[  52% ] [90m[1m_update_scan_actions[22m | pokeball.png[39m[0m
+[  53% ] [90m[1m_update_scan_actions[22m | superball.png[39m[0m
+[  53% ] [90m[1m_update_scan_actions[22m | ultraball.png[39m[0m
+[  54% ] [90m[1m_update_scan_actions[22m | icon_config.png[39m[0m
+[  54% ] [90m[1m_update_scan_actions[22m | icon_map_globe_lens.png[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | treinador.webp[39m[0m
+[  55% ] [90m[1m_update_scan_actions[22m | barlow_semibold.ttf[39m[0m
+[  56% ] [90m[1m_update_scan_actions[22m | cabecalho.svg[39m[0m
+[  56% ] [90m[1m_update_scan_actions[22m | cinzel.ttf[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | greatball.png[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | idleball.png[39m[0m
+[  57% ] [90m[1m_update_scan_actions[22m | pokeball.png[39m[0m
+[  58% ] [90m[1m_update_scan_actions[22m | superball.png[39m[0m
+[  58% ] [90m[1m_update_scan_actions[22m | ultraball.png[39m[0m
+[  59% ] [90m[1m_update_scan_actions[22m | grass.png[39m[0m
+[  59% ] [90m[1m_update_scan_actions[22m | ground.png[39m[0m
+[  60% ] [90m[1m_update_scan_actions[22m | rock.png[39m[0m
+[  60% ] [90m[1m_update_scan_actions[22m | barlow_bold.ttf[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | barlow_regular.ttf[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | cinzel_bold.ttf[39m[0m
+[  61% ] [90m[1m_update_scan_actions[22m | cinzel_extrabold.ttf[39m[0m
+[  62% ] [90m[1m_update_scan_actions[22m | team_janela.svg[39m[0m
+[  62% ] [90m[1m_update_scan_actions[22m | verdana-11px-rounded_cp1252.png[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | analyzer.png[39m[0m
+[  63% ] [90m[1m_update_scan_actions[22m | boss2.png[39m[0m
+[  64% ] [90m[1m_update_scan_actions[22m | breeding.png[39m[0m
+[  64% ] [90m[1m_update_scan_actions[22m | clan_icon.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | community.png[39m[0m
+[  65% ] [90m[1m_update_scan_actions[22m | duel.png[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | guild.png[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | icon_album.png[39m[0m
+[  66% ] [90m[1m_update_scan_actions[22m | icon_config.png[39m[0m
+[  67% ] [90m[1m_update_scan_actions[22m | icon_daily.png[39m[0m
+[  67% ] [90m[1m_update_scan_actions[22m | icon_gym.png[39m[0m
+[  68% ] [90m[1m_update_scan_actions[22m | icon_home_center.png[39m[0m
+[  68% ] [90m[1m_update_scan_actions[22m | icon_logout.png[39m[0m
+[  69% ] [90m[1m_update_scan_actions[22m | icon_map_globe_lens.png[39m[0m
+[  69% ] [90m[1m_update_scan_actions[22m | icon_pip.svg[39m[0m
+[  70% ] [90m[1m_update_scan_actions[22m | icon_profile_player.png[39m[0m
+[  70% ] [90m[1m_update_scan_actions[22m | icon_ranking3.png[39m[0m
+[  71% ] [90m[1m_update_scan_actions[22m | icon_store.png[39m[0m
+[  71% ] [90m[1m_update_scan_actions[22m | icon_stream_bonus.svg[39m[0m
+[  71% ] [90m[1m_update_scan_actions[22m | icon_viplist.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | inventory.png[39m[0m
+[  72% ] [90m[1m_update_scan_actions[22m | logo.png[39m[0m
+[  73% ] [90m[1m_update_scan_actions[22m | mail.png[39m[0m
+[  73% ] [90m[1m_update_scan_actions[22m | menu_professions.png[39m[0m
+[  74% ] [90m[1m_update_scan_actions[22m | nurse.png[39m[0m
+[  74% ] [90m[1m_update_scan_actions[22m | playerWarning.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | pokeball_open_v2.png[39m[0m
+[  75% ] [90m[1m_update_scan_actions[22m | pokedex.png[39m[0m
+[  76% ] [90m[1m_update_scan_actions[22m | pokemon.png[39m[0m
+[  76% ] [90m[1m_update_scan_actions[22m | pokepedia.png[39m[0m
+[  76% ] [90m[1m_update_scan_actions[22m | pvp_crest.png[39m[0m
+[  77% ] [90m[1m_update_scan_actions[22m | questlog.png[39m[0m
+[  77% ] [90m[1m_update_scan_actions[22m | seasonpass_badge.png[39m[0m
+[  78% ] [90m[1m_update_scan_actions[22m | sleep.png[39m[0m
+[  78% ] [90m[1m_update_scan_actions[22m | talents.png[39m[0m
+[  79% ] [90m[1m_update_scan_actions[22m | usedballs.png[39m[0m
+[  79% ] [90m[1m_update_scan_actions[22m | earth_ball.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | pokemon_xp.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | rock_stone.png[39m[0m
+[  80% ] [90m[1m_update_scan_actions[22m | small_stone.png[39m[0m
+[  81% ] [90m[1m_update_scan_actions[22m | stone_orb.png[39m[0m
+[  81% ] [90m[1m_update_scan_actions[22m | strange_pheromone.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | strange_rock.png[39m[0m
+[  82% ] [90m[1m_update_scan_actions[22m | hunts.png[39m[0m
+[  83% ] [90m[1m_update_scan_actions[22m | kanto.png[39m[0m
+[  83% ] [90m[1m_update_scan_actions[22m | icon_map_globe_lens.png[39m[0m
+[  84% ] [90m[1m_update_scan_actions[22m | great_potion.png[39m[0m
+[  84% ] [90m[1m_update_scan_actions[22m | hyper_potion.png[39m[0m
+[  85% ] [90m[1m_update_scan_actions[22m | small_potion.png[39m[0m
+[  85% ] [90m[1m_update_scan_actions[22m | ultimate_potion.png[39m[0m
+[  85% ] [90m[1m_update_scan_actions[22m | ultra_potion.png[39m[0m
+[  86% ] [90m[1m_update_scan_actions[22m | bug.png[39m[0m
+[  86% ] [90m[1m_update_scan_actions[22m | dark.png[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | dragon.png[39m[0m
+[  87% ] [90m[1m_update_scan_actions[22m | electric.png[39m[0m
+[  88% ] [90m[1m_update_scan_actions[22m | fairy.png[39m[0m
+[  88% ] [90m[1m_update_scan_actions[22m | fighting.png[39m[0m
+[  89% ] [90m[1m_update_scan_actions[22m | fire.png[39m[0m
+[  89% ] [90m[1m_update_scan_actions[22m | flying.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | ghost.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | grass.png[39m[0m
+[  90% ] [90m[1m_update_scan_actions[22m | ground.png[39m[0m
+[  91% ] [90m[1m_update_scan_actions[22m | ice.png[39m[0m
+[  91% ] [90m[1m_update_scan_actions[22m | normal.png[39m[0m
+[  92% ] [90m[1m_update_scan_actions[22m | poison.png[39m[0m
+[  92% ] [90m[1m_update_scan_actions[22m | psychic.png[39m[0m
+[  93% ] [90m[1m_update_scan_actions[22m | rock.png[39m[0m
+[  93% ] [90m[1m_update_scan_actions[22m | steel.png[39m[0m
+[  94% ] [90m[1m_update_scan_actions[22m | water.png[39m[0m
+[  94% ] [90m[1m_update_scan_actions[22m | outfits-male-196-00-bfa20f0b6fde.webp[39m[0m
+[  95% ] [90m[1m_update_scan_actions[22m | outfits-male-400-00-9bea9479fb83.webp[39m[0m
+[  95% ] [90m[1m_update_scan_actions[22m | outfits-male-400-00-9bea9479fb83.webp[39m[0m
+[  95% ] [90m[1m_update_scan_actions[22m | hunt_original.png[39m[0m
+[  96% ] [90m[1m_update_scan_actions[22m | timestamps_195308.png[39m[0m
+[  96% ] [90m[1m_update_scan_actions[22m | timestamps_195332.png[39m[0m
+[  97% ] [90m[1m_update_scan_actions[22m | timestamps_195347.png[39m[0m
+[  97% ] [90m[1m_update_scan_actions[22m | hud_frontal_renderizado.png[39m[0m
+[  98% ] [90m[1m_update_scan_actions[22m | team_renderizado.png[39m[0m
+[  98% ] [90m[1m_update_scan_actions[22m | auto_helper_renderizado.png[39m[0m
+[  99% ] [90m[1m_update_scan_actions[22m | time_renderizado.png[39m[0m
+[92m[ DONE ][39m [1m_update_scan_actions[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (218 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   0% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   0% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   1% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   1% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   2% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   2% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   3% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   3% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   4% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   4% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   5% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   5% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   5% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   6% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   6% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   7% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   7% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   8% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   8% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   9% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   9% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  10% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  10% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  10% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  11% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  11% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  12% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  12% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  13% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  13% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  14% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  14% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  15% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  15% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  15% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  16% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  16% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  17% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  17% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  18% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  18% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  19% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  19% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  20% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  20% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  21% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  21% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  21% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  22% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  22% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  23% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  23% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  24% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  24% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  25% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  25% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  26% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  26% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  26% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  27% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  27% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  28% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  28% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  29% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  29% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  30% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  30% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  31% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  31% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  31% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  32% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  32% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  33% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  33% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  34% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  34% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  35% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  35% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  36% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  36% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  36% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  37% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  37% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  38% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  38% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  39% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  39% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  40% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  40% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  41% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  41% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  42% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  42% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  42% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  43% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  43% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  44% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  44% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  45% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  45% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  46% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  46% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  47% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  47% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  47% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  48% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  48% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  49% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  49% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  50% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  50% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  51% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  51% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  52% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  52% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  52% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  53% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  53% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  54% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  54% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  55% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  55% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  56% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  56% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  57% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  57% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  57% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  58% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  58% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  59% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  59% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  60% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  60% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  61% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  61% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  62% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  62% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  63% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  63% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  63% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  64% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  64% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  65% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  65% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  66% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  66% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  67% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  67% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  68% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  68% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  68% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  69% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  69% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  70% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  70% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  71% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  71% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  72% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  72% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  73% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  73% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  73% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  74% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  74% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  75% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  75% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  76% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  76% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  77% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  77% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  78% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  78% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  78% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  79% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  79% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  80% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  80% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  81% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  81% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  82% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  82% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  83% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  83% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  84% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  84% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  84% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  85% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  85% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  86% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  86% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  87% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  87% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  88% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  88% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  89% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  89% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  89% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  90% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  90% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  91% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  91% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  92% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  92% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  93% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  93% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  94% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  94% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  94% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  95% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  95% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  96% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  96% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  97% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  97% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  98% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  98% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[  99% ] [90m[1mreimport[22m | Preparing files to reimport...[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing pre-reimport operations...[39m[0m
+[   0% ] [90m[1mreimport[22m | cinzel_extrabold.ttf[39m[0m
+[   0% ] [90m[1mreimport[22m | cinzel_bold.ttf[39m[0m
+[   0% ] [90m[1mreimport[22m | barlow_regular.ttf[39m[0m
+[   1% ] [90m[1mreimport[22m | barlow_bold.ttf[39m[0m
+[   1% ] [90m[1mreimport[22m | cinzel.ttf[39m[0m
+[   2% ] [90m[1mreimport[22m | barlow_semibold.ttf[39m[0m
+[   2% ] [90m[1mreimport[22m | cinzel_extrabold.ttf[39m[0m
+[   3% ] [90m[1mreimport[22m | cinzel_bold.ttf[39m[0m
+[   3% ] [90m[1mreimport[22m | barlow_regular.ttf[39m[0m
+[   4% ] [90m[1mreimport[22m | barlow_bold.ttf[39m[0m
+[   4% ] [90m[1mreimport[22m | cinzel.ttf[39m[0m
+[   5% ] [90m[1mreimport[22m | barlow_semibold.ttf[39m[0m
+[   5% ] [90m[1mreimport[22m | verdana-11px-rounded_cp1252.png[39m[0m
+[   5% ] [90m[1mreimport[22m | analyzer.png[39m[0m
+[   6% ] [90m[1mreimport[22m | boss2.png[39m[0m
+[   6% ] [90m[1mreimport[22m | breeding.png[39m[0m
+[   7% ] [90m[1mreimport[22m | clan_icon.png[39m[0m
+[   7% ] [90m[1mreimport[22m | community.png[39m[0m
+[   8% ] [90m[1mreimport[22m | duel.png[39m[0m
+[   8% ] [90m[1mreimport[22m | guild.png[39m[0m
+[   9% ] [90m[1mreimport[22m | icon_album.png[39m[0m
+[   9% ] [90m[1mreimport[22m | icon_config.png[39m[0m
+[  10% ] [90m[1mreimport[22m | icon_daily.png[39m[0m
+[  10% ] [90m[1mreimport[22m | icon_gym.png[39m[0m
+[  10% ] [90m[1mreimport[22m | icon_home_center.png[39m[0m
+[  11% ] [90m[1mreimport[22m | icon_logout.png[39m[0m
+[  11% ] [90m[1mreimport[22m | icon_map_globe_lens.png[39m[0m
+[  12% ] [90m[1mreimport[22m | icon_pip.svg[39m[0m
+[  12% ] [90m[1mreimport[22m | icon_profile_player.png[39m[0m
+[  13% ] [90m[1mreimport[22m | icon_ranking3.png[39m[0m
+[  13% ] [90m[1mreimport[22m | icon_store.png[39m[0m
+[  14% ] [90m[1mreimport[22m | icon_stream_bonus.svg[39m[0m
+[  14% ] [90m[1mreimport[22m | icon_viplist.png[39m[0m
+[  15% ] [90m[1mreimport[22m | inventory.png[39m[0m
+[  15% ] [90m[1mreimport[22m | logo.png[39m[0m
+[  15% ] [90m[1mreimport[22m | mail.png[39m[0m
+[  16% ] [90m[1mreimport[22m | superball_broke.png[39m[0m
+[  16% ] [90m[1mreimport[22m | superball_catch.png[39m[0m
+[  17% ] [90m[1mreimport[22m | ultraball_broke.png[39m[0m
+[  17% ] [90m[1mreimport[22m | ultraball_catch.png[39m[0m
+[  18% ] [90m[1mreimport[22m | dark.png[39m[0m
+[  18% ] [90m[1mreimport[22m | normal.png[39m[0m
+[  19% ] [90m[1mreimport[22m | greatball.png[39m[0m
+[  19% ] [90m[1mreimport[22m | idleball.png[39m[0m
+[  20% ] [90m[1mreimport[22m | pokeball.png[39m[0m
+[  20% ] [90m[1mreimport[22m | superball.png[39m[0m
+[  21% ] [90m[1mreimport[22m | ultraball.png[39m[0m
+[  21% ] [90m[1mreimport[22m | icon_config.png[39m[0m
+[  21% ] [90m[1mreimport[22m | icon_map_globe_lens.png[39m[0m
+[  22% ] [90m[1mreimport[22m | treinador.webp[39m[0m
+[  22% ] [90m[1mreimport[22m | cabecalho.svg[39m[0m
+[  23% ] [90m[1mreimport[22m | greatball.png[39m[0m
+[  23% ] [90m[1mreimport[22m | idleball.png[39m[0m
+[  24% ] [90m[1mreimport[22m | pokeball.png[39m[0m
+[  24% ] [90m[1mreimport[22m | superball.png[39m[0m
+[  25% ] [90m[1mreimport[22m | ultraball.png[39m[0m
+[  25% ] [90m[1mreimport[22m | grass.png[39m[0m
+[  26% ] [90m[1mreimport[22m | ground.png[39m[0m
+[  26% ] [90m[1mreimport[22m | rock.png[39m[0m
+[  26% ] [90m[1mreimport[22m | team_janela.svg[39m[0m
+[  27% ] [90m[1mreimport[22m | bug.png[39m[0m
+[  27% ] [90m[1mreimport[22m | dark.png[39m[0m
+[  28% ] [90m[1mreimport[22m | dragon.png[39m[0m
+[  28% ] [90m[1mreimport[22m | electric.png[39m[0m
+[  29% ] [90m[1mreimport[22m | fairy.png[39m[0m
+[  29% ] [90m[1mreimport[22m | fighting.png[39m[0m
+[  30% ] [90m[1mreimport[22m | fire.png[39m[0m
+[  30% ] [90m[1mreimport[22m | flying.png[39m[0m
+[  31% ] [90m[1mreimport[22m | ghost.png[39m[0m
+[  31% ] [90m[1mreimport[22m | grass.png[39m[0m
+[  31% ] [90m[1mreimport[22m | ground.png[39m[0m
+[  32% ] [90m[1mreimport[22m | ice.png[39m[0m
+[  32% ] [90m[1mreimport[22m | normal.png[39m[0m
+[  33% ] [90m[1mreimport[22m | poison.png[39m[0m
+[  33% ] [90m[1mreimport[22m | psychic.png[39m[0m
+[  34% ] [90m[1mreimport[22m | rock.png[39m[0m
+[  34% ] [90m[1mreimport[22m | steel.png[39m[0m
+[  35% ] [90m[1mreimport[22m | water.png[39m[0m
+[  35% ] [90m[1mreimport[22m | outfits-male-400-00-9bea9479fb83.webp[39m[0m
+[  36% ] [90m[1mreimport[22m | hunt_original.png[39m[0m
+[  36% ] [90m[1mreimport[22m | timestamps_195308.png[39m[0m
+[  36% ] [90m[1mreimport[22m | timestamps_195332.png[39m[0m
+[  37% ] [90m[1mreimport[22m | timestamps_195347.png[39m[0m
+[  37% ] [90m[1mreimport[22m | hud_frontal_renderizado.png[39m[0m
+[  38% ] [90m[1mreimport[22m | team_renderizado.png[39m[0m
+[  38% ] [90m[1mreimport[22m | auto_helper_renderizado.png[39m[0m
+[  39% ] [90m[1mreimport[22m | time_renderizado.png[39m[0m
+[  39% ] [90m[1mreimport[22m | menu_professions.png[39m[0m
+[  40% ] [90m[1mreimport[22m | nurse.png[39m[0m
+[  40% ] [90m[1mreimport[22m | playerWarning.png[39m[0m
+[  41% ] [90m[1mreimport[22m | pokeball_open_v2.png[39m[0m
+[  41% ] [90m[1mreimport[22m | pokedex.png[39m[0m
+[  42% ] [90m[1mreimport[22m | pokemon.png[39m[0m
+[  42% ] [90m[1mreimport[22m | pokepedia.png[39m[0m
+[  42% ] [90m[1mreimport[22m | pvp_crest.png[39m[0m
+[  43% ] [90m[1mreimport[22m | questlog.png[39m[0m
+[  43% ] [90m[1mreimport[22m | seasonpass_badge.png[39m[0m
+[  44% ] [90m[1mreimport[22m | sleep.png[39m[0m
+[  44% ] [90m[1mreimport[22m | talents.png[39m[0m
+[  45% ] [90m[1mreimport[22m | usedballs.png[39m[0m
+[  45% ] [90m[1mreimport[22m | earth_ball.png[39m[0m
+[  46% ] [90m[1mreimport[22m | pokemon_xp.png[39m[0m
+[  46% ] [90m[1mreimport[22m | rock_stone.png[39m[0m
+[  47% ] [90m[1mreimport[22m | small_stone.png[39m[0m
+[  47% ] [90m[1mreimport[22m | stone_orb.png[39m[0m
+[  47% ] [90m[1mreimport[22m | strange_pheromone.png[39m[0m
+[  48% ] [90m[1mreimport[22m | strange_rock.png[39m[0m
+[  48% ] [90m[1mreimport[22m | hunts.png[39m[0m
+[  49% ] [90m[1mreimport[22m | kanto.png[39m[0m
+[  49% ] [90m[1mreimport[22m | icon_map_globe_lens.png[39m[0m
+[  50% ] [90m[1mreimport[22m | great_potion.png[39m[0m
+[  50% ] [90m[1mreimport[22m | hyper_potion.png[39m[0m
+[  51% ] [90m[1mreimport[22m | small_potion.png[39m[0m
+[  51% ] [90m[1mreimport[22m | ultimate_potion.png[39m[0m
+[  52% ] [90m[1mreimport[22m | ultra_potion.png[39m[0m
+[  52% ] [90m[1mreimport[22m | map-items-27-7fd1af91f6b6.webp[39m[0m
+[  52% ] [90m[1mreimport[22m | map-items-28-f875b6b19fc2.webp[39m[0m
+[  53% ] [90m[1mreimport[22m | map-items-29-dd865ff1d90e.webp[39m[0m
+[  53% ] [90m[1mreimport[22m | map-items-30-d04146598a63.webp[39m[0m
+[  54% ] [90m[1mreimport[22m | map-items-31-c918a64e0acd.webp[39m[0m
+[  54% ] [90m[1mreimport[22m | map-items-32-d7515c72013a.webp[39m[0m
+[  55% ] [90m[1mreimport[22m | map-items-33-59d7eb5d3528.webp[39m[0m
+[  55% ] [90m[1mreimport[22m | map-items-34-1dde0b1ebe81.webp[39m[0m
+[  56% ] [90m[1mreimport[22m | map-items-35-66cdfe5efcf8.webp[39m[0m
+[  56% ] [90m[1mreimport[22m | map-items-36-53cf5ee7bdf9.webp[39m[0m
+[  57% ] [90m[1mreimport[22m | map-items-37-d510da28015b.webp[39m[0m
+[  57% ] [90m[1mreimport[22m | map-items-38-a53b0a2be76d.webp[39m[0m
+[  57% ] [90m[1mreimport[22m | map-items-39-1dcac822b6b7.webp[39m[0m
+[  58% ] [90m[1mreimport[22m | map-items-40-4d5e6bc92bc6.webp[39m[0m
+[  58% ] [90m[1mreimport[22m | map-items-41-c55e344f575f.webp[39m[0m
+[  59% ] [90m[1mreimport[22m | map-items-42-b30d4ed4489f.webp[39m[0m
+[  59% ] [90m[1mreimport[22m | map-items-43-6f2e9792873b.webp[39m[0m
+[  60% ] [90m[1mreimport[22m | map-items-44-d6c212493a1c.webp[39m[0m
+[  60% ] [90m[1mreimport[22m | map-items-45-97e1cc317fcf.webp[39m[0m
+[  61% ] [90m[1mreimport[22m | map-items-46-5b2e280e1055.webp[39m[0m
+[  61% ] [90m[1mreimport[22m | map-items-47-ddbed536f7f0.webp[39m[0m
+[  62% ] [90m[1mreimport[22m | map-items-48-60d0019bd6ba.webp[39m[0m
+[  62% ] [90m[1mreimport[22m | map-items-49-242beece9e1a.webp[39m[0m
+[  63% ] [90m[1mreimport[22m | map-items-50-d82d462f3e7a.webp[39m[0m
+[  63% ] [90m[1mreimport[22m | map-items-51-a70d06668518.webp[39m[0m
+[  63% ] [90m[1mreimport[22m | map-items-52-49503a89e50f.webp[39m[0m
+[  64% ] [90m[1mreimport[22m | map-items-53-e9b93966f635.webp[39m[0m
+[  64% ] [90m[1mreimport[22m | map-items-00-6d34a1e696f1.webp[39m[0m
+[  65% ] [90m[1mreimport[22m | map-items-01-31b79255858f.webp[39m[0m
+[  65% ] [90m[1mreimport[22m | map-items-02-9f025cfd1f20.webp[39m[0m
+[  66% ] [90m[1mreimport[22m | map-items-03-e056de6d208c.webp[39m[0m
+[  66% ] [90m[1mreimport[22m | map-items-04-cf3b4a5783f2.webp[39m[0m
+[  67% ] [90m[1mreimport[22m | map-items-05-3cbaa6a00d0a.webp[39m[0m
+[  67% ] [90m[1mreimport[22m | map-items-06-722f4780175f.webp[39m[0m
+[  68% ] [90m[1mreimport[22m | map-items-07-8be7a83e1301.webp[39m[0m
+[  68% ] [90m[1mreimport[22m | map-items-08-fff49d906afd.webp[39m[0m
+[  68% ] [90m[1mreimport[22m | map-items-09-115ff698384b.webp[39m[0m
+[  69% ] [90m[1mreimport[22m | map-items-10-fe3b5b227c9d.webp[39m[0m
+[  69% ] [90m[1mreimport[22m | map-items-11-97f1c8217940.webp[39m[0m
+[  70% ] [90m[1mreimport[22m | map-items-12-5fdddf6fe575.webp[39m[0m
+[  70% ] [90m[1mreimport[22m | map-items-13-f3bf31db4a06.webp[39m[0m
+[  71% ] [90m[1mreimport[22m | map-items-14-4a422a90b1b6.webp[39m[0m
+[  71% ] [90m[1mreimport[22m | map-items-15-302a652324c0.webp[39m[0m
+[  72% ] [90m[1mreimport[22m | map-items-16-347544eaa9d0.webp[39m[0m
+[  72% ] [90m[1mreimport[22m | map-items-17-564da83fc992.webp[39m[0m
+[  73% ] [90m[1mreimport[22m | map-items-18-b4d5ea0f8e25.webp[39m[0m
+[  73% ] [90m[1mreimport[22m | map-items-19-731dad8a95f8.webp[39m[0m
+[  73% ] [90m[1mreimport[22m | map-items-20-3bfff251314b.webp[39m[0m
+[  74% ] [90m[1mreimport[22m | map-items-21-b5dc907cb907.webp[39m[0m
+[  74% ] [90m[1mreimport[22m | map-items-22-7040c1ff63f1.webp[39m[0m
+[  75% ] [90m[1mreimport[22m | map-items-23-317348b20887.webp[39m[0m
+[  75% ] [90m[1mreimport[22m | map-items-24-da0e29d136ce.webp[39m[0m
+[  76% ] [90m[1mreimport[22m | map-items-25-43d826227c54.webp[39m[0m
+[  76% ] [90m[1mreimport[22m | map-items-26-08763e159215.webp[39m[0m
+[  77% ] [90m[1mreimport[22m | map-items-82-abeb067d9db4.webp[39m[0m
+[  77% ] [90m[1mreimport[22m | map-items-83-a7ced8eadff2.webp[39m[0m
+[  78% ] [90m[1mreimport[22m | map-items-84-64accc8194a5.webp[39m[0m
+[  78% ] [90m[1mreimport[22m | map-items-85-8693b7011346.webp[39m[0m
+[  78% ] [90m[1mreimport[22m | map-items-86-bab0651dc520.webp[39m[0m
+[  79% ] [90m[1mreimport[22m | map-items-87-0dd34029d446.webp[39m[0m
+[  79% ] [90m[1mreimport[22m | map-items-88-39580b742298.webp[39m[0m
+[  80% ] [90m[1mreimport[22m | map-items-89-07f9d723b216.webp[39m[0m
+[  80% ] [90m[1mreimport[22m | map-items-90-504d029e62c1.webp[39m[0m
+[  81% ] [90m[1mreimport[22m | map-items-91-e51664c623fb.webp[39m[0m
+[  81% ] [90m[1mreimport[22m | map-items-92-db446ca77a9d.webp[39m[0m
+[  82% ] [90m[1mreimport[22m | map-items-93-cd80e9688125.webp[39m[0m
+[  82% ] [90m[1mreimport[22m | map-items-94-ce1ce3eba082.webp[39m[0m
+[  83% ] [90m[1mreimport[22m | greatball.png[39m[0m
+[  83% ] [90m[1mreimport[22m | idleball.png[39m[0m
+[  84% ] [90m[1mreimport[22m | idleball_gold.png[39m[0m
+[  84% ] [90m[1mreimport[22m | pokeball.png[39m[0m
+[  84% ] [90m[1mreimport[22m | superball.png[39m[0m
+[  85% ] [90m[1mreimport[22m | ultraball.png[39m[0m
+[  85% ] [90m[1mreimport[22m | greatball_broke.png[39m[0m
+[  86% ] [90m[1mreimport[22m | greatball_catch.png[39m[0m
+[  86% ] [90m[1mreimport[22m | idleball_broke.png[39m[0m
+[  87% ] [90m[1mreimport[22m | idleball_catch.png[39m[0m
+[  87% ] [90m[1mreimport[22m | idleball_gold_broke.png[39m[0m
+[  88% ] [90m[1mreimport[22m | idleball_gold_catch.png[39m[0m
+[  88% ] [90m[1mreimport[22m | pokeball_broke.png[39m[0m
+[  89% ] [90m[1mreimport[22m | pokeball_catch.png[39m[0m
+[  89% ] [90m[1mreimport[22m | map-items-54-a123df244f44.webp[39m[0m
+[  89% ] [90m[1mreimport[22m | map-items-55-ae3e034d758c.webp[39m[0m
+[  90% ] [90m[1mreimport[22m | map-items-56-2d393ff1b617.webp[39m[0m
+[  90% ] [90m[1mreimport[22m | map-items-57-b27ec40c1706.webp[39m[0m
+[  91% ] [90m[1mreimport[22m | map-items-58-f3b534d565a0.webp[39m[0m
+[  91% ] [90m[1mreimport[22m | map-items-59-ea289cfd357f.webp[39m[0m
+[  92% ] [90m[1mreimport[22m | map-items-60-4a931c21ea9f.webp[39m[0m
+[  92% ] [90m[1mreimport[22m | map-items-61-5b60035a0d8b.webp[39m[0m
+[  93% ] [90m[1mreimport[22m | map-items-62-e81449b47c5a.webp[39m[0m
+[  93% ] [90m[1mreimport[22m | map-items-63-ea289cfd357f.webp[39m[0m
+[  94% ] [90m[1mreimport[22m | map-items-64-29d582e36eb1.webp[39m[0m
+[  94% ] [90m[1mreimport[22m | map-items-65-393f4cc21c38.webp[39m[0m
+[  94% ] [90m[1mreimport[22m | map-items-66-6356e1bb953e.webp[39m[0m
+[  95% ] [90m[1mreimport[22m | map-items-67-5a70e760c8e9.webp[39m[0m
+[  95% ] [90m[1mreimport[22m | map-items-68-63fb6a562f1d.webp[39m[0m
+[  96% ] [90m[1mreimport[22m | map-items-69-45cd9b5936d4.webp[39m[0m
+[  96% ] [90m[1mreimport[22m | map-items-70-d8477781cad8.webp[39m[0m
+[  97% ] [90m[1mreimport[22m | map-items-71-ad2b232711b8.webp[39m[0m
+[  97% ] [90m[1mreimport[22m | map-items-72-813393f1f0f2.webp[39m[0m
+[  98% ] [90m[1mreimport[22m | map-items-73-1bb0abca3846.webp[39m[0m
+[  98% ] [90m[1mreimport[22m | map-items-74-ee4a9a04a40b.webp[39m[0m
+[  99% ] [90m[1mreimport[22m | map-items-75-c74419681cb2.webp[39m[0m
+[  99% ] [90m[1mreimport[22m | Finalizing Asset Import...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mreimport[22m | Started (Re)Importing Assets (218 steps)[39m[0m
+[   0% ] [90m[1mreimport[22m | Executing post-reimport operations...[39m[0m
+[92m[ DONE ][39m [1mreimport[22m
+[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Started Loading editor (5 steps)[39m[0m
+[   0% ] [90m[1mloading_editor_layout[22m | Loading editor layout...[39m[0m
+[  16% ] [90m[1mloading_editor_layout[22m | Loading docks...[39m[0m
+[92m[ DONE ][39m [1mloading_editor_layout[22m
+[0m

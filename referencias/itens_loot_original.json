@@ -1,0 +1,51 @@
+[
+  {
+    "id": 39,
+    "name": "Earth Ball",
+    "icon": "earth_ball.png",
+    "category": "loot",
+    "rare": false,
+    "npcPrice": 1
+  },
+  {
+    "id": 109,
+    "name": "Rock Stone",
+    "icon": "rock_stone.gif",
+    "category": "stone",
+    "rare": true,
+    "npcPrice": 5000
+  },
+  {
+    "id": 120,
+    "name": "Small Stone",
+    "icon": "small_stone.png",
+    "category": "loot",
+    "rare": false,
+    "npcPrice": 1
+  },
+  {
+    "id": 126,
+    "name": "Stone Orb",
+    "icon": "stone_orb.png",
+    "category": "loot",
+    "rare": false,
+    "npcPrice": 17
+  },
+  {
+    "id": 128,
+    "name": "Strange Rock",
+    "icon": "strange_rock.png",
+    "category": "loot",
+    "rare": true,
+    "npcPrice": 159
+  },
+  {
+    "id": 44417,
+    "name": "Strange Pheromone",
+    "icon": "/assets/items/strange_pheromone.png",
+    "category": "loot",
+    "rare": false,
+    "npcPrice": 1000000,
+    "description": "Um feromônio misterioso com um aroma incomum. Parece estimular os instintos dos Pokémon, tornando-os mais receptivos durante o breeding"
+  }
+]

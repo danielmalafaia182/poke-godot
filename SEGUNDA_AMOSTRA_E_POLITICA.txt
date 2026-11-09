@@ -1,0 +1,20 @@
+SEGUNDA AMOSTRA: OUTRA CONTA, HUNT BLASTOISE
+109 mensagens field ao longo de79,226 s.
+Há troca de aliado: Exeggutor Lv398 -> Gyarados Lv214. A mensagem pokes informa os atributos completos de ambos; não precisamos inferir seus atributos a partir dos IVs.
+Exeggutor: HPmáx12444, atributoHP1037, Power9346, qualidade1,8.
+Gyarados: HPmáx6324, atributoHP527, Power5386, qualidade1,8.
+Em ambos, HPmáx é12x atributoHP; Power também coincide com o arredondamento de soma dos atributos x qualidade. Isso confirma a consistência desses cálculos para esses dois casos, não a fórmula de dano.
+Há10 Leaf Storm do Exeggutor,12 Thrash do Gyarados e6 Skull Bash recebidos, com34/36/37 de dano. Os alvos Blastoise têm15 valores distintos de HPmáx entre2380 e4725.
+Leaf Storm registra efetividade2,5. Na primeira amostra, Tackle resistido registra1/3. Esses valores são compatíveis com a transformação de efetividade já usada no protótipo nesses casos.
+Há13 field-kill. A lista de Pokémon contém102 Blastoise Lv1. Não relacionamos automaticamente cada Pokémon da lista a uma captura desta sessão, pois falta ligação explícita por ID no catch-result. É um indício adicional para investigar separadamente a força selvagem e o nível de captura; não prova que cada inimigo capturado preserve nível de combate.
+A variação de HP não pode ser atribuída somente à conta ou somente à espécie: mudaram as duas coisas em relação à primeira amostra.
+Não usamos os intervalos entre Leaf Storm como cooldown: houve deslocamento, mortes, troca de alvo e troca de aliado. O alvo indicado em targetSlot pode já ser o próximo após um KO, enquanto hits.slot ainda identifica a vítima do golpe anterior.
+Passos declarados: aliado500ms, selvagem1000ms, tick200ms.
+
+COMO AVANÇAREMOS COM LAG E INCERTEZA
+1. Dados observados: guardamos os valores e as condições específicas da amostra.
+2. Hipóteses: fórmulas ou timers capazes de explicar mais de um caso, ainda sujeitos a teste.
+3. Escolhas do nosso jogo: decisões explícitas de fluidez/coerência quando o original é ambíguo ou indesejável.
+Podemos escolher comportamento melhor sem chamar essa escolha de regra descoberta do servidor. Não vamos copiar travamentos ou usar atrasos da rede como cadência de ataque.
+A direção pretendida é manter relógios independentes, resultado único por golpe/encontro, apresentação interpolada e comportamento estável após atrasos. Antes de trocar a fórmula global, precisamos separar modificadores, ataque básico e habilidade, força do selvagem e atributos do aliado.
+Este pacote é o laboratório de reprodução da divergência. Não é um patch que afirma ter corrigido toda a força de combate do original.

@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-49-00-cef435a80990.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(530,2,64,64)
+[resource]
+script=ExtResource("1")
+nome="Venomoth"
+textura=SubResource("A")
+base_hp=70
+base_atk=65
+base_def=60
+base_sp_atk=90
+base_sp_def=75
+base_speed=90
+tipo_primario="BUG"
+tipo_secundario="POISON"

@@ -1,0 +1,53 @@
+VALIDAÇÃO — REVISÃO DE QUALIDADE V1
+Motor executado: Godot 4.6.1 stable, Linux x86_64.
+Base: poke-idle(1).rar. Testes isolados do progresso do jogador.
+
+IMPORTAÇÃO
+Importação em cópia sem .godot, seguida da execução dos testes: OK.
+O runner cria nomes exclusivos de aplicação e registra todos os logs.
+
+RESULTADOS
+- test_revisao.gd: 14 verificações, 0 falhas.
+  Contrato da grade e espera por alvo móvel sem recálculo por frame.
+- test_movimento_selvagens.gd: 16.923 verificações, 0 falhas.
+  Simulação de 60 segundos em passos de 0,1s; interpolação, reserva de células,
+  diagonais, respawn, perseguição e conclusão de encontros com XP.
+  O teste repõe HP do aliado para isolar navegação de derrota; não mede balanceamento.
+- test_hunt_referencias.gd: 147 verificações, 0 falhas.
+  Grade, 15 spawns, HUD/painéis, treinador, recompensa 8 e VIP 8+4,
+  ausência de XP duplicado, captura fracassada e contrato de persistência.
+- test_qualidade.gd: 56 verificações, 0 falhas.
+  Identidades, TEAM/BOX, líder, capacidade, itens, filtros, cura, HUD,
+  perda/retomada de caminho, captura repetida, respawn e round-trip do save.
+- test_cidade_qualidade.gd: 62 verificações, 0 falhas.
+  Caminhada real por inputs até depot e retorno, sinal do botão de clique,
+  convite/painel, bloqueio de caminhada pelo modal, checkpoint, entrada na caça,
+  retorno à cidade e seguidores. Não é uma prova de todos os pixels clicáveis.
+- test_compatibilidade_save.gd: 14 verificações, 0 falhas.
+  Fixture sintética produzida com o código anterior em outro processo;
+  restauração integral dos campos, nova gravação, recarga sem duplicação,
+  backup, migração de campos opcionais, dados inválidos e erro de I/O.
+
+DETALHES RELEVANTES
+1. Teste do HUD conserva os IDs de instância de todos os cartões e das barras
+   durante 100 alterações de HP e XP. Também verifica textos, nível, valores
+   da barra e a barra sobre o aliado. Isso demonstra ausência de reconstrução
+   nesses eventos; não é um benchmark de FPS ou memória do jogo inteiro.
+2. Retomar um alvo após perda de caminho mantém a mesma instância e HP=3.
+3. KO repetido concede XP uma vez. Captura repetida consome uma bola e adiciona
+   um indivíduo uma vez. Falha e ausência de estoque são verificadas.
+4. Respawn gera outro ID/indivíduo com HP completo, sem flags anteriores,
+   reutiliza o sprite e não altera o evento de captura já emitido.
+5. Comparação de save normaliza representação JSON de números inteiros;
+   ignora apenas salvo_em_unix. Nenhum campo de progresso foi descartado.
+
+VERIFICAÇÃO VISUAL
+HUD de uma caça renderizado com OpenGL Compatibility, software Mesa, 1152×648.
+Conferidos cartão de time/HP/XP, menu, Auto-Helper, recompensa e Capture.
+A aparência foi preservada; não se afirma igualdade visual com o print original.
+
+LIMITES
+Windows/Godot 4.7.2 não foi executado neste ambiente.
+Não é auditoria exaustiva, benchmark de longa duração, teste de energia interrompida
+ou validação de servidor online. Dano/chance de captura/IA continuam provisórios.
+A serialização e o esquema do save não foram modificados nesta revisão.

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="DadosDestinoCaca" format=3 uid="uid://hj1dqs3b4ngc"]
+
+[ext_resource type="Resource" uid="uid://h3iupkjqdcha" path="res://dados/especies/larvitar.tres" id="1_5djv3"]
+[ext_resource type="Script" uid="uid://dgjmsdd04vu1t" path="res://dados_destino_caca.gd" id="1_rp6e4"]
+
+[resource]
+script = ExtResource("1_rp6e4")
+especie = ExtResource("1_5djv3")
+posicao_mapa = Vector2(681, 1643)
+metadata/_custom_type_script = "uid://dgjmsdd04vu1t"

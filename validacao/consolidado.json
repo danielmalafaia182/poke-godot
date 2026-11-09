@@ -1,0 +1,188 @@
+[
+  {
+    "etapa": "importacao",
+    "aprovado": true,
+    "execucao": "20261106_154912_365a94f0",
+    "log": "importacao.txt"
+  },
+  {
+    "etapa": "01_test_evolucao_pokemon",
+    "aprovado": true,
+    "execucao": "20261106_154912_365a94f0",
+    "log": "01_test_evolucao_pokemon.txt"
+  },
+  {
+    "etapa": "01_test_loot_hunts",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_loot_hunts.txt"
+  },
+  {
+    "etapa": "01_test_progressao_treinador",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_progressao_treinador.txt"
+  },
+  {
+    "etapa": "01_test_dificuldade_hunts",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_dificuldade_hunts.txt"
+  },
+  {
+    "etapa": "01_test_mapa_entre_hunts",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_mapa_entre_hunts.txt"
+  },
+  {
+    "etapa": "01_test_melhor_golpe",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_melhor_golpe.txt"
+  },
+  {
+    "etapa": "01_test_togepi_last_resort",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_togepi_last_resort.txt"
+  },
+  {
+    "etapa": "01_test_cerco_acesso",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_cerco_acesso.txt"
+  },
+  {
+    "etapa": "01_test_importacao_especies",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_importacao_especies.txt"
+  },
+  {
+    "etapa": "01_test_configuracao_hunts",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_configuracao_hunts.txt"
+  },
+  {
+    "etapa": "01_test_hunt_generica",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_hunt_generica.txt"
+  },
+  {
+    "etapa": "01_test_hunt_larvitar",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_hunt_larvitar.txt"
+  },
+  {
+    "etapa": "01_test_mapa_fiel",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_mapa_fiel.txt"
+  },
+  {
+    "etapa": "01_test_ataques_independentes",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_ataques_independentes.txt"
+  },
+  {
+    "etapa": "01_test_dano_atributos",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_dano_atributos.txt"
+  },
+  {
+    "etapa": "01_test_ajustes_hunt",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_ajustes_hunt.txt"
+  },
+  {
+    "etapa": "01_test_loot_combate_fiel",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_loot_combate_fiel.txt"
+  },
+  {
+    "etapa": "01_test_depot_cidade_fiel",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_depot_cidade_fiel.txt"
+  },
+  {
+    "etapa": "01_test_team_fiel",
+    "aprovado": true,
+    "execucao": "20261106_154912_365a94f0",
+    "log": "01_test_team_fiel.txt"
+  },
+  {
+    "etapa": "01_test_ui_fiel",
+    "aprovado": true,
+    "execucao": "20261106_154912_365a94f0",
+    "log": "01_test_ui_fiel.txt"
+  },
+  {
+    "etapa": "01_test_revisao",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_revisao.txt"
+  },
+  {
+    "etapa": "01_test_movimento_selvagens",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_movimento_selvagens.txt"
+  },
+  {
+    "etapa": "01_test_hunt_referencias",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_hunt_referencias.txt"
+  },
+  {
+    "etapa": "01_test_qualidade",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_qualidade.txt"
+  },
+  {
+    "etapa": "01_test_cidade_qualidade",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_cidade_qualidade.txt"
+  },
+  {
+    "etapa": "01_test_compatibilidade_save_fixture",
+    "aprovado": true,
+    "execucao": "20261106_154912_365a94f0",
+    "log": "01_test_compatibilidade_save_fixture.txt"
+  },
+  {
+    "etapa": "01_test_compatibilidade_save",
+    "aprovado": true,
+    "execucao": "20261106_154912_365a94f0",
+    "log": "01_test_compatibilidade_save.txt"
+  },
+  {
+    "etapa": "01_test_consistencia",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_consistencia.txt"
+  },
+  {
+    "etapa": "01_test_golpes_combate",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_golpes_combate.txt"
+  },
+  {
+    "etapa": "01_test_combate_rapido",
+    "aprovado": true,
+    "execucao": "20261106_154756_dbb758a2",
+    "log": "01_test_combate_rapido.txt"
+  }
+]

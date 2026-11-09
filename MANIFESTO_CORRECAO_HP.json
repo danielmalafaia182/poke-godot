@@ -1,0 +1,41 @@
+{
+  "base": "comparador_combate_pronto.zip",
+  "arquivos": [
+    {
+      "caminho": "LEIA-ME_CORRECAO_COMPARADOR_HP.txt",
+      "sha256": "52773a5735bf2933d5392ac6b62372ea34fd79cce20a2cc86f2fc07c872f911c"
+    },
+    {
+      "caminho": "comparador_regras_combate.gd",
+      "sha256": "ce09d1bcb4cbee30f428f1d556785d6aa3e81af767ff904d86054a996da77ff4"
+    },
+    {
+      "caminho": "referencias_v2_classificacao_corrigida.json",
+      "sha256": "44d01c56c816c278df305556852b3ebb2332cee9a5bde26fc7382cead2ebab0d"
+    },
+    {
+      "caminho": "test_comparador_combate.gd",
+      "sha256": "5b5cf7f9b30e8d26b5650b5aa190dffa45b453cf0c0fe52f2aaf7c0401f99f2f"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_comparador_hp/01_test_calibracao_combate.txt",
+      "sha256": "8a20d7bf522b5920e4c328cae9fa405e733833f884b966ed667c01a580b90ccb"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_comparador_hp/01_test_comparador_combate.txt",
+      "sha256": "0e7849f85456cb9490210e830a3497fc9daed51570a6d8dc63460fbbb803af6d"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_comparador_hp/RESUMO.md",
+      "sha256": "998749248203a830b3c2aa81043d7d639d3aabfce4712ffdd3f0c5e92eee661c"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_comparador_hp/importacao.txt",
+      "sha256": "e2e51e08cec7570567842ec62c9ab76d417d7e9ce0a0598922ce69f6b84bd6ca"
+    },
+    {
+      "caminho": "validacao_qualidade/resultados/correcao_comparador_hp/resumo.json",
+      "sha256": "2d838f56b177184e2de1e1261fed25e4866017757a4255d08213599263f4699f"
+    }
+  ]
+}

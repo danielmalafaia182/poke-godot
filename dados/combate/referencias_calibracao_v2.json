@@ -1,0 +1,227 @@
+{
+  "schema": 1,
+  "fidelidade_global_comprovada": false,
+  "politica_local_v2": {
+    "piso_dano_aliado_nao_imune": 2,
+    "piso_dano_selvagem_nao_imune": 1,
+    "multiplicador_selvagem": 1.0,
+    "tick_combate_ms": 200,
+    "intervalo_base_aliado_ms": 1500,
+    "intervalo_base_selvagem_ms": 2000,
+    "imunidade_dano": 0,
+    "status_dano": 0,
+    "TM_sem_aprendizado": false,
+    "speed_afeta_cadencia": false
+  },
+  "amostras": [
+    {
+      "arquivo": "poke_ws_2026-11-06T20-25-55-050Z.txt",
+      "sha256": "236bc030e526e2b86e4cfd762f70088b670b2817472eeb335ddaf93a2e51f96e",
+      "fields": 79,
+      "duracao_fields_s": 54.023,
+      "golpes": [
+        {
+          "direcao": "causado",
+          "golpe": "Tackle",
+          "eventos": 31,
+          "dano_min": 2,
+          "dano_max": 2,
+          "soma_dano": 62,
+          "efetividades": [
+            0.3333333333333333
+          ],
+          "intervalos_pacotes_ms": [
+            1601,
+            1600,
+            1601,
+            1600,
+            1600
+          ]
+        },
+        {
+          "direcao": "recebido",
+          "golpe": "Tackle",
+          "eventos": 58,
+          "dano_min": 1,
+          "dano_max": 1,
+          "soma_dano": 58,
+          "efetividades": [
+            0.3333333333333333
+          ],
+          "intervalos_pacotes_ms": [
+            2001,
+            2002,
+            2399,
+            2002,
+            0
+          ]
+        }
+      ],
+      "hp_selvagens_observados": [
+        120
+      ]
+    },
+    {
+      "arquivo": "poke_ws_2026-11-06T20-43-57-501Z.txt",
+      "sha256": "d1bcaf85bc9c833ed57a8299c899f763a8e239a61ca1d92b13cde942469925a8",
+      "fields": 109,
+      "duracao_fields_s": 79.226,
+      "golpes": [
+        {
+          "direcao": "causado",
+          "golpe": "Leaf Storm",
+          "eventos": 10,
+          "dano_min": 11306,
+          "dano_max": 20567,
+          "soma_dano": 148829,
+          "efetividades": [
+            2.5
+          ],
+          "intervalos_pacotes_ms": [
+            7203,
+            6801,
+            4802,
+            1600,
+            7603
+          ]
+        },
+        {
+          "direcao": "causado",
+          "golpe": "Thrash",
+          "eventos": 12,
+          "dano_min": 1012,
+          "dano_max": 1300,
+          "soma_dano": 13400,
+          "efetividades": [
+            1
+          ],
+          "intervalos_pacotes_ms": [
+            1201,
+            2000,
+            1199,
+            1601,
+            3201
+          ]
+        },
+        {
+          "direcao": "recebido",
+          "golpe": "Skull Bash",
+          "eventos": 6,
+          "dano_min": 34,
+          "dano_max": 37,
+          "soma_dano": 211,
+          "efetividades": [
+            1
+          ],
+          "intervalos_pacotes_ms": [
+            2000,
+            3201,
+            6006,
+            2000,
+            2002
+          ]
+        }
+      ],
+      "hp_selvagens_observados": [
+        2380,
+        2520,
+        2625,
+        2975,
+        3150,
+        3360,
+        3430,
+        3465,
+        3780,
+        3885,
+        3920,
+        3990,
+        4585,
+        4690,
+        4725
+      ]
+    }
+  ],
+  "fixtures": [
+    {
+      "especie": "Geodude",
+      "nivel": 1,
+      "qualidade": 1.13,
+      "ivs": [
+        32,
+        28,
+        32,
+        32,
+        32,
+        17
+      ],
+      "origem_ivs": "sintéticos compatíveis; não são os IVs reais da conta",
+      "atributos": {
+        "hp": 1,
+        "atk": 1,
+        "def": 2,
+        "spAtk": 1,
+        "spDef": 1,
+        "speed": 1
+      },
+      "power": 8,
+      "hp_maximo": 24
+    },
+    {
+      "especie": "Exeggutor",
+      "nivel": 398,
+      "qualidade": 1.8,
+      "ivs": [
+        27,
+        29,
+        20,
+        30,
+        30,
+        2
+      ],
+      "origem_ivs": "inferência condicionada à fórmula do cliente e atributos arredondados",
+      "atributos": {
+        "hp": 1037,
+        "atk": 975,
+        "def": 796,
+        "spAtk": 1178,
+        "spDef": 796,
+        "speed": 410
+      },
+      "power": 9346,
+      "hp_maximo": 12444
+    },
+    {
+      "especie": "Gyarados",
+      "nivel": 214,
+      "qualidade": 1.8,
+      "ivs": [
+        23,
+        32,
+        23,
+        24,
+        23,
+        29
+      ],
+      "origem_ivs": "inferência condicionada à fórmula do cliente e atributos arredondados",
+      "atributos": {
+        "hp": 527,
+        "atk": 647,
+        "def": 428,
+        "spAtk": 370,
+        "spDef": 500,
+        "speed": 520
+      },
+      "power": 5386,
+      "hp_maximo": 6324
+    }
+  ],
+  "limites": [
+    "Piso 2 e remoção do bônus 1,8 são escolhas locais compatíveis com um duelo; não revelam a fórmula do servidor.",
+    "Dados de atributos/HP/Power são calculados separadamente do dano de golpes.",
+    "Def/SpDef/Atk/SpAtk e nível de combate dos Blastoise selvagens não conhecidos. Não se ajustou a curva de dano alto por tentativa.",
+    "Horários são de pacotes, não de execução individual. slot identifica vítima; não identifica atacante de todos os golpes recebidos. Eventos iguais não foram deduplicados.",
+    "Tick de combate a 200 ms e intervalos de 1,5/2 s são um perfil candidato, não frequências universais comprovadas.",
+    "HP selvagem continua na regra anterior HP calculado x5; os HP dos Blastoise da amostra não são reproduzidos nem usados para inventar defesa.",
+    "Aprendizado de TM, crítico, STAB, aleatoriedade, buffs e velocidade de ataque por espécie permanecem pendentes."
+  ]
+}

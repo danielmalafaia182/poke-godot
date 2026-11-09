@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-32-00-e2afb0600ffc.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(342,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Caterpie"
+textura=SubResource("A")
+base_hp=45
+base_atk=30
+base_def=35
+base_sp_atk=20
+base_sp_def=20
+base_speed=45
+tipo_primario="BUG"
+tipo_secundario=""

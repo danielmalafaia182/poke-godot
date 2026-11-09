@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-38-00-10b8b1669f9d.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(206,2,32,64)
+[resource]
+script=ExtResource("1")
+nome="Hitmonchan"
+textura=SubResource("A")
+base_hp=50
+base_atk=105
+base_def=79
+base_sp_atk=35
+base_sp_def=110
+base_speed=76
+tipo_primario="FIGHTING"
+tipo_secundario=""

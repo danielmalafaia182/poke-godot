@@ -1,0 +1,29 @@
+{
+  "execucao": "20261108_000506_b2d48caf",
+  "godot": "/opt/godot/4.6.3/Godot_v4.6.3-stable_linux.x86_64",
+  "testes_selecionados": [
+    "test_nivel_formula_selvagem"
+  ],
+  "repeticoes": 1,
+  "etapas": [
+    {
+      "etapa": "importacao",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 14.883,
+      "motivo": "",
+      "log": "importacao.txt"
+    },
+    {
+      "etapa": "01_test_nivel_formula_selvagem",
+      "aprovado": true,
+      "codigo_saida": 0,
+      "duracao_segundos": 2.123,
+      "motivo": "",
+      "log": "01_test_nivel_formula_selvagem.txt",
+      "perfil_isolado": "PokeIdle_QA_fcab347d56724fba8963cc43549473d2"
+    }
+  ],
+  "config_original_preservada": true,
+  "aprovado": true
+}

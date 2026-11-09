@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-20-00-f57f4e11c497.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(398,2,64,64)
+[resource]
+script=ExtResource("1")
+nome="Hitmonlee"
+textura=SubResource("A")
+base_hp=50
+base_atk=120
+base_def=53
+base_sp_atk=35
+base_sp_def=110
+base_speed=87
+tipo_primario="FIGHTING"
+tipo_secundario=""

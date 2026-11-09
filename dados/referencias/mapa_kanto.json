@@ -1,0 +1,2960 @@
+{
+  "map": {
+    "w": 1788,
+    "h": 3364
+  },
+  "hunts": [
+    {
+      "slug": "cerulean",
+      "name": "Cerulean",
+      "looktype": 1309,
+      "level": 0,
+      "pixel": [
+        589,
+        355
+      ],
+      "type1": "",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "pewter",
+      "name": "Lavender",
+      "looktype": 1309,
+      "level": 0,
+      "pixel": [
+        785,
+        515
+      ],
+      "type1": "",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "viridian",
+      "name": "Viridian",
+      "looktype": 1309,
+      "level": 0,
+      "pixel": [
+        215,
+        600
+      ],
+      "type1": "",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "bulbasaur",
+      "name": "Bulbasaur",
+      "looktype": 25,
+      "level": 20,
+      "pixel": [
+        365,
+        662
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "ivysaur",
+      "name": "Ivysaur",
+      "looktype": 24,
+      "level": 40,
+      "pixel": [
+        337,
+        693
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "venusaur",
+      "name": "Venusaur",
+      "looktype": 22,
+      "level": 80,
+      "pixel": [
+        412,
+        683
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "charmander",
+      "name": "Charmander",
+      "looktype": 29,
+      "level": 20,
+      "pixel": [
+        190,
+        884
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "charmeleon",
+      "name": "Charmeleon",
+      "looktype": 23,
+      "level": 40,
+      "pixel": [
+        207,
+        922
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "charizard",
+      "name": "Charizard",
+      "looktype": 67,
+      "level": 80,
+      "pixel": [
+        61,
+        43
+      ],
+      "type1": "FIRE",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "squirtle",
+      "name": "Squirtle",
+      "looktype": 2,
+      "level": 20,
+      "pixel": [
+        825,
+        229
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "wartortle",
+      "name": "Wartortle",
+      "looktype": 6,
+      "level": 40,
+      "pixel": [
+        860,
+        179
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "blastoise",
+      "name": "Blastoise",
+      "looktype": 55,
+      "level": 80,
+      "pixel": [
+        836,
+        108
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "caterpie",
+      "name": "Caterpie",
+      "looktype": 32,
+      "level": 1,
+      "pixel": [
+        728,
+        690
+      ],
+      "type1": "BUG",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "metapod",
+      "name": "Metapod",
+      "looktype": 31,
+      "level": 10,
+      "pixel": [
+        183,
+        520
+      ],
+      "type1": "BUG",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "butterfree",
+      "name": "Butterfree",
+      "looktype": 40,
+      "level": 30,
+      "pixel": [
+        402,
+        842
+      ],
+      "type1": "BUG",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "weedle",
+      "name": "Weedle",
+      "looktype": 21,
+      "level": 1,
+      "pixel": [
+        476,
+        362
+      ],
+      "type1": "BUG",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "kakuna",
+      "name": "Kakuna",
+      "looktype": 60,
+      "level": 10,
+      "pixel": [
+        432,
+        372
+      ],
+      "type1": "BUG",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "beedrill",
+      "name": "Beedrill",
+      "looktype": 3563,
+      "level": 30,
+      "pixel": [
+        446,
+        327
+      ],
+      "type1": "BUG",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "pidgey",
+      "name": "Pidgey",
+      "looktype": 30,
+      "level": 1,
+      "pixel": [
+        689,
+        392
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "pidgeotto",
+      "name": "Pidgeotto",
+      "looktype": 5,
+      "level": 20,
+      "pixel": [
+        723,
+        392
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "pidgeot",
+      "name": "Pidgeot",
+      "looktype": 80,
+      "level": 80,
+      "pixel": [
+        664,
+        170
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "rattata",
+      "name": "Rattata",
+      "looktype": 36,
+      "level": 1,
+      "pixel": [
+        599,
+        390
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "raticate",
+      "name": "Raticate",
+      "looktype": 69,
+      "level": 30,
+      "pixel": [
+        571,
+        385
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "spearow",
+      "name": "Spearow",
+      "looktype": 27,
+      "level": 10,
+      "pixel": [
+        141,
+        438
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "fearow",
+      "name": "Fearow",
+      "looktype": 17,
+      "level": 50,
+      "pixel": [
+        135,
+        376
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "ekans",
+      "name": "Ekans",
+      "looktype": 7,
+      "level": 10,
+      "pixel": [
+        507,
+        416
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "arbok",
+      "name": "Arbok",
+      "looktype": 39,
+      "level": 40,
+      "pixel": [
+        439,
+        435
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "pikachu",
+      "name": "Pikachu",
+      "looktype": 59,
+      "level": 60,
+      "pixel": [
+        1088,
+        202
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "raichu",
+      "name": "Raichu",
+      "looktype": 50,
+      "level": 80,
+      "pixel": [
+        1166,
+        148
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "sandshrew",
+      "name": "Sandshrew",
+      "looktype": 43,
+      "level": 20,
+      "pixel": [
+        699,
+        354
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "sandslash",
+      "name": "Sandslash",
+      "looktype": 115,
+      "level": 60,
+      "pixel": [
+        742,
+        295
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "nidoranfe",
+      "name": "Nidoranfe",
+      "looktype": 70,
+      "level": 10,
+      "pixel": [
+        116,
+        620
+      ],
+      "type1": "",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "nidorina",
+      "name": "Nidorina",
+      "looktype": 71,
+      "level": 30,
+      "pixel": [
+        134,
+        594
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "nidoqueen",
+      "name": "Nidoqueen",
+      "looktype": 79,
+      "level": 80,
+      "pixel": [
+        604,
+        758
+      ],
+      "type1": "POISON",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "nidoranma",
+      "name": "Nidoranma",
+      "looktype": 66,
+      "level": 10,
+      "pixel": [
+        164,
+        571
+      ],
+      "type1": "",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "nidorino",
+      "name": "Nidorino",
+      "looktype": 78,
+      "level": 30,
+      "pixel": [
+        191,
+        555
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "nidoking",
+      "name": "Nidoking",
+      "looktype": 35,
+      "level": 80,
+      "pixel": [
+        605,
+        798
+      ],
+      "type1": "POISON",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "clefairy",
+      "name": "Clefairy",
+      "looktype": 73,
+      "level": 40,
+      "pixel": [
+        299,
+        366
+      ],
+      "type1": "FAIRY",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "clefable",
+      "name": "Clefable",
+      "looktype": 68,
+      "level": 80,
+      "pixel": [
+        382,
+        353
+      ],
+      "type1": "FAIRY",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "vulpix",
+      "name": "Vulpix",
+      "looktype": 62,
+      "level": 20,
+      "pixel": [
+        302,
+        924
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "ninetales",
+      "name": "Ninetales",
+      "looktype": 114,
+      "level": 100,
+      "pixel": [
+        236,
+        896
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "jigglypuff",
+      "name": "Jigglypuff",
+      "looktype": 203,
+      "level": 40,
+      "pixel": [
+        731,
+        1411
+      ],
+      "type1": "NORMAL",
+      "type2": "FAIRY",
+      "implementado": false
+    },
+    {
+      "slug": "wigglytuff",
+      "name": "Wigglytuff",
+      "looktype": 64,
+      "level": 80,
+      "pixel": [
+        728,
+        1455
+      ],
+      "type1": "NORMAL",
+      "type2": "FAIRY",
+      "implementado": false
+    },
+    {
+      "slug": "zubat",
+      "name": "Zubat",
+      "looktype": 44,
+      "level": 10,
+      "pixel": [
+        358,
+        382
+      ],
+      "type1": "POISON",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "golbat",
+      "name": "Golbat",
+      "looktype": 122,
+      "level": 40,
+      "pixel": [
+        335,
+        344
+      ],
+      "type1": "POISON",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "oddish",
+      "name": "Oddish",
+      "looktype": 56,
+      "level": 1,
+      "pixel": [
+        653,
+        426
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "gloom",
+      "name": "Gloom",
+      "looktype": 74,
+      "level": 30,
+      "pixel": [
+        541,
+        437
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "vileplume",
+      "name": "Vileplume",
+      "looktype": 89,
+      "level": 60,
+      "pixel": [
+        453,
+        647
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "paras",
+      "name": "Paras",
+      "looktype": 81,
+      "level": 1,
+      "pixel": [
+        253,
+        439
+      ],
+      "type1": "BUG",
+      "type2": "GRASS",
+      "implementado": false
+    },
+    {
+      "slug": "parasect",
+      "name": "Parasect",
+      "looktype": 95,
+      "level": 50,
+      "pixel": [
+        266,
+        406
+      ],
+      "type1": "BUG",
+      "type2": "GRASS",
+      "implementado": false
+    },
+    {
+      "slug": "venonat",
+      "name": "Venonat",
+      "looktype": 52,
+      "level": 20,
+      "pixel": [
+        794,
+        842
+      ],
+      "type1": "BUG",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "venomoth",
+      "name": "Venomoth",
+      "looktype": 49,
+      "level": 60,
+      "pixel": [
+        760,
+        859
+      ],
+      "type1": "BUG",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "diglett",
+      "name": "Diglett",
+      "looktype": 82,
+      "level": 10,
+      "pixel": [
+        671,
+        309
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "dugtrio",
+      "name": "Dugtrio",
+      "looktype": 83,
+      "level": 40,
+      "pixel": [
+        661,
+        348
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "meowth",
+      "name": "Meowth",
+      "looktype": 105,
+      "level": 20,
+      "pixel": [
+        129,
+        138
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "persian",
+      "name": "Persian",
+      "looktype": 3,
+      "level": 50,
+      "pixel": [
+        159,
+        86
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "psyduck",
+      "name": "Psyduck",
+      "looktype": 100,
+      "level": 20,
+      "pixel": [
+        882,
+        756
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "golduck",
+      "name": "Golduck",
+      "looktype": 99,
+      "level": 80,
+      "pixel": [
+        880,
+        688
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "mankey",
+      "name": "Mankey",
+      "looktype": 106,
+      "level": 10,
+      "pixel": [
+        124,
+        683
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "primeape",
+      "name": "Primeape",
+      "looktype": 103,
+      "level": 30,
+      "pixel": [
+        144,
+        653
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "growlithe",
+      "name": "Growlithe",
+      "looktype": 109,
+      "level": 30,
+      "pixel": [
+        282,
+        882
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "arcanine",
+      "name": "Arcanine",
+      "looktype": 91,
+      "level": 100,
+      "pixel": [
+        265,
+        844
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "poliwag",
+      "name": "Poliwag",
+      "looktype": 111,
+      "level": 1,
+      "pixel": [
+        543,
+        905
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "poliwhirl",
+      "name": "Poliwhirl",
+      "looktype": 212,
+      "level": 30,
+      "pixel": [
+        430,
+        949
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "poliwrath",
+      "name": "Poliwrath",
+      "looktype": 104,
+      "level": 80,
+      "pixel": [
+        466,
+        960
+      ],
+      "type1": "WATER",
+      "type2": "FIGHTING",
+      "implementado": false
+    },
+    {
+      "slug": "abra",
+      "name": "Abra",
+      "looktype": 262,
+      "level": 10,
+      "pixel": [
+        1176,
+        588
+      ],
+      "type1": "PSYCHIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "kadabra",
+      "name": "Kadabra",
+      "looktype": 219,
+      "level": 50,
+      "pixel": [
+        1099,
+        639
+      ],
+      "type1": "PSYCHIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "alakazam",
+      "name": "Alakazam",
+      "looktype": 218,
+      "level": 100,
+      "pixel": [
+        1088,
+        531
+      ],
+      "type1": "PSYCHIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "machop",
+      "name": "Machop",
+      "looktype": 118,
+      "level": 20,
+      "pixel": [
+        108,
+        549
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "machoke",
+      "name": "Machoke",
+      "looktype": 113,
+      "level": 40,
+      "pixel": [
+        81,
+        508
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "machamp",
+      "name": "Machamp",
+      "looktype": 121,
+      "level": 80,
+      "pixel": [
+        800,
+        340
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "bellsprout",
+      "name": "Bellsprout",
+      "looktype": 250,
+      "level": 1,
+      "pixel": [
+        577,
+        423
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "weepinbell",
+      "name": "Weepinbell",
+      "looktype": 37,
+      "level": 30,
+      "pixel": [
+        520,
+        596
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "victreebel",
+      "name": "Victreebel",
+      "looktype": 240,
+      "level": 60,
+      "pixel": [
+        354,
+        215
+      ],
+      "type1": "GRASS",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "tentacool",
+      "name": "Tentacool",
+      "looktype": 96,
+      "level": 10,
+      "pixel": [
+        807,
+        607
+      ],
+      "type1": "WATER",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "tentacruel",
+      "name": "Tentacruel",
+      "looktype": 108,
+      "level": 80,
+      "pixel": [
+        786,
+        644
+      ],
+      "type1": "WATER",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "geodude",
+      "name": "Geodude",
+      "looktype": 196,
+      "level": 1,
+      "pixel": [
+        761,
+        409
+      ],
+      "type1": "ROCK",
+      "type2": "GROUND",
+      "implementado": true
+    },
+    {
+      "slug": "graveler",
+      "name": "Graveler",
+      "looktype": 247,
+      "level": 40,
+      "pixel": [
+        767,
+        367
+      ],
+      "type1": "ROCK",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "golem",
+      "name": "Golem",
+      "looktype": 116,
+      "level": 80,
+      "pixel": [
+        789,
+        452
+      ],
+      "type1": "ROCK",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "ponyta",
+      "name": "Ponyta",
+      "looktype": 16,
+      "level": 20,
+      "pixel": [
+        163,
+        829
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "rapidash",
+      "name": "Rapidash",
+      "looktype": 2116,
+      "level": 80,
+      "pixel": [
+        225,
+        852
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "slowpoke",
+      "name": "Slowpoke",
+      "looktype": 75,
+      "level": 10,
+      "pixel": [
+        560,
+        1879
+      ],
+      "type1": "WATER",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "slowbro",
+      "name": "Slowbro",
+      "looktype": 41,
+      "level": 60,
+      "pixel": [
+        620,
+        1878
+      ],
+      "type1": "WATER",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "magnemite",
+      "name": "Magnemite",
+      "looktype": 217,
+      "level": 10,
+      "pixel": [
+        724,
+        456
+      ],
+      "type1": "ELECTRIC",
+      "type2": "STEEL",
+      "implementado": false
+    },
+    {
+      "slug": "magneton",
+      "name": "Magneton",
+      "looktype": 223,
+      "level": 80,
+      "pixel": [
+        853,
+        368
+      ],
+      "type1": "ELECTRIC",
+      "type2": "STEEL",
+      "implementado": false
+    },
+    {
+      "slug": "farfetch_d",
+      "name": "Farfetch'D",
+      "looktype": 57,
+      "level": 50,
+      "pixel": [
+        734,
+        735
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "doduo",
+      "name": "Doduo",
+      "looktype": 26,
+      "level": 10,
+      "pixel": [
+        651,
+        776
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "dodrio",
+      "name": "Dodrio",
+      "looktype": 120,
+      "level": 60,
+      "pixel": [
+        651,
+        735
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "seel",
+      "name": "Seel",
+      "looktype": 101,
+      "level": 20,
+      "pixel": [
+        536,
+        1068
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "dewgong",
+      "name": "Dewgong",
+      "looktype": 110,
+      "level": 60,
+      "pixel": [
+        498,
+        1006
+      ],
+      "type1": "WATER",
+      "type2": "ICE",
+      "implementado": false
+    },
+    {
+      "slug": "grimer",
+      "name": "Grimer",
+      "looktype": 214,
+      "level": 10,
+      "pixel": [
+        475,
+        437
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "muk",
+      "name": "Muk",
+      "looktype": 47,
+      "level": 80,
+      "pixel": [
+        405,
+        417
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "shellder",
+      "name": "Shellder",
+      "looktype": 54,
+      "level": 10,
+      "pixel": [
+        662,
+        931
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "cloyster",
+      "name": "Cloyster",
+      "looktype": 72,
+      "level": 60,
+      "pixel": [
+        592,
+        998
+      ],
+      "type1": "WATER",
+      "type2": "ICE",
+      "implementado": false
+    },
+    {
+      "slug": "gastly",
+      "name": "Gastly",
+      "looktype": 48,
+      "level": 20,
+      "pixel": [
+        822,
+        532
+      ],
+      "type1": "GHOST",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "haunter",
+      "name": "Haunter",
+      "looktype": 65,
+      "level": 50,
+      "pixel": [
+        822,
+        490
+      ],
+      "type1": "GHOST",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "gengar",
+      "name": "Gengar",
+      "looktype": 244,
+      "level": 100,
+      "pixel": [
+        190,
+        314
+      ],
+      "type1": "GHOST",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "onix",
+      "name": "Onix",
+      "looktype": 248,
+      "level": 60,
+      "pixel": [
+        618,
+        1923
+      ],
+      "type1": "ROCK",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "drowzee",
+      "name": "Drowzee",
+      "looktype": 94,
+      "level": 30,
+      "pixel": [
+        1135,
+        613
+      ],
+      "type1": "PSYCHIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "hypno",
+      "name": "Hypno",
+      "looktype": 119,
+      "level": 60,
+      "pixel": [
+        1142,
+        546
+      ],
+      "type1": "PSYCHIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "krabby",
+      "name": "Krabby",
+      "looktype": 112,
+      "level": 10,
+      "pixel": [
+        598,
+        1359
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "kingler",
+      "name": "Kingler",
+      "looktype": 245,
+      "level": 60,
+      "pixel": [
+        1150,
+        2713
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "voltorb",
+      "name": "Voltorb",
+      "looktype": 123,
+      "level": 10,
+      "pixel": [
+        893,
+        369
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "electrode",
+      "name": "Electrode",
+      "looktype": 125,
+      "level": 40,
+      "pixel": [
+        851,
+        407
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "exeggcute",
+      "name": "Exeggcute",
+      "looktype": 213,
+      "level": 10,
+      "pixel": [
+        1031,
+        589
+      ],
+      "type1": "GRASS",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "exeggutor",
+      "name": "Exeggutor",
+      "looktype": 46,
+      "level": 100,
+      "pixel": [
+        1031,
+        662
+      ],
+      "type1": "GRASS",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "cubone",
+      "name": "Cubone",
+      "looktype": 124,
+      "level": 20,
+      "pixel": [
+        732,
+        338
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "marowak",
+      "name": "Marowak",
+      "looktype": 197,
+      "level": 50,
+      "pixel": [
+        703,
+        294
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "hitmonlee",
+      "name": "Hitmonlee",
+      "looktype": 20,
+      "level": 60,
+      "pixel": [
+        463,
+        1840
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "hitmonchan",
+      "name": "Hitmonchan",
+      "looktype": 38,
+      "level": 60,
+      "pixel": [
+        518,
+        1839
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "lickitung",
+      "name": "Lickitung",
+      "looktype": 11,
+      "level": 60,
+      "pixel": [
+        606,
+        844
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "koffing",
+      "name": "Koffing",
+      "looktype": 228,
+      "level": 10,
+      "pixel": [
+        508,
+        377
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "weezing",
+      "name": "Weezing",
+      "looktype": 231,
+      "level": 60,
+      "pixel": [
+        460,
+        399
+      ],
+      "type1": "POISON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "rhyhorn",
+      "name": "Rhyhorn",
+      "looktype": 77,
+      "level": 30,
+      "pixel": [
+        811,
+        417
+      ],
+      "type1": "GROUND",
+      "type2": "ROCK",
+      "implementado": false
+    },
+    {
+      "slug": "rhydon",
+      "name": "Rhydon",
+      "looktype": 200,
+      "level": 80,
+      "pixel": [
+        811,
+        376
+      ],
+      "type1": "GROUND",
+      "type2": "ROCK",
+      "implementado": false
+    },
+    {
+      "slug": "tangela",
+      "name": "Tangela",
+      "looktype": 18,
+      "level": 50,
+      "pixel": [
+        646,
+        387
+      ],
+      "type1": "GRASS",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "kangaskhan",
+      "name": "Kangaskhan",
+      "looktype": 198,
+      "level": 80,
+      "pixel": [
+        559,
+        781
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "staryu",
+      "name": "Staryu",
+      "looktype": 42,
+      "level": 20,
+      "pixel": [
+        943,
+        700
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "starmie",
+      "name": "Starmie",
+      "looktype": 249,
+      "level": 80,
+      "pixel": [
+        942,
+        772
+      ],
+      "type1": "WATER",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "mr_mime",
+      "name": "Mr. Mime",
+      "looktype": 246,
+      "level": 80,
+      "pixel": [
+        561,
+        839
+      ],
+      "type1": "PSYCHIC",
+      "type2": "FAIRY",
+      "implementado": false
+    },
+    {
+      "slug": "scyther",
+      "name": "Scyther",
+      "looktype": 15,
+      "level": 100,
+      "pixel": [
+        525,
+        811
+      ],
+      "type1": "BUG",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "jynx",
+      "name": "Jynx",
+      "looktype": 282,
+      "level": 100,
+      "pixel": [
+        476,
+        1051
+      ],
+      "type1": "ICE",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "electabuzz",
+      "name": "Electabuzz",
+      "looktype": 281,
+      "level": 100,
+      "pixel": [
+        892,
+        407
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "magmar",
+      "name": "Magmar",
+      "looktype": 76,
+      "level": 100,
+      "pixel": [
+        256,
+        939
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "pinsir",
+      "name": "Pinsir",
+      "looktype": 53,
+      "level": 100,
+      "pixel": [
+        265,
+        513
+      ],
+      "type1": "BUG",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "tauros",
+      "name": "Tauros",
+      "looktype": 93,
+      "level": 60,
+      "pixel": [
+        685,
+        757
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "gyarados",
+      "name": "Gyarados",
+      "looktype": 117,
+      "level": 100,
+      "pixel": [
+        829,
+        643
+      ],
+      "type1": "WATER",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "lapras",
+      "name": "Lapras",
+      "looktype": 193,
+      "level": 100,
+      "pixel": [
+        593,
+        956
+      ],
+      "type1": "WATER",
+      "type2": "ICE",
+      "implementado": false
+    },
+    {
+      "slug": "omanyte",
+      "name": "Omanyte",
+      "looktype": 92,
+      "level": 20,
+      "pixel": [
+        1248,
+        971
+      ],
+      "type1": "ROCK",
+      "type2": "WATER",
+      "implementado": false
+    },
+    {
+      "slug": "omastar",
+      "name": "Omastar",
+      "looktype": 192,
+      "level": 80,
+      "pixel": [
+        1299,
+        970
+      ],
+      "type1": "ROCK",
+      "type2": "WATER",
+      "implementado": false
+    },
+    {
+      "slug": "kabuto",
+      "name": "Kabuto",
+      "looktype": 98,
+      "level": 20,
+      "pixel": [
+        1300,
+        918
+      ],
+      "type1": "ROCK",
+      "type2": "WATER",
+      "implementado": false
+    },
+    {
+      "slug": "kabutops",
+      "name": "Kabutops",
+      "looktype": 164,
+      "level": 80,
+      "pixel": [
+        1249,
+        917
+      ],
+      "type1": "ROCK",
+      "type2": "WATER",
+      "implementado": false
+    },
+    {
+      "slug": "aerodactyl",
+      "name": "Aerodactyl",
+      "looktype": 10,
+      "level": 100,
+      "pixel": [
+        1035,
+        338
+      ],
+      "type1": "ROCK",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "snorlax",
+      "name": "Snorlax",
+      "looktype": 51,
+      "level": 100,
+      "pixel": [
+        619,
+        2946
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "dratini",
+      "name": "Dratini",
+      "looktype": 58,
+      "level": 30,
+      "pixel": [
+        515,
+        954
+      ],
+      "type1": "DRAGON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "dragonair",
+      "name": "Dragonair",
+      "looktype": 61,
+      "level": 80,
+      "pixel": [
+        553,
+        954
+      ],
+      "type1": "DRAGON",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "dragonite",
+      "name": "Dragonite",
+      "looktype": 211,
+      "level": 100,
+      "pixel": [
+        547,
+        1003
+      ],
+      "type1": "DRAGON",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "chikorita",
+      "name": "Chikorita",
+      "looktype": 318,
+      "level": 20,
+      "pixel": [
+        1001,
+        1466
+      ],
+      "type1": "GRASS",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "bayleef",
+      "name": "Bayleef",
+      "looktype": 319,
+      "level": 40,
+      "pixel": [
+        1048,
+        1447
+      ],
+      "type1": "GRASS",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "meganium",
+      "name": "Meganium",
+      "looktype": 320,
+      "level": 80,
+      "pixel": [
+        998,
+        1420
+      ],
+      "type1": "GRASS",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "cyndaquil",
+      "name": "Cyndaquil",
+      "looktype": 321,
+      "level": 20,
+      "pixel": [
+        502,
+        1715
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "quilava",
+      "name": "Quilava",
+      "looktype": 322,
+      "level": 40,
+      "pixel": [
+        544,
+        1716
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "typhlosion",
+      "name": "Typhlosion",
+      "looktype": 323,
+      "level": 80,
+      "pixel": [
+        600,
+        1721
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "totodile",
+      "name": "Totodile",
+      "looktype": 327,
+      "level": 20,
+      "pixel": [
+        1101,
+        2745
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "croconaw",
+      "name": "Croconaw",
+      "looktype": 328,
+      "level": 40,
+      "pixel": [
+        1035,
+        2636
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "feraligatr",
+      "name": "Feraligatr",
+      "looktype": 329,
+      "level": 80,
+      "pixel": [
+        1096,
+        2630
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "noctowl",
+      "name": "Noctowl",
+      "looktype": 333,
+      "level": 60,
+      "pixel": [
+        288,
+        2729
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "crobat",
+      "name": "Crobat",
+      "looktype": 338,
+      "level": 80,
+      "pixel": [
+        964,
+        1775
+      ],
+      "type1": "POISON",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "chinchou",
+      "name": "Chinchou",
+      "looktype": 339,
+      "level": 10,
+      "pixel": [
+        1046,
+        1494
+      ],
+      "type1": "WATER",
+      "type2": "ELECTRIC",
+      "implementado": false
+    },
+    {
+      "slug": "lanturn",
+      "name": "Lanturn",
+      "looktype": 340,
+      "level": 80,
+      "pixel": [
+        1003,
+        1513
+      ],
+      "type1": "WATER",
+      "type2": "ELECTRIC",
+      "implementado": false
+    },
+    {
+      "slug": "pichu",
+      "name": "Pichu",
+      "looktype": 341,
+      "level": 20,
+      "pixel": [
+        1023,
+        192
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "cleffa",
+      "name": "Cleffa",
+      "looktype": 343,
+      "level": 20,
+      "pixel": [
+        342,
+        2651
+      ],
+      "type1": "FAIRY",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "igglybuff",
+      "name": "Igglybuff",
+      "looktype": 342,
+      "level": 20,
+      "pixel": [
+        683,
+        1423
+      ],
+      "type1": "NORMAL",
+      "type2": "FAIRY",
+      "implementado": false
+    },
+    {
+      "slug": "natu",
+      "name": "Natu",
+      "looktype": 346,
+      "level": 30,
+      "pixel": [
+        510,
+        3228
+      ],
+      "type1": "PSYCHIC",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "xatu",
+      "name": "Xatu",
+      "looktype": 347,
+      "level": 80,
+      "pixel": [
+        550,
+        3225
+      ],
+      "type1": "PSYCHIC",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "mareep",
+      "name": "Mareep",
+      "looktype": 349,
+      "level": 20,
+      "pixel": [
+        643,
+        1441
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "flaaffy",
+      "name": "Flaaffy",
+      "looktype": 350,
+      "level": 40,
+      "pixel": [
+        674,
+        1477
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "ampharos",
+      "name": "Ampharos",
+      "looktype": 361,
+      "level": 80,
+      "pixel": [
+        714,
+        1500
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "bellossom",
+      "name": "Bellossom",
+      "looktype": 355,
+      "level": 50,
+      "pixel": [
+        964,
+        1478
+      ],
+      "type1": "GRASS",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "marill",
+      "name": "Marill",
+      "looktype": 351,
+      "level": 20,
+      "pixel": [
+        91,
+        2829
+      ],
+      "type1": "WATER",
+      "type2": "FAIRY",
+      "implementado": false
+    },
+    {
+      "slug": "azumarill",
+      "name": "Azumarill",
+      "looktype": 352,
+      "level": 60,
+      "pixel": [
+        122,
+        2765
+      ],
+      "type1": "WATER",
+      "type2": "FAIRY",
+      "implementado": false
+    },
+    {
+      "slug": "politoed",
+      "name": "Politoed",
+      "looktype": 359,
+      "level": 70,
+      "pixel": [
+        863,
+        3021
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "sunflora",
+      "name": "Sunflora",
+      "looktype": 354,
+      "level": 30,
+      "pixel": [
+        948,
+        1413
+      ],
+      "type1": "GRASS",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "quagsire",
+      "name": "Quagsire",
+      "looktype": 381,
+      "level": 60,
+      "pixel": [
+        1298,
+        2854
+      ],
+      "type1": "WATER",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "misdreavus",
+      "name": "Misdreavus",
+      "looktype": 366,
+      "level": 100,
+      "pixel": [
+        639,
+        1969
+      ],
+      "type1": "GHOST",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "wobbuffet",
+      "name": "Wobbuffet",
+      "looktype": 382,
+      "level": 100,
+      "pixel": [
+        537,
+        3161
+      ],
+      "type1": "PSYCHIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "girafarig",
+      "name": "Girafarig",
+      "looktype": 362,
+      "level": 80,
+      "pixel": [
+        625,
+        3227
+      ],
+      "type1": "NORMAL",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "pineco",
+      "name": "Pineco",
+      "looktype": 367,
+      "level": 10,
+      "pixel": [
+        1576,
+        2957
+      ],
+      "type1": "BUG",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "forretress",
+      "name": "Forretress",
+      "looktype": 368,
+      "level": 80,
+      "pixel": [
+        1518,
+        3024
+      ],
+      "type1": "BUG",
+      "type2": "STEEL",
+      "implementado": false
+    },
+    {
+      "slug": "gligar",
+      "name": "Gligar",
+      "looktype": 383,
+      "level": 40,
+      "pixel": [
+        1002,
+        1752
+      ],
+      "type1": "GROUND",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "steelix",
+      "name": "Steelix",
+      "looktype": 369,
+      "level": 100,
+      "pixel": [
+        655,
+        1919
+      ],
+      "type1": "STEEL",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "snubbull",
+      "name": "Snubbull",
+      "looktype": 410,
+      "level": 30,
+      "pixel": [
+        965,
+        1721
+      ],
+      "type1": "FAIRY",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "granbull",
+      "name": "Granbull",
+      "looktype": 2883,
+      "level": 80,
+      "pixel": [
+        986,
+        1679
+      ],
+      "type1": "FAIRY",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "scizor",
+      "name": "Scizor",
+      "looktype": 370,
+      "level": 100,
+      "pixel": [
+        1611,
+        3057
+      ],
+      "type1": "BUG",
+      "type2": "STEEL",
+      "implementado": false
+    },
+    {
+      "slug": "heracross",
+      "name": "Heracross",
+      "looktype": 373,
+      "level": 100,
+      "pixel": [
+        1472,
+        3077
+      ],
+      "type1": "BUG",
+      "type2": "FIGHTING",
+      "implementado": false
+    },
+    {
+      "slug": "teddiursa",
+      "name": "Teddiursa",
+      "looktype": 371,
+      "level": 30,
+      "pixel": [
+        958,
+        1822
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "ursaring",
+      "name": "Ursaring",
+      "looktype": 372,
+      "level": 100,
+      "pixel": [
+        1040,
+        1802
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "slugma",
+      "name": "Slugma",
+      "looktype": 396,
+      "level": 10,
+      "pixel": [
+        617,
+        1678
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "magcargo",
+      "name": "Magcargo",
+      "looktype": 397,
+      "level": 80,
+      "pixel": [
+        652,
+        1692
+      ],
+      "type1": "FIRE",
+      "type2": "ROCK",
+      "implementado": false
+    },
+    {
+      "slug": "swinub",
+      "name": "Swinub",
+      "looktype": 389,
+      "level": 10,
+      "pixel": [
+        402,
+        1151
+      ],
+      "type1": "ICE",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "piloswine",
+      "name": "Piloswine",
+      "looktype": 390,
+      "level": 80,
+      "pixel": [
+        407,
+        1075
+      ],
+      "type1": "ICE",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "mantine",
+      "name": "Mantine",
+      "looktype": 392,
+      "level": 100,
+      "pixel": [
+        976,
+        1549
+      ],
+      "type1": "WATER",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "skarmory",
+      "name": "Skarmory",
+      "looktype": 398,
+      "level": 100,
+      "pixel": [
+        393,
+        2740
+      ],
+      "type1": "STEEL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "houndour",
+      "name": "Houndour",
+      "looktype": 394,
+      "level": 20,
+      "pixel": [
+        646,
+        1741
+      ],
+      "type1": "DARK",
+      "type2": "FIRE",
+      "implementado": false
+    },
+    {
+      "slug": "houndoom",
+      "name": "Houndoom",
+      "looktype": 395,
+      "level": 100,
+      "pixel": [
+        695,
+        1742
+      ],
+      "type1": "DARK",
+      "type2": "FIRE",
+      "implementado": false
+    },
+    {
+      "slug": "kingdra",
+      "name": "Kingdra",
+      "looktype": 406,
+      "level": 100,
+      "pixel": [
+        1029,
+        1548
+      ],
+      "type1": "WATER",
+      "type2": "DRAGON",
+      "implementado": false
+    },
+    {
+      "slug": "phanpy",
+      "name": "Phanpy",
+      "looktype": 479,
+      "level": 20,
+      "pixel": [
+        592,
+        1639
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "donphan",
+      "name": "Donphan",
+      "looktype": 405,
+      "level": 80,
+      "pixel": [
+        531,
+        1631
+      ],
+      "type1": "GROUND",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "tyrogue",
+      "name": "Tyrogue",
+      "looktype": 384,
+      "level": 30,
+      "pixel": [
+        457,
+        1897
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "hitmontop",
+      "name": "Hitmontop",
+      "looktype": 414,
+      "level": 60,
+      "pixel": [
+        505,
+        1897
+      ],
+      "type1": "FIGHTING",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "smoochum",
+      "name": "Smoochum",
+      "looktype": 402,
+      "level": 30,
+      "pixel": [
+        633,
+        973
+      ],
+      "type1": "ICE",
+      "type2": "PSYCHIC",
+      "implementado": false
+    },
+    {
+      "slug": "elekid",
+      "name": "Elekid",
+      "looktype": 3674,
+      "level": 30,
+      "pixel": [
+        873,
+        334
+      ],
+      "type1": "ELECTRIC",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "magby",
+      "name": "Magby",
+      "looktype": 386,
+      "level": 30,
+      "pixel": [
+        693,
+        1692
+      ],
+      "type1": "FIRE",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "miltank",
+      "name": "Miltank",
+      "looktype": 408,
+      "level": 80,
+      "pixel": [
+        1057,
+        1701
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "larvitar",
+      "name": "Larvitar",
+      "looktype": 400,
+      "level": 30,
+      "pixel": [
+        681,
+        1643
+      ],
+      "type1": "ROCK",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "pupitar",
+      "name": "Pupitar",
+      "looktype": 401,
+      "level": 60,
+      "pixel": [
+        554,
+        1591
+      ],
+      "type1": "ROCK",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "tyranitar",
+      "name": "Tyranitar",
+      "looktype": 416,
+      "level": 100,
+      "pixel": [
+        654,
+        1601
+      ],
+      "type1": "ROCK",
+      "type2": "DARK",
+      "implementado": false
+    },
+    {
+      "slug": "chansey",
+      "name": "Chansey",
+      "looktype": 4,
+      "level": 60,
+      "pixel": [
+        516,
+        762
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "horsea",
+      "name": "Horsea",
+      "looktype": 33,
+      "level": 10,
+      "pixel": [
+        1030,
+        2887
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "seadra",
+      "name": "Seadra",
+      "looktype": 276,
+      "level": 50,
+      "pixel": [
+        1081,
+        2905
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "goldeen",
+      "name": "Goldeen",
+      "looktype": 274,
+      "level": 10,
+      "pixel": [
+        1050,
+        2822
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "seaking",
+      "name": "Seaking",
+      "looktype": 272,
+      "level": 50,
+      "pixel": [
+        1098,
+        2837
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "sentret",
+      "name": "Sentret",
+      "looktype": 412,
+      "level": 10,
+      "pixel": [
+        924,
+        1847
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "furret",
+      "name": "Furret",
+      "looktype": 415,
+      "level": 40,
+      "pixel": [
+        1039,
+        1849
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "hoothoot",
+      "name": "Hoothoot",
+      "looktype": 332,
+      "level": 20,
+      "pixel": [
+        337,
+        2740
+      ],
+      "type1": "NORMAL",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "ledyba",
+      "name": "Ledyba",
+      "looktype": 334,
+      "level": 10,
+      "pixel": [
+        813,
+        3067
+      ],
+      "type1": "BUG",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "ledian",
+      "name": "Ledian",
+      "looktype": 335,
+      "level": 40,
+      "pixel": [
+        892,
+        3124
+      ],
+      "type1": "BUG",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "spinarak",
+      "name": "Spinarak",
+      "looktype": 336,
+      "level": 10,
+      "pixel": [
+        793,
+        3115
+      ],
+      "type1": "BUG",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "ariados",
+      "name": "Ariados",
+      "looktype": 337,
+      "level": 40,
+      "pixel": [
+        843,
+        3118
+      ],
+      "type1": "BUG",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "togepi",
+      "name": "Togepi",
+      "looktype": 344,
+      "level": 1,
+      "pixel": [
+        302,
+        290
+      ],
+      "type1": "FAIRY",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "togetic",
+      "name": "Togetic",
+      "looktype": 345,
+      "level": 80,
+      "pixel": [
+        277,
+        263
+      ],
+      "type1": "FAIRY",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "hoppip",
+      "name": "Hoppip",
+      "looktype": 356,
+      "level": 1,
+      "pixel": [
+        600,
+        1494
+      ],
+      "type1": "GRASS",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "skiploom",
+      "name": "Skiploom",
+      "looktype": 357,
+      "level": 30,
+      "pixel": [
+        935,
+        1525
+      ],
+      "type1": "GRASS",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "jumpluff",
+      "name": "Jumpluff",
+      "looktype": 358,
+      "level": 50,
+      "pixel": [
+        1102,
+        1511
+      ],
+      "type1": "GRASS",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "aipom",
+      "name": "Aipom",
+      "looktype": 348,
+      "level": 40,
+      "pixel": [
+        839,
+        3227
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "sunkern",
+      "name": "Sunkern",
+      "looktype": 353,
+      "level": 1,
+      "pixel": [
+        543,
+        1480
+      ],
+      "type1": "GRASS",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "yanma",
+      "name": "Yanma",
+      "looktype": 379,
+      "level": 50,
+      "pixel": [
+        878,
+        3070
+      ],
+      "type1": "BUG",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "wooper",
+      "name": "Wooper",
+      "looktype": 380,
+      "level": 20,
+      "pixel": [
+        1246,
+        2883
+      ],
+      "type1": "WATER",
+      "type2": "GROUND",
+      "implementado": false
+    },
+    {
+      "slug": "dunsparce",
+      "name": "Dunsparce",
+      "looktype": 364,
+      "level": 30,
+      "pixel": [
+        1054,
+        1758
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "qwilfish",
+      "name": "Qwilfish",
+      "looktype": 979,
+      "level": 50,
+      "pixel": [
+        1069,
+        3051
+      ],
+      "type1": "WATER",
+      "type2": "POISON",
+      "implementado": false
+    },
+    {
+      "slug": "shuckle",
+      "name": "Shuckle",
+      "looktype": 411,
+      "level": 40,
+      "pixel": [
+        954,
+        2295
+      ],
+      "type1": "BUG",
+      "type2": "ROCK",
+      "implementado": false
+    },
+    {
+      "slug": "sneasel",
+      "name": "Sneasel",
+      "looktype": 375,
+      "level": 50,
+      "pixel": [
+        610,
+        1133
+      ],
+      "type1": "DARK",
+      "type2": "ICE",
+      "implementado": false
+    },
+    {
+      "slug": "corsola",
+      "name": "Corsola",
+      "looktype": 388,
+      "level": 50,
+      "pixel": [
+        1049,
+        2705
+      ],
+      "type1": "WATER",
+      "type2": "ROCK",
+      "implementado": false
+    },
+    {
+      "slug": "remoraid",
+      "name": "Remoraid",
+      "looktype": 391,
+      "level": 10,
+      "pixel": [
+        1102,
+        2687
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "octillery",
+      "name": "Octillery",
+      "looktype": 393,
+      "level": 70,
+      "pixel": [
+        1152,
+        2785
+      ],
+      "type1": "WATER",
+      "type2": "",
+      "implementado": false
+    },
+    {
+      "slug": "delibird",
+      "name": "Delibird",
+      "looktype": 399,
+      "level": 40,
+      "pixel": [
+        700,
+        1103
+      ],
+      "type1": "ICE",
+      "type2": "FLYING",
+      "implementado": false
+    },
+    {
+      "slug": "stantler",
+      "name": "Stantler",
+      "looktype": 409,
+      "level": 50,
+      "pixel": [
+        920,
+        1773
+      ],
+      "type1": "NORMAL",
+      "type2": "",
+      "implementado": false
+    }
+  ],
+  "fonte": "map-markers e creatures.json da extração fornecida"
+}

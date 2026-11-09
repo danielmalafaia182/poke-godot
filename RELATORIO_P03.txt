@@ -1,0 +1,145 @@
+P03 — DESVIO DE CORPOS NA PERSEGUIÇÃO DOS SELVAGENS
+Revisão: 2026-11-08 | Base: projeto da correção P02
+
+RESULTADO E ALCANCE
+
+Correção local implementada. O caso (selvagem 0,0; bloqueador 1,0;
+aliado 3,0; área aberta) agora gera um desvio e chega a uma posição de ataque.
+A solução vale para todas as espécies que usam movimento_selvagens.gd.
+Não é uma confirmação do algoritmo do servidor do Poke Idle World.
+
+POR QUE O DEFEITO EXISTIA
+
+Antes, _escolher_destino() solicitava calcular_caminho(origem, aliado) sem
+ocupação dinâmica. O A* escolhia corretamente o menor caminho no mapa que
+recebia: apenas terreno. Nesse mapa, a célula (1,0) estava livre.
+
+Logo depois, passo_livre() consultava os corpos reais e rejeitava (1,0).
+_escolher_destino() retornava a origem, sem recalcular uma alternativa.
+Na decisão seguinte, o mesmo mapa estático produzia o mesmo caminho.
+Isso não era uma decisão demonstrada do original: era uma lacuna entre
+planejamento e execução da nossa navegação.
+
+O retorno à região de spawn usava o mesmo padrão e recebeu a mesma correção.
+A navegação do aliado já usava um snapshot dinâmico; a perseguição dos
+selvagens não estava usando esse mecanismo.
+
+POR QUE AS REVISÕES ANTERIORES NÃO ENCERRAVAM ESSE RISCO
+
+Os testes de colisão verificavam segurança: célula válida, ausência de
+sobreposição e restrições de diagonal. Ficar parado satisfaz essas propriedades.
+Eles não bastavam para verificar progresso: havendo desvio livre, o agente
+precisa encontrá-lo e chegar ao alcance.
+
+Testar dano/cadência depois de dois Pokémon estarem em alcance também não
+verifica como vários inimigos chegam até lá. Um único atacante funcionando
+pode produzir combate e XP enquanto outros ficam presos em filas artificiais.
+Faltou esse ensaio adversarial antes de tratar a perseguição como revisada.
+A descoberta tardia foi uma falha de cobertura da nossa validação. Não foi
+causada por uma informação que o jogador tivesse obrigação de coletar.
+
+O QUE SABEMOS DO ORIGINAL
+
+1. A página pública Combat on the Hunt descreve modificadores de combate,
+   poções e substituição após KO. Não publica algoritmo de perseguição,
+   prioridades, resolução de disputa, ocupação ou desvio de corpos.
+   Fonte consultada em 2026-11-08:
+   https://poke.idleworld.online/pokepedia/systems/combat
+2. A amostra local de WS analisada contém 79 mensagens field, cobrindo
+   54.023 ms entre o primeiro e o último snapshot. Seu field-init informa
+   mobStepMs=1000, heroStepMs=500 e tickMs=200.
+3. Esses dados são evidência do estado transmitido e dos parâmetros dessa
+   sessão. Não revelam o planejamento interno ou o motivo de uma espera.
+4. Não está confirmado se o servidor utiliza A*, BFS, metas de ataque,
+   reservas equivalentes às nossas, passagem por corpos ou outra política.
+   Mesmo um desvio observado em vídeo comprova aquela trajetória; sozinho
+   não identifica o algoritmo que a produziu.
+
+Não precisamos de outra coleta para corrigir o defeito P03 reproduzido.
+Para aumentar a evidência de fidelidade posteriormente, será útil observar
+trajetórias ao redor de um bloqueador e em corredor, com snapshots contínuos.
+Isso continuará sendo confirmação de comportamento observado, não acesso
+à implementação do servidor.
+
+POLÍTICA LOCAL IMPLEMENTADA
+
+- Em perseguição, procurar uma das oito células vizinhas do aliado que
+  permita ataque pela regra de alcance já existente.
+- Não escolher a célula do aliado como destino.
+- Considerar terreno e corpos/reservas antes de calcular a rota.
+- Ignorar apenas o próprio indivíduo no snapshot dos selvagens.
+- Reservar destino e origem de selvagens em deslocamento e as duas laterais
+  de suas diagonais; incluir também as reservas do passo do aliado.
+- Usar um único A* com múltiplas metas, com custo 1 no passo reto e raiz de 2
+  na diagonal. A heurística é a menor distância octil até alguma meta.
+- Escolher rota de menor custo no snapshot, respeitando quinas e diagonais.
+- Revalidar o primeiro passo contra o estado atual antes de iniciá-lo.
+- Reservar só o passo iniciado, não todo o caminho futuro. Cada decisão usa
+  um novo snapshot; não segue cegamente uma rota calculada para corpos antigos.
+- Quem já está em alcance permanece na posição pela regra de combate atual.
+- Sem posição de ataque livre: esperar. Corredor realmente fechado: esperar.
+  Quando o bloqueador sai, a decisão seguinte pode prosseguir.
+- Não empurrar, teleportar ou atravessar outro indivíduo para forçar progresso.
+- O retorno ao spawn também consulta a ocupação dinâmica.
+- Desempate segue a ordem determinística da busca e das direções existentes.
+  Não foi acrescentado um sorteio que interfira em dano, loot ou atributos.
+- Limite padrão: 256 expansões por busca. Identificar separadamente
+  encontrado, sem_destino, sem_rota e limite. Orçamento esgotado NÃO é
+  declaração de inexistência de caminho: o indivíduo aguarda nova decisão.
+- O limite pode ser ajustado em limite_expansoes_por_busca, com teto interno
+  de 4096. Não é um limite de milissegundos ou uma garantia de FPS.
+- diagnosticos_busca mantém só o último resultado por slot, e é limpo na
+  preparação de um novo indivíduo; não cria histórico crescente por frame.
+
+O QUE FOI PRESERVADO
+
+A cadência de passo, raio de perseguição, raio de passeio, pausa aleatória,
+agendas de golpe, HP, identidade e atributos não foram recalibrados.
+P01 e P02 não foram reescritos: caca_base.gd, caca.gd e estado_jogo.gd
+permanecem byte a byte iguais à base da correção P02.
+A mudança altera as rotas e a quantidade de inimigos que consegue chegar
+em alcance. Por isso a pressão real de um cerco pode aumentar mesmo sem
+alterar nenhum valor de dano ou intervalo de ataque.
+
+LIMITES QUE CONTINUAM EXPLÍCITOS
+
+- Não há comprovação de fidelidade integral da IA original.
+- Não há planejamento cooperativo global com rotas no tempo ou garantia
+  matemática de justiça entre todos os slots em qualquer labirinto dinâmico.
+  Em corredor sem espaço não é possível exigir ultrapassagem sem outra regra.
+- Uma rota que precise de mais expansões que o orçamento pode continuar
+  aguardando em snapshots iguais. O diagnóstico permite identificar esse caso.
+- O exame de custo na grade real se refere à hunt do Geodude e às fixtures
+  descritas; não é uma medição de todas as hunts ou de todo hardware.
+- Validação executada em Godot 4.6.3 Linux, sem interface gráfica. Visual,
+  fluidez percebida e execução em Godot 4.7.2 Windows ainda não conferidos.
+
+TESTES DIRECIONADOS
+
+A. Reprodução exata do primeiro passo ocupado e controle que confirma a
+   decisão anterior de esperar; novo caminho chega ao alcance.
+B. Corredor sem desvio e retomada depois da saída do bloqueador.
+C. Reserva de origem, destino e laterais de diagonal de outro selvagem.
+D. Proibição de cruzamento de diagonais e de corte por quina/corpo lateral.
+E. Retorno ao spawn com obstáculo dinâmico.
+F. Oito células de ataque ocupadas: diagnóstico sem_destino e nenhuma invasão.
+G. Dois pretendentes chegando a posições diferentes sem depender do alvo.
+H. Atualização normal de 15 perseguidores em área aberta: oito em posição
+   de ataque, com destinos distintos a cada iteração.
+I. Limite artificial de uma expansão: espera com diagnóstico limite; aumento
+   do orçamento permite avançar.
+J. Reservas do passo diagonal do aliado.
+K. 80 grades com ocupação aleatória determinística: alcançabilidade e custo
+   comparados com Dijkstra independente, passos válidos e resultado repetível.
+L. Grade original do Geodude, 15 pontos de spawn e posição inicial como
+   centros: 1.007 buscas em origens dentro do raio de perseguição padrão,
+   com corpos nos spawns e comparação contra Dijkstra reverso independente.
+   Nenhuma esgotou o orçamento; maior busca: 170 expansões.
+M. Regressões de entrada com líder KO, substituição aleatória após KO,
+   cooldown manual, barras/troca, cerco, ataques independentes, mapa entre
+   hunts, loot, consistência e revisão de regras.
+
+Os números finais, logs completos e tempos medidos estão em verificacao/.
+Cada verificação é uma asserção do ensaio, não um cenário de gameplay distinto.
+
+RESULTADO FINAL: 12 suítes; 5659 verificações; zero falhas.

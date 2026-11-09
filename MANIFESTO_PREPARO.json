@@ -1,0 +1,20 @@
+{
+  "base": "perfis_combate_respawn.zip",
+  "suites": 44,
+  "aprovado": true,
+  "reteste_focado": "20261108_005218_a8230b42",
+  "candidata_padrao": true,
+  "especies": [
+    "Blastoise"
+  ],
+  "fidelidade_comprovada": false,
+  "arquivos": {
+    "caca_base.gd": "f8a5c29c77a8b06f45a1620fa037b789b4b62e1546be9c99b41109e1a0787b84",
+    "encontro_selvagem.gd": "06b2b7ffa9b6e2d964c173273213a6af92a9ea0c5ea2137292504a21959cacd7",
+    "registro_combate.gd": "1e3b704fc811b47bcbe402d82e706ee07debdf525ab00f06e5afe82b773eb008",
+    "test_preparo_ataque.gd": "50da15d5f244ed121a363972fde3c45e2a57f3c3a1a1b5a1c5252b3b5554d349",
+    "test_nivel_formula_selvagem.gd": "bbfabd80cb65a96febc2e70ebcdcbd66fb41f2fcb74c0feab48d622b32d9aa7a",
+    "test_auditoria_geracao.gd": "b467159008559c1a294c152b9b333a68ef09fd4f6c87a02cfd14d81c34fad09a",
+    "validacao_qualidade/executar.py": "ff914e7c3ae4141e00faf6207173b11e5be4ecef35bf516f864dbf5afa3f8bfb"
+  }
+}

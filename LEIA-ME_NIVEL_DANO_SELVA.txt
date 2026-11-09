@@ -1,0 +1,93 @@
+CANDIDATA DE OFENSIVA SELVAGEM — NÍVEL DA FÓRMULA SEPARADO DOS ATRIBUTOS
+
+INSTALAÇÃO
+Pare o jogo e faça backup. Extraia na pasta de project.godot, substituindo os
+scripts incluídos e mesclando as pastas. Preserve os .gd.uid existentes.
+Use sobre ofensiva_selvagens_comparador.zip ou versão posterior.
+Não precisa criar nós nem conectar sinais. Entre novamente na hunt para comparar.
+A opção Usar Nivel Dano Catalogo Selvagem vem ativada por padrão na raiz de Caca.tscn.
+Desmarque para retornar à política anterior de nível; ela é independente do toggle
+Usar Dano Candidato. Desligar a candidata de dano também desativa esta política.
+
+O QUE MUDA NO COMBATE
+Os atributos continuam vindo do Pokémon gerado: espécie, nível local, IVs e qualidade.
+Apenas na parcela de nível da fórmula do dano SELVAGEM, a nova candidata usa o
+huntLevel do catálogo bruto de criaturas. Para Blastoise da configuração atual:
+- Nível para calcular atributos:80.
+- Nível usado na parcela de nível da fórmula de dano:150.
+- HP selvagem: mantém a candidataHP*35; nenhuma vida é multiplicada por150.
+O número150 é um valor presente no catálogo e foi usado como hipótese: NÃO há
+prova de que o servidor o use para calcular dano.
+O nível de acesso mostrado no mapa permanece como estava. O nível/IVs/qualidade
+salvos dos Pokémon capturados e aliados permanecem como estavam. Não há migração.
+A política afeta a previsão nominal de seleção e o ataque executado, de modo coerente.
+O aliado continua usando seu próprio nível. Não se aplicam níveis de hunt ao aliado.
+STAB, variação85–100%, pisos, defesa por categoria e RNG exclusivo permanecem.
+Não há novo multiplicador ofensivo e não mudamos a cadência.
+
+POR QUE TESTAR ESTA CANDIDATA
+Você confirmou Ataque647 e Defesa428 do Gyarados214. No vídeo/WS há três encontros
+com atribuição visual/espacial do agressor e perfis ajustáveis que explicam os dois
+lados, incluindo qualidade compartilhada e IVs individuais:
+- Blastoise slot4:3780HP; recebeThrash982,901,925,1045; causaSkullBash54,55.
+- Slot13:3815HP; recebe1104,1108,1132,1048; causa30,30.
+- Slot6:3535HP; recebe905,984,937,895; causa36,36.
+O mesmo nível local80 nos atributos e nível de fórmula150 admitem os três casos.
+Também conferimos perfis de atributos80 que explicam HP/Def/SpDef e seleção dos
+aliados nos24 encontros das duas sessões anteriores.
+Os exemplos de IV/qualidade são POSSIBILIDADES matemáticas, não atributos revelados
+dos originais. Foram escolhidos após observar os dados; isso não é validação
+independente de uma previsão em amostra nova.
+
+ALTERNATIVA AINDA POSSÍVEL
+Níveis variáveis por indivíduo também admitem exemplos para esses três encontros.
+Por exemplo, o caso54/55 aceita nível comum111 sob as demais premissas, enquanto
+outros encontros admitem níveis menores. Não descobrimos a distribuição original.
+Escolhemos testar o nível ofensivo do catálogo porque reutiliza um dado existente
+e preserva a geração atual, sem introduzir uma distribuição de níveis ainda não
+observada. É uma escolha de protótipo, não uma conclusão exclusiva sobre o original.
+
+POR QUE UNS SELVAGENS PARECEM MAIS FORTES
+O gerador já sorteia IVs1–32 e qualidade. No mesmo nível:
+- IV HP e qualidade alteram a vida e, portanto, quantos golpes aguentam.
+- Atk/SpAtk e qualidade alteram o dano que causam.
+- Def/SpDef e qualidade alteram o dano que recebem.
+A variação de dano de cada golpe é outra camada; não é necessário mudar de nível
+para dois indivíduos da mesma espécie terem forças diferentes. Essa explicação é
+compatível com a observação, mas não comprova a distribuição de atributos original.
+Nesta entrega não sorteamos níveis novos nem alteramos os pesos de IV/qualidade.
+
+ALCANCE ATUAL
+Na configuração fornecida, Blastoise é a única espécie cuja diferença de nível
+local e huntLevel bruto muda o número usado. As demais mantêm o mesmo número.
+Configurações locais personalizadas podem ter outras diferenças.
+Usar huntLevel ofensivamente para todas as espécies continua sendo uma hipótese.
+A evidência direta desta entrega é de Blastoise; validar outras hunts segue pendente.
+
+LOG E COMPARAÇÃO
+Ctrl+Shift+L inicia o registro da caça; repita para exportar.
+Cada dano candidato agora informa nivel_atributos, nivel_formula,
+nivel_formula_substituido, fonte_nivel_formula e os demais componentes.
+O campo nivel preexistente continua significando o nível usado NA FÓRMULA.
+A sessão identifica a política catalogo_huntLevel_candidato_v1.
+O campo dano_v3_nivel_pokemon_mesma_variacao informa o dano que a política anterior
+produziria com os mesmos atributos e o MESMO multiplicador sorteado, sem novo RNG.
+A fórmula numérica continua identificada comoV3; a fonte do nível tem identificação
+separada. É importante comparar os dois campos ao analisar os diagnósticos.
+O observador não modifica a sequência de sorteios.
+
+LABORATÓRIOS
+O laboratório ofensivo anterior testa a hipótese de nível ÚNICO para atributos e
+fórmula. Ele continua mostrando as refutações dessa hipótese; não é uma leitura
+automática de todas as opções da caça. O aviso do painel foi atualizado.
+Os outros laboratórios e comparadores preservam os modelos que já testavam.
+
+VALIDAÇÃO
+Regressão completa em Godot4.6.3, perfil/cópia isolados:41 suítes aprovadas.
+Após ampliar o novo teste com os24 encontros históricos, houve conferência focada
+adicional do mesmo teste. Os logs completos estão incluídos em validacao_qualidade.
+Cobertura nova: três perfis conjuntos comHP e dano dos dois lados, histórico,
+variação por qualidade e IV, execução real, metadados, comparação anterior, RNG,
+rollback e preservação do nível do Resource capturável.
+Ainda falta observar a candidata em jogo no Godot do usuário e validar com novos
+dados originais. Compatibilidade dos casos não comprova o modelo completo.

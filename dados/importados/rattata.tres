@@ -1,0 +1,18 @@
+[gd_resource type="Resource" format=3]
+[ext_resource type="Script" path="res://dados_especie.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/pokemon/importados/outfits-male-36-00-8e28b4b95833.webp" id="2"]
+[sub_resource type="AtlasTexture" id="A"]
+atlas=ExtResource("2")
+region=Rect2(274,2,32,32)
+[resource]
+script=ExtResource("1")
+nome="Rattata"
+textura=SubResource("A")
+base_hp=30
+base_atk=56
+base_def=35
+base_sp_atk=25
+base_sp_def=35
+base_speed=72
+tipo_primario="NORMAL"
+tipo_secundario=""

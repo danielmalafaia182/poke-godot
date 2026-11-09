@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="DadosPokemon" format=3 uid="uid://b6nhj80r3usxn"]
+[ext_resource type="Script" path="res://dados_pokemon.gd" id="1"]
+[ext_resource type="Resource" path="res://dados/especies/larvitar.tres" id="2"]
+[resource]
+script = ExtResource("1")
+especie = ExtResource("2")
+nivel = 1
+vida_atual = 24
+experiencia_total = 0
+versao_atributos = 1
+iv_hp = 27
+iv_atk = 19
+iv_def = 22
+iv_sp_atk = 14
+iv_sp_def = 30
+iv_spd = 25
+qualidade = 1.5
