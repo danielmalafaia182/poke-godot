@@ -236,3 +236,12 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   (sem a bola 2), não da sim. Teste `testes/test_ponte_tcp.py` 11/11. Limites: o painel do time vem de `pokes-get`
   (fixture: Rhydon Lv 50) e não bate com o time da sim; o poke-local não tem outfits/retratos fora Rhydon/Snorlax;
   trade-get, restart-state e auto-boss-get respondem "não implementada" (fixture).
+- 09/11/2026 — Relatório por indivíduo para a fase 3 (`ferramentas/gravador/relatorio_individuos.py`; saída atual em
+  `relatorio/individuos_rhydon_2026-11-09.md`). Indivíduo = (huntKey sem ":rN", slot, espécie): A, os 15 maxHp do Rhydon
+  são os mesmos em r1..r8. maxHp → stat HP → pares (IV, Q) → faixa de SpD/Atk → dano previsto × observado (fórmula F),
+  com os stats do aliado de cada hit; hits do selvagem atribuídos só quando há um único selvagem adjacente.
+  Resultado na gravação real: Solar Beam explicado por uma SpD inteira em 12/15 indivíduos e por uma SpD **sem
+  arredondar** em 15/15 (os 3 que falham caem em janelas não inteiras, ex. 50,11–50,65) — reforça a hipótese do Geodude
+  (stats sem arredondar no dano); Stone Edge 14/15 (o 1 fora é coerente com o ruído da atribuição: 96% na sim).
+  Autoteste na sim (fórmula exata, stats inteiros): 294/294 indivíduos×golpe compatíveis em 20 instâncias.
+  Hits por abate previstos pela SpD compatível ficam perto dos observados (ex. slot 11: 6,22 × 6). Não mexi na fórmula.
