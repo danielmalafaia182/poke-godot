@@ -29,6 +29,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/analisar_gravacao.py` | Resume gravações: cadência, faixas de dano, XP, loot, capturas |
 | `ferramentas/protocolo/gerar_protocolo.py`, `regenerar.sh` | Gera `dados/protocolo.json` (`regenerar.sh` fixa as fontes: 5 chunks do jogo + todas as gravações) |
 | `ferramentas/gravador/medir_passos.py`, `medir_pocao.py` | Medem nas gravações a duração dos passos (por tick exato) e o gatilho/escolha do Auto-Potion |
+| `render/` | Fase 2: `regras_desenho.gd` (ordem/posição dos sprites do mapa), `mapa_renderizador.gd` (desenho em lote), `interpolacao.gd` (walkFrom/stepStartAt/relógio). Portes conferidos contra o JS original rodado no Node (`ferramentas/render/referencia_*.js`) |
 | `ferramentas/gravador/medir_movimento.py` | Adjacentes/perseguição por field, coleira (spawn), caminho do herói até o alvo |
 | `ferramentas/gravador/relatorio_individuos.py` | Por indivíduo selvagem: maxHp → stat HP → faixa de IV/Quality → dano previsto × observado (para a fase 3) |
 | `ponte/servidor_sim.gd`, `ferramentas/ponte/ponte_poke_local.py` | Ponte: o cliente original (poke-local) desenha a hunt da simulação. `python ferramentas/ponte/ponte_poke_local.py` e abrir http://127.0.0.1:8000 |
@@ -304,3 +305,13 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   SpD contínua. Diferencial: antiga 23/26, 1h **27/30** (XP por abate passou com o debuff; fora: ms/tile de herói e
   selvagem e hits selvagens/min lutando na borda, 18,4 × 18,7–25,8). (4) Investigação de movimento aberta (tabela e
   hipóteses acima). Testes: regras 35/35 (novos: captura e debuff), caminho 8/8, determinismo, protocolo, ponte.
+- 09/11/2026 — Fase 2, passo 1 (mapa): `render/regras_desenho.gd` porta buildTile/placeSprite/frameIndexFor (C, modo HD do
+  original: cada sprite com seu zIndex exato, sem "bake"). Teste `testes/test_render_regras.sh` roda o código ORIGINAL
+  extraído do chunk no Node e compara sprite a sprite (asset, quadro, andar, x, y, zIndex, ordem): **idêntico** em rhydon
+  (94.752), geodude (81.175), blastoise (26.651) e nightmare_steelix (301.712). `render/mapa_renderizador.gd`: canvas items
+  do RenderingServer (sem Node por tile), um pai por andar deslocado (z − groundZ)·32, draw_index = posto estável do
+  zIndex (ímpares reservados para entidades), streaming por chunk 8×8 com margem de 10 tiles (streamChunks, C), andar de
+  cima escondido pelo computeFirstVisibleFloor com fade de 180 ms (C), animação de itens pelo tick original (C).
+  Rhydon: 2,6 s para carregar, ~32 mil sprites no ar. `render/interpolacao.gd` porta dT/dI/dM/dL/dS/dk/dy/dC/dE e o relógio
+  dc/dm/dh (C); `testes/test_render_interpolacao.sh` compara com o original sobre 1500 fields reais da rhydon-1h:
+  388.560 amostras iguais (tol. 1e-5 tile, float32). Não portado ainda: sombras e iluminação do Pixi (efeito visual).
