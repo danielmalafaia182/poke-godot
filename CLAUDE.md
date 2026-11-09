@@ -355,3 +355,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   original (Node) em 0..140; treinador 5759 colorido; **0 outfits faltando** entre as 453 espécies das 451 hunts e o
   time. Cores do treinador: o save não as tem — padrão E = as do personagem do poke-local (head 94, body 95, 0, 0).
   Não portado: sprite shiny (o field manda `shiny`; a vista ainda usa o outfit normal).
+- 09/11/2026 — 2b.2 (cadáveres): a vista lê `game/corpses/corpses.json` do snapshot (503 assets, como loadCorpses, C) e as
+  páginas do snapshot ou, na falta, do poke-local (mesmo atlas: 501 assets em comum com frames idênticos). Faltam as
+  páginas `corpses-g-00` e `corpses-h-00` (2 assets: 21366, 14794): o coletor não baixava as páginas de cadáver — agora
+  baixa (etapa atlas; o coletor do repositório foi atualizado para a versão do `coletor_poke.zip`). Tabela espécie →
+  cadáver: **dado do servidor** (o cliente só desenha o id que vem em `field.corpses`); `dados/corpos_observados.json`
+  (gerado por `ferramentas/gravador/extrair_cadaveres.py`, A) cobre só 4 das 453 espécies (Blastoise 2931, Rattata 2848,
+  Rhydon 2858 / shiny 31489, Kangaskhan 6073). As outras ficam sem corpo até haver gravação delas (não inventado).
+  Teste `testes/test_cadaveres.gd` 3/3.

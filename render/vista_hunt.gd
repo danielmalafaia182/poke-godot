@@ -35,6 +35,7 @@ var _ents: Dictionary = {}             # chave -> {rid, looktype}
 var _cadaveres: Dictionary = {}        # "row,col" -> rid
 var _corpses_assets: Dictionary = {}
 var _corpses_paginas: Array = []
+var paginas_cadaver_faltando: Array = []
 var hud: CanvasLayer
 var _placas: Dictionary = {}           # chave -> Control
 var _danos: Array = []                 # {no, t, x, y}
@@ -63,19 +64,25 @@ static func _ler_especies() -> Array:
 
 
 func _carregar_cadaveres() -> void:
-	# corpses.json + páginas do poke-local (o snapshot só tem o json; o asset do Rhydon é o mesmo nos dois, C/A)
-	var base := Fontes.raiz_projeto() + "/poke-local/public"
-	var d = Fontes.ler_json(base + "/game/corpses/corpses.json") if FileAccess.file_exists(base + "/game/corpses/corpses.json") else null
+	## loadCorpses (C): game/corpses/corpses.json do snapshot (503 assets) e as páginas que ele lista. As páginas vêm do
+	## snapshot se estiverem lá, senão do poke-local (o atlas é o mesmo: os 501 assets em comum têm frames idênticos).
+	## Página que não existe em lugar nenhum fica nula e o cadáver dela não é desenhado (ver paginas_cadaver_faltando).
+	var snap := Fontes.pasta_snapshot()
+	var d = Fontes.ler_json(snap + "/game/corpses/corpses.json")
 	if not d is Dictionary:
 		return
 	_corpses_assets = d["assets"]
 	for p in d["pages"]:
-		var img := Image.new()
-		var caminho: String = base + String(p)
-		if FileAccess.file_exists(caminho) and img.load_webp_from_buffer(FileAccess.get_file_as_bytes(caminho)) == OK:
-			_corpses_paginas.append(ImageTexture.create_from_image(img))
-		else:
-			_corpses_paginas.append(null)
+		var tex = null
+		for base in [snap, Fontes.raiz_projeto() + "/poke-local/public"]:
+			var caminho: String = String(base) + String(p)
+			var img := Image.new()
+			if FileAccess.file_exists(caminho) and img.load_webp_from_buffer(FileAccess.get_file_as_bytes(caminho)) == OK:
+				tex = ImageTexture.create_from_image(img)
+				break
+		_corpses_paginas.append(tex)
+		if tex == null:
+			paginas_cadaver_faltando.append(String(p))
 
 
 func receber(msg: Dictionary) -> void:

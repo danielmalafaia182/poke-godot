@@ -12,8 +12,6 @@ extends RefCounted
 
 const Fontes := preload("res://sim/fontes.gd")
 
-const ESTADOS_COM_CADAVER := ["dados/testes/estado_rhydon_venusaur.json", "dados/testes/estado_rhydon_venusaur_1h.json"]
-
 
 static func slug_da_hunt(dados: RefCounted, nome: String) -> String:
 	## Hunt da espécie: a que tem esse nome em dados/gerados/hunts.json (área kanto primeiro).
@@ -44,17 +42,11 @@ static func id_especie(dados: RefCounted, nome: String) -> int:
 	return -1
 
 
-static func cadaveres_observados() -> Dictionary:
-	## A: corpo de cada espécie visto nas gravações (o creatures.json não traz o id do cadáver).
-	var r := {}
-	for c in ESTADOS_COM_CADAVER:
-		var caminho: String = Fontes.raiz_projeto() + "/" + String(c)
-		if FileAccess.file_exists(caminho):
-			var e = Fontes.ler_json(caminho)
-			if e is Dictionary:
-				for k in e.get("cadaveres", {}):
-					r[k] = e["cadaveres"][k]
-	return r
+static func cadaveres_observados(shiny: bool = false) -> Dictionary:
+	## A: cadáver de cada espécie visto nas gravações (dados/corpos_observados.json, gerado por
+	## ferramentas/gravador/extrair_cadaveres.py). O cliente original não tem essa tabela: o servidor manda o id.
+	var d = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_observados.json")
+	return d.get("shiny" if shiny else "normal", {}) if d is Dictionary else {}
 
 
 static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_ms: int) -> Dictionary:
@@ -100,5 +92,6 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"inventario": jogo.get("inventario", []),
 		"balls": {"catalog": catalogo, "counts": counts, "selected": int(jogo.get("bola_auto_catch", 0))},
 		"cadaveres": cadaveres_observados(),
+		"cadaveres_shiny": cadaveres_observados(true),
 		"parametros": parametros,
 	}

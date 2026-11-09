@@ -70,6 +70,7 @@
   const painel = document.createElement('div');
   painel.style.cssText = 'position:fixed;right:12px;bottom:12px;z-index:2147483647;background:#111c;color:#fff;font:12px/1.4 monospace;padding:10px 12px;border-radius:8px;width:340px;box-shadow:0 2px 12px #0008';
   painel.innerHTML = `<b>Coletor Poke Idle — fase 0</b><div id="pc-etapas" style="margin:6px 0"></div>
+    <div style="margin:4px 0">outfits: <input id="pc-out" style="width:220px;font:11px monospace" value="3,112,74,19,115,9,76,103,130,111,1,hunt:rhydon,hunt:rattata,id:5759,id:21019" title="pokeIds, hunt:slug, id:outfit, kind:pokemon|shiny|trainer|npc, ou vazio = todos"></div>
     <button id="pc-ir" style="padding:6px 10px;font-weight:bold;cursor:pointer">Escolher pasta e coletar</button>
     <button id="pc-zip" style="padding:6px 10px;margin-top:4px;cursor:pointer">Baixar como ZIPs</button>
     <button id="pc-parar" style="padding:6px 8px;margin-left:6px;cursor:pointer">Parar</button>
@@ -161,10 +162,43 @@
       const imgs = [...imagens(man)];
       for (let i = 0; i < imgs.length; i++) { st.etapa = `atlas ${nome} ${i + 1}/${imgs.length}`; await baixar(fixPack(imgs[i])); }
     }
+    // Páginas do atlas de cadáveres (loadCorpses do cliente): o corpses.json vem na etapa de dados, as imagens aqui.
+    const cj = await baixar('/game/corpses/corpses.json', null, { json: true });
+    const pags = (cj && cj.pages) || [];
+    for (let i = 0; i < pags.length; i++) { st.etapa = `cadáveres ${i + 1}/${pags.length}`; await baixar(pags[i]); }
+  }
+  // Filtro de outfits: lista separada por vírgula com pokeIds (looktype da espécie = id do outfit),
+  // hunt:slug (todas as espécies que nascem na hunt), id:N (outfit cru, ex. treinador/NPC),
+  // kind:K (pokemon, shiny, trainer, npc, clan, premium, pass, founder, hunt) e npc (= kind:npc).
+  // Vazio = todos os outfits (pacote completo).
+  async function filtroOutfits(oi) {
+    const txt = (painel.querySelector('#pc-out')?.value || '').trim();
+    if (!txt) return null;
+    const cr = (await (await fetch('/game/creatures.json', { cache: 'no-store', credentials: 'omit' })).json()).creatures;
+    const look = new Map(cr.map(c => [c.pokeId, c.looktype]));
+    const ids = new Set();
+    for (const tok of txt.split(',').map(t => t.trim()).filter(Boolean)) {
+      if (tok === 'npc' || tok.startsWith('kind:')) {
+        const k = tok === 'npc' ? 'npc' : tok.slice(5);
+        for (const o of Object.values(oi.outfits || {})) if (o.kind === k) ids.add(String(o.id));
+      }
+      else if (tok.startsWith('id:')) ids.add(tok.slice(3));
+      else if (tok.startsWith('hunt:')) {
+        try {
+          const cfg = await (await fetch(`/api/game/hunt-config?slug=${encodeURIComponent(tok.slice(5))}`, { credentials: 'omit' })).json();
+          for (const sp of cfg.spawns || []) if (look.has(sp.pokeId)) ids.add(String(look.get(sp.pokeId)));
+        } catch { st.erros.push({ erro: 'hunt não encontrada: ' + tok }); }
+      } else if (look.has(Number(tok))) ids.add(String(look.get(Number(tok))));
+      else st.erros.push({ erro: 'pokeId desconhecido: ' + tok });
+    }
+    return ids;
   }
   async function etapaOutfits() {
     const oi = await baixar('/game/asset-packs/outfits-index.json?v=2', 'game/asset-packs/outfits-index.json', { json: true });
-    const lista = Object.values(oi.outfits || {});
+    const filtro = await filtroOutfits(oi);
+    const lista = Object.values(oi.outfits || {}).filter(o => !filtro || filtro.has(String(o.id)));
+    st.outfits = { filtro: filtro ? [...filtro].sort() : 'todos', escolhidos: lista.map(o => `${o.id} ${o.name}`) };
+    if (st.zip) await st.zip.add(`${st.prefixo}outfits_escolhidos.json`, new TextEncoder().encode(JSON.stringify(st.outfits, null, 1)));
     for (let i = 0; i < lista.length; i++) {
       st.etapa = `outfits ${i + 1}/${lista.length}`;
       const man = await baixar(fixPack(lista[i].manifest), null, { json: true });
@@ -210,10 +244,13 @@
     if (modoZip) st.zip = new Zip();
     const fim = {
       formato: 'poke-snapshot-v1', origem: location.origin, coletadoEm: new Date().toISOString(),
-      etapas: escolhidas, arquivos: st.feitos, bytes: st.bytes, erros: st.erros, itens: st.manifest,
+      etapas: escolhidas, outfits: st.outfits || null, arquivos: st.feitos, bytes: st.bytes, erros: st.erros, itens: st.manifest,
     };
-    await gravar('manifest.json', JSON.stringify(fim, null, 1));
-    if (modoZip) { baixarBlob(st.zip.blob(), `${nome}_manifest.zip`); st.zip = null; }
+    // coleta parcial (ex.: só outfits) não pode sobrescrever o manifest.json do snapshot completo
+    const parcial = escolhidas.length < ETAPAS.length;
+    const nomeMan = parcial ? `manifest_parcial_${escolhidas.join('-')}_${Date.now()}.json` : 'manifest.json';
+    await gravar(nomeMan, JSON.stringify(fim, null, 1));
+    if (modoZip) { baixarBlob(st.zip.blob(), `${nome}_${parcial ? 'manifest_parcial' : 'manifest'}.zip`); st.zip = null; }
     st.etapa = st.parar ? 'interrompido' : 'concluído'; resumo();
     window.__pokeColetor.ultimo = { arquivos: st.feitos, bytes: st.bytes, erros: st.erros.length, pasta: nome };
   }

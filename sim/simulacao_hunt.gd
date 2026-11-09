@@ -486,7 +486,8 @@ func _abate(m: Dictionary) -> void:
 	m["prox_ataque"] = -1
 	estatisticas["abates"] += 1
 	var esp: Dictionary = m["especie"]
-	var corpo := int(cfg.get("cadaveres", {}).get(str(m["species_id"]), 0))
+	# A: o cadáver depende da espécie e de ser shiny (Rhydon 2858, shiny 31489); espécie nunca vista morrendo → sem corpo
+	var corpo := int(cfg.get("cadaveres_shiny" if bool(m["shiny"]) else "cadaveres", {}).get(str(m["species_id"]), 0))
 	if corpo > 0:
 		cadaveres.append({"row": m["pos"].y, "col": m["pos"].x, "corpse": corpo, "expira": tick + int(p.cadaver_ms) / int(p.tick_ms)})
 	# XP (A): base = experience da espécie; vip = 50% da base em parcela separada.

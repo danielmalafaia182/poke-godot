@@ -64,7 +64,8 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int, o
 		"treinador": {"xp": xp_treinador},
 		"inventario": est.get("inventario", []),
 		"balls": balls,
-		"cadaveres": est.get("cadaveres", {}),
+		"cadaveres": _corpos(false, est.get("cadaveres", {})),
+		"cadaveres_shiny": _corpos(true, {}),
 	}
 
 
@@ -73,3 +74,13 @@ static func _eh_retomada(hunt_key: String) -> bool:
 	var partes := hunt_key.split(":")
 	var ult := partes[partes.size() - 1]
 	return partes.size() >= 3 and ult.begins_with("r") and ult.substr(1).is_valid_int()
+
+
+static func _corpos(shiny: bool, do_estado: Dictionary) -> Dictionary:
+	## Tabela observada em todas as gravações (dados/corpos_observados.json, A) + o que o estado trouxer.
+	var r := do_estado.duplicate()
+	var d = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_observados.json")
+	if d is Dictionary:
+		for k in d.get("shiny" if shiny else "normal", {}):
+			r[k] = d["shiny" if shiny else "normal"][k]
+	return r
