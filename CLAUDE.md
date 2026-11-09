@@ -328,3 +328,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   de 16,7 em 7469. Para chegar aí: páginas do atlas decodificadas na carga e chunks montados por fila com orçamento de
   3 ms/quadro (F de desempenho; o original monta de uma vez). Limite: carga do Nightmare leva 10 s (montar() em GDScript).
   O projeto foi importado uma vez (`godot --headless --import`, `.godot/` fora do git).
+- 09/11/2026 — Fase 2, passo 4 (regras E na simulação): troca automática após KO aleatória entre membros vivos do time,
+  sem curar, seguida de 5 s (`troca_cooldown_ms`) sem troca manual; troca manual pelo comando `switch {teamIndex}` (C),
+  recusada com `{type: error}` (E: o texto real não foi gravado); sem reserva viva, `field-none {motivo: "sem-reserva"}` e
+  a instância acaba (a cena volta à cidade). `sim/regras_apresentacao.gd`: cartão de derrota um por vez e sem fila
+  (abate com cartão na tela é ignorado; 4500/7000 ms + 220, como no P04), até 30 por instância; contador Capture por
+  instância (retomada mantém, instância nova zera). Teste `testes/test_sim_regras_usuario.gd` 17/17.

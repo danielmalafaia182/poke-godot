@@ -39,10 +39,12 @@ var encerrada: bool = false
 var _saida: Array = []
 var _golpes_cache := {}
 var abates_na_entrada: int = 0
+var troca_manual_liberada_tick: int = 0
 var _campo_mob := PackedInt32Array()
 var _campo_mob_caixa := Rect2i()
 var _campo_mob_chave := Vector2i(-99999, -99999)
-var estatisticas := {"abates": 0, "hits_aliado": 0, "hits_selvagem": 0, "curas": 0, "capturas": 0, "kos": 0}
+var estatisticas := {"abates": 0, "hits_aliado": 0, "hits_selvagem": 0, "curas": 0, "capturas": 0, "kos": 0,
+	"trocas_ko": 0, "trocas_manuais": 0}
 
 
 func _init(config: Dictionary, dados_jogo: RefCounted, mapa_hunt: RefCounted) -> void:
@@ -163,6 +165,8 @@ func passo(intencoes: Array = []) -> Array:
 			encerrada = true
 			_emitir({"type": "field-none"})
 			return _saida
+		if String(it.get("type", "")) == "switch":
+			_troca_manual(int(it.get("teamIndex", -1)))
 	tick += 1
 	_respawns()
 	_expirar_cadaveres()
@@ -535,6 +539,27 @@ func _abate(m: Dictionary) -> void:
 	heroi["alvo"] = _escolher_alvo()
 
 
+func _troca_manual(i: int) -> void:
+	## Troca pedida pelo jogador (C: comando {type: "switch", teamIndex}). E: bloqueada nos 5 s depois de uma troca
+	## automática por KO; o membro precisa estar vivo e não ser o ativo. Recusa → {type: "error"} (E: o texto do
+	## servidor real para isso não foi gravado).
+	var motivo := ""
+	if i < 0 or i >= equipe.size():
+		motivo = "membro inexistente"
+	elif i == ativo:
+		motivo = "já está em campo"
+	elif int(equipe[i]["hp"]) <= 0:
+		motivo = "membro desmaiado"
+	elif tick < troca_manual_liberada_tick:
+		motivo = "aguarde %.1f s" % (float(troca_manual_liberada_tick - tick) * float(p.tick_ms) / 1000.0)
+	if motivo != "":
+		_emitir({"type": "error", "message": "Troca recusada: " + motivo})
+		return
+	ativo = i
+	estatisticas["trocas_manuais"] += 1
+	_golpes_cache.clear()
+
+
 static func _com_debuff(partes: Dictionary, debuff: int) -> Dictionary:
 	## A: a chave "debuff" só aparece nos abates penalizados (nos outros 601 da rhydon-1h ela não existe).
 	if debuff != 0:
@@ -680,9 +705,14 @@ func _pos_dano() -> void:
 			if int(equipe[i]["hp"]) > 0:
 				vivos.append(i)
 		if vivos.is_empty():
+			# E: sem reserva viva no time, a hunt acaba e o jogador volta à cidade (a cena trata o field-none).
 			desmaiado = true
+			encerrada = true
+			_emitir({"type": "field-none", "slug": slug, "motivo": "sem-reserva"})
 			return
 		ativo = vivos[rng.randi_intervalo(0, vivos.size() - 1)]
+		troca_manual_liberada_tick = tick + int(p.troca_cooldown_ms) / int(p.tick_ms)   # E: 5 s
+		estatisticas["trocas_ko"] += 1
 		_golpes_cache.clear()
 		return
 	# Auto-Potion (A, medir_pocao.py em 209 curas reais): dispara no MESMO tick em que o HP fica ≤ 50% do máximo

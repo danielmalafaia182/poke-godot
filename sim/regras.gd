@@ -47,6 +47,7 @@ const PARAMETROS := {
 	"pocao_limiar": 0.5,                    # A: HP ≤ 50% dispara no mesmo tick (91/91 cruzamentos; HP exato na cura ≤ 0,50
 	                                        # em 409 curas); o Auto-Helper da gravação de 1 h mostra "Heal when HP ≤ 50%"
 	"pocao_recarga_ms": 0,                  # A/F: nenhuma cura adiada observada; menor intervalo real 1988 ms
+	"troca_cooldown_ms": 5000,              # E: depois da troca automática por KO, 5 s sem troca manual
 	"vip_fracao": 0.5,                      # A: parcela vip = 50% da base
 	"debuff_entrada_abates": 7,             # A: rhydon-1h, os 7 primeiros abates após entrar (o 8º, 22 s depois, já sem)
 	                                        # F: mecanismo contado em abates (pode ser tempo, ~1 min; não dá para separar)
