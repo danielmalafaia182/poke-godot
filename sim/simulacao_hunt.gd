@@ -74,7 +74,7 @@ func _montar() -> void:
 	equipe = []
 	for e in cfg["equipe"]:
 		equipe.append(_criar_poke(e))
-	ativo = 0
+	ativo = clampi(int(cfg.get("ativo_inicial", 0)), 0, maxi(0, equipe.size() - 1))   # E: o líder do save começa em campo
 	treinador["xp"] = int(cfg.get("treinador", {}).get("xp", 0))
 	treinador["nivel"] = Regras.nivel_por_xp(treinador["xp"])
 	inventario = {}

@@ -4,7 +4,11 @@ extends Node2D
 ##   2. dá o relógio real à simulação (um passo() a cada tick_ms) e repassa as mensagens à vista (render/vista_hunt.gd);
 ##   3. aplica no save o que as mensagens dizem: XP do treinador e do Pokémon, loot, poções e bolas gastas, capturas
 ##      e o HP do time ao sair;
-##   4. HUD mínima: time (com troca manual por clique), contador Capture, cartões de derrota e "Voltar para a cidade".
+##   4. HUD: a mesma da cena antiga (hud_caca.gd + painel_auto_helper.gd, sem mudar esses arquivos). Esta cena oferece
+##      a interface de "controlador" que eles usam (sinais derrota_recompensada/captura_resolvida/aliado_alterado,
+##      obter_troca_restante, painel_auto_helper, _on_botao_voltar_cidade_pressed...). A troca de líder pelo painel passa
+##      pelo EstadoJogo.validador_troca_lider (regra dos 5 s da simulação, E); a troca por KO vira o líder no save; o HP
+##      do time vai para o save a cada field (o painel de time lê de lá); mudar o Auto-Helper durante a hunt vale na hora.
 ## Cidade, mapa-múndi, painéis, inventário e save continuam os de antes. A cena antiga (Caca.tscn) segue no projeto.
 
 const Fontes := preload("res://sim/fontes.gd")
@@ -20,6 +24,11 @@ const CARTOES: Script = preload("res://cartoes_derrota.gd")
 const CENA_CIDADE := "res://cidade.tscn"
 
 signal hunt_encerrada(motivo: String)
+# interface que hud_caca.gd espera do controlador (a mesma da cena antiga)
+signal derrota_recompensada(evento: Dictionary)
+signal captura_resolvida(evento: Dictionary)
+signal aliado_alterado(pokemon: DadosPokemon)
+signal ofensiva_aliado_alterada(diagnostico: Dictionary)
 
 @export var velocidade := 1.0          # ticks por tick real (testes aceleram; o jogo usa 1)
 @export var semente := 0               # 0 = aleatória por entrada
@@ -35,11 +44,21 @@ var _encerrada := false
 var registro := {"xp_treinador": 0, "xp_pokemon": 0, "loot": {}, "loot_fora_do_catalogo": {}, "pocoes": {},
 	"bolas": {}, "capturas": 0, "abates": 0, "cartoes": 0}
 var hud: CanvasLayer
-var _rotulo_captura: Label
-var _cartoes: Control
-var _linhas_time: Array = []
-var _aviso: Label
-var _hp_time: Array = []
+var hud_caca: Control
+var painel_auto_helper: Control
+var titulo := Label.new()
+var botao_voltar_cidade := Button.new()
+var populacao_iniciada := true
+var pokemon_aliado: DadosPokemon = null      # a placa do aliado é desenhada pela vista (render/vista_hunt.gd)
+var imagem_aliado := Node2D.new()
+var vida_aliado := 1
+var diagnostico_ofensivo_aliado: Dictionary = {}
+var usar_golpes_catalogados := false
+var aplicar_cooldowns_catalogo := false
+var _troca_por_ko := false
+var _ativo_visto := -1
+var _hp_visto: Array = []
+var _sequencia_captura := 0
 
 
 func _ready() -> void:
@@ -57,7 +76,12 @@ func _ready() -> void:
 	vista = Vista.new()
 	add_child(vista)
 	vista.nome_treinador = String(EstadoJogo.nome_treinador)
+	_ativo_visto = sim.ativo
 	_montar_hud()
+	EstadoJogo.validador_troca_lider = _validar_troca_lider
+	EstadoJogo.lider_alterado.connect(_sincronizar_lider)
+	EstadoJogo.auto_potion_alterado.connect(_aplicar_auto_helper)
+	EstadoJogo.auto_catch_alterado.connect(_aplicar_auto_helper)
 	for m in sim.iniciar():
 		_tratar(m["msg"])
 	_proximo_tick_ms = Time.get_ticks_msec() + float(sim.p.tick_ms)
@@ -80,7 +104,8 @@ func _extrair_save(nome_hunt: String) -> Dictionary:
 	var nomes_bolas := {}
 	for id in EstadoJogo.estoque_bolas:
 		nomes_bolas[id] = String(EstadoJogo.obter_dados_bola(int(id)).get("nome", "Ball"))
-	return {"hunt": nome_hunt, "equipe": equipe, "treinador_xp": EstadoJogo.experiencia_treinador_acumulada,
+	var lider = EstadoJogo.obter_lider()
+	return {"hunt": nome_hunt, "equipe": equipe, "lider": maxi(0, membros.find(lider)), "treinador_xp": EstadoJogo.experiencia_treinador_acumulada,
 		"inventario": inventario, "bolas": EstadoJogo.estoque_bolas.duplicate(), "nomes_bolas": nomes_bolas,
 		"auto_catch": EstadoJogo.auto_catch, "bola_auto_catch": EstadoJogo.auto_catch_ball_id,
 		"auto_potion": EstadoJogo.auto_potion, "pocao_id": EstadoJogo.auto_potion_item_id,
@@ -100,9 +125,9 @@ func _process(_delta: float) -> void:
 				return
 		_proximo_tick_ms += passo
 		n += 1
+		_conferir_troca_por_ko()
 	if n >= 50:
 		_proximo_tick_ms = agora + passo      # parou (ex.: janela minimizada): não despeja minutos de ticks
-	_atualizar_hud()
 
 
 func _tratar(msg: Dictionary) -> void:
@@ -110,9 +135,8 @@ func _tratar(msg: Dictionary) -> void:
 	match String(msg.get("type", "")):
 		"field-init":
 			apresentacao.nova_instancia(String(msg["huntKey"]))
-			_rotulo_captura.text = "Capture: %d" % apresentacao.capturas
 		"field":
-			_hp_time = msg.get("bossTeam", [])
+			_sincronizar_hp(msg.get("bossTeam", []))
 		"field-kill":
 			registro["abates"] += 1
 			EstadoJogo.registrar_recompensa_treinador(int(msg["xpGained"]))
@@ -120,7 +144,7 @@ func _tratar(msg: Dictionary) -> void:
 			_receber_loot(msg.get("loot", []))
 			if apresentacao.mostrar_cartao(msg, Time.get_ticks_msec()):
 				registro["cartoes"] += 1
-				_cartoes.apresentar(_evento_cartao(msg))
+				derrota_recompensada.emit(_evento_cartao(msg))
 		"poke-xp":
 			var pk = _membro_por_id(String(msg.get("id", "")))
 			if pk != null:
@@ -134,9 +158,12 @@ func _tratar(msg: Dictionary) -> void:
 			var bola := int(msg.get("ballId", 0))
 			if EstadoJogo.consumir_bola(bola):
 				registro["bolas"][bola] = int(registro["bolas"].get(bola, 0)) + 1
-			_rotulo_captura.text = "Capture: %d" % apresentacao.ao_resultado_captura(msg)
+			apresentacao.ao_resultado_captura(msg)
+			_sequencia_captura += 1
 			if bool(msg.get("success", false)):
 				_registrar_captura(String(msg.get("speciesName", "")))
+			# hud_caca conta as capturas da instância pelo id (o contador "N wilds" do painel Capture)
+			captura_resolvida.emit({"sucesso": bool(msg.get("success", false)), "id": "%s#%d" % [String(sim.hunt_key), _sequencia_captura]})
 		"field-none":
 			_sair(String(msg.get("motivo", "saida")))
 		"error":
@@ -232,55 +259,106 @@ func _sair(motivo: String) -> void:
 		get_tree().change_scene_to_file.call_deferred(CENA_CIDADE)
 
 
-# ------------------------------------------------------------------- HUD mínima
+# ------------------------------------------------------------------- HUD da cena antiga
 
 func _montar_hud() -> void:
 	hud = CanvasLayer.new()
+	hud.name = "Interface"
 	hud.layer = 10
 	add_child(hud)
-	var painel := PanelContainer.new()
-	painel.position = Vector2(16, 16)
-	hud.add_child(painel)
-	var coluna := VBoxContainer.new()
-	painel.add_child(coluna)
-	var titulo := Label.new()
-	titulo.text = "%s — Nv %d" % [String(EstadoJogo.nome_treinador), int(EstadoJogo.nivel_treinador)]
-	coluna.add_child(titulo)
-	for i in membros.size():
-		var b := Button.new()
-		b.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		b.custom_minimum_size = Vector2(260, 30)
-		b.pressed.connect(trocar.bind(i))
-		coluna.add_child(b)
-		_linhas_time.append(b)
-	_rotulo_captura = Label.new()
-	_rotulo_captura.text = "Capture: 0"
-	coluna.add_child(_rotulo_captura)
-	var voltar := Button.new()
-	voltar.text = "Voltar para a cidade"
-	voltar.pressed.connect(voltar_cidade)
-	coluna.add_child(voltar)
-	_aviso = Label.new()
-	_aviso.add_theme_color_override("font_color", Color(1, 0.7, 0.4))
-	coluna.add_child(_aviso)
-	_cartoes = CARTOES.new()
-	_cartoes.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_cartoes.position = Vector2(get_viewport().get_visible_rect().size.x - 360, 16)
-	_cartoes.size = Vector2(340, 600)
-	hud.add_child(_cartoes)
+	titulo.hide()
+	hud.add_child(titulo)
+	botao_voltar_cidade.hide()
+	hud.add_child(botao_voltar_cidade)
+	add_child(imagem_aliado)
+	painel_auto_helper = preload("res://painel_auto_helper.gd").new()
+	painel_auto_helper.mostrar_botao_abrir = false
+	painel_auto_helper.name = "PainelAutoHelper"
+	hud.add_child(painel_auto_helper)
+	hud_caca = preload("res://hud_caca.gd").new()
+	hud_caca.name = "HudCaca"
+	hud_caca.controlador = self
+	hud.add_child(hud_caca)
 
 
-func _atualizar_hud() -> void:
-	for i in _linhas_time.size():
-		var pk = membros[i]
-		var hp := int(_hp_time[i]["hp"]) if i < _hp_time.size() else 0
-		var mx := int(_hp_time[i]["maxHp"]) if i < _hp_time.size() else 1
-		var b: Button = _linhas_time[i]
-		var ativo: bool = sim != null and sim.ativo == i
-		b.text = "%s %s  Nv %d   %d/%d" % ["▶" if ativo else "  ", String(pk.especie.nome), int(sim.equipe[i]["nivel"]) if sim != null and i < sim.equipe.size() else pk.nivel, hp, mx]
-		b.modulate = Color(1, 1, 1) if hp > 0 else Color(0.55, 0.55, 0.55)
+func _on_botao_voltar_cidade_pressed() -> void:
+	voltar_cidade()
+
+
+func obter_troca_restante() -> float:
+	## Segundos até a troca manual ser aceita (regra E da simulação: 5 s depois de uma troca por KO).
+	if sim == null:
+		return 0.0
+	return maxf(0.0, float(int(sim.troca_manual_liberada_tick) - int(sim.tick)) * float(sim.p.tick_ms) / 1000.0)
+
+
+func _validar_troca_lider(novo: DadosPokemon) -> bool:
+	if sim == null or _encerrada or not is_inside_tree():
+		return false
+	if _troca_por_ko:
+		return true
+	var i := membros.find(novo)
+	if i < 0 or int(sim.equipe[i]["hp"]) <= 0:
+		return false
+	return obter_troca_restante() <= 0.0
+
+
+func _sincronizar_lider() -> void:
+	## Líder trocado pelo painel → a simulação troca o ativo (ela confere a regra de novo).
+	if _troca_por_ko or sim == null or _encerrada:
+		return
+	var i := membros.find(EstadoJogo.obter_lider())
+	if i >= 0 and i != sim.ativo:
+		trocar(i)
+		_conferir_troca_por_ko()
+
+
+func _conferir_troca_por_ko() -> void:
+	## O ativo mudou na simulação (KO ou troca aceita) → o líder do save acompanha.
+	if sim == null or sim.ativo == _ativo_visto:
+		return
+	_ativo_visto = sim.ativo
+	var pk = membros[sim.ativo] if sim.ativo < membros.size() else null
+	if pk != null and EstadoJogo.obter_lider() != pk:
+		_troca_por_ko = true
+		EstadoJogo.selecionar_lider(pk)
+		_troca_por_ko = false
+	aliado_alterado.emit(pk)
+
+
+func _sincronizar_hp(time: Array) -> void:
+	## HP do time no save a cada field em que mudou (o painel de time e o My Pokes leem do DadosPokemon).
+	for i in mini(time.size(), membros.size()):
+		var hp := int(time[i]["hp"])
+		if i >= _hp_visto.size():
+			_hp_visto.append(-1)
+		if hp != int(_hp_visto[i]):
+			_hp_visto[i] = hp
+			EstadoJogo.registrar_vida_pokemon(membros[i], hp)
+	vida_aliado = int(time[sim.ativo]["hp"]) if sim != null and sim.ativo < time.size() else 0
+
+
+func _aplicar_auto_helper() -> void:
+	## Mudança no Auto-Helper durante a hunt vale na hora (mesmo save, mesmas regras).
+	if sim == null:
+		return
+	sim.cfg["auto_potion"] = EstadoJogo.auto_potion
+	sim.cfg["pocao_fixa"] = EstadoJogo.auto_potion_item_id
+	sim.p["pocao_limiar"] = float(EstadoJogo.auto_potion_threshold) / 100.0
+	sim.cfg["auto_catch"] = EstadoJogo.auto_catch
+	sim.cfg["bola_auto_catch"] = EstadoJogo.auto_catch_ball_id
 
 
 func _avisar(texto: String) -> void:
-	if _aviso != null:
-		_aviso.text = texto
+	push_warning(texto)
+
+
+func _exit_tree() -> void:
+	# saída por outro caminho (ex.: mapa-múndi dentro da hunt troca a cena): grava o HP e o save mesmo assim
+	if sim != null and not _encerrada:
+		_encerrada = true
+		for i in mini(membros.size(), sim.equipe.size()):
+			EstadoJogo.registrar_vida_pokemon(membros[i], int(sim.equipe[i]["hp"]))
+		EstadoJogo.solicitar_salvamento()
+	if EstadoJogo.validador_troca_lider.is_valid() and EstadoJogo.validador_troca_lider.get_object() == self:
+		EstadoJogo.validador_troca_lider = Callable()

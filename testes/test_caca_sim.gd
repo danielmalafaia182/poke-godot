@@ -100,6 +100,24 @@ func _process(_d: float) -> bool:
 				registro_ref = caca.registro
 				caca.hunt_encerrada.connect(func(m): motivo_fim = m)
 				checar(caca.sim != null and String(caca.sim.slug) == "rhydon", "mapa-múndi abriu a hunt do Rhydon na cena nova")
+				# HUD da cena antiga ligada na nova
+				var h = caca.hud_caca
+				checar(h != null and h.painel_time != null and h.menu != null and h.my_pokes != null and h.recompensas != null
+					and h.captura != null and caca.painel_auto_helper != null, "HUD da cena antiga: time, menu, My Pokes, cartões, Capture e Auto-Helper")
+				checar(caca.sim.ativo == caca.membros.find(ej.obter_lider()), "o líder do save começa em campo")
+				ej.definir_auto_potion(false)
+				checar(not bool(caca.sim.cfg["auto_potion"]), "Auto-Helper mudado na hunt vale na simulação (Auto-Potion desligada)")
+				ej.definir_auto_potion(true)
+				checar(bool(caca.sim.cfg["auto_potion"]), "e religada")
+				if caca.membros.size() > 1:
+					var outro: DadosPokemon = caca.membros[1]
+					var ok_troca: bool = ej.selecionar_lider(outro)
+					checar(ok_troca and caca.sim.ativo == 1, "trocar o líder no painel troca o ativo na simulação")
+					caca.sim.troca_manual_liberada_tick = caca.sim.tick + 25     # como logo após um KO (E)
+					checar(not ej.selecionar_lider(venusaur) and caca.sim.ativo == 1 and caca.obter_troca_restante() > 4.9,
+						"dentro dos 5 s após KO a troca é recusada (validador do save)", "%.1f s" % caca.obter_troca_restante())
+					caca.sim.troca_manual_liberada_tick = caca.sim.tick
+					checar(ej.selecionar_lider(venusaur) and caca.sim.ativo == 0, "depois dos 5 s, volta o Venusaur")
 				etapa = 3
 				quadros = 0
 			elif quadros > 300:

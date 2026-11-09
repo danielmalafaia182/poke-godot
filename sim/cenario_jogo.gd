@@ -6,7 +6,7 @@ extends RefCounted
 ##   hunt: nome da espécie da hunt (EstadoJogo.especie_caca.nome) — o slug vem de dados/gerados/hunts.json
 ##   equipe: [{id, nome, xp, ivs{hp,atk,def,spAtk,spDef,speed}, quality, hp (−1 = cheio), shiny?}]   (ordem do time)
 ##   treinador_xp, inventario [{itemId, quantity}], bolas {id: qtd}, auto_catch, bola_auto_catch,
-##   auto_potion, pocao_id (0 = "Automatic (best)"), limite_pocao (%)
+##   auto_potion, pocao_id (0 = "Automatic (best)"), limite_pocao (%), lider (índice do líder no time)
 ## O que é de jogo e não foi observado no original fica marcado: VIP desligado (E: offline), entrada nova sempre
 ## (A: entrar pelo mapa é entrada nova → penalidade de XP nos primeiros abates).
 
@@ -83,6 +83,7 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"spawns": hc.get("spawns", []),
 		"entrada_nova": true,
 		"vip": false,
+		"ativo_inicial": int(jogo.get("lider", 0)),
 		"auto_catch": bool(jogo.get("auto_catch", false)),
 		"bola_auto_catch": int(jogo.get("bola_auto_catch", 0)),
 		"auto_potion": bool(jogo.get("auto_potion", false)),

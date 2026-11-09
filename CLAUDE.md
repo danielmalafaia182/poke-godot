@@ -381,3 +381,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   páginas 0,60) contra 10,4 s; 2,8 MB em disco. Montar o cache a frio ainda custa ~8 s uma vez por mapa:
   `ferramentas/render/gerar_cache_mapas.gd` pré-monta todos. Regressão: desenho idêntico ao original (3/3), fluxo da
   cena 14/14, p99 7,6 ms na cena.
+- 09/11/2026 — 2b.5 (HUD da hunt): a cena nova usa a HUD da cena antiga sem mudar `hud_caca.gd`/`painel_auto_helper.gd`
+  (painel de perfil/time com cooldown, menu superior, My Pokes, Pokepedia, mapa-múndi dentro da hunt, cartões de derrota,
+  painel Capture com estoque de bolas e contador de wilds, Auto-Helper). `caca_sim.gd` implementa a interface de
+  controlador que eles usam. Integração: o líder do save começa em campo; trocar o líder no painel troca o ativo na
+  simulação, pelo `EstadoJogo.validador_troca_lider` (regra dos 5 s da sim, E); troca por KO vira o líder no save; HP do
+  time no save a cada field; Auto-Helper mudado na hunt vale na hora; sair pelo mapa-múndi da hunt também grava.
+  `testes/test_caca_sim.gd` **21/21** (7 checagens novas de HUD), p99 11,9 ms na cena. Visual: as placas do herói e do
+  treinador se sobrepõem quando estão no mesmo tile.
