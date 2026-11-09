@@ -249,7 +249,9 @@ func _criar_marcadores() -> void:
 	var atlas_dados: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/interface/mapa/fiel/marker-atlas.json"))
 	var textura: Texture2D=preload("res://assets/interface/mapa/fiel/marker-atlas-72c2c2858beb.png")
 	for registro in dados["hunts"]:
-		registro["implementado"] = not preload("res://catalogo_hunts.gd").obter(str(registro["name"])).is_empty()
+		# Fase 2: a hunt existe se a simulação tem o mapa real e o hunt-config (snapshot); senão vale o catálogo antigo
+		registro["simulada"] = _cenario_jogo().disponivel(_dados_sim(), str(registro["name"]))
+		registro["implementado"] = bool(registro["simulada"]) or not preload("res://catalogo_hunts.gd").obter(str(registro["name"])).is_empty()
 		catalogo.append(registro)
 		var celula: Array=atlas_dados["slots"][str(int(registro["looktype"]))]
 		var icone: AtlasTexture=AtlasTexture.new()
@@ -326,9 +328,18 @@ func _selecionar_registro(dados: Dictionary) -> void:
 		novo.especie=especie
 		_on_destino_pressed(novo)
 func _on_destino_pressed(destino: DadosDestinoCaca) -> void:
-	if destino==null or destino.especie==null or preload("res://catalogo_hunts.gd").obter(destino.especie.nome).is_empty(): return
+	if destino==null or destino.especie==null: return
+	var simulada: bool=_cenario_jogo().disponivel(_dados_sim(),destino.especie.nome)
+	if not simulada and preload("res://catalogo_hunts.gd").obter(destino.especie.nome).is_empty(): return
 	EstadoJogo.especie_caca=destino.especie
-	get_tree().change_scene_to_file("res://Caca.tscn")
+	# Fase 2: hunt sobre a simulação (mapa real); a cena antiga fica para as hunts que a simulação ainda não tem
+	get_tree().change_scene_to_file("res://caca_sim.tscn" if simulada else "res://Caca.tscn")
+static var _dados_sim_cache: RefCounted
+static func _dados_sim() -> RefCounted:
+	if _dados_sim_cache==null: _dados_sim_cache=preload("res://sim/dados_jogo.gd").carregar()
+	return _dados_sim_cache
+static func _cenario_jogo() -> Script:
+	return preload("res://sim/cenario_jogo.gd")
 func _on_busca_text_changed(_texto: String) -> void: _aplicar_filtros()
 func _on_fechar_pressed() -> void: hide()
 func _mostrar_aviso(texto: String) -> void:

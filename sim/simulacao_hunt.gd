@@ -741,6 +741,10 @@ func _pos_dano() -> void:
 func _escolher_pocao(falta: int) -> int:
 	## A (408/408 curas com inventário conhecido; Auto-Helper "Automatic (best)"): a menor poção do inventário cuja cura cobre o que falta;
 	## se nenhuma cobre, a maior disponível. Empate de cura → menor id (F; não houve empate nas gravações).
+	# E: poção escolhida à mão no Auto-Helper (≠ "Automatic (best)") é usada sempre que houver no inventário
+	var fixa := int(cfg.get("pocao_fixa", 0))
+	if fixa > 0:
+		return fixa if int(inventario.get(fixa, 0)) > 0 else -1
 	var menor_que_cobre := -1
 	var maior := -1
 	for id in inventario:

@@ -29,6 +29,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/analisar_gravacao.py` | Resume gravações: cadência, faixas de dano, XP, loot, capturas |
 | `ferramentas/protocolo/gerar_protocolo.py`, `regenerar.sh` | Gera `dados/protocolo.json` (`regenerar.sh` fixa as fontes: 5 chunks do jogo + todas as gravações) |
 | `ferramentas/gravador/medir_passos.py`, `medir_pocao.py` | Medem nas gravações a duração dos passos (por tick exato) e o gatilho/escolha do Auto-Potion |
+| `caca_sim.gd`, `caca_sim.tscn` | Fase 2: cena de hunt sobre a simulação (mapa real, sim em processo, save atualizado pelas mensagens). O mapa-múndi abre esta cena quando a hunt existe no snapshot; `Caca.tscn` (antiga) fica para o resto e para os testes antigos |
 | `render/` | Fase 2: `regras_desenho.gd` (ordem/posição dos sprites do mapa), `mapa_renderizador.gd` (desenho em lote), `interpolacao.gd` (walkFrom/stepStartAt/relógio). Portes conferidos contra o JS original rodado no Node (`ferramentas/render/referencia_*.js`) |
 | `ferramentas/gravador/medir_movimento.py` | Adjacentes/perseguição por field, coleira (spawn), caminho do herói até o alvo |
 | `ferramentas/gravador/relatorio_individuos.py` | Por indivíduo selvagem: maxHp → stat HP → faixa de IV/Quality → dano previsto × observado (para a fase 3) |
@@ -76,6 +77,8 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 - Um cartão de derrota por vez, sem fila, no máximo 30 exibições por instância (limita apresentação, não prêmios).
 - Contador "Capture" reinicia a cada nova instância de hunt; sem mensagem "X captured...".
 - Captura manual e efeito de Speed na cadência: adiados.
+- Fase 2: a hunt jogável é uma cena nova (`caca_sim.tscn`) em vez de reescrever `caca.gd`/`caca_base.gd` por dentro: ~30 testes antigos
+  dependem da lógica interna da cena antiga. O mapa-múndi decide qual abrir (simulada se houver mapa e hunt-config no snapshot).
 - Outfits (sprites de todos os Pokémon) ficaram fora do snapshot por ora; usar um sprite só no offline é aceitável.
 
 ## Fatos confirmados (fonte A, salvo indicação)
@@ -334,3 +337,15 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   a instância acaba (a cena volta à cidade). `sim/regras_apresentacao.gd`: cartão de derrota um por vez e sem fila
   (abate com cartão na tela é ignorado; 4500/7000 ms + 220, como no P04), até 30 por instância; contador Capture por
   instância (retomada mantém, instância nova zera). Teste `testes/test_sim_regras_usuario.gd` 17/17.
+- 09/11/2026 — Fase 2, passos 3 e 5 (adaptador e desempenho) — **critério de pronto da fase 2 cumprido**. `sim/cenario_jogo.gd`
+  monta a simulação a partir do save (time com IVs/Quality/XP/HP, potions, bolas, Auto-Helper; VIP desligado, E; entrada
+  nova, A; poção escolhida à mão vira `pocao_fixa`, E). `caca_sim.gd`: relógio real para a sim, vista desenhando, e o save
+  atualizado pelas mensagens: XP do treinador (field-kill) e do Pokémon (poke-xp), loot (`receber_loot`; itens fora do
+  catálogo do jogo, hoje só Ancient Stone, ficam registrados e não entram), poções (auto-heal) e bolas (catch-result),
+  captura como DadosPokemon nível 1 (A: 5/5 na rhydon-1h) e HP do time ao sair; cartões pela regra E da sim; troca manual
+  por clique no time. `testes/test_caca_sim.gd` (save isolado): cidade → mapa-múndi (mesmo handler do clique) → Rhydon
+  com o mapa real → 4 min simulados → voltar → cidade → save gravado: **14/14**. Frame time na própria cena (HUD inclusa),
+  60 s em tempo real, 1920×1080, RTX 4060, vsync: média 7,4 ms, p99 **10,4 ms**, 10 de 7748 quadros acima de 16,7 ms (máx
+  33,7). Limites: HUD mínima (time, Capture, cartões, voltar) — os painéis da cena antiga (hud_caca, Auto-Helper na hunt)
+  não foram ligados; filtro de nomes e bola shiny do Auto-Catch não repassados; cadáver só das espécies vistas nas
+  gravações (Rhydon, Kangaskhan); sprites substitutos (E) até baixarmos os outfits.
