@@ -52,7 +52,8 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int) -
 		"nivel_selvagem": int(hunt.get("nivel", 1)),
 		"inicio": hc["start"],
 		"spawns": hc["spawns"],
-		"catch_chance": float(hc.get("catchChance", 0)),   # F: a fórmula real de captura está em aberto
+		# A: entrada nova (huntKey sem ":rN") recebe a penalidade de XP; retomada não (gravação antiga é ":r1")
+		"entrada_nova": not _eh_retomada(String(est["huntKey"])),
 		"vip": est.has("vip"),
 		"auto_catch": est.has("primeiroCatchResult"),
 		"bola_auto_catch": int(est.get("primeiroCatchResult", {}).get("ballId", 0)),  # A: não é balls.selected
@@ -63,3 +64,10 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int) -
 		"balls": balls,
 		"cadaveres": est.get("cadaveres", {}),
 	}
+
+
+static func _eh_retomada(hunt_key: String) -> bool:
+	## "rhydon:1794193271335:r3" → true; "rhydon:1794241362363" → false.
+	var partes := hunt_key.split(":")
+	var ult := partes[partes.size() - 1]
+	return partes.size() >= 3 and ult.begins_with("r") and ult.substr(1).is_valid_int()

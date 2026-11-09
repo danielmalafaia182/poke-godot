@@ -16,9 +16,13 @@ case "$CASO" in
   *) echo "caso desconhecido: $CASO"; exit 2 ;;
 esac
 N="${INSTANCIAS:-20}"
+PARALELO="${PARALELO:-4}"          # instâncias simultâneas (cada uma é um processo Godot independente)
+rm -f saida_testes/dif_${CASO}_s*.jsonl
 for s in $(seq 1 "$N"); do
-  TEMPO_MAX=300 testes/rodar.sh res://testes/rodar_sim.gd --estado "$ESTADO" --segundos "$SEG" --semente "$s" \
-    --saida "saida_testes/dif_${CASO}_s$s.jsonl" > /dev/null 2>&1
+  TEMPO_MAX=900 testes/rodar.sh res://testes/rodar_sim.gd --estado "$ESTADO" --segundos "$SEG" --semente "$s" \
+    --saida "saida_testes/dif_${CASO}_s$s.jsonl" > /dev/null 2>&1 &
+  if (( s % PARALELO == 0 )); then wait; fi
 done
+wait
 python -I ferramentas/gravador/comparar_sim.py --slug rhydon --especie 112 --real "$REAL" \
   --sim saida_testes/dif_${CASO}_s*.jsonl --por-instancia --json "saida_testes/diferencial_${CASO}.json"

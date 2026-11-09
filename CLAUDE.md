@@ -29,6 +29,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/analisar_gravacao.py` | Resume gravações: cadência, faixas de dano, XP, loot, capturas |
 | `ferramentas/protocolo/gerar_protocolo.py`, `regenerar.sh` | Gera `dados/protocolo.json` (`regenerar.sh` fixa as fontes: 5 chunks do jogo + todas as gravações) |
 | `ferramentas/gravador/medir_passos.py`, `medir_pocao.py` | Medem nas gravações a duração dos passos (por tick exato) e o gatilho/escolha do Auto-Potion |
+| `ferramentas/gravador/medir_movimento.py` | Adjacentes/perseguição por field, coleira (spawn), caminho do herói até o alvo |
 | `ferramentas/gravador/relatorio_individuos.py` | Por indivíduo selvagem: maxHp → stat HP → faixa de IV/Quality → dano previsto × observado (para a fase 3) |
 | `ponte/servidor_sim.gd`, `ferramentas/ponte/ponte_poke_local.py` | Ponte: o cliente original (poke-local) desenha a hunt da simulação. `python ferramentas/ponte/ponte_poke_local.py` e abrir http://127.0.0.1:8000 |
 | `ferramentas/importador/importar_snapshot.py` | Snapshot → `dados/gerados/*.json` (determinístico) |
@@ -106,7 +107,12 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 ```
 dano = max(piso, (2·L/5 + 2) · Poder · A/D / 50 · STAB(1,5) · eff_amplificada · (1,8 se selvagem) · aleatório(0,85..1,00))
 A/D = SpA/SpD (golpe especial) ou Atk/Def (físico); piso = 2 aliado / 1 selvagem
+stats do selvagem SEM arredondar; stats do aliado = os exibidos (arredondados)   ← padrão desde 09/11 (F, forte)
 ```
+
+Evidência do arredondamento (`relatorio_individuos.py`, rhydon-1h, 40–160 hits por indivíduo): com SpA do aliado exibida e
+SpD do selvagem contínua, 15/15 indivíduos explicados; SpD inteira, 2/15; SpA do aliado também contínua, 10/15.
+Parâmetros `stats_dano_selvagem` / `stats_dano_aliado` ("continuo"/"inteiro") voltam ao modelo antigo.
 
 Envelopes previstos contêm os observados em: Venusaur 109 Solar Beam → Rhydon 80 (910–2282) e → Kangaskhan 80 (128–230);
 Rhydon Stone Edge → Venusaur (241–432); Kangaskhan Mega Punch → Venusaur (136–207).
@@ -116,8 +122,33 @@ Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes
 ### Em aberto (não invente; deixe parametrizado e marcado)
 
 Seleção de golpe (hipótese: maior dano esperado, empate → menor cooldown; o Venusaur usa só Solar Beam),
-IA de movimento dos selvagens, fórmula de captura, parcela extra de XP vista na conta B (×1,554 em vez de ×1,5),
-efeitos de status, regras de respawn (tempo exato).
+IA de movimento dos selvagens (ver investigação abaixo), forma da curva de captura (só 2 pontos), parcela extra de XP
+vista na conta B (×1,554 em vez de ×1,5), mecanismo da penalidade de entrada (abates ou tempo), efeitos de status,
+regras de respawn (tempo exato).
+
+### Investigação de movimento (aberta; não bloqueia a fase 2)
+
+Medido com `ferramentas/gravador/medir_movimento.py` (A = rhydon-1h, 6613 fields; sim = 2 instâncias de 60 min):
+
+| Métrica | Real 1h | Real antiga | Sim |
+| --- | --- | --- | --- |
+| Selvagens adjacentes ao herói por field (média; % com 2+) | 0,40; 1,9% | 0,75; 15,6% | 0,44; 4,0% |
+| Selvagens vivos na visão (±13, ±7) por field | 1,27 | 1,65 | 1,33 |
+| Selvagens na visão se aproximando do herói por field (Δseq 2) | 0,48 | 0,41 | 0,35 |
+| Fora da visão: parado / se afasta do spawn / se aproxima do spawn | 97,9% / 1,9% / 0 | 99,0% / 1,0% / 0 | 99,3% / 0,7% / 0 |
+| Distância ao spawn fora da visão (mediana; p90) | 0; 0 | 0; 1 | 0; 0 |
+| Caminho do herói até o alvo: tiles ÷ Chebyshev inicial (mediana; p90) | 0,62; 0,78 | 0,58; 0,78 | 0,67; 0,96 |
+| ms por tile no caminho do herói (mediana) | 800 | 800 | 800 |
+
+Hipóteses (F), para testar quando a fase 3 chegar ao movimento:
+- H1: na visão, o selvagem real persegue mais (0,48 × 0,35 por field; P(mover) 0,35 × 0,31). Candidatos: ele não
+  espera "progresso" para andar (a sim fica parada quando bloqueada) ou começa a perseguir assim que entra na visão.
+- H2: não há coleira observável: quem está fora da visão fica no spawn (mediana 0) e nunca foi visto voltando a ele;
+  como quase todos já estão no spawn, a coleira (se existir) não aparece nestes dados.
+- H3: fora da visão há um pequeno vaguear (1–2% dos intervalos se afastando do spawn); a sim quase não tem.
+- H4: o alvo vem ao encontro do herói mais no real (razão p90 0,78 × 0,96): mesma causa de H1.
+- O "ms por tile" do diferencial (754–758 real × 809–866 sim) mede deslocamento entre fields; no caminho até o alvo os
+  dois lados dão 800 ms/tile, então a diferença vem do encontro com o alvo (H1/H4), não da velocidade do passo.
 
 ## Protocolo (resumo; detalhes em `dados/protocolo.json` e nos logs)
 
@@ -265,3 +296,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   Solar Beam compatível com SpD inteira em só 2/15 indivíduos e com SpD sem arredondar em 15/15 (60–160 hits cada) —
   evidência forte de que o dano usa stats sem arredondar; Stone Edge 13/15. Correção no relatório: o golpe final chega
   no field depois do field-kill (antes ele caía na vida seguinte e dava hits/abate < 1).
+- 09/11/2026 — Fechamento da fase 1 (fase aprovada): (1) penalidade de XP na entrada: `debuff_entrada_abates` 7,
+  `debuff_entrada_fator` 0,3 (A); só em entrada nova (huntKey sem ":rN"; a ponte sempre entra nova); mecanismo contado em
+  abates (F). (2) Captura: `captura_pontos` {Super Ball: nível 1 = 35/59, nível 80 = 5/608} (A), interpolação no logit
+  e espécie ignorada (F); `Regras.chance_captura`. (3) Dano: stats do selvagem sem arredondar e do aliado arredondados
+  (F forte, ver a fórmula acima); parâmetros por lado. Autoteste na sim: o relatório explica 146/150 indivíduo×golpe com
+  SpD contínua. Diferencial: antiga 23/26, 1h **27/30** (XP por abate passou com o debuff; fora: ms/tile de herói e
+  selvagem e hits selvagens/min lutando na borda, 18,4 × 18,7–25,8). (4) Investigação de movimento aberta (tabela e
+  hipóteses acima). Testes: regras 35/35 (novos: captura e debuff), caminho 8/8, determinismo, protocolo, ponte.

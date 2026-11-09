@@ -142,6 +142,7 @@ func _nova_hunt(slug: String) -> void:
 	var agora := _agora_real_ms()
 	cfg["inicio_ms"] = agora
 	cfg["hunt_key"] = "%s:%d:ponte%d" % [slug, agora, instancias]
+	cfg["entrada_nova"] = true   # A: entrar pelo mapa é entrada nova (penalidade de XP nos primeiros abates)
 	var mapa = MapaHunt.carregar(slug, Fontes.ler_mapa(slug), Fontes.ler_colisao())
 	sim = Simulacao.new(cfg, dados, mapa)
 	_enviar(sim.iniciar())

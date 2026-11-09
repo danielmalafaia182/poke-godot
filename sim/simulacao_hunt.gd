@@ -38,6 +38,7 @@ var desmaiado: bool = false
 var encerrada: bool = false
 var _saida: Array = []
 var _golpes_cache := {}
+var abates_na_entrada: int = 0
 var _campo_mob := PackedInt32Array()
 var _campo_mob_caixa := Rect2i()
 var _campo_mob_chave := Vector2i(-99999, -99999)
@@ -91,6 +92,7 @@ func _montar() -> void:
 		var mhp := Regras.hp_combate_selvagem(int(st["hp"]), p)
 		mobs.append({"slot": slot, "especie": esp, "species_id": int(s["pokeId"]), "spawn": sp, "pos": sp, "de": sp,
 			"passo_ms": inicio_ms, "facing": "south", "ultimo_passo_tick": -1000, "hp": mhp, "max_hp": mhp, "stats": st,
+			"stats_dano": Regras.calcular_stats_dano(esp["base"], ivs, nivel_selv, q, String(p.stats_dano_selvagem)),
 			"ivs": ivs, "qualidade": q, "nivel": nivel_selv, "dead": false, "morte_tick": -1, "prox_ataque": -1,
 			"shiny": false})
 		slot += 1
@@ -111,6 +113,7 @@ func _criar_poke(e: Dictionary) -> Dictionary:
 
 func _recalcular_stats(poke: Dictionary) -> void:
 	poke["stats"] = Regras.calcular_stats(poke["especie"]["base"], poke["ivs"], int(poke["nivel"]), float(poke["quality"]))
+	poke["stats_dano"] = Regras.calcular_stats_dano(poke["especie"]["base"], poke["ivs"], int(poke["nivel"]), float(poke["quality"]), String(p.stats_dano_aliado))
 	poke["max_hp"] = Regras.hp_combate_aliado(int(poke["stats"]["hp"]))
 	poke["power"] = Regras.power(poke["stats"], float(poke["quality"]))
 
@@ -445,7 +448,7 @@ func _proximo_tile_heroi(destino: Vector2i) -> Vector2i:
 func _golpe(poke_ou_mob: Dictionary, especie_def: Dictionary, stats_def: Dictionary, chave_def: String) -> Dictionary:
 	var chave := "%s|%d|%s" % [str(poke_ou_mob.get("id", poke_ou_mob.get("slot", ""))), int(poke_ou_mob["nivel"]), chave_def]
 	if not _golpes_cache.has(chave):
-		_golpes_cache[chave] = Regras.escolher_golpe(poke_ou_mob["especie"], int(poke_ou_mob["nivel"]), poke_ou_mob["stats"], especie_def, stats_def, p)
+		_golpes_cache[chave] = Regras.escolher_golpe(poke_ou_mob["especie"], int(poke_ou_mob["nivel"]), poke_ou_mob["stats_dano"], especie_def, stats_def, p)
 	return _golpes_cache[chave]
 
 
@@ -456,12 +459,12 @@ func _aleatorio() -> float:
 func _ataque_aliado(m: Dictionary) -> void:
 	var poke := _poke_ativo()
 	heroi["prox_ataque"] = tick + int(p.ataque_aliado_ticks)
-	var g := _golpe(poke, m["especie"], m["stats"], "mob%d" % m["slot"])
+	var g := _golpe(poke, m["especie"], m["stats_dano"], "mob%d" % m["slot"])
 	if g.is_empty():
 		return
 	var especial: bool = g["categoria"] == "SPECIAL"
-	var a := float(poke["stats"]["spAtk"] if especial else poke["stats"]["atk"])
-	var d := float(m["stats"]["spDef"] if especial else m["stats"]["def"])
+	var a := float(poke["stats_dano"]["spAtk"] if especial else poke["stats_dano"]["atk"])
+	var d := float(m["stats_dano"]["spDef"] if especial else m["stats_dano"]["def"])
 	var v := Regras.dano(int(poke["nivel"]), int(g["poder"]), a, d, g["stab"], float(g["eff"]), false, _aleatorio(), p)
 	hits.append({"slot": m["slot"], "amount": v, "eff": g["eff"], "move": g["nome"], "type": g["tipo"]})
 	estatisticas["hits_aliado"] += 1
@@ -486,6 +489,13 @@ func _abate(m: Dictionary) -> void:
 	var base := int(esp.get("xpAbate", 0))
 	var vip := Regras.js_round(float(base) * float(p.vip_fracao)) if cfg.get("vip", false) else 0
 	var total := base + vip
+	# Penalidade de entrada (A: rhydon-1h, os 7 primeiros abates depois de entrar na hunt, e não numa retomada ":rN",
+	# vêm com xpParts.debuff = −4041 sobre 5772 → 1731 = floor(5772 × 0,3)). Mecanismo F: contado em abates.
+	var debuff := 0
+	if cfg.get("entrada_nova", false) and abates_na_entrada < int(p.debuff_entrada_abates):
+		debuff = int(floor(float(total) * float(p.debuff_entrada_fator))) - total
+		total += debuff
+	abates_na_entrada += 1
 	var nivel_t_antes := int(treinador["nivel"])
 	treinador["xp"] = int(treinador["xp"]) + total
 	treinador["nivel"] = Regras.nivel_por_xp(treinador["xp"])
@@ -509,8 +519,8 @@ func _abate(m: Dictionary) -> void:
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
-		"xpParts": {"base": base, "streak": 0, "boost": 0, "vip": vip, "event": 0, "gym": 0, "typeDay": 0},
-		"pokeXp": {"xpGained": total, "parts": {"base": base, "boost": 0, "vip": vip, "event": 0, "mentor": 0, "gym": 0, "typeDay": 0},
+		"xpParts": _com_debuff({"base": base, "streak": 0, "boost": 0, "vip": vip, "event": 0, "gym": 0, "typeDay": 0}, debuff),
+		"pokeXp": {"xpGained": total, "parts": _com_debuff({"base": base, "boost": 0, "vip": vip, "event": 0, "mentor": 0, "gym": 0, "typeDay": 0}, debuff),
 			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
 		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
 	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total,
@@ -525,6 +535,13 @@ func _abate(m: Dictionary) -> void:
 	heroi["alvo"] = _escolher_alvo()
 
 
+static func _com_debuff(partes: Dictionary, debuff: int) -> Dictionary:
+	## A: a chave "debuff" só aparece nos abates penalizados (nos outros 601 da rhydon-1h ela não existe).
+	if debuff != 0:
+		partes["debuff"] = debuff
+	return partes
+
+
 func _tentar_captura(m: Dictionary) -> bool:
 	if not cfg.get("auto_catch", false):
 		return false
@@ -534,7 +551,7 @@ func _tentar_captura(m: Dictionary) -> bool:
 	if sel == "" or int(counts.get(sel, 0)) <= 0:
 		return false
 	counts[sel] = int(counts[sel]) - 1
-	var chance := float(cfg.get("catch_chance", 0.0))  # F: fórmula de captura em aberto; hunt-config.catchChance
+	var chance := Regras.chance_captura(int(sel), int(m["nivel"]), p)  # A nos pontos medidos, F na curva entre eles
 	var sucesso: bool = rng.randf() < chance
 	if sucesso:
 		estatisticas["capturas"] += 1
@@ -639,12 +656,12 @@ func _passo_mob(m: Dictionary) -> void:
 
 func _ataque_selvagem(m: Dictionary) -> void:
 	var poke := _poke_ativo()
-	var g := _golpe(m, poke["especie"], poke["stats"], "poke%s|%d" % [str(poke.get("id", ativo)), int(poke["nivel"])])
+	var g := _golpe(m, poke["especie"], poke["stats_dano"], "poke%s|%d" % [str(poke.get("id", ativo)), int(poke["nivel"])])
 	if g.is_empty():
 		return
 	var especial: bool = g["categoria"] == "SPECIAL"
-	var a := float(m["stats"]["spAtk"] if especial else m["stats"]["atk"])
-	var d := float(poke["stats"]["spDef"] if especial else poke["stats"]["def"])
+	var a := float(m["stats_dano"]["spAtk"] if especial else m["stats_dano"]["atk"])
+	var d := float(poke["stats_dano"]["spDef"] if especial else poke["stats_dano"]["def"])
 	var v := Regras.dano(int(m["nivel"]), int(g["poder"]), a, d, g["stab"], float(g["eff"]), true, _aleatorio(), p)
 	hits.append({"slot": -1, "amount": v, "eff": g["eff"], "move": g["nome"], "type": g["tipo"]})
 	estatisticas["hits_selvagem"] += 1

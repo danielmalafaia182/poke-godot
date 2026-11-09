@@ -39,10 +39,22 @@ const PARAMETROS := {
 	"piso_aliado": 2,                       # A: Gastly × Rattata
 	"piso_selvagem": 1,                     # A: 880 hits do Rattata no Geodude
 	"arredondamento_dano": "round",         # F: round (Math.round) ou floor; sem evidência
+	# Stats na fórmula de dano (F, forte). Selvagem sem arredondar: na rhydon-1h o Solar Beam é explicado por uma SpD
+	# inteira em 2/15 indivíduos e por uma SpD contínua em 15/15. Aliado arredondado (o valor exibido no poke-delta):
+	# com a SpA exibida 15/15; com a SpA recalculada sem arredondar (IVs e Q exatos) só 10/15.
+	"stats_dano_selvagem": "continuo",      # "inteiro" volta ao modelo antigo
+	"stats_dano_aliado": "inteiro",
 	"pocao_limiar": 0.5,                    # A: HP ≤ 50% dispara no mesmo tick (91/91 cruzamentos; HP exato na cura ≤ 0,50
 	                                        # em 409 curas); o Auto-Helper da gravação de 1 h mostra "Heal when HP ≤ 50%"
 	"pocao_recarga_ms": 0,                  # A/F: nenhuma cura adiada observada; menor intervalo real 1988 ms
 	"vip_fracao": 0.5,                      # A: parcela vip = 50% da base
+	"debuff_entrada_abates": 7,             # A: rhydon-1h, os 7 primeiros abates após entrar (o 8º, 22 s depois, já sem)
+	                                        # F: mecanismo contado em abates (pode ser tempo, ~1 min; não dá para separar)
+	"debuff_entrada_fator": 0.3,            # A: 1731 = floor(5772 × 0,3); debuff = −4041
+	# Captura (A nos pontos, F na curva): {bola: [[nível do selvagem, capturas, tentativas], ...]}. Entre os pontos,
+	# interpolação linear no logit; fora deles, o ponto mais próximo. Bola sem pontos → 0 (F). Espécie ignorada (F:
+	# os dois pontos são de espécies diferentes, Rattata e Rhydon). hunt-config.catchChance é 0 em todas (não usado).
+	"captura_pontos": {"3": [[1, 35, 59], [80, 5, 608]]},
 	"hp_selvagem_por_stat": 35,             # A
 	"hp_selvagem_minimo": 120,              # A
 	"golpe_poder_maximo": 599,              # F: golpes de poder 600 (assinatura) nunca aparecem nas gravações
@@ -89,6 +101,21 @@ static func js_round(x: float) -> int:
 
 static func stat(base: int, iv: int, nivel: int, qualidade: float, chave: String) -> int:
 	return js_round(float(nivel) / 100.0 * float(base + 2 * iv) * pow(qualidade, EXPOENTE_STAT[chave]))
+
+
+static func stat_bruto(base: int, iv: int, nivel: int, qualidade: float, chave: String) -> float:
+	return float(nivel) / 100.0 * float(base + 2 * iv) * pow(qualidade, EXPOENTE_STAT[chave])
+
+
+static func calcular_stats_dano(base: Dictionary, ivs: Dictionary, nivel: int, qualidade: float, modo: String) -> Dictionary:
+	## Stats usados na fórmula de dano: modo "continuo" (sem arredondar) ou "inteiro" (os exibidos). Ver PARAMETROS
+	## stats_dano_*. Os stats exibidos (poke-delta) e o HP de combate continuam arredondados (A).
+	if modo == "inteiro":
+		return calcular_stats(base, ivs, nivel, qualidade)
+	var r := {}
+	for k in CHAVES_STATS:
+		r[k] = stat_bruto(int(base[k]), int(ivs[k]), nivel, qualidade, k)
+	return r
 
 
 static func calcular_stats(base: Dictionary, ivs: Dictionary, nivel: int, qualidade: float) -> Dictionary:
@@ -210,6 +237,33 @@ static func efetividade_amplificada(bruta: float) -> float:
 	if bruta >= 1.0:
 		return 1.0
 	return bruta / 1.5
+
+
+static func chance_captura(bola: int, nivel: int, p: Dictionary = PARAMETROS) -> float:
+	var pts: Array = p.get("captura_pontos", {}).get(str(bola), [])
+	if pts.is_empty():
+		return 0.0
+	var ord := pts.duplicate()
+	ord.sort_custom(func(x, y): return int(x[0]) < int(y[0]))
+	var prob := func(pt) -> float: return float(pt[1]) / maxf(1.0, float(pt[2]))
+	if nivel <= int(ord[0][0]):
+		return prob.call(ord[0])
+	if nivel >= int(ord[ord.size() - 1][0]):
+		return prob.call(ord[ord.size() - 1])
+	for i in range(ord.size() - 1):
+		var a: Array = ord[i]
+		var b: Array = ord[i + 1]
+		if nivel <= int(b[0]):
+			var t := float(nivel - int(a[0])) / float(int(b[0]) - int(a[0]))
+			var la := _logit(prob.call(a))
+			var lb := _logit(prob.call(b))
+			return 1.0 / (1.0 + exp(-(la + t * (lb - la))))
+	return 0.0
+
+
+static func _logit(x: float) -> float:
+	var c := clampf(x, 1e-6, 1.0 - 1e-6)
+	return log(c / (1.0 - c))
 
 
 static func tipos_de(especie: Dictionary) -> Array:

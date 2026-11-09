@@ -98,5 +98,34 @@ func _init() -> void:
 		iguais = iguais and r1.proximo_u32() == r2.proximo_u32()
 	checar(iguais and Rng.new(43).proximo_u32() != Rng.new(42).proximo_u32(), "RNG determinístico por semente")
 
+	# --- Captura (A nos pontos, F na curva): Super Ball (3) em nível 1 = 35/59, em nível 80 = 5/608.
+	checar(absf(Regras.chance_captura(3, 1) - 35.0 / 59.0) < 1e-9, "captura Super Ball nível 1 = 35/59")
+	checar(absf(Regras.chance_captura(3, 80) - 5.0 / 608.0) < 1e-9, "captura Super Ball nível 80 = 5/608")
+	var c40 := Regras.chance_captura(3, 40)
+	checar(c40 < 35.0 / 59.0 and c40 > 5.0 / 608.0, "captura nível 40 entre os dois pontos (logit)", "%.4f" % c40)
+	checar(Regras.chance_captura(3, 200) == 5.0 / 608.0 and Regras.chance_captura(1, 80) == 0.0,
+		"fora dos pontos: o mais próximo; bola sem pontos: 0")
+
+	# --- Penalidade de XP na entrada (A: 7 primeiros abates com debuff −4041 → 1731; retomada sem penalidade).
+	var Sim := load("res://testes/rodar_sim.gd")
+	var r_nova: Dictionary = Sim.simular("dados/testes/estado_rhydon_venusaur_1h.json", 240, 3)
+	var xps: Array = []
+	var debuffs: Array = []
+	for l in r_nova["gravador"].linhas:
+		var o = JSON.parse_string(l)
+		if o["msg"]["type"] == "field-kill":
+			xps.append(int(o["msg"]["xpGained"]))
+			debuffs.append(int(o["msg"]["xpParts"].get("debuff", 0)))
+	checar(xps.size() >= 8 and xps.slice(0, 7) == [1731, 1731, 1731, 1731, 1731, 1731, 1731] and xps[7] == 5772,
+		"entrada nova: 7 abates com 1731 de XP, depois 5772", str(xps.slice(0, 9)))
+	checar(debuffs.slice(0, 7).all(func(d): return d == -4041) and debuffs[7] == 0,
+		"xpParts.debuff = −4041 só nos 7 primeiros (chave ausente depois)")
+	var r_ret: Dictionary = Sim.simular("dados/testes/estado_rhydon_venusaur.json", 120, 3)
+	var tem_debuff := false
+	for l in r_ret["gravador"].linhas:
+		if l.contains("\"debuff\""):
+			tem_debuff = true
+	checar(not tem_debuff, "retomada (huntKey :r1): sem penalidade")
+
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(0 if falhas == 0 else 1)
