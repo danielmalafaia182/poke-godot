@@ -363,3 +363,13 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   (gerado por `ferramentas/gravador/extrair_cadaveres.py`, A) cobre só 4 das 453 espécies (Blastoise 2931, Rattata 2848,
   Rhydon 2858 / shiny 31489, Kangaskhan 6073). As outras ficam sem corpo até haver gravação delas (não inventado).
   Teste `testes/test_cadaveres.gd` 3/3.
+- 09/11/2026 — 2b.3 (catálogo de itens): `regras_loot.gd` passa a ter como base `dados/gerados/itens.json` (665 materiais
+  = 670 itens − as 5 poções do jogo, que continuam poções). Convenção do P04 mantida: ids 1..7 do servidor colidem com
+  as bolas e viram 1.000.000 + id (Ancient Stone 2 → 1000002, que já existia no catálogo antigo; a cena nova agora
+  converte o id do loot com `id_interno`). Os 183 itens do catálogo antigo ficam com o mesmo id, nome e ícone res://;
+  os novos usam o ícone do snapshot, lido em tempo de execução por `LOOT.textura` (depot e cartões); 7 ícones são GIF e o
+  Godot não os lê (ficam sem ícone). Categorias: loot/stone = "Materials" (como antes), as outras com o nome do gerado (E).
+  Teste `testes/test_catalogo_itens.gd` 10/10 com um save ANTIGO (`dados/testes/save_antigo_inventario.json`, gerado
+  pelo código de antes da migração): materiais e depot preservados, itens novos entram e fazem ida e volta no save.
+  `test_loot_hunts.gd` (P04) ajustado só na checagem de ícone: 10574 verificações, 0 falhas.
+  `test_compatibilidade_save.gd` (P04) falha igual antes e depois (depende de um fixture que o runner antigo copia).

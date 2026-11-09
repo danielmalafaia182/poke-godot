@@ -185,7 +185,8 @@ func _chip_loot(item: Dictionary) -> PanelContainer:
 	linha.mouse_filter=Control.MOUSE_FILTER_IGNORE
 	chip.add_child(linha)
 	var caminho: String=str(dados.get("icone",item.get("icon","")))
-	if not caminho.is_empty() and ResourceLoader.exists(caminho): linha.add_child(RESULTADO.icone(load(caminho),22))
+	var tex_icone: Texture2D=preload("res://regras_loot.gd").textura(caminho)   # res:// ou ícone do snapshot
+	if tex_icone!=null: linha.add_child(RESULTADO.icone(tex_icone,22))
 	linha.add_child(_rotulo(str(int(item["qty"])),12,Color("ffe89a")))
 	var nome: Label=_rotulo(str(item["name"]),11,Color("ffe1a3") if bool(dados.get("raro",false)) else Color("cfe0f5"))
 	nome.add_theme_font_override("font",UI.TEXTO)

@@ -15,7 +15,8 @@ func executar() -> void:
  for item in LOOT.catalogo():
   checar(not ids.has(int(item["id"])),"ID local único")
   ids[int(item["id"])]=true
-  checar(ResourceLoader.exists(item["icone"]),"Ícone ou marcador disponível")
+  # 2b: ícones do catálogo gerado vêm do snapshot (fora de res://); GIF o Godot não lê (sem ícone)
+  checar(LOOT.textura(str(item["icone"]))!=null or str(item["icone"]).ends_with(".gif"),"Ícone ou marcador disponível")
   checar(int(item["id"]) not in [1,2,3,4,5,6,7,200,201,202,203,204],"Loot não colide com consumíveis")
  for nome in dados["especies"]:
   for i in range(15):

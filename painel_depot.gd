@@ -387,7 +387,7 @@ func atualizar_listas() -> void:
 				return str(a["nome"]) < str(b["nome"])
 			)
 			for item in visiveis:
-				var icone: Texture2D = load(item["icone"]) as Texture2D if ResourceLoader.exists(item["icone"]) else null
+				var icone: Texture2D = preload("res://regras_loot.gd").textura(str(item["icone"]))   # res:// ou ícone do snapshot
 				var b: Button = _cartao(colunas[lado], item["nome"], str(item["quantidade"]) + "×", icone, lado == 0, _mover_item.bind(int(item["id"]), lado == 0))
 				b.tooltip_text = "Item vinculado: permanece na BAG." if item["vinculado"] else "Transferir a pilha inteira."
 				b.disabled = bool(item["vinculado"])

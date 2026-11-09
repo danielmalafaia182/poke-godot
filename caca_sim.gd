@@ -160,14 +160,15 @@ func _id_pocao(nome: String) -> int:
 
 
 func _receber_loot(loot: Array) -> void:
-	## O catálogo de loot do jogo (regras_loot.gd) recusa o lote inteiro se houver item desconhecido: os itens fora
-	## dele ficam registrados em registro.loot_fora_do_catalogo e não entram no inventário (limite conhecido).
+	## O catálogo de itens do jogo (regras_loot.gd) é o gerado do snapshot (670): todo item do loot existe. O que ainda
+	## assim faltar (não deveria) fica em registro.loot_fora_do_catalogo, porque receber_loot recusa o lote inteiro.
 	var aceitos: Array[Dictionary] = []
 	for it in loot:
-		if LOOT.obter(int(it["itemId"])).is_empty():
+		var interno: int = LOOT.id_interno(int(it["itemId"]))   # ids 1..7 do servidor → 1000000 + id (convenção do save)
+		if LOOT.obter(interno).is_empty():
 			registro["loot_fora_do_catalogo"][int(it["itemId"])] = int(registro["loot_fora_do_catalogo"].get(int(it["itemId"]), 0)) + int(it["qty"])
 			continue
-		aceitos.append({"itemId": int(it["itemId"]), "qty": int(it["qty"])})
+		aceitos.append({"itemId": interno, "qty": int(it["qty"])})
 	if aceitos.is_empty():
 		return
 	for it in EstadoJogo.inventario.receber_loot(aceitos):
@@ -195,8 +196,8 @@ func _evento_cartao(msg: Dictionary) -> Dictionary:
 	var ev := msg.duplicate(true)
 	var loot: Array = []
 	for it in msg.get("loot", []):
-		var c: Dictionary = LOOT.obter(int(it["itemId"]))
-		loot.append({"itemId": int(it["itemId"]), "name": String(it["name"]), "qty": int(it["qty"]),
+		var c: Dictionary = LOOT.obter(LOOT.id_interno(int(it["itemId"])))
+		loot.append({"itemId": LOOT.id_interno(int(it["itemId"])), "name": String(it["name"]), "qty": int(it["qty"]),
 			"icon": c.get("icone", ""), "rare": bool(c.get("raro", false))})
 	ev["loot"] = loot
 	return ev
