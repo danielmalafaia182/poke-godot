@@ -81,6 +81,9 @@ def main():
             est["primeiroPokeXp"] = m
         elif t == "field-kill" and "primeiroFieldKill" not in est:
             est["primeiroFieldKill"] = {k: m[k] for k in ("xpGained", "totalXp", "level", "speciesId", "xpParts", "pokeXp")}
+        elif t == "catch-result" and "primeiroCatchResult" not in est:
+            # a bola da auto-captura não é balls.selected (A: selected=1, mas as tentativas gastam a bola 3)
+            est["primeiroCatchResult"] = {k: v for k, v in m.items() if k != "type"}
         elif t == "inventory" and "inventario" not in est:
             est["inventario"] = m["items"]
         elif t == "balls" and "balls" not in est:

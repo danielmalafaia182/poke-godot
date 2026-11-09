@@ -220,6 +220,15 @@
   "type2": "POISON",
   "xp": 20427943
  },
+ "primeiroCatchResult": {
+  "auto": true,
+  "ballId": 3,
+  "ballName": "Super Ball",
+  "col": 34,
+  "row": 50,
+  "speciesName": "Rhydon",
+  "success": false
+ },
  "primeiroField": {
   "bossActiveIdx": 0,
   "bossTeam": [

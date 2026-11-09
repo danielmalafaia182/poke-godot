@@ -127,6 +127,7 @@ func iniciar() -> Array:
 	_emitir({"type": "field-init", "huntKey": hunt_key, "slug": slug, "rows": mapa.rows, "cols": mapa.cols,
 		"minTx": mapa.min_tx, "minTy": mapa.min_ty, "grid": grade, "heroStepMs": int(p.hero_step_ms), "bike": false,
 		"mobStepMs": int(p.mob_step_ms), "trainerStepMs": int(p.trainer_step_ms), "tickMs": int(p.tick_ms)})
+	heroi["alvo"] = _escolher_alvo()  # A: targetSlot nunca é null nos 2009 fields gravados
 	_emitir(_montar_field())
 	return _saida
 
@@ -388,7 +389,8 @@ func _abate(m: Dictionary) -> void:
 func _tentar_captura(m: Dictionary) -> bool:
 	if not cfg.get("auto_catch", false):
 		return false
-	var sel := str(balls.get("selected", ""))
+	# A bola da auto-captura é configuração própria (A: balls.selected = 1, mas as tentativas gastam a bola 3).
+	var sel := str(int(cfg.get("bola_auto_catch", 0)))
 	var counts: Dictionary = balls.get("counts", {})
 	if sel == "" or int(counts.get(sel, 0)) <= 0:
 		return false
