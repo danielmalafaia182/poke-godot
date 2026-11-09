@@ -9,17 +9,24 @@
   "3vooh2axx98am.js"
  ],
  "fontes_logs": [
-  "6611fa39-loogs.txt",
-  "cb61e549-logs_rhyhorn.txt",
-  "f4a55b8a-logs_hitmonlee.txt",
-  "poke_ws_2026-11-08T22-11-28-609Z.txt",
-  "poke_ws_2026-11-08T02-41-10-198Z.txt"
+  "geodeude-2.jsonl",
+  "geodude-10min.jsonl",
+  "gravacoes_unicas_2026-11-09.jsonl",
+  "poke_ws_todas(1)).jsonl",
+  "poke_ws_todas(1).jsonl",
+  "poke_ws_todas(2)(20.jsonl",
+  "poke_ws_todas(2).jsonl",
+  "poke_ws_todas(3).jsonl",
+  "geodude-3.jsonl",
+  "loogs.txt",
+  "logs rhyhorn.txt",
+  "logs hitmonlee.txt"
  ],
  "totais": {
-  "tipos": 136,
+  "tipos": 139,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 24
+  "vistos_em_logs": 28
  },
  "mensagens": {
   "addon-used": {
@@ -78,18 +85,20 @@
   "auto-heal": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 12,
+    "vezes": 214,
     "fontes": [
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt"
     ],
     "esquema": {
      "heal": {
       "tipos": [
        "int"
       ],
-      "exemplo": 150
+      "exemplo": 18
      },
      "kind": {
       "tipos": [
@@ -101,7 +110,7 @@
       "tipos": [
        "str"
       ],
-      "exemplo": "Great Potion"
+      "exemplo": "Small Potion"
      }
     }
    }
@@ -114,185 +123,12 @@
   "autohelper": {
    "no_cliente": {
     "assinado": true
-   },
-   "visto_in": {
-    "vezes": 2,
-    "fontes": [
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
-    ],
-    "esquema": {
-     "autoCatch": {
-      "tipos": [
-       "bool"
-      ],
-      "exemplo": true
-     },
-     "autoCatchBallId": {
-      "tipos": [
-       "int"
-      ],
-      "exemplo": 3
-     },
-     "autoCatchNames": {
-      "tipos": [
-       "str"
-      ],
-      "exemplo": ""
-     },
-     "autoCatchShiny": {
-      "tipos": [
-       "bool"
-      ],
-      "exemplo": true
-     },
-     "autoCatchShinyBallId": {
-      "tipos": [
-       "int"
-      ],
-      "exemplo": 6
-     },
-     "autoPotion": {
-      "tipos": [
-       "bool"
-      ],
-      "exemplo": true
-     },
-     "autoPotionItemId": {
-      "tipos": [
-       "int"
-      ],
-      "exemplo": 0
-     },
-     "autoPotionThreshold": {
-      "tipos": [
-       "int"
-      ],
-      "exemplo": 90
-     },
-     "balls": {
-      "tipos": [
-       "list"
-      ],
-      "itens": {
-       "tipos": [
-        "object"
-       ],
-       "campos": {
-        "iconUrl": {
-         "tipos": [
-          "str"
-         ],
-         "exemplo": "/assets/markitems/pokeball.png"
-        },
-        "id": {
-         "tipos": [
-          "int"
-         ],
-         "exemplo": 1
-        },
-        "infinite": {
-         "tipos": [
-          "bool"
-         ],
-         "exemplo": false
-        },
-        "name": {
-         "tipos": [
-          "str"
-         ],
-         "exemplo": "Poké Ball"
-        },
-        "quantity": {
-         "tipos": [
-          "int"
-         ],
-         "exemplo": 398
-        }
-       }
-      }
-     },
-     "isCreator": {
-      "tipos": [
-       "bool"
-      ],
-      "exemplo": false
-     },
-     "isVip": {
-      "tipos": [
-       "bool"
-      ],
-      "exemplo": true
-     },
-     "pokeCapacity": {
-      "tipos": [
-       "int"
-      ],
-      "exemplo": 3000
-     },
-     "pokeCount": {
-      "tipos": [
-       "int"
-      ],
-      "exemplo": 135
-     },
-     "potions": {
-      "tipos": [
-       "list"
-      ],
-      "itens": {
-       "tipos": [
-        "object"
-       ],
-       "campos": {
-        "healAmount": {
-         "tipos": [
-          "int"
-         ],
-         "exemplo": 60
-        },
-        "icon": {
-         "tipos": [
-          "str"
-         ],
-         "exemplo": "/assets/markitems/small_potion.png"
-        },
-        "id": {
-         "tipos": [
-          "int"
-         ],
-         "exemplo": 200
-        },
-        "name": {
-         "tipos": [
-          "str"
-         ],
-         "exemplo": "Small Potion"
-        },
-        "quantity": {
-         "tipos": [
-          "int"
-         ],
-         "exemplo": 8
-        }
-       }
-      }
-     }
-    }
    }
   },
   "autohelper-get": {
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
-   },
-   "visto_out": {
-    "vezes": 2,
-    "fontes": [
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
-    ],
-    "esquema": {}
    }
   },
   "autohelper-refresh": {
@@ -307,12 +143,14 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 315,
+    "vezes": 4703,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {}
    }
@@ -322,12 +160,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 21,
+    "vezes": 273,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "catalog": {
@@ -380,7 +220,7 @@
          "tipos": [
           "str"
          ],
-         "exemplo": "PokÃ© Ball"
+         "exemplo": "Poké Ball"
         },
         "priceGold": {
          "tipos": [
@@ -400,7 +240,7 @@
         "tipos": [
          "int"
         ],
-        "exemplo": 99
+        "exemplo": 96
        },
        "2": {
         "tipos": [
@@ -412,7 +252,7 @@
         "tipos": [
          "int"
         ],
-        "exemplo": 5767
+        "exemplo": 10838
        },
        "4": {
         "tipos": [
@@ -426,7 +266,7 @@
          "int"
         ],
         "opcional": true,
-        "exemplo": 3205
+        "exemplo": 100
        }
       }
      },
@@ -439,7 +279,7 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 364739
+      "exemplo": 12695
      },
      "selected": {
       "tipos": [
@@ -456,12 +296,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 4,
+    "vezes": 2,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {}
    }
@@ -476,9 +314,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodude-10min.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl"
     ],
     "esquema": {
      "boosts": {
@@ -490,29 +329,23 @@
         "object"
        ],
        "campos": {
-        "extra": {
-         "tipos": [
-          "int"
-         ],
-         "exemplo": 0
-        },
         "key": {
          "tipos": [
           "str"
          ],
-         "exemplo": "loot"
+         "exemplo": "shinylock"
         },
         "pct": {
          "tipos": [
           "int"
          ],
-         "exemplo": 40
+         "exemplo": 0
         },
         "until": {
          "tipos": [
           "int"
          ],
-         "exemplo": 1794177072234
+         "exemplo": 1794194505554
         }
        }
       }
@@ -526,10 +359,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 53,
     "fontes": [
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl"
     ],
     "esquema": {}
    }
@@ -568,11 +403,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 15,
+    "vezes": 273,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "auto": {
@@ -609,7 +447,7 @@
       "tipos": [
        "str"
       ],
-      "exemplo": "Geodude"
+      "exemplo": "Rattata"
      },
      "success": {
       "tipos": [
@@ -625,12 +463,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 9,
+    "vezes": 2,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "msg": {
@@ -758,12 +594,11 @@
     ]
    },
    "visto_out": {
-    "vezes": 4,
+    "vezes": 3,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodude-10min.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "resume": {
@@ -776,7 +611,7 @@
       "tipos": [
        "str"
       ],
-      "exemplo": "geodude"
+      "exemplo": "typhlosion"
      }
     }
    }
@@ -791,11 +626,13 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 4,
+    "vezes": 56,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "loogs.txt"
     ],
     "esquema": {
      "events": {
@@ -811,13 +648,13 @@
          "tipos": [
           "str"
          ],
-         "exemplo": "ApariÃ§Ã£o de shinies Ã2"
+         "exemplo": "Aparição de shinies ×2"
         },
         "emoji": {
          "tipos": [
           "str"
          ],
-         "exemplo": "â¨"
+         "exemplo": "✨"
         },
         "key": {
          "tipos": [
@@ -829,7 +666,7 @@
          "tipos": [
           "str"
          ],
-         "exemplo": "â¨ Shiny Ã2"
+         "exemplo": "✨ Shiny ×2"
         },
         "pct": {
          "tipos": [
@@ -865,13 +702,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 204,
+    "vezes": 4120,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "f4a55b8a-logs_hitmonlee.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs hitmonlee.txt",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "allMobsDead": {
@@ -886,6 +725,13 @@
       ],
       "exemplo": 0
      },
+     "bossSwitch": {
+      "tipos": [
+       "bool"
+      ],
+      "opcional": true,
+      "exemplo": true
+     },
      "bossTeam": {
       "tipos": [
        "list"
@@ -899,13 +745,13 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 345
+         "exemplo": 26
         },
         "maxHp": {
          "tipos": [
           "int"
          ],
-         "exemplo": 348
+         "exemplo": 36
         }
        }
       }
@@ -923,19 +769,19 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 43
+         "exemplo": 30
         },
         "corpse": {
          "tipos": [
           "int"
          ],
-         "exemplo": 6071
+         "exemplo": 2848
         },
         "row": {
          "tipos": [
           "int"
          ],
-         "exemplo": 46
+         "exemplo": 45
         }
        }
       }
@@ -961,25 +807,25 @@
         "tipos": [
          "int"
         ],
-        "exemplo": 50
+        "exemplo": 41
        },
        "facing": {
         "tipos": [
          "str"
         ],
-        "exemplo": "west"
+        "exemplo": "east"
        },
        "row": {
         "tipos": [
          "int"
         ],
-        "exemplo": 46
+        "exemplo": 48
        },
        "stepStartAt": {
         "tipos": [
          "int"
         ],
-        "exemplo": 1793908356217
+        "exemplo": 1794195114242
        },
        "walkFrom": {
         "tipos": [
@@ -990,13 +836,13 @@
           "tipos": [
            "int"
           ],
-          "exemplo": 51
+          "exemplo": 41
          },
          "row": {
           "tipos": [
            "int"
           ],
-          "exemplo": 46
+          "exemplo": 48
          }
         }
        }
@@ -1006,25 +852,25 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 345
+      "exemplo": 26
      },
      "heroLooktype": {
       "tipos": [
        "int"
       ],
-      "exemplo": 25
+      "exemplo": 196
      },
      "heroMaxHp": {
       "tipos": [
        "int"
       ],
-      "exemplo": 348
+      "exemplo": 36
      },
      "heroName": {
       "tipos": [
        "str"
       ],
-      "exemplo": "Bulbasaur"
+      "exemplo": "Geodude"
      },
      "hits": {
       "tipos": [
@@ -1039,32 +885,32 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 2688
+         "exemplo": 13
         },
         "eff": {
          "tipos": [
           "float",
           "int"
          ],
-         "exemplo": 5.5
+         "exemplo": 1
         },
         "move": {
          "tipos": [
           "str"
          ],
-         "exemplo": "Razor Leaf"
+         "exemplo": "Tackle"
         },
         "slot": {
          "tipos": [
           "int"
          ],
-         "exemplo": 11
+         "exemplo": 10
         },
         "type": {
          "tipos": [
           "str"
          ],
-         "exemplo": "GRASS"
+         "exemplo": "NORMAL"
         }
        }
       }
@@ -1082,7 +928,7 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 82
+         "exemplo": 78
         },
         "dead": {
          "tipos": [
@@ -1136,13 +982,13 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 74
+         "exemplo": 19
         },
         "stepStartAt": {
          "tipos": [
           "int"
          ],
-         "exemplo": 1793908356217
+         "exemplo": 1794195114242
         },
         "walkFrom": {
          "tipos": [
@@ -1153,7 +999,7 @@
            "tipos": [
             "int"
            ],
-           "exemplo": 82
+           "exemplo": 78
           },
           "row": {
            "tipos": [
@@ -1176,19 +1022,19 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 4
+      "exemplo": 2860
      },
      "serverNow": {
       "tipos": [
        "int"
       ],
-      "exemplo": 1793908356217
+      "exemplo": 1794195114242
      },
      "targetSlot": {
       "tipos": [
        "int"
       ],
-      "exemplo": 11
+      "exemplo": 10
      },
      "trainer": {
       "tipos": [
@@ -1199,25 +1045,25 @@
         "tipos": [
          "int"
         ],
-        "exemplo": 50
+        "exemplo": 41
        },
        "facing": {
         "tipos": [
          "str"
         ],
-        "exemplo": "west"
+        "exemplo": "east"
        },
        "row": {
         "tipos": [
          "int"
         ],
-        "exemplo": 46
+        "exemplo": 48
        },
        "stepStartAt": {
         "tipos": [
          "int"
         ],
-        "exemplo": 1793908356217
+        "exemplo": 1794195114242
        },
        "walkFrom": {
         "tipos": [
@@ -1228,13 +1074,13 @@
           "tipos": [
            "int"
           ],
-          "exemplo": 50
+          "exemplo": 41
          },
          "row": {
           "tipos": [
            "int"
           ],
-          "exemplo": 46
+          "exemplo": 48
          }
         }
        }
@@ -1242,8 +1088,10 @@
      },
      "waveRespawnAt": {
       "tipos": [
+       "int",
        "null"
-      ]
+      ],
+      "exemplo": 1794193326973
      }
     }
    }
@@ -1252,6 +1100,16 @@
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 44,
+    "fontes": [
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl"
+    ],
+    "esquema": {}
    }
   },
   "field-init": {
@@ -1259,12 +1117,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 4,
+    "vezes": 47,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "bike": {
@@ -1277,7 +1137,7 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 109
+      "exemplo": 105
      },
      "grid": {
       "tipos": [
@@ -1305,19 +1165,19 @@
       "tipos": [
        "str"
       ],
-      "exemplo": "geodude:1793908355535"
+      "exemplo": "rattata:1794194542239:r10"
      },
      "minTx": {
       "tipos": [
        "int"
       ],
-      "exemplo": -54
+      "exemplo": -52
      },
      "minTy": {
       "tipos": [
        "int"
       ],
-      "exemplo": -43
+      "exemplo": -42
      },
      "mobStepMs": {
       "tipos": [
@@ -1329,13 +1189,13 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 88
+      "exemplo": 85
      },
      "slug": {
       "tipos": [
        "str"
       ],
-      "exemplo": "geodude"
+      "exemplo": "rattata"
      },
      "tickMs": {
       "tipos": [
@@ -1357,11 +1217,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 15,
+    "vezes": 264,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "col": {
@@ -1374,7 +1237,7 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 36
+      "exemplo": 109
      },
      "leveledUp": {
       "tipos": [
@@ -1386,7 +1249,7 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 196
+      "exemplo": 36
      },
      "loot": {
       "tipos": [
@@ -1401,19 +1264,19 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 120
+         "exemplo": 110
         },
         "name": {
          "tipos": [
           "str"
          ],
-         "exemplo": "Small Stone"
+         "exemplo": "Rubber Ball"
         },
         "qty": {
          "tipos": [
           "int"
          ],
-         "exemplo": 4
+         "exemplo": 3
         }
        }
       }
@@ -1427,7 +1290,7 @@
         "tipos": [
          "int"
         ],
-        "exemplo": 36
+        "exemplo": 3
        },
        "parts": {
         "tipos": [
@@ -1445,6 +1308,13 @@
            "int"
           ],
           "exemplo": 0
+         },
+         "debuff": {
+          "tipos": [
+           "int"
+          ],
+          "opcional": true,
+          "exemplo": -9
          },
          "event": {
           "tipos": [
@@ -1489,7 +1359,7 @@
         "tipos": [
          "int"
         ],
-        "exemplo": 1
+        "exemplo": 74
        },
        "xpGained": {
         "tipos": [
@@ -1515,25 +1385,25 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 11
+      "exemplo": 10
      },
      "speciesId": {
       "tipos": [
        "int"
       ],
-      "exemplo": 74
+      "exemplo": 19
      },
      "speciesName": {
       "tipos": [
        "str"
       ],
-      "exemplo": "Geodude"
+      "exemplo": "Rattata"
      },
      "totalXp": {
       "tipos": [
        "int"
       ],
-      "exemplo": 714292
+      "exemplo": 20851232
      },
      "xpGained": {
       "tipos": [
@@ -1557,6 +1427,13 @@
          "int"
         ],
         "exemplo": 0
+       },
+       "debuff": {
+        "tipos": [
+         "int"
+        ],
+        "opcional": true,
+        "exemplo": -9
        },
        "event": {
         "tipos": [
@@ -1713,17 +1590,112 @@
     "chaves_literal": []
    }
   },
+  "invasion-energy": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 68,
+    "fontes": [
+     "gravacoes_unicas_2026-11-09.jsonl"
+    ],
+    "esquema": {
+     "endsAt": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794195000000
+     },
+     "energy": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 9
+     },
+     "entryOpen": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "entryUntil": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794193800000
+     },
+     "live": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "max": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 10
+     }
+    }
+   }
+  },
+  "invasion-energy-get": {
+   "no_cliente": {},
+   "visto_out": {
+    "vezes": 68,
+    "fontes": [
+     "gravacoes_unicas_2026-11-09.jsonl"
+    ],
+    "esquema": {}
+   }
+  },
+  "invasion-state": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 141,
+    "fontes": [
+     "geodude-10min.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl"
+    ],
+    "esquema": {
+     "endsAt": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794195000000
+     },
+     "entryOpen": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "entryUntil": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794193800000
+     },
+     "live": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     }
+    }
+   }
+  },
   "inventory": {
    "no_cliente": {
     "assinado": true
    },
    "visto_in": {
-    "vezes": 27,
+    "vezes": 485,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "items": {
@@ -1739,13 +1711,13 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 39
+         "exemplo": 10
         },
         "quantity": {
          "tipos": [
           "int"
          ],
-         "exemplo": 6626
+         "exemplo": 21
         }
        }
       }
@@ -1765,9 +1737,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 4,
     "fontes": [
-     "6611fa39-loogs.txt"
+     "geodude-10min.jsonl",
+     "loogs.txt"
     ],
     "esquema": {}
    }
@@ -1806,12 +1779,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 4,
+    "vezes": 46,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "list": {
@@ -1831,12 +1806,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 4,
+    "vezes": 2,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {}
    }
@@ -1844,9 +1817,13 @@
   "poke-delta": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 1,
+    "vezes": 73,
     "fontes": [
-     "6611fa39-loogs.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "loogs.txt"
     ],
     "esquema": {
      "poke": {
@@ -1858,24 +1835,34 @@
         "tipos": [
          "int"
         ],
-        "exemplo": 196
+        "exemplo": 36
        },
        "evolveNeedLevel": {
         "tipos": [
          "int"
         ],
-        "exemplo": 40
+        "opcional": true,
+        "exemplo": 30
        },
        "evolvesToName": {
         "tipos": [
          "str"
         ],
-        "exemplo": "Graveler"
+        "opcional": true,
+        "exemplo": "Raticate"
+       },
+       "finalStage": {
+        "tipos": [
+         "bool"
+        ],
+        "opcional": true,
+        "exemplo": true
        },
        "hasEvolution": {
         "tipos": [
          "bool"
         ],
+        "opcional": true,
         "exemplo": true
        },
        "hp": {
@@ -1888,13 +1875,13 @@
         "tipos": [
          "str"
         ],
-        "exemplo": "cmw3yq3mdfkgf12ih566etdtx"
+        "exemplo": "cmw8pgp2u18pl8u8hzsxd2yyl"
        },
        "ivTotal": {
         "tipos": [
          "int"
         ],
-        "exemplo": 76
+        "exemplo": 92
        },
        "leader": {
         "tipos": [
@@ -1908,11 +1895,18 @@
         ],
         "exemplo": 1
        },
+       "locked": {
+        "tipos": [
+         "bool"
+        ],
+        "opcional": true,
+        "exemplo": true
+       },
        "looktype": {
         "tipos": [
          "int"
         ],
-        "exemplo": 196
+        "exemplo": 36
        },
        "maxHp": {
         "tipos": [
@@ -1924,25 +1918,25 @@
         "tipos": [
          "str"
         ],
-        "exemplo": "Geodude"
+        "exemplo": "Rattata"
        },
        "power": {
         "tipos": [
          "int"
         ],
-        "exemplo": 11
+        "exemplo": 9
        },
        "quality": {
         "tipos": [
          "float"
         ],
-        "exemplo": 1.394
+        "exemplo": 1.299
        },
        "sellValue": {
         "tipos": [
          "int"
         ],
-        "exemplo": 300
+        "exemplo": 80
        },
        "shiny": {
         "tipos": [
@@ -1952,14 +1946,16 @@
        },
        "slot": {
         "tipos": [
+         "int",
          "null"
-        ]
+        ],
+        "exemplo": 0
        },
        "speciesId": {
         "tipos": [
          "int"
         ],
-        "exemplo": 74
+        "exemplo": 19
        },
        "starter": {
         "tipos": [
@@ -1976,13 +1972,13 @@
           "tipos": [
            "int"
           ],
-          "exemplo": 2
+          "exemplo": 1
          },
          "def": {
           "tipos": [
            "int"
           ],
-          "exemplo": 2
+          "exemplo": 1
          },
          "hp": {
           "tipos": [
@@ -2006,7 +2002,7 @@
           "tipos": [
            "int"
           ],
-          "exemplo": 1
+          "exemplo": 2
          }
         }
        },
@@ -2020,12 +2016,13 @@
         "tipos": [
          "str"
         ],
-        "exemplo": "ROCK"
+        "exemplo": "NORMAL"
        },
        "type2": {
         "tipos": [
          "str"
         ],
+        "opcional": true,
         "exemplo": "GROUND"
        },
        "xp": {
@@ -2073,24 +2070,27 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 15,
+    "vezes": 264,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "id": {
       "tipos": [
        "str"
       ],
-      "exemplo": "cmu9y6y5cntw5iiyrt3u78fys"
+      "exemplo": "cmvyzawpzfjbnsvchnzmjfpu4"
      },
      "level": {
       "tipos": [
        "int"
       ],
-      "exemplo": 36
+      "exemplo": 3
      },
      "leveledUp": {
       "tipos": [
@@ -2102,13 +2102,13 @@
       "tipos": [
        "int"
       ],
-      "exemplo": 1
+      "exemplo": 74
      },
      "xp": {
       "tipos": [
        "int"
       ],
-      "exemplo": 712226
+      "exemplo": 282
      },
      "xpGained": {
       "tipos": [
@@ -2131,12 +2131,238 @@
      "list"
     ],
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 2,
+    "fontes": [
+     "geodude-10min.jsonl"
+    ],
+    "esquema": {
+     "list": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "barLooktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 196
+        },
+        "evolveNeedLevel": {
+         "tipos": [
+          "int"
+         ],
+         "opcional": true,
+         "exemplo": 40
+        },
+        "evolvesToName": {
+         "tipos": [
+          "str"
+         ],
+         "opcional": true,
+         "exemplo": "Graveler"
+        },
+        "finalStage": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
+        },
+        "hasEvolution": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
+        },
+        "hp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 24
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cmvyzawpzfjbnsvchnzmjfpu4"
+        },
+        "ivTotal": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 173
+        },
+        "leader": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "level": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "locked": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 196
+        },
+        "maxHp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 24
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Geodude"
+        },
+        "power": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 8
+        },
+        "quality": {
+         "tipos": [
+          "float"
+         ],
+         "exemplo": 1.137
+        },
+        "sellValue": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 300
+        },
+        "shiny": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "slot": {
+         "tipos": [
+          "int",
+          "null"
+         ],
+         "exemplo": 0
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 74
+        },
+        "starter": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "stats": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "atk": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1
+          },
+          "def": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 2
+          },
+          "hp": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1
+          },
+          "spAtk": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1
+          },
+          "spDef": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1
+          },
+          "speed": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1
+          }
+         }
+        },
+        "team": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "type1": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "ROCK"
+        },
+        "type2": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "GROUND"
+        },
+        "xp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        }
+       }
+      }
+     }
+    }
    }
   },
   "pokes-get": {
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 2,
+    "fontes": [
+     "geodude-10min.jsonl"
+    ],
+    "esquema": {}
    }
   },
   "profession-gather": {
@@ -2317,9 +2543,10 @@
     ]
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 2,
     "fontes": [
-     "6611fa39-loogs.txt"
+     "geodude-10min.jsonl",
+     "loogs.txt"
     ],
     "esquema": {
      "slug": {
@@ -2526,12 +2753,14 @@
     ]
    },
    "visto_out": {
-    "vezes": 4,
+    "vezes": 47,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "cb61e549-logs_rhyhorn.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "logs rhyhorn.txt",
+     "loogs.txt"
     ],
     "esquema": {
      "hc": {
@@ -2552,11 +2781,13 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 4,
+    "vezes": 55,
     "fontes": [
-     "6611fa39-loogs.txt",
-     "poke_ws_2026-11-08T02-41-10-198Z.txt",
-     "poke_ws_2026-11-08T22-11-28-609Z.txt"
+     "geodeude-2.jsonl",
+     "geodude-10min.jsonl",
+     "geodude-3.jsonl",
+     "gravacoes_unicas_2026-11-09.jsonl",
+     "loogs.txt"
     ],
     "esquema": {
      "until": {

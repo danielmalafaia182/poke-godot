@@ -8,6 +8,7 @@ Para cada mensagem recebida (dir "in"):
   - listas e objetos aninhados são conferidos pelo mesmo critério;
   - campos que o esquema não conhece viram aviso (o esquema vem só de logs: ausência não prova nada).
 Tipos sem esquema (só "no_cliente") passam apenas pela checagem de existência.
+O protocolo.json é gerado (ferramentas/protocolo/regenerar.sh) com todas as gravações reais: elas próprias passam nele.
 
 Uso: python ferramentas/protocolo/validar_jsonl.py arquivo.jsonl [--protocolo dados/protocolo.json] [--max-erros 20]
 Saída: código 0 se não houver erro (avisos não reprovam).
@@ -114,59 +115,13 @@ def validar(caminho, protocolo, max_erros=20):
     return {"por_tipo": dict(por_tipo), "erros": erros, "avisos": dict(avisos), "invalidas": invalidas}
 
 
-def unir_esquemas(a, b):
-    """União de dois esquemas de campo (formato do protocolo.json). Campo ausente em um dos lados vira opcional."""
-    r = {"tipos": sorted(set(a.get("tipos", [])) | set(b.get("tipos", [])))}
-    if a.get("opcional") or b.get("opcional"):
-        r["opcional"] = True
-    if "campos" in a or "campos" in b:
-        ca, cb = a.get("campos", {}), b.get("campos", {})
-        r["campos"] = {}
-        for k in sorted(set(ca) | set(cb)):
-            if k in ca and k in cb:
-                r["campos"][k] = unir_esquemas(ca[k], cb[k])
-            else:
-                e = dict(ca.get(k) or cb.get(k))
-                e["opcional"] = True
-                r["campos"][k] = e
-    if "itens" in a or "itens" in b:
-        ia, ib = a.get("itens"), b.get("itens")
-        r["itens"] = unir_esquemas(ia, ib) if ia and ib else (ia or ib)
-    return r
-
-
-def ampliar_com_referencia(proto, caminhos):
-    """Acrescenta ao protocolo o esquema aprendido de gravações reais (fonte A), sem alterar o arquivo gerado."""
-    sys.path.insert(0, str(RAIZ / "ferramentas" / "protocolo"))
-    from gerar_protocolo import Esquema, ler_logs
-    esq = {}
-    for d, m, _ in ler_logs(caminhos):
-        if d != "in":
-            continue
-        e = esq.setdefault(m["type"], Esquema())
-        e.ver({k: v for k, v in m.items() if k != "type"})
-    msgs = proto["mensagens"]
-    for t, e in esq.items():
-        novo = e.dump().get("campos", {})
-        alvo = msgs.setdefault(t, {"no_cliente": {}})
-        vi = alvo.setdefault("visto_in", {})
-        if "esquema" in vi:
-            vi["esquema"] = unir_esquemas({"campos": vi["esquema"]}, {"campos": novo})["campos"]
-        else:
-            vi["esquema"] = novo
-    return proto
-
-
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("arquivo")
     ap.add_argument("--protocolo", default=str(RAIZ / "dados" / "protocolo.json"))
-    ap.add_argument("--referencia", nargs="*", default=[], help="gravações reais que ampliam o esquema (fonte A)")
     ap.add_argument("--max-erros", type=int, default=20)
     a = ap.parse_args()
     proto = json.load(open(a.protocolo, encoding="utf-8"))
-    if a.referencia:
-        proto = ampliar_com_referencia(proto, a.referencia)
     r = validar(a.arquivo, proto, a.max_erros)
     print("mensagens por tipo:", r["por_tipo"])
     if r["invalidas"]:

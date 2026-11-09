@@ -10,7 +10,7 @@ Saída: para cada tipo, direção, quantas vezes foi visto, em quais fontes, e o
 esquema dos campos (tipos observados, exemplo curto, aninhamento de objetos e listas).
 Uso: python3 gerar_protocolo.py --cliente chunk1.js chunk2.js --logs a.txt b.jsonl --saida protocolo.json
 """
-import argparse, json, re, sys
+import argparse, glob, json, os, re, sys
 from collections import defaultdict
 
 TIPOS_HTML = {"button", "number", "checkbox", "password", "submit", "range", "text",
@@ -69,8 +69,12 @@ class Esquema:
         return d
 
 
-def ler_logs(caminhos):
-    """Devolve (direcao, mensagem, fonte) para cada mensagem reconhecida."""
+def ler_logs(caminhos, deduplicar=True):
+    """Devolve (direcao, mensagem, fonte) para cada mensagem reconhecida.
+
+    Com deduplicar, uma linha do gravador novo ({sessao,t,dir,msg}) que já apareceu em outro arquivo
+    (mesma sessão, instante, direção e conteúdo) é contada uma vez só: as gravações exportadas se sobrepõem."""
+    vistas = set()
     for c in caminhos:
         with open(c, encoding="utf-8", errors="replace") as f:
             for linha in f:
@@ -93,10 +97,15 @@ def ler_logs(caminhos):
                     m, d = o["msg"], o["dir"]
                     if d == "meta":
                         continue
+                    if deduplicar:
+                        chave = (o.get("sessao"), o.get("t"), d, json.dumps(m, sort_keys=True))
+                        if chave in vistas:
+                            continue
+                        vistas.add(chave)
                 else:                                        # mensagem crua
                     m, d = o, "?"
                 if isinstance(m, dict) and isinstance(m.get("type"), str):
-                    yield d, m, c.split("/")[-1]
+                    yield d, m, os.path.basename(c)
 
 
 def extrair_cliente(caminhos):
@@ -117,12 +126,25 @@ def extrair_cliente(caminhos):
     return enviados, assinados
 
 
+def expandir(padroes):
+    """Expande globs (o shell do Windows não expande) e mantém a ordem, sem repetir arquivo."""
+    r = []
+    for p in padroes:
+        for c in (sorted(glob.glob(p)) if any(ch in p for ch in "*?[") else [p]):
+            c = c.replace("\\", "/")
+            if c not in r:
+                r.append(c)
+    return r
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--cliente", nargs="*", default=[])
-    ap.add_argument("--logs", nargs="*", default=[])
+    ap.add_argument("--cliente", nargs="*", default=[], help="arquivos ou padrões glob")
+    ap.add_argument("--logs", nargs="*", default=[], help="arquivos ou padrões glob")
     ap.add_argument("--saida", required=True)
     a = ap.parse_args()
+    a.cliente = expandir(a.cliente)
+    a.logs = expandir(a.logs)
 
     enviados, assinados = extrair_cliente(a.cliente)
     esquemas = defaultdict(Esquema)
@@ -161,8 +183,8 @@ def main():
         "formato": "poke-protocolo-v1",
         "nota": "Gerado automaticamente. 'enviado' = cliente -> servidor; 'assinado' = evento que o cliente escuta. "
                 "Esquemas vêm só dos logs: campo ausente não prova que o servidor nunca o envie.",
-        "fontes_cliente": [c.split("/")[-1] for c in a.cliente],
-        "fontes_logs": [c.split("/")[-1] for c in a.logs],
+        "fontes_cliente": [os.path.basename(c) for c in a.cliente],
+        "fontes_logs": [os.path.basename(c) for c in a.logs],
         "totais": {
             "tipos": len(mensagens),
             "enviados_no_cliente": len(enviados),

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Passo 3 da fase 1: 1 h simulada → JSONL no formato do gravador → validação contra dados/protocolo.json
-# (ampliado com o esquema das gravações reais, fonte A) → o analisador das gravações lê a saída sem erro.
+# (gerado com todas as gravações reais; a gravação real de controle também precisa passar) → o analisador lê a saída.
 # Uso: testes/test_sim_protocolo.sh   (saída em saida_testes/, ignorada pelo git)
 set -euo pipefail
 RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
@@ -19,5 +19,6 @@ for linha in open(sys.argv[1], encoding="utf-8"):
     n += 1
 print(f"OK    formato do gravador em {n} linhas")
 EOF
-python -I ferramentas/protocolo/validar_jsonl.py "$SAIDA" --referencia "$REF"
+echo "controle (gravação real):"; python -I ferramentas/protocolo/validar_jsonl.py "$REF" | tail -1
+python -I ferramentas/protocolo/validar_jsonl.py "$SAIDA"
 python -I ferramentas/gravador/analisar_gravacao.py "$SAIDA" > /dev/null && echo "OK    analisar_gravacao.py leu a saída"
