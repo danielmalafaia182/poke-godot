@@ -15,7 +15,9 @@ Para a fase 3 (calibração do dano). Não muda nada na simulação. Fontes de c
     nesse indivíduo (sinal para a fase 3).
   - Selvagem → aliado: o hit no herói (slot −1) não diz quem bateu; só entram fields com UM selvagem vivo
     adjacente ao herói (Chebyshev ≤ 1), atribuídos a ele. Ataque do selvagem variando sobre Q × IV de Atk/SpA.
-  - Hits por abate observados: hits do aliado no slot entre o respawn e o field-kill daquele slot (só vidas inteiras).
+  - Hits por abate observados: hits do aliado no slot entre o respawn e o field-kill daquele slot, só em vidas
+    inteiras. Field que não chega não perde hit: o servidor acumula os hits até o próximo field entregue (A: na
+    rhydon-1h, hits do aliado por field 0,18 com Δseq 2 e 0,91 com Δseq 10).
 
 Uso: python relatorio_individuos.py gravacao.jsonl [...] --slug rhydon [--json saida.json] [--md saida.md]
 """
@@ -156,9 +158,11 @@ def chave_base(hk):
 def coletar(caminhos, slug, especie=None):
     """Indivíduos por (huntKey, slot): maxHp, hits do aliado, hits atribuídos, vidas (hits até cada abate)."""
     ind = {}
-    heroi = {}          # último poke-delta visto: {speciesId, level, stats}
-    huntkey, atual = None, None
+    deltas = {}         # último poke-delta por nome: {speciesId, level, stats} (capturas mandam poke-delta de outros)
+    heroi = {}
+    huntkey, atual, seq_ant = None, None, None
     vidas_abertas = {}  # (hk, slot) -> hits nesta vida (None = vida começou antes da gravação)
+    fechando = {}       # vidas encerradas por field-kill que ainda esperam o golpe final (vem no field seguinte)
     for d, m, _ in ler_logs(caminhos):
         if d != "in":
             continue
@@ -166,15 +170,20 @@ def coletar(caminhos, slug, especie=None):
         if t == "poke-delta":
             p = m.get("poke", {})
             if p.get("stats"):
-                heroi = {"speciesId": p.get("speciesId"), "level": p.get("level"), "stats": p["stats"],
-                         "nome": p.get("name")}
+                deltas[p.get("name")] = {"speciesId": p.get("speciesId"), "level": p.get("level"),
+                                         "stats": p["stats"], "nome": p.get("name")}
         elif t == "field-init":
             huntkey, atual = chave_base(m.get("huntKey")), m.get("slug")
             vidas_abertas = {}
+            fechando = {}
+            seq_ant = None
         elif atual != slug:
             continue
         elif t == "field":
-            if not heroi or m.get("heroName") != heroi.get("nome"):
+            heroi = deltas.get(m.get("heroName"), {})
+            if not heroi:
+                # stats do aliado ainda desconhecidos: a vida em curso não pode ser contada inteira
+                vidas_abertas = {k: None for k in vidas_abertas}
                 continue
             h = m["hero"]
             vivos = [x for x in m["mobs"] if not x["dead"]]
@@ -197,7 +206,9 @@ def coletar(caminhos, slug, especie=None):
                     k = (huntkey, hit["slot"], especies_slot.get(hit["slot"]))
                     if k in ind:
                         ind[k]["hits_aliado"][(hit["move"], hit["type"], hit["eff"])].append((hit["amount"], dict(heroi)))
-                        if vidas_abertas.get(k) is not None:
+                        if k in fechando:
+                            fechando[k] += 1
+                        elif vidas_abertas.get(k) is not None:
                             vidas_abertas[k] += 1
             adj = [x for x in vivos if max(abs(x["row"] - h["row"]), abs(x["col"] - h["col"])) <= 1]
             if len(adj) == 1 and (huntkey, adj[0]["slot"], adj[0]["speciesId"]) in ind:
@@ -205,10 +216,14 @@ def coletar(caminhos, slug, especie=None):
                 for hit in m["hits"]:
                     if hit["slot"] == -1:
                         ind[k]["hits_selvagem"][(hit["move"], hit["type"], hit["eff"])].append((hit["amount"], dict(heroi)))
+            # A: o field-kill sai no tick do abate e o golpe final só chega no próximo field (hits acumulados)
+            for k, n in fechando.items():
+                ind[k]["hits_por_vida"].append(n)
+            fechando = {}
         elif t == "field-kill":
             k = (huntkey, m.get("slot"), m.get("speciesId"))
             if vidas_abertas.get(k) is not None and k in ind:
-                ind[k]["hits_por_vida"].append(vidas_abertas[k])
+                fechando[k] = vidas_abertas[k]
             vidas_abertas.pop(k, None)
     return ind
 
@@ -272,6 +287,10 @@ def analisar(ind, especies, nivel_selvagem):
                 "defesa": {"stat": chave_d, "faixa_pelo_hp": [min(vals), max(vals)],
                            "compativel_com_hits": [comp[0], comp[-1]] if comp else None},
                 "compativel": bool(comp)})
+        obs = [x for am in e["hits_aliado"].values() for x, _ in am]
+        if obs:
+            # maxHp ÷ dano médio por hit: comparável dos dois lados mesmo quando nenhuma vida foi vista inteira
+            r["hits_por_abate_pelo_dano_medio_obs"] = round(e["maxHp"] / (sum(obs) / len(obs)), 2)
         if media_prev_total:
             md = sum(m * n for m, n in media_prev_total) / sum(n for _, n in media_prev_total)
             r["hits_por_abate_previsto"] = round(e["maxHp"] / md, 2)
@@ -314,7 +333,7 @@ def markdown(linhas, fonte):
            "ok = existe defesa/ataque permitido pelo HP que explica todos os hits observados: com stats inteiros / "
            "com o stat do selvagem sem arredondar (hipótese F).", "",
            "| instância | slot | maxHp | stat HP | IV HP | Q | golpe aliado | obs (n, mín–máx, média) | "
-           "previsto (mín–máx, média) | defesa pelo HP → pelos hits | ok | hits/abate obs → prev (pelo HP / pela defesa compatível) | "
+           "previsto (mín–máx, média) | defesa pelo HP → pelos hits | ok | maxHp/dano por hit: obs (vidas inteiras / dano médio) → prev (pelo HP / pela defesa compatível) | "
            "golpe selvagem | obs | previsto | ok |",
            "|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|"]
     for r in linhas:
@@ -345,6 +364,7 @@ def markdown(linhas, fonte):
             if a else "—",
             ok_txt(a),
             (f'{r["hits_por_abate_observado"]:.2f}' if r["hits_por_abate_observado"] is not None else "—")
+            + " / " + str(r.get("hits_por_abate_pelo_dano_medio_obs", "—"))
             + " → " + str(r.get("hits_por_abate_previsto", "—")) + " / " + str(r.get("hits_por_abate_previsto_pelos_hits", "—")),
             f'{s["golpe"]} (eff {s["eff"]:g})' if s else "—", f_obs(s) if s else "—", f_prev(s) if s else "—",
             ok_txt(s)]) + " |")
@@ -376,10 +396,10 @@ def main():
     md = markdown(linhas, ", ".join(os.path.basename(x) for x in a.arquivos))
     print(md)
     if a.json:
-        with open(a.json, "w", encoding="utf-8") as f:
+        with open(a.json, "w", encoding="utf-8", newline="\n") as f:
             json.dump(linhas, f, ensure_ascii=False, indent=1)
     if a.md:
-        with open(a.md, "w", encoding="utf-8") as f:
+        with open(a.md, "w", encoding="utf-8", newline="\n") as f:
             f.write(md)
 
 

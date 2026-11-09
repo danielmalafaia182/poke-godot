@@ -91,12 +91,14 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 | Efetividade amplificada: ×1,5→1,75; ×2→2,5; ×4→5,5; resistência ÷1,5 (×½ → 0,333); ×0 e ×1 iguais | (B) + `eff` nos hits |
 | **Piso de dano: 2 para o aliado, 1 para o selvagem — inclusive com eff 0 ou resistido** | Gastly×Rattata (eff 0: 2 e 1); Rattata→Geodude resistido: 1 em 880 hits |
 | XP base por abate = `experience` da espécie; VIP soma +50% em parcela separada (`xpParts`) | 200+ abates |
+| Ao entrar numa hunt (não na retomada `:rN`) os abates de ~1 min saem com `xpParts.debuff` = −70% (5772 → 1731) | rhydon-1h: os 7 primeiros abates; mecanismo exato em aberto (F) |
+| Os hits do `field` que o cliente não recebe não se perdem: vão no próximo field entregue; o `field-kill` sai no tick do abate, antes do field com o golpe final | rhydon-1h: hits/field 0,18 com Δseq 2, 0,91 com Δseq 10 |
 | XP acumulada = round(50/3 × (L³ − 6L² + 17L − 12)) → 100/200/400/800 para níveis 2–5 | (B) + Geodude subiu com 102, 210; nível 4 com 714 |
 | Loot: tabela de `creatures.json`, chance em 1/100.000, quantidade min–max | Rhydon 60 abates: Horn 83,3% vs 83,32% |
 | Hyper Potion cura até 1000, limitado ao HP que falta | 60+ auto-heals |
 | Auto-Potion dispara no mesmo tick em que o HP fica ≤ 50% (sem recarga observada); usa a menor poção do inventário que cobre o que falta, ou a maior se nenhuma cobre | `medir_pocao.py`: 42/42 cruzamentos; 208/208 escolhas |
 | Golpes: o mesmo nome tem cooldown diferente por espécie (234 de 407 variam) | catálogo; por isso golpes ficam dentro de cada espécie |
-| Captura com Super Ball: 59% em Rattata nível 1 (35/59); 0% em 167 tentativas no nível 80+ | gravações; `hunt-config.catchChance` é 0 em todas |
+| Captura com Super Ball: 59% em Rattata nível 1 (35/59); no Rhydon 80, 0 em 167 (gravações antigas) e 5 em 608 na rhydon-1h (~0,8%); o Rhydon capturado chega como poke-delta de nível 1 | gravações; `hunt-config.catchChance` é 0 em todas |
 | 15 spawns por hunt em Kanto/Outland, 16 em Orre, até 56 em Nightmare | `hunt-config` |
 
 ### Fórmula de dano candidata (F, coerente com todos os casos medidos)
@@ -245,3 +247,21 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   (stats sem arredondar no dano); Stone Edge 14/15 (o 1 fora é coerente com o ruído da atribuição: 96% na sim).
   Autoteste na sim (fórmula exata, stats inteiros): 294/294 indivíduos×golpe compatíveis em 20 instâncias.
   Hits por abate previstos pela SpD compatível ficam perto dos observados (ex. slot 11: 6,22 × 6). Não mexi na fórmula.
+- 09/11/2026 — Gravação nova `poke har/gravacoes/rhydon-1h.jsonl` (88 min, 608 abates, Venusaur 119–124, mesma
+  conta e configuração) virou a referência principal; estado inicial em `dados/testes/estado_rhydon_venusaur_1h.json`
+  (o extrator agora pega o poke-delta do herói: o primeiro poke-delta dessa gravação é de um Rhydon nível 1 capturado).
+  Medições refeitas, todas confirmam as anteriores (A): herói →reto 600 ms (241/247), →diagonal 1000/1200 (110/54);
+  selvagem →reto 1000/1200 (409/226), →diagonal 2000/2200 (138/6); treinador = herói em 6613/6613 fields.
+  Auto-Potion: 49/49 cruzamentos de 50% curados no mesmo tick, HP exato na cura ≤ 0,50 em 200/200, menor intervalo
+  3024 ms; poção = menor que cobre (200/200, sempre Hyper com Great+Hyper no inventário). O print do Auto-Helper
+  ("Potion: Automatic (best)", "Heal when HP ≤ 50%") confere com o gatilho medido. PARAMETROS ficaram com as contagens
+  somadas (extra de tick 0,33/0,36/0,04; desempate herói 1769/471/74, selvagem 1537/679/387). Captura: 5/608 no
+  Rhydon 80 (a sim usa catchChance 0 do hunt-config: ainda F). Protocolo: 140 tipos, 34 vistos.
+  Diferencial agora por caso (`testes/test_sim_diferencial.sh antiga|1h`): antiga **23/26**, 1h **26/30**. Com a amostra
+  maior sumiram: curas/min (antiga 7,22 fora; 1h 2,34 dentro de 1,94–3,71) e hits do aliado por abate (1h 2,91 dentro de
+  2,54–3,46). Continuam fora: ms/tile do herói (757 × 809–870) e do selvagem (1136 × 1293–1334) — caminho/perseguição
+  (F); novos: hits selvagens/min lutando (18,4 × 19,8–27,8: a sim junta selvagens demais no herói) e XP por abate
+  (debuff de entrada, não modelado). Relatório por indivíduo da 1h em `relatorio/individuos_rhydon_1h_2026-11-09.md`:
+  Solar Beam compatível com SpD inteira em só 2/15 indivíduos e com SpD sem arredondar em 15/15 (60–160 hits cada) —
+  evidência forte de que o dano usa stats sem arredondar; Stone Edge 13/15. Correção no relatório: o golpe final chega
+  no field depois do field-kill (antes ele caía na vida seguinte e dava hits/abate < 1).
