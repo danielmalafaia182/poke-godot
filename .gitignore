@@ -20,3 +20,4 @@ __pycache__/
 
 # Saídas de teste da simulação
 /saida_testes/
+/cache/

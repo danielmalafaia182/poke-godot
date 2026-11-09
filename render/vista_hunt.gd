@@ -44,6 +44,7 @@ var _fonte: Font
 var escala := 2.4
 var ultimo_quadro: Dictionary = {}
 var _slug_carregado := ""
+var _slug_pendente := ""
 
 
 func _ready() -> void:
@@ -91,14 +92,20 @@ func receber(msg: Dictionary) -> void:
 	if tipo == "field-init":
 		estado.receber_init(msg)
 		if String(msg["slug"]) != _slug_carregado:
-			_carregar_mapa(String(msg["slug"]))
+			_slug_pendente = String(msg["slug"])
 	elif tipo == "field":
+		if _slug_pendente != "":
+			# o mapa carrega no 1º field: aí já se sabe onde o herói está (páginas do atlas em volta dele primeiro)
+			var h: Dictionary = msg["hero"]
+			_carregar_mapa(_slug_pendente, Vector2(float(estado.init.get("minTx", 0)) + float(h["col"]),
+				float(estado.init.get("minTy", 0)) + float(h["row"])))
+			_slug_pendente = ""
 		estado.receber_field(msg, agora)
 		_hits(msg.get("hits", []), msg)
 		_sincronizar_cadaveres(msg.get("corpses", []))
 
 
-func _carregar_mapa(slug: String) -> void:
+func _carregar_mapa(slug: String, centro: Vector2 = Vector2.ZERO) -> void:
 	if mapa != null:
 		mapa.queue_free()
 		for k in _ents.keys():
@@ -110,7 +117,7 @@ func _carregar_mapa(slug: String) -> void:
 	mapa = Renderizador.new()
 	add_child(mapa)
 	move_child(mapa, 0)
-	mapa.carregar(slug)
+	mapa.carregar(slug, centro)
 	_slug_carregado = slug
 
 

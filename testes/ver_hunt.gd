@@ -21,6 +21,7 @@ var tempos: PackedFloat64Array = PackedFloat64Array()
 var capturas: Array = []
 var _ultimo_us := 0
 var mensagens := 0
+var carga_ms := 0
 var _descartar := false
 var capturas_feitas := 0
 
@@ -54,7 +55,8 @@ func _initialize() -> void:
 	var t := Time.get_ticks_msec()
 	for m in sim.iniciar():
 		_entregar(m)
-	print("mapa e simulação prontos em %d ms" % (Time.get_ticks_msec() - t))
+	carga_ms = Time.get_ticks_msec() - t
+	print("mapa e simulação prontos em %d ms; mapa: %s" % [carga_ms, str(vista.mapa.tempos_carga) if vista.mapa else "?"])
 	t0 = Time.get_ticks_msec() / 1000.0
 	proximo_tick = Time.get_ticks_msec() + 200.0
 	_ultimo_us = Time.get_ticks_usec()
@@ -98,7 +100,7 @@ func _relatorio() -> void:
 	for x in v:
 		soma += x
 	var p := func(q: float) -> float: return v[mini(n - 1, int(q * n))]
-	var r := {"slug": args["slug"], "janela": [get_root().size.x, get_root().size.y], "quadros": n,
+	var r := {"slug": args["slug"], "carga_ms": carga_ms, "carga_mapa": vista.mapa.tempos_carga, "origem_cache": vista.mapa.origem_cache, "janela": [get_root().size.x, get_root().size.y], "quadros": n,
 		"media_ms": soma / maxf(1, n), "p50_ms": p.call(0.5), "p95_ms": p.call(0.95), "p99_ms": p.call(0.99), "max_ms": v[n - 1],
 		"fps_medio": 1000.0 / (soma / maxf(1, n)), "acima_16_7ms": v.filter(func(x): return x > 16.7).size(),
 		"sprites_no_ar": vista.mapa.estatisticas["sprites_carregados"], "abates": sim.estatisticas["abates"],

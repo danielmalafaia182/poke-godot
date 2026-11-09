@@ -373,3 +373,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   pelo código de antes da migração): materiais e depot preservados, itens novos entram e fazem ida e volta no save.
   `test_loot_hunts.gd` (P04) ajustado só na checagem de ícone: 10574 verificações, 0 falhas.
   `test_compatibilidade_save.gd` (P04) falha igual antes e depois (depende de um fixture que o runner antigo copia).
+- 09/11/2026 — 2b.4 (carga dos mapas grandes): `render/cache_mapa.gd` grava, por mapa, o resultado de `montar()` já
+  ordenado por andar (arrays compactados, índice de chunks, páginas por chunk, tiles com chão) em `cache/mapas/<slug>.bin`
+  (zstd; fora do git e do scan; inválido se mudar o mapa, draworder, offsets, colisão, versão do atlas ou VERSAO). O
+  renderizador lê do cache, decodifica só as páginas dos chunks em volta do herói e o resto numa thread de fundo
+  (WorkerThreadPool; chunk sem página espera na fila). nightmare_steelix: **0,91 s** (manifest 0,20 + cache 0,06 + 15
+  páginas 0,60) contra 10,4 s; 2,8 MB em disco. Montar o cache a frio ainda custa ~8 s uma vez por mapa:
+  `ferramentas/render/gerar_cache_mapas.gd` pré-monta todos. Regressão: desenho idêntico ao original (3/3), fluxo da
+  cena 14/14, p99 7,6 ms na cena.

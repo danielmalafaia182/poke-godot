@@ -1,14 +1,18 @@
 extends Node2D
 ## Desenha o mapa original (stonegy-map-compact-v1) com o atlas de map-items do snapshot.
 ##
-## Ordem e posições: render/regras_desenho.gd (porte literal do cliente, conferido contra o JS original).
+## Ordem e posições: render/regras_desenho.gd (porte literal do cliente, conferido contra o JS original), lidas do
+## cache binário render/cache_mapa.gd (já ordenadas por andar; montado na 1ª vez e reaproveitado depois).
 ## Desenho em lote via RenderingServer: um canvas item por sprite, filho do canvas item do andar, sem Node por tile.
-## A ordem dentro do andar é o draw_index = posto do sprite na ordenação estável por zIndex (×2; os ímpares ficam para
+## A ordem dentro do andar é o draw_index = 2 × posto do sprite na ordenação estável por zIndex (os ímpares ficam para
 ## as entidades). Como no cliente (streamChunks/unloadChunk), só os chunks de 8×8 tiles perto da câmera existem.
 ## Andares: um por z, deslocados (z − groundZ)·32 px; o andar acima do herói some quando há chão sobre ele
 ## (computeFirstVisibleFloor, C), com o fade de 180 ms por unidade de alpha (tickFloorFade, C).
+## Páginas do atlas: as dos chunks em volta do ponto inicial são decodificadas na carga; as outras numa thread de
+## fundo (WorkerThreadPool). Um chunk cuja página ainda não chegou espera na fila (F de desempenho).
 
 const DadosDesenho := preload("res://render/dados_desenho.gd")
+const CacheMapa := preload("res://render/cache_mapa.gd")
 const Fontes := preload("res://sim/fontes.gd")
 
 const CHUNK := 8
@@ -16,19 +20,22 @@ const MARGEM_TILES := 10          # streamChunks (C): ±10 tiles além da metade
 const DURACAO_QUADRO_PADRAO := 150.0
 
 var dados: RefCounted
-var regras: RefCounted
 var slug := ""
 var ground_z := 7
 var min_z := 0
 var max_z := 0
 var animacao_ligada := true
 var tiles_visiveis := Vector2(25, 13)   # vista do original em zoom 1 ("25×13")
+var origem_cache := ""                  # "cache" ou "montado"
+var tempos_carga := {}
 
-var _andares := {}          # z -> {"rid": RID, "colocacoes": Array, "z_ord": PackedFloat64Array, "posto": PackedInt32Array, "alpha": float}
-var _chunks_tiles := {}     # "z|cx,cy" -> Array de índices de colocação daquele andar
-var _carregados := {}       # chave -> Array de {rid, i, z}
+var _assets: Dictionary = {}       # id (String) -> asset do manifest
+var _andares := {}          # z -> {"rid", "a" (arrays do cache), "alpha"}
+var _chunks: Dictionary = {}       # "z|cx,cy" -> PackedInt32Array
+var _paginas_chunk: Dictionary = {}
+var _carregados := {}       # chave -> Array de RID
 var _animados := {}         # rid -> {"a": asset, "i": quadro, "base": int, "len": int, "t": ms, "x":, "y":, "z":}
-var _tile_index := {}       # "x,y,z" -> true (tile com chão), para o andar visível
+var _chao := {}             # "x,y,z" -> true (tile com chão), para o andar visível
 var _ret_chunks := Rect2i()
 var centro_tile := Vector2(0, 0)   # tile (fracionário) no centro da tela: o herói interpolado
 var primeiro_andar_visivel := 0
@@ -37,24 +44,32 @@ var orcamento_ms := 3.0            # tempo máximo por quadro montando/desmontan
 var _fila_carregar: Array = []
 var _fila_descarregar: Array = []
 var _primeira_carga := true
+var _paginas: Dictionary = {}      # página -> Texture2D (pronta)
+var _decodificando: Dictionary = {}  # página -> id da tarefa
+var _imagens_prontas: Dictionary = {}  # página -> Image (vinda da thread)
+var _mutex := Mutex.new()
+var _caminhos_paginas: Array = []
 
 
-func carregar(slug_mapa: String) -> void:
+func carregar(slug_mapa: String, centro_inicial = null) -> void:
 	slug = slug_mapa
+	var t0 := Time.get_ticks_msec()
 	dados = DadosDesenho.carregar()
-	var mapa := Fontes.ler_mapa(slug)
-	regras = dados.regras_para(mapa)
-	var meta: Dictionary = mapa.get("_meta", {})
-	ground_z = int(meta.get("groundZ", (meta.get("range", [0, 0, 0, 0, 7]) as Array)[4]))
-	var por_andar: Dictionary = regras.montar(mapa["tiles"])
-	min_z = 1 << 30
-	max_z = -(1 << 30)
-	for t in mapa["tiles"]:
-		if int(t[3]) != 0:
-			_tile_index["%d,%d,%d" % [int(t[0]), int(t[1]), int(t[2])]] = true
-		min_z = mini(min_z, int(t[2]))
-		max_z = maxi(max_z, int(t[2]))
-	var zs := por_andar.keys()
+	_assets = dados.manifest["assets"]
+	_caminhos_paginas = dados.paginas_url
+	tempos_carga["manifest_ms"] = Time.get_ticks_msec() - t0
+	var t1 := Time.get_ticks_msec()
+	var c: Dictionary = CacheMapa.obter(slug, dados)
+	origem_cache = String(c.get("origem", ""))
+	tempos_carga["cache_ms"] = Time.get_ticks_msec() - t1
+	ground_z = int(c["ground_z"])
+	min_z = int(c["min_z"])
+	max_z = int(c["max_z"])
+	for k in c["chao"]:
+		_chao[k] = true
+	_chunks = c["chunks"]
+	_paginas_chunk = c["paginas_chunk"]
+	var zs: Array = (c["andares"] as Dictionary).keys()
 	zs.sort()
 	zs.reverse()          # buildWorld (C): andares adicionados do maior z ao menor → o menor fica por cima
 	for z in zs:
@@ -62,54 +77,44 @@ func carregar(slug_mapa: String) -> void:
 		RenderingServer.canvas_item_set_parent(rid, get_canvas_item())
 		RenderingServer.canvas_item_set_transform(rid, Transform2D(0.0, Vector2((int(z) - ground_z) * 32, (int(z) - ground_z) * 32)))
 		RenderingServer.canvas_item_set_default_texture_filter(rid, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
-		var col: Array = por_andar[z]
-		# posto = posição na ordenação estável por zIndex (empate → ordem de inserção, como o Array.sort do JS)
-		var idx := range(col.size())
-		idx.sort_custom(func(a, b):
-			var za: float = col[a][4]
-			var zb: float = col[b][4]
-			return za < zb or (za == zb and a < b))
-		var posto := PackedInt32Array()
-		posto.resize(col.size())
-		var z_ord := PackedFloat64Array()
-		z_ord.resize(col.size())
-		for r in idx.size():
-			posto[idx[r]] = r
-			z_ord[r] = col[idx[r]][4]
-		_andares[int(z)] = {"rid": rid, "colocacoes": col, "z_ord": z_ord, "posto": posto, "alpha": 1.0}
-		for i in col.size():
-			var c: Array = col[i]
-			var chave := "%d|%d,%d" % [int(z), floori(float(c[6]) / CHUNK), floori(float(c[7]) / CHUNK)]
-			if not _chunks_tiles.has(chave):
-				_chunks_tiles[chave] = []
-			_chunks_tiles[chave].append(i)
-	# páginas do atlas decodificadas já na carga: decodificar uma página webp de 2046×2040 no meio da hunt custa
-	# dezenas de ms (pico de frame time)
-	for pg in paginas_necessarias():
-		dados.pagina(int(pg))
+		_andares[int(z)] = {"rid": rid, "a": c["andares"][z], "alpha": 1.0}
+	# páginas: as dos chunks em volta do início agora; o resto em segundo plano
+	var t2 := Time.get_ticks_msec()
+	if centro_inicial != null:
+		centro_tile = centro_inicial
+	var perto := {}
+	for chave in _chunks_desejados():
+		for pg in _paginas_chunk.get(chave, PackedInt32Array()):
+			perto[int(pg)] = true
+	for pg in perto:
+		_pagina_sincrona(int(pg))
+	tempos_carga["paginas_iniciais"] = perto.size()
+	tempos_carga["paginas_iniciais_ms"] = Time.get_ticks_msec() - t2
+	for pg in c["paginas"]:
+		if not _paginas.has(int(pg)):
+			_decodificar_em_fundo(int(pg))
 	primeiro_andar_visivel = _primeiro_andar_visivel()
 	for z in _andares:
 		_aplicar_alpha(int(z), 1.0 if int(z) >= primeiro_andar_visivel else 0.0)
+	tempos_carga["total_ms"] = Time.get_ticks_msec() - t0
 
 
 func paginas_necessarias() -> Array:
 	var r := {}
-	for z in _andares:
-		for c in _andares[z]["colocacoes"]:
-			for f in regras.assets[int(c[0])]["frames"]:
-				r[int(f["page"])] = true
+	for k in _paginas_chunk:
+		for pg in _paginas_chunk[k]:
+			r[int(pg)] = true
 	var l := r.keys()
 	l.sort()
 	return l
 
 
 func posto_entidade(z_index: float, z_andar: int = -999999) -> int:
-	## draw_index de uma entidade (criatura, cadáver) no andar: 2 × (quantos sprites têm zIndex menor) − 1 + 2,
-	## isto é, logo depois do último sprite estático com zIndex < z_index.
+	## draw_index de uma entidade (criatura, cadáver) no andar: logo depois do último sprite estático com zIndex menor.
 	var a: Dictionary = _andares.get(ground_z if z_andar == -999999 else z_andar, {})
 	if a.is_empty():
 		return 0
-	return 2 * (a["z_ord"] as PackedFloat64Array).bsearch(z_index, true) + 1
+	return 2 * (a["a"]["zi"] as PackedFloat64Array).bsearch(z_index, true) + 1
 
 
 func rid_andar(z: int = -999999) -> RID:
@@ -118,16 +123,15 @@ func rid_andar(z: int = -999999) -> RID:
 
 
 func definir_centro(tile: Vector2) -> void:
-	## Herói (interpolado) no centro: atualiza streaming, cull e visibilidade de andares.
+	## Herói (interpolado) no centro: atualiza streaming e visibilidade de andares.
 	centro_tile = tile
 	_stream()
-	var novo := _primeiro_andar_visivel()
-	if novo != primeiro_andar_visivel:
-		primeiro_andar_visivel = novo
+	primeiro_andar_visivel = _primeiro_andar_visivel()
 
 
 func _process(delta: float) -> void:
 	var ms := delta * 1000.0
+	_receber_paginas()
 	# tickFloorFade (C): alpha anda 1/180 por ms rumo a 0/1
 	for z in _andares:
 		var alvo := 1.0 if int(z) >= primeiro_andar_visivel else 0.0
@@ -155,22 +159,60 @@ func _primeiro_andar_visivel() -> int:
 	var sy := roundi(centro_tile.y)
 	for a in range(ground_z - 1, min_z - 1, -1):
 		var n := ground_z - a
-		if _tile_index.has("%d,%d,%d" % [sx + n, sy + n, a]):
+		if _chao.has("%d,%d,%d" % [sx + n, sy + n, a]):
 			return a + 1
 	return min_z
 
 
-func _stream() -> void:
+# ------------------------------------------------------------------- páginas do atlas
+
+func _pagina_sincrona(pg: int) -> void:
+	if _paginas.has(pg):
+		return
+	_paginas[pg] = dados.pagina(pg)
+
+
+func _decodificar_em_fundo(pg: int) -> void:
+	if _decodificando.has(pg):
+		return
+	var caminho: String = _caminhos_paginas[pg]
+	_decodificando[pg] = WorkerThreadPool.add_task(func():
+		var img := Image.new()
+		var ok := img.load_webp_from_buffer(FileAccess.get_file_as_bytes(caminho)) == OK
+		_mutex.lock()
+		_imagens_prontas[pg] = img if ok else null
+		_mutex.unlock())
+
+
+func _receber_paginas() -> void:
+	if _imagens_prontas.is_empty():
+		return
+	_mutex.lock()
+	var prontas := _imagens_prontas.duplicate()
+	_imagens_prontas.clear()
+	_mutex.unlock()
+	for pg in prontas:
+		WorkerThreadPool.wait_for_task_completion(_decodificando[pg])
+		_decodificando.erase(pg)
+		if not _paginas.has(pg) and prontas[pg] != null:
+			_paginas[pg] = ImageTexture.create_from_image(prontas[pg])
+
+
+func _chunk_pronto(chave: String) -> bool:
+	for pg in _paginas_chunk.get(chave, PackedInt32Array()):
+		if not _paginas.has(int(pg)):
+			return false
+	return true
+
+
+# ------------------------------------------------------------------- streaming
+
+func _chunks_desejados() -> Dictionary:
 	var meia := tiles_visiveis / 2.0
 	var x0 := floori((centro_tile.x - meia.x - MARGEM_TILES) / CHUNK)
 	var x1 := floori((centro_tile.x + meia.x + MARGEM_TILES) / CHUNK)
 	var y0 := floori((centro_tile.y - meia.y - MARGEM_TILES) / CHUNK)
 	var y1 := floori((centro_tile.y + meia.y + MARGEM_TILES) / CHUNK)
-	var ret := Rect2i(x0, y0, x1 - x0 + 1, y1 - y0 + 1)
-	if ret == _ret_chunks:
-		return
-	_ret_chunks = ret
-	# os andares deslocados ((z − groundZ) tiles) também precisam dos chunks deslocados
 	var manter := {}
 	for z in _andares:
 		var d := int(z) - ground_z
@@ -183,8 +225,19 @@ func _stream() -> void:
 				if oy + CHUNK < centro_tile.y - meia.y - MARGEM_TILES or oy > centro_tile.y + meia.y + MARGEM_TILES:
 					continue
 				var chave := "%d|%d,%d" % [int(z), cx, cy]
-				if _chunks_tiles.has(chave):
+				if _chunks.has(chave):
 					manter[chave] = true
+	return manter
+
+
+func _stream() -> void:
+	var meia := tiles_visiveis / 2.0
+	var ret := Rect2i(floori((centro_tile.x - meia.x - MARGEM_TILES) / CHUNK), floori((centro_tile.y - meia.y - MARGEM_TILES) / CHUNK),
+		floori((centro_tile.x + meia.x + MARGEM_TILES) / CHUNK), floori((centro_tile.y + meia.y + MARGEM_TILES) / CHUNK))
+	if ret == _ret_chunks:
+		return
+	_ret_chunks = ret
+	var manter := _chunks_desejados()
 	# F (desempenho): o original monta os chunks novos de uma vez; aqui eles entram numa fila, os mais perto do
 	# herói primeiro, e cada quadro gasta no máximo `orcamento_ms` montando/desmontando (a margem de 10 tiles dá tempo).
 	_fila_descarregar = []
@@ -213,10 +266,16 @@ func _dist_chunk(chave: String, c: Vector2) -> float:
 
 func _drenar(orcamento: float) -> void:
 	var t0 := Time.get_ticks_usec()
+	var adiados: Array = []
 	while not _fila_carregar.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < orcamento:
 		var chave: String = _fila_carregar.pop_front()
-		if not _carregados.has(chave):
-			_carregar_chunk(chave)
+		if _carregados.has(chave):
+			continue
+		if not _chunk_pronto(chave):
+			adiados.append(chave)       # página ainda decodificando: volta para a fila
+			continue
+		_carregar_chunk(chave)
+	_fila_carregar.append_array(adiados)
 	while not _fila_descarregar.is_empty() and (Time.get_ticks_usec() - t0) / 1000.0 < orcamento:
 		var chave: String = _fila_descarregar.pop_front()
 		if _carregados.has(chave):
@@ -227,22 +286,25 @@ func _drenar(orcamento: float) -> void:
 func _carregar_chunk(chave: String) -> void:
 	var z := int(chave.split("|")[0])
 	var andar: Dictionary = _andares[z]
-	var col: Array = andar["colocacoes"]
-	var posto: PackedInt32Array = andar["posto"]
+	var a: Dictionary = andar["a"]
+	var ids: PackedInt32Array = a["id"]
+	var qs: PackedInt32Array = a["quadro"]
+	var xs: PackedInt32Array = a["x"]
+	var ys: PackedInt32Array = a["y"]
+	var an: PackedByteArray = a["anim"]
 	var lista: Array = []
-	for i in _chunks_tiles[chave]:
-		var c: Array = col[i]
-		var a: Dictionary = regras.assets[int(c[0])]
+	for i in _chunks[chave]:
+		var asset: Dictionary = _assets[str(ids[i])]
 		var rid := RenderingServer.canvas_item_create()
 		RenderingServer.canvas_item_set_parent(rid, andar["rid"])
-		RenderingServer.canvas_item_set_draw_index(rid, 2 * posto[i])
+		RenderingServer.canvas_item_set_draw_index(rid, 2 * i)
 		RenderingServer.canvas_item_set_default_texture_filter(rid, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
-		_desenhar_quadro(rid, a, int(c[1]), int(c[2]), int(c[3]))
-		if bool(c[5]):
-			var com_padrao := int(a.get("patternX", 0)) != 0 or int(a.get("patternY", 0)) != 0
-			_animados[rid] = {"a": a, "i": int(c[1]), "base": int(c[1]) if com_padrao else 0,
-				"len": int(a.get("animLen", 1)) if com_padrao else (a["frames"] as Array).size(),
-				"t": 0.0, "x": int(c[2]), "y": int(c[3]), "z": z}
+		_desenhar_quadro(rid, asset, qs[i], xs[i], ys[i])
+		if an[i] == 1:
+			var com_padrao := int(asset.get("patternX", 0)) != 0 or int(asset.get("patternY", 0)) != 0
+			_animados[rid] = {"a": asset, "i": qs[i], "base": qs[i] if com_padrao else 0,
+				"len": int(asset.get("animLen", 1)) if com_padrao else (asset["frames"] as Array).size(),
+				"t": 0.0, "x": xs[i], "y": ys[i], "z": z}
 		lista.append(rid)
 	_carregados[chave] = lista
 	estatisticas["sprites_carregados"] = int(estatisticas["sprites_carregados"]) + lista.size()
@@ -258,7 +320,7 @@ func _descarregar(chave: String) -> void:
 
 func _desenhar_quadro(rid: RID, a: Dictionary, quadro: int, x: int, y: int) -> void:
 	var f: Dictionary = a["frames"][quadro]
-	var tex: Texture2D = dados.pagina(int(f["page"]))
+	var tex: Texture2D = _paginas[int(f["page"])]
 	RenderingServer.canvas_item_clear(rid)
 	RenderingServer.canvas_item_add_texture_rect_region(rid, Rect2(x, y, float(a["width"]), float(a["height"])),
 		tex.get_rid(), Rect2(float(f["x"]), float(f["y"]), float(f["w"]), float(f["h"])))
@@ -284,6 +346,9 @@ func _animar(ms: float) -> void:
 
 
 func _exit_tree() -> void:
+	for pg in _decodificando:
+		WorkerThreadPool.wait_for_task_completion(_decodificando[pg])
+	_decodificando.clear()
 	for chave in _carregados.keys():
 		_descarregar(chave)
 	for z in _andares:
