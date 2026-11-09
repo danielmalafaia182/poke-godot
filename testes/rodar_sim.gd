@@ -30,9 +30,20 @@ static func caminho_absoluto(c: String) -> String:
 	return Fontes.raiz_projeto() + "/" + c
 
 
-static func simular(estado: String, segundos: int, semente: int) -> Dictionary:
+static func ler_params(texto: String) -> Dictionary:
+	## "chave=valor,chave2=valor2" → sobrescreve PARAMETROS (só para experimentos de sensibilidade).
+	var r := {}
+	for par in texto.split(",", false):
+		var kv := par.split("=")
+		if kv.size() == 2:
+			r[kv[0].strip_edges()] = str_to_var(kv[1].strip_edges())
+	return r
+
+
+static func simular(estado: String, segundos: int, semente: int, params: Dictionary = {}) -> Dictionary:
 	var dados = DadosJogo.carregar()
 	var cfg := Cenario.de_estado(caminho_absoluto(estado), dados, semente)
+	cfg["parametros"] = params
 	var mapa = MapaHunt.carregar(cfg["slug"], Fontes.ler_mapa(cfg["slug"]), Fontes.ler_colisao())
 	var sim = Simulacao.new(cfg, dados, mapa)
 	var grav = Gravador.new("sim-%s-%d" % [cfg["slug"], semente])
@@ -46,7 +57,7 @@ static func simular(estado: String, segundos: int, semente: int) -> Dictionary:
 func _init() -> void:
 	var a := argumentos()
 	var t0 := Time.get_ticks_msec()
-	var r := simular(a["estado"], int(a["segundos"]), int(a["semente"]))
+	var r := simular(a["estado"], int(a["segundos"]), int(a["semente"]), ler_params(a.get("params", "")))
 	var dt := Time.get_ticks_msec() - t0
 	var saida := caminho_absoluto(a["saida"])
 	r["gravador"].salvar(saida)

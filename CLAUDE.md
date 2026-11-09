@@ -190,3 +190,15 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   `--referencia <gravação>` amplia o esquema com o observado (A) sem editar o arquivo gerado. Teste `testes/test_sim_protocolo.sh`:
   1 h simulada, 11.726 mensagens, 0 erro; controle real também 0 erro. Achado (A): a bola da auto-captura não é
   `balls.selected` (selected = 1, mas as tentativas gastam a bola 3). Limite: `targetSlot` quando não há selvagem vivo é null (F).
+- 09/11/2026 — Fase 1, passo 4 (diferencial): `ferramentas/gravador/comparar_sim.py` (usa `analisar()` do `analisar_gravacao.py`
+  nos dois lados) e `testes/test_sim_diferencial.sh`: 20 instâncias × 10 min contra a gravação real do Rhydon (9,3 min, 55 abates,
+  **uma** instância). Critério revisto após a 1ª rodada (registrado): cada semente é uma instância com 15 indivíduos fixos e a
+  variação entre instâncias é grande; comparar 5 h agregadas com uma instância real subestimava a variância. Agora métricas de
+  ritmo/dano passam se o valor real cair entre p05 e p95 das instâncias. Resultado: **22/26**. Dentro: XP/abate (igual),
+  cadência do aliado (moda 1600), faixas de dano dos dois lados, HP dos selvagens (faixa, múltiplos de 35, média), loot (5 itens,
+  taxa e quantidade), abates/min, hits selvagens/min, cura média. **Fora (todas F, para a fase 3):** hits do aliado por abate
+  (real 4,05; sim p95 4,04 → a sim mata um pouco rápido: fórmula de dano/HP), curas por minuto (real 7,22 = p95 da sim → regra
+  da poção), ms/tile do herói (real 754; sim 770–1005 → passo diagonal 2× provavelmente caro demais) e do selvagem (real 1018;
+  sim 1035–1126 → bloqueios na perseguição). Sensibilidade (não adotada): sem recarga de poção ou com limiar 0,6 as curas sobem,
+  mas o limiar 0,6 derruba a cura média. Não feito: o critério de pronto da fase (cliente original via `poke-local` desenhando a
+  hunt simulada) e 1 h de gravação real para o diferencial ter amostra maior.
