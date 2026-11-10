@@ -327,11 +327,17 @@ func _selecionar_registro(dados: Dictionary) -> void:
 		var novo: DadosDestinoCaca=DadosDestinoCaca.new()
 		novo.especie=especie
 		_on_destino_pressed(novo)
+	elif bool(dados.get("simulada",false)) and str(dados.get("slug",""))!="":
+		# 2b: hunt sem espécie correspondente no jogo, mas com mapa e hunt-config: entra pelo slug
+		EstadoJogo.especie_caca=null
+		EstadoJogo.slug_caca=str(dados["slug"])
+		get_tree().change_scene_to_file("res://caca_sim.tscn")
 func _on_destino_pressed(destino: DadosDestinoCaca) -> void:
 	if destino==null or destino.especie==null: return
 	var simulada: bool=_cenario_jogo().disponivel(_dados_sim(),destino.especie.nome)
 	if not simulada and preload("res://catalogo_hunts.gd").obter(destino.especie.nome).is_empty(): return
 	EstadoJogo.especie_caca=destino.especie
+	EstadoJogo.slug_caca=""   # 2b: viagem pela espécie (o slug é achado pelo nome); _selecionar_registro passa o slug
 	# Fase 2: hunt sobre a simulação (mapa real); a cena antiga fica para as hunts que a simulação ainda não tem
 	get_tree().change_scene_to_file("res://caca_sim.tscn" if simulada else "res://Caca.tscn")
 static var _dados_sim_cache: RefCounted

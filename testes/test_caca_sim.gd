@@ -105,6 +105,7 @@ func _process(_d: float) -> bool:
 				checar(h != null and h.painel_time != null and h.menu != null and h.my_pokes != null and h.recompensas != null
 					and h.captura != null and caca.painel_auto_helper != null, "HUD da cena antiga: time, menu, My Pokes, cartões, Capture e Auto-Helper")
 				checar(caca.sim.ativo == caca.membros.find(ej.obter_lider()), "o líder do save começa em campo")
+				checar(int(ej.salvamento.intervalo_minimo_ms) == 10000, "na hunt os saves ficam espaçados (no máximo 1 a cada 10 s, E)")
 				ej.definir_auto_potion(false)
 				checar(not bool(caca.sim.cfg["auto_potion"]), "Auto-Helper mudado na hunt vale na simulação (Auto-Potion desligada)")
 				ej.definir_auto_potion(true)
@@ -169,6 +170,8 @@ func _process(_d: float) -> bool:
 		4:
 			if current_scene != null and current_scene.scene_file_path == "res://cidade.tscn":
 				checar(true, "voltou para a cidade")
+				checar(int(ej.salvamento.intervalo_minimo_ms) == 0 and not bool(ej.salvamento._salvamento_pendente),
+					"na cidade o save volta a ser imediato e a saída da hunt já gravou (nada pendente)")
 				var salvou: bool = ej.salvar_agora()
 				checar(salvou and not ej.erro_salvamento, "save (isolado) gravado depois da hunt", String(ej.aviso_salvamento))
 				return _fim()

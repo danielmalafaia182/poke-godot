@@ -33,6 +33,7 @@ signal ofensiva_aliado_alterada(diagnostico: Dictionary)
 @export var velocidade := 1.0          # ticks por tick real (testes aceleram; o jogo usa 1)
 @export var semente := 0               # 0 = aleatória por entrada
 @export var trocar_de_cena_ao_sair := true
+static var sem_trocar_cena_global := false    # testes de varredura: a cena não volta sozinha para a cidade
 
 var dados: RefCounted
 var sim: RefCounted
@@ -61,29 +62,54 @@ var _hp_visto: Array = []
 var _sequencia_captura := 0
 
 
+var tempos_carga := {}
+var perfil_sim_us := 0      # tempo da simulação + mensagens + save (por quadro, acumulado)
+var perfil_sim_max_us := 0
+
+
+const INTERVALO_SAVE_HUNT_MS := 10000   # E (2b.6): na hunt, no máximo um save a cada 10 s; ao sair, save imediato
+
+
 func _ready() -> void:
+	var t0 := Time.get_ticks_msec()
+	EstadoJogo.salvamento.intervalo_minimo_ms = INTERVALO_SAVE_HUNT_MS
 	dados = DadosJogo.carregar()
+	tempos_carga["dados_ms"] = Time.get_ticks_msec() - t0
 	var especie = EstadoJogo.especie_caca
+	var slug_pedido := String(EstadoJogo.slug_caca)
 	var nome := String(especie.nome) if especie != null else "Rhydon"
-	if not CenarioJogo.disponivel(dados, nome):
+	if slug_pedido != "":
+		nome = String(dados.hunts.get(slug_pedido, {}).get("nome", nome))
+	if not CenarioJogo.disponivel(dados, nome, slug_pedido):
 		push_error("hunt de %s indisponível na simulação (sem mapa/hunt-config no snapshot)" % nome)
 		_sair("indisponivel")
 		return
 	var agora := int(Time.get_unix_time_from_system() * 1000.0)
-	var cfg := CenarioJogo.configurar(_extrair_save(nome), dados, semente if semente != 0 else agora % 2147483647, agora)
+	var jogo := _extrair_save(nome)
+	jogo["slug"] = slug_pedido
+	var cfg := CenarioJogo.configurar(jogo, dados, semente if semente != 0 else agora % 2147483647, agora)
+	var t1 := Time.get_ticks_msec()
 	var mapa = MapaHunt.carregar(cfg["slug"], Fontes.ler_mapa(cfg["slug"]), Fontes.ler_colisao())
 	sim = Simulacao.new(cfg, dados, mapa)
+	tempos_carga["sim_ms"] = Time.get_ticks_msec() - t1
+	var t2 := Time.get_ticks_msec()
 	vista = Vista.new()
 	add_child(vista)
 	vista.nome_treinador = String(EstadoJogo.nome_treinador)
 	_ativo_visto = sim.ativo
+	tempos_carga["vista_ms"] = Time.get_ticks_msec() - t2
+	var t3 := Time.get_ticks_msec()
 	_montar_hud()
+	tempos_carga["hud_ms"] = Time.get_ticks_msec() - t3
 	EstadoJogo.validador_troca_lider = _validar_troca_lider
 	EstadoJogo.lider_alterado.connect(_sincronizar_lider)
 	EstadoJogo.auto_potion_alterado.connect(_aplicar_auto_helper)
 	EstadoJogo.auto_catch_alterado.connect(_aplicar_auto_helper)
+	var t4 := Time.get_ticks_msec()
 	for m in sim.iniciar():
 		_tratar(m["msg"])
+	tempos_carga["inicio_e_mapa_ms"] = Time.get_ticks_msec() - t4
+	tempos_carga["total_ready_ms"] = Time.get_ticks_msec() - t0
 	_proximo_tick_ms = Time.get_ticks_msec() + float(sim.p.tick_ms)
 
 
@@ -112,15 +138,22 @@ func _extrair_save(nome_hunt: String) -> Dictionary:
 		"limite_pocao": EstadoJogo.auto_potion_threshold}
 
 
+var tipos_no_quadro: Array = []   # diagnóstico (varredura): mensagens tratadas no último quadro
+
+
 func _process(_delta: float) -> void:
 	if sim == null or _encerrada:
 		return
+	var _t0 := Time.get_ticks_usec()
 	var agora := float(Time.get_ticks_msec())
 	var passo := float(sim.p.tick_ms) / maxf(0.001, velocidade)
 	var n := 0
+	tipos_no_quadro.clear()
 	while agora >= _proximo_tick_ms and n < 50:
 		for m in sim.passo():
+			var _tm := Time.get_ticks_usec()
 			_tratar(m["msg"])
+			tipos_no_quadro.append("%s:%d" % [String(m["msg"].get("type", "")), Time.get_ticks_usec() - _tm])
 			if _encerrada:
 				return
 		_proximo_tick_ms += passo
@@ -128,6 +161,8 @@ func _process(_delta: float) -> void:
 		_conferir_troca_por_ko()
 	if n >= 50:
 		_proximo_tick_ms = agora + passo      # parou (ex.: janela minimizada): não despeja minutos de ticks
+	perfil_sim_us += Time.get_ticks_usec() - _t0
+	perfil_sim_max_us = maxi(perfil_sim_max_us, Time.get_ticks_usec() - _t0)
 
 
 func _tratar(msg: Dictionary) -> void:
@@ -253,9 +288,10 @@ func _sair(motivo: String) -> void:
 	if sim != null:
 		for i in mini(membros.size(), sim.equipe.size()):
 			EstadoJogo.registrar_vida_pokemon(membros[i], int(sim.equipe[i]["hp"]))
+	EstadoJogo.salvamento.intervalo_minimo_ms = 0
 	EstadoJogo.solicitar_salvamento()
 	hunt_encerrada.emit(motivo)
-	if trocar_de_cena_ao_sair and is_inside_tree():
+	if trocar_de_cena_ao_sair and not sem_trocar_cena_global and is_inside_tree():
 		get_tree().change_scene_to_file.call_deferred(CENA_CIDADE)
 
 
@@ -334,7 +370,13 @@ func _sincronizar_hp(time: Array) -> void:
 			_hp_visto.append(-1)
 		if hp != int(_hp_visto[i]):
 			_hp_visto[i] = hp
-			EstadoJogo.registrar_vida_pokemon(membros[i], hp)
+			# só a UI (painel de time, My Pokes): registrar_vida_pokemon pediria um save a cada field; o HP vai para o
+			# save ao sair (_sair/_exit_tree) e junto com os saves que XP e loot já pedem
+			var pk: DadosPokemon = membros[i]
+			var novo := clampi(hp, 0, pk.obter_vida_maxima())
+			if pk.vida_atual != novo:
+				pk.vida_atual = novo
+				EstadoJogo.colecao.individuo_alterado.emit(pk)
 	vida_aliado = int(time[sim.ativo]["hp"]) if sim != null and sim.ativo < time.size() else 0
 
 
@@ -359,6 +401,10 @@ func _exit_tree() -> void:
 		_encerrada = true
 		for i in mini(membros.size(), sim.equipe.size()):
 			EstadoJogo.registrar_vida_pokemon(membros[i], int(sim.equipe[i]["hp"]))
+		EstadoJogo.salvamento.intervalo_minimo_ms = 0
+		EstadoJogo.solicitar_salvamento()
+	if EstadoJogo.salvamento.intervalo_minimo_ms != 0:   # nunca deixa a cidade com o save espaçado
+		EstadoJogo.salvamento.intervalo_minimo_ms = 0
 		EstadoJogo.solicitar_salvamento()
 	if EstadoJogo.validador_troca_lider.is_valid() and EstadoJogo.validador_troca_lider.get_object() == self:
 		EstadoJogo.validador_troca_lider = Callable()

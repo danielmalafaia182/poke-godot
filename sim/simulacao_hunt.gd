@@ -43,6 +43,13 @@ var troca_manual_liberada_tick: int = 0
 var _campo_mob := PackedInt32Array()
 var _campo_mob_caixa := Rect2i()
 var _campo_mob_chave := Vector2i(-99999, -99999)
+var _ilhas := PackedInt32Array()   # componente 8-conexa de cada tile livre (-1 = bloqueado); a grade não muda
+var ajuste_inicio := {}            # diagnóstico: como o `start` do hunt-config foi ajustado (vazio = usado como veio)
+var _pass := PackedByteArray()     # 1 = tile transitável (cópia plana da grade, para o laço do caminho)
+const _DX := [0, 1, 0, -1, 1, 1, -1, -1]   # = DIRECOES (retas antes das diagonais)
+const _DY := [-1, 0, 1, 0, -1, 1, 1, -1]
+var _campo_global := PackedInt32Array()          # campo de tempo do herói no mapa inteiro (sem selvagens), por destino
+var _campo_global_chave := Vector2i(-99999, -99999)
 var estatisticas := {"abates": 0, "hits_aliado": 0, "hits_selvagem": 0, "curas": 0, "capturas": 0, "kos": 0,
 	"trocas_ko": 0, "trocas_manuais": 0}
 
@@ -69,8 +76,12 @@ func _celula(x: int, y: int) -> Vector2i:
 
 func _montar() -> void:
 	var ini: Dictionary = cfg["inicio"]
-	var c := _celula(int(ini["x"]), int(ini["y"]))
-	heroi = {"pos": c, "de": c, "passo_ms": inicio_ms, "facing": "south", "ultimo_passo_tick": -1000, "alvo": -1, "prox_ataque": 0, "passo_dur_ms": int(p.hero_step_ms)}
+	atualizar_grade()
+	var spawns_cel: Array = []
+	for s in cfg["spawns"]:
+		spawns_cel.append(_celula(int(s["x"]), int(s["y"])))
+	var c := _ajustar_inicio(_celula(int(ini["x"]), int(ini["y"])), spawns_cel)
+	heroi ={"pos": c, "de": c, "passo_ms": inicio_ms, "facing": "south", "ultimo_passo_tick": -1000, "alvo": -1, "prox_ataque": 0, "passo_dur_ms": int(p.hero_step_ms)}
 	equipe = []
 	for e in cfg["equipe"]:
 		equipe.append(_criar_poke(e))
@@ -98,6 +109,108 @@ func _montar() -> void:
 			"ivs": ivs, "qualidade": q, "nivel": nivel_selv, "dead": false, "morte_tick": -1, "prox_ataque": -1,
 			"shiny": false})
 		slot += 1
+
+
+func atualizar_grade() -> void:
+	## Cópias derivadas da grade (plana e ilhas). A grade não muda numa hunt; testes que a editam chamam isto depois.
+	_pass.resize(int(mapa.rows) * int(mapa.cols))
+	for r in int(mapa.rows):
+		for c0 in int(mapa.cols):
+			_pass[r * int(mapa.cols) + c0] = 1 if mapa.passavel(r, c0) else 0
+	_ilhas = _rotular_ilhas()
+
+
+func _rotular_ilhas() -> PackedInt32Array:
+	## Componentes 8-conexas dos tiles livres (o passo diagonal não exige os ortogonais livres, como em DIRECOES).
+	var cols := int(mapa.cols)
+	var rows := int(mapa.rows)
+	var rot := PackedInt32Array()
+	rot.resize(rows * cols)
+	rot.fill(-1)
+	var n := 0
+	for r in rows:
+		for c in cols:
+			if rot[r * cols + c] >= 0 or not mapa.passavel(r, c):
+				continue
+			rot[r * cols + c] = n
+			var pilha := PackedInt32Array([r * cols + c])
+			while not pilha.is_empty():
+				var k := pilha[pilha.size() - 1]
+				pilha.resize(pilha.size() - 1)
+				var pr := k / cols
+				var pc := k % cols
+				for d in DIRECOES:
+					var qr: int = pr + d.y
+					var qc: int = pc + d.x
+					if qr < 0 or qc < 0 or qr >= rows or qc >= cols:
+						continue
+					var q := qr * cols + qc
+					if rot[q] < 0 and mapa.passavel(qr, qc):
+						rot[q] = n
+						pilha.append(q)
+			n += 1
+	return rot
+
+
+func _ilha(c: Vector2i) -> int:
+	if c.x < 0 or c.y < 0 or c.x >= int(mapa.cols) or c.y >= int(mapa.rows):
+		return -1
+	return _ilhas[c.y * int(mapa.cols) + c.x]
+
+
+func _alcanca(ilha: int, c: Vector2i) -> bool:
+	## Da ilha `ilha` dá para encostar (Chebyshev ≤ 1) em `c`: algum tile livre em volta de `c` (ou o próprio) é dela.
+	if ilha < 0:
+		return true   # herói fora da grade: sem filtro (comportamento antigo)
+	for dy in range(-1, 2):
+		for dx in range(-1, 2):
+			if _ilha(c + Vector2i(dx, dy)) == ilha:
+				return true
+	return false
+
+
+func _livre_mais_proximo(c: Vector2i, ilha: int) -> Vector2i:
+	## Tile livre mais próximo de `c` (anel de Chebyshev; no anel, ordem linha → coluna), opcionalmente numa ilha.
+	var lim := maxi(int(mapa.cols), int(mapa.rows))
+	for r in range(1, lim + 1):
+		for y in range(c.y - r, c.y + r + 1):
+			for x in range(c.x - r, c.x + r + 1):
+				if maxi(absi(x - c.x), absi(y - c.y)) != r:
+					continue
+				var t := Vector2i(x, y)
+				var il := _ilha(t)
+				if il >= 0 and (ilha < 0 or il == ilha):
+					return t
+	return c
+
+
+func _ajustar_inicio(c: Vector2i, spawns_cel: Array) -> Vector2i:
+	var orig := c
+	if bool(p.inicio_bloqueado_anel) and _ilha(c) < 0:
+		c = _livre_mais_proximo(c, -1)
+		ajuste_inicio["start_bloqueado"] = [orig.x, orig.y]
+	if bool(p.inicio_ilha_com_spawns) and _ilha(c) >= 0 and not spawns_cel.is_empty():
+		var por_ilha := {}
+		for s in spawns_cel:
+			var vistas := {}
+			for dy in range(-1, 2):
+				for dx in range(-1, 2):
+					var il := _ilha(s + Vector2i(dx, dy))
+					if il >= 0:
+						vistas[il] = true
+			for il in vistas:
+				por_ilha[il] = int(por_ilha.get(il, 0)) + 1
+		if not por_ilha.has(_ilha(c)) and not por_ilha.is_empty():
+			var melhor := -1
+			for il in por_ilha:
+				if melhor < 0 or int(por_ilha[il]) > int(por_ilha[melhor]) or (int(por_ilha[il]) == int(por_ilha[melhor]) and int(il) < melhor):
+					melhor = int(il)
+			var antes := c
+			c = _livre_mais_proximo(c, melhor)
+			ajuste_inicio["ilha_sem_spawn"] = [antes.x, antes.y]
+	if c != orig:
+		ajuste_inicio["inicio_usado"] = [c.x, c.y]
+	return c
 
 
 func _criar_poke(e: Dictionary) -> Dictionary:
@@ -245,12 +358,12 @@ func _poke_ativo() -> Dictionary:
 	return equipe[ativo]
 
 
-func _escolher_alvo() -> int:
+func _escolher_alvo(so_encostados: bool = false) -> int:
 	# A (19 de 23 trocas): o selvagem vivo mais próximo em Chebyshev; desempate por distância euclidiana e slot (F).
 	var melhor := -1
 	var chave := Vector2i(1 << 30, 1 << 30)
 	for m in mobs:
-		if m["dead"]:
+		if m["dead"] or not _alvo_valido(m) or (so_encostados and _cheb(m["pos"], heroi["pos"]) > 1):
 			continue
 		var k := Vector2i(_cheb(m["pos"], heroi["pos"]), _dist2(m["pos"], heroi["pos"]))
 		if k.x < chave.x or (k.x == chave.x and k.y < chave.y):
@@ -259,34 +372,49 @@ func _escolher_alvo() -> int:
 	return melhor
 
 
+func _alvo_valido(m: Dictionary) -> bool:
+	## F (alvo_so_alcancavel): só selvagens em que o herói consegue encostar; o que já está encostado sempre vale.
+	if not bool(p.alvo_so_alcancavel) or _cheb(m["pos"], heroi["pos"]) <= 1:
+		return true
+	return _alcanca(_ilha(heroi["pos"]), m["pos"])
+
+
 func _turno_heroi() -> void:
 	var alvo := int(heroi["alvo"])
-	if alvo < 0 or mobs[alvo]["dead"]:
+	if alvo < 0 or mobs[alvo]["dead"] or not _alvo_valido(mobs[alvo]):
 		alvo = _escolher_alvo()
 		heroi["alvo"] = alvo
 	if alvo < 0:
 		return
 	var m: Dictionary = mobs[alvo]
 	if _cheb(m["pos"], heroi["pos"]) > 1 and _espera_minima_ok(heroi, int(p.hero_step_ms)):
-		_passo_heroi(m["pos"])
+		if not _passo_heroi(m["pos"]) and bool(p.alvo_troca_se_bloqueado):
+			# F: sem caminho até o alvo (ex.: corredor fechado por outros selvagens) → ataca o encostado mais próximo
+			var viz := _escolher_alvo(true)
+			if viz >= 0:
+				alvo = viz
+				heroi["alvo"] = viz
+				m = mobs[viz]
 	if _cheb(m["pos"], heroi["pos"]) <= 1 and tick >= int(heroi["prox_ataque"]):
 		_ataque_aliado(m)
 
 
-func _passo_heroi(destino: Vector2i) -> void:
+func _passo_heroi(destino: Vector2i) -> bool:
+	## false = não há caminho até o destino agora (true também quando só está esperando o passo).
 	var prox := _proximo_tile_heroi(destino)   # herói: recalcula a cada tick (sem _plano; ver comentário lá)
 	if prox == heroi["pos"]:
-		return
+		return false
 	var d: Vector2i = prox - heroi["pos"]
 	var diagonal := d.x != 0 and d.y != 0
 	if not _espera_ok(heroi, diagonal, int(p.hero_step_ms),
 			float(p.passo_extra_prob_heroi_diagonal if diagonal else p.passo_extra_prob_heroi_reto)):
-		return
+		return true
 	heroi["de"] = heroi["pos"]
 	heroi["pos"] = prox
 	heroi["passo_ms"] = agora_ms()
 	heroi["facing"] = _facing(d, heroi["facing"])
 	heroi["ultimo_passo_tick"] = tick
+	return true
 
 
 func _plano(a: Dictionary, centro: Vector2i, calcular: Callable, pode_pisar: Callable) -> Vector2i:
@@ -354,19 +482,34 @@ func _campo_tempo(centro: Vector2i, caixa: Rect2i, custos: Vector2i, bloqueados:
 			var gi := (g.y - caixa.position.y) * w + (g.x - caixa.position.x)
 			dist[gi] = 0
 			baldes[0].append(gi)
+	var ox := caixa.position.x
+	var oy := caixa.position.y
+	var cols := int(mapa.cols)
+	var com_bloq := not bloqueados.is_empty()
 	var k := 0
 	while k < baldes.size():
 		var balde: PackedInt32Array = baldes[k]
 		for idx in balde:
 			if dist[idx] != k:
 				continue
-			var c := Vector2i(idx % w + caixa.position.x, idx / w + caixa.position.y)
-			for d in DIRECOES:
-				var n: Vector2i = c + d
-				if not caixa.has_point(n) or n == centro or not _livre(n) or bloqueados.has(n):
+			var lx := idx % w
+			var ly := idx / w
+			# mesma ordem de DIRECOES e mesmas regras de antes, com índices planos (2b.6: ~2× mais rápido)
+			for j in 8:
+				var nx: int = lx + _DX[j]
+				var ny: int = ly + _DY[j]
+				if nx < 0 or ny < 0 or nx >= w or ny >= h:
 					continue
-				var nd := k + (custos.y if d.x != 0 and d.y != 0 else custos.x)
-				var ni := (n.y - caixa.position.y) * w + (n.x - caixa.position.x)
+				var gx := nx + ox
+				var gy := ny + oy
+				if gx == centro.x and gy == centro.y:
+					continue
+				if _pass[gy * cols + gx] == 0:
+					continue
+				if com_bloq and bloqueados.has(Vector2i(gx, gy)):
+					continue
+				var nd := k + (custos.y if j >= 4 else custos.x)
+				var ni := ny * w + nx
 				if nd < dist[ni]:
 					dist[ni] = nd
 					while baldes.size() <= nd:
@@ -442,10 +585,14 @@ func _proximo_tile_heroi(destino: Vector2i) -> Vector2i:
 	var campo := _campo_tempo(destino, caixa, custos, bloq)
 	var t := _escolher_passo(heroi["pos"], destino, campo, caixa, custos, pode, p.desempate_heroi)
 	if t == heroi["pos"]:
-		# sem caminho dentro da caixa (parede no meio): procura no mapa inteiro
+		# sem caminho dentro da caixa (parede no meio): campo de tempo no mapa inteiro. F (2b.6, desempenho): esse campo
+		# ignora os selvagens (eles só bloqueiam na escolha do passo) e fica guardado enquanto o destino não muda — fora
+		# da visão o alvo não anda, então é calculado ~1 vez por alvo (antes: a cada passo, até 40 ms em labirinto).
 		caixa = Rect2i(0, 0, int(mapa.cols), int(mapa.rows))
-		campo = _campo_tempo(destino, caixa, custos, bloq)
-		t = _escolher_passo(heroi["pos"], destino, campo, caixa, custos, pode, p.desempate_heroi)
+		if _campo_global_chave != destino:
+			_campo_global_chave = destino
+			_campo_global = _campo_tempo(destino, caixa, custos, {})
+		t = _escolher_passo(heroi["pos"], destino, _campo_global, caixa, custos, pode, p.desempate_heroi)
 	return t
 
 
@@ -519,6 +666,8 @@ func _abate(m: Dictionary) -> void:
 			continue
 		if rng.randf() * 100000.0 < chance:
 			var qtd: int = rng.randi_intervalo(int(e.get("min", 1)), int(e.get("max", 1)))
+			if e.get("itemId") == null:
+				continue  # item sem id no catálogo (relatorio_importacao.loot_sem_item): sorteado, mas não entregue
 			loot.append({"itemId": int(e["itemId"]), "name": e["item"], "qty": qtd})
 			inventario[int(e["itemId"])] = int(inventario.get(int(e["itemId"]), 0)) + qtd
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],

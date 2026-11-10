@@ -14,7 +14,7 @@
   "iv-teto-32"
  ],
  "hashesSaida": {
-  "especies.json": "068dfbc6df2c958ee29dd8974bbac8345628fbee96d96cbc621e50928e327aa2",
+  "especies.json": "421e5b10b5f8fd6f87d3032d45cdd15a21c4f528d39ab4d489dc52217d92dd31",
   "golpes.json": "ba65d477235a04783124bf7791a9497b4a82f219af1d7b9f1bda290047cfa7e2",
   "itens.json": "01cebd863004f626d5544f88c1ccf533d2c165b6534b292d164e61db093e7b70",
   "hunts.json": "aeb014516f30a3dab7f10a5b40f79af4830812a067087402c55b45395f969d6a",
@@ -22,11 +22,9 @@
   "regras.json": "492e2ff395d5f75d784807e90baed08cf5509aa38ed52ee8a8086e0fadf2aa63"
  },
  "pendencias": {
-  "loot_sem_item": {
-   "Pile Of Seeds": [
-    672,
-    50041
-   ]
+  "loot_sem_item": {},
+  "loot_por_nome_sem_caixa": {
+   "Pile Of Seeds": 5303
   },
   "golpes_variam_por_especie": {
    "Razor Leaf": 3,

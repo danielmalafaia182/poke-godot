@@ -58,23 +58,39 @@ func _informar_salvamento(texto: String, falhou: bool) -> void:
 	if falhou:
 		push_warning(texto)
 
+# E (2b.6): numa hunt cada abate/poção pede um save (~15 ms na thread principal). Com intervalo_minimo_ms > 0 o pedido
+# só marca pendente e o timer de 0,8 s grava quando o intervalo venceu; quem liga (caca_sim) zera ao sair e salva.
+var intervalo_minimo_ms: int = 0
+var _ultimo_save_ms: int = -1000000
+
 func solicitar_salvamento() -> void:
 	if not _persistencia_pronta or _persistencia.bloqueado:
 		return
 	_salvamento_pendente = true
+	if intervalo_minimo_ms > 0:
+		return
 	if not _salvamento_agendado:
 		_salvamento_agendado = true
 		call_deferred("_salvar_se_pendente")
 
 func _salvar_se_pendente() -> void:
 	_salvamento_agendado = false
-	if _salvamento_pendente:
+	if _salvamento_pendente and (intervalo_minimo_ms <= 0 or Time.get_ticks_msec() - _ultimo_save_ms >= intervalo_minimo_ms):
 		salvar_agora()
+
+var perfil_saves := {"n": 0, "us": 0, "max_us": 0}   # diagnóstico: quantos saves e quanto custaram
 
 func salvar_agora() -> bool:
 	if not _persistencia_pronta:
 		return false
-	if not _persistencia.salvar(estado):
+	var _t0 := Time.get_ticks_usec()
+	_ultimo_save_ms = Time.get_ticks_msec()
+	var ok: bool = _persistencia.salvar(estado)
+	var _dt := Time.get_ticks_usec() - _t0
+	perfil_saves["n"] += 1
+	perfil_saves["us"] += _dt
+	perfil_saves["max_us"] = maxi(int(perfil_saves["max_us"]), _dt)
+	if not ok:
 		_informar_salvamento(_persistencia.erro, true)
 		return false
 	_salvamento_pendente = false

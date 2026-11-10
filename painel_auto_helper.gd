@@ -315,6 +315,9 @@ func _quantidade(valor: int) -> String:
 	return resultado
 
 func atualizar() -> void:
+	# 2b.6 (desempenho): cada tentativa de auto-catch chama isto; só o que mudou é reaplicado e o reajuste de tamanho
+	# só é agendado quando algo visível mudou (antes: texto, tamanho e layout de todos os botões a cada abate).
+	var mudou: bool = false
 	ativar_captura.set_pressed_no_signal(EstadoJogo.auto_catch)
 	if nomes.text != EstadoJogo.auto_catch_names:
 		nomes.text = EstadoJogo.auto_catch_names
@@ -323,19 +326,28 @@ func atualizar() -> void:
 		var dados: Dictionary = EstadoJogo.obter_dados_bola(id)
 		var quantidade: int = EstadoJogo.obter_quantidade_bola(id)
 		var estoque: String = "∞" if bool(dados["infinita"]) and quantidade>0 else _quantidade(quantidade)
-		botao.text = estoque
-		botao.custom_minimum_size.x = ceilf(UI.FORTE.get_string_size(estoque,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x)+42
-		botao.tooltip_text = str(dados["nome"])+" — "+estoque
+		if botao.text != estoque:
+			botao.text = estoque
+			botao.custom_minimum_size.x = ceilf(UI.FORTE.get_string_size(estoque,HORIZONTAL_ALIGNMENT_LEFT,-1,13).x)+42
+			botao.tooltip_text = str(dados["nome"])+" — "+estoque
+			mudou = true
 		# O cliente mostra somente o estoque disponível, sem perder a seleção salva.
-		botao.visible = quantidade>0
+		if botao.visible != (quantidade>0):
+			botao.visible = quantidade>0
+			mudou = true
 		botao.disabled = quantidade<=0
 		botao.set_pressed_no_signal(id==EstadoJogo.auto_catch_ball_id)
+	if _bolas.visible != EstadoJogo.auto_catch:
+		mudou = true
 	_bolas.visible = EstadoJogo.auto_catch
 	_filtro.visible = EstadoJogo.auto_catch
 	var sem_bola: bool = EstadoJogo.obter_quantidade_bola(EstadoJogo.auto_catch_ball_id)<=0
+	if resumo.visible != (EstadoJogo.auto_catch and sem_bola):
+		mudou = true
 	resumo.visible = EstadoJogo.auto_catch and sem_bola
 	resumo.text = "⚠ You no longer have the configured Poké\nBall — pick another one below."
-	call_deferred("_ajustar_tamanho")
+	if mudou:
+		call_deferred("_ajustar_tamanho")
 
 func _atualizar_pocoes() -> void:
 	ativar_pocao.set_pressed_no_signal(EstadoJogo.auto_potion)

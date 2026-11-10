@@ -42,6 +42,12 @@ def norm_especie(c, itens_por_nome, rel):
     for l in c.get("loot", []):
         item = itens_por_nome.get(l["name"])
         if item is None:
+            # F: o loot cita o item por nome; "Pile Of Seeds" (Skiddo) só existe como "Pile of Seeds" (5303).
+            # Sem caixa, e só se o nome for único no catálogo. Fica registrado no relatório.
+            item = itens_por_nome.get(("sem_caixa", l["name"].lower()))
+            if item is not None:
+                rel["loot_por_nome_sem_caixa"][l["name"]] = item["id"]
+        if item is None:
             rel["loot_sem_item"][l["name"]].append(c["pokeId"])
         loot.append({
             "item": l["name"],
@@ -90,7 +96,7 @@ def main():
         else ler(p("api", "game", "map-markers.json"))["hunts"]
     correcoes = ler(a.correcoes)
 
-    rel = {"loot_sem_item": defaultdict(list), "golpes_variam_por_especie": {}, "spawns_sem_especie": defaultdict(list),
+    rel = {"loot_sem_item": defaultdict(list), "loot_por_nome_sem_caixa": {}, "golpes_variam_por_especie": {}, "spawns_sem_especie": defaultdict(list),
            "hunts_sem_config": [], "hunts_sem_mapa": [], "ids_duplicados": []}
 
     # ---------- itens ----------
@@ -98,6 +104,8 @@ def main():
     itens = []
     for i in sorted(items, key=lambda x: x["id"]):
         itens_por_nome.setdefault(i["name"], i)
+        sc = ("sem_caixa", i["name"].lower())
+        itens_por_nome[sc] = None if sc in itens_por_nome else i     # None = nome ambíguo sem caixa
         d = {"id": i["id"], "nome": i["name"], "icone": i.get("icon"), "categoria": i.get("category"),
              "raro": bool(i.get("rare", False)), "precoNpc": i.get("npcPrice", 0)}
         for k_src, k_dst in (("description", "descricao"), ("healAmount", "cura"), ("priceGold", "precoGold"),

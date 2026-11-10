@@ -1,12 +1,14 @@
 extends SceneTree
 ## Desenha um mapa com render/mapa_renderizador.gd numa janela e salva uma captura (inspeção visual).
 ## Uso: testes/rodar_janela.sh res://testes/ver_mapa.gd -- --slug rhydon --x -2 --y 1 --saida saida_testes/mapa.png
+##        [--escala 2.4] [--animacao 0|1] [--atlas 1|0] [--array 0|1]
 
 const Renderizador := preload("res://render/mapa_renderizador.gd")
 
 var r: Node2D
 var quadros := 0
-var args := {"slug": "rhydon", "x": "-2", "y": "1", "saida": "saida_testes/mapa.png", "escala": "2.4"}
+var args := {"slug": "rhydon", "x": "-2", "y": "1", "saida": "saida_testes/mapa.png", "escala": "2.4",
+	"animacao": "1", "array": "0", "atlas": "1"}
 
 
 func _initialize() -> void:
@@ -20,7 +22,10 @@ func _initialize() -> void:
 			i += 1
 	get_root().size = Vector2i(1920, 1080)
 	var t0 := Time.get_ticks_msec()
+	Renderizador.usar_array = String(args["array"]) == "1"     # 1 = Texture2DArray (opção, 2b.6), 0 = uma textura por página (padrão)
+	Renderizador.usar_atlas_mapa = String(args["atlas"]) == "1"   # 1 = atlas por mapa (padrão), 0 = páginas
 	r = Renderizador.new()
+	r.animacao_ligada = String(args["animacao"]) == "1"        # 0 = quadro inicial fixo (comparação pixel a pixel)
 	get_root().add_child(r)
 	var centro := Vector2(float(args["x"]), float(args["y"]))
 	r.carregar(String(args["slug"]), centro)

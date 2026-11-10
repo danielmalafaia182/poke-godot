@@ -46,10 +46,7 @@ func _ready() -> void:
 	menu.cidade_solicitada.connect(controlador._on_botao_voltar_cidade_pressed)
 	menu.mapa_solicitado.connect(_abrir_mapa_mundi)
 	menu.botoes["map"].tooltip_text = "Mapa-Múndi — escolher outra hunt"
-	mapa_mundi=load("res://mapa_mundi.tscn").instantiate()
-	mapa_mundi.name="MapaMundiHunt"
-	mapa_mundi.hide()
-	add_child(mapa_mundi)
+	# 2b: o mapa-múndi da hunt é criado na 1ª abertura (instanciá-lo custava ~0,5 s na entrada da hunt)
 	recompensas = load("res://cartoes_derrota.gd").new()
 	add_child(recompensas)
 	controlador.derrota_recompensada.connect(recompensas.apresentar)
@@ -170,7 +167,28 @@ func _posicionar_aviso_ofensivo() -> void:
 	if is_instance_valid(aviso_ofensivo):
 		aviso_ofensivo.position=Vector2(20,maxf(190,painel_time.position.y+painel_time.size.y+12))
 
+var _estoque_assinatura: String = ""
+var _estoque_rotulos: Dictionary = {}
+
 func _atualizar_estoque() -> void:
+	# 2b.6 (desempenho): cada tentativa de auto-catch muda o estoque; se o conjunto de bolas e a selecionada não
+	# mudaram, só os números são trocados (recriar os botões com os ícones custava milissegundos por abate).
+	var ids_com_estoque: Array = []
+	for id in [1,2,3,4,5,6,7]:
+		if EstadoJogo.obter_quantidade_bola(id) > 0:
+			ids_com_estoque.append(id)
+	var assinatura: String = str(ids_com_estoque)+"|"+str(EstadoJogo.auto_catch_ball_id)
+	if assinatura == _estoque_assinatura and _estoque_rotulos.size() == ids_com_estoque.size():
+		for id in ids_com_estoque:
+			var dados_bola: Dictionary = EstadoJogo.obter_dados_bola(id)
+			var texto: String = "∞" if bool(dados_bola.get("infinita",false)) else _numero(EstadoJogo.obter_quantidade_bola(id))
+			var rotulo: Label = _estoque_rotulos[id]
+			if rotulo.text != texto:
+				rotulo.text = texto
+				(rotulo.get_meta("botao") as Button).custom_minimum_size.x=UI.FORTE.get_string_size(texto,HORIZONTAL_ALIGNMENT_LEFT,-1,12).x+33
+		return
+	_estoque_assinatura = assinatura
+	_estoque_rotulos.clear()
 	for filho in estoque.get_children():
 		estoque.remove_child(filho)
 		filho.queue_free()
@@ -204,7 +222,10 @@ func _atualizar_estoque() -> void:
 		var imagem: TextureRect=preload("res://estilo_resultado_combate.gd").icone(preload("res://visual_pokemon.gd").centralizar_retrato(textura),11)
 		imagem.size_flags_vertical=Control.SIZE_SHRINK_CENTER
 		linha.add_child(imagem)
-		linha.add_child(UI.texto(texto_quantidade,12,Color("e5eaf0"),true))
+		var rotulo_quantidade: Label = UI.texto(texto_quantidade,12,Color("e5eaf0"),true)
+		rotulo_quantidade.set_meta("botao", bola)
+		_estoque_rotulos[id] = rotulo_quantidade
+		linha.add_child(rotulo_quantidade)
 		bola.add_theme_constant_override("icon_max_width",11)
 		bola.add_theme_font_override("font",UI.FORTE)
 		bola.add_theme_font_size_override("font_size",12)
@@ -241,6 +262,10 @@ func _process(_delta: float) -> void:
 		placa_aliado.visible=controlador.imagem_aliado.is_visible_in_tree() and controlador.vida_aliado>0
 
 func _abrir_mapa_mundi() -> void:
+	if mapa_mundi == null:
+		mapa_mundi=load("res://mapa_mundi.tscn").instantiate()
+		mapa_mundi.name="MapaMundiHunt"
+		add_child(mapa_mundi)
 	my_pokes.hide()
 	pokepedia.hide()
 	if is_instance_valid(painel_time.perfil): painel_time.perfil.hide()

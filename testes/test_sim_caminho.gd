@@ -64,6 +64,7 @@ func _init() -> void:
 	for y in range(c.y - 10, c.y + 11):
 		for x in range(c.x - 10, c.x + 11):
 			mapa.grade[y][x] = true
+	sim.atualizar_grade()   # a sim guarda cópias derivadas da grade (plana e ilhas)
 	checar(mapa.passavel(c.y + 10, c.x + 10), "chão aberto sintético no centro do mapa", str(c))
 
 	var r := contar(sim, c, Vector2i(2, 5), 400)

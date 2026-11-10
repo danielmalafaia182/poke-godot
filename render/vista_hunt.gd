@@ -38,6 +38,7 @@ var _corpses_paginas: Array = []
 var paginas_cadaver_faltando: Array = []
 var hud: CanvasLayer
 var _placas: Dictionary = {}           # chave -> Control
+var _placas_estado: Dictionary = {}    # chave -> {"esc", "pct"} aplicados por último
 var _danos: Array = []                 # {no, t, x, y}
 var _atrasados: Array = []             # hits com dmgDelayMs: {ate, hit}
 var _fonte: Font
@@ -125,14 +126,28 @@ static func _agora() -> float:
 	return Time.get_unix_time_from_system() * 1000.0
 
 
+var perfil := {"quadro_us": 0, "entidades_us": 0, "placas_us": 0, "n": 0, "max_total_us": 0}
+
+
 func _process(_delta: float) -> void:
 	if mapa == null or estado.field.is_empty():
 		return
+	var _t0 := Time.get_ticks_usec()
+	_processar()
+	var dt := Time.get_ticks_usec() - _t0
+	perfil["n"] += 1
+	perfil["max_total_us"] = maxi(int(perfil["max_total_us"]), dt)
+
+
+func _processar() -> void:
+	var _ta := Time.get_ticks_usec()
 	var agora := _agora()
 	var tela := get_viewport_rect().size
 	escala = tela.x / (TILES_LARGURA * 32.0)
 	mapa.tiles_visiveis = tela / (32.0 * escala)
 	var v: Dictionary = estado.quadro(agora)
+	perfil["quadro_us"] += Time.get_ticks_usec() - _ta
+	var _tb := Time.get_ticks_usec()
 	ultimo_quadro = v
 	if v.is_empty():
 		return
@@ -155,8 +170,11 @@ func _process(_delta: float) -> void:
 		if k.begins_with("mob") and not vivos.has(k):
 			RenderingServer.free_rid(_ents[k]["rid"])
 			_ents.erase(k)
+	perfil["entidades_us"] += Time.get_ticks_usec() - _tb
+	var _tc := Time.get_ticks_usec()
 	_placas_quadro(v, f, ox, oy, tela)
 	_danos_quadro(agora, tela)
+	perfil["placas_us"] += Time.get_ticks_usec() - _tc
 
 
 func _entidade(chave: String, looktype: int, vista: Dictionary, ox: float, oy: float, visivel: bool) -> void:
@@ -268,9 +286,12 @@ func _placas_quadro(v: Dictionary, f: Dictionary, ox: float, oy: float, tela: Ve
 		if not ver.has(k):
 			_placas[k].queue_free()
 			_placas.erase(k)
+			_placas_estado.erase(k)
 
 
 func _placa(chave: String, nome: String, pct: float, pos: Vector2) -> void:
+	## 2b.6 (desempenho): só o que mudou é reaplicado — tema/tamanhos quando a escala muda, a barra quando o HP muda;
+	## a posição a cada quadro. Placa fora da tela fica escondida (antes: 56 placas com o tema refeito a cada quadro).
 	var p: Control = _placas.get(chave)
 	var esc := _px_logico()
 	if p == null:
@@ -292,24 +313,37 @@ func _placa(chave: String, nome: String, pct: float, pos: Vector2) -> void:
 		p.add_child(barra)
 		hud.add_child(p)
 		_placas[chave] = p
+		_placas_estado[chave] = {"esc": -1.0, "pct": -2.0}
+	var tela := get_viewport_rect().size
+	var na_tela := pos.x > -120.0 * esc and pos.y > -40.0 * esc and pos.x < tela.x + 120.0 * esc and pos.y < tela.y + 40.0 * esc
+	if p.visible != na_tela:
+		p.visible = na_tela
+	if not na_tela:
+		return
+	var e: Dictionary = _placas_estado[chave]
 	var rot: Label = p.get_node("Nome")
-	rot.add_theme_font_size_override("font_size", roundi(11.0 * esc))
-	if rot.text != nome:
-		rot.text = nome
-	rot.size = Vector2(200, 16) * esc
-	rot.position = Vector2(-100 * esc, -21 * esc)
-	var tem_barra := pct >= 0.0
 	var fundo: ColorRect = p.get_node("Fundo")
 	var barra: ColorRect = p.get_node("Barra")
-	fundo.visible = tem_barra
-	barra.visible = tem_barra
-	if tem_barra:
+	if float(e["esc"]) != esc:
+		e["esc"] = esc
+		e["pct"] = -2.0
+		rot.add_theme_font_size_override("font_size", roundi(11.0 * esc))
+		rot.size = Vector2(200, 16) * esc
+		rot.position = Vector2(-100 * esc, -21 * esc)
 		# setPlate (C): fundo 31×4, preenchimento 29 × pct, 2 px de altura
 		fundo.size = Vector2(31, 4) * esc
 		fundo.position = Vector2(-15.5, -4) * esc
-		barra.size = Vector2(maxf(0.001, 29.0 * clampf(pct, 0, 100) / 100.0), 2) * esc
 		barra.position = Vector2(-14.5, -3) * esc
-		barra.color = Color.from_hsv(0.33 * clampf(pct, 0, 100) / 100.0, 0.85, 0.9)
+	if rot.text != nome:
+		rot.text = nome
+	if float(e["pct"]) != pct:
+		e["pct"] = pct
+		var tem_barra := pct >= 0.0
+		fundo.visible = tem_barra
+		barra.visible = tem_barra
+		if tem_barra:
+			barra.size = Vector2(maxf(0.001, 29.0 * clampf(pct, 0, 100) / 100.0), 2) * esc
+			barra.color = Color.from_hsv(0.33 * clampf(pct, 0, 100) / 100.0, 0.85, 0.9)
 	p.position = pos
 
 

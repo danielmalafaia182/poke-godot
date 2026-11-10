@@ -57210,7 +57210,7 @@
   "loot": [
    {
     "item": "Pile Of Seeds",
-    "itemId": null,
+    "itemId": 5303,
     "chance": 0.8,
     "chanceBruta": 80000,
     "min": 1,
@@ -86038,7 +86038,7 @@
    },
    {
     "item": "Pile Of Seeds",
-    "itemId": null,
+    "itemId": 5303,
     "chance": 0.8,
     "chanceBruta": 80000,
     "min": 1,

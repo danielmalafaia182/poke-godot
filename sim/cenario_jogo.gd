@@ -26,9 +26,9 @@ static func slug_da_hunt(dados: RefCounted, nome: String) -> String:
 	return achou
 
 
-static func disponivel(dados: RefCounted, nome: String) -> bool:
+static func disponivel(dados: RefCounted, nome: String, slug: String = "") -> bool:
 	## A simulação roda a hunt se há slug, mapa e hunt-config no snapshot.
-	var s := slug_da_hunt(dados, nome)
+	var s := slug if slug != "" else slug_da_hunt(dados, nome)
 	if s == "":
 		return false
 	var pasta := Fontes.pasta_snapshot()
@@ -50,7 +50,7 @@ static func cadaveres_observados(shiny: bool = false) -> Dictionary:
 
 
 static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_ms: int) -> Dictionary:
-	var slug := slug_da_hunt(dados, String(jogo["hunt"]))
+	var slug := String(jogo.get("slug", "")) if String(jogo.get("slug", "")) != "" else slug_da_hunt(dados, String(jogo["hunt"]))
 	var hc: Dictionary = Fontes.ler_hunt_config(slug)
 	var hunt: Dictionary = dados.hunts.get(slug, {})
 	var equipe: Array = []

@@ -248,31 +248,71 @@ func _seguir(e: Dictionary, alvo: Dictionary, grid: Array, mobs: Array, passo: f
 	Interp._iniciar_passo(e, l, o, passo, agora)
 
 
+var _bfs_falha := ""              # estado (origem|destino|ocupados) em que a BFS falhou por último
+var _grade_plana := PackedByteArray()
+var _grade_ref: Array = []
+var _grade_cols := 0
+
+
 func _bfs(grid: Array, de: Dictionary, para: Dictionary, ocupado: Dictionary) -> Array:
+	## Mesma BFS de antes (4 direções na ordem de QUATRO, primeiro caminho encontrado), com índices inteiros (2b.6):
+	## a versão com chaves de texto custava ~40 ms quando o destino ficava inalcançável e rodava a cada quadro.
+	## Falha no mesmo estado não é refeita (o resultado seria o mesmo).
 	if not _livre(grid, de) or not _livre(grid, para):
 		return []
 	if _igual(de, para):
 		return [de]
-	var fila: Array = [de]
-	var pai := {}
-	var visto := {"%d,%d" % [int(de["row"]), int(de["col"])]: true}
-	while not fila.is_empty():
-		var s: Dictionary = fila.pop_front()
+	var chave := "%d,%d|%d,%d|%s" % [int(de["row"]), int(de["col"]), int(para["row"]), int(para["col"]), ocupado.keys()]
+	if chave == _bfs_falha:
+		return []
+	if not is_same(grid, _grade_ref):
+		_grade_ref = grid
+		_grade_cols = 0
+		for linha in grid:
+			_grade_cols = maxi(_grade_cols, (linha as Array).size())
+		_grade_plana = PackedByteArray()
+		_grade_plana.resize(grid.size() * _grade_cols)
+		for r in grid.size():
+			var linha: Array = grid[r]
+			for c in linha.size():
+				_grade_plana[r * _grade_cols + c] = 1 if bool(linha[c]) else 0
+	var rows := grid.size()
+	var cols := _grade_cols
+	var ocup := {}
+	for k in ocupado:
+		var partes: PackedStringArray = String(k).split(",")
+		ocup[int(partes[0]) * cols + int(partes[1])] = true
+	var ini := int(de["row"]) * cols + int(de["col"])
+	var fim := int(para["row"]) * cols + int(para["col"])
+	var pai := PackedInt32Array()
+	pai.resize(rows * cols)
+	pai.fill(-2)                      # -2 = não visto
+	pai[ini] = -1
+	var fila := PackedInt32Array([ini])
+	var cab := 0
+	while cab < fila.size():
+		var sidx := fila[cab]
+		cab += 1
+		var sr := sidx / cols
+		var sc := sidx % cols
 		for d in QUATRO:
-			var o := {"row": int(s["row"]) + d.x, "col": int(s["col"]) + d.y}
-			var k := "%d,%d" % [o["row"], o["col"]]
-			if visto.has(k) or not _livre(grid, o):
+			var orr: int = sr + d.x
+			var oc: int = sc + d.y
+			if orr < 0 or orr >= rows or oc < 0 or oc >= cols:
 				continue
-			if ocupado.has(k) and not _igual(o, para):
+			var oi := orr * cols + oc
+			if pai[oi] != -2 or _grade_plana[oi] == 0:
 				continue
-			visto[k] = true
-			pai[k] = s
-			if _igual(o, para):
-				var cam: Array = [o]
-				var t = s
-				while t != null:
-					cam.push_front(t)
-					t = pai.get("%d,%d" % [int(t["row"]), int(t["col"])])
+			if ocup.has(oi) and oi != fim:
+				continue
+			pai[oi] = sidx
+			if oi == fim:
+				var cam: Array = []
+				var t := oi
+				while t != -1:
+					cam.push_front({"row": t / cols, "col": t % cols})
+					t = pai[t]
 				return cam
-			fila.append(o)
+			fila.append(oi)
+	_bfs_falha = chave
 	return []

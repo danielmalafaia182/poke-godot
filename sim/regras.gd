@@ -24,6 +24,19 @@ const PARAMETROS := {
 	"desempate_heroi": [1769, 471, 74],
 	"desempate_mob": [1537, 679, 387],
 	"caminho_margem": 6,                    # F: folga da caixa de busca em volta do herói/alvo (tiles)
+	# Ilhas da grade (2b.6). 103 hunts têm spawns em tile bloqueado e 9 têm o `start` bloqueado (hunt-config × grade).
+	# typhlosion (A, 1 caso): start (54,75) bloqueado; o herói real aparece em (53,74), o 1º tile livre do anel 1 em
+	# ordem linha → coluna. F: o herói vai para o tile livre mais próximo (anel de Chebyshev, ordem linha → coluna).
+	"inicio_bloqueado_anel": true,
+	# E (jogabilidade): se a ilha do herói não alcança nenhum spawn (ex.: nightmare_magby, todos os 56 spawns em outra
+	# ilha), ele começa no tile livre mais próximo da ilha que alcança mais spawns. O original não foi observado nesses casos.
+	"inicio_ilha_com_spawns": true,
+	# F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do
+	# herói). Sem isso, o herói fica preso num selvagem de outra ilha e a busca no mapa inteiro roda a cada passo.
+	"alvo_so_alcancavel": true,
+	# F: sem caminho até o alvo (corredor fechado por outros selvagens; banette) e com selvagem encostado, o herói passa a
+	# atacar o encostado mais próximo. Sem isso, apanha parado até morrer. O original não foi observado nesse caso.
+	"alvo_troca_se_bloqueado": true,
 	"ataque_aliado_ticks": 8,               # A: 1600 ms, grade fixa (as variações de 1200/2000 vêm de field não recebido)
 	"ataque_selvagem_ticks": 10,            # A: ~2000 ms por selvagem
 	"ataque_selvagem_extra_prob": 0.25,     # F: às vezes +1 tick (média medida ~2050 ms no Kangaskhan)

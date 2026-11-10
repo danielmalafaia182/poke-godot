@@ -36,6 +36,9 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ponte/servidor_sim.gd`, `ferramentas/ponte/ponte_poke_local.py` | Ponte: o cliente original (poke-local) desenha a hunt da simulação. `python ferramentas/ponte/ponte_poke_local.py` e abrir http://127.0.0.1:8000 |
 | `ferramentas/importador/importar_snapshot.py` | Snapshot → `dados/gerados/*.json` (determinístico) |
 | `ferramentas/importador/diff_snapshots.py` | Diferenças entre snapshots |
+| `testes/test_todas_hunts.py` (+ `.gd`) | Varredura 2b.6: entra em cada hunt pela cena nova e registra carga, erros, abates, XP, quadro (p99/pior, render CPU/GPU, draw calls, composição dos quadros lentos), saves. `--velocidade 1` cobra p99 < 16,7 ms; acelerado, o quadro é só informativo |
+| `testes/diag_ilhas.gd` | Ilha da grade do `start` e de cada spawn do hunt-config, por hunt |
+| `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
 | `dados/protocolo.json` | 139 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 28 vistos nas gravações |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
@@ -389,3 +392,29 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   time no save a cada field; Auto-Helper mudado na hunt vale na hora; sair pelo mapa-múndi da hunt também grava.
   `testes/test_caca_sim.gd` **21/21** (7 checagens novas de HUD), p99 11,9 ms na cena. Visual: as placas do herói e do
   treinador se sobrepõem quando estão no mesmo tile.
+- 09/11/2026 — 2b.6 (escala): `testes/test_todas_hunts.py` entra nas **451 hunts** pela cena nova (time de teste E, save
+  isolado), 60 s simulados a 10×: **451/451 sem erro**, 0 tempo esgotado, carga máx. **1,59 s** (p50 0,89; nightmare_steelix
+  1,21), 4553 abates, 9,39 M de XP, 0 outfit substituto, só 1 hunt sem abate em 60 s (nightmare_snorunt: labirinto; abate
+  na repetição). Correções que a varredura exigiu:
+  (1) loot "Pile Of Seeds" (Skiddo) sem itemId: o importador casa nome sem caixa quando é único (F; vira 5303) e a sim
+  ignora item sem id. (2) Ilhas: 9 hunts com `start` em tile bloqueado e 103 com spawns bloqueados (hunt-config × grade;
+  a grade bate nas 7 conferidas). typhlosion (A, 1 caso): start (54,75) bloqueado e o herói real aparece em (53,74), o 1º
+  livre do anel 1 em linha → coluna → regra F `inicio_bloqueado_anel`; se a ilha do herói não alcança spawn
+  (nightmare_magby), ele começa na ilha que alcança mais (E); alvo só entre os alcançáveis (F); sem caminho até o alvo e
+  com selvagem encostado, ataca o encostado (F; banette ficava apanhando parado). Rhydon 20 min: saída da sim **idêntica
+  byte a byte** antes/depois. Caminho: campo do herói no mapa inteiro guardado por destino e laço com índices planos
+  (pior tick 36 → 11 ms; 1 h simulada 17,5 → 10 s). (3) Quadro: placas só reaplicam o que muda e somem fora da tela;
+  animação dos itens por agenda (mesmo quadro que a regra antiga em 6000 quadros, `test_render_animacao.gd`); BFS do
+  treinador com índices inteiros e falha guardada (mesmo caminho em 1200 buscas, `test_render_bfs_treinador.gd`; antes
+  40 ms/quadro com destino inalcançável); estoque de bolas e Auto-Helper atualizados no lugar (`hud_caca.gd`,
+  `painel_auto_helper.gd`, mesmo comportamento); saves na hunt espaçados em 10 s (E; cada save custa ~15 ms e cada
+  abate/poção pedia um; ao sair, save imediato); **atlas por mapa** (draw calls 2200 → ~140 em electabuzz; pixels iguais ao
+  modo por páginas fora de linhas de 1 px da escala da janela). Testados e descartados: renderer Vulkan (pior) e
+  Texture2DArray (mesmo p99, +1 s de carga; fica como opção `usar_array`).
+  **p99 a 1×** (60 s, 1920×1080, RTX 4060), 16 hunts mais pesadas: última rodada 12/16 abaixo de 16,7 ms (piores:
+  ancient_pinsir 20,4, nightmare_elekid 20,0, nightmare_luxray 19,7, nightmare_raichu 17,1); as mesmas deram 12,9–17,3
+  na rodada anterior. Nos quadros lentos restantes o jogo gasta pouco (script 1–2 ms, render CPU ~4, GPU ~2) ou é o save
+  de 10 em 10 s; a máquina tinha Firefox/Discord abertos e a variação entre rodadas (±3–5 ms) é do tamanho da margem.
+  **Critério de p99 não confirmado** nas hunts mais pesadas (4 de 16 acima do limite na última rodada). Limites: atlas por mapa ocupa ~3,8 MB/mapa em
+  `cache/` (1,7 GB se pré-gerar as 451; sem pré-gerar, a 1ª entrada monta em 0,25–1 s); tabela espécie → cadáver só de 4
+  espécies (dado do servidor; 4 hunts desenham corpos); time de teste da varredura é E.

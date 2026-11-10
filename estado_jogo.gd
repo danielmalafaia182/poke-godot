@@ -78,6 +78,8 @@ var experiencia_treinador_acumulada: int:
 	set(valor): perfil.experiencia_treinador_acumulada = valor
 
 var especie_caca: DadosEspecie
+# Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
+var slug_caca: String = ""
 var celula_cidade_salva: Vector2i = Vector2i(-1, 3)
 var direcao_cidade_salva: int = 2
 var posicao_cidade_definida: bool = false
