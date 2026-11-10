@@ -284,53 +284,87 @@ func construir_dados(estado: Node) -> Dictionary:
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 
-func _escrever_temporario(arquivo: String, texto: String) -> bool:
+# --- gravação -----------------------------------------------------------------------------------------------
+# `gravar` pode rodar numa thread de trabalho (coordenador_salvamento.gd): recebe uma CÓPIA dos dados já montada na
+# thread principal, não toca o estado do jogo nem os campos deste objeto e devolve {"ok", "erro", "texto"}.
+# Escrita atômica: grava <arquivo>.tmp, relê e compara byte a byte, e só então renomeia por cima do principal; a cópia
+# de segurança (.bak) vem da última versão válida em memória. Quem chama garante uma gravação por vez.
+
+func _escrever_conferindo(arquivo: String, texto: String) -> String:
 	var file: FileAccess = FileAccess.open(arquivo, FileAccess.WRITE)
 	if file == null:
-		erro = "Não foi possível gravar o progresso (" + error_string(FileAccess.get_open_error()) + ")."
-		return false
+		return "Não foi possível gravar o progresso (" + error_string(FileAccess.get_open_error()) + ")."
 	file.store_string(texto)
 	file.flush()
 	var resultado: Error = file.get_error()
 	file.close()
 	if resultado != OK:
-		erro = "A gravação do progresso falhou: " + error_string(resultado)
-		return false
-	var leitura: Dictionary = _ler(arquivo)
-	if not leitura.has("dados") or leitura["texto"] != texto:
-		erro = "Falha ao verificar o arquivo gravado."
-		return false
-	return true
+		return "A gravação do progresso falhou: " + error_string(resultado)
+	# O texto já foi validado antes de ser escrito; a releitura confere o que chegou ao disco.
+	if FileAccess.get_file_as_string(arquivo) != texto:
+		return "Falha ao verificar o arquivo gravado."
+	return ""
 
-func _promover(origem: String, destino: String) -> bool:
+func _renomear(origem: String, destino: String) -> String:
 	var resultado: Error = DirAccess.rename_absolute(ProjectSettings.globalize_path(origem), ProjectSettings.globalize_path(destino))
 	if resultado != OK:
-		erro = "Não foi possível finalizar o salvamento: " + error_string(resultado)
-		return false
-	return true
+		return "Não foi possível finalizar o salvamento: " + error_string(resultado)
+	return ""
 
-func salvar(estado: Node) -> bool:
-	if bloqueado:
-		return false
-	erro = ""
-	var dados: Dictionary = construir_dados(estado)
+# Diagnóstico para o teste de exclusividade: quantas gravações estão dentro de `gravar` ao mesmo tempo (máximo visto).
+static var _mutex_diag := Mutex.new()
+static var gravacoes_simultaneas := 0
+static var max_gravacoes_simultaneas := 0
+
+func gravar(dados: Dictionary, copia_bak: String) -> Dictionary:
+	_mutex_diag.lock()
+	gravacoes_simultaneas += 1
+	max_gravacoes_simultaneas = maxi(max_gravacoes_simultaneas, gravacoes_simultaneas)
+	_mutex_diag.unlock()
+	var r: Dictionary = _gravar(dados, copia_bak)
+	_mutex_diag.lock()
+	gravacoes_simultaneas -= 1
+	_mutex_diag.unlock()
+	return r
+
+func _gravar(dados: Dictionary, copia_bak: String) -> Dictionary:
 	var validacao: String = _validar(dados)
 	if not validacao.is_empty():
-		erro = "Progresso não gravado: " + validacao
-		return false
+		return {"ok": false, "erro": "Progresso não gravado: " + validacao}
 	var conteudo: String = JSON.stringify(dados)
 	var texto: String = JSON.stringify({"formato": FORMATO, "versao": VERSAO, "sha256": conteudo.sha256_text(), "conteudo": conteudo}, "\t")
 	if texto.to_utf8_buffer().size() > MAX_BYTES:
-		erro = "O progresso excede o tamanho de arquivo suportado."
+		return {"ok": false, "erro": "O progresso excede o tamanho de arquivo suportado."}
+	var falha: String = _escrever_conferindo(caminho + ".tmp", texto)
+	if falha.is_empty():
+		# A cópia vem da última versão validada em memória, nunca de um principal corrompido.
+		falha = _escrever_conferindo(caminho + ".bak.tmp", copia_bak if not copia_bak.is_empty() else texto)
+	if falha.is_empty():
+		falha = _renomear(caminho + ".bak.tmp", caminho + ".bak")
+	if falha.is_empty():
+		falha = _renomear(caminho + ".tmp", caminho)
+	if not falha.is_empty():
+		return {"ok": false, "erro": falha}
+	return {"ok": true, "texto": texto}
+
+func aplicar_resultado(r: Dictionary) -> bool:
+	## Na thread principal, depois de `gravar`.
+	if bool(r.get("ok", false)):
+		erro = ""
+		ultimo_valido = String(r["texto"])
+		encontrado = true
+		return true
+	erro = String(r.get("erro", "Falha desconhecida ao salvar."))
+	return false
+
+func aquecer() -> void:
+	## Carrega na thread principal o que `_validar` lê, para que `gravar` possa rodar numa thread sem carregar recursos.
+	var _e: Dictionary = ESPECIES
+	var _i: Array = preload("res://regras_loot.gd").ids()
+	var _x: int = preload("res://regras_pokemon.gd").xp_total_para_nivel(2)
+
+func salvar(estado: Node) -> bool:
+	## Caminho síncrono (fechar o jogo, testes): tudo na thread principal.
+	if bloqueado:
 		return false
-	if not _escrever_temporario(caminho + ".tmp", texto):
-		return false
-	# A cópia vem da última versão validada em memória, nunca de um principal corrompido.
-	var copia: String = ultimo_valido if not ultimo_valido.is_empty() else texto
-	if not _escrever_temporario(caminho + ".bak.tmp", copia) or not _promover(caminho + ".bak.tmp", caminho + ".bak"):
-		return false
-	if not _promover(caminho + ".tmp", caminho):
-		return false
-	ultimo_valido = texto
-	encontrado = true
-	return true
+	return aplicar_resultado(gravar(construir_dados(estado), ultimo_valido))

@@ -432,3 +432,14 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
 - 09/11/2026 — 2b.7 (sombras e iluminação): não portadas; registradas como pendência visual (seção acima) com a receita do
   cliente (C) e estimativa de meio dia. Motivo: risco para a ordem de desenho e para o frame time, que ainda está no limite
   nas hunts mais pesadas (2b.6). Não bloqueia.
+- 09/11/2026 — Pós-2b, item 1 (save fora da thread principal): `coordenador_salvamento.gd` monta só a cópia dos dados
+  (`construir_dados`) na thread principal; validação, JSON, sha256, escrita do `.tmp`, releitura byte a byte, `.bak` e
+  renames rodam numa thread de trabalho (`salvamento_local.gd` `gravar`, que não toca o estado do jogo). Uma gravação por
+  vez: pedido durante a gravação fica pendente e sai depois com o estado de então; `salvar_agora` (fechar o jogo, testes)
+  espera a que está em andamento. A validação lê recursos, que são aquecidos ao iniciar. A releitura de conferência
+  passou de "decodificar + validar de novo" para comparação byte a byte (o texto já saiu validado). Formato do arquivo
+  inalterado (JSON sem compressão: saves antigos seguem compatíveis; não havia compressão a mover). Teste
+  `testes/test_save_thread.py` (APPDATA isolado): save antigo 8/8 (carrega, grava em thread, arquivo confere, nunca duas
+  gravações simultâneas, último estado no disco, depot preservado); thread principal 9,6 ms × 46 ms síncrono com 300 no
+  box; **15/15 mortes do processo no meio da gravação** sem perda (XP carregada entre a última gravação confirmada e a
+  última iniciada; 6 deixaram `.tmp` pela metade e a carga usou o principal). `test_caca_sim` 23/23.

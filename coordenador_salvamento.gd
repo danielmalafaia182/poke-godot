@@ -27,6 +27,8 @@ func iniciar(fachada: Node) -> void:
 		pokemon.normalizar_atributos()
 	var inicial_corrigido: bool=estado.colecao.corrigir_inicial_prototipo()
 	_persistencia_pronta = true
+	_persistencia.aquecer()      # o que a validação lê já carregado: a gravação em thread não carrega recursos
+	set_process(false)
 	if not carregou:
 		_informar_salvamento(_persistencia.erro, true)
 	elif not _persistencia.aviso.is_empty():
@@ -76,27 +78,85 @@ func solicitar_salvamento() -> void:
 func _salvar_se_pendente() -> void:
 	_salvamento_agendado = false
 	if _salvamento_pendente and (intervalo_minimo_ms <= 0 or Time.get_ticks_msec() - _ultimo_save_ms >= intervalo_minimo_ms):
-		salvar_agora()
+		_iniciar_gravacao_em_thread()
 
-var perfil_saves := {"n": 0, "us": 0, "max_us": 0}   # diagnóstico: quantos saves e quanto custaram
+# Item 1 (fase 2b): a gravação roda numa thread de trabalho. Na thread principal fica só construir_dados (uma cópia
+# nova do estado); validação, JSON, sha256, escrita do .tmp, releitura, .bak e renames vão para a thread
+# (salvamento_local.gd `gravar`). Nunca há duas gravações ao mesmo tempo: um pedido durante a gravação fica pendente e
+# sai quando ela termina (com o estado de então); o caminho síncrono (salvar_agora, fechar o jogo) espera a que está
+# em andamento antes de gravar.
+var _tarefa: int = -1
+var _resultado_thread: Dictionary = {}
+var perfil_saves := {"n": 0, "us": 0, "max_us": 0, "thread_us": 0, "thread_max_us": 0}   # us = thread principal
 
-func salvar_agora() -> bool:
-	if not _persistencia_pronta:
-		return false
+func gravando() -> bool:
+	return _tarefa != -1
+
+func _iniciar_gravacao_em_thread() -> void:
+	if not _persistencia_pronta or _persistencia.bloqueado or _tarefa != -1:
+		return
 	var _t0 := Time.get_ticks_usec()
 	_ultimo_save_ms = Time.get_ticks_msec()
-	var ok: bool = _persistencia.salvar(estado)
-	var _dt := Time.get_ticks_usec() - _t0
-	perfil_saves["n"] += 1
-	perfil_saves["us"] += _dt
-	perfil_saves["max_us"] = maxi(int(perfil_saves["max_us"]), _dt)
-	if not ok:
+	var dados: Dictionary = _persistencia.construir_dados(estado)
+	var copia: String = _persistencia.ultimo_valido
+	var persistencia: RefCounted = _persistencia
+	_salvamento_pendente = false
+	_resultado_thread = {}
+	_tarefa = WorkerThreadPool.add_task(func():
+		var t := Time.get_ticks_usec()
+		var r: Dictionary = persistencia.gravar(dados, copia)
+		r["thread_us"] = Time.get_ticks_usec() - t
+		_resultado_thread = r)
+	_contar(Time.get_ticks_usec() - _t0)
+	set_process(true)
+
+func _process(_delta: float) -> void:
+	if _tarefa == -1:
+		set_process(false)
+		return
+	if WorkerThreadPool.is_task_completed(_tarefa):
+		_concluir_thread()
+
+func _concluir_thread() -> bool:
+	WorkerThreadPool.wait_for_task_completion(_tarefa)
+	_tarefa = -1
+	var r: Dictionary = _resultado_thread
+	perfil_saves["thread_us"] += int(r.get("thread_us", 0))
+	perfil_saves["thread_max_us"] = maxi(int(perfil_saves["thread_max_us"]), int(r.get("thread_us", 0)))
+	return _aplicar(r)
+
+func _aplicar(r: Dictionary) -> bool:
+	if not _persistencia.aplicar_resultado(r):
+		_salvamento_pendente = true          # tenta de novo no próximo ciclo do timer
 		_informar_salvamento(_persistencia.erro, true)
 		return false
-	_salvamento_pendente = false
 	if erro_salvamento:
 		_informar_salvamento("Progresso salvo.", false)
 	return true
+
+func _contar(us: int) -> void:
+	perfil_saves["n"] += 1
+	perfil_saves["us"] += us
+	perfil_saves["max_us"] = maxi(int(perfil_saves["max_us"]), us)
+
+func salvar_agora() -> bool:
+	## Síncrono: espera a gravação em andamento (se houver) e grava o estado atual na thread principal.
+	if not _persistencia_pronta:
+		return false
+	if _tarefa != -1:
+		_concluir_thread()
+	if _persistencia.bloqueado:
+		return false
+	var _t0 := Time.get_ticks_usec()
+	_ultimo_save_ms = Time.get_ticks_msec()
+	_salvamento_pendente = false
+	var ok: bool = _aplicar(_persistencia.gravar(_persistencia.construir_dados(estado), _persistencia.ultimo_valido))
+	_contar(Time.get_ticks_usec() - _t0)
+	return ok
+
+func _exit_tree() -> void:
+	if _tarefa != -1:
+		_concluir_thread()
 
 func _fechar_jogo() -> void:
 	if _persistencia.bloqueado:
