@@ -463,3 +463,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   Stone, que segue com o ícone do catálogo antigo). `test_catalogo_itens` 12/12 (7/7 animados com o nº de quadros certo;
   0 item sem ícone). **Placas**: herói e treinador perto um do outro → a do treinador sobe e fica empilhada 16 px lógicos
   acima, suave com a distância (E; `vista_hunt.empilhar_placa`, `testes/test_placas.gd` 8/8). `test_caca_sim` 23/23.
+- 09/11/2026 — Pós-2b, item 5: `PLANO_GRAVACOES_FASE3.md` (18 gravações; P1 ≈ 2 h, total ≈ 4 h 30), com as hunts
+  escolhidas por `ferramentas/fase3/planejar_fase3.gd` (golpe previsto, 2º colocado, margem e custo da luta para cada
+  Pokémon das contas A e B × cada espécie das 451 hunts). Achado com dado existente (A): "primeiro golpe da lista" e
+  "aprendido por último" já estão descartados (Venusaur usa Solar Beam e não Petal Dance; Rhydon selvagem usa Stone Edge
+  no empate exato com Earthquake), e o cooldown do golpe não limita a cadência (Solar Beam a cada 1,6 s); a regra da sim
+  (maior dano esperado → menor cooldown → aprendido primeiro) é a única simples coerente. Fica para gravar: desempate
+  no Golem (S1), efetividade (S2/S4/S5/S7), razão A/D (S3/S6), captura nos níveis 10/20/40/60, por bola e por raridade
+  (C1–C6), e movimento com luta longa, tamanho de janela (`view`), mapa da referência e herói lento (M1–M4).
