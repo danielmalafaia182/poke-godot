@@ -101,8 +101,9 @@ func _init() -> void:
 	# --- Captura (A nos pontos, F na curva): Super Ball (3) em nível 1 = 35/59, em nível 80 = 5/608.
 	checar(absf(Regras.chance_captura(3, 1) - 35.0 / 59.0) < 1e-9, "captura Super Ball nível 1 = 35/59")
 	checar(absf(Regras.chance_captura(3, 80) - 5.0 / 608.0) < 1e-9, "captura Super Ball nível 80 = 5/608")
+	checar(absf(Regras.chance_captura(3, 20) - 2.0 / 37.0) < 1e-9, "captura Super Ball nível 20 = 2/37 (fase3/S4)")
 	var c40 := Regras.chance_captura(3, 40)
-	checar(c40 < 35.0 / 59.0 and c40 > 5.0 / 608.0, "captura nível 40 entre os dois pontos (logit)", "%.4f" % c40)
+	checar(c40 < 2.0 / 37.0 and c40 > 5.0 / 608.0, "captura nível 40 entre os pontos 20 e 80 (logit)", "%.4f" % c40)
 	checar(Regras.chance_captura(3, 200) == 5.0 / 608.0 and Regras.chance_captura(1, 80) == 0.0,
 		"fora dos pontos: o mais próximo; bola sem pontos: 0")
 

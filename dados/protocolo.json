@@ -18,16 +18,20 @@
   "poke_ws_todas(2).jsonl",
   "poke_ws_todas(3).jsonl",
   "rhydon-1h.jsonl",
+  "S1.jsonl",
+  "S2.jsonl",
+  "S3.jsonl",
+  "S4.jsonl",
   "geodude-3.jsonl",
   "loogs.txt",
   "logs rhyhorn.txt",
   "logs hitmonlee.txt"
  ],
  "totais": {
-  "tipos": 140,
+  "tipos": 141,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 34
+  "vistos_em_logs": 38
  },
  "mensagens": {
   "addon-used": {
@@ -145,8 +149,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 12060,
+    "vezes": 14184,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -163,8 +171,12 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 883,
+    "vezes": 925,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -300,8 +312,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 4,
+    "vezes": 8,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
      "rhydon-1h.jsonl"
@@ -319,8 +335,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 5,
+    "vezes": 10,
     "fontes": [
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodude-10min.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "rhydon-1h.jsonl"
@@ -365,8 +384,9 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 83,
+    "vezes": 85,
     "fontes": [
+     "S1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -410,8 +430,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 881,
+    "vezes": 919,
     "fontes": [
+     "S2.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -602,8 +624,12 @@
     ]
    },
    "visto_out": {
-    "vezes": 4,
+    "vezes": 8,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodude-10min.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
@@ -635,8 +661,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 86,
+    "vezes": 89,
     "fontes": [
+     "S1.jsonl",
+     "S3.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -712,8 +740,12 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 10733,
+    "vezes": 12619,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1114,8 +1146,9 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 71,
+    "vezes": 73,
     "fontes": [
+     "S1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1130,8 +1163,12 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 75,
+    "vezes": 81,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1231,8 +1268,12 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 872,
+    "vezes": 1096,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1868,8 +1909,12 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1295,
+    "vezes": 1496,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1986,8 +2031,12 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 74,
+    "vezes": 442,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -2002,7 +2051,59 @@
        "list"
       ],
       "itens": {
-       "tipos": []
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "at": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1794320560056
+        },
+        "col": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 72
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 20
+        },
+        "level": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Oddish"
+        },
+        "pokeId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 43
+        },
+        "row": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 51
+        },
+        "shiny": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        }
+       }
       }
      }
     }
@@ -2014,8 +2115,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 7,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
      "rhydon-1h.jsonl"
@@ -2026,8 +2131,9 @@
   "poke-delta": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 83,
+    "vezes": 85,
     "fontes": [
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -2260,11 +2366,45 @@
     "chaves_literal": [
      "pokeId"
     ]
+   },
+   "visto_out": {
+    "vezes": 1,
+    "fontes": [
+     "S1.jsonl"
+    ],
+    "esquema": {
+     "pokeId": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "cmu7iu79n6chzleth2yl8rr25"
+     }
+    }
    }
   },
   "poke-swap-cooldown": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "S1.jsonl"
+    ],
+    "esquema": {
+     "leftMs": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 4985
+     },
+     "totalMs": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 5000
+     }
+    }
    }
   },
   "poke-withdraw": {
@@ -2280,8 +2420,12 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 872,
+    "vezes": 1096,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -2608,14 +2752,258 @@
     }
    }
   },
+  "pokes-chunk": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 6,
+    "fontes": [
+     "S1.jsonl",
+     "S2.jsonl"
+    ],
+    "esquema": {
+     "gen": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 3
+     },
+     "list": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "barLooktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 200
+        },
+        "evolveNeedLevel": {
+         "tipos": [
+          "int"
+         ],
+         "opcional": true,
+         "exemplo": 600
+        },
+        "evolvesToName": {
+         "tipos": [
+          "str"
+         ],
+         "opcional": true,
+         "exemplo": "Rhyperior"
+        },
+        "finalStage": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
+        },
+        "hasEvolution": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
+        },
+        "hp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 13464
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cmumcldhjknrspcos6op6ze86"
+        },
+        "ivTotal": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 141
+        },
+        "leader": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "level": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 425
+        },
+        "locked": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 200
+        },
+        "maxHp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 13464
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Rhydon"
+        },
+        "power": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 9657
+        },
+        "quality": {
+         "tipos": [
+          "float"
+         ],
+         "exemplo": 1.8
+        },
+        "sellValue": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 13000
+        },
+        "shiny": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "slot": {
+         "tipos": [
+          "int",
+          "null"
+         ],
+         "exemplo": 0
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 112
+        },
+        "starter": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "stats": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "atk": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1306
+          },
+          "def": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1224
+          },
+          "hp": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1122
+          },
+          "spAtk": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 592
+          },
+          "spDef": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 497
+          },
+          "speed": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 624
+          }
+         }
+        },
+        "team": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "type1": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "GROUND"
+        },
+        "type2": {
+         "tipos": [
+          "str"
+         ],
+         "opcional": true,
+         "exemplo": "ROCK"
+        },
+        "xp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 2401607306
+        }
+       }
+      }
+     },
+     "seq": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "total": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 2
+     }
+    }
+   }
+  },
   "pokes-get": {
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 5,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
      "geodude-10min.jsonl",
      "rhydon-1h.jsonl"
     ],
@@ -2630,6 +3018,56 @@
   "profession-photo": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "S2.jsonl"
+    ],
+    "esquema": {
+     "col": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 41
+     },
+     "itemName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Rare Pokémon Picture"
+     },
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "pictures": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 95
+     },
+     "row": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 54
+     },
+     "slot": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 8
+     },
+     "speciesId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 19
+     }
+    }
    }
   },
   "pvp-accept": {
@@ -3017,8 +3455,12 @@
     ]
    },
    "visto_out": {
-    "vezes": 75,
+    "vezes": 81,
     "fontes": [
+     "S1.jsonl",
+     "S2.jsonl",
+     "S3.jsonl",
+     "S4.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -3046,8 +3488,10 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 85,
+    "vezes": 88,
     "fontes": [
+     "S1.jsonl",
+     "S3.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",

@@ -2,6 +2,10 @@
  "formato": "poke-corpos-por-especie-v1",
  "nota": "Gerado por ferramentas/gravador/atualizar_corpos.py (fonte A: field.corpses das gravações, ligado ao selvagem morto no tile). speciesId -> id em game/corpses/corpses.json. Espécie ausente nunca foi vista morrendo; a simulação usa então o normal (shiny, F) ou o genérico (corpse 0, E).",
  "fontes": {
+  "S1.jsonl": "e66f925e1725fcac1c708ba2bc7c9297f747a38953fce79c2fdb3a66574ad397",
+  "S2.jsonl": "682d8e642a116c265dff343b15db093eb6afdf1137259b810ed6a1755e6a3908",
+  "S3.jsonl": "c6b3e284e6bb8854789a7d376856bcdc05d6e522bc7cf58c03379cc7de63b7f5",
+  "S4.jsonl": "92e9f7424b387ed2c00d925ff8b790aa7344cca03f715e58843b3136a6381e0d",
   "geodeude-2.jsonl": "2523321df5c2f1cabc37718c572cb72437461d09887d5f9bdecb7eb989534d41",
   "geodude-10min.jsonl": "44f837ff1a9d1486191874d29790a3a621f7fb1b7c40ac3985d73a1a3a8809bc",
   "geodude-3.jsonl": "c5aa50a639c134fd358dc78048e46e748908fc94e888bf736a4db1c84458247c",
@@ -23,9 +27,30 @@
   },
   "19": {
    "corpo": 2848,
-   "n": 2427,
+   "n": 3187,
    "contagem": {
-    "2848": 2427
+    "2848": 3187
+   }
+  },
+  "37": {
+   "corpo": 2945,
+   "n": 937,
+   "contagem": {
+    "2945": 937
+   }
+  },
+  "43": {
+   "corpo": 3008,
+   "n": 3020,
+   "contagem": {
+    "3008": 3020
+   }
+  },
+  "111": {
+   "corpo": 3035,
+   "n": 991,
+   "contagem": {
+    "3035": 991
    }
   },
   "112": {
@@ -46,9 +71,9 @@
  "shiny": {
   "19": {
    "corpo": 2848,
-   "n": 24,
+   "n": 46,
    "contagem": {
-    "2848": 24
+    "2848": 46
    }
   },
   "112": {

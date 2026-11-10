@@ -70,8 +70,10 @@ const PARAMETROS := {
 	"debuff_entrada_fator": 0.3,            # A: 1731 = floor(5772 × 0,3); debuff = −4041
 	# Captura (A nos pontos, F na curva): {bola: [[nível do selvagem, capturas, tentativas], ...]}. Entre os pontos,
 	# interpolação linear no logit; fora deles, o ponto mais próximo. Bola sem pontos → 0 (F). Espécie ignorada (F:
-	# os dois pontos são de espécies diferentes, Rattata e Rhydon). hunt-config.catchChance é 0 em todas (não usado).
-	"captura_pontos": {"3": [[1, 35, 59], [80, 5, 608]]},
+	# os três pontos são de espécies diferentes, Rattata 1, Vulpix 20 e Rhydon 80; nível e espécie não se separam com
+	# eles). hunt-config.catchChance é 0 em todas (não usado). Nível 20 (fase3/S4, conta A, 10/11/2026): 2/37; a curva
+	# de 2 pontos previa 29,6% (P(≤2 | 29,6%) = 0,0003), então ela caiu e o ponto entrou.
+	"captura_pontos": {"3": [[1, 35, 59], [20, 2, 37], [80, 5, 608]]},
 	"hp_selvagem_por_stat": 35,             # A
 	"hp_selvagem_minimo": 120,              # A
 	"golpe_poder_maximo": 599,              # F: golpes de poder 600 (assinatura) nunca aparecem nas gravações
@@ -305,8 +307,13 @@ static func dano(nivel: int, poder: int, ataque: float, defesa: float, stab: boo
 
 
 static func escolher_golpe(especie_atk: Dictionary, nivel: int, stats_atk: Dictionary, especie_def: Dictionary, stats_def: Dictionary, p: Dictionary = PARAMETROS) -> Dictionary:
-	## Hipótese (F), coerente com os 7 pares gravados: entre os golpes com nivel ≤ nível, de dano e com poder abaixo de 600,
-	## o de maior dano esperado (poder × A/D × STAB × eff amplificada); empate → menor cooldown; depois o primeiro da lista.
+	## Entre os golpes com nivel ≤ nível, de dano e com poder abaixo de 600, o de maior dano esperado (poder × A/D × STAB ×
+	## eff amplificada, com os stats do indivíduo); empate → menor cooldown; depois o primeiro da lista.
+	## A (fase 3, 10/11/2026; 324 hits do líder em S1–S4 + os 10 pares antigos): desempate pelo primeiro da lista (S1:
+	## Rhydon Stone Edge 58/58, Golem Earthquake 59/59), efetividade (S2 Hammer Arm 32/32; S4 Double-Edge 39/39) e A/D
+	## por indivíduo (S3: Gyarados usa Aqua Tail em 3 dos 15 Rhyhorn e Hydro Pump nos outros 12, sempre o mesmo golpe por
+	## indivíduo, e os 15 são coerentes com a regra dentro dos stats que o maxHp e o dano permitem). Fica F: o critério
+	## "maior dano esperado" exato (nenhum caso medido ficou perto do empate fora do empate exato do S1).
 	var tipos_atk := tipos_de(especie_atk)
 	var tipos_def := tipos_de(especie_def)
 	var melhor: Dictionary = {}

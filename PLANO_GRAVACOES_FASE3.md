@@ -24,6 +24,20 @@ casos com margem grande, ou empates exatos, que não dependem de IV. Fórmula de
 7. Depois de cada gravação: `python -I ferramentas/gravador/atualizar_corpos.py`. Cada hunt nova também ensina o
    cadáver da espécie dela, o que é um ganho extra.
 
+## Situação (10/11/2026)
+
+Conferência: `python -I ferramentas/fase3/conferir_fase3.py` (e `ferramentas/fase3/s3_individuos.py` para o S3).
+
+| ID | Gravado | Resultado |
+|---|---|---|
+| S1 | sim (12 min, 116 abates; Rhydon 425 e Golem 387, troca aos ~5 min; 2 retomadas no meio, sem efeito) | **confirma**: Stone Edge 58/58, Earthquake 59/59 → empate exato = primeiro da lista |
+| S2 | sim (4 min, 32 abates; catch ligado com Idle Ball, 1 tentativa: não atrapalha) | **confirma**: Hammer Arm 32/32 |
+| S3 | sim (3,6 min, 39 abates) | **confirma por indivíduo**: Hydro Pump 31/39 (o critério de 95% supunha IV 16 e não passa), mas cada Rhyhorn leva sempre o mesmo golpe (15/15) e os 3 com Aqua Tail são coerentes com a regra pelos stats que o maxHp e o dano permitem (15/15; em 12 a escolha restringiu o indivíduo) |
+| S4 | sim (4 min, 37 abates; Venusaur já no nível 139, não 124; catch ligado com Super Ball) | **confirma**: Double-Edge 39/39; vale também como **C2**: 2/37 capturas (a curva de 2 pontos previa 29,6%: derrubada; o ponto entrou na sim) |
+| S5–S8 | não | dispensáveis: S5 e S7 (efetividade sem STAB) e S8 (repete o S4) testam o que S2/S4 já mostraram; S6 (A/D) foi coberto pelo S3. Gravar só se sobrar tempo |
+| C1, C3–C6 | não | **ainda necessários** (a curva tem 3 pontos, cada um de uma espécie: nível e espécie não se separam). Prioridade: C6 (Bulbasaur 20, mesma bola e nível do C2: separa espécie), C1, C3, C5; C4 por último |
+| M1–M4 | não | **ainda necessários** (nada novo de movimento nestas quatro) |
+
 Duração total: **~4 h 30**. Prioridade 1 (P1) ≈ 2 h fecha o essencial de cada ponto; P2 dá folga estatística.
 
 ## (a) Seleção de golpe

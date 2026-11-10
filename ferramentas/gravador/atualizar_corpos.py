@@ -27,7 +27,7 @@ RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
 sys.path.insert(0, os.path.join(RAIZ, "ferramentas", "protocolo"))
 from gerar_protocolo import expandir, ler_logs  # noqa: E402
 
-PADRAO = [os.path.join(RAIZ, "poke har", "gravacoes", "*.jsonl"), os.path.join(RAIZ, "*.jsonl")]
+PADRAO = [os.path.join(RAIZ, "poke har", "gravacoes", "*.jsonl"), os.path.join(RAIZ, "poke har", "gravacoes", "fase3", "*.jsonl"), os.path.join(RAIZ, "*.jsonl")]
 FORMATO = "poke-corpos-por-especie-v1"
 
 

@@ -41,7 +41,8 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `testes/diag_ilhas.gd` | Ilha da grade do `start` e de cada spawn do hunt-config, por hunt |
 | `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
-| `dados/protocolo.json` | 139 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 28 vistos nas gravações |
+| `dados/protocolo.json` | 141 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 38 vistos nas gravações |
+| `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas, penalidade de entrada |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
 
@@ -98,16 +99,17 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 | Stat = round(L/100 × (base + 2·IV) × Quality^exp); exp 0,95 HP/vel, 0,8 demais; Power = round(Σstats × Quality) | (B)+(C), paridade testada antes |
 | Fator aleatório 0,85–1,00 por golpe | máx/mín ≤ 1,17 dentro do mesmo indivíduo (72 indivíduos) |
 | Efetividade amplificada: ×1,5→1,75; ×2→2,5; ×4→5,5; resistência ÷1,5 (×½ → 0,333); ×0 e ×1 iguais | (B) + `eff` nos hits |
+| Golpe do líder: sempre o mesmo por indivíduo selvagem; a efetividade e a razão A/D do indivíduo mudam a escolha; empate exato (poder, tipo, categoria e cooldown iguais) → o primeiro da lista | fase3 S1–S4: 324 hits; Stone Edge 58/58 no Rhydon e Earthquake 59/59 no Golem (empate), Hammer Arm 32/32, Double-Edge 39/39, Gyarados com Aqua Tail em 3 e Hydro Pump em 12 Rhyhorn (15/15 coerentes com os stats possíveis) |
 | **Piso de dano: 2 para o aliado, 1 para o selvagem — inclusive com eff 0 ou resistido** | Gastly×Rattata (eff 0: 2 e 1); Rattata→Geodude resistido: 1 em 880 hits |
 | XP base por abate = `experience` da espécie; VIP soma +50% em parcela separada (`xpParts`) | 200+ abates |
-| Ao entrar numa hunt (não na retomada `:rN`) os abates de ~1 min saem com `xpParts.debuff` = −70% (5772 → 1731) | rhydon-1h: os 7 primeiros abates; mecanismo exato em aberto (F) |
+| Ao entrar numa hunt (não na retomada `:rN`) os abates de ~1 min saem com `xpParts.debuff` = −70% (5772 → 1731) | rhydon-1h: 7 abates; fase3: 0 (S1), 9 (S2, até 46–77 s), 6 (S3, até 20–30 s), 10 (S4, até 59–61 s) → **não** é contado em abates; tempo exato em aberto (F) |
 | Os hits do `field` que o cliente não recebe não se perdem: vão no próximo field entregue; o `field-kill` sai no tick do abate, antes do field com o golpe final | rhydon-1h: hits/field 0,18 com Δseq 2, 0,91 com Δseq 10 |
 | XP acumulada = round(50/3 × (L³ − 6L² + 17L − 12)) → 100/200/400/800 para níveis 2–5 | (B) + Geodude subiu com 102, 210; nível 4 com 714 |
 | Loot: tabela de `creatures.json`, chance em 1/100.000, quantidade min–max | Rhydon 60 abates: Horn 83,3% vs 83,32% |
 | Hyper Potion cura até 1000, limitado ao HP que falta | 60+ auto-heals |
 | Auto-Potion dispara no mesmo tick em que o HP fica ≤ 50% (sem recarga observada); usa a menor poção do inventário que cobre o que falta, ou a maior se nenhuma cobre | `medir_pocao.py`: 42/42 cruzamentos; 208/208 escolhas |
 | Golpes: o mesmo nome tem cooldown diferente por espécie (234 de 407 variam) | catálogo; por isso golpes ficam dentro de cada espécie |
-| Captura com Super Ball: 59% em Rattata nível 1 (35/59); no Rhydon 80, 0 em 167 (gravações antigas) e 5 em 608 na rhydon-1h (~0,8%); o Rhydon capturado chega como poke-delta de nível 1 | gravações; `hunt-config.catchChance` é 0 em todas |
+| Captura com Super Ball: 59% em Rattata nível 1 (35/59); no Rhydon 80, 0 em 167 (gravações antigas) e 5 em 608 na rhydon-1h (~0,8%); Vulpix nível 20: 2 em 37 (fase3/S4); o capturado chega como poke-delta de nível 1 | gravações; `hunt-config.catchChance` é 0 em todas |
 | 15 spawns por hunt em Kanto/Outland, 16 em Orre, até 56 em Nightmare | `hunt-config` |
 
 ### Fórmula de dano candidata (F, coerente com todos os casos medidos)
@@ -129,9 +131,9 @@ Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
 
-Seleção de golpe (hipótese: maior dano esperado, empate → menor cooldown; o Venusaur usa só Solar Beam),
+Seleção de golpe: o critério exato de "maior dano esperado" (A em S1–S4, ver Fatos; não houve caso perto do empate fora do empate exato), e o desempate por cooldown (só o Solar Beam × Petal Dance),
 IA de movimento dos selvagens (ver investigação abaixo), forma da curva de captura (só 2 pontos), parcela extra de XP
-vista na conta B (×1,554 em vez de ×1,5), mecanismo da penalidade de entrada (abates ou tempo), efeitos de status,
+vista na conta B (×1,554 em vez de ×1,5; a conta B tem uma parcela `guild`, 24 em 548 no Rhyhorn, A, e o Pokémon dela recebe `mentor`), duração da penalidade de entrada (não é por abates), efeitos de status,
 regras de respawn (tempo exato).
 
 ### Pendência visual: sombras e iluminação do cliente (não portadas; não bloqueiam)
@@ -479,3 +481,16 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   rodadas ≤ 0,8 ms (com os programas abertos era ±3–5 ms: o ruído da rodada anterior era da máquina). 0 erro. Ainda há
   quadros isolados lentos (pior por hunt 12–74 ms, poucos por minuto), que não pesam no p99. Não foi preciso mexer na
   montagem de chunks.
+- 10/11/2026 — Fase 3, gravações S1–S4 (`poke har/gravacoes/fase3/`; conferência `ferramentas/fase3/conferir_fase3.py` e
+  `s3_individuos.py`; situação no `PLANO_GRAVACOES_FASE3.md`). Configuração: bate com o plano, salvo níveis (Rhydon 425,
+  Golem 387, Venusaur 139) e catch ligado no S2/S4. Seleção de golpe (A, 324 hits): **confirma** em S1 (empate exato →
+  primeiro da lista: Stone Edge 58/58 no Rhydon, Earthquake 59/59 no Golem), S2 (Hammer Arm 32/32) e S4 (Double-Edge
+  39/39); S3 não passa no critério de 95% (Hydro Pump 31/39), mas porque o critério supunha IV 16: cada Rhyhorn leva sempre
+  o mesmo golpe e os 15 são coerentes com "maior dano esperado com os stats do indivíduo" (a sim já faz assim). A regra da
+  sim não mudou (só o comentário). Captura: S4 vale como C2 — Super Ball no Vulpix 20: **2/37**, contra 29,6% da curva de 2
+  pontos (P = 0,0003) → o ponto entrou em `captura_pontos` (A); a forma entre os pontos continua F e nível × espécie não se
+  separam. Penalidade de entrada: 0/9/6/10 abates (S1..S4) → não é por abates (o parâmetro de 7 abates fica, marcado F);
+  a duração não fecha em ~60 s (S3 acaba antes de 30 s). Conta B tem parcela `guild` (24 em 548). Cadáveres: 7 espécies
+  normais (+ Oddish, Rhyhorn, Vulpix). Protocolo regenerado com as gravações da fase 3: 141 tipos, 38 vistos. Testes:
+  regras 36/36, caminho 8/8, determinismo, regras do usuário 17/17, cadáveres 3/3, grade 7/7, protocolo OK, cena 22/22,
+  catálogo 12/12; Rhydon 20 min idêntico byte a byte; diferencial 1h 27/30 e antiga 23/26 (iguais a antes).
