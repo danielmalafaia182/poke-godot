@@ -133,6 +133,17 @@ IA de movimento dos selvagens (ver investigação abaixo), forma da curva de cap
 vista na conta B (×1,554 em vez de ×1,5), mecanismo da penalidade de entrada (abates ou tempo), efeitos de status,
 regras de respawn (tempo exato).
 
+### Pendência visual: sombras e iluminação do cliente (não portadas; não bloqueiam)
+
+Como o original faz (C, `makeShadow`/`syncShadow`/`applyShadowFilters`/`sb`/`sj` em 0gx72gz9qjk5j.js): cada sprite do mapa
+na banda de itens (zIndex > 7,5e6) com altura > 32 e cada criatura ganha uma cópia preta (tint 0) numa camada de sombra
+por andar (zIndex 7,5e6, entre cadáveres e itens), ancorada nos pés (anchor y = 1), altura × tan(latitude), skew x =
+−longitude, alpha do sprite; a camada inteira leva blur (`soft` = 1) e alpha de grupo = diffuse/(ambient + diffuse) = 0,45
+(luz padrão longitude 45°, latitude 45°, ambient 0,55, diffuse 0,45; `rock-tunnel` e `mt-moon`: latitude 20, diffuse 0,3,
+ambient 0,7). Porte em Godot: um canvas item de grupo por andar (canvas_group com shader de blur e alpha), mais um canvas
+item por sprite alto/criatura com Transform2D com skew. Estimativa: meio dia, com risco para a ordem de desenho e o frame
+time; fica para depois (decisão registrada no passo 2b.7).
+
 ### Investigação de movimento (aberta; não bloqueia a fase 2)
 
 Medido com `ferramentas/gravador/medir_movimento.py` (A = rhydon-1h, 6613 fields; sim = 2 instâncias de 60 min):
@@ -418,3 +429,6 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   **Critério de p99 não confirmado** nas hunts mais pesadas (4 de 16 acima do limite na última rodada). Limites: atlas por mapa ocupa ~3,8 MB/mapa em
   `cache/` (1,7 GB se pré-gerar as 451; sem pré-gerar, a 1ª entrada monta em 0,25–1 s); tabela espécie → cadáver só de 4
   espécies (dado do servidor; 4 hunts desenham corpos); time de teste da varredura é E.
+- 09/11/2026 — 2b.7 (sombras e iluminação): não portadas; registradas como pendência visual (seção acima) com a receita do
+  cliente (C) e estimativa de meio dia. Motivo: risco para a ordem de desenho e para o frame time, que ainda está no limite
+  nas hunts mais pesadas (2b.6). Não bloqueia.
