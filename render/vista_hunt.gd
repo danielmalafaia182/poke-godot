@@ -284,11 +284,14 @@ func _placas_quadro(v: Dictionary, f: Dictionary, ox: float, oy: float, tela: Ve
 		_placa(k, nome, pct, tile_para_tela(ox + float(m["col"]), oy + float(m["row"])) - Vector2(0, dy))
 		ver[k] = true
 	var hero: Dictionary = v["hero"]
-	_placa("heroi", String(f.get("heroName", "")), 100.0 * float(f.get("heroHp", 0)) / maxf(1.0, float(f.get("heroMaxHp", 1))),
-		tile_para_tela(ox + float(hero["col"]), oy + float(hero["row"])) - Vector2(0, dy))
+	var pos_heroi := tile_para_tela(ox + float(hero["col"]), oy + float(hero["row"])) - Vector2(0, dy)
+	_placa("heroi", String(f.get("heroName", "")), 100.0 * float(f.get("heroHp", 0)) / maxf(1.0, float(f.get("heroMaxHp", 1))), pos_heroi)
 	ver["heroi"] = true
 	var tr: Dictionary = v["trainer"]
-	_placa("treinador", nome_treinador, -1.0, tile_para_tela(ox + float(tr["col"]), oy + float(tr["row"])) - Vector2(0, dy))
+	var pos_tr := tile_para_tela(ox + float(tr["col"]), oy + float(tr["row"])) - Vector2(0, dy)
+	# E: herói e treinador no mesmo tile (ou quase) → a placa do treinador sobe e fica empilhada acima da do herói,
+	# deslizando conforme eles se afastam (o original não foi observado nesse caso)
+	_placa("treinador", nome_treinador, -1.0, empilhar_placa(pos_tr, pos_heroi, _px_logico()))
 	ver["treinador"] = true
 	for k in _placas.keys():
 		if not ver.has(k):
@@ -453,4 +456,14 @@ func _cadaver_generico(c: Dictionary, mobs: Array, ox: int, oy: int) -> RID:
 	RenderingServer.canvas_item_set_modulate(rid, COR_CADAVER_GENERICO)
 	RenderingServer.canvas_item_set_draw_index(rid, mapa.posto_entidade(5.0e6 + Regras.sx(tx, ty) + 0.35))
 	return rid
+
+
+static func empilhar_placa(pos_tr: Vector2, pos_heroi: Vector2, esc: float) -> Vector2:
+	## E: placa do treinador perto da do herói → sobe até ficar empilhada acima (16 px lógicos), suavemente conforme a
+	## distância (some o efeito a 70 px na horizontal ou 16 px na vertical).
+	var perto_x := 1.0 - clampf(absf(pos_tr.x - pos_heroi.x) / (70.0 * esc), 0.0, 1.0)
+	var perto_y := 1.0 - clampf(absf(pos_tr.y - pos_heroi.y) / (16.0 * esc), 0.0, 1.0)
+	if perto_x <= 0.0 or perto_y <= 0.0:
+		return pos_tr
+	return Vector2(pos_tr.x, minf(pos_tr.y, pos_heroi.y - 16.0 * esc * perto_x * perto_y))
 

@@ -455,3 +455,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   dado usa o normal (F); espécie sem dado emite `corpse: 0`, o **genérico (E)**, que a vista desenha como o sprite parado da
   própria espécie, escurecido, na camada do cadáver (não há cadáver neutro no atlas: todos são espécies reconhecíveis).
   Rhydon 20 min: saída da sim idêntica. `test_cadaveres` 3/3; pichu (sem dado) desenha os genéricos, sem erro.
+- 09/11/2026 — Pós-2b, item 4 (pendências menores): **ícones GIF** — o cliente mostra ícone de item com `<img>` e o
+  navegador anima GIF (C), então os quadros ficam: `ferramentas/importador/gif_para_folha.py` (Python puro: LZW,
+  entrelaçamento, transparência, descarte) gera na importação uma folha PNG por GIF em `dados/gerados/icones/`
+  (determinístico; `.gdignore`) e o `itens.json` ganha `iconeAnimado` {quadros, largura, altura, duracoesMs, folha};
+  `regras_loot.textura` monta uma `AnimatedTexture` com as durações do GIF. 8 GIFs convertidos (os 7 sem ícone + Ancient
+  Stone, que segue com o ícone do catálogo antigo). `test_catalogo_itens` 12/12 (7/7 animados com o nº de quadros certo;
+  0 item sem ícone). **Placas**: herói e treinador perto um do outro → a do treinador sobe e fica empilhada 16 px lógicos
+  acima, suave com a distância (E; `vista_hunt.empilhar_placa`, `testes/test_placas.gd` 8/8). `test_caca_sim` 23/23.

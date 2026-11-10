@@ -11,6 +11,8 @@ Uso:
 Somente biblioteca padrão. Determinístico: a mesma entrada gera os mesmos bytes.
 """
 import argparse, hashlib, json, os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from gif_para_folha import converter as gif_para_folha  # noqa: E402
 from collections import defaultdict
 
 ALIAS_MAPA = {"cerulean": "cerulean_novo", "pesca": "cerulean_novo", "aero_boss": "golem"}
@@ -87,6 +89,7 @@ def main():
     ap.add_argument("--saida", required=True)
     a = ap.parse_args()
     S = a.snapshot
+    out = a.saida
     p = lambda *x: os.path.join(S, *x)
 
     manifest = ler(p("manifest.json")) if os.path.exists(p("manifest.json")) else {}
@@ -97,7 +100,8 @@ def main():
     correcoes = ler(a.correcoes)
 
     rel = {"loot_sem_item": defaultdict(list), "loot_por_nome_sem_caixa": {}, "golpes_variam_por_especie": {}, "spawns_sem_especie": defaultdict(list),
-           "hunts_sem_config": [], "hunts_sem_mapa": [], "ids_duplicados": []}
+           "hunts_sem_config": [], "hunts_sem_mapa": [], "ids_duplicados": [],
+           "icones_gif_convertidos": []}
 
     # ---------- itens ----------
     itens_por_nome = {}
@@ -112,6 +116,19 @@ def main():
                              ("revivePct", "revivePct")):
             if k_src in i:
                 d[k_dst] = i[k_src]
+        # GIF (o Godot não lê): folha PNG com os quadros + durações; o cliente anima via <img> (C)
+        icone = i.get("icon") or ""
+        if icone.lower().endswith(".gif") and icone.startswith("/") and os.path.exists(p(*icone.strip("/").split("/"))):
+            with open(p(*icone.strip("/").split("/")), "rb") as fg:
+                folha, info = gif_para_folha(fg.read())
+            nome_png = os.path.splitext(os.path.basename(icone))[0] + ".png"
+            os.makedirs(os.path.join(out, "icones"), exist_ok=True)
+            with open(os.path.join(out, "icones", nome_png), "wb") as fo:
+                fo.write(folha)
+            with open(os.path.join(out, "icones", ".gdignore"), "w", encoding="utf-8") as fo:
+                fo.write("")
+            d["iconeAnimado"] = dict(info, folha="icones/" + nome_png)
+            rel["icones_gif_convertidos"].append(icone)
         itens.append(d)
 
     # ---------- espécies e golpes ----------

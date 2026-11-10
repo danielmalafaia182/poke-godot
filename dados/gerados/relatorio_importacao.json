@@ -16,7 +16,7 @@
  "hashesSaida": {
   "especies.json": "421e5b10b5f8fd6f87d3032d45cdd15a21c4f528d39ab4d489dc52217d92dd31",
   "golpes.json": "ba65d477235a04783124bf7791a9497b4a82f219af1d7b9f1bda290047cfa7e2",
-  "itens.json": "01cebd863004f626d5544f88c1ccf533d2c165b6534b292d164e61db093e7b70",
+  "itens.json": "0f0ba6fdf8318fbf250bd3d168124e9d513dfe2b9f56c960c855a7ce4e5e4ef0",
   "hunts.json": "aeb014516f30a3dab7f10a5b40f79af4830812a067087402c55b45395f969d6a",
   "cidades.json": "18dc42123528bd8cc65ebff3420d7a3571cd7c43013158c9d83d6ab5131a54c6",
   "regras.json": "492e2ff395d5f75d784807e90baed08cf5509aa38ed52ee8a8086e0fadf2aa63"
@@ -265,6 +265,16 @@
   "spawns_sem_especie": {},
   "hunts_sem_config": [],
   "hunts_sem_mapa": [],
-  "ids_duplicados": []
+  "ids_duplicados": [],
+  "icones_gif_convertidos": [
+   "/assets/stones/ancient_stone.gif",
+   "/assets/items/big_bug_gosme.gif",
+   "/assets/items/big_enchanted_gem.gif",
+   "/assets/items/corrupted_ice_orb.gif",
+   "/assets/items/corrupted_pot_of_moss_bug.gif",
+   "/assets/items/compressed_fire.gif",
+   "/assets/items/compressed_ghost_essence.gif",
+   "/assets/items/solid_dark_gem.gif"
+  ]
  }
 }

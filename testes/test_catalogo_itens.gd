@@ -73,5 +73,18 @@ func executar() -> void:
 			icones_ok += 1
 	print("ícones carregáveis: %d de %d (GIF, não lido pelo Godot: %d)" % [icones_ok, LOOT.catalogo().size(), gifs])
 	checar(icones_ok + gifs == LOOT.catalogo().size(), "todo ícone que não é GIF carrega")
+	# ícones GIF do snapshot (o Godot não lê GIF): folha PNG do importador → AnimatedTexture com os quadros do GIF
+	var esperados := {5008: 7, 5009: 3, 5024: 8, 5025: 5, 5302: 7, 5313: 7, 5314: 5}
+	var anim_ok := []
+	for id in esperados:
+		var tex = LOOT.textura(String(LOOT.obter(id).get("icone", "")))
+		if tex is AnimatedTexture and (tex as AnimatedTexture).frames == esperados[id] and tex.get_width() > 0:
+			anim_ok.append(id)
+	checar(anim_ok.size() == esperados.size(), "os 7 ícones GIF aparecem animados, com o nº de quadros do GIF", "%d de 7" % anim_ok.size())
+	var sem_icone := 0
+	for it in LOOT.catalogo():
+		if LOOT.textura(String(it["icone"])) == null:
+			sem_icone += 1
+	checar(sem_icone == 0, "todo item do catálogo tem ícone", "%d sem ícone" % sem_icone)
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(1 if falhas else 0)

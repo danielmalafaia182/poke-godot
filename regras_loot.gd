@@ -22,6 +22,7 @@ static var _dados: Dictionary = {}
 static var _indice: Dictionary = {}
 static var _lista: Array[Dictionary] = []
 static var _texturas: Dictionary = {}
+static var _animacoes: Dictionary = {}     # caminho da folha -> {"quadros", "largura", "altura", "duracoesMs"}
 
 
 static func id_interno(original: int) -> int:
@@ -56,9 +57,15 @@ static func _carregar() -> void:
 			continue
 		var id := id_interno(orig)
 		var antigo: Dictionary = antigos.get(id, {})
+		var icone_gerado := _icone_snapshot(String(g.get("icone", "")))
+		if g.has("iconeAnimado"):
+			# GIF do snapshot convertido pelo importador numa folha PNG (o cliente anima o GIF via <img>, C)
+			var an: Dictionary = g["iconeAnimado"]
+			icone_gerado = ProjectSettings.globalize_path("res://dados/gerados/" + String(an["folha"]))
+			_animacoes[icone_gerado] = an
 		var item := {"id": id, "id_original": orig, "nome": String(g["nome"]),
 			"categoria": String(antigo.get("categoria", _categoria(String(g.get("categoria", "loot"))))),
-			"icone": String(antigo.get("icone", _icone_snapshot(String(g.get("icone", ""))))),
+			"icone": String(antigo.get("icone", icone_gerado)),
 			"vinculado": bool(antigo.get("vinculado", false)), "raro": bool(g.get("raro", antigo.get("raro", false))),
 			"chance_catalogo": antigo.get("chance_catalogo", 0), "minimo": antigo.get("minimo", 1), "maximo": antigo.get("maximo", 1),
 			"preco_npc": int(g.get("precoNpc", 0))}
@@ -94,8 +101,8 @@ static func obter(id: int) -> Dictionary:
 
 
 static func textura(caminho: String) -> Texture2D:
-	## Ícone de item: res:// (importado) ou arquivo do snapshot (png/webp lidos em tempo de execução).
-	## GIF não é lido pelo Godot: esses (24 do catálogo) ficam sem ícone.
+	## Ícone de item: res:// (importado) ou arquivo do snapshot (png/webp lidos em tempo de execução). Os GIFs animados do
+	## snapshot chegam como folha PNG (dados/gerados/icones, pelo importador) e viram AnimatedTexture com as durações do GIF.
 	if caminho == "":
 		return null
 	if _texturas.has(caminho):
@@ -110,8 +117,25 @@ static func textura(caminho: String) -> Texture2D:
 		var ok := img.load_png_from_buffer(bytes) if caminho.ends_with(".png") else img.load_webp_from_buffer(bytes)
 		if ok == OK:
 			tex = ImageTexture.create_from_image(img)
+			if _animacoes.has(caminho):
+				tex = _animar(img, _animacoes[caminho])
 	_texturas[caminho] = tex
 	return tex
+
+
+static func _animar(folha: Image, an: Dictionary) -> Texture2D:
+	var n := int(an["quadros"])
+	var w := int(an["largura"])
+	var h := int(an["altura"])
+	if n <= 1:
+		return ImageTexture.create_from_image(folha)
+	var at := AnimatedTexture.new()
+	at.frames = n
+	var dur: Array = an.get("duracoesMs", [])
+	for q in n:
+		at.set_frame_texture(q, ImageTexture.create_from_image(folha.get_region(Rect2i(q * w, 0, w, h))))
+		at.set_frame_duration(q, float(dur[q] if q < dur.size() else 100) / 1000.0)
+	return at
 
 
 static func sortear(especie: String, rng: RandomNumberGenerator) -> Array[Dictionary]:

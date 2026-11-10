@@ -13,7 +13,23 @@
   "icone": "/assets/stones/ancient_stone.gif",
   "categoria": "stone",
   "raro": true,
-  "precoNpc": 50000
+  "precoNpc": 50000,
+  "iconeAnimado": {
+   "quadros": 8,
+   "largura": 32,
+   "altura": 32,
+   "duracoesMs": [
+    150,
+    150,
+    150,
+    150,
+    150,
+    150,
+    150,
+    150
+   ],
+   "folha": "icones/ancient_stone.png"
+  }
  },
  {
   "id": 3,
@@ -1289,7 +1305,22 @@
   "icone": "/assets/items/big_bug_gosme.gif",
   "categoria": "clan",
   "raro": false,
-  "precoNpc": 100
+  "precoNpc": 100,
+  "iconeAnimado": {
+   "quadros": 7,
+   "largura": 32,
+   "altura": 32,
+   "duracoesMs": [
+    150,
+    120,
+    120,
+    120,
+    120,
+    120,
+    60
+   ],
+   "folha": "icones/big_bug_gosme.png"
+  }
  },
  {
   "id": 5009,
@@ -1297,7 +1328,18 @@
   "icone": "/assets/items/big_enchanted_gem.gif",
   "categoria": "clan",
   "raro": false,
-  "precoNpc": 100
+  "precoNpc": 100,
+  "iconeAnimado": {
+   "quadros": 3,
+   "largura": 32,
+   "altura": 32,
+   "duracoesMs": [
+    190,
+    190,
+    190
+   ],
+   "folha": "icones/big_enchanted_gem.png"
+  }
  },
  {
   "id": 5010,
@@ -1321,7 +1363,23 @@
   "icone": "/assets/items/corrupted_ice_orb.gif",
   "categoria": "loot",
   "raro": false,
-  "precoNpc": 10
+  "precoNpc": 10,
+  "iconeAnimado": {
+   "quadros": 8,
+   "largura": 26,
+   "altura": 26,
+   "duracoesMs": [
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100,
+    100
+   ],
+   "folha": "icones/corrupted_ice_orb.png"
+  }
  },
  {
   "id": 5025,
@@ -1329,7 +1387,20 @@
   "icone": "/assets/items/corrupted_pot_of_moss_bug.gif",
   "categoria": "loot",
   "raro": false,
-  "precoNpc": 10
+  "precoNpc": 10,
+  "iconeAnimado": {
+   "quadros": 5,
+   "largura": 32,
+   "altura": 32,
+   "duracoesMs": [
+    190,
+    190,
+    190,
+    190,
+    190
+   ],
+   "folha": "icones/corrupted_pot_of_moss_bug.png"
+  }
  },
  {
   "id": 5028,
@@ -1457,7 +1528,22 @@
   "icone": "/assets/items/compressed_fire.gif",
   "categoria": "clan",
   "raro": false,
-  "precoNpc": 100
+  "precoNpc": 100,
+  "iconeAnimado": {
+   "quadros": 7,
+   "largura": 32,
+   "altura": 32,
+   "duracoesMs": [
+    190,
+    190,
+    190,
+    190,
+    190,
+    190,
+    190
+   ],
+   "folha": "icones/compressed_fire.png"
+  }
  },
  {
   "id": 5303,
@@ -1537,7 +1623,22 @@
   "icone": "/assets/items/compressed_ghost_essence.gif",
   "categoria": "clan",
   "raro": false,
-  "precoNpc": 100
+  "precoNpc": 100,
+  "iconeAnimado": {
+   "quadros": 7,
+   "largura": 32,
+   "altura": 32,
+   "duracoesMs": [
+    190,
+    190,
+    190,
+    190,
+    190,
+    190,
+    190
+   ],
+   "folha": "icones/compressed_ghost_essence.png"
+  }
  },
  {
   "id": 5314,
@@ -1545,7 +1646,20 @@
   "icone": "/assets/items/solid_dark_gem.gif",
   "categoria": "clan",
   "raro": false,
-  "precoNpc": 100
+  "precoNpc": 100,
+  "iconeAnimado": {
+   "quadros": 5,
+   "largura": 32,
+   "altura": 32,
+   "duracoesMs": [
+    250,
+    250,
+    250,
+    250,
+    250
+   ],
+   "folha": "icones/solid_dark_gem.png"
+  }
  },
  {
   "id": 6352,
