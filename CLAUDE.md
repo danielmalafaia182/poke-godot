@@ -471,3 +471,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   (maior dano esperado → menor cooldown → aprendido primeiro) é a única simples coerente. Fica para gravar: desempate
   no Golem (S1), efetividade (S2/S4/S5/S7), razão A/D (S3/S6), captura nos níveis 10/20/40/60, por bola e por raridade
   (C1–C6), e movimento com luta longa, tamanho de janela (`view`), mapa da referência e herói lento (M1–M4).
+- 10/11/2026 — Pós-2b, item 2 (**p99 com critério estatístico — cumprido**): Firefox e Discord fechados pelo usuário;
+  16 hunts mais pesadas × 3 rodadas, 60 s a 1×, 1920×1080, RTX 4060 (`testes/test_todas_hunts.py --velocidade 1`;
+  saídas `saida_testes/p99_rodada{1,2,3}.json`). Critério: mediana dos 3 p99 ≤ 16,7 ms em cada hunt → **16/16**. Medianas:
+  nightmare_elekid 11,0; ancient_pinsir 10,3; nightmare_luxray 10,3; nightmare_raichu 9,1; rhydon 7,5; nightmare_magby
+  7,4; rapidash 7,1; nightmare_snorunt 7,0; magneton 6,6; electabuzz 6,3; as outras 6 entre 5,7 e 5,9 ms. Variação entre
+  rodadas ≤ 0,8 ms (com os programas abertos era ±3–5 ms: o ruído da rodada anterior era da máquina). 0 erro. Ainda há
+  quadros isolados lentos (pior por hunt 12–74 ms, poucos por minuto), que não pesam no p99. Não foi preciso mexer na
+  montagem de chunks.
