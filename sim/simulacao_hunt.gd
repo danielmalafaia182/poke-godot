@@ -843,7 +843,7 @@ func _turno_selvagens() -> void:
 				m["prox_ataque"] = tick + int(p.ataque_selvagem_ticks) + extra
 		else:
 			m["prox_ataque"] = -1
-			if _na_visao(m["pos"]) and _espera_minima_ok(m, int(p.mob_step_ms)):
+			if _na_visao(m["pos"]) and _espera_minima_ok(m, int(p.mob_step_ms)) 					and tick - int(heroi["ultimo_passo_tick"]) >= int(p.mob_espera_apos_heroi_ticks):
 				_passo_mob(m)
 	_pos_dano()
 

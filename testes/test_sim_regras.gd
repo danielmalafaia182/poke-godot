@@ -98,24 +98,26 @@ func _init() -> void:
 		iguais = iguais and r1.proximo_u32() == r2.proximo_u32()
 	checar(iguais and Rng.new(43).proximo_u32() != Rng.new(42).proximo_u32(), "RNG determinístico por semente")
 
-	# --- Captura com medidor (C: investimento por espécie; forma F ajustada nas sequências A, sem fator de nível).
-	# Rattata 1, preço 80, Super Ball: tentativas 1–3 depois de uma captura ≈ 0,46 / 0,87 / 1 (A: 15/34, 15/18, 3/3);
-	# Spearow 10, preço 100: ≈ 0,37 / 0,63 / 0,90 (A: 13/28, 7/14, 7/7).
+	# --- Captura com medidor (C: investimento por espécie; forma F ajustada nas sequências A; valor da bola = ouro, A/C5).
+	# Rattata 1, preço 80, Super Ball: tentativas 1–3 depois de uma captura ≈ 0,51 / 0,87 / 1 (A: 15/34, 15/18, 3/3);
+	# Spearow 10, preço 100: ≈ 0,41 / 0,87 na 3ª (A: 13/28, 7/14, 7/7); Geodude 1 (300): Poké 0,014, Ultra 0,35.
 	var v3 := Regras.valor_bola(3)
-	checar(absf(v3 - 50.0) < 1e-9, "Super Ball vale o próprio preço (50) no medidor")
+	checar(absf(v3 - 50.0) < 1e-9 and Regras.valor_bola(4) == 130.0 and Regras.valor_bola(1) == 5.0, "bola vale o ouro pago (Super 50, Ultra 130, Poké 5)")
 	var cr1 := Regras.chance_captura(3, 0.0, 80.0)
 	var cr2 := Regras.chance_captura(3, v3, 80.0)
 	var cr3 := Regras.chance_captura(3, 2.0 * v3, 80.0)
-	checar(absf(cr1 - 0.459) < 0.01 and absf(cr2 - 0.872) < 0.01 and cr3 == 1.0, "Rattata: 0,46 / 0,87 / 1", "%.3f %.3f %.3f" % [cr1, cr2, cr3])
+	checar(absf(cr1 - 0.509) < 0.01 and absf(cr2 - 0.871) < 0.01 and cr3 == 1.0, "Rattata: 0,51 / 0,87 / 1", "%.3f %.3f %.3f" % [cr1, cr2, cr3])
 	var cs1 := Regras.chance_captura(3, 0.0, 100.0)
 	var cs3 := Regras.chance_captura(3, 2.0 * v3, 100.0)
-	checar(absf(cs1 - 0.3675) < 0.01 and absf(cs3 - 0.897) < 0.01, "Spearow: 0,37 na 1ª, 0,90 na 3ª", "%.3f %.3f" % [cs1, cs3])
+	checar(absf(cs1 - 0.407) < 0.01 and absf(cs3 - 0.871) < 0.01, "Spearow: 0,41 na 1ª, 0,87 na 3ª", "%.3f %.3f" % [cs1, cs3])
+	checar(absf(Regras.chance_captura(1, 0.0, 300.0) - 0.0136) < 0.001 and absf(Regras.chance_captura(4, 0.0, 300.0) - 0.353) < 0.005,
+		"Geodude 1: Poké 0,014 e Ultra 0,35 na 1ª", "%.4f %.3f" % [Regras.chance_captura(1, 0.0, 300.0), Regras.chance_captura(4, 0.0, 300.0)])
 	checar(Regras.chance_captura(3, 0.0, 13000.0) < 0.004 and Regras.chance_captura(3, 300.0 * v3, 13000.0) > 2.0 * Regras.chance_captura(3, 0.0, 13000.0),
 		"Rhydon (13000): chance baixa que sobe com o investimento")
 	checar(Regras.chance_captura(5, 0.0, 13000.0) == 1.0 and Regras.chance_captura(9, 50.0, 80.0) == 0.0,
 		"Master Ball garante; bola desconhecida não captura")
-	checar(Regras.chance_captura(6, 0.0, 80.0) < 1.0, "Idle Ball no Rattata 1 não é certa (A: falhou no S2)",
-		"%.3f" % Regras.chance_captura(6, 0.0, 80.0))
+	checar(Regras.chance_captura(6, 0.0, 300.0) == 1.0, "Idle Ball (400 de ouro) captura o Geodude 1 (A: 73/73 fora de shiny)",
+		"%.3f" % Regras.chance_captura(6, 0.0, 300.0))
 	checar(absf(Regras.chance_captura(3, 0.0, 1000.0, 1.0) - 2.0 * Regras.chance_captura(3, 0.0, 1000.0)) < 1e-9, "bônus multiplica (1 + bônus)")
 
 	# --- Penalidade de entrada (boost shinylock): 60 s desde a entrada, XP × 0,3 (5772 → 1731), sem chave depois.

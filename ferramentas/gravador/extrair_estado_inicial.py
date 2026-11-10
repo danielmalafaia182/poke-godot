@@ -42,6 +42,7 @@ def main():
     cadaveres = {}
     mortos_pendentes = {}
     deltas = []
+    chunk = []
     for o in linhas(origem):
         if o["dir"] != "in":
             continue
@@ -61,6 +62,9 @@ def main():
             est["vip"] = m
         if t == "poke-delta":
             deltas.append(m["poke"])
+        if t == "pokes-chunk":
+            # lista do time (A): serve de poke-delta quando a gravação não tem um do herói (ex.: M3)
+            chunk.extend(x for x in m.get("list", []) if x.get("team"))
         if not dentro:
             continue
         if t == "field":
@@ -94,6 +98,8 @@ def main():
     # poke-delta é de um Pokémon nível 1 vindo de pacote de cartas, não do Venusaur)
     heroi = est.get("primeiroField", {}).get("heroName")
     escolhido = next((d for d in deltas if d.get("name") == heroi and d.get("team")), None)         or next((d for d in deltas if d.get("name") == heroi), None) or (deltas[0] if deltas else None)
+    if escolhido is None or escolhido.get("name") != heroi:
+        escolhido = next((d for d in chunk if d.get("name") == heroi and d.get("leader")), None) or escolhido
     if escolhido is not None:
         est["pokeDelta"] = escolhido
     with open(destino, "w", encoding="utf-8", newline="\n") as f:

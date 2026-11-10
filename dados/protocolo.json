@@ -22,11 +22,13 @@
   "C6.jsonl",
   "M1.jsonl",
   "M2.jsonl",
+  "M3.jsonl",
   "S1.jsonl",
   "S2.jsonl",
   "S3.jsonl",
   "S4.jsonl",
   "c2.jsonl",
+  "c5.jsonl",
   "geodude-3.jsonl",
   "loogs.txt",
   "logs rhyhorn.txt",
@@ -36,8 +38,8 @@
   "tipos": 144,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 50,
-  "rest_vistos": 0
+  "vistos_em_logs": 54,
+  "rest_vistos": 6
  },
  "mensagens": {
   "addon-used": {
@@ -221,9 +223,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 3,
+    "vezes": 30,
     "fontes": [
-     "M1.jsonl"
+     "M1.jsonl",
+     "M3.jsonl",
+     "c5.jsonl"
     ],
     "esquema": {
      "autoCatch": {
@@ -391,9 +395,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 23,
     "fontes": [
-     "M1.jsonl"
+     "M1.jsonl",
+     "M3.jsonl",
+     "c5.jsonl"
     ],
     "esquema": {}
    }
@@ -404,9 +410,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 6,
     "fontes": [
-     "M1.jsonl"
+     "M1.jsonl",
+     "M3.jsonl",
+     "c5.jsonl"
     ],
     "esquema": {}
    }
@@ -417,17 +425,19 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 20701,
+    "vezes": 26191,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -444,17 +454,19 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1124,
+    "vezes": 1455,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -590,17 +602,19 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 13,
+    "vezes": 15,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
      "rhydon-1h.jsonl"
@@ -618,16 +632,18 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 21,
+    "vezes": 25,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodude-10min.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "rhydon-1h.jsonl"
@@ -672,14 +688,16 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 95,
+    "vezes": 100,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -723,13 +741,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1112,
+    "vezes": 1441,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "M3.jsonl",
      "S2.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -920,17 +940,19 @@
     ]
    },
    "visto_out": {
-    "vezes": 13,
+    "vezes": 15,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodude-10min.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
@@ -962,15 +984,17 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 101,
+    "vezes": 106,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S3.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1046,17 +1070,19 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 18703,
+    "vezes": 23464,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1474,17 +1500,19 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 86,
+    "vezes": 88,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1584,17 +1612,19 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1475,
+    "vezes": 1966,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1904,6 +1934,13 @@
   "guild-dirty": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "c5.jsonl"
+    ],
+    "esquema": {}
    }
   },
   "guild-get": {
@@ -1917,12 +1954,117 @@
   "guild-history": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "c5.jsonl"
+    ],
+    "esquema": {
+     "guild": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "at": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "2026-11-10T16:05:19.928Z"
+        },
+        "body": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Boa Tarde, lembrem de doar para abrir mais vagas para guild!"
+        },
+        "channel": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "guild"
+        },
+        "fromName": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "DinhoOvoPreto"
+        },
+        "guildTag": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "TJF"
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cmwavstywabqc4ozuxx317kkx"
+        },
+        "isAdmin": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isCm": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isCreator": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isTutor": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isVip": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "level": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 663
+        }
+       }
+      }
+     },
+     "guildTag": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "TJF"
+     }
+    }
    }
   },
   "guild-history-get": {
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 1,
+    "fontes": [
+     "c5.jsonl"
+    ],
+    "esquema": {}
    }
   },
   "gym-global": {
@@ -2475,8 +2617,9 @@
   "invasion-announce": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 1,
+    "vezes": 2,
     "fontes": [
+     "c5.jsonl",
      "rhydon-1h.jsonl"
     ],
     "esquema": {
@@ -2498,9 +2641,10 @@
   "invasion-energy": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 109,
+    "vezes": 149,
     "fontes": [
      "M1.jsonl",
+     "c5.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "rhydon-1h.jsonl"
     ],
@@ -2547,8 +2691,9 @@
   "invasion-energy-get": {
    "no_cliente": {},
    "visto_out": {
-    "vezes": 108,
+    "vezes": 148,
     "fontes": [
+     "c5.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "rhydon-1h.jsonl"
     ],
@@ -2558,9 +2703,10 @@
   "invasion-state": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 281,
+    "vezes": 402,
     "fontes": [
      "M2.jsonl",
+     "c5.jsonl",
      "geodude-10min.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "rhydon-1h.jsonl"
@@ -2598,17 +2744,19 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2205,
+    "vezes": 2692,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -2755,17 +2903,19 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 818,
+    "vezes": 1143,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -2844,17 +2994,19 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 12,
+    "vezes": 14,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
      "rhydon-1h.jsonl"
@@ -2865,13 +3017,14 @@
   "poke-delta": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 118,
+    "vezes": 245,
     "fontes": [
      "C1.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -2982,7 +3135,8 @@
        },
        "quality": {
         "tipos": [
-         "float"
+         "float",
+         "int"
         ],
         "exemplo": 1.299
        },
@@ -3106,9 +3260,11 @@
     ]
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
-     "S1.jsonl"
+     "M3.jsonl",
+     "S1.jsonl",
+     "c5.jsonl"
     ],
     "esquema": {
      "pokeId": {
@@ -3125,9 +3281,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1,
+    "vezes": 2,
     "fontes": [
-     "S1.jsonl"
+     "S1.jsonl",
+     "c5.jsonl"
     ],
     "esquema": {
      "leftMs": {
@@ -3158,17 +3315,19 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1475,
+    "vezes": 1966,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -3500,17 +3659,19 @@
   "pokes-chunk": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 6,
+    "vezes": 10,
     "fontes": [
+     "M3.jsonl",
      "S1.jsonl",
-     "S2.jsonl"
+     "S2.jsonl",
+     "c5.jsonl"
     ],
     "esquema": {
      "gen": {
       "tipos": [
        "int"
       ],
-      "exemplo": 3
+      "exemplo": 5
      },
      "list": {
       "tipos": [
@@ -3525,7 +3686,14 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 200
+         "exemplo": 116
+        },
+        "breedingBox": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
         },
         "evolveNeedLevel": {
          "tipos": [
@@ -3559,19 +3727,19 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 13464
+         "exemplo": 11364
         },
         "id": {
          "tipos": [
           "str"
          ],
-         "exemplo": "cmumcldhjknrspcos6op6ze86"
+         "exemplo": "cmu7iu79n6chzleth2yl8rr25"
         },
         "ivTotal": {
          "tipos": [
           "int"
          ],
-         "exemplo": 141
+         "exemplo": 120
         },
         "leader": {
          "tipos": [
@@ -3583,7 +3751,7 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 425
+         "exemplo": 387
         },
         "locked": {
          "tipos": [
@@ -3596,25 +3764,25 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 200
+         "exemplo": 116
         },
         "maxHp": {
          "tipos": [
           "int"
          ],
-         "exemplo": 13464
+         "exemplo": 11364
         },
         "name": {
          "tipos": [
           "str"
          ],
-         "exemplo": "Rhydon"
+         "exemplo": "Golem"
         },
         "power": {
          "tipos": [
           "int"
          ],
-         "exemplo": 9657
+         "exemplo": 8435
         },
         "quality": {
          "tipos": [
@@ -3626,7 +3794,7 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 13000
+         "exemplo": 15000
         },
         "shiny": {
          "tipos": [
@@ -3645,7 +3813,7 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 112
+         "exemplo": 76
         },
         "starter": {
          "tipos": [
@@ -3662,37 +3830,37 @@
            "tipos": [
             "int"
            ],
-           "exemplo": 1306
+           "exemplo": 855
           },
           "def": {
            "tipos": [
             "int"
            ],
-           "exemplo": 1224
+           "exemplo": 1177
           },
           "hp": {
            "tipos": [
             "int"
            ],
-           "exemplo": 1122
+           "exemplo": 947
           },
           "spAtk": {
            "tipos": [
             "int"
            ],
-           "exemplo": 592
+           "exemplo": 465
           },
           "spDef": {
            "tipos": [
             "int"
            ],
-           "exemplo": 497
+           "exemplo": 626
           },
           "speed": {
            "tipos": [
             "int"
            ],
-           "exemplo": 624
+           "exemplo": 616
           }
          }
         },
@@ -3706,20 +3874,20 @@
          "tipos": [
           "str"
          ],
-         "exemplo": "GROUND"
+         "exemplo": "ROCK"
         },
         "type2": {
          "tipos": [
           "str"
          ],
          "opcional": true,
-         "exemplo": "ROCK"
+         "exemplo": "GROUND"
         },
         "xp": {
          "tipos": [
           "int"
          ],
-         "exemplo": 2401607306
+         "exemplo": 1766449846
         }
        }
       }
@@ -3766,16 +3934,18 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1,
+    "vezes": 5,
     "fontes": [
-     "S2.jsonl"
+     "M3.jsonl",
+     "S2.jsonl",
+     "c5.jsonl"
     ],
     "esquema": {
      "col": {
       "tipos": [
        "int"
       ],
-      "exemplo": 41
+      "exemplo": 25
      },
      "itemName": {
       "tipos": [
@@ -3783,35 +3953,42 @@
       ],
       "exemplo": "Rare Pokémon Picture"
      },
+     "msg": {
+      "tipos": [
+       "str"
+      ],
+      "opcional": true,
+      "exemplo": "O Pokémon se moveu rápido demais e a foto saiu tremida... in"
+     },
      "ok": {
       "tipos": [
        "bool"
       ],
-      "exemplo": true
+      "exemplo": false
      },
      "pictures": {
       "tipos": [
        "int"
       ],
-      "exemplo": 95
+      "exemplo": 101
      },
      "row": {
       "tipos": [
        "int"
       ],
-      "exemplo": 54
+      "exemplo": 29
      },
      "slot": {
       "tipos": [
        "int"
       ],
-      "exemplo": 8
+      "exemplo": 0
      },
      "speciesId": {
       "tipos": [
        "int"
       ],
-      "exemplo": 19
+      "exemplo": 112
      }
     }
    }
@@ -4071,6 +4248,81 @@
   "shiny-global": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "c5.jsonl"
+    ],
+    "esquema": {
+     "avatar": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "body": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 114
+       },
+       "feet": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "head": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "legs": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 114
+       },
+       "lookType": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 20009
+       }
+      }
+     },
+     "dexId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 169
+     },
+     "playerName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "vatahomas"
+     },
+     "pokemonName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Crobat"
+     },
+     "spriteId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1781
+     },
+     "tier": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "C"
+     }
+    }
    }
   },
   "sleep-mode": {
@@ -4290,17 +4542,19 @@
     ]
    },
    "visto_out": {
-    "vezes": 86,
+    "vezes": 88,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
      "S3.jsonl",
      "S4.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -4328,15 +4582,17 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 100,
+    "vezes": 105,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "M1.jsonl",
      "M2.jsonl",
+     "M3.jsonl",
      "S1.jsonl",
      "S3.jsonl",
      "c2.jsonl",
+     "c5.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -4355,5 +4611,825 @@
    }
   }
  },
- "rest": {}
+ "rest": {
+  "GET /api/game/capture-log": {
+   "vezes": 5,
+   "fontes": [
+    "c5.jsonl"
+   ],
+   "status": {
+    "200": 5
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "limit": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 200
+     },
+     "normalTotal": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 875
+     },
+     "rows": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "at": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "2026-11-10T21:01:51.082Z"
+        },
+        "ballName": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Poké Ball"
+        },
+        "firstCatch": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cmwb6e5pm9ges122eebjtdjbc"
+        },
+        "ivTotal": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 62
+        },
+        "level": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 196
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Geodude"
+        },
+        "quality": {
+         "tipos": [
+          "float"
+         ],
+         "exemplo": 0.902
+        },
+        "shiny": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 74
+        }
+       }
+      }
+     },
+     "shinyTotal": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "sort": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "recent"
+     },
+     "total": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 875
+     }
+    }
+   }
+  },
+  "GET /api/game/hunt-config": {
+   "vezes": 2,
+   "fontes": [
+    "M3.jsonl",
+    "c5.jsonl"
+   ],
+   "status": {
+    "200": 2
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "catchChance": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "lures": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": []
+      }
+     },
+     "spawns": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "pokeId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 112
+        },
+        "x": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": -25
+        },
+        "y": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": -19
+        }
+       }
+      }
+     },
+     "start": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "x": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": -2
+       },
+       "y": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       }
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/map-markers": {
+   "vezes": 1,
+   "fontes": [
+    "M3.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "hunts": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "area": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "kanto"
+        },
+        "level": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1309
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Cerulean"
+        },
+        "pixel": {
+         "tipos": [
+          "list"
+         ],
+         "itens": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 589
+         }
+        },
+        "range": {
+         "tipos": [
+          "list"
+         ],
+         "itens": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 3976
+         }
+        },
+        "slug": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cerulean"
+        }
+       }
+      }
+     },
+     "map": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "h": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 3364
+       },
+       "w": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1788
+       }
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/outfits": {
+   "vezes": 4,
+   "fontes": [
+    "c5.jsonl"
+   ],
+   "status": {
+    "200": 4
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "base": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 20011
+     },
+     "colors": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "body": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 95
+       },
+       "feet": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "head": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 94
+       },
+       "legs": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       }
+      }
+     },
+     "gender": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "male"
+     },
+     "items": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "colorizable": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "kind": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "base"
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 20011
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Treinador"
+        }
+       }
+      }
+     },
+     "locked": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "colorizable": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 20002
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Greninja Cosplay"
+        },
+        "price": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 30
+        }
+       }
+      }
+     },
+     "lookType": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 9894
+     }
+    }
+   }
+  },
+  "GET /api/game/profile": {
+   "vezes": 4,
+   "fontes": [
+    "c5.jsonl"
+   ],
+   "status": {
+    "200": 4
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "blessType": {
+      "tipos": [
+       "null"
+      ]
+     },
+     "clan": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "name": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "orebound"
+       },
+       "rank": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 5
+       }
+      }
+     },
+     "createdAt": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "2026-09-18T20:23:01.902Z"
+     },
+     "diamonds": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 21
+     },
+     "fishForNext": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 18
+     },
+     "fishInLevel": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "fishingSkill": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 10
+     },
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 94430014
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 622
+     },
+     "name": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "MikePapa"
+     },
+     "onlineSeconds": {
+      "tipos": [
+       "null"
+      ]
+     },
+     "pokedexCount": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 122
+     },
+     "pokedexTotal": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 358
+     },
+     "pokelogPoints": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "pvp": {
+      "tipos": [
+       "null"
+      ]
+     },
+     "rank": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 9435
+     },
+     "scores": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "adventurer": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "engineer": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "nightmare": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "professor": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "stylist": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       }
+      }
+     },
+     "streakEarned": {
+      "tipos": [
+       "null"
+      ]
+     },
+     "totalCatches": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 21135
+     },
+     "totalPlayers": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 341733
+     },
+     "vip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "vipUntil": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1800131888836
+     },
+     "xp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 7846028552
+     },
+     "xpForNext": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 38502200
+     },
+     "xpInLevel": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 38298827
+     }
+    }
+   }
+  },
+  "POST /api/game/auto-helper": {
+   "vezes": 5,
+   "fontes": [
+    "M3.jsonl",
+    "c5.jsonl"
+   ],
+   "status": {
+    "200": 5
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "autoCatch": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "autoCatchBallId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 3
+     },
+     "autoCatchNames": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": ""
+     },
+     "autoCatchShiny": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "autoCatchShinyBallId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 6
+     },
+     "autoPotion": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "autoPotionItemId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "autoPotionThreshold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 90
+     },
+     "balls": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "iconUrl": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/pokeball.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "infinite": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Poké Ball"
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 337
+        }
+       }
+      }
+     },
+     "isCreator": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "isVip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "pokeCapacity": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 3000
+     },
+     "pokeCount": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 389
+     },
+     "potions": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "healAmount": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 150
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/great_potion.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 201
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Great Potion"
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 390
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
 }

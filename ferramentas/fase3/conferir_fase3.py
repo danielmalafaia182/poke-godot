@@ -24,14 +24,14 @@ RAIZ = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),
 sys.path.insert(0, os.path.join(RAIZ, "ferramentas", "gravador"))
 import rest  # noqa: E402
 
-# Modelo do medidor (F) — mesmos valores de sim/regras.gd PARAMETROS (captura_*)
-C, K = 0.735, 1.44
+# Modelo do medidor (F) — mesmos valores de sim/regras.gd PARAMETROS (captura_*); valor da bola = ouro (A, C5)
+C, K = 0.814, 1.14
 EFIC = {1: 1, 2: 2, 3: 3, 4: 4, 5: 255, 6: 5, 7: 5}
 PRECO_BOLA = {1: 5, 2: 20, 3: 50, 4: 130, 5: 0, 6: 400, 7: 400}
 
 
 def valor_bola(b):
-    return EFIC.get(b, 0) * PRECO_BOLA[3] / 3.0
+    return float(PRECO_BOLA.get(b, 0))
 
 
 def chance(b, investido_antes, preco):
@@ -58,7 +58,7 @@ PLANO_GOLPES = {
     "S7": ("exeggcute", {"Rhydon": "Megahorn", "Golem": "Steamroller"}),
     "S8": ("bulbasaur", {"Venusaur": "Double-Edge"}),
 }
-PLANO_CAPTURA = {"C1": "spearow", "C2": "vulpix", "C3": "arbok", "C4": "pikachu", "C5": "vulpix", "C6": "bulbasaur"}
+PLANO_CAPTURA = {"C1": "spearow", "C2": "vulpix", "C3": "arbok", "C4": "pikachu", "C5": "geodude", "C6": "bulbasaur"}
 PLANO_MOVIMENTO = {"M1": "kangaskhan", "M2": "kangaskhan", "M3": "rhydon", "M4": "rattata"}
 
 
@@ -71,6 +71,7 @@ def ler(caminho):
 
 def conferir(caminho):
     ident = os.path.splitext(os.path.basename(caminho))[0].split("_")[0].upper()
+    shiny_em = {}
     r = {"arquivo": os.path.basename(caminho), "id": ident, "sessoes": set(), "entradas": [], "huntKeys": [],
          "niveis": {}, "lideres": Counter(), "golpes": Counter(), "por_slot": defaultdict(Counter),
          "capturas": Counter(), "tentativas": [], "lock_until": None, "abates_srv": [], "abates": 0, "debuff": [], "sem_debuff": None, "t_entrada": None, "duracao_s": 0}
@@ -91,6 +92,7 @@ def conferir(caminho):
                     r["niveis"][p["name"]] = p["level"]
         elif t == "field-kill":
             r["abates"] += 1
+            shiny_em[(m.get("row"), m.get("col"))] = bool(m.get("shiny"))
             pk = m.get("pokeXp") or {}
             deb = (m.get("xpParts") or {}).get("debuff", 0)
             dt = round((reg["t"] - (r["t_entrada"] or reg["t"])) / 1000.0, 1)
@@ -102,8 +104,10 @@ def conferir(caminho):
             if pk.get("level"):
                 r["niveis"].setdefault("_poke_%s" % pk.get("speciesId"), pk.get("level"))
         elif t == "catch-result":
-            r["capturas"][(m.get("ballName"), bool(m.get("success")))] += 1
-            r["tentativas"].append((m.get("speciesName"), int(m.get("ballId", 0)), bool(m.get("success")), slug_atual))
+            shiny = shiny_em.get((m.get("row"), m.get("col")), False)   # A: o field-kill do mesmo tile vem logo antes
+            r["capturas"][(m.get("ballName") + (" (shiny)" if shiny else ""), bool(m.get("success")))] += 1
+            if not shiny:   # shiny não usa o medidor (C); fica fora do modelo
+                r["tentativas"].append((m.get("speciesName"), int(m.get("ballId", 0)), bool(m.get("success")), slug_atual))
         elif t == "boosts":
             for b in m.get("boosts") or []:
                 if b.get("key") == "shinylock":

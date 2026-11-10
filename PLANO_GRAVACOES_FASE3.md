@@ -41,47 +41,37 @@ Conferência: `python -I ferramentas/fase3/conferir_fase3.py` (e `ferramentas/fa
 | C6 | sim (6 min, 84 tentativas, sem used-balls) | Bulbasaur 20 RARE (3000): 0/84; modelo novo 2,05 (P = 0,13): **inconclusivo** para raridade (fator ajustado 1,00) |
 | M1 | sim (Venusaur 140–141, 121 abates, ~19 min de fields em 2,5 h com pausas) | **Borda da perseguição medida (A)**: ±13 em colunas e ±13 em linhas, não ±7. H1 e H4 explicados por isso no Kangaskhan; H3 cai (o "vaguear" era perseguição em \|dy\| 8–13) |
 | M2 | sim (Venusaur 141–142, 65 abates), mas o `view` foi 27×15 do começo ao fim | O cliente calcula o `view` só pelo zoom da câmera (C); o tamanho da janela não muda nada. A pergunta do M2 (a visão acompanha a janela?) não se aplica. Serve como 2ª gravação de luta longa (confirma o M1) |
-| C3, C4, C7, C8, C5, M3, M4 | não | ver "O que falta", abaixo |
+| C5 | sim (conta B, Rhydon 425, `geodude`, 44,7 min: Poké 61, Great 60, Super 59, Ultra 69 e um trecho extra de Idle 75). Gravador v1.2 com linhas REST, mas **sem used-balls**: foi aberto o `capture-log` (histórico de capturas), não a tela Gerenciamento de Captura | **Valor da bola = ouro pago** (critério fechado). Esperado pelo ouro × pela eficiência, observado: Poké 0,9 × 4,0, 0/47; Great 5,1 × 9,8, 6/60; Super 12,9 × 13,7, 10/59; Ultra 33,1 × 20,3, 37/69; Idle 73,0 × 26,2, 73/73 (logL −190,6 × −294,5). As 2 falhas de Idle foram em shiny (como a do S2). Investimento de antes da gravação: inconclusivo |
+| M3 | sim (conta B, Golem 387, `rhydon`, 16,7 min, 167 abates; catch ligado, 5 tentativas) | Abate em 1 golpe: 0,03 adjacentes por field. O selvagem que não é o alvo quase nunca chega ao lado do herói (0,32/min real × 1,88 na sim com caixa 13), mas em luta longa (M1/M2) chega mais que na sim. **Nenhuma regra testada fecha as quatro gravações**: a sim fica com 7 |
+| C3, C4, C7, C8, M4 | não | ver "O que falta", abaixo |
 
-### O que falta (em ordem de prioridade, revisto em 10/11/2026)
+### O que falta (em ordem de prioridade, revisto em 10/11/2026, depois do C5 e do M3)
 
-1. **Antes de tudo: o gravador v1.2.** Nenhuma gravação tem linha REST. O mais provável é que a versão antiga do gravador
-   estivesse ativa na página: com outra versão ativa, o v1.1 saía sem avisar. O v1.2 avisa nesse caso e marca
-   `restHook` na linha `__open`. Para conferir: abra a tela Gerenciamento de Captura e veja se o painel do gravador conta
-   um tipo `__rest`.
-2. **C5 (P1): valor da bola.** Conta B, Rhydon, `geodude` (1, preço 300), 60 tentativas por bola: Poké, Great, Super e
-   Ultra, nessa ordem, abrindo o used-balls em cada troca. Esperado pelo modelo:
-
-   | Bola | Se o medidor conta a eficiência | Se conta o ouro pago |
-   |---|---|---|
-   | Poké | 4,1 | 1,1 |
-   | Great | 8,2 | 5,0 |
-   | Super | 12,1 | 12,1 |
-   | Ultra | 15,8 | 28,2 |
-
-   É a pergunta de captura que mais vale agora. A Super Ball no Geodude substitui o C7.
-3. **Transições da penalidade (P1, ~10 min).** Grave sem parar o gravador:
+1. **Transições da penalidade (P1, ~10 min).** Grave sem parar o gravador:
    - hunt A → cidade → espere 30 s → hunt B;
    - hunt B → mapa-múndi direto para a hunt C;
    - hunt C → cidade → a mesma hunt C de novo.
 
-   Nas 9 entradas medidas, o lock acaba 60 s depois da entrada e chega junto do `enter-hunt`. O S3 é a única exceção:
-   lá o lock acabou 20–30 s depois da entrada, sem `boosts` no arquivo. Só uma transição gravada inteira mostra de onde o
-   minuto conta.
-4. **M3 (P1 para o movimento): Golem 386 em `rhydon`, 20 min.** Com a caixa 13×13, a sim acerta o Kangaskhan, mas junta
-   selvagens demais no Rhydon (0,58 adjacentes por field, contra 0,40 no real). O M3 separa o efeito do tempo de luta
-   (abate em 1 golpe) do efeito do mapa.
-5. **M4 (P2): Geodude ~10 em `rattata`.** Coleira (H2): falta ver um selvagem que perseguia e ficou para trás voltar ou
+   Em 11 entradas o lock acaba 60 s depois da entrada. O S3 é a única exceção. Só uma transição gravada inteira mostra
+   de onde o minuto conta e se voltar à mesma hunt penaliza.
+2. **C8 com used-balls (P1, ~8 min): Meowth 20, preço 300, Super Ball.** Antes de entrar e logo depois de sair, abra a
+   tela **Gerenciamento de Captura** (lista de espécies com Preço de NPC, Total Gasto e tentativas), não o histórico de
+   capturas. Responde duas coisas: com o mesmo preço do Geodude 1, o nível pesa? E o investimento de antes da gravação
+   entra no medidor? (O `attempts` do início diz quanto já havia.)
+3. **M6 (novo, P1 para o movimento): luta de duração média, ~20 min.** Um líder que mate em ~3–4 golpes (luta de 6–10 s)
+   numa hunt com grade real conferida (`rhyhorn` ou `kangaskhan`). Em luta curta (M3, 1h) o não-alvo chega ao herói menos
+   que na sim; em luta longa (M1/M2), mais. Uma duração intermediária mostra onde isso vira e separa "tempo de luta" de
+   "mapa". Hipótese de trabalho (F): o não-alvo só fecha o último tile quando o herói já está lutando.
+4. **M4 (P2): Geodude ~10 em `rattata`.** Coleira (H2): falta ver um selvagem que perseguia e ficou para trás voltar ou
    não ao spawn.
-6. **C8 (P2): Meowth 20, preço 300.** Mesmo preço do Geodude 1. Confirma, com o mesmo preço, que o nível não pesa
-   (hoje isso vem de Rattata 1 × Spearow 10, com preços 80 e 100).
-7. **M5 (P2, novo): zoom.** Mude o zoom da câmera no meio de uma hunt (o `view` muda com ele, C) e veja se o raio de
+5. **M5 (P2): zoom.** Mude o zoom da câmera no meio de uma hunt (o `view` muda com ele, C) e veja se o raio de
    perseguição acompanha.
 
-**Dispensadas:** C3 e C4 (caras e com pouca informação); C7 (coberto pela Super Ball do C5); S5–S8; o C6 não precisa
-ser repetido (raridade fica em aberto, sem prioridade); M2 com janela de tamanhos diferentes (a janela não muda o `view`).
+**Dispensadas:** C5 e M3 (feitas); C3 e C4 (caras e com pouca informação); C7 (coberto pela Super Ball do C5); S5–S8; o
+C6 não precisa ser repetido (raridade fica em aberto, sem prioridade); M2 com janela de tamanhos diferentes (a janela
+não muda o `view`); outra gravação de valor de bola (o ouro fechou).
 
-Duração total: **~4 h 30**. Prioridade 1 (P1) ≈ 2 h fecha o essencial de cada ponto; P2 dá folga estatística.
+Falta gravar: P1 ≈ 40 min (penalidade, C8, M6); P2 ≈ 40 min (M4, M5).
 
 ## (a) Seleção de golpe
 

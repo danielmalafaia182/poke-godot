@@ -44,6 +44,7 @@ const PARAMETROS := {
 	"ataque_selvagem_ticks": 10,            # A: ~2000 ms por selvagem
 	"ataque_selvagem_extra_prob": 0.25,     # F: às vezes +1 tick (média medida ~2050 ms no Kangaskhan)
 	"primeiro_ataque_selvagem_ticks": 10,   # F: 1º golpe ~2000 ms depois de encostar (4 casos: 1600–3200 ms)
+	"mob_espera_apos_heroi_ticks": 0,      # F (experimento M3): selvagem só dá passo N ticks depois do último passo do herói; 0 = desligado
 	"visao_meia_largura": 13,               # A: perseguição até |dx| 13, nunca 14+ (rhydon-1h, M1, M2)
 	"visao_meia_altura": 7,                 # F (sim). A borda real medida em 10/11/2026 é 13 nos dois eixos: selvagens se
 	                                        # aproximam com |dy| até 13 (0,16–0,43 por intervalo em |dy| 8–13, centenas de
@@ -89,19 +90,20 @@ const PARAMETROS := {
 	# tela Gerenciamento de Captura, /api/game/used-balls: por espécie preço de NPC, ouro gasto, tentativas totais e
 	# desde a última captura, que zera ao capturar; Master Ball garante; shiny não usa o medidor).
 	# Forma (F, máxima verossimilhança em 10/11/2026 sobre as sequências A de Rattata 1, Spearow 10, Vulpix 20 ×2,
-	# Bulbasaur 20, Rhydon 80 e Blastoise 80, todas com Super Ball; o trecho antes da 1ª captura de cada gravação fica
-	# de fora porque o medidor inicial não foi gravado):
+	# Rhydon 80 (Super Ball) e Geodude 1 (C5: Poké, Great, Super, Ultra e Idle); o trecho antes da 1ª captura de cada
+	# gravação fica de fora porque o medidor inicial não foi gravado; tentativas em shiny ficam de fora (não usam o medidor):
 	#   chance = min(1, c · v / precoNpc · (1 + k · investido_antes / precoNpc) · (1 + bônus))
-	# v = valor da bola desta tentativa; investido_antes = valor das bolas desde a última captura, SEM a atual.
-	# logL −98,1 (2 parâmetros) contra −126,0 do modelo anterior com fator de nível (c0 · nível^−0,86): o C1 derrubou
-	# o nível (Spearow 10 capturou 28/52, o modelo de nível previa 3,9). Com um fator de nível ou de raridade a mais,
-	# o ganho é nulo (expoente −0,06; Bulbasaur RARE ×1,00). Por tentativa desde a última captura (A): Rattata 15/34,
-	# 15/18, 3/3 (modelo 0,46 / 0,87 / 1); Spearow 13/28, 7/14, 7/7 (0,37 / 0,63 / 0,90).
-	"captura_c": 0.735,
-	"captura_k": 1.44,
-	# Valor da bola (F; só Super Ball medida): "eficiencia" = catchRate × preço da Super ÷ 3 (Super = 50) — padrão porque
-	# a Idle Ball (catchRate 5, 400 de ouro) falhou no Rattata 1 (S2): pelo ouro dela a chance seria 1; "ouro" = priceGold.
-	"captura_valor_bola": "eficiencia",     # "eficiencia" | "ouro"
+	# v = ouro pago pela bola desta tentativa (priceGold); investido_antes = ouro das bolas desde a última captura, SEM a atual.
+	# Sem fator de nível (o C1 derrubou: Spearow 10 capturou 28/52) nem de raridade (ganho nulo).
+	# Valor da bola = OURO (A, C5, Geodude 1, preço 300; esperado pelo ouro × pela eficiência, mesmo c/k): Poké 0,9 × 4,0
+	# (observado 0/47), Great 5,1 × 9,8 (6/60), Super 12,9 × 13,7 (10/59), Ultra 33,1 × 20,3 (37/69), Idle 73,0 × 26,2
+	# (73/73). logL −190,6 (ouro) contra −294,5 (eficiência); com o valor de cada bola livre o ajuste dá Great 23, Ultra 143
+	# (ouro: 20 e 130). As 5 falhas de Idle Ball em todas as gravações (S2, C5, M3) foram em shiny.
+	# Medidor que zera ao trocar de bola: logL −191,0 contra −190,6 (indistinguível; fica o que soma tudo, como a tela
+	# used-balls, que guarda o total por espécie).
+	"captura_c": 0.814,
+	"captura_k": 1.14,
+	"captura_valor_bola": "ouro",           # A (C5): "ouro" = priceGold; "eficiencia" = catchRate × 50/3 (refutado)
 	"captura_eficiencia": {"1": 1, "2": 2, "3": 3, "4": 4, "5": 255, "6": 5, "7": 5},   # A: balls.catalog.catchRate
 	"captura_preco_bola": {"1": 5, "2": 20, "3": 50, "4": 130, "5": 0, "6": 400, "7": 400},   # A: balls.catalog.priceGold
 	"captura_garantida_eficiencia": 255,    # C/B-relatado: Master Ball (catchRate 255) garante
@@ -294,7 +296,7 @@ static func efetividade_amplificada(bruta: float) -> float:
 static func valor_bola(bola: int, p: Dictionary = PARAMETROS) -> float:
 	## Quanto uma bola soma ao medidor de investimento (ouro ou equivalente; F, ver captura_valor_bola).
 	var k := str(bola)
-	if String(p.get("captura_valor_bola", "eficiencia")) == "ouro":
+	if String(p.get("captura_valor_bola", "ouro")) == "ouro":
 		return float(p.captura_preco_bola.get(k, 0))
 	return float(p.captura_eficiencia.get(k, 0)) * float(p.captura_preco_bola.get("3", 50)) / 3.0
 

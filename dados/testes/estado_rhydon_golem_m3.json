@@ -1,0 +1,484 @@
+{
+ "balls": {
+  "catalog": [
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 1,
+    "iconUrl": "/assets/markitems/pokeball.png",
+    "id": 1,
+    "infinite": false,
+    "name": "Poké Ball",
+    "priceGold": 5
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 2,
+    "iconUrl": "/assets/markitems/greatball.png",
+    "id": 2,
+    "infinite": false,
+    "name": "Great Ball",
+    "priceGold": 20
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 3,
+    "iconUrl": "/assets/markitems/superball.png",
+    "id": 3,
+    "infinite": false,
+    "name": "Super Ball",
+    "priceGold": 50
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 4,
+    "iconUrl": "/assets/markitems/ultraball.png",
+    "id": 4,
+    "infinite": false,
+    "name": "Ultra Ball",
+    "priceGold": 130
+   },
+   {
+    "bound": false,
+    "buyable": false,
+    "catchRate": 5,
+    "iconUrl": "/assets/markitems/idleball.png",
+    "id": 6,
+    "infinite": false,
+    "name": "Idle Ball",
+    "priceGold": 400
+   },
+   {
+    "bound": true,
+    "buyable": false,
+    "catchRate": 5,
+    "iconUrl": "/assets/markitems/idleball_gold.png",
+    "id": 7,
+    "infinite": true,
+    "name": "Golden Idle Ball",
+    "priceGold": 400
+   },
+   {
+    "bound": false,
+    "buyable": false,
+    "catchRate": 255,
+    "iconUrl": null,
+    "id": 5,
+    "infinite": false,
+    "name": "Master Ball",
+    "priceGold": 0
+   }
+  ],
+  "counts": {
+   "1": 337,
+   "2": 676,
+   "3": 10807,
+   "4": 3867,
+   "6": 3216
+  },
+  "expires": {},
+  "gold": 94430014,
+  "selected": 1
+ },
+ "cadaveres": {
+  "112": 2858
+ },
+ "fieldInit": {
+  "bike": false,
+  "cols": 107,
+  "heroStepMs": 500,
+  "huntKey": "rhydon:1794347201692",
+  "minTx": -46,
+  "minTy": -45,
+  "mobStepMs": 1000,
+  "rows": 93,
+  "slug": "rhydon",
+  "tickMs": 200,
+  "trainerStepMs": 500,
+  "type": "field-init"
+ },
+ "fonte": "M3.jsonl",
+ "formato": "poke-estado-inicial-v1",
+ "huntKey": "rhydon:1794347201692",
+ "inventario": [
+  {
+   "itemId": 4,
+   "quantity": 25
+  },
+  {
+   "itemId": 5,
+   "quantity": 4
+  },
+  {
+   "itemId": 10,
+   "quantity": 20572
+  },
+  {
+   "itemId": 13,
+   "quantity": 674
+  },
+  {
+   "itemId": 14,
+   "quantity": 399
+  },
+  {
+   "itemId": 16,
+   "quantity": 2345
+  },
+  {
+   "itemId": 23,
+   "quantity": 8
+  },
+  {
+   "itemId": 39,
+   "quantity": 1641
+  },
+  {
+   "itemId": 44,
+   "quantity": 1
+  },
+  {
+   "itemId": 45,
+   "quantity": 9
+  },
+  {
+   "itemId": 48,
+   "quantity": 5
+  },
+  {
+   "itemId": 49,
+   "quantity": 14
+  },
+  {
+   "itemId": 53,
+   "quantity": 20
+  },
+  {
+   "itemId": 60,
+   "quantity": 8
+  },
+  {
+   "itemId": 63,
+   "quantity": 16
+  },
+  {
+   "itemId": 66,
+   "quantity": 10
+  },
+  {
+   "itemId": 68,
+   "quantity": 92
+  },
+  {
+   "itemId": 69,
+   "quantity": 1
+  },
+  {
+   "itemId": 70,
+   "quantity": 1814
+  },
+  {
+   "itemId": 71,
+   "quantity": 3
+  },
+  {
+   "itemId": 81,
+   "quantity": 38
+  },
+  {
+   "itemId": 96,
+   "quantity": 58
+  },
+  {
+   "itemId": 102,
+   "quantity": 1176
+  },
+  {
+   "itemId": 106,
+   "quantity": 2
+  },
+  {
+   "itemId": 107,
+   "quantity": 3
+  },
+  {
+   "itemId": 109,
+   "quantity": 22
+  },
+  {
+   "itemId": 110,
+   "quantity": 149
+  },
+  {
+   "itemId": 112,
+   "quantity": 28
+  },
+  {
+   "itemId": 114,
+   "quantity": 612
+  },
+  {
+   "itemId": 117,
+   "quantity": 395
+  },
+  {
+   "itemId": 118,
+   "quantity": 12
+  },
+  {
+   "itemId": 120,
+   "quantity": 1065
+  },
+  {
+   "itemId": 122,
+   "quantity": 20
+  },
+  {
+   "itemId": 123,
+   "quantity": 2786
+  },
+  {
+   "itemId": 124,
+   "quantity": 14493
+  },
+  {
+   "itemId": 126,
+   "quantity": 194
+  },
+  {
+   "itemId": 127,
+   "quantity": 7
+  },
+  {
+   "itemId": 128,
+   "quantity": 5
+  },
+  {
+   "itemId": 131,
+   "quantity": 3436
+  },
+  {
+   "itemId": 140,
+   "quantity": 35728
+  },
+  {
+   "itemId": 141,
+   "quantity": 21761
+  },
+  {
+   "itemId": 142,
+   "quantity": 205
+  },
+  {
+   "itemId": 201,
+   "quantity": 390
+  },
+  {
+   "itemId": 202,
+   "quantity": 100
+  },
+  {
+   "itemId": 203,
+   "quantity": 2546
+  },
+  {
+   "itemId": 240,
+   "quantity": 3434
+  },
+  {
+   "itemId": 5200,
+   "quantity": 136
+  },
+  {
+   "itemId": 5305,
+   "quantity": 4301
+  },
+  {
+   "itemId": 5312,
+   "quantity": 212
+  },
+  {
+   "itemId": 11538,
+   "quantity": 1
+  },
+  {
+   "itemId": 13115,
+   "quantity": 77
+  },
+  {
+   "itemId": 14929,
+   "quantity": 6
+  },
+  {
+   "itemId": 16263,
+   "quantity": 5
+  },
+  {
+   "itemId": 16327,
+   "quantity": 1
+  },
+  {
+   "itemId": 21287,
+   "quantity": 18
+  },
+  {
+   "itemId": 37288,
+   "quantity": 3
+  },
+  {
+   "itemId": 44417,
+   "quantity": 9
+  },
+  {
+   "itemId": 59195,
+   "quantity": 101
+  },
+  {
+   "itemId": 70000,
+   "quantity": 12
+  },
+  {
+   "itemId": 90126,
+   "quantity": 2
+  },
+  {
+   "itemId": 90128,
+   "quantity": 1
+  }
+ ],
+ "pokeDelta": {
+  "barLooktype": 116,
+  "finalStage": true,
+  "hp": 11364,
+  "id": "cmu7iu79n6chzleth2yl8rr25",
+  "ivTotal": 120,
+  "leader": true,
+  "level": 387,
+  "looktype": 116,
+  "maxHp": 11364,
+  "name": "Golem",
+  "power": 8435,
+  "quality": 1.8,
+  "sellValue": 15000,
+  "shiny": false,
+  "slot": 0,
+  "speciesId": 76,
+  "starter": false,
+  "stats": {
+   "atk": 855,
+   "def": 1177,
+   "hp": 947,
+   "spAtk": 465,
+   "spDef": 626,
+   "speed": 616
+  },
+  "team": true,
+  "type1": "ROCK",
+  "type2": "GROUND",
+  "xp": 1766449846
+ },
+ "primeiroCatchResult": {
+  "auto": true,
+  "ballId": 3,
+  "ballName": "Super Ball",
+  "col": 44,
+  "row": 52,
+  "speciesName": "Rhydon",
+  "success": false
+ },
+ "primeiroField": {
+  "bossActiveIdx": 0,
+  "bossTeam": [
+   {
+    "hp": 11364,
+    "maxHp": 11364
+   },
+   {
+    "hp": 13152,
+    "maxHp": 13152
+   },
+   {
+    "hp": 13464,
+    "maxHp": 13464
+   },
+   {
+    "hp": 6324,
+    "maxHp": 6324
+   }
+  ],
+  "heroHp": 11364,
+  "heroLooktype": 116,
+  "heroMaxHp": 11364,
+  "heroName": "Golem",
+  "mobsMaxHp": [
+   3045,
+   4550,
+   3780,
+   3395,
+   3290,
+   3710,
+   5285,
+   4025,
+   4235,
+   3325,
+   3885,
+   4375,
+   3500,
+   3920,
+   4550
+  ],
+  "seq": 4,
+  "serverNow": 1794347202435
+ },
+ "primeiroFieldKill": {
+  "level": 622,
+  "pokeXp": {
+   "level": 387,
+   "parts": {
+    "base": 3848,
+    "boost": 0,
+    "debuff": -4630,
+    "event": 0,
+    "guild": 169,
+    "gym": 0,
+    "mentor": 673,
+    "typeDay": 0,
+    "vip": 1924
+   },
+   "speciesId": 76,
+   "xpGained": 1984
+  },
+  "speciesId": 112,
+  "totalXp": 7846056680,
+  "xpGained": 1782,
+  "xpParts": {
+   "base": 3848,
+   "boost": 0,
+   "debuff": -4159,
+   "event": 0,
+   "guild": 169,
+   "gym": 0,
+   "streak": 0,
+   "typeDay": 0,
+   "vip": 1924
+  }
+ },
+ "primeiroPokeXp": {
+  "id": "cmu7iu79n6chzleth2yl8rr25",
+  "level": 387,
+  "leveledUp": false,
+  "speciesId": 76,
+  "type": "poke-xp",
+  "xp": 1766451830,
+  "xpGained": 1984
+ },
+ "sessao": "2026-11-10T20-58-00-712Z",
+ "slug": "rhydon",
+ "vip": {
+  "type": "vip",
+  "until": 1800131888836
+ }
+}

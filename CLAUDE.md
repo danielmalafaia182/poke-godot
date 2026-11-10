@@ -112,6 +112,7 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 | Golpes: o mesmo nome tem cooldown diferente por espécie (234 de 407 variam) | catálogo; por isso golpes ficam dentro de cada espécie |
 | Captura com Super Ball: 59% em Rattata nível 1 (35/59); no Rhydon 80, 0 em 167 (gravações antigas) e 5 em 608 na rhydon-1h (~0,8%); Vulpix nível 20: 2 em 37 (fase3/S4); o capturado chega como poke-delta de nível 1 | gravações; `hunt-config.catchChance` é 0 em todas |
 | A chance sobe com as tentativas desde a última captura da espécie (medidor de investimento, C: tutorial e tela used-balls): Rattata 1 (preço 80) 15/34, 15/18, 3/3; Spearow 10 (preço 100) 13/28, 7/14, 7/7. A base não depende do nível: Rattata 1 e Spearow 10 têm a mesma 1ª tentativa (~0,45); Vulpix 20 (1000) 5/94; Bulbasaur 20 (3000) 0/84; Rhydon 80 (13000) 5/608 | geodude-10min, geodeude-2, C1, S4, c2, C6, rhydon-1h (A); forma da sim F (ver Estado de 10/11) |
+| **Valor da bola no medidor = ouro pago (priceGold), não catchRate.** Geodude 1 (preço 300), mesma conta e hunt, esperado pelo ouro × pela eficiência (mesmo c/k): Poké 0,9 × 4,0 (obs. 0/47), Great 5,1 × 9,8 (6/60), Super 12,9 × 13,7 (10/59), Ultra 33,1 × 20,3 (37/69), Idle 73,0 × 26,2 (73/73); logL −190,6 × −294,5; valor livre por bola: Great 23, Ultra 143 (ouro 20, 130). Toda falha de Idle Ball (5: S2, C5, M3) foi em shiny | fase3/C5 (conta B), S2, M3 |
 | Selvagens perseguem o herói só com \|dx\| ≤ 13 **e** \|dy\| ≤ 13 (0,16–0,43 de chance de se aproximar por intervalo até 13; zero a partir de 14 nos dois eixos). Fora disso ficam parados no lugar (100% dos intervalos com a caixa 13×13) | rhydon-1h (centenas de intervalos por distância), M1, M2 |
 | `view {hc, hr}` = {ceil(25/zoom/2) + 2, ceil(13/zoom/2) + 2}, enviado no field-init e quando o zoom muda; o tamanho da janela não entra. 27×15 (zoom 0,5) em todas as gravações | (C) chunk 0gx72gz9qjk5j.js; M2 |
 | 15 spawns por hunt em Kanto/Outland, 16 em Orre, até 56 em Nightmare | `hunt-config` |
@@ -136,7 +137,7 @@ Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes
 ### Em aberto (não invente; deixe parametrizado e marcado)
 
 Seleção de golpe: o critério exato de "maior dano esperado" (A em S1–S4, ver Fatos; não houve caso perto do empate fora do empate exato), e o desempate por cooldown (só o Solar Beam × Petal Dance),
-IA de movimento dos selvagens (o que limita o acúmulo no herói em luta curta; ver investigação abaixo), forma do medidor de captura (valor de cada bola, raridade, se o investimento de antes da gravação conta; ver o plano C5), de onde conta o minuto da penalidade de entrada (só o S3 foge de "desde a entrada"), parcela extra de XP
+IA de movimento dos selvagens (o que limita o acúmulo no herói em luta curta: o M3 não achou a regra; ver investigação abaixo), forma do medidor de captura (o valor da bola fechou: ouro; faltam raridade e se o investimento de antes da gravação conta: sem used-balls no C5, qualquer medidor inicial de 0 a ~3000 de ouro explica o começo dele), de onde conta o minuto da penalidade de entrada (só o S3 foge de "desde a entrada"), parcela extra de XP
 vista na conta B (×1,554 em vez de ×1,5; a conta B tem uma parcela `guild`, 24 em 548 no Rhyhorn, A, e o Pokémon dela recebe `mentor`), efeitos de status,
 regras de respawn (tempo exato).
 
@@ -183,6 +184,29 @@ curta (F; M3 separa tempo de luta de mapa). Por isso a sim **continua com 7** (`
 do Rhydon perde um critério em cada caso (1h 26/30, antiga 22/26; curas/min e abates/min saem da faixa). A sim também
 persegue com \|dx\| = 14 (0,26–0,41 por intervalo) e o real nunca: a checagem real parece usar a posição de antes do
 passo (F).
+
+Atualização de 10/11/2026 (M3: Golem 387 em `rhydon`, abate em 1 golpe, 167 abates em 16,7 min; sim com o estado
+`dados/testes/estado_rhydon_golem_m3.json`, 3 × 20 min):
+
+| Métrica (caixa 13×13) | Real M3 | Sim 7 | Sim 13 |
+| --- | --- | --- | --- |
+| Adjacentes por field (média; % com 2+) | 0,03; 0% | 0,06; 0,1% | 0,13; 0,8% |
+| Perseguindo por field | 0,92 | 0,66 | 0,68 |
+| Caminho do herói: tiles ÷ Chebyshev (mediana; p90) | 0,42; 0,50 | 0,63; 1,06 | 0,50; 0,78 |
+| ms por tile: herói; selvagem | 809; 1124 | 832; 1403 | 832; 1288 |
+| Selvagem que não é o alvo chegando ao lado do herói, por min | 0,32 | — | 1,88 |
+
+O que o M3 mostra (A): o selvagem real persegue mais e encontra o herói mais cedo que a sim (melhor com 13 do que com 7),
+mas o selvagem que **não** é o alvo quase nunca chega ao lado do herói. Chegadas por minuto de não-alvos, real × sim 13:
+M3 0,32 × 1,88; rhydon-1h 0,76 × 2,63; M1/M2 2,64 × 1,07 (em luta longa, o contrário). O herói real nunca troca de alvo
+com o alvo vivo (0 em M3, 1h e M1). Descartados como causa: respawn (60,0 s nos dois lados), selvagens vivos por field
+(real 5,4 / 8,0 / 12,4 × sim 5,7 / 7,5 / 12,9), taxa de passo por intervalo (0,16–0,31 real × ~0,25 sim, para não-alvos)
+e intervalo entre passos (1000/1200 ms nos dois). Testado e descartado (F): selvagem só anda N ticks depois do último
+passo do herói (`mob_espera_apos_heroi_ticks`, padrão 0 = desligado): N = 5 acerta os adjacentes nos quatro casos
+(M3 0,03; 1h 0,38; M1/M2 1,32), mas o selvagem passa a andar 3054 ms/tile (real 1136) e para de vir ao encontro do
+herói. Medida enganosa registrada: "o selvagem só anda logo depois do passo do herói" é artefato de amostragem (o
+cliente recebe fields a cada 2 ticks sobretudo quando o herói anda). **Nenhuma regra fechou as quatro gravações; a sim
+continua com 7.**
 
 Hipóteses originais (F; ver o resultado acima):
 - H1: na visão, o selvagem real persegue mais (0,48 × 0,35 por field; P(mover) 0,35 × 0,31). Candidatos: ele não
@@ -606,4 +630,24 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   **Testes:** regras 40/40, caminho 8/8, determinismo, regras do usuário 17/17, cadáveres 3/3, catálogo 12/12, save
   fase 3 12/12, cena 22/22, grade 7/7, protocolo OK, ponte 11/11, save em thread 15/15. Diferencial: 1h 27/30,
   antiga 23/26 (iguais a antes).
+- 10/11/2026 — Fase 3, gravações C5 e M3 (gravador v1.2: as duas têm linhas `__rest`, mas **nenhuma tem used-balls**;
+  o C5 tem `capture-log` e o `auto-helper` de cada troca de bola).
+  - Configuração: C5 conta B, Rhydon 425, `geodude`, Poké 61 / Great 60 / Super 59 / Ultra 69 e um trecho extra de
+    Idle 75 (44,7 min); M3 conta B, Golem 387 (plano 386), `rhydon`, 16,7 min (plano 20), catch ligado (5 tentativas).
+  - **Captura — valor da bola = ouro (A, C5; critério fechado)**: tabela nos Fatos. A sim passa a `captura_valor_bola`
+    "ouro", com c 0,814 e k 1,14 reajustados em todas as sequências (antes 0,735 e 1,44, com a eficiência; com só a
+    Super Ball as duas formas eram iguais). As 5 falhas de Idle Ball de todas as gravações foram em shiny, o que tira o
+    motivo antigo para a eficiência. Medidor que zera ao trocar de bola: indistinguível (logL −191,0 × −190,6).
+    Investimento de antes da gravação: inconclusivo (sem used-balls).
+  - `conferir_fase3.py`: modelo com o ouro, tentativas em shiny fora do modelo (marcadas "(shiny)"), C5 = `geodude`.
+    Modelo × observado: C5 125,2/127, C1 28,4/28, c2 3,4/3, S4 2,5/2, C6 2,0/0.
+  - **Movimento (M3)**: tabela na investigação de movimento. Nenhuma regra fechou M1, M2, M3 e rhydon-1h juntas: a sim
+    continua com `visao_meia_altura` 7. Parâmetro experimental `mob_espera_apos_heroi_ticks` (0 = desligado; saída da
+    sim igual com 0).
+  - Penalidade: lock de 60 s desde a entrada também no C5 e no M3 (8/8 e 11/11 abates com debuff antes do until).
+  - `extrair_estado_inicial.py` usa o líder do `pokes-chunk` quando a gravação não tem poke-delta do herói (M3).
+  - Cadáveres: 10 espécies normais (+ Geodude), 3 shiny. Protocolo: 144 tipos, 54 vistos, 6 caminhos REST.
 
+  **Testes:** regras 41/41, caminho 8/8, determinismo, regras do usuário 17/17, cadáveres 3/3, catálogo 12/12, save
+  fase 3 12/12, cena 22/22, grade 7/7, protocolo OK, ponte 11/11, save em thread 15/15. Diferencial: 1h 27/30,
+  antiga 23/26 (iguais a antes; a saída da sim muda de propósito nas capturas).
