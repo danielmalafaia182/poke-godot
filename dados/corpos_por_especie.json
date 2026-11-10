@@ -1,0 +1,63 @@
+{
+ "formato": "poke-corpos-por-especie-v1",
+ "nota": "Gerado por ferramentas/gravador/atualizar_corpos.py (fonte A: field.corpses das gravações, ligado ao selvagem morto no tile). speciesId -> id em game/corpses/corpses.json. Espécie ausente nunca foi vista morrendo; a simulação usa então o normal (shiny, F) ou o genérico (corpse 0, E).",
+ "fontes": {
+  "geodeude-2.jsonl": "2523321df5c2f1cabc37718c572cb72437461d09887d5f9bdecb7eb989534d41",
+  "geodude-10min.jsonl": "44f837ff1a9d1486191874d29790a3a621f7fb1b7c40ac3985d73a1a3a8809bc",
+  "geodude-3.jsonl": "c5aa50a639c134fd358dc78048e46e748908fc94e888bf736a4db1c84458247c",
+  "gravacoes_unicas_2026-11-09.jsonl": "0e4a829a34f8d10f7c6d9318af6f35dc373fcd90a8310c8f61be8919901191a2",
+  "poke_ws_todas(1)).jsonl": "47ba68fe8ea04823cdc4b08d5d2e80dd734181c2ad895c4de9ece566ba3c1b15",
+  "poke_ws_todas(1).jsonl": "6c79e89000f473429f521ba2b6533a024bdcaeb9910c0662d247b674dd39a7b2",
+  "poke_ws_todas(2)(20.jsonl": "02e1e8a15b14f230d71d0e0337a3be8823eff44a1857d97d0fc476c8426b1ed0",
+  "poke_ws_todas(2).jsonl": "047175cff68082a2ebc0e478838b946590e0f4f9f68991690b677784aaf79003",
+  "poke_ws_todas(3).jsonl": "07adc6af058c41026007daedbfc577a5ff8b852b9b6e8e47dfe19f2ef77b15ab",
+  "rhydon-1h.jsonl": "309628bff7ea6e77e0df327dd7190a3ee0e7aaf304c49c952bf6482fe3d65849"
+ },
+ "normal": {
+  "9": {
+   "corpo": 2931,
+   "n": 7138,
+   "contagem": {
+    "2931": 7138
+   }
+  },
+  "19": {
+   "corpo": 2848,
+   "n": 2427,
+   "contagem": {
+    "2848": 2427
+   }
+  },
+  "112": {
+   "corpo": 2858,
+   "n": 19743,
+   "contagem": {
+    "2858": 19743
+   }
+  },
+  "115": {
+   "corpo": 6073,
+   "n": 404,
+   "contagem": {
+    "6073": 404
+   }
+  }
+ },
+ "shiny": {
+  "19": {
+   "corpo": 2848,
+   "n": 24,
+   "contagem": {
+    "2848": 24
+   }
+  },
+  "112": {
+   "corpo": 31489,
+   "n": 52,
+   "contagem": {
+    "31489": 52
+   }
+  }
+ },
+ "conflitos": {}
+}

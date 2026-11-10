@@ -37,6 +37,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/importador/importar_snapshot.py` | Snapshot → `dados/gerados/*.json` (determinístico) |
 | `ferramentas/importador/diff_snapshots.py` | Diferenças entre snapshots |
 | `testes/test_todas_hunts.py` (+ `.gd`) | Varredura 2b.6: entra em cada hunt pela cena nova e registra carga, erros, abates, XP, quadro (p99/pior, render CPU/GPU, draw calls, composição dos quadros lentos), saves. `--velocidade 1` cobra p99 < 16,7 ms; acelerado, o quadro é só informativo |
+| `ferramentas/gravador/atualizar_corpos.py` | Mantém `dados/corpos_por_especie.json` (espécie → cadáver, A) somando as observações de qualquer gravação nova (cada arquivo entra uma vez, por sha256) |
 | `testes/diag_ilhas.gd` | Ilha da grade do `start` e de cada spawn do hunt-config, por hunt |
 | `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
@@ -443,3 +444,14 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   gravações simultâneas, último estado no disco, depot preservado); thread principal 9,6 ms × 46 ms síncrono com 300 no
   box; **15/15 mortes do processo no meio da gravação** sem perda (XP carregada entre a última gravação confirmada e a
   última iniciada; 6 deixaram `.tmp` pela metade e a carga usou o principal). `test_caca_sim` 23/23.
+- 09/11/2026 — Pós-2b, item 3 (corpos por espécie): **não há padrão** que ligue espécie e cadáver nos dados públicos:
+  `creatures.json` não tem campo de cadáver; a ordem dos 503 ids do `corpses.json` não segue Pokédex nem looktype (os 4
+  conhecidos estão nas posições 12, 15, 33 e 124 para as espécies 19, 112, 9 e 115); o cliente só desenha o id que vem em
+  `field.corpses` (`corpseTexture`, C); o `hunt.py` do poke-local usa um id fixo (2989). Os cadáveres são o próprio Pokémon
+  desmaiado (folha de contato), então o vínculo é por espécie, mas só o servidor o conhece. `dados/corpos_por_especie.json`
+  (A) substitui o `corpos_observados.json`: `ferramentas/gravador/atualizar_corpos.py` soma as observações de qualquer
+  gravação nova (idempotente; cada arquivo entra uma vez por sha256), com contagem e conflitos. Hoje: 4 espécies normais
+  (Blastoise 2931, Rattata 2848, Rhydon 2858, Kangaskhan 6073) e 2 shiny (Rattata 2848, Rhydon 31489). Na sim: shiny sem
+  dado usa o normal (F); espécie sem dado emite `corpse: 0`, o **genérico (E)**, que a vista desenha como o sprite parado da
+  própria espécie, escurecido, na camada do cadáver (não há cadáver neutro no atlas: todos são espécies reconhecíveis).
+  Rhydon 20 min: saída da sim idêntica. `test_cadaveres` 3/3; pichu (sem dado) desenha os genéricos, sem erro.

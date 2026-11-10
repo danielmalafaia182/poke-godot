@@ -633,9 +633,18 @@ func _abate(m: Dictionary) -> void:
 	m["prox_ataque"] = -1
 	estatisticas["abates"] += 1
 	var esp: Dictionary = m["especie"]
-	# A: o cadáver depende da espécie e de ser shiny (Rhydon 2858, shiny 31489); espécie nunca vista morrendo → sem corpo
-	var corpo := int(cfg.get("cadaveres_shiny" if bool(m["shiny"]) else "cadaveres", {}).get(str(m["species_id"]), 0))
-	if corpo > 0:
+	# A: o cadáver depende da espécie e de ser shiny (Rhydon 2858, shiny 31489; Rattata shiny = normal 2848).
+	# F: shiny sem dado próprio usa o normal. E: espécie nunca vista morrendo → corpse 0 (genérico; a vista desenha o
+	# próprio sprite da espécie escurecido no tile). Sem `cadaver_generico`, fica sem corpo como antes.
+	var sid := str(m["species_id"])
+	var corpo := -1
+	if bool(m["shiny"]):
+		corpo = int(cfg.get("cadaveres_shiny", {}).get(sid, -1))
+	if corpo < 0:
+		corpo = int(cfg.get("cadaveres", {}).get(sid, -1))
+	if corpo < 0 and bool(p.cadaver_generico):
+		corpo = 0
+	if corpo >= 0:
 		cadaveres.append({"row": m["pos"].y, "col": m["pos"].x, "corpse": corpo, "expira": tick + int(p.cadaver_ms) / int(p.tick_ms)})
 	# XP (A): base = experience da espécie; vip = 50% da base em parcela separada.
 	var base := int(esp.get("xpAbate", 0))

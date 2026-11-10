@@ -103,7 +103,7 @@ func receber(msg: Dictionary) -> void:
 			_slug_pendente = ""
 		estado.receber_field(msg, agora)
 		_hits(msg.get("hits", []), msg)
-		_sincronizar_cadaveres(msg.get("corpses", []))
+		_sincronizar_cadaveres(msg.get("corpses", []), msg.get("mobs", []))
 
 
 func _carregar_mapa(slug: String, centro: Vector2 = Vector2.ZERO) -> void:
@@ -219,7 +219,10 @@ func _entidade(chave: String, looktype: int, vista: Dictionary, ox: float, oy: f
 		RenderingServer.canvas_item_set_draw_index(rid, posto)
 
 
-func _sincronizar_cadaveres(lista: Array) -> void:
+const COR_CADAVER_GENERICO := Color(0.42, 0.42, 0.42, 0.85)
+
+
+func _sincronizar_cadaveres(lista: Array, mobs: Array = []) -> void:
 	if mapa == null:
 		return
 	var ox := int(estado.init.get("minTx", 0))
@@ -229,6 +232,11 @@ func _sincronizar_cadaveres(lista: Array) -> void:
 		var k := "%d,%d,%d" % [int(c["row"]), int(c["col"]), int(c["corpse"])]
 		ver[k] = true
 		if _cadaveres.has(k):
+			continue
+		if int(c["corpse"]) == 0:
+			var rid_g := _cadaver_generico(c, mobs, ox, oy)
+			if rid_g.is_valid():
+				_cadaveres[k] = rid_g
 			continue
 		var a: Dictionary = _corpses_assets.get(str(int(c["corpse"])), {})
 		if a.is_empty():
@@ -414,3 +422,35 @@ func _exit_tree() -> void:
 	for k in _cadaveres.keys():
 		RenderingServer.free_rid(_cadaveres[k])
 	_cadaveres.clear()
+
+
+func _cadaver_generico(c: Dictionary, mobs: Array, ox: int, oy: int) -> RID:
+	## E (corpse 0 = espécie sem cadáver conhecido): o sprite parado da espécie que morreu naquele tile, de frente,
+	## escurecido, no lugar e na camada do cadáver. O original desenharia o cadáver real (o Pokémon desmaiado), que só o
+	## servidor sabe qual é; os 503 do atlas são todos de espécies reconhecíveis, então não há um neutro.
+	var especie := -1
+	for m in mobs:
+		if bool(m.get("dead", false)) and int(m["row"]) == int(c["row"]) and int(m["col"]) == int(c["col"]):
+			especie = int(m["speciesId"])
+			break
+	if especie < 0:
+		return RID()
+	var o: Dictionary = outfits.obter(int(looktype_especie.get(especie, 0)))
+	if o.is_empty():
+		return RID()
+	var q: Dictionary = outfits.quadro(o, 3, 0)
+	if q.is_empty():
+		return RID()
+	var tx := ox + int(c["col"])
+	var ty := oy + int(c["row"])
+	var w: float = (q["rect"] as Rect2).size.x
+	var h: float = (q["rect"] as Rect2).size.y
+	var rid := RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(rid, mapa.rid_andar())
+	RenderingServer.canvas_item_set_default_texture_filter(rid, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
+	RenderingServer.canvas_item_add_texture_rect_region(rid, Rect2(32.0 * tx + 16.0 - w * 0.5, 32.0 * ty + 16.0 - (h - 11.52), w, h),
+		(q["tex"] as Texture2D).get_rid(), q["rect"])
+	RenderingServer.canvas_item_set_modulate(rid, COR_CADAVER_GENERICO)
+	RenderingServer.canvas_item_set_draw_index(rid, mapa.posto_entidade(5.0e6 + Regras.sx(tx, ty) + 0.35))
+	return rid
+

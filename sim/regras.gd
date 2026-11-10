@@ -37,6 +37,9 @@ const PARAMETROS := {
 	# F: sem caminho até o alvo (corredor fechado por outros selvagens; banette) e com selvagem encostado, o herói passa a
 	# atacar o encostado mais próximo. Sem isso, apanha parado até morrer. O original não foi observado nesse caso.
 	"alvo_troca_se_bloqueado": true,
+	# E: espécie sem cadáver conhecido (dados/corpos_por_especie.json) deixa corpse 0 = genérico (a vista desenha o sprite
+	# da própria espécie escurecido). Todos os cadáveres do atlas são Pokémon reconhecíveis: não há um neutro para usar.
+	"cadaver_generico": true,
 	"ataque_aliado_ticks": 8,               # A: 1600 ms, grade fixa (as variações de 1200/2000 vêm de field não recebido)
 	"ataque_selvagem_ticks": 10,            # A: ~2000 ms por selvagem
 	"ataque_selvagem_extra_prob": 0.25,     # F: às vezes +1 tick (média medida ~2050 ms no Kangaskhan)

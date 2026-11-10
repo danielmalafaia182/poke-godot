@@ -36,11 +36,11 @@ func _init() -> void:
 			sem_pagina.append(int(k))
 	checar(n_assets == 503, "corpses.json do snapshot carregado", "%d assets" % n_assets)
 	print("cadáveres desenháveis: %d de %d; páginas faltando: %s; assets sem página: %s" % [desenhaveis, n_assets, str(v.paginas_cadaver_faltando), str(sem_pagina)])
-	var obs = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_observados.json")
+	var obs = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_por_especie.json")
 	var todos_ok := true
 	for tab in ["normal", "shiny"]:
 		for sid in obs[tab]:
-			var c := str(int(obs[tab][sid]))
+			var c := str(int(obs[tab][sid]["corpo"]))
 			var a: Dictionary = v._corpses_assets.get(c, {})
 			if a.is_empty() or v._corpses_paginas[int(a["frames"][0]["page"])] == null:
 				todos_ok = false

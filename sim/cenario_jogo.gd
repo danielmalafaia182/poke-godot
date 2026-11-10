@@ -43,10 +43,15 @@ static func id_especie(dados: RefCounted, nome: String) -> int:
 
 
 static func cadaveres_observados(shiny: bool = false) -> Dictionary:
-	## A: cadáver de cada espécie visto nas gravações (dados/corpos_observados.json, gerado por
-	## ferramentas/gravador/extrair_cadaveres.py). O cliente original não tem essa tabela: o servidor manda o id.
-	var d = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_observados.json")
-	return d.get("shiny" if shiny else "normal", {}) if d is Dictionary else {}
+	## A: cadáver de cada espécie visto nas gravações (dados/corpos_por_especie.json, mantido por
+	## ferramentas/gravador/atualizar_corpos.py). O cliente original não tem essa tabela: o servidor manda o id.
+	var d = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_por_especie.json")
+	var r := {}
+	if d is Dictionary:
+		var g: Dictionary = d.get("shiny" if shiny else "normal", {})
+		for k in g:
+			r[k] = int(g[k]["corpo"])
+	return r
 
 
 static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_ms: int) -> Dictionary:

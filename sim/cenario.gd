@@ -77,10 +77,11 @@ static func _eh_retomada(hunt_key: String) -> bool:
 
 
 static func _corpos(shiny: bool, do_estado: Dictionary) -> Dictionary:
-	## Tabela observada em todas as gravações (dados/corpos_observados.json, A) + o que o estado trouxer.
+	## Tabela observada nas gravações (dados/corpos_por_especie.json, A) + o que o estado trouxer.
 	var r := do_estado.duplicate()
-	var d = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_observados.json")
+	var d = Fontes.ler_json(Fontes.pasta_dados() + "/corpos_por_especie.json")
 	if d is Dictionary:
-		for k in d.get("shiny" if shiny else "normal", {}):
-			r[k] = d["shiny" if shiny else "normal"][k]
+		var g: Dictionary = d.get("shiny" if shiny else "normal", {})
+		for k in g:
+			r[k] = int(g[k]["corpo"])
 	return r
