@@ -43,35 +43,23 @@ Conferência: `python -I ferramentas/fase3/conferir_fase3.py` (e `ferramentas/fa
 | M2 | sim (Venusaur 141–142, 65 abates), mas o `view` foi 27×15 do começo ao fim | O cliente calcula o `view` só pelo zoom da câmera (C); o tamanho da janela não muda nada. A pergunta do M2 (a visão acompanha a janela?) não se aplica. Serve como 2ª gravação de luta longa (confirma o M1) |
 | C5 | sim (conta B, Rhydon 425, `geodude`, 44,7 min: Poké 61, Great 60, Super 59, Ultra 69 e um trecho extra de Idle 75). Gravador v1.2 com linhas REST, mas **sem used-balls**: foi aberto o `capture-log` (histórico de capturas), não a tela Gerenciamento de Captura | **Valor da bola = ouro pago** (critério fechado). Esperado pelo ouro × pela eficiência, observado: Poké 0,9 × 4,0, 0/47; Great 5,1 × 9,8, 6/60; Super 12,9 × 13,7, 10/59; Ultra 33,1 × 20,3, 37/69; Idle 73,0 × 26,2, 73/73 (logL −190,6 × −294,5). As 2 falhas de Idle foram em shiny (como a do S2). Investimento de antes da gravação: inconclusivo |
 | M3 | sim (conta B, Golem 387, `rhydon`, 16,7 min, 167 abates; catch ligado, 5 tentativas) | Abate em 1 golpe: 0,03 adjacentes por field. O selvagem que não é o alvo quase nunca chega ao lado do herói (0,32/min real × 1,88 na sim com caixa 13), mas em luta longa (M1/M2) chega mais que na sim. **Nenhuma regra testada fecha as quatro gravações**: a sim fica com 7 |
-| C3, C4, C7, C8, M4 | não | ver "O que falta", abaixo |
+| T1 | sim (8,9 min, Venusaur, Super Ball): rattata → cidade (29 s) → spearow → mapa → vulpix → cidade → vulpix | **Confirma a regra do usuário**: lock de 60 s desde a **entrada** (58,9–59,3 s pelo serverNow; os 29 s na cidade não contaram), hunt nova penaliza vindo da cidade ou pelo mapa, a mesma hunt pela cidade não (0/15 abates com debuff). "Desde a saída" descartado |
+| C8 | sim (8,5 min, Meowth 20, preço 300, 87 tentativas; used-balls só no início; o print do fim mostra 6 tentativas no total e não bate com o arquivo) | Meowth 17/87, modelo 18,4 partindo de medidor zero (a espécie não estava no used-balls). **O nível não pesa** (mesmo fator do Geodude 1, preço 300). `goldSpent` = ouro desde a última captura |
+| C3, C4, C7, M4, M5, M6 | não | dispensadas ou opcionais (abaixo) |
 
-### O que falta (em ordem de prioridade, revisto em 10/11/2026, depois do C5 e do M3)
+### Fase 3 fechada (10/11/2026)
 
-1. **Transições da penalidade (P1, ~10 min).** Grave sem parar o gravador:
-   - hunt A → cidade → espere 30 s → hunt B;
-   - hunt B → mapa-múndi direto para a hunt C;
-   - hunt C → cidade → a mesma hunt C de novo.
+Nada obrigatório falta gravar. Opcionais, só se houver evidência nova a buscar no movimento (desvio conhecido no
+CLAUDE.md):
+- **M6:** luta de duração média (6–10 s por abate, ~20 min) em `rhyhorn` ou `kangaskhan`, para achar onde o acúmulo de
+  não-alvos no herói muda de sinal.
+- **M4:** coleira (H2), Geodude ~10 em `rattata`.
+- **M5:** mudar o zoom no meio de uma hunt e ver se o raio de perseguição acompanha o `view`.
+- Expiração de sessão (15 min com o jogo fechado → lock), se for importar.
 
-   Em 11 entradas o lock acaba 60 s depois da entrada. O S3 é a única exceção. Só uma transição gravada inteira mostra
-   de onde o minuto conta e se voltar à mesma hunt penaliza.
-2. **C8 com used-balls (P1, ~8 min): Meowth 20, preço 300, Super Ball.** Antes de entrar e logo depois de sair, abra a
-   tela **Gerenciamento de Captura** (lista de espécies com Preço de NPC, Total Gasto e tentativas), não o histórico de
-   capturas. Responde duas coisas: com o mesmo preço do Geodude 1, o nível pesa? E o investimento de antes da gravação
-   entra no medidor? (O `attempts` do início diz quanto já havia.)
-3. **M6 (novo, P1 para o movimento): luta de duração média, ~20 min.** Um líder que mate em ~3–4 golpes (luta de 6–10 s)
-   numa hunt com grade real conferida (`rhyhorn` ou `kangaskhan`). Em luta curta (M3, 1h) o não-alvo chega ao herói menos
-   que na sim; em luta longa (M1/M2), mais. Uma duração intermediária mostra onde isso vira e separa "tempo de luta" de
-   "mapa". Hipótese de trabalho (F): o não-alvo só fecha o último tile quando o herói já está lutando.
-4. **M4 (P2): Geodude ~10 em `rattata`.** Coleira (H2): falta ver um selvagem que perseguia e ficou para trás voltar ou
-   não ao spawn.
-5. **M5 (P2): zoom.** Mude o zoom da câmera no meio de uma hunt (o `view` muda com ele, C) e veja se o raio de
-   perseguição acompanha.
+**Dispensadas:** C3, C4, C7, S5–S8, repetir o C6, M2 com janela, outra gravação de valor de bola.
 
-**Dispensadas:** C5 e M3 (feitas); C3 e C4 (caras e com pouca informação); C7 (coberto pela Super Ball do C5); S5–S8; o
-C6 não precisa ser repetido (raridade fica em aberto, sem prioridade); M2 com janela de tamanhos diferentes (a janela
-não muda o `view`); outra gravação de valor de bola (o ouro fechou).
-
-Falta gravar: P1 ≈ 40 min (penalidade, C8, M6); P2 ≈ 40 min (M4, M5).
+Opcionais: ≈ 1 h (M4, M5, M6).
 
 ## (a) Seleção de golpe
 

@@ -78,11 +78,13 @@ const PARAMETROS := {
 	# A: until = entrada + 60,0 s em 4 entradas (rhydon-1h, typhlosion, S2, S4) e todo abate antes do until tem
 	# xpParts.debuff, nenhum depois (7/601, 9/23, 10/27). XP: floor(total × 0,3) (A: 5772 → 1731, 846 → 253, 12 → 3).
 	# Loot: 15 drops em 5 entradas contra 68 esperados (0,22×; ×0,3 dá P = 0,13) → chance × 0,3 (F: chance ou
-	# quantidade não se separam com esta amostra). Quando aplica (relato do usuário, B-relatado, ver cenario_jogo.gd):
-	# hunt diferente da última ou sessão expirada; voltar à mesma hunt pela cidade não penaliza (S1, sem lock: coerente).
-	# Início: o minuto conta da SAÍDA do lugar anterior (hipótese do usuário, F; explica o S3, cujo lock acabou 20–30 s
-	# depois da entrada); com saída e entrada no mesmo instante dá os 4 casos A. A sim recebe o fim pronto
-	# (cfg.penalidade_ate_ms) ou calcula: inicio_ms − cfg.ms_desde_saida + duração.
+	# quantidade não se separam com esta amostra). Quando aplica (A, T1 em 10/11/2026, confirma o relato do usuário):
+	# hunt diferente da última, vindo da cidade (rattata → cidade 29 s → spearow) ou direto pelo mapa (spearow → vulpix),
+	# penaliza; voltar à mesma hunt pela cidade (vulpix → cidade → vulpix) não penaliza (sem boosts, 0/15 abates com
+	# debuff). Sessão expirada: B-relatado (não gravado). Início: o minuto conta da ENTRADA (A: until − 1º serverNow da
+	# instância = 58,9–59,3 s nas 3 entradas do T1, e 60,0–61,4 s nas 9 anteriores; os 29 s na cidade não contaram).
+	# "Desde a saída" foi descartado; o S3 segue como exceção sem explicação. ms_desde_saida fica 0 (parâmetro mantido).
+	# A sim recebe o fim pronto (cfg.penalidade_ate_ms) ou calcula: inicio_ms − cfg.ms_desde_saida + duração.
 	"penalidade_duracao_ms": 60000,
 	"penalidade_fator": 0.3,
 	"penalidade_loot": "chance",            # "chance" (× fator na chance de cada item) | "quantidade" | "nenhuma"

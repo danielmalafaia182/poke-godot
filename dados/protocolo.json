@@ -20,6 +20,7 @@
   "rhydon-1h.jsonl",
   "C1.jsonl",
   "C6.jsonl",
+  "C8.jsonl",
   "M1.jsonl",
   "M2.jsonl",
   "M3.jsonl",
@@ -29,6 +30,7 @@
   "S4.jsonl",
   "c2.jsonl",
   "c5.jsonl",
+  "t1_transacoes.jsonl",
   "geodude-3.jsonl",
   "loogs.txt",
   "logs rhyhorn.txt",
@@ -39,7 +41,7 @@
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
   "vistos_em_logs": 54,
-  "rest_vistos": 6
+  "rest_vistos": 8
  },
  "mensagens": {
   "addon-used": {
@@ -425,10 +427,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 26191,
+    "vezes": 27757,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -444,7 +447,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {}
    }
@@ -454,10 +458,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1455,
+    "vezes": 1630,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -473,7 +478,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "catalog": {
@@ -602,10 +608,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 15,
+    "vezes": 19,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -617,7 +624,8 @@
      "c5.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {}
    }
@@ -632,10 +640,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 25,
+    "vezes": 33,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -646,7 +655,8 @@
      "c5.jsonl",
      "geodude-10min.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "boosts": {
@@ -688,10 +698,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 100,
+    "vezes": 116,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -702,7 +713,8 @@
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {}
    }
@@ -741,10 +753,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1441,
+    "vezes": 1612,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M3.jsonl",
      "S2.jsonl",
      "S4.jsonl",
@@ -756,7 +769,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "auto": {
@@ -940,10 +954,11 @@
     ]
    },
    "visto_out": {
-    "vezes": 15,
+    "vezes": 20,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -956,7 +971,8 @@
      "geodude-10min.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "resume": {
@@ -984,10 +1000,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 106,
+    "vezes": 122,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1000,7 +1017,8 @@
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "events": {
@@ -1070,10 +1088,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 23464,
+    "vezes": 24741,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1090,7 +1109,8 @@
      "logs hitmonlee.txt",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "allMobsDead": {
@@ -1500,10 +1520,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 88,
+    "vezes": 93,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1519,7 +1540,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "bike": {
@@ -1612,10 +1634,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1966,
+    "vezes": 2137,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1631,7 +1654,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "col": {
@@ -2617,8 +2641,9 @@
   "invasion-announce": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 2,
+    "vezes": 3,
     "fontes": [
+     "C8.jsonl",
      "c5.jsonl",
      "rhydon-1h.jsonl"
     ],
@@ -2641,8 +2666,9 @@
   "invasion-energy": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 149,
+    "vezes": 151,
     "fontes": [
+     "C8.jsonl",
      "M1.jsonl",
      "c5.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
@@ -2691,8 +2717,9 @@
   "invasion-energy-get": {
    "no_cliente": {},
    "visto_out": {
-    "vezes": 148,
+    "vezes": 150,
     "fontes": [
+     "C8.jsonl",
      "c5.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "rhydon-1h.jsonl"
@@ -2703,8 +2730,9 @@
   "invasion-state": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 402,
+    "vezes": 405,
     "fontes": [
+     "C8.jsonl",
      "M2.jsonl",
      "c5.jsonl",
      "geodude-10min.jsonl",
@@ -2744,10 +2772,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2692,
+    "vezes": 2815,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -2763,7 +2792,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "items": {
@@ -2805,10 +2835,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 4,
+    "vezes": 7,
     "fontes": [
      "geodude-10min.jsonl",
-     "loogs.txt"
+     "loogs.txt",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {}
    }
@@ -2903,10 +2934,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1143,
+    "vezes": 1147,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -2922,7 +2954,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "list": {
@@ -2994,10 +3027,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 14,
+    "vezes": 18,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3009,7 +3043,8 @@
      "c5.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {}
    }
@@ -3017,9 +3052,10 @@
   "poke-delta": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 245,
+    "vezes": 292,
     "fontes": [
      "C1.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "S4.jsonl",
@@ -3030,7 +3066,8 @@
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "poke": {
@@ -3315,10 +3352,11 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1966,
+    "vezes": 2137,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3334,7 +3372,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "id": {
@@ -4229,11 +4268,12 @@
     ]
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 5,
     "fontes": [
      "M1.jsonl",
      "geodude-10min.jsonl",
-     "loogs.txt"
+     "loogs.txt",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "slug": {
@@ -4542,10 +4582,11 @@
     ]
    },
    "visto_out": {
-    "vezes": 88,
+    "vezes": 93,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -4561,7 +4602,8 @@
      "gravacoes_unicas_2026-11-09.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "hc": {
@@ -4582,10 +4624,11 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 105,
+    "vezes": 121,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
+     "C8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -4598,7 +4641,8 @@
      "geodude-3.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "loogs.txt",
-     "rhydon-1h.jsonl"
+     "rhydon-1h.jsonl",
+     "t1_transacoes.jsonl"
     ],
     "esquema": {
      "until": {
@@ -4736,14 +4780,61 @@
     }
    }
   },
-  "GET /api/game/hunt-config": {
+  "GET /api/game/city-npcs": {
    "vezes": 2,
    "fontes": [
-    "M3.jsonl",
-    "c5.jsonl"
+    "t1_transacoes.jsonl"
    ],
    "status": {
     "200": 2
+   },
+   "esquema": {
+    "tipos": [
+     "list"
+    ],
+    "itens": {
+     "tipos": [
+      "object"
+     ],
+     "campos": {
+      "id": {
+       "tipos": [
+        "str"
+       ],
+       "exemplo": "npc_nurse_-3_-10"
+      },
+      "kind": {
+       "tipos": [
+        "str"
+       ],
+       "exemplo": "nurse"
+      },
+      "x": {
+       "tipos": [
+        "int"
+       ],
+       "exemplo": -3
+      },
+      "y": {
+       "tipos": [
+        "int"
+       ],
+       "exemplo": -10
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/hunt-config": {
+   "vezes": 9,
+   "fontes": [
+    "C8.jsonl",
+    "M3.jsonl",
+    "c5.jsonl",
+    "t1_transacoes.jsonl"
+   ],
+   "status": {
+    "200": 9
    },
    "esquema": {
     "tipos": [
@@ -4760,6 +4851,7 @@
       "tipos": [
        "list"
       ],
+      "opcional": true,
       "itens": {
        "tipos": []
       }
@@ -4777,25 +4869,26 @@
          "tipos": [
           "int"
          ],
-         "exemplo": 112
+         "exemplo": 52
         },
         "x": {
          "tipos": [
           "int"
          ],
-         "exemplo": -25
+         "exemplo": 23
         },
         "y": {
          "tipos": [
           "int"
          ],
-         "exemplo": -19
+         "exemplo": 14
         }
        }
       }
      },
      "start": {
       "tipos": [
+       "null",
        "object"
       ],
       "campos": {
@@ -4803,13 +4896,13 @@
         "tipos": [
          "int"
         ],
-        "exemplo": -2
+        "exemplo": 0
        },
        "y": {
         "tipos": [
          "int"
         ],
-        "exemplo": 1
+        "exemplo": 0
        }
       }
      }
@@ -4817,12 +4910,14 @@
    }
   },
   "GET /api/game/map-markers": {
-   "vezes": 1,
+   "vezes": 7,
    "fontes": [
-    "M3.jsonl"
+    "C8.jsonl",
+    "M3.jsonl",
+    "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 1
+    "200": 7
    },
    "esquema": {
     "tipos": [
@@ -5254,6 +5349,169 @@
        "int"
       ],
       "exemplo": 38298827
+     }
+    }
+   }
+  },
+  "GET /api/game/used-balls": {
+   "vezes": 1,
+   "fontes": [
+    "C8.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "ballTypes": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "iconUrl": {
+         "tipos": [
+          "null",
+          "str"
+         ],
+         "exemplo": "/assets/markitems/pokeball.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Poké Ball"
+        }
+       }
+      }
+     },
+     "caught": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": []
+      }
+     },
+     "pokemons": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "attempts": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 12
+        },
+        "balls": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "1": {
+           "tipos": [
+            "int"
+           ],
+           "opcional": true,
+           "exemplo": 1693
+          },
+          "2": {
+           "tipos": [
+            "int"
+           ],
+           "opcional": true,
+           "exemplo": 2143
+          },
+          "3": {
+           "tipos": [
+            "int"
+           ],
+           "opcional": true,
+           "exemplo": 97
+          },
+          "4": {
+           "tipos": [
+            "int"
+           ],
+           "opcional": true,
+           "exemplo": 100
+          },
+          "6": {
+           "tipos": [
+            "int"
+           ],
+           "opcional": true,
+           "exemplo": 15
+          }
+         }
+        },
+        "caught": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "dexId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "goldSpent": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 600
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Bulbasaur"
+        },
+        "price": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 3000
+        },
+        "shiny": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "total": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 97
+        }
+       }
+      }
      }
     }
    }

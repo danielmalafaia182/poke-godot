@@ -16,8 +16,8 @@ const Fontes := preload("res://sim/fontes.gd")
 
 
 static func penalizar_entrada(sessao_expirada: bool, ultima_hunt: String, slug: String) -> bool:
-	## Lock de entrada (boost shinylock), regra relatada pelo usuário (B-relatado): hunt diferente da última, ou
-	## qualquer hunt depois que a sessão expirou; a mesma hunt de novo (pela cidade) não penaliza.
+	## Lock de entrada (boost shinylock): hunt diferente da última penaliza e a mesma hunt de novo (pela cidade) não
+	## (A, gravação T1); qualquer hunt depois que a sessão expirou penaliza (B-relatado, não gravado).
 	return sessao_expirada or ultima_hunt != slug
 
 

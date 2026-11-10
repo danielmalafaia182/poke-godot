@@ -4,6 +4,7 @@
  "fontes": {
   "C1.jsonl": "266d997809947d3163c00d9dbc2fc13ab39d302eb8b23edbe7a9e9e88fc1d1a2",
   "C6.jsonl": "47c7c4902d2e3566ade21731d010733d7bb42db03562e1e106e1facbca85b37c",
+  "C8.jsonl": "05e9ad8cf2a5350f936c050e67ebd082a54f45edccb108e276da7609f23f3a5f",
   "M1.jsonl": "5344694d50f54bdd01a07c81ee6b8163c8708e0d983f3bbe4b831072612796f8",
   "M2.jsonl": "6fa7e006006b7607fc2c159eefcabfa10324d44164c3b57e9a2deb036d8d2036",
   "M3.jsonl": "560acc5676b2a9088a9f88057327e58f84d42a764ecda3c02fc4158f188d34f9",
@@ -22,7 +23,8 @@
   "poke_ws_todas(2)(20.jsonl": "02e1e8a15b14f230d71d0e0337a3be8823eff44a1857d97d0fc476c8426b1ed0",
   "poke_ws_todas(2).jsonl": "047175cff68082a2ebc0e478838b946590e0f4f9f68991690b677784aaf79003",
   "poke_ws_todas(3).jsonl": "07adc6af058c41026007daedbfc577a5ff8b852b9b6e8e47dfe19f2ef77b15ab",
-  "rhydon-1h.jsonl": "309628bff7ea6e77e0df327dd7190a3ee0e7aaf304c49c952bf6482fe3d65849"
+  "rhydon-1h.jsonl": "309628bff7ea6e77e0df327dd7190a3ee0e7aaf304c49c952bf6482fe3d65849",
+  "t1_transacoes.jsonl": "accecf931d8850bd53c3dbb58589e4594632ee2b7d62e7a316c261284924d3cd"
  },
  "normal": {
   "1": {
@@ -41,23 +43,23 @@
   },
   "19": {
    "corpo": 2848,
-   "n": 3187,
+   "n": 3634,
    "contagem": {
-    "2848": 3187
+    "2848": 3634
    }
   },
   "21": {
    "corpo": 2826,
-   "n": 1371,
+   "n": 2070,
    "contagem": {
-    "2826": 1371
+    "2826": 2070
    }
   },
   "37": {
    "corpo": 2945,
-   "n": 2376,
+   "n": 3159,
    "contagem": {
-    "2945": 2376
+    "2945": 3159
    }
   },
   "43": {
@@ -65,6 +67,13 @@
    "n": 3020,
    "contagem": {
     "3008": 3020
+   }
+  },
+  "52": {
+   "corpo": 3043,
+   "n": 2218,
+   "contagem": {
+    "3043": 2218
    }
   },
   "74": {
@@ -102,6 +111,13 @@
    "n": 46,
    "contagem": {
     "2848": 46
+   }
+  },
+  "21": {
+   "corpo": 55422,
+   "n": 30,
+   "contagem": {
+    "55422": 30
    }
   },
   "74": {
