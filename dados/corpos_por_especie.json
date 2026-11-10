@@ -2,10 +2,15 @@
  "formato": "poke-corpos-por-especie-v1",
  "nota": "Gerado por ferramentas/gravador/atualizar_corpos.py (fonte A: field.corpses das gravações, ligado ao selvagem morto no tile). speciesId -> id em game/corpses/corpses.json. Espécie ausente nunca foi vista morrendo; a simulação usa então o normal (shiny, F) ou o genérico (corpse 0, E).",
  "fontes": {
+  "C1.jsonl": "266d997809947d3163c00d9dbc2fc13ab39d302eb8b23edbe7a9e9e88fc1d1a2",
+  "C6.jsonl": "47c7c4902d2e3566ade21731d010733d7bb42db03562e1e106e1facbca85b37c",
+  "M1.jsonl": "5344694d50f54bdd01a07c81ee6b8163c8708e0d983f3bbe4b831072612796f8",
+  "M2.jsonl": "6fa7e006006b7607fc2c159eefcabfa10324d44164c3b57e9a2deb036d8d2036",
   "S1.jsonl": "e66f925e1725fcac1c708ba2bc7c9297f747a38953fce79c2fdb3a66574ad397",
   "S2.jsonl": "682d8e642a116c265dff343b15db093eb6afdf1137259b810ed6a1755e6a3908",
   "S3.jsonl": "c6b3e284e6bb8854789a7d376856bcdc05d6e522bc7cf58c03379cc7de63b7f5",
   "S4.jsonl": "92e9f7424b387ed2c00d925ff8b790aa7344cca03f715e58843b3136a6381e0d",
+  "c2.jsonl": "0bc33a80ef274be76963034a18017cac049b1d743376211e3a36f64526a169a6",
   "geodeude-2.jsonl": "2523321df5c2f1cabc37718c572cb72437461d09887d5f9bdecb7eb989534d41",
   "geodude-10min.jsonl": "44f837ff1a9d1486191874d29790a3a621f7fb1b7c40ac3985d73a1a3a8809bc",
   "geodude-3.jsonl": "c5aa50a639c134fd358dc78048e46e748908fc94e888bf736a4db1c84458247c",
@@ -18,6 +23,13 @@
   "rhydon-1h.jsonl": "309628bff7ea6e77e0df327dd7190a3ee0e7aaf304c49c952bf6482fe3d65849"
  },
  "normal": {
+  "1": {
+   "corpo": 2830,
+   "n": 2344,
+   "contagem": {
+    "2830": 2344
+   }
+  },
   "9": {
    "corpo": 2931,
    "n": 7138,
@@ -32,11 +44,18 @@
     "2848": 3187
    }
   },
+  "21": {
+   "corpo": 2826,
+   "n": 1371,
+   "contagem": {
+    "2826": 1371
+   }
+  },
   "37": {
    "corpo": 2945,
-   "n": 937,
+   "n": 2376,
    "contagem": {
-    "2945": 937
+    "2945": 2376
    }
   },
   "43": {
@@ -62,9 +81,9 @@
   },
   "115": {
    "corpo": 6073,
-   "n": 404,
+   "n": 4658,
    "contagem": {
-    "6073": 404
+    "6073": 4658
    }
   }
  },

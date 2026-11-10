@@ -98,22 +98,25 @@ func _init() -> void:
 		iguais = iguais and r1.proximo_u32() == r2.proximo_u32()
 	checar(iguais and Rng.new(43).proximo_u32() != Rng.new(42).proximo_u32(), "RNG determinístico por semente")
 
-	# --- Captura com medidor (C: investimento por espécie; forma F ajustada nas sequências A).
-	# Rattata nível 1, preço 80, Super Ball: 1ª tentativa depois de uma captura ≈ 0,43 (A: 15/34), 2ª ≈ 0,85 (15/18), 3ª = 1 (3/3).
+	# --- Captura com medidor (C: investimento por espécie; forma F ajustada nas sequências A, sem fator de nível).
+	# Rattata 1, preço 80, Super Ball: tentativas 1–3 depois de uma captura ≈ 0,46 / 0,87 / 1 (A: 15/34, 15/18, 3/3);
+	# Spearow 10, preço 100: ≈ 0,37 / 0,63 / 0,90 (A: 13/28, 7/14, 7/7).
 	var v3 := Regras.valor_bola(3)
-	var c1 := Regras.chance_captura(3, 1, v3, 80.0)
-	var c2 := Regras.chance_captura(3, 1, 2.0 * v3, 80.0)
-	var c3 := Regras.chance_captura(3, 1, 3.0 * v3, 80.0)
-	checar(absf(v3 - 50.0) < 1e-9, "Super Ball soma o próprio preço (50) ao medidor")
-	checar(absf(c1 - 0.425) < 0.01 and absf(c2 - 0.85) < 0.01 and c3 == 1.0, "Rattata 1: 0,43 / 0,85 / 1 nas tentativas 1–3",
-		"%.3f %.3f %.3f" % [c1, c2, c3])
-	checar(Regras.chance_captura(3, 80, v3, 13000.0) < 0.0001 and Regras.chance_captura(3, 80, 200.0 * v3, 13000.0) > Regras.chance_captura(3, 80, 100.0 * v3, 13000.0),
-		"Rhydon 80: chance baixa que sobe com o investimento")
-	checar(Regras.chance_captura(5, 80, 0.0, 13000.0) == 1.0 and Regras.chance_captura(9, 1, 50.0, 80.0) == 0.0,
+	checar(absf(v3 - 50.0) < 1e-9, "Super Ball vale o próprio preço (50) no medidor")
+	var cr1 := Regras.chance_captura(3, 0.0, 80.0)
+	var cr2 := Regras.chance_captura(3, v3, 80.0)
+	var cr3 := Regras.chance_captura(3, 2.0 * v3, 80.0)
+	checar(absf(cr1 - 0.459) < 0.01 and absf(cr2 - 0.872) < 0.01 and cr3 == 1.0, "Rattata: 0,46 / 0,87 / 1", "%.3f %.3f %.3f" % [cr1, cr2, cr3])
+	var cs1 := Regras.chance_captura(3, 0.0, 100.0)
+	var cs3 := Regras.chance_captura(3, 2.0 * v3, 100.0)
+	checar(absf(cs1 - 0.3675) < 0.01 and absf(cs3 - 0.897) < 0.01, "Spearow: 0,37 na 1ª, 0,90 na 3ª", "%.3f %.3f" % [cs1, cs3])
+	checar(Regras.chance_captura(3, 0.0, 13000.0) < 0.004 and Regras.chance_captura(3, 300.0 * v3, 13000.0) > 2.0 * Regras.chance_captura(3, 0.0, 13000.0),
+		"Rhydon (13000): chance baixa que sobe com o investimento")
+	checar(Regras.chance_captura(5, 0.0, 13000.0) == 1.0 and Regras.chance_captura(9, 50.0, 80.0) == 0.0,
 		"Master Ball garante; bola desconhecida não captura")
-	checar(Regras.chance_captura(6, 1, Regras.valor_bola(6), 80.0) < 1.0, "Idle Ball no Rattata 1 não é certa (A: falhou no S2)",
-		"%.3f" % Regras.chance_captura(6, 1, Regras.valor_bola(6), 80.0))
-	checar(absf(Regras.chance_captura(3, 1, v3, 80.0, 1.0) - minf(1.0, 2.0 * c1)) < 1e-9, "bônus multiplica (1 + bônus)")
+	checar(Regras.chance_captura(6, 0.0, 80.0) < 1.0, "Idle Ball no Rattata 1 não é certa (A: falhou no S2)",
+		"%.3f" % Regras.chance_captura(6, 0.0, 80.0))
+	checar(absf(Regras.chance_captura(3, 0.0, 1000.0, 1.0) - 2.0 * Regras.chance_captura(3, 0.0, 1000.0)) < 1e-9, "bônus multiplica (1 + bônus)")
 
 	# --- Penalidade de entrada (boost shinylock): 60 s desde a entrada, XP × 0,3 (5772 → 1731), sem chave depois.
 	var Sim := load("res://testes/rodar_sim.gd")

@@ -25,7 +25,7 @@ sys.path.insert(0, os.path.join(RAIZ, "ferramentas", "gravador"))
 import rest  # noqa: E402
 
 # Modelo do medidor (F) — mesmos valores de sim/regras.gd PARAMETROS (captura_*)
-C0, ALFA = 0.68, 0.86
+C, K = 0.735, 1.44
 EFIC = {1: 1, 2: 2, 3: 3, 4: 4, 5: 255, 6: 5, 7: 5}
 PRECO_BOLA = {1: 5, 2: 20, 3: 50, 4: 130, 5: 0, 6: 400, 7: 400}
 
@@ -34,12 +34,13 @@ def valor_bola(b):
     return EFIC.get(b, 0) * PRECO_BOLA[3] / 3.0
 
 
-def chance(b, nivel, investido, preco):
+def chance(b, investido_antes, preco):
     if EFIC.get(b, 0) <= 0:
         return 0.0
     if EFIC[b] >= 255:
         return 1.0
-    return max(0.0, min(1.0, C0 * max(1, nivel) ** -ALFA * investido / max(1.0, preco)))
+    p = max(1.0, preco)
+    return max(0.0, min(1.0, C * valor_bola(b) / p * (1 + K * investido_antes / p)))
 
 
 def _carregar(nome):
@@ -149,8 +150,8 @@ def conferir_captura(r, slug):
             nivel = int(hunts[h_]["nivel"]) if h_ in hunts else int(e.get("nivelHunt") or 1)
             niveis.add((h_ if h_ in hunts else "?", nivel))
             n += 1
+            p = chance(b, inv, preco)
             inv += valor_bola(b)
-            p = chance(b, nivel, inv, preco)
             esperado += p          # esperança condicionada à história observada (o medidor zera nas capturas reais)
             if ok:
                 obs += 1

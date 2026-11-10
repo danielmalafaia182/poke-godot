@@ -3,7 +3,7 @@
 
 Por field (só a hunt pedida, herói vivo):
   1. adjacentes: quantos selvagens vivos estão a Chebyshev ≤ 1 do herói;
-  2. na visão: quantos vivos estão dentro da área de visão (±13 colunas, ±7 linhas: view {hc 27, hr 15});
+  2. na visão: quantos vivos estão dentro da área de visão (±13 colunas, ±13 linhas: borda medida, A; antes ±7);
      perseguindo: quantos desses, fora do alcance (Chebyshev > 1), se moveram para mais perto do herói desde o field
      anterior (só pares com Δseq = 2);
   3. coleira: selvagens vivos FORA da visão — fração que se move por intervalo de 400 ms e, quando se move, se
@@ -22,7 +22,7 @@ from collections import Counter
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "protocolo"))
 from gerar_protocolo import ler_logs  # noqa: E402
 
-VISAO_X, VISAO_Y = 13, 7
+VISAO_X, VISAO_Y = 13, 13   # A desde 10/11/2026 (perseguição até 13 nos dois eixos); antes 13, 7
 
 
 def cheb(a, b):
@@ -135,8 +135,11 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("arquivos", nargs="+")
     ap.add_argument("--slug", default="rhydon")
+    ap.add_argument("--visao", default="13x13", help="meias-larguras da caixa de visão, colunas x linhas (A: 13x13; antes 13x7)")
     ap.add_argument("--json")
     a = ap.parse_args()
+    global VISAO_X, VISAO_Y
+    VISAO_X, VISAO_Y = (int(v) for v in a.visao.lower().split("x"))
     sys.stdout.reconfigure(encoding="utf-8")
     r = resumo(a.arquivos, a.slug)
     print(json.dumps(r, ensure_ascii=False, indent=1))

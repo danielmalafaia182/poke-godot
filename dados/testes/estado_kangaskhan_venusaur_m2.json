@@ -1,0 +1,261 @@
+{
+ "cadaveres": {
+  "115": 6073
+ },
+ "fieldInit": {
+  "bike": false,
+  "cols": 121,
+  "heroStepMs": 500,
+  "huntKey": "kangaskhan:1794338738946",
+  "minTx": -60,
+  "minTy": -47,
+  "mobStepMs": 1000,
+  "rows": 95,
+  "slug": "kangaskhan",
+  "tickMs": 200,
+  "trainerStepMs": 500,
+  "type": "field-init"
+ },
+ "fonte": "M2.jsonl",
+ "formato": "poke-estado-inicial-v1",
+ "huntKey": "kangaskhan:1794338738946",
+ "inventario": [
+  {
+   "itemId": 2,
+   "quantity": 1
+  },
+  {
+   "itemId": 10,
+   "quantity": 101
+  },
+  {
+   "itemId": 25,
+   "quantity": 18
+  },
+  {
+   "itemId": 39,
+   "quantity": 17613
+  },
+  {
+   "itemId": 40,
+   "quantity": 1
+  },
+  {
+   "itemId": 46,
+   "quantity": 577
+  },
+  {
+   "itemId": 56,
+   "quantity": 3
+  },
+  {
+   "itemId": 57,
+   "quantity": 19
+  },
+  {
+   "itemId": 66,
+   "quantity": 4
+  },
+  {
+   "itemId": 68,
+   "quantity": 857
+  },
+  {
+   "itemId": 69,
+   "quantity": 70
+  },
+  {
+   "itemId": 73,
+   "quantity": 30
+  },
+  {
+   "itemId": 81,
+   "quantity": 7
+  },
+  {
+   "itemId": 107,
+   "quantity": 10
+  },
+  {
+   "itemId": 109,
+   "quantity": 148
+  },
+  {
+   "itemId": 110,
+   "quantity": 1478
+  },
+  {
+   "itemId": 112,
+   "quantity": 4221
+  },
+  {
+   "itemId": 120,
+   "quantity": 52519
+  },
+  {
+   "itemId": 126,
+   "quantity": 15480
+  },
+  {
+   "itemId": 128,
+   "quantity": 347
+  },
+  {
+   "itemId": 140,
+   "quantity": 74
+  },
+  {
+   "itemId": 201,
+   "quantity": 902
+  },
+  {
+   "itemId": 203,
+   "quantity": 9204
+  },
+  {
+   "itemId": 240,
+   "quantity": 22
+  },
+  {
+   "itemId": 5309,
+   "quantity": 1397
+  },
+  {
+   "itemId": 5310,
+   "quantity": 2362
+  },
+  {
+   "itemId": 11560,
+   "quantity": 1042
+  },
+  {
+   "itemId": 13115,
+   "quantity": 12
+  },
+  {
+   "itemId": 21287,
+   "quantity": 4
+  },
+  {
+   "itemId": 37288,
+   "quantity": 11
+  }
+ ],
+ "pokeDelta": {
+  "barLooktype": 22,
+  "finalStage": true,
+  "hp": 960,
+  "id": "cmu9y6y5cntw5iiyrt3u78fys",
+  "ivTotal": 98,
+  "leader": true,
+  "level": 142,
+  "looktype": 22,
+  "maxHp": 1896,
+  "name": "Venusaur",
+  "power": 733,
+  "quality": 0.835,
+  "sellValue": 18000,
+  "shiny": false,
+  "slot": 0,
+  "speciesId": 3,
+  "starter": true,
+  "stats": {
+   "atk": 113,
+   "def": 112,
+   "hp": 158,
+   "spAtk": 167,
+   "spDef": 165,
+   "speed": 163
+  },
+  "team": true,
+  "type1": "GRASS",
+  "type2": "POISON",
+  "xp": 45749086
+ },
+ "primeiroField": {
+  "bossActiveIdx": 0,
+  "bossTeam": [
+   {
+    "hp": 960,
+    "maxHp": 1884
+   },
+   {
+    "hp": 42,
+    "maxHp": 60
+   },
+   {
+    "hp": 24,
+    "maxHp": 24
+   }
+  ],
+  "heroHp": 960,
+  "heroLooktype": 22,
+  "heroMaxHp": 1884,
+  "heroName": "Venusaur",
+  "mobsMaxHp": [
+   3850,
+   3465,
+   5110,
+   4830,
+   3185,
+   4095,
+   4550,
+   4900,
+   4655,
+   4970,
+   4130,
+   4655,
+   4060,
+   4130,
+   3780
+  ],
+  "seq": 4,
+  "serverNow": 1794338739550
+ },
+ "primeiroFieldKill": {
+  "level": 142,
+  "pokeXp": {
+   "level": 141,
+   "parts": {
+    "base": 3848,
+    "boost": 0,
+    "debuff": -4041,
+    "event": 0,
+    "gym": 0,
+    "mentor": 0,
+    "typeDay": 0,
+    "vip": 1924
+   },
+   "speciesId": 3,
+   "xpGained": 1731
+  },
+  "speciesId": 115,
+  "totalXp": 45824542,
+  "xpGained": 1731,
+  "xpParts": {
+   "base": 3848,
+   "boost": 0,
+   "debuff": -4041,
+   "event": 0,
+   "gym": 0,
+   "streak": 0,
+   "typeDay": 0,
+   "vip": 1924
+  }
+ },
+ "primeiroPokeXp": {
+  "id": "cmu9y6y5cntw5iiyrt3u78fys",
+  "level": 141,
+  "leveledUp": false,
+  "speciesId": 3,
+  "type": "poke-xp",
+  "xp": 45712723,
+  "xpGained": 1731
+ },
+ "sessao": "2026-11-10T18-03-20-735Z",
+ "slug": "kangaskhan",
+ "vip": {
+  "type": "vip",
+  "until": 1796135385546
+ }
+}

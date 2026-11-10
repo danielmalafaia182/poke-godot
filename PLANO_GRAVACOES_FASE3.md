@@ -36,8 +36,50 @@ Conferência: `python -I ferramentas/fase3/conferir_fase3.py` (e `ferramentas/fa
 | S3 | sim (3,6 min, 39 abates) | **confirma por indivíduo**: Hydro Pump 31/39 (o critério de 95% supunha IV 16 e não passa), mas cada Rhyhorn leva sempre o mesmo golpe (15/15) e os 3 com Aqua Tail são coerentes com a regra pelos stats que o maxHp e o dano permitem (15/15; em 12 a escolha restringiu o indivíduo) |
 | S4 | sim (4 min, 37 abates; Venusaur já no nível 139, não 124; catch ligado com Super Ball) | **confirma**: Double-Edge 39/39; vale também como **C2**: 2/37 capturas (a curva de 2 pontos previa 29,6%: derrubada; depois a curva por nível foi trocada pelo medidor de investimento, seção b) |
 | S5–S8 | não | dispensáveis: S5 e S7 (efetividade sem STAB) e S8 (repete o S4) testam o que S2/S4 já mostraram; S6 (A/D) foi coberto pelo S3. Gravar só se sobrar tempo |
-| C1, C5–C8 | não | revistos pelo medidor de captura (seção b): C1, C5 (agora no Geodude, conta B), C7 e C8 são P1; C6 é P2; **C3 e C4 dispensados** |
-| M1–M4 | não | **ainda necessários** (nada novo de movimento nestas quatro) |
+| C1 | sim (4,5 min, 52 tentativas; Venusaur 142, Super Ball; **sem used-balls**: o gravador não gravou nenhuma linha REST) | Spearow 10: 28/52. **Derruba o fator de nível** do modelo (ele previa 3,9). Chance por tentativa desde a última captura: 13/28, 7/14, 7/7 → o medidor existe e a base sai do preço |
+| C2 (c2) | sim, extra (57 tentativas) | Vulpix 20: 3/57 (com o S4, 5/94); modelo novo 4,0 esperado no conjunto |
+| C6 | sim (6 min, 84 tentativas, sem used-balls) | Bulbasaur 20 RARE (3000): 0/84; modelo novo 2,05 (P = 0,13): **inconclusivo** para raridade (fator ajustado 1,00) |
+| M1 | sim (Venusaur 140–141, 121 abates, ~19 min de fields em 2,5 h com pausas) | **Borda da perseguição medida (A)**: ±13 em colunas e ±13 em linhas, não ±7. H1 e H4 explicados por isso no Kangaskhan; H3 cai (o "vaguear" era perseguição em \|dy\| 8–13) |
+| M2 | sim (Venusaur 141–142, 65 abates), mas o `view` foi 27×15 do começo ao fim | O cliente calcula o `view` só pelo zoom da câmera (C); o tamanho da janela não muda nada. A pergunta do M2 (a visão acompanha a janela?) não se aplica. Serve como 2ª gravação de luta longa (confirma o M1) |
+| C3, C4, C7, C8, C5, M3, M4 | não | ver "O que falta", abaixo |
+
+### O que falta (em ordem de prioridade, revisto em 10/11/2026)
+
+1. **Antes de tudo: o gravador v1.2.** Nenhuma gravação tem linha REST. O mais provável é que a versão antiga do gravador
+   estivesse ativa na página: com outra versão ativa, o v1.1 saía sem avisar. O v1.2 avisa nesse caso e marca
+   `restHook` na linha `__open`. Para conferir: abra a tela Gerenciamento de Captura e veja se o painel do gravador conta
+   um tipo `__rest`.
+2. **C5 (P1): valor da bola.** Conta B, Rhydon, `geodude` (1, preço 300), 60 tentativas por bola: Poké, Great, Super e
+   Ultra, nessa ordem, abrindo o used-balls em cada troca. Esperado pelo modelo:
+
+   | Bola | Se o medidor conta a eficiência | Se conta o ouro pago |
+   |---|---|---|
+   | Poké | 4,1 | 1,1 |
+   | Great | 8,2 | 5,0 |
+   | Super | 12,1 | 12,1 |
+   | Ultra | 15,8 | 28,2 |
+
+   É a pergunta de captura que mais vale agora. A Super Ball no Geodude substitui o C7.
+3. **Transições da penalidade (P1, ~10 min).** Grave sem parar o gravador:
+   - hunt A → cidade → espere 30 s → hunt B;
+   - hunt B → mapa-múndi direto para a hunt C;
+   - hunt C → cidade → a mesma hunt C de novo.
+
+   Nas 9 entradas medidas, o lock acaba 60 s depois da entrada e chega junto do `enter-hunt`. O S3 é a única exceção:
+   lá o lock acabou 20–30 s depois da entrada, sem `boosts` no arquivo. Só uma transição gravada inteira mostra de onde o
+   minuto conta.
+4. **M3 (P1 para o movimento): Golem 386 em `rhydon`, 20 min.** Com a caixa 13×13, a sim acerta o Kangaskhan, mas junta
+   selvagens demais no Rhydon (0,58 adjacentes por field, contra 0,40 no real). O M3 separa o efeito do tempo de luta
+   (abate em 1 golpe) do efeito do mapa.
+5. **M4 (P2): Geodude ~10 em `rattata`.** Coleira (H2): falta ver um selvagem que perseguia e ficou para trás voltar ou
+   não ao spawn.
+6. **C8 (P2): Meowth 20, preço 300.** Mesmo preço do Geodude 1. Confirma, com o mesmo preço, que o nível não pesa
+   (hoje isso vem de Rattata 1 × Spearow 10, com preços 80 e 100).
+7. **M5 (P2, novo): zoom.** Mude o zoom da câmera no meio de uma hunt (o `view` muda com ele, C) e veja se o raio de
+   perseguição acompanha.
+
+**Dispensadas:** C3 e C4 (caras e com pouca informação); C7 (coberto pela Super Ball do C5); S5–S8; o C6 não precisa
+ser repetido (raridade fica em aberto, sem prioridade); M2 com janela de tamanhos diferentes (a janela não muda o `view`).
 
 Duração total: **~4 h 30**. Prioridade 1 (P1) ≈ 2 h fecha o essencial de cada ponto; P2 dá folga estatística.
 
@@ -83,11 +125,13 @@ espécie**:
 As gravações confirmam (A): no Rattata 1 a chance foi 15/34 na 1ª tentativa depois de uma captura, 15/18 na 2ª e
 3/3 na 3ª.
 
-Modelo da sim (F, ajustado nas sequências de Rattata, Vulpix e Rhydon):
+Modelo da sim (F; refeito em 10/11/2026 depois do C1, sobre Rattata, Spearow, Vulpix, Bulbasaur, Rhydon e Blastoise):
 
-  chance = min(1, 0,68 · nível^−0,86 · investido / preço de NPC · (1 + bônus))
+  chance = min(1, 0,735 · v/P · (1 + 1,44 · investido_antes/P))
 
-`investido` é o valor das bolas desde a última captura, incluindo a desta tentativa.
+v é o valor da bola da tentativa, P o preço de NPC e investido_antes o valor das bolas desde a última captura, sem a
+atual. Não há fator de nível: o C1 derrubou o modelo anterior (0,68 · nível^−0,86). Com Super Ball, a 1ª tentativa
+depois de uma captura sai com 0,735 · 50/P: Rattata 0,46, Spearow 0,37, Vulpix 0,037, Rhydon 0,003.
 
 **O que falta medir:**
 - **Valor de cada bola.** Ou é a eficiência convertida (Super = 50; padrão, porque a Idle Ball falhou no Rattata), ou é

@@ -44,8 +44,15 @@ const PARAMETROS := {
 	"ataque_selvagem_ticks": 10,            # A: ~2000 ms por selvagem
 	"ataque_selvagem_extra_prob": 0.25,     # F: às vezes +1 tick (média medida ~2050 ms no Kangaskhan)
 	"primeiro_ataque_selvagem_ticks": 10,   # F: 1º golpe ~2000 ms depois de encostar (4 casos: 1600–3200 ms)
-	"visao_meia_largura": 13,               # C+A: comando view {hc:27, hr:15}; selvagens só perseguem dentro dela
-	"visao_meia_altura": 7,                 # C+A
+	"visao_meia_largura": 13,               # A: perseguição até |dx| 13, nunca 14+ (rhydon-1h, M1, M2)
+	"visao_meia_altura": 7,                 # F (sim). A borda real medida em 10/11/2026 é 13 nos dois eixos: selvagens se
+	                                        # aproximam com |dy| até 13 (0,16–0,43 por intervalo em |dy| 8–13, centenas de
+	                                        # intervalos na rhydon-1h; M1/M2 iguais) e nunca com 14+. Com 13 na sim, o
+	                                        # Kangaskhan (M1, M2) passa a bater e o Rhydon piora (0,58 adjacentes × 0,40;
+	                                        # curas/min fora da faixa no diferencial): falta o que limita o acúmulo em luta
+	                                        # curta (F). Fica 7 até isso fechar (M3). A sim ainda persegue com |dx| = 14
+	                                        # (0,26–0,41), o real nunca: a checagem real usa a posição de antes do passo (F).
+	                                        # C: view = {hc: ceil(25/zoom/2)+2, hr: ceil(13/zoom/2)+2} — só o zoom muda o view
 	"respawn_ms": 60000,                    # A: 7 respawns medidos, todos 60 s, no ponto de spawn, mesmo indivíduo
 	"cadaver_ms": 20000,                    # A aproximado: corpos somem em ~19–20 s
 	"fator_selvagem": 1.8,                  # F: fórmula candidata
@@ -80,17 +87,20 @@ const PARAMETROS := {
 	"penalidade_loot": "chance",            # "chance" (× fator na chance de cada item) | "quantidade" | "nenhuma"
 	# Captura com medidor de investimento (C: tutorial "quanto mais bolas você investe numa espécie, maior a chance";
 	# tela Gerenciamento de Captura, /api/game/used-balls: por espécie preço de NPC, ouro gasto, tentativas totais e
-	# desde a última captura, que zera ao capturar; "Quanto mais fraco o selvagem, mais fácil a captura"; Master Ball
-	# garante; shiny não usa o medidor). Forma (F, ajustada por máxima verossimilhança nas sequências A de Rattata 1,
-	# Vulpix 20 e Rhydon 80, todas com Super Ball; −59,5 contra −65,6 de uma chance fixa por espécie):
-	#   chance = min(1, c0 · nível^−α · investido / precoNpc · (1 + bônus))
-	# investido = valor das bolas desde a última captura, INCLUINDO a desta tentativa. No Rattata a chance sobe com as
-	# tentativas desde a captura (A: 15/34 na 1ª, 15/18 na 2ª, 3/3 na 3ª; o modelo dá 0,43 / 0,85 / 1).
-	# Valor da bola: "eficiencia" = catchRate × preço da Super Ball ÷ 3 (a Super vale o próprio preço) — padrão porque a
-	# Idle Ball (catchRate 5, 400 de ouro) falhou no Rattata 1 (S2): pelo ouro dela a chance seria 1. "ouro" = priceGold.
-	# Nível e espécie não se separam (cada ponto é de uma espécie): o fator de nível pode ser de espécie/preço.
-	"captura_c0": 0.68,
-	"captura_alfa": 0.86,
+	# desde a última captura, que zera ao capturar; Master Ball garante; shiny não usa o medidor).
+	# Forma (F, máxima verossimilhança em 10/11/2026 sobre as sequências A de Rattata 1, Spearow 10, Vulpix 20 ×2,
+	# Bulbasaur 20, Rhydon 80 e Blastoise 80, todas com Super Ball; o trecho antes da 1ª captura de cada gravação fica
+	# de fora porque o medidor inicial não foi gravado):
+	#   chance = min(1, c · v / precoNpc · (1 + k · investido_antes / precoNpc) · (1 + bônus))
+	# v = valor da bola desta tentativa; investido_antes = valor das bolas desde a última captura, SEM a atual.
+	# logL −98,1 (2 parâmetros) contra −126,0 do modelo anterior com fator de nível (c0 · nível^−0,86): o C1 derrubou
+	# o nível (Spearow 10 capturou 28/52, o modelo de nível previa 3,9). Com um fator de nível ou de raridade a mais,
+	# o ganho é nulo (expoente −0,06; Bulbasaur RARE ×1,00). Por tentativa desde a última captura (A): Rattata 15/34,
+	# 15/18, 3/3 (modelo 0,46 / 0,87 / 1); Spearow 13/28, 7/14, 7/7 (0,37 / 0,63 / 0,90).
+	"captura_c": 0.735,
+	"captura_k": 1.44,
+	# Valor da bola (F; só Super Ball medida): "eficiencia" = catchRate × preço da Super ÷ 3 (Super = 50) — padrão porque
+	# a Idle Ball (catchRate 5, 400 de ouro) falhou no Rattata 1 (S2): pelo ouro dela a chance seria 1; "ouro" = priceGold.
 	"captura_valor_bola": "eficiencia",     # "eficiencia" | "ouro"
 	"captura_eficiencia": {"1": 1, "2": 2, "3": 3, "4": 4, "5": 255, "6": 5, "7": 5},   # A: balls.catalog.catchRate
 	"captura_preco_bola": {"1": 5, "2": 20, "3": 50, "4": 130, "5": 0, "6": 400, "7": 400},   # A: balls.catalog.priceGold
@@ -289,15 +299,16 @@ static func valor_bola(bola: int, p: Dictionary = PARAMETROS) -> float:
 	return float(p.captura_eficiencia.get(k, 0)) * float(p.captura_preco_bola.get("3", 50)) / 3.0
 
 
-static func chance_captura(bola: int, nivel: int, investido: float, preco_npc: float, bonus: float = 0.0, p: Dictionary = PARAMETROS) -> float:
-	## Chance de uma tentativa normal (não shiny). `investido` já inclui o valor desta bola (F, ver PARAMETROS).
+static func chance_captura(bola: int, investido_antes: float, preco_npc: float, bonus: float = 0.0, p: Dictionary = PARAMETROS) -> float:
+	## Chance de uma tentativa normal (não shiny); `investido_antes` = valor das bolas desde a última captura, sem a atual.
 	var efic := int(p.captura_eficiencia.get(str(bola), 0))
 	if efic <= 0:
 		return 0.0
 	if efic >= int(p.captura_garantida_eficiencia):
 		return 1.0
-	var c := float(p.captura_c0) * pow(float(maxi(1, nivel)), -float(p.captura_alfa))
-	return clampf(c * investido / maxf(1.0, preco_npc) * (1.0 + bonus), 0.0, 1.0)
+	var preco := maxf(1.0, preco_npc)
+	var v := valor_bola(bola, p)
+	return clampf(float(p.captura_c) * v / preco * (1.0 + float(p.captura_k) * investido_antes / preco) * (1.0 + bonus), 0.0, 1.0)
 
 
 static func chance_captura_shiny(bola: int, tier: String, p: Dictionary = PARAMETROS) -> float:

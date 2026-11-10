@@ -762,12 +762,12 @@ func _tentar_captura(m: Dictionary) -> bool:
 	# Medidor de investimento por espécie (C; forma F, ver PARAMETROS): soma esta bola, sorteia, zera ao capturar.
 	var sid := str(m["species_id"]) + ("s" if bool(m["shiny"]) else "")   # C: a tela separa a variante shiny
 	var med: Dictionary = medidor.get(sid, {"investido": 0.0, "tentativas": 0, "total": 0, "gasto": 0})
+	var chance := Regras.chance_captura(int(sel), float(med.get("investido", 0.0)),
+		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)), p)
 	med["investido"] = float(med.get("investido", 0.0)) + Regras.valor_bola(int(sel), p)
 	med["tentativas"] = int(med.get("tentativas", 0)) + 1
 	med["total"] = int(med.get("total", 0)) + 1
 	med["gasto"] = int(med.get("gasto", 0)) + int(p.captura_preco_bola.get(sel, 0))
-	var chance := Regras.chance_captura(int(sel), int(m["nivel"]), float(med["investido"]),
-		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)), p)
 	if bool(m["shiny"]):   # C: shiny não usa o medidor (chance fixa por tier × força da bola)
 		chance = Regras.chance_captura_shiny(int(sel), String(m["especie"].get("tierShiny", "")), p)
 	var sucesso: bool = rng.randf() < chance

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Gravador WS — Poke Idle World
 // @namespace    poke-idle-godot
-// @version      1.1
+// @version      1.2
 // @description  Grava as mensagens do jogo e as respostas de /api/game/* (sem token, URL de conexão ou cabeçalhos).
 // @match        https://poke.idleworld.online/play*
 // @run-at       document-start
@@ -16,16 +16,24 @@
  * Mensagens de chat/DM de outros jogadores são descartadas por padrão.
  * v1.1: grava também o corpo das respostas GET/POST de /api/game/* (ex.: used-balls = investimento de captura
  * por espécie; pokes do painel do time), com dir "rest". Guarda caminho, parâmetros (sem os que parecem credencial), status e corpo.
+ * v1.2: se outra versão do gravador já estiver ativa na página, avisa (a antiga não grava REST) em vez de sair calada;
+ * a linha meta __open leva versaoGravador 3 e restHook, para conferir no arquivo que o gancho REST estava ligado.
  * Painel no canto inferior esquerdo: pausar, exportar JSONL, limpar.
  */
 (function () {
   'use strict';
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-  if (W.__pokeGravador) { W.__pokeGravador.mostrar(); return; }
+  const VERSAO = 3;
+  if (W.__pokeGravador) {
+    if ((W.__pokeGravador.versao || 0) < VERSAO) {
+      alert('Gravador WS: uma versão antiga já está ativa nesta página e NÃO grava as respostas REST (used-balls). ' +
+            'Desative a antiga no Tampermonkey (ou feche a aba), recarregue a página e cole/ative esta versão.');
+    }
+    W.__pokeGravador.mostrar(); return;
+  }
 
   const DESCARTAR = new Set(['chat', 'dm', 'chat-delete', 'dm-inbox']);
   const SESSAO = new Date().toISOString().replace(/[:.]/g, '-');
-  const VERSAO = 2;
   const REST_OK = /^\/api\/game\//;          // só dados de jogo; nada de /api/auth
   const REST_NAO = /^\/api\/game\/(chat|dm|friends|messages|mail)/;
   let pausado = false, total = 0, porTipo = {};
@@ -69,7 +77,7 @@
     ligados.add(ws);
     ws.addEventListener('message', ev => registrar('in', ev.data));
     ws.addEventListener('close', ev => registrar('meta', JSON.stringify({ type: '__close', code: ev.code })));
-    registrar('meta', JSON.stringify({ type: '__open', versaoGravador: VERSAO, ua: navigator.userAgent }));
+    registrar('meta', JSON.stringify({ type: '__open', versaoGravador: VERSAO, restHook: restLigado, ua: navigator.userAgent }));
   }
   const Original = W.WebSocket;
   const envioOriginal = Original.prototype.send;
@@ -88,7 +96,9 @@
 
   // ---------- respostas REST de /api/game/* ----------
   const fetchOriginal = W.fetch;
+  let restLigado = false;
   if (fetchOriginal) {
+    restLigado = true;
     W.fetch = function (entrada, opcoes) {
       const p = fetchOriginal.apply(this, arguments);
       try {
@@ -158,5 +168,5 @@
   }
   if (document.body) montar(); else document.addEventListener('DOMContentLoaded', montar);
 
-  W.__pokeGravador = { exportar, lerTudo, sessao: SESSAO, mostrar: () => { if (painel) painel.style.display = 'block'; } };
+  W.__pokeGravador = { versao: VERSAO, exportar, lerTudo, sessao: SESSAO, mostrar: () => { if (painel) painel.style.display = 'block'; } };
 })();
