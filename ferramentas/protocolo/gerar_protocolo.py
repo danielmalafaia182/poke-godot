@@ -4,7 +4,8 @@
 Fontes:
   --cliente  chunks JS do cliente original (comandos enviados e eventos assinados)
   --logs     gravações (3 formatos aceitos: linha = mensagem JSON; formato antigo
-             {"direcao","dados"}; formato do gravador novo {"dir","msg"})
+             {"direcao","dados"}; formato do gravador novo {"dir","msg"}). As linhas dir "rest" do gravador v1.1
+             (respostas de /api/game/*) não são mensagens WS: vão para a seção "rest", por caminho.
 
 Saída: para cada tipo, direção, quantas vezes foi visto, em quais fontes, e o
 esquema dos campos (tipos observados, exemplo curto, aninhamento de objetos e listas).
@@ -69,7 +70,7 @@ class Esquema:
         return d
 
 
-def ler_logs(caminhos, deduplicar=True):
+def ler_logs(caminhos, deduplicar=True, rest=False):
     """Devolve (direcao, mensagem, fonte) para cada mensagem reconhecida.
 
     Com deduplicar, uma linha do gravador novo ({sessao,t,dir,msg}) que já apareceu em outro arquivo
@@ -87,6 +88,8 @@ def ler_logs(caminhos, deduplicar=True):
                     continue
                 if not isinstance(o, dict):
                     continue
+                if rest and not (o.get("dir") == "rest" and "msg" in o):
+                    continue                                 # só o gravador v1.1 grava REST
                 if "direcao" in o and "dados" in o:          # gravador antigo
                     try:
                         m = json.loads(o["dados"])
@@ -95,7 +98,7 @@ def ler_logs(caminhos, deduplicar=True):
                     d = "out" if o["direcao"].startswith("envi") else "in"
                 elif "dir" in o and "msg" in o:              # gravador novo
                     m, d = o["msg"], o["dir"]
-                    if d == "meta":
+                    if d == "meta" or (d == "rest") != rest:
                         continue
                     if deduplicar:
                         chave = (o.get("sessao"), o.get("t"), d, json.dumps(m, sort_keys=True))
@@ -161,6 +164,16 @@ def main():
         fontes[chave].add(fonte)
         contagem[chave] += 1
 
+    # respostas REST (gravador v1.1): esquema do corpo por método + caminho
+    rest = {}
+    for _d, m, fonte in ler_logs(a.logs, rest=True):
+        k = "%s %s" % (m.get("metodo", "GET"), m.get("caminho", "?"))
+        r = rest.setdefault(k, {"vezes": 0, "fontes": set(), "status": defaultdict(int), "esquema": Esquema()})
+        r["vezes"] += 1
+        r["fontes"].add(fonte)
+        r["status"][str(m.get("status"))] += 1
+        r["esquema"].ver(m.get("corpo"))
+
     mensagens = {}
     todos = set(enviados) | set(assinados) | {t for t, _ in esquemas}
     for t in sorted(todos):
@@ -190,8 +203,11 @@ def main():
             "enviados_no_cliente": len(enviados),
             "assinados_no_cliente": len(assinados),
             "vistos_em_logs": len({t for t, _ in esquemas}),
+            "rest_vistos": len(rest),
         },
         "mensagens": mensagens,
+        "rest": {k: {"vezes": r["vezes"], "fontes": sorted(r["fontes"]), "status": dict(r["status"]),
+                     "esquema": r["esquema"].dump()} for k, r in sorted(rest.items())},
     }
     with open(a.saida, "w", encoding="utf-8", newline="\n") as f:
         json.dump(saida, f, ensure_ascii=False, indent=1)

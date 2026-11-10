@@ -12,7 +12,8 @@ casos com margem grande, ou empates exatos, que não dependem de IV. Fórmula de
 
 ## Como gravar (vale para todas)
 
-1. Abra o jogo com o gravador ativo (`ferramentas/gravador/gravador_ws.user.js`) **antes** de entrar na hunt, para o
+1. Abra o jogo com o gravador ativo (`ferramentas/gravador/gravador_ws.user.js`, **v1.1**: grava também as respostas de
+   `/api/game/*`) **antes** de entrar na hunt, para o
    `field-init` e o `poke-delta` do líder ficarem no arquivo.
 2. Entre numa **instância nova**, não na retomada. A penalidade de XP de entrada não atrapalha estas medições.
 3. Mantenha a aba **visível e em primeiro plano**: em segundo plano o navegador atrasa o WebSocket e os `field` chegam
@@ -33,9 +34,9 @@ Conferência: `python -I ferramentas/fase3/conferir_fase3.py` (e `ferramentas/fa
 | S1 | sim (12 min, 116 abates; Rhydon 425 e Golem 387, troca aos ~5 min; 2 retomadas no meio, sem efeito) | **confirma**: Stone Edge 58/58, Earthquake 59/59 → empate exato = primeiro da lista |
 | S2 | sim (4 min, 32 abates; catch ligado com Idle Ball, 1 tentativa: não atrapalha) | **confirma**: Hammer Arm 32/32 |
 | S3 | sim (3,6 min, 39 abates) | **confirma por indivíduo**: Hydro Pump 31/39 (o critério de 95% supunha IV 16 e não passa), mas cada Rhyhorn leva sempre o mesmo golpe (15/15) e os 3 com Aqua Tail são coerentes com a regra pelos stats que o maxHp e o dano permitem (15/15; em 12 a escolha restringiu o indivíduo) |
-| S4 | sim (4 min, 37 abates; Venusaur já no nível 139, não 124; catch ligado com Super Ball) | **confirma**: Double-Edge 39/39; vale também como **C2**: 2/37 capturas (a curva de 2 pontos previa 29,6%: derrubada; o ponto entrou na sim) |
+| S4 | sim (4 min, 37 abates; Venusaur já no nível 139, não 124; catch ligado com Super Ball) | **confirma**: Double-Edge 39/39; vale também como **C2**: 2/37 capturas (a curva de 2 pontos previa 29,6%: derrubada; depois a curva por nível foi trocada pelo medidor de investimento, seção b) |
 | S5–S8 | não | dispensáveis: S5 e S7 (efetividade sem STAB) e S8 (repete o S4) testam o que S2/S4 já mostraram; S6 (A/D) foi coberto pelo S3. Gravar só se sobrar tempo |
-| C1, C3–C6 | não | **ainda necessários** (a curva tem 3 pontos, cada um de uma espécie: nível e espécie não se separam). Prioridade: C6 (Bulbasaur 20, mesma bola e nível do C2: separa espécie), C1, C3, C5; C4 por último |
+| C1, C5–C8 | não | revistos pelo medidor de captura (seção b): C1, C5 (agora no Geodude, conta B), C7 e C8 são P1; C6 é P2; **C3 e C4 dispensados** |
 | M1–M4 | não | **ainda necessários** (nada novo de movimento nestas quatro) |
 
 Duração total: **~4 h 30**. Prioridade 1 (P1) ≈ 2 h fecha o essencial de cada ponto; P2 dá folga estatística.
@@ -71,26 +72,69 @@ como a hipótese diz. Cada abate traz o nome do golpe nos `hits`, e quase todas 
 Critério: a hipótese passa se, em cada gravação, ≥ 95% dos hits do líder usarem o golpe previsto. Se outro golpe
 aparecer de forma consistente, a gravação mostra qual regra o servidor usa no lugar.
 
-## (b) Captura por nível e por bola
+## (b) Captura: medidor de investimento por espécie (revisto em 10/11/2026)
 
-**Hoje (A):** Super Ball, nível 1: 35/59 (59%); nível 80: 5/608 (~0,8%). A sim interpola no logit e ignora a espécie (F).
-Faltam pontos no meio da curva, as outras bolas e o efeito da espécie. `capturaBase` está vazio em 420 de 647 espécies;
-o campo que varia entre hunts do mesmo nível é a `raridade`.
+**O que mudou.** A captura não é uma curva por nível. O cliente (C) diz que há um **medidor de investimento por
+espécie**:
+- o tutorial diz "quanto mais bolas você investe numa espécie, maior a chance";
+- a tela Gerenciamento de Captura (`/api/game/used-balls`) mostra o preço de NPC, o ouro gasto, as tentativas totais e as
+  tentativas desde a última captura, que zeram ao capturar.
 
-Uma tentativa por abate (auto-catch). As durações supõem ~8 abates/min com abate em 1 golpe. É uma estimativa: a
-rhydon-1h fez 6,9/min com 2–3 golpes por abate. As tentativas miram ~12 sucessos pela curva atual.
+As gravações confirmam (A): no Rattata 1 a chance foi 15/34 na 1ª tentativa depois de uma captura, 15/18 na 2ª e
+3/3 na 3ª.
 
-| ID | Pri. | Conta | Líder | Hunt (nível, espécie, raridade) | Duração | Auto-Helper | Esperado pela curva atual (F) | O que mede |
+Modelo da sim (F, ajustado nas sequências de Rattata, Vulpix e Rhydon):
+
+  chance = min(1, 0,68 · nível^−0,86 · investido / preço de NPC · (1 + bônus))
+
+`investido` é o valor das bolas desde a última captura, incluindo a desta tentativa.
+
+**O que falta medir:**
+- **Valor de cada bola.** Ou é a eficiência convertida (Super = 50; padrão, porque a Idle Ball falhou no Rattata), ou é
+  o ouro pago.
+- **Nível × preço.** Cada ponto medido é de uma espécie diferente, então os dois ainda não se separam.
+- **Raridade.**
+- **Medidor de antes da gravação.** Precisa ver se o investimento feito antes conta (o used-balls do início responde).
+
+**O que isso muda no plano:**
+- Contar capturas informa pouco em espécie cara. Arbok, Pikachu e Bulbasaur, que custam 3000 a 8000, dão 1 a 3
+  capturas em 15 a 30 min.
+- Informam mais as espécies **baratas**, que fecham um ciclo a cada poucas tentativas: cada ciclo é uma medida da
+  chance contra o investimento.
+- C3 (Arbok) e C4 (Pikachu) **deixam de ser necessários**. O nível alto já tem o Rhydon 80 (5/608).
+- C5 passa do Vulpix (1–3 capturas por bola) para o Geodude 1, onde dá 6 a 20.
+- Entram C7 (Geodude 1, preço 300) e C8 (Meowth 20, preço 300). Eles separam preço de nível:
+  - C7 × Rattata: mesmo nível, preço 3,75×;
+  - C7 × C8: mesmo preço, nível 1 × 20;
+  - C8 × C2: mesmo nível, preço 300 × 1000.
+
+**Como gravar (além das regras gerais):**
+- Use o **gravador v1.1**.
+- Abra a tela **Gerenciamento de Captura** (menu superior) **antes de entrar e logo depois de sair** da hunt. No C5,
+  abra também em cada troca de bola. Cada abertura grava o used-balls com o medidor naquele momento.
+- Na primeira abertura, anote se a espécie já foi capturada (✓) e quantas "tentativas mais recentes" ela tem. Isso
+  separa espécie já capturada × nunca capturada, e medidor zerado × acumulado.
+- A conferência é `python -I ferramentas/fase3/conferir_fase3.py`. Ela mostra capturas × esperado pelo modelo,
+  partindo do medidor do início.
+
+As capturas esperadas abaixo são do modelo (F), com ~8 tentativas/min (abate em 1 golpe):
+
+| ID | Pri. | Conta | Líder | Hunt (nível, preço, raridade) | Duração | Auto-Helper | Esperado (F) | O que mede |
 |---|---|---|---|---|---|---|---|---|
-| C1 | P1 | A | Venusaur 124 | `spearow` (10, Spearow, COMMON) | 5 min | catch **on**, Super Ball; poção on | ~45% → ~40 tentativas | Ponto da curva no nível 10 |
-| C2 | P1 | A | Venusaur 124 | `vulpix` (20, Vulpix, COMMON) | 6 min | catch on, **Super Ball** | ~30% → ~45 tentativas | Nível 20 (base das comparações C5/C6). Pode ser a mesma sessão do S4, se o catch estiver ligado nela |
-| C3 | P1 | B | Rhydon 423 | `arbok` (40, Arbok, COMMON) | 15 min | catch on, Super Ball | ~10% → ~120 tentativas | Nível 40 |
-| C4 | P2 | B | Rhydon 423 | `pikachu` (60, Pikachu, COMMON) | 30 min | catch on, Super Ball | ~3% → ~240 tentativas (~7 sucessos) | Nível 60. Longa porque a chance é baixa; com 30 min o intervalo fica largo, mas já separa curvas |
-| C5 | P1 | A | Venusaur 124 | `vulpix` (20) | 3 × 6 min | catch on: **Poké**, depois **Great**, depois **Ultra** Ball (trocar a bola no Auto-Helper e anotar a hora) | — | Efeito da bola com nível e espécie fixos (a Super Ball vem do C2) |
-| C6 | P2 | A | Venusaur 124 | `bulbasaur` (20, Bulbasaur, **RARE**) | 6 min | catch on, Super Ball | se a raridade não importa, igual ao C2 (~30%) | Efeito da espécie/raridade no mesmo nível e bola |
+| C1 | P1 | A | Venusaur | `spearow` (10, 100, C) | 8 min (~60 tentativas) | catch on, Super Ball; poção on | ~10 capturas | Chance × investimento no nível 10 (ciclos curtos) |
+| C2 | feito | A | Venusaur | `vulpix` (20, 1000, C) | (S4) | Super | 1,2 (observado 2/37) | — |
+| C7 | P1 | B | Rhydon | `geodude` (1, 300, C) | 6 min (~45) | catch on, Super Ball | ~12 | Preço no nível 1 (× Rattata 80, já medido) |
+| C8 | P1 | A ou B | Venusaur ou Rhydon | `meowth` (20, 300, C) | 15 min (~120) | catch on, Super Ball | ~9 | Nível com preço fixo (× C7) e preço com nível fixo (× C2) |
+| C5 | P1 | **B** (tem Poké 398, Great 736, Ultra 3936; a conta A tem 6 Great e nenhuma Ultra) | Rhydon | `geodude` (1, 300) | 3 × 8 min (~60 por bola) | catch on: **Poké**, depois **Great**, depois **Ultra** (abrir o used-balls em cada troca) | Poké 6 / Great 9 / Ultra 13 (pela eficiência) contra 3 / 7 / 20 (pelo ouro) | Valor da bola no medidor: eficiência ou ouro |
+| C6 | P2 | A | Venusaur | `bulbasaur` (20, 3000, **R**) | 12 min (~90) | catch on, Super Ball | ~1,8 | Raridade. Pouca informação (1–2 capturas): só se sobrar tempo |
+| C3, C4 | — | — | — | `arbok`, `pikachu` | — | — | 1,7 e 1,8 em 15/30 min | **Dispensados** (caros e com pouca informação) |
 
-Antes do C3–C5, confira o estoque: são ~120 Super Balls no C3, ~240 no C4 e ~45 de cada bola no C5. Se faltar alguma
-bola, pule a linha e me avise; o resto continua valendo.
+Estoque: C1, C7 e C8 gastam juntos ~230 Super Balls; C5, ~60 de cada bola (Poké, Great e Ultra).
+
+**Penalidade de entrada (para todas as gravações).** É o boost `shinylock` (C): 1 minuto com −70% de XP e de drops. O
+until vem na mensagem `boosts` e já está medido (A, 4 entradas). Falta saber de onde o minuto conta. Para fechar isso,
+grave uma vez a sequência hunt A → cidade → espere ~30 s → hunt B, sem parar o gravador entre as hunts. Assim o
+`boosts` sai no arquivo mesmo se chegar antes da entrada. Não precisa de nenhuma gravação separada.
 
 ## (c) Movimento e perseguição (H1–H4)
 

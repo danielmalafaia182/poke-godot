@@ -98,35 +98,71 @@ func _init() -> void:
 		iguais = iguais and r1.proximo_u32() == r2.proximo_u32()
 	checar(iguais and Rng.new(43).proximo_u32() != Rng.new(42).proximo_u32(), "RNG determinístico por semente")
 
-	# --- Captura (A nos pontos, F na curva): Super Ball (3) em nível 1 = 35/59, em nível 80 = 5/608.
-	checar(absf(Regras.chance_captura(3, 1) - 35.0 / 59.0) < 1e-9, "captura Super Ball nível 1 = 35/59")
-	checar(absf(Regras.chance_captura(3, 80) - 5.0 / 608.0) < 1e-9, "captura Super Ball nível 80 = 5/608")
-	checar(absf(Regras.chance_captura(3, 20) - 2.0 / 37.0) < 1e-9, "captura Super Ball nível 20 = 2/37 (fase3/S4)")
-	var c40 := Regras.chance_captura(3, 40)
-	checar(c40 < 2.0 / 37.0 and c40 > 5.0 / 608.0, "captura nível 40 entre os pontos 20 e 80 (logit)", "%.4f" % c40)
-	checar(Regras.chance_captura(3, 200) == 5.0 / 608.0 and Regras.chance_captura(1, 80) == 0.0,
-		"fora dos pontos: o mais próximo; bola sem pontos: 0")
+	# --- Captura com medidor (C: investimento por espécie; forma F ajustada nas sequências A).
+	# Rattata nível 1, preço 80, Super Ball: 1ª tentativa depois de uma captura ≈ 0,43 (A: 15/34), 2ª ≈ 0,85 (15/18), 3ª = 1 (3/3).
+	var v3 := Regras.valor_bola(3)
+	var c1 := Regras.chance_captura(3, 1, v3, 80.0)
+	var c2 := Regras.chance_captura(3, 1, 2.0 * v3, 80.0)
+	var c3 := Regras.chance_captura(3, 1, 3.0 * v3, 80.0)
+	checar(absf(v3 - 50.0) < 1e-9, "Super Ball soma o próprio preço (50) ao medidor")
+	checar(absf(c1 - 0.425) < 0.01 and absf(c2 - 0.85) < 0.01 and c3 == 1.0, "Rattata 1: 0,43 / 0,85 / 1 nas tentativas 1–3",
+		"%.3f %.3f %.3f" % [c1, c2, c3])
+	checar(Regras.chance_captura(3, 80, v3, 13000.0) < 0.0001 and Regras.chance_captura(3, 80, 200.0 * v3, 13000.0) > Regras.chance_captura(3, 80, 100.0 * v3, 13000.0),
+		"Rhydon 80: chance baixa que sobe com o investimento")
+	checar(Regras.chance_captura(5, 80, 0.0, 13000.0) == 1.0 and Regras.chance_captura(9, 1, 50.0, 80.0) == 0.0,
+		"Master Ball garante; bola desconhecida não captura")
+	checar(Regras.chance_captura(6, 1, Regras.valor_bola(6), 80.0) < 1.0, "Idle Ball no Rattata 1 não é certa (A: falhou no S2)",
+		"%.3f" % Regras.chance_captura(6, 1, Regras.valor_bola(6), 80.0))
+	checar(absf(Regras.chance_captura(3, 1, v3, 80.0, 1.0) - minf(1.0, 2.0 * c1)) < 1e-9, "bônus multiplica (1 + bônus)")
 
-	# --- Penalidade de XP na entrada (A: 7 primeiros abates com debuff −4041 → 1731; retomada sem penalidade).
+	# --- Penalidade de entrada (boost shinylock): 60 s desde a entrada, XP × 0,3 (5772 → 1731), sem chave depois.
 	var Sim := load("res://testes/rodar_sim.gd")
 	var r_nova: Dictionary = Sim.simular("dados/testes/estado_rhydon_venusaur_1h.json", 240, 3)
-	var xps: Array = []
-	var debuffs: Array = []
+	var fim_lock: int = int(r_nova["sim"].inicio_ms) + 60000
+	var ok_lock := true
+	var n_lock := 0
+	var n_depois := 0
+	var boosts_ok := false
 	for l in r_nova["gravador"].linhas:
 		var o = JSON.parse_string(l)
-		if o["msg"]["type"] == "field-kill":
-			xps.append(int(o["msg"]["xpGained"]))
-			debuffs.append(int(o["msg"]["xpParts"].get("debuff", 0)))
-	checar(xps.size() >= 8 and xps.slice(0, 7) == [1731, 1731, 1731, 1731, 1731, 1731, 1731] and xps[7] == 5772,
-		"entrada nova: 7 abates com 1731 de XP, depois 5772", str(xps.slice(0, 9)))
-	checar(debuffs.slice(0, 7).all(func(d): return d == -4041) and debuffs[7] == 0,
-		"xpParts.debuff = −4041 só nos 7 primeiros (chave ausente depois)")
+		var m: Dictionary = o["msg"]
+		if m["type"] == "boosts":
+			boosts_ok = m["boosts"].size() == 1 and m["boosts"][0]["key"] == "shinylock" and int(m["boosts"][0]["until"]) == fim_lock
+		if m["type"] == "field-kill":
+			if int(o["t"]) < fim_lock:
+				n_lock += 1
+				ok_lock = ok_lock and int(m["xpGained"]) == 1731 and int(m["xpParts"].get("debuff", 0)) == -4041
+			else:
+				n_depois += 1
+				ok_lock = ok_lock and int(m["xpGained"]) == 5772 and not m["xpParts"].has("debuff")
+	checar(boosts_ok, "entrada nova emite boosts {shinylock, until = entrada + 60 s}")
+	checar(ok_lock and n_lock > 0 and n_depois > 0, "XP 1731 (debuff −4041) antes do until, 5772 sem a chave depois",
+		"%d no lock, %d depois" % [n_lock, n_depois])
 	var r_ret: Dictionary = Sim.simular("dados/testes/estado_rhydon_venusaur.json", 120, 3)
 	var tem_debuff := false
 	for l in r_ret["gravador"].linhas:
-		if l.contains("\"debuff\""):
+		if l.contains("\"debuff\"") or l.contains("shinylock"):
 			tem_debuff = true
 	checar(not tem_debuff, "retomada (huntKey :r1): sem penalidade")
+	# Loot no lock: chance × 0,3 (F). 30 instâncias × 60 s: drops por abate no lock ≈ 0,3 × os de depois.
+	var dl := [0, 0]
+	var dd := [0, 0]
+	for sem in range(1, 13):
+		var r: Dictionary = Sim.simular("dados/testes/estado_rhydon_venusaur_1h.json", 180, 100 + sem)
+		var fl: int = int(r["sim"].inicio_ms) + 60000
+		for l in r["gravador"].linhas:
+			var o = JSON.parse_string(l)
+			if o["msg"]["type"] == "field-kill":
+				var alvo: Array = dl if int(o["t"]) < fl else dd
+				alvo[0] += 1
+				alvo[1] += (o["msg"]["loot"] as Array).size()
+	var razao := (float(dl[1]) / maxf(1.0, dl[0])) / maxf(1e-9, float(dd[1]) / maxf(1.0, dd[0]))
+	checar(razao > 0.2 and razao < 0.42, "loot no lock ≈ 0,3 × o normal (chance × 0,3)", "%.2f (%d abates no lock)" % [razao, dl[0]])
+	# Medidor: investimento cresce por tentativa e zera na captura
+	var sim_m = r_nova["sim"]
+	var med: Dictionary = sim_m.medidor.get("112", {})
+	checar(int(med.get("total", 0)) == int(sim_m.estatisticas["abates"]) and float(med.get("investido", -1.0)) == 50.0 * int(med.get("tentativas", -1)),
+		"medidor do Rhydon: 1 tentativa por abate; investido = 50 × tentativas desde a última captura", str(med))
 
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(0 if falhas == 0 else 1)

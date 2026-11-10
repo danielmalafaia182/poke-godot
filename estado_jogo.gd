@@ -80,6 +80,15 @@ var experiencia_treinador_acumulada: int:
 var especie_caca: DadosEspecie
 # Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
 var slug_caca: String = ""
+# Fase 3: medidor de captura por espécie (C: /api/game/used-balls) — speciesId (str, "s" no fim = shiny) →
+# {investido, tentativas, total, gasto}. Vai no save (campo opcional "captura_medidor").
+var medidor_captura: Dictionary = {}
+# Fase 3: penalidade de entrada (boost shinylock). Relato do usuário (B-relatado): vale ao entrar numa hunt diferente
+# da última ou depois que a sessão expira (15 min com o jogo fechado; E: o jogo local não tem modo soneca). Voltar à
+# mesma hunt pela cidade não penaliza. `ultima_hunt_slug` vai no save; `sessao_expirada` é decidida ao carregar.
+var ultima_hunt_slug: String = ""
+var sessao_expirada: bool = true
+const SESSAO_EXPIRA_S := 900
 var celula_cidade_salva: Vector2i = Vector2i(-1, 3)
 var direcao_cidade_salva: int = 2
 var posicao_cidade_definida: bool = false

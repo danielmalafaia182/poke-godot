@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         Gravador WS — Poke Idle World
 // @namespace    poke-idle-godot
-// @version      1.0
-// @description  Grava as mensagens do jogo (sem token/URL) para comparar com a simulação local.
+// @version      1.1
+// @description  Grava as mensagens do jogo e as respostas de /api/game/* (sem token, URL de conexão ou cabeçalhos).
 // @match        https://poke.idleworld.online/play*
 // @run-at       document-start
 // @grant        none
@@ -14,6 +14,8 @@
  *     na próxima mensagem que o cliente enviar (o jogo envia algo a cada ~4 s).
  * Guarda só o corpo das mensagens, com horário local. Não guarda URL, token, cookies.
  * Mensagens de chat/DM de outros jogadores são descartadas por padrão.
+ * v1.1: grava também o corpo das respostas GET/POST de /api/game/* (ex.: used-balls = investimento de captura
+ * por espécie; pokes do painel do time), com dir "rest". Guarda caminho, parâmetros (sem os que parecem credencial), status e corpo.
  * Painel no canto inferior esquerdo: pausar, exportar JSONL, limpar.
  */
 (function () {
@@ -23,7 +25,9 @@
 
   const DESCARTAR = new Set(['chat', 'dm', 'chat-delete', 'dm-inbox']);
   const SESSAO = new Date().toISOString().replace(/[:.]/g, '-');
-  const VERSAO = 1;
+  const VERSAO = 2;
+  const REST_OK = /^\/api\/game\//;          // só dados de jogo; nada de /api/auth
+  const REST_NAO = /^\/api\/game\/(chat|dm|friends|messages|mail)/;
   let pausado = false, total = 0, porTipo = {};
   const fila = [];
 
@@ -81,6 +85,27 @@
   Embrulho.prototype = Original.prototype;
   for (const k of ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED']) Embrulho[k] = Original[k];
   W.WebSocket = Embrulho;
+
+  // ---------- respostas REST de /api/game/* ----------
+  const fetchOriginal = W.fetch;
+  if (fetchOriginal) {
+    W.fetch = function (entrada, opcoes) {
+      const p = fetchOriginal.apply(this, arguments);
+      try {
+        const url = new URL(typeof entrada === 'string' ? entrada : entrada.url, location.href);
+        if (url.origin === location.origin && REST_OK.test(url.pathname) && !REST_NAO.test(url.pathname)) {
+          const metodo = ((opcoes && opcoes.method) || (entrada && entrada.method) || 'GET').toUpperCase();
+          p.then(r => r.clone().text().then(corpo => {
+            let dados; try { dados = JSON.parse(corpo); } catch { dados = corpo.slice(0, 200000); }
+            const consulta = {};
+            for (const [k, v] of url.searchParams) if (!/token|auth|key|secret|senha|pass/i.test(k)) consulta[k] = v;
+            registrar('rest', JSON.stringify({ type: '__rest', metodo, caminho: url.pathname, consulta, status: r.status, corpo: dados }));
+          })).catch(() => {});
+        }
+      } catch { /* nunca quebrar o jogo */ }
+      return p;
+    };
+  }
 
   // ---------- exportação ----------
   async function lerTudo(sessao) {

@@ -88,6 +88,10 @@ func _ready() -> void:
 	var jogo := _extrair_save(nome)
 	jogo["slug"] = slug_pedido
 	var cfg := CenarioJogo.configurar(jogo, dados, semente if semente != 0 else agora % 2147483647, agora)
+	# Penalidade de entrada (B-relatado): hunt diferente da última ou sessão expirada; a mesma hunt de novo não.
+	cfg["entrada_nova"] = CenarioJogo.penalizar_entrada(EstadoJogo.sessao_expirada, EstadoJogo.ultima_hunt_slug, String(cfg["slug"]))
+	EstadoJogo.ultima_hunt_slug = String(cfg["slug"])
+	EstadoJogo.sessao_expirada = false
 	var t1 := Time.get_ticks_msec()
 	var mapa = MapaHunt.carregar(cfg["slug"], Fontes.ler_mapa(cfg["slug"]), Fontes.ler_colisao())
 	sim = Simulacao.new(cfg, dados, mapa)
@@ -135,7 +139,7 @@ func _extrair_save(nome_hunt: String) -> Dictionary:
 		"inventario": inventario, "bolas": EstadoJogo.estoque_bolas.duplicate(), "nomes_bolas": nomes_bolas,
 		"auto_catch": EstadoJogo.auto_catch, "bola_auto_catch": EstadoJogo.auto_catch_ball_id,
 		"auto_potion": EstadoJogo.auto_potion, "pocao_id": EstadoJogo.auto_potion_item_id,
-		"limite_pocao": EstadoJogo.auto_potion_threshold}
+		"limite_pocao": EstadoJogo.auto_potion_threshold, "medidor_captura": EstadoJogo.medidor_captura}
 
 
 var tipos_no_quadro: Array = []   # diagnóstico (varredura): mensagens tratadas no último quadro
@@ -194,6 +198,7 @@ func _tratar(msg: Dictionary) -> void:
 			if EstadoJogo.consumir_bola(bola):
 				registro["bolas"][bola] = int(registro["bolas"].get(bola, 0)) + 1
 			apresentacao.ao_resultado_captura(msg)
+			EstadoJogo.medidor_captura = sim.medidor.duplicate(true)   # medidor por espécie (vai no próximo save)
 			_sequencia_captura += 1
 			if bool(msg.get("success", false)):
 				_registrar_captura(String(msg.get("speciesName", "")))

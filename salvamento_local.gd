@@ -122,6 +122,17 @@ func _validar(dados: Variant) -> String:
 		return "Limite de cura inválido."
 	if not _inteiro(config.get("auto_potion_item_id"), 0, 204) or (int(config["auto_potion_item_id"]) != 0 and not POCOES.has(int(config["auto_potion_item_id"]))):
 		return "Poção selecionada inválida."
+	# Fase 3 (opcionais): medidor de captura por espécie e a última hunt (penalidade de entrada).
+	if dados.has("captura_medidor"):
+		var med: Variant = dados["captura_medidor"]
+		if not med is Dictionary or med.size() > 5000:
+			return "Medidor de captura inválido."
+		for k in med:
+			var v: Variant = med[k]
+			if not k is String or k.length() > 12 or not v is Dictionary or not _numero(v.get("investido", 0.0), 0.0, 1e15) 					or not _inteiro(v.get("tentativas", 0), 0, 2147483647) or not _inteiro(v.get("total", 0), 0, 2147483647) 					or not _inteiro(v.get("gasto", 0), 0, 9007199254740991):
+				return "Medidor de captura inválido."
+	if dados.has("ultima_hunt") and (not dados["ultima_hunt"] is String or dados["ultima_hunt"].length() > 64):
+		return "Última hunt inválida."
 	var cidade: Variant = dados["cidade"]
 	if not cidade is Dictionary or cidade.get("mapa") != "cerulean" or not cidade.get("definida") is bool:
 		return "Cidade inválida."
@@ -221,6 +232,15 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 		# Lista explícita; nunca atribui propriedades arbitrárias vindas do arquivo.
 		if campo in ["auto_catch", "auto_catch_ball_id", "auto_catch_names", "bola_selecionada", "auto_potion", "auto_potion_threshold", "auto_potion_item_id"]:
 			estado.set(campo, dados["configuracoes"][campo] if campo in ["auto_catch", "auto_potion", "auto_catch_names"] else int(dados["configuracoes"][campo]))
+	estado.medidor_captura = {}
+	for k in dados.get("captura_medidor", {}):
+		var v: Dictionary = dados["captura_medidor"][k]
+		estado.medidor_captura[String(k)] = {"investido": float(v.get("investido", 0.0)), "tentativas": int(v.get("tentativas", 0)),
+			"total": int(v.get("total", 0)), "gasto": int(v.get("gasto", 0))}
+	estado.ultima_hunt_slug = String(dados.get("ultima_hunt", ""))
+	# B-relatado/E: a sessão expira com 15 min de jogo fechado (o salvo_em_unix é o último save antes de fechar).
+	var fechado_s := int(Time.get_unix_time_from_system()) - int(dados.get("salvo_em_unix", 0))
+	estado.sessao_expirada = not dados.has("salvo_em_unix") or fechado_s >= estado.SESSAO_EXPIRA_S
 	estado.posicao_cidade_definida = dados["cidade"]["definida"]
 	estado.celula_cidade_salva = Vector2i(int(dados["cidade"]["x"]), int(dados["cidade"]["y"]))
 	estado.direcao_cidade_salva = int(dados["cidade"]["direcao"])
@@ -281,6 +301,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"bolas": _estoque_json(estado.estoque_bolas), "pocoes": _estoque_json(estado.estoque_pocoes), "depot": _estoque_json(estado.itens_depot),
 		"configuracoes": {"auto_catch": estado.auto_catch, "auto_catch_ball_id": estado.auto_catch_ball_id, "auto_catch_names": estado.auto_catch_names, "bola_selecionada": estado.bola_selecionada, "auto_potion": estado.auto_potion, "auto_potion_threshold": estado.auto_potion_threshold, "auto_potion_item_id": estado.auto_potion_item_id},
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
+		"captura_medidor": estado.medidor_captura.duplicate(true), "ultima_hunt": estado.ultima_hunt_slug,
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 

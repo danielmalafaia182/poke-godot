@@ -7,10 +7,15 @@ gravador novo {dir,msg}). Para cada hunt (field-init) mede:
   - hits por golpe e lado (aliado->selvagem, selvagem->aliado): n, intervalo típico, min/média/máx de dano, eff
   - abates, XP por parcela, loot por item, capturas por bola, auto-heals
   - HP máximo dos selvagens (para conferir 35 x stat)
+  - penalidade de entrada (boost shinylock): until, abates antes/depois, com/sem xpParts.debuff, drops por abate
+  - gravador v1.1: respostas REST por endpoint e a diferença do used-balls entre a primeira e a última (rest.py)
 Uso: python3 analisar_gravacao.py gravacao.jsonl [mais.jsonl ...] [--json saida.json]
 """
-import argparse, json, statistics, sys
+import argparse, json, os, statistics, sys
 from collections import Counter, defaultdict
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import rest  # noqa: E402
 
 
 def mensagens(caminho):
@@ -48,25 +53,35 @@ def analisar(caminhos):
     hunts = []
     atual = None
     for c in caminhos:
+        ultimo_lock = 0
         for m in mensagens(c):
             t = m["type"]
             if t == "field-init":
                 atual = {"slug": m.get("slug"), "huntKey": m.get("huntKey"), "fonte": c.split("/")[-1],
                          "init": {k: m.get(k) for k in ("rows", "cols", "tickMs", "heroStepMs", "mobStepMs", "trainerStepMs")},
-                         "fields": [], "kills": [], "catches": [], "heals": []}
+                         "fields": [], "kills": [], "catches": [], "heals": [], "locks": []}
+                if ultimo_lock:   # o lock é do jogador, não da instância: vale também nas retomadas (:rN)
+                    atual["locks"].append(ultimo_lock)
                 hunts.append(atual)
                 continue
             if atual is None:
                 if t == "field":   # gravação começou no meio da hunt
                     atual = {"slug": "?", "huntKey": None, "fonte": c.split("/")[-1], "init": {},
-                             "fields": [], "kills": [], "catches": [], "heals": []}
+                             "fields": [], "kills": [], "catches": [], "heals": [], "locks": []}
                     hunts.append(atual)
                 else:
                     continue
             if t == "field":
                 atual["fields"].append(m)
             elif t == "field-kill":
-                atual["kills"].append(m)
+                # instante do abate no relógio do servidor ≈ serverNow do último field (o field-kill sai antes do field
+                # do tick do abate, então fica no máximo um intervalo de field atrás)
+                atual["kills"].append(dict(m, _srv=atual["fields"][-1]["serverNow"] if atual["fields"] else None))
+            elif t == "boosts":
+                for b in m.get("boosts") or []:
+                    if b.get("key") == "shinylock":
+                        ultimo_lock = int(b.get("until", 0))
+                        atual["locks"].append(ultimo_lock)
             elif t == "catch-result":
                 atual["catches"].append(m)
             elif t == "auto-heal":
@@ -118,11 +133,23 @@ def analisar(caminhos):
         r["capturas"] = Counter((c.get("ballName"), bool(c.get("success"))) for c in h["catches"]).most_common()
         r["capturas"] = [[b, s, n] for (b, s), n in r["capturas"]]
         r["autoHeal"] = Counter((x.get("name"), x.get("heal")) for x in h["heals"]).most_common()
+        pen = {"until": h["locks"][-1] if h["locks"] else None,
+               "comDebuff": sum(1 for k in h["kills"] if "debuff" in (k.get("xpParts") or {}))}
+        if pen["until"]:
+            antes = [k for k in h["kills"] if k["_srv"] is not None and k["_srv"] < pen["until"]]
+            depois = [k for k in h["kills"] if k["_srv"] is not None and k["_srv"] >= pen["until"]]
+            pen.update({"abatesAntes": len(antes), "abatesDepois": len(depois),
+                        "debuffAntes": sum(1 for k in antes if "debuff" in (k.get("xpParts") or {})),
+                        "debuffDepois": sum(1 for k in depois if "debuff" in (k.get("xpParts") or {})),
+                        "dropsPorAbateAntes": round(sum(len(k.get("loot") or []) for k in antes) / max(1, len(antes)), 3),
+                        "dropsPorAbateDepois": round(sum(len(k.get("loot") or []) for k in depois) / max(1, len(depois)), 3)})
+        r["penalidade"] = pen
         saida.append(r)
     return saida
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     ap.add_argument("arquivos", nargs="+")
     ap.add_argument("--json")
@@ -138,6 +165,20 @@ def main():
         print("   abates:", r["abates"], " xp:", r["xpPorParte"], " loot:", r["loot"])
         if r["capturas"]: print("   capturas:", r["capturas"])
         if r["autoHeal"]: print("   auto-heal:", r["autoHeal"])
+        if r["penalidade"]["until"] or r["penalidade"]["comDebuff"]: print("   penalidade de entrada:", r["penalidade"])
+    for c in a.arquivos:
+        rs = rest.ler_rest(c)
+        if not rs:
+            continue
+        print(f"\n== REST ({c.split('/')[-1]}): {len(rs)} respostas:",
+              dict(Counter(f"{x['metodo']} {x['caminho']}" for x in rs).most_common()))
+        ub = rest.used_balls(c)
+        if len(ub) >= 2:
+            print("   used-balls (primeira → última):")
+            for k, d in rest.diferenca(ub[0]["corpo"], ub[-1]["corpo"]).items():
+                print("     ", k, json.dumps(d, ensure_ascii=False))
+        elif ub:
+            print("   used-balls: só 1 resposta (abra a tela Gerenciamento de Captura no início E no fim)")
     if a.json:
         json.dump(res, open(a.json, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 

@@ -65,15 +65,38 @@ const PARAMETROS := {
 	"pocao_recarga_ms": 0,                  # A/F: nenhuma cura adiada observada; menor intervalo real 1988 ms
 	"troca_cooldown_ms": 5000,              # E: depois da troca automática por KO, 5 s sem troca manual
 	"vip_fracao": 0.5,                      # A: parcela vip = 50% da base
-	"debuff_entrada_abates": 7,             # A: rhydon-1h, os 7 primeiros abates após entrar (o 8º, 22 s depois, já sem)
-	                                        # F: mecanismo contado em abates (pode ser tempo, ~1 min; não dá para separar)
-	"debuff_entrada_fator": 0.3,            # A: 1731 = floor(5772 × 0,3); debuff = −4041
-	# Captura (A nos pontos, F na curva): {bola: [[nível do selvagem, capturas, tentativas], ...]}. Entre os pontos,
-	# interpolação linear no logit; fora deles, o ponto mais próximo. Bola sem pontos → 0 (F). Espécie ignorada (F:
-	# os três pontos são de espécies diferentes, Rattata 1, Vulpix 20 e Rhydon 80; nível e espécie não se separam com
-	# eles). hunt-config.catchChance é 0 em todas (não usado). Nível 20 (fase3/S4, conta A, 10/11/2026): 2/37; a curva
-	# de 2 pontos previa 29,6% (P(≤2 | 29,6%) = 0,0003), então ela caiu e o ponto entrou.
-	"captura_pontos": {"3": [[1, 35, 59], [20, 2, 37], [80, 5, 608]]},
+	# Penalidade de entrada = boost "shinylock" (C: texto do boost, "Por 1 minuto: nenhum Pokémon Shiny aparece e você
+	# recebe 70% menos EXP e drops"; o servidor manda {type: boosts, boosts: [{key: shinylock, until, pct: 0}]}).
+	# A: until = entrada + 60,0 s em 4 entradas (rhydon-1h, typhlosion, S2, S4) e todo abate antes do until tem
+	# xpParts.debuff, nenhum depois (7/601, 9/23, 10/27). XP: floor(total × 0,3) (A: 5772 → 1731, 846 → 253, 12 → 3).
+	# Loot: 15 drops em 5 entradas contra 68 esperados (0,22×; ×0,3 dá P = 0,13) → chance × 0,3 (F: chance ou
+	# quantidade não se separam com esta amostra). Quando aplica (relato do usuário, B-relatado, ver cenario_jogo.gd):
+	# hunt diferente da última ou sessão expirada; voltar à mesma hunt pela cidade não penaliza (S1, sem lock: coerente).
+	# Início: o minuto conta da SAÍDA do lugar anterior (hipótese do usuário, F; explica o S3, cujo lock acabou 20–30 s
+	# depois da entrada); com saída e entrada no mesmo instante dá os 4 casos A. A sim recebe o fim pronto
+	# (cfg.penalidade_ate_ms) ou calcula: inicio_ms − cfg.ms_desde_saida + duração.
+	"penalidade_duracao_ms": 60000,
+	"penalidade_fator": 0.3,
+	"penalidade_loot": "chance",            # "chance" (× fator na chance de cada item) | "quantidade" | "nenhuma"
+	# Captura com medidor de investimento (C: tutorial "quanto mais bolas você investe numa espécie, maior a chance";
+	# tela Gerenciamento de Captura, /api/game/used-balls: por espécie preço de NPC, ouro gasto, tentativas totais e
+	# desde a última captura, que zera ao capturar; "Quanto mais fraco o selvagem, mais fácil a captura"; Master Ball
+	# garante; shiny não usa o medidor). Forma (F, ajustada por máxima verossimilhança nas sequências A de Rattata 1,
+	# Vulpix 20 e Rhydon 80, todas com Super Ball; −59,5 contra −65,6 de uma chance fixa por espécie):
+	#   chance = min(1, c0 · nível^−α · investido / precoNpc · (1 + bônus))
+	# investido = valor das bolas desde a última captura, INCLUINDO a desta tentativa. No Rattata a chance sobe com as
+	# tentativas desde a captura (A: 15/34 na 1ª, 15/18 na 2ª, 3/3 na 3ª; o modelo dá 0,43 / 0,85 / 1).
+	# Valor da bola: "eficiencia" = catchRate × preço da Super Ball ÷ 3 (a Super vale o próprio preço) — padrão porque a
+	# Idle Ball (catchRate 5, 400 de ouro) falhou no Rattata 1 (S2): pelo ouro dela a chance seria 1. "ouro" = priceGold.
+	# Nível e espécie não se separam (cada ponto é de uma espécie): o fator de nível pode ser de espécie/preço.
+	"captura_c0": 0.68,
+	"captura_alfa": 0.86,
+	"captura_valor_bola": "eficiencia",     # "eficiencia" | "ouro"
+	"captura_eficiencia": {"1": 1, "2": 2, "3": 3, "4": 4, "5": 255, "6": 5, "7": 5},   # A: balls.catalog.catchRate
+	"captura_preco_bola": {"1": 5, "2": 20, "3": 50, "4": 130, "5": 0, "6": 400, "7": 400},   # A: balls.catalog.priceGold
+	"captura_garantida_eficiencia": 255,    # C/B-relatado: Master Ball (catchRate 255) garante
+	# Shiny (C, barra de captura: pct = min(1, shinyBase × catchRate)); shinyBase por tier vem do servidor (F: vazio)
+	"captura_shiny_base": {},
 	"hp_selvagem_por_stat": 35,             # A
 	"hp_selvagem_minimo": 120,              # A
 	"golpe_poder_maximo": 599,              # F: golpes de poder 600 (assinatura) nunca aparecem nas gravações
@@ -258,31 +281,29 @@ static func efetividade_amplificada(bruta: float) -> float:
 	return bruta / 1.5
 
 
-static func chance_captura(bola: int, nivel: int, p: Dictionary = PARAMETROS) -> float:
-	var pts: Array = p.get("captura_pontos", {}).get(str(bola), [])
-	if pts.is_empty():
+static func valor_bola(bola: int, p: Dictionary = PARAMETROS) -> float:
+	## Quanto uma bola soma ao medidor de investimento (ouro ou equivalente; F, ver captura_valor_bola).
+	var k := str(bola)
+	if String(p.get("captura_valor_bola", "eficiencia")) == "ouro":
+		return float(p.captura_preco_bola.get(k, 0))
+	return float(p.captura_eficiencia.get(k, 0)) * float(p.captura_preco_bola.get("3", 50)) / 3.0
+
+
+static func chance_captura(bola: int, nivel: int, investido: float, preco_npc: float, bonus: float = 0.0, p: Dictionary = PARAMETROS) -> float:
+	## Chance de uma tentativa normal (não shiny). `investido` já inclui o valor desta bola (F, ver PARAMETROS).
+	var efic := int(p.captura_eficiencia.get(str(bola), 0))
+	if efic <= 0:
 		return 0.0
-	var ord := pts.duplicate()
-	ord.sort_custom(func(x, y): return int(x[0]) < int(y[0]))
-	var prob := func(pt) -> float: return float(pt[1]) / maxf(1.0, float(pt[2]))
-	if nivel <= int(ord[0][0]):
-		return prob.call(ord[0])
-	if nivel >= int(ord[ord.size() - 1][0]):
-		return prob.call(ord[ord.size() - 1])
-	for i in range(ord.size() - 1):
-		var a: Array = ord[i]
-		var b: Array = ord[i + 1]
-		if nivel <= int(b[0]):
-			var t := float(nivel - int(a[0])) / float(int(b[0]) - int(a[0]))
-			var la := _logit(prob.call(a))
-			var lb := _logit(prob.call(b))
-			return 1.0 / (1.0 + exp(-(la + t * (lb - la))))
-	return 0.0
+	if efic >= int(p.captura_garantida_eficiencia):
+		return 1.0
+	var c := float(p.captura_c0) * pow(float(maxi(1, nivel)), -float(p.captura_alfa))
+	return clampf(c * investido / maxf(1.0, preco_npc) * (1.0 + bonus), 0.0, 1.0)
 
 
-static func _logit(x: float) -> float:
-	var c := clampf(x, 1e-6, 1.0 - 1e-6)
-	return log(c / (1.0 - c))
+static func chance_captura_shiny(bola: int, tier: String, p: Dictionary = PARAMETROS) -> float:
+	## C: min(1, shinyBase(tier) × catchRate); sem shinyBase conhecido → 0 (F).
+	var base := float(p.captura_shiny_base.get(tier, 0.0))
+	return clampf(base * float(p.captura_eficiencia.get(str(bola), 0)), 0.0, 1.0)
 
 
 static func tipos_de(especie: Dictionary) -> Array:

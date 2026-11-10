@@ -42,7 +42,8 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
 | `dados/protocolo.json` | 141 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 38 vistos nas gravações |
-| `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas, penalidade de entrada |
+| `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas × modelo do medidor (partindo do used-balls do início), lock de entrada |
+| `ferramentas/gravador/rest.py` | Lê as linhas `dir: "rest"` do gravador v1.1 (respostas de `/api/game/*`); medidor de captura do used-balls e a diferença entre duas respostas |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
 
@@ -102,7 +103,7 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 | Golpe do líder: sempre o mesmo por indivíduo selvagem; a efetividade e a razão A/D do indivíduo mudam a escolha; empate exato (poder, tipo, categoria e cooldown iguais) → o primeiro da lista | fase3 S1–S4: 324 hits; Stone Edge 58/58 no Rhydon e Earthquake 59/59 no Golem (empate), Hammer Arm 32/32, Double-Edge 39/39, Gyarados com Aqua Tail em 3 e Hydro Pump em 12 Rhyhorn (15/15 coerentes com os stats possíveis) |
 | **Piso de dano: 2 para o aliado, 1 para o selvagem — inclusive com eff 0 ou resistido** | Gastly×Rattata (eff 0: 2 e 1); Rattata→Geodude resistido: 1 em 880 hits |
 | XP base por abate = `experience` da espécie; VIP soma +50% em parcela separada (`xpParts`) | 200+ abates |
-| Ao entrar numa hunt (não na retomada `:rN`) os abates de ~1 min saem com `xpParts.debuff` = −70% (5772 → 1731) | rhydon-1h: 7 abates; fase3: 0 (S1), 9 (S2, até 46–77 s), 6 (S3, até 20–30 s), 10 (S4, até 59–61 s) → **não** é contado em abates; tempo exato em aberto (F) |
+| Penalidade de entrada = boost `shinylock` (C: "Por 1 minuto: nenhum Pokémon Shiny aparece e você recebe 70% menos EXP e drops"): a mensagem `boosts {key: shinylock, until}` chega logo depois do field-init, until = entrada + 60,0 s, e todo abate antes do until sai com `xpParts.debuff` (XP = floor(total × 0,3)), nenhum depois; o lock é do jogador e atravessa a retomada `:rN`; os drops caem para ~0,22× (15 contra 68 esperados) | rhydon-1h 7/601, typhlosion, S2 9/23, S4 10/27; S3 sem `boosts` no arquivo e lock acabando 20–30 s após a entrada (o minuto começou antes: F, hipótese do usuário de que conta da saída do lugar anterior); S1 sem lock (coerente com "mesma hunt não penaliza", B-relatado) |
 | Os hits do `field` que o cliente não recebe não se perdem: vão no próximo field entregue; o `field-kill` sai no tick do abate, antes do field com o golpe final | rhydon-1h: hits/field 0,18 com Δseq 2, 0,91 com Δseq 10 |
 | XP acumulada = round(50/3 × (L³ − 6L² + 17L − 12)) → 100/200/400/800 para níveis 2–5 | (B) + Geodude subiu com 102, 210; nível 4 com 714 |
 | Loot: tabela de `creatures.json`, chance em 1/100.000, quantidade min–max | Rhydon 60 abates: Horn 83,3% vs 83,32% |
@@ -110,6 +111,7 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 | Auto-Potion dispara no mesmo tick em que o HP fica ≤ 50% (sem recarga observada); usa a menor poção do inventário que cobre o que falta, ou a maior se nenhuma cobre | `medir_pocao.py`: 42/42 cruzamentos; 208/208 escolhas |
 | Golpes: o mesmo nome tem cooldown diferente por espécie (234 de 407 variam) | catálogo; por isso golpes ficam dentro de cada espécie |
 | Captura com Super Ball: 59% em Rattata nível 1 (35/59); no Rhydon 80, 0 em 167 (gravações antigas) e 5 em 608 na rhydon-1h (~0,8%); Vulpix nível 20: 2 em 37 (fase3/S4); o capturado chega como poke-delta de nível 1 | gravações; `hunt-config.catchChance` é 0 em todas |
+| A chance sobe com as tentativas desde a última captura da espécie (medidor de investimento, C: tutorial e tela used-balls): Rattata 1, 1ª tentativa depois de uma captura 15/34, 2ª 15/18, 3ª 3/3 | geodude-10min + geodeude-2 (A); modelo da sim F (ver Estado de 10/11) |
 | 15 spawns por hunt em Kanto/Outland, 16 em Orre, até 56 em Nightmare | `hunt-config` |
 
 ### Fórmula de dano candidata (F, coerente com todos os casos medidos)
@@ -132,8 +134,8 @@ Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes
 ### Em aberto (não invente; deixe parametrizado e marcado)
 
 Seleção de golpe: o critério exato de "maior dano esperado" (A em S1–S4, ver Fatos; não houve caso perto do empate fora do empate exato), e o desempate por cooldown (só o Solar Beam × Petal Dance),
-IA de movimento dos selvagens (ver investigação abaixo), forma da curva de captura (só 2 pontos), parcela extra de XP
-vista na conta B (×1,554 em vez de ×1,5; a conta B tem uma parcela `guild`, 24 em 548 no Rhyhorn, A, e o Pokémon dela recebe `mentor`), duração da penalidade de entrada (não é por abates), efeitos de status,
+IA de movimento dos selvagens (ver investigação abaixo), forma do medidor de captura (valor de cada bola, nível × preço da espécie, raridade, se o medidor de antes da gravação conta; ver o plano C1, C5, C7, C8), início do minuto da penalidade de entrada, parcela extra de XP
+vista na conta B (×1,554 em vez de ×1,5; a conta B tem uma parcela `guild`, 24 em 548 no Rhyhorn, A, e o Pokémon dela recebe `mentor`), efeitos de status,
 regras de respawn (tempo exato).
 
 ### Pendência visual: sombras e iluminação do cliente (não portadas; não bloqueiam)
@@ -494,3 +496,43 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   normais (+ Oddish, Rhyhorn, Vulpix). Protocolo regenerado com as gravações da fase 3: 141 tipos, 38 vistos. Testes:
   regras 36/36, caminho 8/8, determinismo, regras do usuário 17/17, cadáveres 3/3, grade 7/7, protocolo OK, cena 22/22,
   catálogo 12/12; Rhydon 20 min idêntico byte a byte; diferencial 1h 27/30 e antiga 23/26 (iguais a antes).
+- 10/11/2026 — Fase 3, penalidade de entrada e medidor de captura.
+  **Penalidade = boost `shinylock`** (C: texto do boost, −70% de EXP e drops por 1 min):
+  - (A) Em 4 entradas, o `boosts.until` = entrada + 60,0 s. Todo abate antes dele tem debuff e nenhum depois (7/601,
+    9/23, 10/27, typhlosion). O lock atravessa a retomada `:rN`.
+  - (A) Drops no lock: 15 contra 68 esperados (0,22×; P = 0,13 contra ×0,3).
+  - Sim: lock por tempo (`penalidade_duracao_ms` 60000, `penalidade_fator` 0,3, `penalidade_loot` "chance", F para
+    chance × quantidade). Emite `boosts {shinylock, until}` depois do field-init (A).
+  - (F) O minuto conta da saída do lugar anterior (`ms_desde_saida`, hipótese do usuário; explica o S3, que não tem o
+    `boosts` no arquivo).
+  - Regra de quando aplicar (B-relatado: hunt diferente da última ou sessão expirada, 15 min com o jogo fechado) em
+    `CenarioJogo.penalizar_entrada`. O save ganhou o campo opcional `ultima_hunt`.
+
+  **Captura = medidor de investimento por espécie** (C: tutorial e tela used-balls; Master Ball garante; shiny à parte,
+  min(1, shinyBase × catchRate), da barra de captura):
+  - (A) O Rattata 1 mostra a chance subindo com as tentativas desde a última captura: 15/34, 15/18, 3/3.
+  - (F) Modelo por máxima verossimilhança nas sequências de Rattata, Vulpix e Rhydon: −59,5 com 2 parâmetros, contra
+    −65,6 de uma chance fixa por espécie. Fórmula: min(1, 0,68 · nível^−0,86 · investido / precoNpc · (1 + bônus)),
+    com investido = bolas desde a última captura, incluindo a atual.
+  - (F) Valor da bola = eficiência × 50/3, porque a Idle Ball falhou no Rattata 1 do S2, e pelo ouro dela daria chance
+    1; a alternativa "ouro" fica parametrizada.
+  - `captura_pontos` saiu. O medidor vive na sim (`sim.medidor`) e no save (campo opcional `captura_medidor`); o jogo
+    ainda não tem a tela de Gerenciamento de Captura.
+  - Reanálise: Rattata 23/37 e 12/22 (modelo 22,0 e 13,3), Rhydon 5/608 (3,9 partindo de medidor zero), Vulpix 2/37
+    (1,15), Blastoise 0/193 (0,4), Idle Ball 0/1 (0,71). Não é validação independente: as mesmas sequências
+    entraram no ajuste.
+
+  **Gravador e ferramentas:**
+  - Gravador v1.1 (do usuário, revisado: só `fetch` de `/api/game/*`, parâmetros com cara de credencial filtrados)
+    grava `dir: "rest"`.
+  - `ferramentas/gravador/rest.py` lê esse formato. `analisar_gravacao.py` mostra o lock e o used-balls do início e do
+    fim. `gerar_protocolo.py` põe as respostas REST numa seção própria (as mensagens WS ficaram iguais).
+    `conferir_fase3.py` compara as capturas com o modelo partindo do used-balls do início.
+  - Plano (seção b revista): C3/C4 dispensados; C5 passa para o Geodude 1 na conta B (Poké/Great/Ultra separam
+    eficiência × ouro); novos C7 (Geodude 1, preço 300) e C8 (Meowth 20, preço 300) separam nível de preço; C6 vira P2.
+
+  **Testes:** regras 39/39 (captura e lock refeitos), save fase 3 12/12 (save antigo carrega, ida e volta, inválidos,
+  sessão, regra), cena 22/22, ponte 11/11 (`boosts` depois do field-init), save em thread 15/15 mortes, determinismo,
+  protocolo, caminho 8/8, regras do usuário 17/17, cadáveres 3/3, catálogo 12/12. A saída da sim mudou de propósito
+  (lock e medidor). Diferencial: 1h 27/30, antiga 23/26 (iguais a antes).
+

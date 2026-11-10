@@ -2,7 +2,7 @@
 """Teste do servidor headless da simulação (ponte/servidor_sim.gd) pelo TCP, sem navegador.
 
 Sobe o Godot com APPDATA temporário (o save real nunca é tocado), conecta como a ponte e confere:
-  - enter-hunt rhydon → field-init + field (tick 0), depois ~2,5 fields/s em tempo real;
+  - enter-hunt rhydon → field-init + boosts (shinylock) + field (tick 0), depois ~2,5 fields/s em tempo real;
   - serverNow acompanha o relógio (desvio < 500 ms) e seq conta ticks;
   - a mensagem sai crua (sem o envelope {t, msg} da simulação) e passa no validador do protocolo;
   - enter-hunt com resume → field-init + field da MESMA instância (mesmo huntKey);
@@ -83,7 +83,8 @@ def main():
         c.enviar({"type": "enter-hunt", "slug": "rhydon", "resume": False})
         msgs = c.ler(6.0)
         tipos = [m["type"] for _, m in msgs]
-        checar(tipos[:2] == ["field-init", "field"], "enter-hunt → field-init e field", str(tipos[:2]))
+        # A: entrada nova traz o boost shinylock logo depois do field-init (penalidade de entrada)
+        checar(tipos[:3] == ["field-init", "boosts", "field"], "enter-hunt → field-init, boosts (shinylock) e field", str(tipos[:3]))
         checar(all("msg" not in m and "type" in m for _, m in msgs), "mensagens cruas (sem envelope {t, msg})")
         fields = [(t, m) for t, m in msgs if m["type"] == "field"]
         taxa = (len(fields) - 1) / ((fields[-1][0] - fields[0][0]) / 1000) if len(fields) > 2 else 0

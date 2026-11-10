@@ -31,7 +31,8 @@
   "tipos": 141,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 38
+  "vistos_em_logs": 38,
+  "rest_vistos": 0
  },
  "mensagens": {
   "addon-used": {
@@ -3509,5 +3510,6 @@
     }
    }
   }
- }
+ },
+ "rest": {}
 }

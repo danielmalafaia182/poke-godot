@@ -38,7 +38,8 @@ var desmaiado: bool = false
 var encerrada: bool = false
 var _saida: Array = []
 var _golpes_cache := {}
-var abates_na_entrada: int = 0
+var penalidade_ate_ms: int = 0   # fim do lock de entrada (boost shinylock), em ms do relógio da sim; 0 = sem lock
+var medidor := {}               # speciesId (str) -> {investido, tentativas, total, gasto}: medidor de captura (C)
 var troca_manual_liberada_tick: int = 0
 var _campo_mob := PackedInt32Array()
 var _campo_mob_caixa := Rect2i()
@@ -92,6 +93,11 @@ func _montar() -> void:
 	for it in cfg.get("inventario", []):
 		inventario[int(it["itemId"])] = int(it["quantity"])
 	balls = (cfg.get("balls", {}) as Dictionary).duplicate(true)
+	medidor = (cfg.get("medidor_captura", {}) as Dictionary).duplicate(true)
+	if cfg.has("penalidade_ate_ms"):
+		penalidade_ate_ms = int(cfg["penalidade_ate_ms"])
+	elif cfg.get("entrada_nova", false):
+		penalidade_ate_ms = inicio_ms - int(cfg.get("ms_desde_saida", 0)) + int(p.penalidade_duracao_ms)
 	var nivel_selv := int(cfg.get("nivel_selvagem", 1))
 	mobs = []
 	var slot := 0
@@ -243,9 +249,22 @@ func iniciar() -> Array:
 	## Equivale a enter-hunt: devolve field-init e o primeiro field (tick 0).
 	_saida = []
 	_emitir(msg_field_init())
+	if penalidade_ativa():
+		_emitir(msg_boosts())   # A: logo depois do field-init, {key: shinylock, until, pct: 0}
 	heroi["alvo"] = _escolher_alvo()  # A: targetSlot nunca é null nos 2009 fields gravados
 	_emitir(_montar_field())
 	return _saida
+
+
+func penalidade_ativa() -> bool:
+	return agora_ms() < penalidade_ate_ms
+
+
+func msg_boosts() -> Dictionary:
+	var b: Array = []
+	if penalidade_ativa():
+		b.append({"key": "shinylock", "until": penalidade_ate_ms, "pct": 0})
+	return {"type": "boosts", "boosts": b}
 
 
 func msg_field_init() -> Dictionary:
@@ -650,13 +669,12 @@ func _abate(m: Dictionary) -> void:
 	var base := int(esp.get("xpAbate", 0))
 	var vip := Regras.js_round(float(base) * float(p.vip_fracao)) if cfg.get("vip", false) else 0
 	var total := base + vip
-	# Penalidade de entrada (A: rhydon-1h, os 7 primeiros abates depois de entrar na hunt, e não numa retomada ":rN",
-	# vêm com xpParts.debuff = −4041 sobre 5772 → 1731 = floor(5772 × 0,3)). Mecanismo F: contado em abates.
+	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
-	if cfg.get("entrada_nova", false) and abates_na_entrada < int(p.debuff_entrada_abates):
-		debuff = int(floor(float(total) * float(p.debuff_entrada_fator))) - total
+	var lock := penalidade_ativa()
+	if lock:
+		debuff = int(floor(float(total) * float(p.penalidade_fator))) - total
 		total += debuff
-	abates_na_entrada += 1
 	var nivel_t_antes := int(treinador["nivel"])
 	treinador["xp"] = int(treinador["xp"]) + total
 	treinador["nivel"] = Regras.nivel_por_xp(treinador["xp"])
@@ -673,8 +691,14 @@ func _abate(m: Dictionary) -> void:
 		var chance := float(e.get("chanceBruta", 0.0))
 		if chance <= 0.0:
 			continue
+		if lock and String(p.penalidade_loot) == "chance":
+			chance *= float(p.penalidade_fator)
 		if rng.randf() * 100000.0 < chance:
 			var qtd: int = rng.randi_intervalo(int(e.get("min", 1)), int(e.get("max", 1)))
+			if lock and String(p.penalidade_loot) == "quantidade":
+				qtd = int(floor(float(qtd) * float(p.penalidade_fator)))
+				if qtd <= 0:
+					continue
 			if e.get("itemId") == null:
 				continue  # item sem id no catálogo (relatorio_importacao.loot_sem_item): sorteado, mas não entregue
 			loot.append({"itemId": int(e["itemId"]), "name": e["item"], "qty": qtd})
@@ -735,10 +759,23 @@ func _tentar_captura(m: Dictionary) -> bool:
 	if sel == "" or int(counts.get(sel, 0)) <= 0:
 		return false
 	counts[sel] = int(counts[sel]) - 1
-	var chance := Regras.chance_captura(int(sel), int(m["nivel"]), p)  # A nos pontos medidos, F na curva entre eles
+	# Medidor de investimento por espécie (C; forma F, ver PARAMETROS): soma esta bola, sorteia, zera ao capturar.
+	var sid := str(m["species_id"]) + ("s" if bool(m["shiny"]) else "")   # C: a tela separa a variante shiny
+	var med: Dictionary = medidor.get(sid, {"investido": 0.0, "tentativas": 0, "total": 0, "gasto": 0})
+	med["investido"] = float(med.get("investido", 0.0)) + Regras.valor_bola(int(sel), p)
+	med["tentativas"] = int(med.get("tentativas", 0)) + 1
+	med["total"] = int(med.get("total", 0)) + 1
+	med["gasto"] = int(med.get("gasto", 0)) + int(p.captura_preco_bola.get(sel, 0))
+	var chance := Regras.chance_captura(int(sel), int(m["nivel"]), float(med["investido"]),
+		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)), p)
+	if bool(m["shiny"]):   # C: shiny não usa o medidor (chance fixa por tier × força da bola)
+		chance = Regras.chance_captura_shiny(int(sel), String(m["especie"].get("tierShiny", "")), p)
 	var sucesso: bool = rng.randf() < chance
 	if sucesso:
 		estatisticas["capturas"] += 1
+		med["investido"] = 0.0
+		med["tentativas"] = 0
+	medidor[sid] = med
 	var nome_bola := ""
 	for b in balls.get("catalog", []):
 		if str(b.get("id", "")) == sel:

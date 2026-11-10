@@ -6,11 +6,19 @@ extends RefCounted
 ##   hunt: nome da espécie da hunt (EstadoJogo.especie_caca.nome) — o slug vem de dados/gerados/hunts.json
 ##   equipe: [{id, nome, xp, ivs{hp,atk,def,spAtk,spDef,speed}, quality, hp (−1 = cheio), shiny?}]   (ordem do time)
 ##   treinador_xp, inventario [{itemId, quantity}], bolas {id: qtd}, auto_catch, bola_auto_catch,
-##   auto_potion, pocao_id (0 = "Automatic (best)"), limite_pocao (%), lider (índice do líder no time)
-## O que é de jogo e não foi observado no original fica marcado: VIP desligado (E: offline), entrada nova sempre
-## (A: entrar pelo mapa é entrada nova → penalidade de XP nos primeiros abates).
+##   auto_potion, pocao_id (0 = "Automatic (best)"), limite_pocao (%), lider (índice do líder no time),
+##   penalizar (bool: lock de entrada; quem decide é a cena, pela regra B-relatada em estado_jogo.gd), ms_desde_saida
+##   (o minuto do lock conta da saída do lugar anterior, F), medidor_captura (EstadoJogo.medidor_captura)
+## O que é de jogo e não foi observado no original fica marcado: VIP desligado (E: offline); sem bônus de captura de
+## guild nem boosts (E: offline).
 
 const Fontes := preload("res://sim/fontes.gd")
+
+
+static func penalizar_entrada(sessao_expirada: bool, ultima_hunt: String, slug: String) -> bool:
+	## Lock de entrada (boost shinylock), regra relatada pelo usuário (B-relatado): hunt diferente da última, ou
+	## qualquer hunt depois que a sessão expirou; a mesma hunt de novo (pela cidade) não penaliza.
+	return sessao_expirada or ultima_hunt != slug
 
 
 static func slug_da_hunt(dados: RefCounted, nome: String) -> String:
@@ -86,7 +94,10 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"nivel_selvagem": int(hunt.get("nivel", 1)),
 		"inicio": hc.get("start", {"x": 0, "y": 0}),
 		"spawns": hc.get("spawns", []),
-		"entrada_nova": true,
+		"entrada_nova": bool(jogo.get("penalizar", true)),
+		"ms_desde_saida": int(jogo.get("ms_desde_saida", 0)),
+		"medidor_captura": (jogo.get("medidor_captura", {}) as Dictionary).duplicate(true),
+		"bonus_captura": 0.0,
 		"vip": false,
 		"ativo_inicial": int(jogo.get("lider", 0)),
 		"auto_catch": bool(jogo.get("auto_catch", false)),
