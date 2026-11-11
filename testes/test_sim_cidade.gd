@@ -106,12 +106,15 @@ func _init() -> void:
 	checar(int(l["gold"]) == 390 and int(l["itens"]["203"]) == 2, "comprar 2 Hyper Potion (55 cada)")
 	checar(tipo(sv.tratar(l, {"type": "shop-buy", "ballId": 4, "qty": 100}), "error").size() > 0 and int(l["gold"]) == 390, "ouro insuficiente: recusa sem mudar nada")
 	checar(tipo(sv.tratar(l, {"type": "shop-buy", "ballId": 6, "qty": 1}), "error").size() > 0, "Idle Ball não é comprável (A: buyable false)")
-	checar(sv.preco_venda(4) == 40 and sv.preco_venda(200) == 5 and sv.preco_venda(205) == 40,
-		"venda: npcPrice (C), com teto no preço de compra para poções (E)", "%d %d %d" % [sv.preco_venda(4), sv.preco_venda(200), sv.preco_venda(205)])
-	r = sv.tratar(l, {"type": "shop-sell", "items": [{"itemId": 4, "qty": 10}, {"itemId": 200, "qty": 1}]})
-	checar(int(tipo(r, "shop-sold")["goldGained"]) == 405 and int(l["gold"]) == 795 and not l["itens"].has("4") and int(l["itens"]["200"]) == 2,
-		"vender 10 Bag of Pollen (40) e 1 Small Potion (5): +405 (C: {gold, goldGained, soldCount})")
-	checar(tipo(sv.tratar(l, {"type": "shop-sell", "items": [{"itemId": 200, "qty": 99}]}), "error").size() > 0, "vender mais do que tem: recusa")
+	checar(sv.preco_venda(4) == 40 and sv.preco_venda(200) == 0 and sv.preco_venda(109) == 0 and sv.preco_venda(205) == 40 and sv.preco_venda(206) == 350,
+		"venda: npcPrice (C); poções e pedras o Mark não compra, Revive/Max Revive sim (C: iV/iK do cliente)",
+		"%d %d %d %d %d" % [sv.preco_venda(4), sv.preco_venda(200), sv.preco_venda(109), sv.preco_venda(205), sv.preco_venda(206)])
+	checar(tipo(sv.tratar(l, {"type": "shop-sell", "items": [{"itemId": 200, "qty": 1}]}), "error").size() > 0 and int(l["itens"]["200"]) == 3,
+		"vender poção: recusa (não está na lista do Mark)")
+	r = sv.tratar(l, {"type": "shop-sell", "items": [{"itemId": 4, "qty": 10}]})
+	checar(int(tipo(r, "shop-sold")["goldGained"]) == 400 and int(l["gold"]) == 790 and not l["itens"].has("4"),
+		"vender 10 Bag of Pollen (40): +400 (C: {gold, goldGained, soldCount})")
+	checar(tipo(sv.tratar(l, {"type": "shop-sell", "items": [{"itemId": 4, "qty": 99}]}), "error").size() > 0, "vender mais do que tem: recusa")
 	r = sv.tratar(l, {"type": "pokemon-sell", "pokeIds": ["char"]})
 	checar(int(tipo(r, "pokemon-sold")["goldGained"]) == int(dados.especie(5)["valorVenda"]) and sv._poke(l, "char").is_empty() and tipo(r, "pokes-removed")["ids"] == ["char"],
 		"vender Pokémon da BOX pelo valorVenda (F)")

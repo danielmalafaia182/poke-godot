@@ -19,6 +19,11 @@ func executar() -> void:
 	atual.erase("materiais")
 	checar(atual.has("experiencia_base_migracao"),"migração registra base sem alterar XP histórica")
 	atual.erase("experiencia_base_migracao")
+	# Campos opcionais das fases 3 e 4: um save anterior carrega com os padrões (medidor vazio, sem última hunt, ouro 0, VIP off).
+	checar((atual.get("captura_medidor",{}) as Dictionary).is_empty() and String(atual.get("ultima_hunt","")) == "" and int(atual.get("ouro",0)) == 0 and not bool(atual.get("vip",false)),
+		"campos novos (medidor, última hunt, ouro, VIP) entram com o padrão")
+	for campo in ["captura_medidor","ultima_hunt","ouro","vip"]:
+		atual.erase(campo)
 	var esperado: Dictionary=anterior.duplicate(true)
 	for registro in esperado["team"]:
 		if registro["id"]!=esperado["inicial_id"]: continue

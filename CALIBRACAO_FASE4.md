@@ -64,9 +64,9 @@ Testes:
 | --- | --- | --- |
 | Bolas à venda e preços: Poké 5, Great 20, Super 50, Ultra 130; Idle, Golden Idle e Master fora | A | `balls.catalog` (`priceGold`, `buyable`) |
 | Itens à venda: os com `priceGold` > 0 (hoje as 5 poções: 5, 10, 22, 55, 135) | C/A | a tela mostra "Preço: priceGold"; `items.json` |
-| Venda de item ao NPC: `npcPrice` | C | "Mark paga: npcPrice" |
-| Venda nunca acima do preço de compra (poção comprada a 5 vende a 5, não a 50) | **E** | sem o teto, comprar e vender daria ouro infinito; pede gravação (G1) |
-| Venda de Pokémon (só da BOX, nunca o inicial) pelo `valorVenda` da espécie | F (valor) / E (restrições) | não gravado (G2) |
+| Venda de item ao NPC: `npcPrice`, só para item com `npcPrice > 0` fora das categorias heal/revive/stone (exceções: ids 205 e 206, Revive e Max Revive aposentados) | C | "Mark paga: npcPrice"; lista de venda do cliente filtra `iV = {heal, revive, stone}` com exceção `iK = {205, 206}`. Poções e pedras não são vendáveis. Tabela completa: `dados/relatorios/precos_npc.md` |
+| Venda nunca acima do preço de compra | E (só proteção) | com a regra acima, nenhum item do catálogo chega no teto (0 de 370 vendáveis). No lote 1 a regra tratava poções como vendáveis; o `npcPrice` delas (50 > 5 de compra) não é preço de venda. Não era erro de importação: campos e unidade conferidos contra o snapshot cru, 0 divergências |
+| Venda de Pokémon (só da BOX, nunca o inicial) pelo `valorVenda` da espécie | F (valor) / C (restrições) | o cliente lista para venda só Pokémon fora do time, não inicial, não shiny, não anunciado no mercado e com `sellValue > 0` (C); a exclusão de shiny ainda não está na sim (sem shiny no time offline); o valor pago não foi gravado (G2) |
 | Ouro vem só de vendas (o `field-kill` não traz ouro) | A | nenhum campo de ouro em 600+ abates |
 | Ouro inicial 0 | E | o original dá 100 Small Potions e 100 Poké Balls (C); o saldo inicial não foi gravado |
 | Loja, Nurse e depot só nas cidades com o NPC | A | `city-npcs`: Cerulean e Viridian têm `shop`, `nurse` e `pokedepot` |
@@ -99,13 +99,7 @@ Fica de fora (não medido):
 
 ## O que pede evidência do original (até 4 gravações curtas, gravador v1.2)
 
-**G1 — preço de venda das poções (3 min).**
-1. Em Cerulean, compre 1 Small Potion no Mark (aba Comprar).
-2. Abra a aba de vender itens e deixe a lista na tela por 5 s.
-3. Venda 1 Small Potion e 1 loot qualquer.
-4. Saia da loja.
-
-A resposta de `/api/game/shop` e a do `shop/sell` (`goldGained`) mostram se a poção vende por 5, por 50 ou não vende.
+**G1 — dispensada.** O cliente (C) mostra que o Mark não compra poções nem pedras (categorias heal/revive/stone).
 
 **G2 — venda de Pokémon (2 min).** Na loja, aba de Pokémon:
 1. Venda 1 Pokémon da BOX de nível 1 e Quality comum.

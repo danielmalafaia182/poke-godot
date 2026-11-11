@@ -685,9 +685,34 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   determinismo, regras do usuário 17/17, cadáveres 3/3, catálogo 12/12, save fase 3 12/12, grade 7/7, cena 22/22,
   protocolo, ponte 11/11, save em thread 15/15. Diferencial 1h 27/30, antiga 23/26 (iguais). P04: 37/43 passam;
   4 falhavam antes também (cerco_acesso, compatibilidade_save, mapa_entre_hunts, mapa_fiel).
-  **Em aberto:** `test_movimento_selvagens` é instável nas duas versões, mas mais agora: falhou 7 em 13 contra 2 em 9
-  antes ("caça conclui encontros com alvos móveis", depende de tempo real); causa não achada.
+  (A instabilidade do `test_movimento_selvagens` foi resolvida na entrada seguinte: não era regressão.)
   **Desempenho** (mesma máquina e estado, Firefox/Discord abertos; os números absolutos da 2b exigem fechá-los):
   quadro p99 e carga iguais dentro do ruído (Rhydon 1499–1703 × 1644–1649 ms de carga, p99 13,7–14,0 × 14,1–14,3;
   elekid 1535–1554 × 1542–1557, p99 18,1–18,6 × 17,1–18,1); tick da sim p99 2,3–3,1 × 2,4–2,6 ms
   (`testes/medir_tick.gd`; `simulacao_hunt.gd` não mudou).
+- 11/11/2026 — Correções antes do lote 2 (nenhuma regra de jogo nova).
+  - `test_movimento_selvagens` determinístico: todas as fontes de aleatoriedade da cena antiga são semeadas (RNG
+    global, que sorteia IV/Quality dos selvagens; `rng_dano`, `rng_troca`, `rng_loot`; IA de movimento), o relógio de
+    troca é fixo e a cena avança por passos de 0,1 s com os timers parados. A parte unitária roda numa instância própria.
+    **20/20 rodadas com a mesma impressão** (`1c0d65f2d50b`). Modo `--varrer N` (sementes 1..N).
+  - **Por que a falha subiu de 2/9 para 7/13: não foi regressão.** Com as mesmas 40 sementes, a saída é idêntica byte a
+    byte em `3d8abb6` (antes do lote 1) e na versão atual; nas duas, 18 de 40 sementes não matam nenhum selvagem em 60 s.
+    O teste antigo usava sementes aleatórias e falhava ~45% das vezes; 2/9 e 7/13 são amostras dessa mesma taxa.
+  - Preços (`dados/relatorios/precos_npc.md`, gerado por `ferramentas/importador/relatorio_precos.py`): importação
+    conferida campo a campo contra o snapshot cru (`npcPrice → precoNpc`, `priceGold → precoGold`, ouro inteiro),
+    **0 divergências: não era erro de importação**. As poções eram os únicos itens com `npcPrice` > preço de compra.
+    O cliente (C) mostra que o Mark não compra heal/revive/stone (exceto 205 e 206). A regra de venda do lote 1 estava
+    errada ao vender poções: corrigida em `sim/servico_cidade.gd`. O teto "venda ≤ compra" fica só como proteção.
+    Resultado: 370 vendáveis, 0 com venda acima da compra.
+  - Os 4 testes do P04 que já falhavam:
+    - `test_cerco_acesso`, `test_mapa_fiel`, `test_mapa_entre_hunts`: esperavam a cena antiga "Caca"; desde a fase 2
+      (decisão E) o mapa abre `caca_sim.tscn` para hunt com mapa e hunt-config no snapshot. Expectativas atualizadas
+      (o de viagem entre hunts agora confere a nova instância pelo `hunt_key`).
+    - `test_compatibilidade_save`: dependia da fixture que o runner antigo gravava antes; agora
+      `testes/test_compatibilidade_save.sh` grava a fixture e roda o teste no mesmo user:// isolado (`rodar.sh`
+      aceita `ISOLADO`). Os campos opcionais novos (medidor, última hunt, ouro, VIP) são conferidos com o padrão.
+  - `cenario_teste_config.tscn` (gerado por `test_configuracao_hunts.gd`) no `.gitignore`.
+
+  **Testes:** P04 **43/43**, serviço da cidade 41/41, ciclo 20/20, regras 41/41, caminho 8/8, determinismo, regras do
+  usuário 17/17, cadáveres 3/3, catálogo 12/12, save fase 3 12/12, grade 7/7, cena 22/22, protocolo, ponte 11/11, save
+  em thread 15/15. Diferencial 1h 27/30, antiga 23/26 (iguais).

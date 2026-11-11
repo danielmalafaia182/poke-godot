@@ -9,7 +9,10 @@ func quadros() -> void:
  for i in range(4): await process_frame
 func parar(caca: Node) -> void:
  caca.set_process(false);caca.set_physics_process(false)
- caca.timer_combate.stop();caca.timer_auto_potion.stop()
+ if "timer_combate" in caca: caca.timer_combate.stop();caca.timer_auto_potion.stop()
+func hud_de(caca: Node) -> Control:
+ # cena antiga: Interface/HudCaca; cena nova (caca_sim, fase 2): a mesma HUD em hud_caca
+ return caca.hud_caca if "hud_caca" in caca and caca.hud_caca!=null else caca.get_node("Interface/HudCaca")
 func executar() -> void:
  var estado: Node=root.get_node("EstadoJogo")
  estado.especie_caca=load("res://dados/especies/geodude.tres")
@@ -31,18 +34,19 @@ func executar() -> void:
  for registro in hud.mapa_mundi.catalogo:
   if registro["name"]=="Togepi": hud.mapa_mundi._selecionar_registro(registro);break
  await quadros()
- checar(current_scene!=null and current_scene.name=="Caca" and estado.especie_caca.nome=="Togepi","Viaja diretamente para Togepi")
+ # Fase 2 (E): a hunt simulada abre a cena nova (caca_sim.tscn).
+ checar(current_scene!=null and current_scene.scene_file_path=="res://caca_sim.tscn" and estado.especie_caca.nome=="Togepi","Viaja diretamente para Togepi")
  caca=current_scene;parar(caca)
- hud=caca.get_node("Interface/HudCaca")
+ hud=hud_de(caca)
  checar(hud.capturados_hunt==0,"Nova caça zera contador de capturas")
  checar(estado.obter_lider()==lider and lider.obter_vida_atual()==hp,"Preserva líder e HP, sem cura na viagem")
  checar(estado.estoque_bolas==estoque and not estado.auto_potion and not estado.auto_catch,"Preserva estoque e configurações")
  var instancia: int=caca.get_instance_id()
- id=caca.selvagens[0].id
+ var chave: String=String(caca.sim.cfg["hunt_key"])
  hud.menu.mapa_solicitado.emit();await quadros()
  for registro in hud.mapa_mundi.catalogo:
   if registro["name"]=="Togepi": hud.mapa_mundi._selecionar_registro(registro);break
  await quadros()
- checar(current_scene.get_instance_id()!=instancia and current_scene.selvagens[0].id!=id,"Selecionar mesma hunt cria nova instância")
+ checar(current_scene.get_instance_id()!=instancia and String(current_scene.sim.cfg["hunt_key"])!=chave,"Selecionar mesma hunt cria nova instância")
  print("MAPA ENTRE HUNTS: %d verificações; %d falhas" % [checks,falhas])
  quit(1 if falhas else 0)

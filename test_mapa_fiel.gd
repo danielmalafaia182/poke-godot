@@ -135,7 +135,8 @@ func executar() -> void:
 	mapa.navegacao.centralizar(Vector2(761,409))
 	await quadros()
 	await clicar(geodude.get_global_rect().get_center())
-	checar(is_instance_valid(current_scene) and current_scene.name=="Caca" and estado.especie_caca.nome=="Geodude","clique real no marcador entra na caça implementada")
+	# Fase 2 (E): a hunt simulada abre a cena nova (caca_sim.tscn).
+	checar(is_instance_valid(current_scene) and current_scene.scene_file_path=="res://caca_sim.tscn" and estado.especie_caca.nome=="Geodude","clique real no marcador entra na caça implementada")
 	checar(estado.auto_catch_ball_id==3 and estado.estoque_bolas==bolas and estado.estoque_pocoes==pocoes,"abrir mapa e viajar preserva configuração e estoque")
 	print("MAPA FIEL: ",checks," verificações; ",falhas," falhas")
 	quit(1 if falhas else 0)

@@ -60,8 +60,13 @@ const PARAMETROS := {
 		{"id": 7, "name": "Golden Idle Ball", "catchRate": 5, "priceGold": 400, "buyable": false, "infinite": true, "bound": true},
 		{"id": 5, "name": "Master Ball", "catchRate": 255, "priceGold": 0, "buyable": false, "infinite": false, "bound": false}],
 	# Compra de item: priceGold > 0 do items.json (C: a tela mostra "Preço: priceGold"; hoje só as 5 poções).
-	# Venda: npcPrice (C: "Mark paga: npcPrice"). E: nunca acima do preço de compra quando o item é comprável
-	# (Small Potion custa 5 e o npcPrice é 50: sem o teto, comprar e vender daria ouro infinito). Pede gravação.
+	# Venda: npcPrice (C: "Mark paga: npcPrice"), só para as categorias que o Mark compra (abaixo).
+	# C: a lista de venda do Mark só aceita item com npcPrice > 0 e fora das categorias heal/revive/stone, salvo os ids
+	# 205 e 206 (Revive e Max Revive, aposentados: "Venda ao Mark pelo mesmo valor que você pagou"). Poções e pedras
+	# não são vendáveis; o npcPrice delas (50, 150, …) não é preço de venda.
+	"venda_categorias_excluidas": ["heal", "revive", "stone"],
+	"venda_excecoes_ids": [205, 206],
+	# E (proteção): nunca vender acima do preço de compra. Com a regra acima nenhum item do catálogo chega nele.
 	"venda_teto_preco_compra": true,
 	"venda_pokemon": "valorVenda",          # F: Pokémon vendido pelo valorVenda (sellValue) da espécie; o original não foi gravado
 	"qtd_max_por_compra": 100000,           # E: limite de sanidade por operação
@@ -354,6 +359,8 @@ func _bola(id: int) -> Dictionary:
 
 func preco_venda(item_id: int) -> int:
 	var it: Dictionary = dados.itens.get(item_id, {})
+	if String(it.get("categoria", "")) in p.venda_categorias_excluidas and not (item_id in p.venda_excecoes_ids):
+		return 0
 	var v := int(it.get("precoNpc", 0))
 	if bool(p.venda_teto_preco_compra) and int(it.get("precoGold", 0)) > 0:
 		v = mini(v, int(it["precoGold"]))
