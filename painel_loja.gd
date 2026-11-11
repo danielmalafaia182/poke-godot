@@ -141,14 +141,14 @@ func atualizar() -> void:
 				for q in [1, 10, 100]:
 					acoes.append(_botao("+%d" % q, func() -> void:
 						_resultado(_ej().comprar_bola(id, q), "Comprou %d× %s." % [q, b["name"]])))
-				_linha("%s (você tem %d)" % [b["name"], _ej().obter_quantidade_bola(id)], "💲%d" % int(b["price"]), acoes)
+				_linha("%s (você tem %d)" % [b["name"], _ej().obter_quantidade_bola(id)], "💲%d" % int(b["priceGold"]), acoes)
 			for it in loja.get("items", []):
 				var id := int(it["id"])
 				var acoes: Array = []
 				for q in [1, 10, 100]:
 					acoes.append(_botao("+%d" % q, func() -> void:
 						_resultado(_ej().comprar_item(id, q), "Comprou %d× %s." % [q, it["name"]])))
-				_linha("%s (você tem %d)" % [it["name"], _ej().obter_quantidade_pocao(id)], "💲%d" % int(it["price"]), acoes)
+				_linha("%s (você tem %d)" % [it["name"], _ej().obter_quantidade_pocao(id)], "💲%d" % int(it["priceGold"]), acoes)
 		"vender":
 			var todos: Array = []
 			for it in loja.get("sell", []):

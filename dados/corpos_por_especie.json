@@ -14,6 +14,7 @@
   "S4.jsonl": "92e9f7424b387ed2c00d925ff8b790aa7344cca03f715e58843b3136a6381e0d",
   "c2.jsonl": "0bc33a80ef274be76963034a18017cac049b1d743376211e3a36f64526a169a6",
   "c5.jsonl": "7b40aad9b90f779e7ccf8b205c06c3d9306762c9f8f97f558f31d6777367b524",
+  "g1.jsonl": "5dc537a2ca191dd2cf6a67382ce39b9f3f73a93fc3153c4104b0dd98f06347b8",
   "geodeude-2.jsonl": "2523321df5c2f1cabc37718c572cb72437461d09887d5f9bdecb7eb989534d41",
   "geodude-10min.jsonl": "44f837ff1a9d1486191874d29790a3a621f7fb1b7c40ac3985d73a1a3a8809bc",
   "geodude-3.jsonl": "c5aa50a639c134fd358dc78048e46e748908fc94e888bf736a4db1c84458247c",
@@ -102,6 +103,13 @@
    "n": 4658,
    "contagem": {
     "6073": 4658
+   }
+  },
+  "10524": {
+   "corpo": 3004,
+   "n": 19,
+   "contagem": {
+    "3004": 19
    }
   }
  },

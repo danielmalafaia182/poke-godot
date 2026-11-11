@@ -202,11 +202,22 @@ func conceder_experiencia(pokemon: DadosPokemon, quantidade: int) -> bool:
 
 func curar_time() -> Dictionary:
 	# Fase 4: Nurse Joy pela simulação (C: cura o time inteiro de graça; joy-heal).
+	# A (G4): a resposta é só {type: "joy-healed"}; quantos foram curados e quanto HP é calculado aqui, para a tela.
+	var antes := {}
+	for p in time_pokemon:
+		antes[p] = p.obter_vida_atual()
 	var msgs: Array = PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "joy-heal"})
-	for m in msgs:
-		if m.get("type") == "joy-healed":
-			return {"quantidade": int(m["healed"]), "hp": int(m["hp"])}
-	return {"quantidade": 0, "hp": 0, "erro": PONTE_CIDADE.primeiro_erro(msgs)}
+	var erro := PONTE_CIDADE.primeiro_erro(msgs)
+	if not erro.is_empty():
+		return {"quantidade": 0, "hp": 0, "erro": erro}
+	var quantidade := 0
+	var hp := 0
+	for p in time_pokemon:
+		var ganho: int = p.obter_vida_atual() - int(antes.get(p, p.obter_vida_atual()))
+		if ganho > 0:
+			quantidade += 1
+			hp += ganho
+	return {"quantidade": quantidade, "hp": hp}
 
 func definir_auto_catch(ativo: bool) -> void:
 	configuracao.definir_auto_catch(ativo)

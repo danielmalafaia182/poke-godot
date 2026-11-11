@@ -96,12 +96,15 @@ func _init() -> void:
 	var loja: Dictionary = sv.tratar(l, {"type": "shop"})[0]
 	var precos := {}
 	for b in loja["balls"]:
-		precos[int(b["id"])] = int(b["price"])
+		precos[int(b["id"])] = int(b["priceGold"])
 	checar(precos == {1: 5, 2: 20, 3: 50, 4: 130}, "bolas à venda e preços = balls.catalog (A)", str(precos))
-	checar(loja["items"].size() == 5 and int(loja["items"][0]["price"]) == 5, "itens à venda: as 5 poções com priceGold (C/A)")
+	checar(loja["items"].size() == 5 and int(loja["items"][0]["priceGold"]) == 5 and loja["items"][0].has("category") and loja["balls"][0].has("catchRate"),
+		"itens à venda: as 5 poções; campos de GET /api/game/shop (A, G1)")
 	r = sv.tratar(l, {"type": "shop-buy", "ballId": 3, "qty": 10})
 	checar(int(l["gold"]) == 500 and int(l["bolas"]["3"]) == 10 and int(tipo(r, "shop-bought")["bought"]) == 10 and int(tipo(r, "balls")["gold"]) == 500,
 		"comprar 10 Super Ball: −500 de ouro, +10 bolas, resposta {gold, bought} (C)")
+	var compra: Dictionary = tipo(r, "shop-bought")
+	checar(bool(compra["ok"]) and compra["item"] == "Super Ball" and int(compra["goldSpent"]) == 500, "resposta da compra = {ok, bought, item, goldSpent, gold} (A, G1)")
 	r = sv.tratar(l, {"type": "shop-buy", "itemId": 203, "qty": 2})
 	checar(int(l["gold"]) == 390 and int(l["itens"]["203"]) == 2, "comprar 2 Hyper Potion (55 cada)")
 	checar(tipo(sv.tratar(l, {"type": "shop-buy", "ballId": 4, "qty": 100}), "error").size() > 0 and int(l["gold"]) == 390, "ouro insuficiente: recusa sem mudar nada")
@@ -113,17 +116,26 @@ func _init() -> void:
 		"vender poção: recusa (não está na lista do Mark)")
 	r = sv.tratar(l, {"type": "shop-sell", "items": [{"itemId": 4, "qty": 10}]})
 	checar(int(tipo(r, "shop-sold")["goldGained"]) == 400 and int(l["gold"]) == 790 and not l["itens"].has("4"),
-		"vender 10 Bag of Pollen (40): +400 (C: {gold, goldGained, soldCount})")
+		"vender 10 Bag of Pollen (40): +400 (A, G1: Bag of Pollen vendido a 40)")
+	checar(bool(tipo(r, "shop-sold")["ok"]) and int(tipo(r, "shop-sold")["soldKinds"]) == 1, "resposta da venda = {ok, soldKinds, soldCount, goldGained, gold} (A, G1)")
 	checar(tipo(sv.tratar(l, {"type": "shop-sell", "items": [{"itemId": 4, "qty": 99}]}), "error").size() > 0, "vender mais do que tem: recusa")
 	r = sv.tratar(l, {"type": "pokemon-sell", "pokeIds": ["char"]})
 	checar(int(tipo(r, "pokemon-sold")["goldGained"]) == int(dados.especie(5)["valorVenda"]) and sv._poke(l, "char").is_empty() and tipo(r, "pokes-removed")["ids"] == ["char"],
 		"vender Pokémon da BOX pelo valorVenda (F)")
-	checar(tipo(sv.tratar(l, {"type": "pokemon-sell", "pokeIds": ["ini"]}), "error").size() > 0, "não vende do time nem o inicial (E)")
+	checar(tipo(sv.tratar(l, {"type": "pokemon-sell", "pokeIds": ["ini"]}), "error").size() > 0, "não vende do time nem o inicial (C)")
+	l["pokes"].append({"id": "shy", "speciesId": 19, "xp": 0, "ivs": ivs(1), "quality": 1.0, "hp": -1, "team": false, "slot": -1, "shiny": true})
+	var ouro_antes := int(l["gold"])
+	checar(tipo(sv.tratar(l, {"type": "pokemon-sell", "pokeIds": ["shy"]}), "error").get("message", "").contains("shiny") and int(l["gold"]) == ouro_antes and not sv._poke(l, "shy").is_empty(),
+		"o Mark não compra Pokémon shiny (C: lista de venda do cliente)")
+	l["pokes"].append({"id": "b1", "speciesId": 9, "xp": 0, "ivs": ivs(31), "quality": 1.014, "hp": -1, "team": false, "slot": -1})
+	l["pokes"].append({"id": "b2", "speciesId": 9, "xp": Regras.xp_total_para_nivel(80), "ivs": ivs(3), "quality": 1.8, "hp": -1, "team": false, "slot": -1})
+	r = sv.tratar(l, {"type": "pokemon-sell", "pokeIds": ["b1", "b2"]})
+	checar(int(tipo(r, "pokemon-sold")["goldGained"]) == 36000, "Blastoise vale 18000 qualquer que seja nível, Quality e IV (A, G2)", str(tipo(r, "pokemon-sold")))
 
 	# ---------------------------------------------------------------- Nurse Joy
 	var n := estado_base()
 	r = sv.tratar(n, {"type": "joy-heal"})
-	checar(int(tipo(r, "joy-healed")["healed"]) == 1 and int(sv._poke(n, "geo")["hp"]) == -1 and int(n["gold"]) == 1000,
+	checar(tipo(r, "joy-healed").keys() == ["type"] and int(sv._poke(n, "geo")["hp"]) == -1 and int(n["gold"]) == 1000,
 		"Nurse Joy cura o time inteiro de graça (C)")
 	var sem := estado_base()
 	sem["cidade"] = "pewter"
@@ -145,7 +157,10 @@ func _init() -> void:
 		slots.append(int(t["slot"]))
 	checar(slots == [0, 1, 2, 3, 4, 5], "slots do time renumerados 0..5", str(slots))
 	r = sv.tratar(d, {"type": "depot-move", "itemId": 4, "dir": "store"})
-	checar(int(d["depot"]["itens"]["4"]) == 10 and not d["itens"].has("4"), "guardar item no depot (C: {itemId, dir})")
+	checar(int(d["depot"]["itens"]["4"]) == 10 and not d["itens"].has("4"), "guardar item no depot: a pilha inteira (A, G4)")
+	var md: Dictionary = tipo(r, "depot")
+	checar(md.has("inventory") and md.has("depot") and md["depot"][0].keys() == ["id", "name", "icon", "category", "npcPrice", "quantity"],
+		"mensagem do depot = {inventory, depot}, itens {id, name, icon, category, npcPrice, quantity} (A, G4)", str(md["depot"][0].keys()))
 	r = sv.tratar(d, {"type": "depot-move", "itemId": 4, "dir": "withdraw"})
 	checar(int(d["itens"]["4"]) == 10 and not d["depot"]["itens"].has("4"), "retirar item do depot")
 	checar(tipo(sv.tratar(d, {"type": "depot-move", "ballId": 7, "dir": "store"}), "error").size() > 0, "bola vinculada fica na BAG (A: bound; E)")

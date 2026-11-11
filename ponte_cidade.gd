@@ -134,8 +134,8 @@ static func aplicar(ej: Node, msgs: Array) -> void:
 				mudou_depot = true
 			"depot":
 				ej.itens_depot.clear()
-				for it in m.get("items", []):
-					var id := int(it["itemId"])
+				for it in m.get("depot", []):
+					var id := int(it["id"])
 					ej.itens_depot[id if id in POCOES else LOOT.id_interno(id)] = int(it["quantity"])
 				for b in m.get("balls", []):
 					ej.itens_depot[int(b["ballId"])] = int(b["quantity"])

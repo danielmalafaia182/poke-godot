@@ -68,7 +68,10 @@ const PARAMETROS := {
 	"venda_excecoes_ids": [205, 206],
 	# E (proteção): nunca vender acima do preço de compra. Com a regra acima nenhum item do catálogo chega nele.
 	"venda_teto_preco_compra": true,
-	"venda_pokemon": "valorVenda",          # F: Pokémon vendido pelo valorVenda (sellValue) da espécie; o original não foi gravado
+	# A (G1): Pokémon vendido pelo sellValue da espécie (valorVenda), sem depender de nível, Quality ou IV: 2 Blastoise
+	# Lv.1 (Q 1,014 / IV 124 e Q 1,273 / IV 61) → 18000 cada; o sellValue que o servidor manda é o da espécie em
+	# 399/399 Pokémon da lista (níveis 1 a 425).
+	"venda_pokemon": "valorVenda",
 	"qtd_max_por_compra": 100000,           # E: limite de sanidade por operação
 	# Depot
 	"limite_time": 6,                       # C: "Your team only carries 6 — the rest rest here"
@@ -371,14 +374,14 @@ func _loja(estado: Dictionary) -> Dictionary:
 	var bolas: Array = []
 	for b in p.bolas_catalogo:
 		if bool(b["buyable"]):
-			bolas.append({"id": int(b["id"]), "name": String(b["name"]), "price": int(b["priceGold"])})
+			bolas.append({"id": int(b["id"]), "name": String(b["name"]), "priceGold": int(b["priceGold"]), "catchRate": int(b["catchRate"])})
 	var itens: Array = []
 	var ids: Array = dados.itens.keys()
 	ids.sort()
 	for id in ids:
 		var it: Dictionary = dados.itens[id]
 		if int(it.get("precoGold", 0)) > 0:
-			itens.append({"id": int(id), "name": String(it["nome"]), "price": int(it["precoGold"]), "category": String(it.get("categoria", ""))})
+			itens.append({"id": int(id), "name": String(it["nome"]), "priceGold": int(it["precoGold"]), "category": String(it.get("categoria", "")), "description": String(it.get("descricao", ""))})
 	var venda: Array = []
 	var bag: Dictionary = estado.get("itens", {})
 	var chaves := bag.keys()
@@ -387,6 +390,9 @@ func _loja(estado: Dictionary) -> Dictionary:
 		var preco := preco_venda(int(k))
 		if preco > 0 and int(bag[k]) > 0:
 			venda.append({"itemId": int(k), "name": String(dados.itens.get(int(k), {}).get("nome", "")), "price": preco, "quantity": int(bag[k])})
+	# A (gravação G1): GET /api/game/shop = {gold, balls[{id, name, priceGold, iconUrl, catchRate}], items[{id, name,
+	# priceGold, icon, category, description}]}. "sell" é E: o cliente original monta a lista de venda do inventário
+	# (npcPrice e o filtro de categorias, C); aqui ela vem pronta para a tela não repetir a regra.
 	return {"type": "shop", "gold": int(estado.get("gold", 0)), "balls": bolas, "items": itens, "sell": venda}
 
 
@@ -414,7 +420,8 @@ func _comprar(estado: Dictionary, cmd: Dictionary) -> Array:
 	if custo > int(estado.get("gold", 0)):
 		return [_erro("Ouro insuficiente.")]
 	estado["gold"] = int(estado.get("gold", 0)) - custo
-	var r: Array = [{"type": "shop-bought", "gold": int(estado["gold"]), "bought": qtd, "name": nome}, msg_currency(estado)]
+	# A (G1): POST /api/game/shop/buy → {ok, bought, item, goldSpent, gold}
+	var r: Array = [{"type": "shop-bought", "ok": true, "bought": qtd, "item": nome, "goldSpent": custo, "gold": int(estado["gold"])}, msg_currency(estado)]
 	if cmd.has("ballId"):
 		var k := str(int(cmd["ballId"]))
 		estado["bolas"][k] = int(estado["bolas"].get(k, 0)) + qtd
@@ -452,7 +459,11 @@ func _vender(estado: Dictionary, cmd: Dictionary) -> Array:
 			bag.erase(pl[0])
 		vendidos += int(pl[1])
 	estado["gold"] = int(estado.get("gold", 0)) + ganho
-	return [{"type": "shop-sold", "gold": int(estado["gold"]), "goldGained": ganho, "soldCount": vendidos},
+	# A (G1): POST /api/game/shop/sell → {ok, soldKinds, soldCount, goldGained, gold}
+	var tipos_vendidos := {}
+	for pl in plano:
+		tipos_vendidos[pl[0]] = true
+	return [{"type": "shop-sold", "ok": true, "soldKinds": tipos_vendidos.size(), "soldCount": vendidos, "goldGained": ganho, "gold": int(estado["gold"])},
 		msg_currency(estado), msg_inventario(estado)]
 
 
@@ -467,9 +478,11 @@ func _vender_pokemon(estado: Dictionary, cmd: Dictionary) -> Array:
 		if pk.is_empty() or alvos.has(pk):
 			return [_erro("Pokémon inválido.")]
 		if bool(pk.get("team", false)) or bool(pk.get("starter", false)):
-			return [_erro("Só Pokémon da BOX podem ser vendidos.")]   # E
+			return [_erro("Só Pokémon da BOX podem ser vendidos.")]   # C: a lista de venda exclui time e inicial
+		if bool(pk.get("shiny", false)):
+			return [_erro("O Mark não compra Pokémon shiny.")]        # C: a lista de venda exclui shiny
 		alvos.append(pk)
-		ganho += int(dados.especie(int(pk["speciesId"])).get("valorVenda", 0))   # F: PARAMETROS.venda_pokemon
+		ganho += int(dados.especie(int(pk["speciesId"])).get("valorVenda", 0))   # A: PARAMETROS.venda_pokemon
 	if alvos.is_empty():
 		return [_erro("Nada para vender.")]
 	var removidos: Array = []
@@ -497,7 +510,9 @@ func _curar(estado: Dictionary) -> Array:
 			curados += 1
 			total += falta
 			r.append({"type": "poke-delta", "poke": poke_delta(pk)})
-	r.push_front({"type": "joy-healed", "healed": curados, "hp": total})
+	# A (G4): a resposta é {type: "joy-healed"} sem campos, no mesmo instante, sem custo; depois o servidor reenvia a
+	# lista de Pokémon (pokes-chunk). Aqui a lista vai como poke-delta de cada curado (E).
+	r.push_front({"type": "joy-healed"})
 	return r
 
 
@@ -513,9 +528,25 @@ func _msg_depot_lista(d: Dictionary, chave_id: String) -> Array:
 	return l
 
 
+func _lista_itens_depot(d: Dictionary) -> Array:
+	## A (G4): itens de /api/game/depot = [{id, name, icon, category, npcPrice, quantity}]
+	var l: Array = []
+	var ks := d.keys()
+	ks.sort_custom(func(a, b): return int(a) < int(b))
+	for k in ks:
+		if int(d[k]) <= 0:
+			continue
+		var it: Dictionary = dados.itens.get(int(k), {})
+		l.append({"id": int(k), "name": String(it.get("nome", "")), "icon": String(it.get("icone", "")),
+			"category": String(it.get("categoria", "")), "npcPrice": int(it.get("precoNpc", 0)), "quantity": int(d[k])})
+	return l
+
+
 func _msg_depot(estado: Dictionary) -> Dictionary:
+	## A (G4): GET/POST /api/game/depot[/move] → {inventory, depot}. "balls" é E: no original as bolas não aparecem no
+	## depot (só itens); o P04 guarda bolas no depot e isso ficou como está (ver CALIBRACAO_FASE4.md).
 	var dep: Dictionary = estado.get("depot", {})
-	return {"type": "depot", "items": _msg_depot_lista(dep.get("itens", {}), "itemId"),
+	return {"type": "depot", "inventory": _lista_itens_depot(estado.get("itens", {})), "depot": _lista_itens_depot(dep.get("itens", {})),
 		"balls": _msg_depot_lista(dep.get("bolas", {}), "ballId")}
 
 

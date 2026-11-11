@@ -30,6 +30,7 @@
   "S4.jsonl",
   "c2.jsonl",
   "c5.jsonl",
+  "g1.jsonl",
   "t1_transacoes.jsonl",
   "geodude-3.jsonl",
   "loogs.txt",
@@ -37,11 +38,11 @@
   "logs hitmonlee.txt"
  ],
  "totais": {
-  "tipos": 144,
+  "tipos": 145,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 54,
-  "rest_vistos": 8
+  "vistos_em_logs": 56,
+  "rest_vistos": 15
  },
  "mensagens": {
   "addon-used": {
@@ -427,7 +428,7 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 27757,
+    "vezes": 27901,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -441,6 +442,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -458,7 +460,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1630,
+    "vezes": 1634,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -472,6 +474,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -608,7 +611,7 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 19,
+    "vezes": 20,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -622,6 +625,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
      "rhydon-1h.jsonl",
@@ -640,7 +644,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 33,
+    "vezes": 34,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -653,6 +657,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodude-10min.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
      "rhydon-1h.jsonl",
@@ -698,7 +703,7 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 116,
+    "vezes": 123,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -709,6 +714,7 @@
      "S1.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -753,7 +759,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1612,
+    "vezes": 1615,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -763,6 +769,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -954,7 +961,7 @@
     ]
    },
    "visto_out": {
-    "vezes": 20,
+    "vezes": 21,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -968,6 +975,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodude-10min.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
@@ -1000,7 +1008,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 122,
+    "vezes": 129,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -1012,6 +1020,7 @@
      "S3.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1088,7 +1097,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 24741,
+    "vezes": 24757,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -1102,6 +1111,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1520,7 +1530,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 93,
+    "vezes": 94,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -1534,6 +1544,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1634,7 +1645,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2137,
+    "vezes": 2140,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -1648,6 +1659,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -1658,6 +1670,13 @@
      "t1_transacoes.jsonl"
     ],
     "esquema": {
+     "baseDex": {
+      "tipos": [
+       "int"
+      ],
+      "opcional": true,
+      "exemplo": 31
+     },
      "col": {
       "tipos": [
        "int"
@@ -2631,8 +2650,9 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 7,
     "fontes": [
+     "g1.jsonl",
      "rhydon-1h.jsonl"
     ],
     "esquema": {}
@@ -2772,7 +2792,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2815,
+    "vezes": 2820,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -2786,6 +2806,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -2827,6 +2848,23 @@
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 1,
+    "fontes": [
+     "g1.jsonl"
+    ],
+    "esquema": {}
+   }
+  },
+  "joy-healed": {
+   "no_cliente": {},
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "g1.jsonl"
+    ],
+    "esquema": {}
    }
   },
   "leave-hunt": {
@@ -2835,8 +2873,9 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 7,
+    "vezes": 8,
     "fontes": [
+     "g1.jsonl",
      "geodude-10min.jsonl",
      "loogs.txt",
      "t1_transacoes.jsonl"
@@ -2934,7 +2973,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1147,
+    "vezes": 1148,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -2948,6 +2987,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -3027,7 +3067,7 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 18,
+    "vezes": 19,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -3041,6 +3081,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "logs rhyhorn.txt",
      "loogs.txt",
      "rhydon-1h.jsonl",
@@ -3352,7 +3393,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2137,
+    "vezes": 2140,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -3366,6 +3407,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -3698,12 +3740,13 @@
   "pokes-chunk": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 10,
+    "vezes": 22,
     "fontes": [
      "M3.jsonl",
      "S1.jsonl",
      "S2.jsonl",
-     "c5.jsonl"
+     "c5.jsonl",
+     "g1.jsonl"
     ],
     "esquema": {
      "gen": {
@@ -3952,11 +3995,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 7,
+    "vezes": 12,
     "fontes": [
      "M1.jsonl",
      "S1.jsonl",
      "S2.jsonl",
+     "g1.jsonl",
      "geodude-10min.jsonl",
      "rhydon-1h.jsonl"
     ],
@@ -4268,9 +4312,10 @@
     ]
    },
    "visto_out": {
-    "vezes": 5,
+    "vezes": 7,
     "fontes": [
      "M1.jsonl",
+     "g1.jsonl",
      "geodude-10min.jsonl",
      "loogs.txt",
      "t1_transacoes.jsonl"
@@ -4582,7 +4627,7 @@
     ]
    },
    "visto_out": {
-    "vezes": 93,
+    "vezes": 94,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -4596,6 +4641,7 @@
      "S4.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -4624,7 +4670,7 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 121,
+    "vezes": 128,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -4636,6 +4682,7 @@
      "S3.jsonl",
      "c2.jsonl",
      "c5.jsonl",
+     "g1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
      "geodude-3.jsonl",
@@ -4781,12 +4828,13 @@
    }
   },
   "GET /api/game/city-npcs": {
-   "vezes": 2,
+   "vezes": 4,
    "fontes": [
+    "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 2
+    "200": 4
    },
    "esquema": {
     "tipos": [
@@ -4797,44 +4845,170 @@
       "object"
      ],
      "campos": {
+      "dir": {
+       "tipos": [
+        "int"
+       ],
+       "opcional": true,
+       "exemplo": 2
+      },
       "id": {
        "tipos": [
         "str"
        ],
-       "exemplo": "npc_nurse_-3_-10"
+       "exemplo": "npc_held_machine_-7_-29"
       },
       "kind": {
        "tipos": [
         "str"
        ],
-       "exemplo": "nurse"
+       "exemplo": "held_machine"
       },
       "x": {
        "tipos": [
         "int"
        ],
-       "exemplo": -3
+       "exemplo": -7
       },
       "y": {
        "tipos": [
         "int"
        ],
-       "exemplo": -10
+       "exemplo": -29
       }
      }
     }
    }
   },
+  "GET /api/game/depot": {
+   "vezes": 1,
+   "fontes": [
+    "g1.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "depot": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "category": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "stone"
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/stones/ancient_stone.gif"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 2
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Ancient Stone"
+        },
+        "npcPrice": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 50000
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 15
+        }
+       }
+      }
+     },
+     "inventory": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "category": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "loot"
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "bag_of_pollen.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 4
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Bag of Pollen"
+        },
+        "npcPrice": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 40
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 24
+        }
+       }
+      }
+     },
+     "maxSlots": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 200
+     }
+    }
+   }
+  },
   "GET /api/game/hunt-config": {
-   "vezes": 9,
+   "vezes": 12,
    "fontes": [
     "C8.jsonl",
     "M3.jsonl",
     "c5.jsonl",
+    "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 9
+    "200": 12
    },
    "esquema": {
     "tipos": [
@@ -4909,15 +5083,40 @@
     }
    }
   },
+  "GET /api/game/item/lock": {
+   "vezes": 1,
+   "fontes": [
+    "g1.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "locked": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": []
+      }
+     }
+    }
+   }
+  },
   "GET /api/game/map-markers": {
-   "vezes": 7,
+   "vezes": 8,
    "fontes": [
     "C8.jsonl",
     "M3.jsonl",
+    "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 7
+    "200": 8
    },
    "esquema": {
     "tipos": [
@@ -5353,6 +5552,118 @@
     }
    }
   },
+  "GET /api/game/shop": {
+   "vezes": 1,
+   "fontes": [
+    "g1.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "balls": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "catchRate": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "iconUrl": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/pokeball.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Poké Ball"
+        },
+        "priceGold": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 5
+        }
+       }
+      }
+     },
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 92435014
+     },
+     "items": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "category": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "heal"
+        },
+        "description": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": ""
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/small_potion.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 200
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Small Potion"
+        },
+        "priceGold": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 5
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "GET /api/game/used-balls": {
    "vezes": 1,
    "fontes": [
@@ -5685,6 +5996,250 @@
         }
        }
       }
+     }
+    }
+   }
+  },
+  "POST /api/game/depot/move": {
+   "vezes": 3,
+   "fontes": [
+    "g1.jsonl"
+   ],
+   "status": {
+    "200": 3
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "depot": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "category": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "stone"
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/stones/ancient_stone.gif"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 2
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Ancient Stone"
+        },
+        "npcPrice": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 50000
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 15
+        }
+       }
+      }
+     },
+     "inventory": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "category": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "loot"
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "band_aid.png"
+        },
+        "id": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 5
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Band Aid"
+        },
+        "npcPrice": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "quantity": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 4
+        }
+       }
+      }
+     },
+     "maxSlots": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 200
+     }
+    }
+   }
+  },
+  "POST /api/game/pokemon/sell": {
+   "vezes": 2,
+   "fontes": [
+    "g1.jsonl"
+   ],
+   "status": {
+    "200": 2
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 92453049
+     },
+     "goldGained": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 18000
+     },
+     "sold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     }
+    }
+   }
+  },
+  "POST /api/game/shop/buy": {
+   "vezes": 1,
+   "fontes": [
+    "g1.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "bought": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 92435009
+     },
+     "goldSpent": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 5
+     },
+     "item": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Small Potion"
+     },
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     }
+    }
+   }
+  },
+  "POST /api/game/shop/sell": {
+   "vezes": 1,
+   "fontes": [
+    "g1.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 92435049
+     },
+     "goldGained": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 40
+     },
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "soldCount": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "soldKinds": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
      }
     }
    }

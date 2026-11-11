@@ -29,16 +29,16 @@ Testes:
 | --- | --- | --- |
 | `evolve-info {capturedId, destId?}` | `GET /api/game/evolve?capturedId=&destId=` | C (os campos da resposta são os que a tela lê: `canEvolve`, `needLevel`, `level`, `keepLevel`, `resetLevel`, `itemOnly`, `hasStones`, `stones[{itemId, name, need, have}]`, `branches`, `destName`) |
 | `evolve {capturedId, useStone, destId?}` | `POST /api/game/evolve` → `{name}` | C |
-| `shop` | `GET /api/game/shop` | C (só o `gold` é lido com certeza; o resto da resposta é E) |
-| `shop-buy {ballId \| itemId, qty}` | `POST /api/game/shop/buy` → `{gold, bought}` | C |
-| `shop-sell {items[{itemId, qty}]}` | `POST /api/game/shop/sell` → `{gold, goldGained, soldCount}` | C |
-| `pokemon-sell {pokeIds}` | `POST /api/game/pokemon/sell` → `{gold, goldGained, sold}` | C |
-| `joy-heal` | WS `joy-heal` (sem resposta própria no cliente) | C; a resposta `joy-healed` é E |
-| `depot`, `depot-move {itemId, dir} \| {all: true}` | `GET/POST /api/game/depot[/move]` | C; `ballId` no `depot-move` é E |
+| `shop` | `GET /api/game/shop` → `{gold, balls[{id, name, priceGold, iconUrl, catchRate}], items[{id, name, priceGold, icon, category, description}]}` | **A** (G1); a lista `sell` extra é E (o cliente monta a lista de venda do inventário) |
+| `shop-buy {ballId \| itemId, qty}` | `POST /api/game/shop/buy` → `{ok, bought, item, goldSpent, gold}` | **A** (G1: 1 Small Potion por 5) |
+| `shop-sell {items[{itemId, qty}]}` | `POST /api/game/shop/sell` → `{ok, soldKinds, soldCount, goldGained, gold}` | **A** (G1: 1 Bag of Pollen por 40) |
+| `pokemon-sell {pokeIds}` | `POST /api/game/pokemon/sell` → `{sold, goldGained, gold}` | **A** (G2) |
+| `joy-heal` | WS `joy-heal` → `{type: "joy-healed"}` sem campos, no mesmo instante; depois o servidor reenvia a lista de Pokémon | **A** (G4); aqui a lista vai como `poke-delta` dos curados (E) |
+| `depot`, `depot-move {itemId, dir} \| {all: true}` | `GET/POST /api/game/depot[/move]` → `{inventory[…], depot[…]}`, itens `{id, name, icon, category, npcPrice, quantity}` | **A** (G4); `ballId`/`balls` são E (no original as bolas não ficam no depot) |
 | `poke-store {id}`, `poke-withdraw {id}` | WS `poke-store`, `poke-withdraw` | C (nomes); os campos são E |
 | Mensagens de estado | `balls {catalog, counts, gold, selected}`, `inventory {items}`, `poke-delta {poke}` | A (formato gravado) |
 | | `currency {gold}` | C (o tipo existe) |
-| | `depot`, `pokes-removed`, `evolved`, `shop-*`, `pokemon-sold` | E |
+| | `pokes-removed`, `evolved` | E |
 
 ## Evolução
 
@@ -66,7 +66,7 @@ Testes:
 | Itens à venda: os com `priceGold` > 0 (hoje as 5 poções: 5, 10, 22, 55, 135) | C/A | a tela mostra "Preço: priceGold"; `items.json` |
 | Venda de item ao NPC: `npcPrice`, só para item com `npcPrice > 0` fora das categorias heal/revive/stone (exceções: ids 205 e 206, Revive e Max Revive aposentados) | C | "Mark paga: npcPrice"; lista de venda do cliente filtra `iV = {heal, revive, stone}` com exceção `iK = {205, 206}`. Poções e pedras não são vendáveis. Tabela completa: `dados/relatorios/precos_npc.md` |
 | Venda nunca acima do preço de compra | E (só proteção) | com a regra acima, nenhum item do catálogo chega no teto (0 de 370 vendáveis). No lote 1 a regra tratava poções como vendáveis; o `npcPrice` delas (50 > 5 de compra) não é preço de venda. Não era erro de importação: campos e unidade conferidos contra o snapshot cru, 0 divergências |
-| Venda de Pokémon (só da BOX, nunca o inicial) pelo `valorVenda` da espécie | F (valor) / C (restrições) | o cliente lista para venda só Pokémon fora do time, não inicial, não shiny, não anunciado no mercado e com `sellValue > 0` (C); a exclusão de shiny ainda não está na sim (sem shiny no time offline); o valor pago não foi gravado (G2) |
+| Venda de Pokémon: só da BOX, nunca o inicial nem shiny; vale o `sellValue` da espécie, sem depender de nível, Quality ou IV | **A** (valor) / C (restrições) | G2: 2 Blastoise Lv.1 (Q 1,014 / IV 124 e Q 1,273 / IV 61) → 18000 cada = `valorVenda`; o `sellValue` que o servidor manda é o da espécie em 399/399 Pokémon (níveis 1 a 425). Restrições (C): o cliente lista só Pokémon fora do time, não inicial, não shiny, não anunciado, `sellValue > 0`. A recusa de shiny entrou na sim em 11/11 |
 | Ouro vem só de vendas (o `field-kill` não traz ouro) | A | nenhum campo de ouro em 600+ abates |
 | Ouro inicial 0 | E | o original dá 100 Small Potions e 100 Poké Balls (C); o saldo inicial não foi gravado |
 | Loja, Nurse e depot só nas cidades com o NPC | A | `city-npcs`: Cerulean e Viridian têm `shop`, `nurse` e `pokedepot` |
@@ -75,7 +75,7 @@ Testes:
 
 | Regra | Fonte | Evidência |
 | --- | --- | --- |
-| Cura o time inteiro, de graça, sem recarga | C | "She heals your whole team for free" e "Nurse Joy heals for free"; o botão manda `joy-heal` direto |
+| Cura o time inteiro, de graça, sem recarga, na hora | **A** (G4) + C | `joy-healed` no mesmo instante do `joy-heal`, nenhuma mensagem de ouro; o Exeggutor ferido voltou a 13188/13188 |
 | Só o time (não a BOX) | C/E | "heals your whole team" |
 
 ## Depot
@@ -84,9 +84,11 @@ Testes:
 | --- | --- | --- |
 | Time de no máximo 6 | C | "Your team only carries 6 — the rest rest here" |
 | BOX com até 3000 Pokémon | A (conta VIP) / F (sem VIP) | `auto-helper.pokeCapacity` 3000 |
-| Depot de itens com até 200 pilhas | E | limite do P04; o original não mostra limite |
-| "Guardar tudo" leva a BAG inteira; bola vinculada (Golden Idle) fica | C (`{all: true}`) / A (`bound`) / E (vinculada fica) | — |
+| Depot de itens com até 200 pilhas | E | G4 chegou a 89 pilhas sem aviso de limite (não contradiz) |
+| Mover leva a pilha inteira; "guardar tudo" esvazia a BAG (inclusive poções); vinculada (Golden Idle) fica | **A** (G4) / A (`bound`) / E (vinculada fica) | G4: 24 Bag of Pollen numa vez, 15 Ancient Stone retiradas numa vez, "guardar tudo" levou 62 pilhas e deixou a BAG vazia |
 | O inicial não vai para a BOX; depositar o líder passa a liderança ao inicial | E | regras do P04 mantidas |
+
+| Bolas no depot | **A** × E | G4: as bolas nunca aparecem no depot (nem na lista da BAG, nem na do depot); o P04 guarda bolas no depot e isso **ficou como está** até decisão |
 
 ## VIP
 
@@ -99,13 +101,9 @@ Fica de fora (não medido):
 
 ## O que pede evidência do original (até 4 gravações curtas, gravador v1.2)
 
-**G1 — dispensada.** O cliente (C) mostra que o Mark não compra poções nem pedras (categorias heal/revive/stone).
+**G1 — feita (11/11).** Compra (Small Potion por 5) e venda de loot (Bag of Pollen por 40) com o formato das respostas (A). Poções e pedras não aparecem para venda: a lista é montada pelo cliente (C); o servidor não foi testado com uma poção.
 
-**G2 — venda de Pokémon (2 min).** Na loja, aba de Pokémon:
-1. Venda 1 Pokémon da BOX de nível 1 e Quality comum.
-2. Venda 1 de nível alto da mesma espécie, se houver.
-
-O `goldGained` de cada um mostra se o valor é o `sellValue` fixo ou se depende de nível ou Quality.
+**G2 — feita (11/11).** O valor é o `sellValue` da espécie (A).
 
 **G3 — evolução com pedras (3 min).** Com um Pokémon que já pode evoluir e com pedras na BAG:
 1. Abra a janela de evolução (botão ⬆ no time).
@@ -115,10 +113,4 @@ O `goldGained` de cada um mostra se o valor é o `sellValue` fixo ou se depende 
 
 As respostas `GET /api/game/evolve` trazem a receita real (`stones`) e confirmam ou derrubam a hipótese F.
 
-**G4 — Nurse Joy e depot (2 min).**
-1. Volte da hunt com o time ferido e clique na Nurse Joy (Heal team).
-2. Abra o Depot e guarde 1 item.
-3. Retire 1 item.
-4. Use "guardar tudo".
-
-Mostra se o servidor responde ao `joy-heal` (e com o quê) e o formato de `/api/game/depot`.
+**G4 — feita (11/11).** Nurse Joy responde `joy-healed` vazio, sem custo; formato do depot e regras de mover (A).

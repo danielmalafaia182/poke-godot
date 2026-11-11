@@ -138,7 +138,7 @@ Parâmetros `stats_dano_selvagem` / `stats_dano_aliado` ("continuo"/"inteiro") v
 
 Envelopes previstos contêm os observados em: Venusaur 109 Solar Beam → Rhydon 80 (910–2282) e → Kangaskhan 80 (128–230);
 Rhydon Stone Edge → Venusaur (241–432); Kangaskhan Mega Punch → Venusaur (136–207).
-Em aberto: no nível 1 o Geodude (Atk exibido 1) tira 6–8 em Rattata — sugere stats sem arredondar ou piso interno de stat.
+Em aberto (**desvio conhecido, medido em 11/11**): no nível 1 o Geodude tira 6 ou 8 em Rattata (A, geodude-10min, 153 hits; nível 2: 8–10, nível 3: 12–14, nível 4: 20–23) e a sim tira 2 (o piso) — Larvitar Lv.1 → Geodude e Geodude Lv.1 → Rattata dão 2 em 100% dos hits; por isso um time de nível 1 não abate nada em 60 s na sim (40/40 sementes, `testes/varrer_sementes_sim.gd`). Não corrigido (aguarda decisão); sugere stats sem arredondar ou piso interno de stat.
 Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes/geodude-*.jsonl`).
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
@@ -716,3 +716,19 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   **Testes:** P04 **43/43**, serviço da cidade 41/41, ciclo 20/20, regras 41/41, caminho 8/8, determinismo, regras do
   usuário 17/17, cadáveres 3/3, catálogo 12/12, save fase 3 12/12, grade 7/7, cena 22/22, protocolo, ponte 11/11, save
   em thread 15/15. Diferencial 1h 27/30, antiga 23/26 (iguais).
+- 11/11/2026 — Gravação G1 (`poke har/gravacoes/fase3/g1.jsonl`, com G1, G2 e G4 numa sessão) e ajustes (detalhe em
+  `CALIBRACAO_FASE4.md`).
+  - G1 (A): compra `{ok, bought, item, goldSpent, gold}` (Small Potion por 5); venda `{ok, soldKinds, soldCount,
+    goldGained, gold}` (Bag of Pollen por 40 = npcPrice); `GET /shop` = `{gold, balls, items}`. A recusa de poções
+    segue C (a lista de venda é do cliente).
+  - G2 (A): **venda de Pokémon = `sellValue` da espécie**: 2 Blastoise Lv.1 de Quality/IV diferentes → 18000 cada;
+    `sellValue` = `valorVenda` em 399/399 Pokémon (níveis 1 a 425). F → A.
+  - G4 (A): `joy-heal` → `{type: "joy-healed"}` sem campos, na hora, sem custo; depot `{inventory, depot}` com itens
+    `{id, name, icon, category, npcPrice, quantity}`; mover leva a pilha inteira; "guardar tudo" esvazia a BAG
+    (inclusive poções); 89 pilhas sem aviso de limite. As bolas não aparecem no depot do original (o P04 guarda: não
+    mudado, pendente de decisão).
+  - Mensagens do serviço da cidade no formato gravado (shop, shop-bought, shop-sold, joy-healed, depot).
+  - O Mark não compra Pokémon shiny (C, aplicado).
+  - Item 3: a sim nova também não abate com time nível 1 (40/40 sementes, mesmo com HP cheio a cada passo); causa =
+    dano no nível 1–4 (desvio conhecido acima), não alvo, perseguição nem spawn (35 golpes em 60 s, cadência cheia).
+  **Testes:** serviço 46/46, P04 43/43, regressão verde, diferencial 1h 27/30 e antiga 23/26 (iguais).
