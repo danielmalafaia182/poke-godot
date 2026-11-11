@@ -138,6 +138,16 @@ func _validar(dados: Variant) -> String:
 		return "Ouro inválido."
 	if dados.has("vip") and not dados["vip"] is bool:
 		return "VIP inválido."
+	# Fase 4, lote 2 (opcionais): Streak Points e soneca pendente.
+	if dados.has("streak"):
+		var st: Variant = dados["streak"]
+		if not st is Dictionary or not _inteiro(st.get("totalKills", 0), 0, 9007199254740991) or not st.get("spent", {}) is Dictionary:
+			return "Streak inválido."
+		for t in st.get("spent", {}):
+			if not t in ["exp", "loot", "shiny"] or not _inteiro(st["spent"][t], 0, 1000000):
+				return "Streak inválido."
+	if dados.has("soneca") and (not dados["soneca"] is Dictionary or JSON.stringify(dados["soneca"]).length() > 200000):
+		return "Soneca inválida."
 	var cidade: Variant = dados["cidade"]
 	if not cidade is Dictionary or cidade.get("mapa") != "cerulean" or not cidade.get("definida") is bool:
 		return "Cidade inválida."
@@ -245,9 +255,17 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 	estado.ultima_hunt_slug = String(dados.get("ultima_hunt", ""))
 	estado.ouro = int(dados.get("ouro", 0))
 	estado.vip = bool(dados.get("vip", false))
+	var st: Dictionary = dados.get("streak", {})
+	var gastos := {}
+	for t in st.get("spent", {}):
+		gastos[String(t)] = int(st["spent"][t])
+	estado.streak = {"totalKills": int(st.get("totalKills", 0)), "spent": gastos}
+	estado.soneca = (dados.get("soneca", {}) as Dictionary).duplicate(true)
 	# B-relatado/E: a sessão expira com 15 min de jogo fechado (o salvo_em_unix é o último save antes de fechar).
-	var fechado_s := int(Time.get_unix_time_from_system()) - int(dados.get("salvo_em_unix", 0))
-	estado.sessao_expirada = not dados.has("salvo_em_unix") or fechado_s >= estado.SESSAO_EXPIRA_S
+	# Regra da sessão em sim/servico_jogador.gd (sem soneca, 15 min fechado expira; com soneca valendo, não).
+	estado.sessao_expirada = not dados.has("salvo_em_unix") or bool(preload("res://sim/servico_jogador.gd").new().tratar(
+		{"soneca": dados.get("soneca", {})}, {"type": "sessao", "fechado_em": int(dados.get("salvo_em_unix", 0)),
+		"agora": int(Time.get_unix_time_from_system())})[0]["expirada"])
 	estado.posicao_cidade_definida = dados["cidade"]["definida"]
 	estado.celula_cidade_salva = Vector2i(int(dados["cidade"]["x"]), int(dados["cidade"]["y"]))
 	estado.direcao_cidade_salva = int(dados["cidade"]["direcao"])
@@ -309,7 +327,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"configuracoes": {"auto_catch": estado.auto_catch, "auto_catch_ball_id": estado.auto_catch_ball_id, "auto_catch_names": estado.auto_catch_names, "bola_selecionada": estado.bola_selecionada, "auto_potion": estado.auto_potion, "auto_potion_threshold": estado.auto_potion_threshold, "auto_potion_item_id": estado.auto_potion_item_id},
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
 		"captura_medidor": estado.medidor_captura.duplicate(true), "ultima_hunt": estado.ultima_hunt_slug,
-		"ouro": estado.ouro, "vip": estado.vip,
+		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 

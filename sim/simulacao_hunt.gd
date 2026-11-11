@@ -249,8 +249,10 @@ func iniciar() -> Array:
 	## Equivale a enter-hunt: devolve field-init e o primeiro field (tick 0).
 	_saida = []
 	_emitir(msg_field_init())
-	if penalidade_ativa():
+	if penalidade_ativa() or not _boosts_ativos().is_empty():
 		_emitir(msg_boosts())   # A: logo depois do field-init, {key: shinylock, until, pct: 0}
+	if not (cfg.get("eventos", []) as Array).is_empty():
+		_emitir(msg_events())   # A: formato {type: events, events: [{key, name, desc, pct, emoji, until}]}
 	heroi["alvo"] = _escolher_alvo()  # A: targetSlot nunca é null nos 2009 fields gravados
 	_emitir(_montar_field())
 	return _saida
@@ -264,7 +266,34 @@ func msg_boosts() -> Dictionary:
 	var b: Array = []
 	if penalidade_ativa():
 		b.append({"key": "shinylock", "until": penalidade_ate_ms, "pct": 0})
+	b.append_array(_boosts_ativos())
 	return {"type": "boosts", "boosts": b}
+
+
+func _boosts_ativos() -> Array:
+	var r: Array = []
+	for bo in cfg.get("boosts", []):
+		if agora_ms() < int(bo.get("until", 0)):
+			r.append({"key": String(bo["key"]), "until": int(bo["until"]), "pct": int(bo.get("pct", 0))})
+	return r
+
+
+func _boost_ativo(chave: String) -> bool:
+	for bo in _boosts_ativos():
+		if String(bo["key"]) == chave:
+			return true
+	return false
+
+
+func msg_events() -> Dictionary:
+	var l: Array = []
+	for ev in cfg.get("eventos", []):
+		var x: Dictionary = {}
+		for k in ["key", "name", "desc", "pct", "emoji", "until"]:
+			if ev.has(k):
+				x[k] = ev[k]
+		l.append(x)
+	return {"type": "events", "events": l}
 
 
 func msg_field_init() -> Dictionary:
@@ -668,27 +697,80 @@ func _abate(m: Dictionary) -> void:
 	# XP (A): base = experience da espécie; vip = 50% da base em parcela separada.
 	var base := int(esp.get("xpAbate", 0))
 	var vip := Regras.js_round(float(base) * float(p.vip_fracao)) if cfg.get("vip", false) else 0
-	var total := base + vip
+	# Fase 4, lote 2 (F: cada parcela é um % da base): streak (só treinador), boost xp / pokexp, tipo do dia.
+	var streak_xp := Regras.js_round(float(base) * float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("exp", 0)))
+	var boost_t := Regras.js_round(float(base) * _pct_boost("xp") / 100.0)
+	var boost_p := Regras.js_round(float(base) * _pct_boost("pokexp") / 100.0)
+	var tipo_dia := _tipo_do_dia_ativo(esp)
+	var parcela_dia := Regras.js_round(float(base) * float(p.tipo_do_dia_pct) / 100.0) if tipo_dia else 0
+	var total := base + vip + streak_xp + boost_t + parcela_dia
+	var total_p := base + vip + boost_p + parcela_dia
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
+	var debuff_p := 0
 	var lock := penalidade_ativa()
 	if lock:
 		debuff = int(floor(float(total) * float(p.penalidade_fator))) - total
 		total += debuff
+		debuff_p = int(floor(float(total_p) * float(p.penalidade_fator))) - total_p
+		total_p += debuff_p
 	var nivel_t_antes := int(treinador["nivel"])
 	treinador["xp"] = int(treinador["xp"]) + total
 	treinador["nivel"] = Regras.nivel_por_xp(treinador["xp"])
 	var poke := _poke_ativo()
 	var nivel_p_antes := int(poke["nivel"])
-	poke["xp"] = int(poke["xp"]) + total
+	poke["xp"] = int(poke["xp"]) + total_p
 	poke["nivel"] = Regras.nivel_por_xp(poke["xp"])
 	var subiu_poke: bool = int(poke["nivel"]) != nivel_p_antes
 	if subiu_poke:
 		_recalcular_stats(poke)  # A: subir de nível não cura (HP absoluto mantido, máximo novo)
 	# Loot (A): cada entrada sorteada com chance/100000; quantidade uniforme min..max.
 	var loot: Array = []
+	# Rolagens de drop: 1 + as extras da trilha Loot do Streak (C). Sem pontos, uma rolagem e nenhum sorteio a mais.
+	var rolagens := 1
+	var extra := float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("loot", 0))
+	if extra > 0.0:
+		rolagens += int(floor(extra))
+		if rng.randf() < extra - floor(extra):
+			rolagens += 1
+	var mult_loot := (1.0 + _pct_boost("loot") / 100.0) * (1.0 + float(p.tipo_do_dia_pct) / 100.0 if tipo_dia else 1.0)
+	for _r in rolagens:
+		_rolar_loot(esp, lock, mult_loot, loot)
+	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
+		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
+		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
+		"xpParts": _com_debuff({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": 0, "gym": 0, "typeDay": parcela_dia}, debuff),
+		"pokeXp": {"xpGained": total_p, "parts": _com_debuff({"base": base, "boost": boost_p, "vip": vip, "event": 0, "mentor": 0, "gym": 0, "typeDay": parcela_dia}, debuff_p),
+			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
+		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
+	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total_p,
+		"xp": poke["xp"], "level": poke["nivel"], "leveledUp": subiu_poke})
+	var bola := _tentar_captura(m)
+	if subiu_poke:
+		_emitir({"type": "poke-delta", "poke": _poke_delta(poke)})
+	_emitir(_msg_inventario())
+	_fim_abate(m, bola)
+
+
+func _pct_boost(chave: String) -> float:
+	## Boost ativo (cfg.boosts: [{key, until, pct}], A: formato da mensagem boosts) → pct; 0 sem boost.
+	for b in cfg.get("boosts", []):
+		if String(b.get("key", "")) == chave and agora_ms() < int(b.get("until", 0)):
+			return float(b.get("pct", 0))
+	return 0.0
+
+
+func _tipo_do_dia_ativo(esp: Dictionary) -> bool:
+	## Evento type-of-day (cfg.eventos, A: formato da mensagem events): vale para selvagem de um dos tipos do dia.
+	for ev in cfg.get("eventos", []):
+		if String(ev.get("key", "")) == "type-of-day" and agora_ms() < int(ev.get("until", 0)):
+			return String(ev.get("tipo", "")) in Regras.tipos_de(esp)
+	return false
+
+
+func _rolar_loot(esp: Dictionary, lock: bool, mult: float, loot: Array) -> void:
 	for e in esp.get("loot", []):
-		var chance := float(e.get("chanceBruta", 0.0))
+		var chance := float(e.get("chanceBruta", 0.0)) * mult
 		if chance <= 0.0:
 			continue
 		if lock and String(p.penalidade_loot) == "chance":
@@ -703,19 +785,9 @@ func _abate(m: Dictionary) -> void:
 				continue  # item sem id no catálogo (relatorio_importacao.loot_sem_item): sorteado, mas não entregue
 			loot.append({"itemId": int(e["itemId"]), "name": e["item"], "qty": qtd})
 			inventario[int(e["itemId"])] = int(inventario.get(int(e["itemId"]), 0)) + qtd
-	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
-		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
-		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
-		"xpParts": _com_debuff({"base": base, "streak": 0, "boost": 0, "vip": vip, "event": 0, "gym": 0, "typeDay": 0}, debuff),
-		"pokeXp": {"xpGained": total, "parts": _com_debuff({"base": base, "boost": 0, "vip": vip, "event": 0, "mentor": 0, "gym": 0, "typeDay": 0}, debuff),
-			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
-		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
-	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total,
-		"xp": poke["xp"], "level": poke["nivel"], "leveledUp": subiu_poke})
-	var bola := _tentar_captura(m)
-	if subiu_poke:
-		_emitir({"type": "poke-delta", "poke": _poke_delta(poke)})
-	_emitir(_msg_inventario())
+
+
+func _fim_abate(m: Dictionary, bola: bool) -> void:
 	if bola:
 		_emitir(_msg_balls())
 	# re-alvo imediato (A: o alvo novo aparece no mesmo field da morte)
@@ -763,7 +835,7 @@ func _tentar_captura(m: Dictionary) -> bool:
 	var sid := str(m["species_id"]) + ("s" if bool(m["shiny"]) else "")   # C: a tela separa a variante shiny
 	var med: Dictionary = medidor.get(sid, {"investido": 0.0, "tentativas": 0, "total": 0, "gasto": 0})
 	var chance := Regras.chance_captura(int(sel), float(med.get("investido", 0.0)),
-		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)), p)
+		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)) + (float(p.boost_captura_bonus) if _pct_boost("capture") > 0.0 or _boost_ativo("capture") else 0.0), p)
 	med["investido"] = float(med.get("investido", 0.0)) + Regras.valor_bola(int(sel), p)
 	med["tentativas"] = int(med.get("tentativas", 0)) + 1
 	med["total"] = int(med.get("total", 0)) + 1

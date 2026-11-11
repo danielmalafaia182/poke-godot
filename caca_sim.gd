@@ -88,6 +88,10 @@ func _ready() -> void:
 	var jogo := _extrair_save(nome)
 	jogo["slug"] = slug_pedido
 	var cfg := CenarioJogo.configurar(jogo, dados, semente if semente != 0 else agora % 2147483647, agora)
+	# Fase 4, lote 2: Streak Points (C), Tipo do Dia (A: evento; E: rotação offline) e boosts ativos (A: formato).
+	cfg["streak"] = EstadoJogo.efeitos_streak()
+	cfg["eventos"] = EstadoJogo.eventos_do_dia(agora / 1000)
+	cfg["boosts"] = EstadoJogo.boosts_ativos(agora)
 	# Penalidade de entrada (B-relatado): hunt diferente da última ou sessão expirada; a mesma hunt de novo não.
 	cfg["entrada_nova"] = CenarioJogo.penalizar_entrada(EstadoJogo.sessao_expirada, EstadoJogo.ultima_hunt_slug, String(cfg["slug"]))
 	EstadoJogo.ultima_hunt_slug = String(cfg["slug"])
@@ -178,6 +182,7 @@ func _tratar(msg: Dictionary) -> void:
 			_sincronizar_hp(msg.get("bossTeam", []))
 		"field-kill":
 			registro["abates"] += 1
+			EstadoJogo.registrar_abates(1)
 			EstadoJogo.registrar_recompensa_treinador(int(msg["xpGained"]))
 			registro["xp_treinador"] += int(msg["xpGained"])
 			_receber_loot(msg.get("loot", []))
@@ -320,6 +325,27 @@ func _montar_hud() -> void:
 	hud_caca.name = "HudCaca"
 	hud_caca.controlador = self
 	hud.add_child(hud_caca)
+	# Modo Soneca (C: botão Zzz na hunt; o jogo fecha e a caçada segue 5 min "no servidor").
+	var zzz := Button.new()
+	zzz.name = "BotaoSoneca"
+	zzz.text = "💤 Zzz"
+	zzz.tooltip_text = "Modo Soneca: a hunt continua por 5 min e, ao voltar, você coleta 50% da taxa de XP pelo tempo fora (até 24 h)."
+	zzz.anchor_left = 1.0; zzz.anchor_right = 1.0; zzz.anchor_top = 1.0; zzz.anchor_bottom = 1.0
+	zzz.offset_left = -120; zzz.offset_right = -16; zzz.offset_top = -48; zzz.offset_bottom = -16
+	zzz.pressed.connect(func() -> void:
+		if soneca().is_empty():
+			EstadoJogo.salvar_agora()
+			get_tree().quit())
+	hud.add_child(zzz)
+
+
+func soneca() -> String:
+	## Roda a amostra de 5 min a partir do estado atual da hunt e grava a soneca (sem fechar o jogo; o botão fecha).
+	if sim == null or _encerrada:
+		return "Sem hunt para a soneca."
+	var erro: String = EstadoJogo.dormir(sim, int(Time.get_unix_time_from_system()))
+	_encerrada = true
+	return erro
 
 
 func _on_botao_voltar_cidade_pressed() -> void:

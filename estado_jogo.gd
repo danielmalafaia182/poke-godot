@@ -20,6 +20,7 @@ signal estado_salvamento_alterado
 signal individuo_alterado(pokemon: DadosPokemon)
 signal ouro_alterado
 signal vip_alterado
+signal streak_alterado
 
 const CATALOGO_POCOES = InventarioJogo.CATALOGO_POCOES
 const CATALOGO_BOLAS = InventarioJogo.CATALOGO_BOLAS
@@ -90,6 +91,14 @@ var vip: bool = false:
 			vip = valor
 			vip_alterado.emit()
 const PONTE_CIDADE := preload("res://ponte_cidade.gd")
+# Fase 4, lote 2: Streak Points e Modo Soneca (regras em sim/servico_jogador.gd; vão no save).
+const SERVICO_JOGADOR := preload("res://sim/servico_jogador.gd")
+static var _servico_jogador = null
+var streak: Dictionary = {"totalKills": 0, "spent": {}}
+var soneca: Dictionary = {}
+# Boosts ativos ({key, until(ms), pct}, A: formato). E: o jogo offline ainda não tem fonte de boosts (no original vêm
+# da loja de diamantes, do Daily Gift e de itens); o campo existe para a simulação e para sistemas futuros.
+var boosts: Array = []
 # Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
 var slug_caca: String = ""
 # Fase 3: medidor de captura por espécie (C: /api/game/used-balls) — speciesId (str, "s" no fim = shiny) →
@@ -317,6 +326,90 @@ func evoluir_pokemon(pokemon: DadosPokemon, usar_pedra: Variant = null, destino:
 	if destino >= 0:
 		cmd["destId"] = destino
 	return PONTE_CIDADE.primeiro_erro(PONTE_CIDADE.enviar(self, cidade_atual(), cmd))
+
+# ---------------------------------------------------------------- lote 2: Streak, soneca, eventos
+func servico_jogador():
+	if _servico_jogador == null:
+		_servico_jogador = SERVICO_JOGADOR.new()
+	return _servico_jogador
+
+func _estado_jogador() -> Dictionary:
+	return {"gold": ouro, "streak": streak, "soneca": soneca}
+
+func _voltar_estado_jogador(e: Dictionary) -> void:
+	if int(e["gold"]) != ouro:
+		ouro = int(e["gold"])
+		ouro_alterado.emit()
+	streak = e["streak"]
+	soneca = e["soneca"]
+
+func registrar_abates(n: int = 1) -> void:
+	## C: "1 point every 1000 total kills" — a hunt chama a cada field-kill.
+	SERVICO_JOGADOR.somar_abates(_estado_jogador(), n)
+
+func streak_info() -> Dictionary:
+	return servico_jogador().tratar(_estado_jogador(), {"type": "streak-get"})[0]
+
+func gastar_streak(trilha: String) -> String:
+	var e := _estado_jogador()
+	var msgs: Array = servico_jogador().tratar(e, {"type": "streak-spend", "track": trilha})
+	_voltar_estado_jogador(e)
+	var erro := PONTE_CIDADE.primeiro_erro(msgs)
+	if erro.is_empty():
+		streak_alterado.emit()
+		solicitar_salvamento()
+	return erro
+
+func efeitos_streak() -> Dictionary:
+	return servico_jogador().efeitos_streak(_estado_jogador())
+
+func eventos_do_dia(agora_unix: int) -> Array:
+	return servico_jogador().tratar({}, {"type": "eventos", "agora": agora_unix})[0]["events"]
+
+func boosts_ativos(agora_ms: int) -> Array:
+	return boosts.filter(func(b): return int(b.get("until", 0)) > agora_ms)
+
+# Modo Soneca (C): a hunt atual roda 5 min (amostra) e o jogo fecha; ao voltar, o tempo fora rende 50% da taxa de XP.
+func dormir(sim, agora_unix: int) -> String:
+	var amostra: Dictionary = SERVICO_JOGADOR.amostra_soneca(sim, int(servico_jogador().p.soneca_amostra_s))
+	var e := _estado_jogador()
+	var msgs: Array = servico_jogador().tratar(e, {"type": "sleep-mode", "agora": agora_unix, "amostra": amostra})
+	_voltar_estado_jogador(e)
+	solicitar_salvamento()
+	return "" if bool(msgs[0].get("ghost", false)) else "Sem hunt para a soneca."
+
+func relatorio_offline(agora_unix: int) -> Dictionary:
+	var e := _estado_jogador()
+	var r: Dictionary = servico_jogador().tratar(e, {"type": "offline-get", "agora": agora_unix})[0]
+	_voltar_estado_jogador(e)   # voltar antes de 5 min cancela (o serviço zera a soneca)
+	return r
+
+func coletar_offline(agora_unix: int) -> Dictionary:
+	var e := _estado_jogador()
+	var msgs: Array = servico_jogador().tratar(e, {"type": "offline-claim", "agora": agora_unix, "boost": false})
+	_voltar_estado_jogador(e)
+	var c: Dictionary = {}
+	for m in msgs:
+		if m.get("type") == "offline-claimed":
+			c = m
+	if c.is_empty():
+		return {"erro": PONTE_CIDADE.primeiro_erro(msgs)}
+	registrar_recompensa_treinador(int(c["xpTrainer"]))
+	registrar_abates(int(c.get("sampleKills", 0)))
+	for pk in time_pokemon:
+		if pk.id_persistente == String(c["pokemonId"]):
+			conceder_experiencia(pk, int(c["xpPokemon"]))
+	var loot: Array[Dictionary] = []
+	for k in c.get("loot", {}):
+		var interno: int = preload("res://regras_loot.gd").id_interno(int(k))
+		if not preload("res://regras_loot.gd").obter(interno).is_empty():
+			loot.append({"itemId": interno, "qty": int(c["loot"][k])})
+	inventario.receber_loot(loot)
+	for k in c.get("itemsUsed", {}):
+		for i in int(c["itemsUsed"][k]):
+			inventario.consumir_pocao(int(k))
+	solicitar_salvamento()
+	return c
 
 # ---------------------------------------------------------------- loja do Mark
 func loja() -> Dictionary:

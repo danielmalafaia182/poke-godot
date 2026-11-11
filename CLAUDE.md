@@ -46,6 +46,8 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/rest.py` | Lê as linhas `dir: "rest"` do gravador v1.1 (respostas de `/api/game/*`); medidor de captura do used-balls e a diferença entre duas respostas |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
 | `sim/servico_cidade.gd`, `ponte_cidade.gd` | Fase 4, lote 1: serviços da cidade (evolução, loja do Mark, Nurse Joy, depot) puros na `sim/`; a ponte monta o estado do save, manda o comando e aplica as mensagens no `EstadoJogo`. Regras e fontes em `CALIBRACAO_FASE4.md` |
+| `sim/servico_jogador.gd` | Fase 4, lote 2: sessão, Modo Soneca (amostra de 5 min pela própria sim, coleta de 50%), Streak Points e Tipo do Dia; parcelas `streak`/`boost`/`typeDay` e efeitos de loot na `simulacao_hunt.gd`. Regras em `CALIBRACAO_FASE4.md` |
+| `painel_soneca.gd`, `painel_streak.gd` | Coleta da soneca ao abrir a cidade e janela de Streak Points (⚙ → Streak Points); botão 💤 Zzz na HUD da hunt |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
 
@@ -732,3 +734,20 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Item 3: a sim nova também não abate com time nível 1 (40/40 sementes, mesmo com HP cheio a cada passo); causa =
     dano no nível 1–4 (desvio conhecido acima), não alvo, perseguição nem spawn (35 golpes em 60 s, cadência cheia).
   **Testes:** serviço 46/46, P04 43/43, regressão verde, diferencial 1h 27/30 e antiga 23/26 (iguais).
+- 11/11/2026 — **Fase 4, lote 2 começado** (regras e fontes em `CALIBRACAO_FASE4.md`).
+  - `sim/servico_jogador.gd` (puro): **sessão** (regra do usuário: sem soneca, 15 min fechado expira; com soneca
+    valendo, não, E), **Modo Soneca** (C: Zzz → a hunt roda 5 min sem bolas; voltar antes de 5 min cancela; coleta =
+    XP/loot/poções da amostra + 50% da taxa de XP pelo tempo fora, teto 24 h, no treinador e no Pokémon; turbo
+    recusado offline, E), **Streak Points** (C: 1 ponto/1000 abates, n-ésimo custa 25.000 × n, trilhas EXP/Loot/Shiny
+    +0,1%), **Tipo do Dia** (A: formato, texto e virada às 03:00 UTC; E: rotação fixa ancorada em 09/11 Dragão e
+    10/11 Inseto).
+  - `simulacao_hunt.gd`: parcelas `streak` (só treinador, A), `boost` (xp/pokexp), `typeDay` (F: % da base), loot
+    com boost +40%, tipo do dia ×1,2 (F) e rolagens extras do Streak Loot (C); boost de captura dobra a chance (C);
+    mensagens `boosts` e `events` no formato gravado (A). **Com nada ativo, a saída é idêntica byte a byte** à de
+    antes. Boosts não têm fonte offline ainda (E).
+  - Cliente: `streak` e `soneca` no save (opcionais); a hunt conta abates para o Streak e passa Streak, Tipo do Dia e
+    boosts para a sim; botão 💤 Zzz; janela de coleta ao abrir a cidade; janela de Streak Points.
+  - **Não feito:** tarefas de NPC e Daily Kill/Catch/Gift — o cliente só traz o formato; alvos, quantidades e prêmios
+    vêm do servidor (gravações G5 e G7). Também G3 (receita das pedras), G6 (soneca real) e G8 (Tipo do Dia num abate).
+  **Testes:** lote 2 puro 28/28, ciclo do lote 2 na cena 14/14, P04 43/43 (compatibilidade com os campos novos),
+  serviço da cidade 46/46, regressão verde, diferencial 1h 27/30 e antiga 23/26 (iguais).

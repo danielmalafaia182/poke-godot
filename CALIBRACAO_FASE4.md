@@ -99,7 +99,73 @@ Fica de fora (não medido):
 - os outros efeitos do VIP original no Auto-Helper e na capacidade;
 - o "+50%" sobre streak, boost e evento (offline não tem).
 
-## O que pede evidência do original (até 4 gravações curtas, gravador v1.2)
+## Lote 2 (11/11/2026): sessão, Modo Soneca, Streak Points, boosts e Tipo do Dia
+
+Onde mora: `sim/servico_jogador.gd` (sessão, soneca, Streak, Tipo do Dia) e as parcelas novas em
+`sim/simulacao_hunt.gd` (com nada ativo, a saída da sim é **idêntica byte a byte** à de antes: 20 min de Rhydon
+conferidos). Cliente: `EstadoJogo` (`streak`, `soneca` no save), botão 💤 Zzz na hunt, `painel_soneca.gd` (coleta ao
+abrir a cidade) e `painel_streak.gd` (⚙ → Streak Points). Testes: `testes/test_sim_lote2.gd` (28/28, puro) e
+`testes/test_ciclo_lote2.gd` (14/14, na cena com save isolado).
+
+| Regra | Fonte | Evidência |
+| --- | --- | --- |
+| Sem soneca, 15 min com o jogo fechado matam a sessão (a próxima hunt penaliza); voltar à mesma hunt pela cidade não penaliza | B-relatado (regra do usuário) | não gravado; implementado em `servico_jogador` (comando `sessao`) e usado ao carregar o save |
+| Com soneca valendo (amostra completa), a sessão continua | E | dedução: o original mantém o jogador "na hunt" durante a soneca |
+| Soneca: botão Zzz na hunt; a caçada segue 5 min (combate, XP, loot, Auto-Potion; **sem bolas**) | C | guia "Nap Mode" |
+| Voltar antes dos 5 min cancela a soneca (sessão nova, sem farm offline) | C | guia |
+| Coleta: tempo do fim da soneca até o login, teto de 24 h; rende **50% da taxa de XP da amostra**, no treinador **e** no Pokémon que lutava | C | guia e janela "While you were away" (`xp50`, `seconds`, `cappedAt`, `estKills`) |
+| A amostra em si (XP, loot e poções dos 5 min) vale inteira | C | "the hunt continues on the server" (aconteceu de verdade); aplicada na coleta (E: momento) |
+| Se o time cai na amostra, ela para ali e o rendimento reflete | C | janela: "Your leader fainted during the nap" |
+| Turbo (100%, 2💎) | C | recusado offline (E: sem diamantes) |
+| Abates da amostra contam para o Streak; os estimados não | F | não gravado |
+| Mensagens: `sleep-mode` → `sleep-ok {ghost: true}`; `GET /offline` → `{report: {sample{slug, kills, fainted, itemsUsed}, seconds, cappedAt, estKills, xp50, xp100, boostCost}}`; `POST /offline {boost}` | C | campos lidos pelo cliente; a resposta da coleta (`offline-claimed`) é E |
+| Streak Points: 1 ponto a cada 1000 abates totais; o n-ésimo ponto custa 25.000 × n de ouro; trilhas EXP, Loot, Shiny com +0,1% por ponto; os pontos nunca resetam | C | guia e janela (`totalKills`, `available`, `spent`, `toNext`, `killsPerPoint`) |
+| Trilha EXP: parcela `streak` = base × 0,1% × pontos, só no treinador | C (+0,1%) / A (o `pokeXp.parts` não tem chave streak) / F (sobre a base) | nunca vista ≠ 0 nas gravações |
+| Trilha Loot: +0,1% de chance de uma rolagem extra inteira de drop por ponto (100% = 1 extra garantida, excesso → próxima) | C | texto da janela |
+| Trilha Shiny | C | guardada sem efeito (E: sem shiny no time offline) |
+| Boosts `xp` +50% treinador, `pokexp` +50% Pokémon, `loot` +40% de chance, `capture` dobra a chance | C | guia "Boost"; formato `{key, until, pct}` (A) |
+| Parcela de boost = base × pct | F | nunca vista ≠ 0 |
+| Fonte de boosts offline | E | nenhuma ainda (no original: loja de diamantes, Daily Gift, itens); a sim aceita `cfg.boosts` |
+| Tipo do Dia: +20% de XP (parcela `typeDay`) e +20% de loot nos selvagens do tipo; o dia vira às 03:00 UTC | A (formato, texto e horário: `until` 1794366000000) | parcela = 20% da base e loot = chance × 1,2 (F) |
+| Rotação do Tipo do Dia | E | ancorada nos dois dias gravados (09/11 Dragão, 10/11 Inseto), ciclo fixo de 18 tipos |
+| Tarefas de NPC e Daily Kill / Daily Catch / Daily Gift | — | **não implementados**: o cliente traz só o formato (C: `tasks[{id, city, npc, kind, pokeId, qty, have, complete, claimed, xp, cash}]`, `daily-kill {options[…], pickedIdx, rerolls, rerollMax, rerollCost, resetAt}`); alvos, quantidades e prêmios vêm do servidor (gravações G5 e G6) |
+
+## O que pede evidência do original (gravações curtas, gravador v1.2)
+
+**G3 — evolução com pedras (3 min), ainda pendente.** Com um Pokémon que já pode evoluir e com pedras na BAG:
+1. Abra a janela de evolução (botão ⬆ no time) e espere 5 s.
+2. Evolua com pedras.
+3. Só abra (sem evoluir) a janela de uma espécie de dois tipos (Ivysaur, Charmeleon ou Geodude) e espere 5 s.
+
+As respostas de `GET /api/game/evolve` trazem a receita real (`stones`): fecham ou derrubam a hipótese F.
+
+**G5 — tarefas e diárias (4 min).**
+1. Abra Quests & Tasks e passe por todas as cidades da lista (2 s em cada).
+2. Abra Daily Kill e espere 5 s; escolha uma missão.
+3. Abra Daily Catch e espere 5 s.
+4. Se houver tarefa ou missão completa, resgate uma.
+
+Traz `/api/game/tasks`, `/api/game/daily-kill`, `/api/game/daily-catch` e o formato do resgate (alvos, quantidades, prêmios).
+
+**G6 — Modo Soneca de verdade (≥ 10 min fora).**
+1. Numa hunt conhecida, com o gravador ligado, clique 💤 Zzz.
+2. Feche o jogo por pelo menos 10 min.
+3. Reabra com o gravador já ligado **antes** de carregar a página.
+4. Espere a janela "Enquanto você estava fora…" e clique Coletar (sem turbo).
+
+Traz o `report` real (`xp50`, `estKills`, `seconds`) e a resposta da coleta: confere a taxa de 50% e o que a amostra
+entrega.
+
+**G7 — Streak Points e Daily Gift (2 min).**
+1. Abra a janela Streak Points e espere 5 s (não invista).
+2. Abra o Daily Gift e espere 5 s (não colete, se não quiser).
+
+Traz `/api/game/streak` (formato e o `perPoint`/custo reais) e o calendário do Daily Gift (prêmios dos 28 dias).
+
+**G8 — Tipo do Dia num abate (5 min).** Numa hunt de uma espécie do tipo do dia (veja o evento no topo), grave 5 min
+de abates.
+
+Mostra a parcela `typeDay` e o efeito no loot: fecha as duas hipóteses F (20% da base e chance × 1,2).
 
 **G1 — feita (11/11).** Compra (Small Potion por 5) e venda de loot (Bag of Pollen por 40) com o formato das respostas (A). Poções e pedras não aparecem para venda: a lista é montada pelo cliente (C); o servidor não foi testado com uma poção.
 

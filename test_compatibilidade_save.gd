@@ -22,7 +22,10 @@ func executar() -> void:
 	# Campos opcionais das fases 3 e 4: um save anterior carrega com os padrões (medidor vazio, sem última hunt, ouro 0, VIP off).
 	checar((atual.get("captura_medidor",{}) as Dictionary).is_empty() and String(atual.get("ultima_hunt","")) == "" and int(atual.get("ouro",0)) == 0 and not bool(atual.get("vip",false)),
 		"campos novos (medidor, última hunt, ouro, VIP) entram com o padrão")
-	for campo in ["captura_medidor","ultima_hunt","ouro","vip"]:
+	# Fase 4, lote 2: Streak e soneca entram zerados num save anterior.
+	checar(int((atual.get("streak",{}) as Dictionary).get("totalKills",0)) == 0 and ((atual.get("streak",{}) as Dictionary).get("spent",{}) as Dictionary).is_empty() and (atual.get("soneca",{}) as Dictionary).is_empty(),
+		"campos do lote 2 (Streak, soneca) entram zerados")
+	for campo in ["captura_medidor","ultima_hunt","ouro","vip","streak","soneca"]:
 		atual.erase(campo)
 	var esperado: Dictionary=anterior.duplicate(true)
 	for registro in esperado["team"]:

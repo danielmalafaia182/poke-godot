@@ -39,6 +39,8 @@ const CELULA_LOJA: Vector2i = Vector2i(22, 8)
 var painel_loja: Control
 var placa_loja: PlacaInteracao
 var painel_config: PanelContainer
+var painel_streak: Control
+var painel_soneca: Control
 var rotulo_ouro: Label
 # 0 = cidade inteira. Mantém placas e ações disponíveis à distância, como
 # solicitado. Um raio positivo pode ser configurado posteriormente no Inspector.
@@ -305,7 +307,7 @@ func _perto_nurse() -> bool:
 	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_NURSE)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
 
 func _modal_aberto() -> bool:
-	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta()
+	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_soneca != null and painel_soneca.visible)
 
 func _clicar_nurse() -> void:
 	if not _perto_nurse() or personagem.andando or _modal_aberto():
@@ -376,6 +378,33 @@ func _criar_ouro_e_config() -> void:
 	vip.toggled.connect(func(ligado: bool) -> void: EstadoJogo.vip = ligado)
 	painel_config.add_child(vip)
 	engrenagem.pressed.connect(func() -> void: painel_config.visible = not painel_config.visible)
+	# Fase 4, lote 2: Streak Points e a coleta da soneca.
+	painel_config.remove_child(vip)
+	var coluna := VBoxContainer.new()
+	painel_config.add_child(coluna)
+	coluna.add_child(vip)
+	var botao_streak := Button.new()
+	botao_streak.name = "StreakPoints"
+	botao_streak.text = "Streak Points"
+	coluna.add_child(botao_streak)
+	painel_streak = load("res://painel_streak.gd").new()
+	painel_streak.name = "PainelStreak"
+	get_node("Interface").add_child(painel_streak)
+	botao_streak.pressed.connect(func() -> void:
+		painel_config.hide()
+		painel_streak.abrir())
+	painel_soneca = load("res://painel_soneca.gd").new()
+	painel_soneca.name = "PainelSoneca"
+	get_node("Interface").add_child(painel_soneca)
+	call_deferred("verificar_soneca")
 	var atualizar := func() -> void: rotulo_ouro.text = "💲 %d" % EstadoJogo.ouro
 	EstadoJogo.ouro_alterado.connect(atualizar)
 	atualizar.call()
+
+func verificar_soneca() -> void:
+	## Ao abrir a cidade: soneca pendente → janela de coleta; voltou antes de 5 min → cancelada (C), sem janela.
+	if EstadoJogo.soneca.is_empty():
+		return
+	var r: Dictionary = EstadoJogo.relatorio_offline(int(Time.get_unix_time_from_system()))
+	if r.get("report") != null:
+		painel_soneca.abrir(r)

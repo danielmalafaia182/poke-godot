@@ -114,7 +114,18 @@ const PARAMETROS := {
 	"hp_selvagem_por_stat": 35,             # A
 	"hp_selvagem_minimo": 120,              # A
 	"golpe_poder_maximo": 599,              # F: golpes de poder 600 (assinatura) nunca aparecem nas gravações
-	"chance_shiny": 0.0,                    # E: sem shiny na fase 1
+	"chance_shiny": 0.0,
+	# Fase 4, lote 2 — parcelas de XP e efeitos de loot (cfg.boosts, cfg.eventos, cfg.streak; zero = saída igual a antes).
+	# Streak Points (C, guia e janela do original): +0,1% por ponto na trilha EXP (parcela "streak" do treinador; o
+	# pokeXp.parts não tem chave streak, A) e, na trilha Loot, +0,1% de chance de uma rolagem EXTRA inteira de drop
+	# (100% = uma rolagem garantida; o excesso vira a chance da próxima, C).
+	"streak_pct_por_ponto": 0.001,
+	# Boosts (C: "XP Boost +50% trainer XP", "Pokémon XP Boost +50%", "Loot Boost +40% loot chance", "Capture Boost:
+	# doubles the catch chance"); o pct vem no próprio boost ({key, until, pct}, A). F: parcela = % da XP base.
+	"boost_captura_bonus": 1.0,             # C: dobra a chance (multiplica a chance por arremesso)
+	# Tipo do Dia (A: evento "type-of-day", "+20% de XP e +20% de loot em Pokémon do tipo X"): parcela typeDay = 20% da
+	# base (F: sobre a base) e chance de cada drop × 1,2 (F: "loot" lido como chance).
+	"tipo_do_dia_pct": 20,                    # E: sem shiny na fase 1
 }
 
 # (C) cliente original, chunk 0fllz2m_ktm3s.js: tabela de tipos `k` e typeEffectiveness().
