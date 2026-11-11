@@ -34,6 +34,7 @@ func executar() -> void:
 	var extra: DadosPokemon = DadosPokemon.new()
 	extra.especie = load("res://dados/especies/geodude.tres")
 	estado.registrar_captura(extra)
+	estado.forcar_cidade="cerulean" # fase 4: o depot é da cidade
 	estado.mover_pokemon_depot(extra,false)
 	# Verifica os recortes reais dos spritesheets, não apenas a enumeração da direção.
 	for nome: String in ["Larvitar","Geodude"]:

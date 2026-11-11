@@ -113,8 +113,8 @@ func _ready() -> void:
 	corpo.add_child(evoluir)
 	evoluir.add_theme_stylebox_override("normal",UI.caixa(Color("183b27"),Color("78bc58"),8,6))
 	evoluir.pressed.connect(func() -> void:
-		var erro: String=EstadoJogo.evoluir_pokemon(selecionado)
-		if not erro.is_empty(): evoluir.tooltip_text=erro
+		# Fase 4: a janela de evolução escolhe o caminho (com pedras mantém o nível; sem pedras volta ao Lv.1, C).
+		load("res://painel_evolucao.gd").abrir_para(get_tree(), selecionado)
 	)
 	EstadoJogo.depot_alterado.connect(_atualizar_se_aberto)
 	EstadoJogo.lider_alterado.connect(_atualizar_se_aberto)

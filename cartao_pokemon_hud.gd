@@ -93,7 +93,7 @@ func configurar(individuo: DadosPokemon, textura: Texture2D) -> void:
 	evoluir.tooltip_text = "Evolução disponível em Cerulean ao atingir o nível exigido."
 	nomes.add_child(evoluir)
 	evoluir.add_theme_stylebox_override("normal",bloqueado)
-	evoluir.pressed.connect(func() -> void: get_node("/root/EstadoJogo").evoluir_pokemon(pokemon))
+	evoluir.pressed.connect(func() -> void: load("res://painel_evolucao.gd").abrir_para(get_tree(), pokemon))
 	call_deferred("atualizar_valores")
 	barra_hp = BARRAS.criar(pokemon,false,7)
 	dados.add_child(barra_hp)

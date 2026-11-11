@@ -139,7 +139,7 @@ func _extrair_save(nome_hunt: String) -> Dictionary:
 		"inventario": inventario, "bolas": EstadoJogo.estoque_bolas.duplicate(), "nomes_bolas": nomes_bolas,
 		"auto_catch": EstadoJogo.auto_catch, "bola_auto_catch": EstadoJogo.auto_catch_ball_id,
 		"auto_potion": EstadoJogo.auto_potion, "pocao_id": EstadoJogo.auto_potion_item_id,
-		"limite_pocao": EstadoJogo.auto_potion_threshold, "medidor_captura": EstadoJogo.medidor_captura}
+		"limite_pocao": EstadoJogo.auto_potion_threshold, "medidor_captura": EstadoJogo.medidor_captura, "vip": EstadoJogo.vip}
 
 
 var tipos_no_quadro: Array = []   # diagnóstico (varredura): mensagens tratadas no último quadro
@@ -245,7 +245,7 @@ func _receber_loot(loot: Array) -> void:
 func _registrar_captura(nome: String) -> void:
 	## A: o Pokémon capturado chega como poke-delta de nível 1 (5/5 capturas da rhydon-1h); IVs e Quality pelo sorteio
 	## do próprio jogo (DadosPokemon), como nas capturas do P04.
-	var especie = ESPECIES.obter_especies().get(nome)
+	var especie = ESPECIES.obter_todas().get(nome)
 	if especie == null:
 		return
 	var novo := DadosPokemon.new()

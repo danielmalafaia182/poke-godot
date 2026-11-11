@@ -18,6 +18,8 @@ signal depot_alterado
 signal lider_alterado
 signal estado_salvamento_alterado
 signal individuo_alterado(pokemon: DadosPokemon)
+signal ouro_alterado
+signal vip_alterado
 
 const CATALOGO_POCOES = InventarioJogo.CATALOGO_POCOES
 const CATALOGO_BOLAS = InventarioJogo.CATALOGO_BOLAS
@@ -78,6 +80,16 @@ var experiencia_treinador_acumulada: int:
 	set(valor): perfil.experiencia_treinador_acumulada = valor
 
 var especie_caca: DadosEspecie
+# Fase 4: ouro do treinador (A: balls.gold / currency; vai no save, campo opcional "ouro"). Começa em 0 (E: o saldo
+# inicial do original não foi gravado; o original dá 100 Small Potions e 100 Poké Balls ao jogador novo, C).
+var ouro: int = 0
+# Fase 4: VIP (E: opção do jogador, desligada por padrão). Ligado, a simulação soma a parcela vip = 50% da XP base (A).
+var vip: bool = false:
+	set(valor):
+		if vip != valor:
+			vip = valor
+			vip_alterado.emit()
+const PONTE_CIDADE := preload("res://ponte_cidade.gd")
 # Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
 var slug_caca: String = ""
 # Fase 3: medidor de captura por espécie (C: /api/game/used-balls) — speciesId (str, "s" no fim = shiny) →
@@ -110,7 +122,7 @@ func _ready() -> void:
 	perfil.perfil_alterado.connect(perfil_alterado.emit)
 	salvamento.estado_salvamento_alterado.connect(estado_salvamento_alterado.emit)
 	colecao.individuo_alterado.connect(individuo_alterado.emit)
-	for evento in [estoque_bolas_alterado, estoque_pocoes_alterado, depot_alterado, lider_alterado, auto_catch_alterado, auto_potion_alterado, perfil_alterado, inventario.alterado, colecao.alterado]:
+	for evento in [estoque_bolas_alterado, estoque_pocoes_alterado, depot_alterado, lider_alterado, auto_catch_alterado, auto_potion_alterado, perfil_alterado, inventario.alterado, colecao.alterado, ouro_alterado, vip_alterado]:
 		evento.connect(solicitar_salvamento)
 	add_child(salvamento)
 	salvamento.iniciar(self)
@@ -143,10 +155,19 @@ func quantidade_item_bag(id: int) -> int:
 	return inventario.quantidade_item_bag(id)
 
 func mover_item_depot(id: int, guardar: bool) -> String:
-	return inventario.mover_item_depot(id, guardar)
+	# Fase 4: o depot é decidido pela simulação (sim/servico_cidade.gd); o id interno vira ballId/itemId do original.
+	var cmd := {"type": "depot-move", "dir": "store" if guardar else "withdraw"}
+	if not preload("res://regras_loot.gd").obter(id).is_empty():
+		cmd["itemId"] = preload("res://regras_loot.gd").id_original(id)
+	elif id >= 200:
+		cmd["itemId"] = id
+	else:
+		cmd["ballId"] = id
+	return PONTE_CIDADE.primeiro_erro(PONTE_CIDADE.enviar(self, cidade_atual(), cmd))
 
 func guardar_todos_itens_depot() -> String:
-	return inventario.guardar_todos_itens_depot()
+	var erro := PONTE_CIDADE.primeiro_erro(PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "depot-move", "all": true}))
+	return erro if not erro.is_empty() else "Itens guardados."
 
 func obter_lider() -> DadosPokemon:
 	return colecao.obter_lider()
@@ -165,7 +186,10 @@ func iniciar_depot() -> void:
 	colecao.iniciar_depot()
 
 func mover_pokemon_depot(pokemon: DadosPokemon, guardar: bool) -> String:
-	return colecao.mover_pokemon_depot(pokemon, guardar)
+	var erro: String = preload("res://contrato_pokemon.gd").validar(pokemon)
+	if not erro.is_empty():
+		return erro
+	return PONTE_CIDADE.primeiro_erro(PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "poke-store" if guardar else "poke-withdraw", "id": pokemon.id_persistente}))
 
 func registrar_captura(pokemon: DadosPokemon) -> bool:
 	return colecao.registrar_captura(pokemon)
@@ -177,7 +201,12 @@ func conceder_experiencia(pokemon: DadosPokemon, quantidade: int) -> bool:
 	return colecao.conceder_experiencia(pokemon, quantidade)
 
 func curar_time() -> Dictionary:
-	return colecao.curar_time()
+	# Fase 4: Nurse Joy pela simulação (C: cura o time inteiro de graça; joy-heal).
+	var msgs: Array = PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "joy-heal"})
+	for m in msgs:
+		if m.get("type") == "joy-healed":
+			return {"quantidade": int(m["healed"]), "hp": int(m["hp"])}
+	return {"quantidade": 0, "hp": 0, "erro": PONTE_CIDADE.primeiro_erro(msgs)}
 
 func definir_auto_catch(ativo: bool) -> void:
 	configuracao.definir_auto_catch(ativo)
@@ -230,24 +259,75 @@ func registrar_posicao_cidade(celula: Vector2i, direcao: int) -> void:
 func validar_nova_captura(pokemon: DadosPokemon) -> String:
 	return colecao.validar_nova_captura(pokemon)
 
+# Cidade onde o jogador está (E: o P04 tem só Cerulean; na hunt não há cidade e os serviços recusam, como no original).
+func cidade_atual() -> String:
+	if not is_inside_tree():
+		return forcar_cidade
+	var cena := get_tree().current_scene
+	if cena != null and cena.scene_file_path == "res://cidade.tscn":
+		return "cerulean"
+	for filho in get_tree().root.get_children():
+		if filho.scene_file_path == "res://cidade.tscn":
+			return "cerulean"
+	return forcar_cidade
+
+# Testes headless sem a cena da cidade usam esta cidade (vazio = nenhuma).
+var forcar_cidade: String = ""
+
+# ---------------------------------------------------------------- evolução (sim/servico_cidade.gd)
+func info_evolucao(pokemon: DadosPokemon, destino: int = -1) -> Dictionary:
+	if pokemon == null:
+		return {"type": "error", "message": "Selecione um Pokémon."}
+	var cmd := {"type": "evolve-info", "capturedId": pokemon.id_persistente}
+	if destino >= 0:
+		cmd["destId"] = destino
+	return PONTE_CIDADE.servico().tratar(PONTE_CIDADE.estado_de(self, cidade_atual()), cmd)[0]
+
 func validar_evolucao(pokemon: DadosPokemon) -> String:
 	if pokemon==null or pokemon.especie==null or not time_pokemon.has(pokemon): return "Selecione um Pokémon do time."
-	if get_tree().current_scene==null or get_tree().current_scene.scene_file_path!="res://cidade.tscn": return "Evolua em Cerulean."
-	var regra: Dictionary=preload("res://regras_evolucao.gd").obter(pokemon.especie.nome)
-	if regra.is_empty(): return "Evolução ainda indisponível."
-	if pokemon.nivel<int(regra["nivel"]): return "Requer nível %d." % int(regra["nivel"])
-	if pokemon.obter_vida_atual()<=0: return "Cure o Pokémon antes de evoluir."
-	if not preload("res://especies_importadas.gd").obter_especies().has(regra["nome"]): return "Espécie de destino indisponível."
+	if cidade_atual() != "cerulean": return "Evolua em Cerulean."
+	var info := info_evolucao(pokemon)
+	if info.get("type") == "error": return String(info["message"])
+	if info.has("reason"): return String(info["reason"])
+	if not bool(info.get("canEvolve", false)): return "Requer nível %d." % int(info.get("needLevel", 0))
 	return ""
-func evoluir_pokemon(pokemon: DadosPokemon) -> String:
+
+# usar_pedra: true = mantém o nível e gasta as pedras; false = grátis e volta ao Lv.1 (C). null = com pedra se houver,
+# senão devolve o aviso para a UI perguntar (nunca reseta o nível sem escolha explícita).
+func evoluir_pokemon(pokemon: DadosPokemon, usar_pedra: Variant = null, destino: int = -1) -> String:
 	var erro: String=validar_evolucao(pokemon)
 	if not erro.is_empty(): return erro
-	var regra: Dictionary=preload("res://regras_evolucao.gd").obter(pokemon.especie.nome)
-	var hp: int=pokemon.obter_vida_atual()
-	pokemon.especie=preload("res://especies_importadas.gd").obter_especies()[regra["nome"]]
-	pokemon.vida_atual=mini(hp,pokemon.obter_vida_maxima())
-	colecao.depot_alterado.emit()
-	colecao.individuo_alterado.emit(pokemon)
-	colecao.pokemon_alterado.emit()
-	colecao.alterado.emit()
-	return ""
+	var info := info_evolucao(pokemon, destino)
+	if info.get("destId") == null: return "Escolha a evolução."
+	if usar_pedra == null:
+		if not bool(info.get("hasStones", false)): return "Faltam pedras. Sem pedras, a evolução volta ao Lv.1."
+		usar_pedra = true
+	var cmd := {"type": "evolve", "capturedId": pokemon.id_persistente, "useStone": bool(usar_pedra)}
+	if destino >= 0:
+		cmd["destId"] = destino
+	return PONTE_CIDADE.primeiro_erro(PONTE_CIDADE.enviar(self, cidade_atual(), cmd))
+
+# ---------------------------------------------------------------- loja do Mark
+func loja() -> Dictionary:
+	return PONTE_CIDADE.servico().tratar(PONTE_CIDADE.estado_de(self, cidade_atual()), {"type": "shop"})[0]
+
+func comprar_bola(id: int, quantidade: int) -> String:
+	return PONTE_CIDADE.primeiro_erro(PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "shop-buy", "ballId": id, "qty": quantidade}))
+
+func comprar_item(id_original: int, quantidade: int) -> String:
+	return PONTE_CIDADE.primeiro_erro(PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "shop-buy", "itemId": id_original, "qty": quantidade}))
+
+# itens: [{itemId (original), qty}]
+func vender_itens(itens: Array) -> Dictionary:
+	var msgs: Array = PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "shop-sell", "items": itens})
+	for m in msgs:
+		if m.get("type") == "shop-sold": return m
+	return {"erro": PONTE_CIDADE.primeiro_erro(msgs)}
+
+func vender_pokemon(lista: Array[DadosPokemon]) -> Dictionary:
+	var ids: Array = []
+	for p in lista: ids.append(p.id_persistente)
+	var msgs: Array = PONTE_CIDADE.enviar(self, cidade_atual(), {"type": "pokemon-sell", "pokeIds": ids})
+	for m in msgs:
+		if m.get("type") == "pokemon-sold": return m
+	return {"erro": PONTE_CIDADE.primeiro_erro(msgs)}

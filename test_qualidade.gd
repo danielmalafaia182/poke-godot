@@ -24,6 +24,7 @@ func testar() -> void:
 	var estado: Node = root.get_node("EstadoJogo")
 	root.size = Vector2i(1152,648)
 	estado.especie_caca = load("res://dados/especies/geodude.tres")
+	estado.forcar_cidade="cerulean" # fase 4: cura e depot são da cidade; o teste os usa como preparo
 	estado.curar_time()
 	estado.selecionar_lider(estado.pokemon_inicial)
 	# Coleção: recursos distintos não podem compartilhar identidade persistente.

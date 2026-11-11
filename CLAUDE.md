@@ -45,6 +45,8 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas × modelo do medidor (partindo do used-balls do início), lock de entrada |
 | `ferramentas/gravador/rest.py` | Lê as linhas `dir: "rest"` do gravador v1.1 (respostas de `/api/game/*`); medidor de captura do used-balls e a diferença entre duas respostas |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
+| `sim/servico_cidade.gd`, `ponte_cidade.gd` | Fase 4, lote 1: serviços da cidade (evolução, loja do Mark, Nurse Joy, depot) puros na `sim/`; a ponte monta o estado do save, manda o comando e aplica as mensagens no `EstadoJogo`. Regras e fontes em `CALIBRACAO_FASE4.md` |
+| `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
 
 Dados grandes/de referência — **ficam dentro desta pasta**, fora do git (`.gitignore`) e fora do scan do Godot (`.gdignore`).
@@ -85,6 +87,8 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 - Captura manual e efeito de Speed na cadência: adiados.
 - Fase 2: a hunt jogável é uma cena nova (`caca_sim.tscn`) em vez de reescrever `caca.gd`/`caca_base.gd` por dentro: ~30 testes antigos
   dependem da lógica interna da cena antiga. O mapa-múndi decide qual abrir (simulada se houver mapa e hunt-config no snapshot).
+- VIP: opção nas Configurações (⚙ na cidade), **desligada por padrão**; ligada, +50% da XP base como no original
+  (parcela `vip`). Ouro inicial 0. Revenda ao NPC nunca acima do preço de compra (evita ouro infinito com poções).
 - Outfits: desde 09/11 o snapshot tem os 846 do índice (545 categorias); o substituto (200) só entra se faltar algum.
 
 Resumo da calibração da fase 3 (cada regra, fonte, evidência, o que ficou aberto): `CALIBRACAO_FASE3.md`.
@@ -654,3 +658,36 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   **Testes:** regras 41/41, caminho 8/8, determinismo, regras do usuário 17/17, cadáveres 3/3, catálogo 12/12, save
   fase 3 12/12, cena 22/22, grade 7/7, protocolo OK, ponte 11/11, save em thread 15/15. Diferencial: 1h 27/30,
   antiga 23/26 (iguais a antes).
+- 10/11/2026 — **Fase 4, lote 1** (evolução, loja e economia, Nurse Joy, depot; regras e fontes em `CALIBRACAO_FASE4.md`).
+  - Lógica em `sim/servico_cidade.gd` (puro, determinístico, comandos e mensagens no formato do original quando
+    conhecido, C/A; o resto E). `ponte_cidade.gd` monta o estado do save, manda o comando e aplica as mensagens; o
+    `EstadoJogo` (evoluir, curar, depot) passa por ela, então as telas antigas não mudaram de contrato.
+  - Evolução (C, guia e janela do original): só em Cerulean; nível = `evolveLevel`; com pedras mantém o nível, sem
+    pedras é grátis e volta ao Lv.1; IV/Quality mantidos e stats da base nova. **Receita das pedras é F**: tipo
+    principal da origem + tipos ganhos (bate com os 2 exemplos do guia). Eevee por ramos (B/F). Janela nova
+    `painel_evolucao.gd`; o botão nunca volta ao Lv.1 sem escolha.
+  - Loja do Mark (`painel_loja.gd`, NPC em (22, 8) do city-npcs): bolas pelo `balls.catalog` (A), poções pelo
+    `priceGold`; venda pelo `npcPrice` (C) com teto no preço de compra (E: evita ouro infinito); Pokémon da BOX pelo
+    `valorVenda` (F). Ouro no save (campo `ouro`; começa em 0, E) e no canto da cidade.
+  - Nurse Joy: cura o time de graça, sem recarga (C). Depot: time 6 (C), BOX 3000 (A, conta VIP), 200 pilhas de
+    itens (E), "guardar tudo" (C).
+  - VIP: opção em ⚙ (canto inferior direito da cidade), desligada por padrão; ligada, `cfg.vip` na simulação (+50%
+    da XP base, A). Campo `vip` no save.
+  - Espécies: `especies_importadas.obter_todas()` = as 212 com recurso + as do snapshot (base/tipos do gerado); usada
+    pelo save, pela ponte e pela captura da cena nova (antes, captura de espécie sem `.tres` era ignorada).
+    `obter_especies()` segue com as 212 (contrato dos testes do P04). Custo: +95 ms uma vez, no início.
+  - Testes antigos do P04 ajustados ao comportamento novo (sem relaxar a regra): `test_evolucao_pokemon` (pedras /
+    Lv.1, a janela), e `forcar_cidade = "cerulean"` no preparo de `test_hunt_larvitar`, `test_ataques_independentes`,
+    `test_team_fiel` e `test_qualidade` (que curavam/depositavam fora da cidade). `testes/rodar_antigos.sh` roda os 43.
+
+  **Testes:** serviço 40/40, ciclo de ponta a ponta 20/20 (hunt com VIP → vende loot → compra Super Ball e Small
+  Potion → Nurse → Geodude → Graveler com pedra → BOX e depot → save relido), regras 41/41, caminho 8/8,
+  determinismo, regras do usuário 17/17, cadáveres 3/3, catálogo 12/12, save fase 3 12/12, grade 7/7, cena 22/22,
+  protocolo, ponte 11/11, save em thread 15/15. Diferencial 1h 27/30, antiga 23/26 (iguais). P04: 37/43 passam;
+  4 falhavam antes também (cerco_acesso, compatibilidade_save, mapa_entre_hunts, mapa_fiel).
+  **Em aberto:** `test_movimento_selvagens` é instável nas duas versões, mas mais agora: falhou 7 em 13 contra 2 em 9
+  antes ("caça conclui encontros com alvos móveis", depende de tempo real); causa não achada.
+  **Desempenho** (mesma máquina e estado, Firefox/Discord abertos; os números absolutos da 2b exigem fechá-los):
+  quadro p99 e carga iguais dentro do ruído (Rhydon 1499–1703 × 1644–1649 ms de carga, p99 13,7–14,0 × 14,1–14,3;
+  elekid 1535–1554 × 1542–1557, p99 18,1–18,6 × 17,1–18,1); tick da sim p99 2,3–3,1 × 2,4–2,6 ms
+  (`testes/medir_tick.gd`; `simulacao_hunt.gd` não mudou).

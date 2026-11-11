@@ -30,6 +30,7 @@ func executar() -> void:
 	var lider: DadosPokemon=estado.obter_lider()
 	lider.experiencia_total=preload("res://regras_pokemon.gd").xp_total_para_nivel(100)
 	lider.normalizar_atributos()
+	estado.forcar_cidade="cerulean" # fase 4: a cura é da Nurse Joy (só na cidade); o teste a usa como preparo
 	estado.curar_time()
 	caca=load("res://Caca.tscn").instantiate()
 	root.add_child(caca)

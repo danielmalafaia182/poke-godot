@@ -34,6 +34,12 @@ var timer_resultado_cura: Timer
 var painel_depot: Control
 var botao_depot: Button
 const CELULA_DEPOT: Vector2i = Vector2i(-8, -14)
+# Fase 4: Mark (loja), posição do city-npcs de Cerulean (npc_shop_22_8, A).
+const CELULA_LOJA: Vector2i = Vector2i(22, 8)
+var painel_loja: Control
+var placa_loja: PlacaInteracao
+var painel_config: PanelContainer
+var rotulo_ouro: Label
 # 0 = cidade inteira. Mantém placas e ações disponíveis à distância, como
 # solicitado. Um raio positivo pode ser configurado posteriormente no Inspector.
 @export_range(0,4096,32) var alcance_interacao_cidade: float = 0.0
@@ -95,6 +101,14 @@ func _ready() -> void:
 	placa_depot.configurar("Depot","Open Depot")
 	botao_depot = placa_depot.botao
 	botao_depot.pressed.connect(_clicar_depot)
+	painel_loja = load("res://painel_loja.gd").new()
+	painel_loja.name = "PainelLoja"
+	get_node("Interface").add_child(painel_loja)
+	placa_loja = PlacaInteracao.new()
+	get_node("Interface").add_child(placa_loja)
+	placa_loja.configurar("Mark","Open Shop")
+	placa_loja.botao.pressed.connect(_clicar_loja)
+	_criar_ouro_e_config()
 	resized.connect(_ajustar_cenario)
 	# Novo: personagem animado independente do controlador de caça.
 	personagem = TREINADOR_CIDADE.new()
@@ -132,6 +146,7 @@ func _ready() -> void:
 	# Placas ficam antes dos controles também na ordem de entrada do mouse.
 	get_node("Interface").move_child(placa_nurse,0)
 	get_node("Interface").move_child(placa_depot,0)
+	get_node("Interface").move_child(placa_loja,0)
 	_ajustar_cenario()
 
 func _ajustar_cenario() -> void:
@@ -198,6 +213,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		painel_nurse.hide()
 		painel_pokepedia.hide()
 		painel_depot.fechar()
+		painel_loja.hide()
+		var evo: Control = get_node("Interface").get_node_or_null("PainelEvolucao")
+		if evo != null: evo.hide()
 		get_viewport().set_input_as_handled()
 
 func _atualizar_resumo_depot() -> void:
@@ -220,7 +238,7 @@ func _clicar_depot() -> void:
 func _process(delta: float) -> void:
 	if personagem == null:
 		return
-	personagem.atualizar(delta, not mapa_mundi.visible and not painel_auto_helper.janela.visible and not painel_depot.visible and not painel_my_pokes.visible and not painel_time.perfil.visible and not painel_nurse.visible and not painel_pokepedia.visible)
+	personagem.atualizar(delta, not _modal_aberto())
 	# Alteração: a atualização segue a ordem da cadeia para propagar os trechos.
 	for membro in seguidores:
 		membro.atualizar(delta, personagem.velocidade_movimento)
@@ -231,6 +249,8 @@ func _process(delta: float) -> void:
 	placa_nurse.visible = pode_mostrar
 	placa_depot.posicionar(cenario.to_global(Vector2(CELULA_DEPOT)*32.0+Vector2(16,16)))
 	placa_depot.visible = pode_mostrar
+	placa_loja.posicionar(cenario.to_global(Vector2(CELULA_LOJA)*32.0+Vector2(16,16)))
+	placa_loja.visible = pode_mostrar
 	resultado_cura.position = Vector2(size.x*0.5-220,size.y*0.5-100)
 	resultado_cura.size = Vector2(440,36)
 
@@ -285,7 +305,7 @@ func _perto_nurse() -> bool:
 	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_NURSE)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
 
 func _modal_aberto() -> bool:
-	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible
+	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta()
 
 func _clicar_nurse() -> void:
 	if not _perto_nurse() or personagem.andando or _modal_aberto():
@@ -310,3 +330,52 @@ func _abrir_pokepedia() -> void:
 	painel_nurse.hide()
 	painel_auto_helper.janela.hide()
 	painel_pokepedia.abrir()
+
+# ---------------------------------------------------------------- fase 4: loja, ouro e configurações
+func _evolucao_aberta() -> bool:
+	var p: Control = get_node("Interface").get_node_or_null("PainelEvolucao")
+	return p != null and p.visible
+
+func _perto_loja() -> bool:
+	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_LOJA)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
+
+func _clicar_loja() -> void:
+	if not _perto_loja() or personagem.andando or _modal_aberto():
+		return
+	painel_loja.abrir()
+
+func _criar_ouro_e_config() -> void:
+	var caixa := HBoxContainer.new()
+	caixa.name = "OuroConfig"
+	# canto inferior direito: fora do menu e do HUD do time
+	caixa.anchor_left = 1.0; caixa.anchor_right = 1.0; caixa.anchor_top = 1.0; caixa.anchor_bottom = 1.0
+	caixa.offset_left = -340; caixa.offset_right = -16; caixa.offset_top = -48; caixa.offset_bottom = -16
+	caixa.alignment = BoxContainer.ALIGNMENT_END
+	get_node("Interface").add_child(caixa)
+	rotulo_ouro = Label.new()
+	rotulo_ouro.add_theme_color_override("font_color", Color("f0c040"))
+	rotulo_ouro.add_theme_color_override("font_outline_color", Color.BLACK)
+	rotulo_ouro.add_theme_constant_override("outline_size", 5)
+	caixa.add_child(rotulo_ouro)
+	var engrenagem := Button.new()
+	engrenagem.name = "Configuracoes"
+	engrenagem.text = "⚙"
+	engrenagem.tooltip_text = "Configurações"
+	caixa.add_child(engrenagem)
+	painel_config = PanelContainer.new()
+	painel_config.name = "PainelConfig"
+	painel_config.add_theme_stylebox_override("panel", preload("res://estilo_hud_original.gd").moldura())
+	painel_config.anchor_left = 1.0; painel_config.anchor_right = 1.0; painel_config.anchor_top = 1.0; painel_config.anchor_bottom = 1.0
+	painel_config.offset_left = -420; painel_config.offset_right = -16; painel_config.offset_top = -100; painel_config.offset_bottom = -56
+	painel_config.hide()
+	get_node("Interface").add_child(painel_config)
+	var vip := CheckButton.new()
+	vip.name = "VIP"
+	vip.text = "VIP (+50% de XP base, como no original)"
+	vip.button_pressed = EstadoJogo.vip
+	vip.toggled.connect(func(ligado: bool) -> void: EstadoJogo.vip = ligado)
+	painel_config.add_child(vip)
+	engrenagem.pressed.connect(func() -> void: painel_config.visible = not painel_config.visible)
+	var atualizar := func() -> void: rotulo_ouro.text = "💲 %d" % EstadoJogo.ouro
+	EstadoJogo.ouro_alterado.connect(atualizar)
+	atualizar.call()

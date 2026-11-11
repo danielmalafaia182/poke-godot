@@ -218,3 +218,34 @@ static func obter_especies() -> Dictionary:
 	if _especies.is_empty():
 		for nome in CAMINHOS: _especies[nome]=load(CAMINHOS[nome])
 	return _especies
+
+# Fase 4: as 212 com recurso local (obter_especies, contrato do P04) + as do snapshot sem .tres. Usado pelo save, pela
+# ponte da cidade (evolução) e pela captura na hunt nova, que podem chegar a qualquer espécie.
+static var _todas: Dictionary = {}
+static func obter_todas() -> Dictionary:
+	if _todas.is_empty():
+		_todas = obter_especies().duplicate()
+		_completar_do_gerado()
+	return _todas
+
+# Fase 4: evolução e captura podem chegar a qualquer espécie do snapshot. As que não têm .tres importado são criadas
+# em memória a partir de dados/gerados/especies.json (base, tipos; fonte A/C). Sem textura própria: a UI usa o
+# retrato/outfit quando existe, como já fazia para as capturas da cena nova.
+static func _completar_do_gerado() -> void:
+	var lista: Variant = JSON.parse_string(FileAccess.get_file_as_string("res://dados/gerados/especies.json"))
+	if not lista is Array:
+		return
+	for e in lista:
+		var nome := String(e.get("nome", ""))
+		if nome.is_empty() or _todas.has(nome):
+			continue
+		var b: Dictionary = e.get("base", {})
+		var d := DadosEspecie.new()
+		d.nome = nome
+		d.base_hp = int(b.get("hp", 1)); d.base_atk = int(b.get("atk", 1)); d.base_def = int(b.get("def", 1))
+		d.base_sp_atk = int(b.get("spAtk", 1)); d.base_sp_def = int(b.get("spDef", 1)); d.base_speed = int(b.get("speed", 1))
+		var t: Array = e.get("tipos", [])
+		d.tipo_primario = String(t[0]) if t.size() > 0 and t[0] != null else ""
+		d.tipo_secundario = String(t[1]) if t.size() > 1 and t[1] != null else ""
+		d.vida_maxima = maxi(24, 12 * d.base_hp)
+		_todas[nome] = d

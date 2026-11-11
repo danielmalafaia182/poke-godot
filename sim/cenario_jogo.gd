@@ -9,7 +9,7 @@ extends RefCounted
 ##   auto_potion, pocao_id (0 = "Automatic (best)"), limite_pocao (%), lider (índice do líder no time),
 ##   penalizar (bool: lock de entrada; quem decide é a cena, pela regra B-relatada em estado_jogo.gd), ms_desde_saida
 ##   (o minuto do lock conta da saída do lugar anterior, F), medidor_captura (EstadoJogo.medidor_captura)
-## O que é de jogo e não foi observado no original fica marcado: VIP desligado (E: offline); sem bônus de captura de
+## O que é de jogo e não foi observado no original fica marcado: vip (bool, E: opção do jogador, padrão desligado); sem bônus de captura de
 ## guild nem boosts (E: offline).
 
 const Fontes := preload("res://sim/fontes.gd")
@@ -98,7 +98,7 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"ms_desde_saida": int(jogo.get("ms_desde_saida", 0)),
 		"medidor_captura": (jogo.get("medidor_captura", {}) as Dictionary).duplicate(true),
 		"bonus_captura": 0.0,
-		"vip": false,
+		"vip": bool(jogo.get("vip", false)),   # E: opção do jogador (padrão desligado); ligada, +50% da XP base (A)
 		"ativo_inicial": int(jogo.get("lider", 0)),
 		"auto_catch": bool(jogo.get("auto_catch", false)),
 		"bola_auto_catch": int(jogo.get("bola_auto_catch", 0)),

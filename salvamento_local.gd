@@ -4,7 +4,7 @@ extends RefCounted
 const VERSAO: int = 1
 const FORMATO: String = "poke-idle-progresso"
 var ESPECIES: Dictionary:
-	get: return preload("res://especies_importadas.gd").obter_especies()
+	get: return preload("res://especies_importadas.gd").obter_todas()
 const CAMPOS_IV: Array[String] = ["iv_hp", "iv_atk", "iv_def", "iv_sp_atk", "iv_sp_def", "iv_spd"]
 const BOLAS: Array[int] = [1, 2, 3, 4, 5, 6, 7]
 const POCOES: Array[int] = [200, 201, 202, 203, 204]
@@ -133,6 +133,11 @@ func _validar(dados: Variant) -> String:
 				return "Medidor de captura inválido."
 	if dados.has("ultima_hunt") and (not dados["ultima_hunt"] is String or dados["ultima_hunt"].length() > 64):
 		return "Última hunt inválida."
+	# Fase 4 (opcionais): ouro do treinador e a opção VIP.
+	if dados.has("ouro") and not _inteiro(dados["ouro"], 0, 9007199254740991):
+		return "Ouro inválido."
+	if dados.has("vip") and not dados["vip"] is bool:
+		return "VIP inválido."
 	var cidade: Variant = dados["cidade"]
 	if not cidade is Dictionary or cidade.get("mapa") != "cerulean" or not cidade.get("definida") is bool:
 		return "Cidade inválida."
@@ -238,6 +243,8 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 		estado.medidor_captura[String(k)] = {"investido": float(v.get("investido", 0.0)), "tentativas": int(v.get("tentativas", 0)),
 			"total": int(v.get("total", 0)), "gasto": int(v.get("gasto", 0))}
 	estado.ultima_hunt_slug = String(dados.get("ultima_hunt", ""))
+	estado.ouro = int(dados.get("ouro", 0))
+	estado.vip = bool(dados.get("vip", false))
 	# B-relatado/E: a sessão expira com 15 min de jogo fechado (o salvo_em_unix é o último save antes de fechar).
 	var fechado_s := int(Time.get_unix_time_from_system()) - int(dados.get("salvo_em_unix", 0))
 	estado.sessao_expirada = not dados.has("salvo_em_unix") or fechado_s >= estado.SESSAO_EXPIRA_S
@@ -302,6 +309,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"configuracoes": {"auto_catch": estado.auto_catch, "auto_catch_ball_id": estado.auto_catch_ball_id, "auto_catch_names": estado.auto_catch_names, "bola_selecionada": estado.bola_selecionada, "auto_potion": estado.auto_potion, "auto_potion_threshold": estado.auto_potion_threshold, "auto_potion_item_id": estado.auto_potion_item_id},
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
 		"captura_medidor": estado.medidor_captura.duplicate(true), "ultima_hunt": estado.ultima_hunt_slug,
+		"ouro": estado.ouro, "vip": estado.vip,
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 
