@@ -1,0 +1,1401 @@
+{
+ "claimsGravados": [
+  {
+   "slot": 1,
+   "speciesId": 246,
+   "tierKey": "hard",
+   "xp": 14613
+  },
+  {
+   "slot": 2,
+   "speciesId": 246,
+   "tierKey": "hard",
+   "xp": 20458
+  }
+ ],
+ "fonte": "A: G5.jsonl, GET /api/game/daily-catch",
+ "resetAt": 1794625200000,
+ "tiers": [
+  {
+   "key": "superEasy",
+   "label": "Super Easy",
+   "maxLevel": 59,
+   "minLevel": 25,
+   "reward": {
+    "items": [],
+    "xp": 0,
+    "xpMax": 36525,
+    "xpMin": 10
+   },
+   "rewardText": [
+    "1× Newbie Gift"
+   ],
+   "species": [
+    {
+     "huntLevel": 10,
+     "id": 63,
+     "name": "Abra"
+    },
+    {
+     "huntLevel": 1,
+     "id": 69,
+     "name": "Bellsprout"
+    },
+    {
+     "huntLevel": 1,
+     "id": 10,
+     "name": "Caterpie"
+    },
+    {
+     "huntLevel": 10,
+     "id": 170,
+     "name": "Chinchou"
+    },
+    {
+     "huntLevel": 20,
+     "id": 104,
+     "name": "Cubone"
+    },
+    {
+     "huntLevel": 10,
+     "id": 50,
+     "name": "Diglett"
+    },
+    {
+     "huntLevel": 10,
+     "id": 84,
+     "name": "Doduo"
+    },
+    {
+     "huntLevel": 30,
+     "id": 96,
+     "name": "Drowzee"
+    },
+    {
+     "huntLevel": 10,
+     "id": 23,
+     "name": "Ekans"
+    },
+    {
+     "huntLevel": 10,
+     "id": 102,
+     "name": "Exeggcute"
+    },
+    {
+     "huntLevel": 20,
+     "id": 349,
+     "name": "Feebas"
+    },
+    {
+     "huntLevel": 1,
+     "id": 74,
+     "name": "Geodude"
+    },
+    {
+     "huntLevel": 10,
+     "id": 118,
+     "name": "Goldeen"
+    },
+    {
+     "huntLevel": 10,
+     "id": 88,
+     "name": "Grimer"
+    },
+    {
+     "huntLevel": 20,
+     "id": 163,
+     "name": "Hoothoot"
+    },
+    {
+     "huntLevel": 1,
+     "id": 187,
+     "name": "Hoppip"
+    },
+    {
+     "huntLevel": 10,
+     "id": 116,
+     "name": "Horsea"
+    },
+    {
+     "huntLevel": 10,
+     "id": 14,
+     "name": "Kakuna"
+    },
+    {
+     "huntLevel": 10,
+     "id": 109,
+     "name": "Koffing"
+    },
+    {
+     "huntLevel": 10,
+     "id": 98,
+     "name": "Krabby"
+    },
+    {
+     "huntLevel": 10,
+     "id": 165,
+     "name": "Ledyba"
+    },
+    {
+     "huntLevel": 1,
+     "id": 129,
+     "name": "Magikarp"
+    },
+    {
+     "huntLevel": 10,
+     "id": 81,
+     "name": "Magnemite"
+    },
+    {
+     "huntLevel": 10,
+     "id": 56,
+     "name": "Mankey"
+    },
+    {
+     "huntLevel": 20,
+     "id": 52,
+     "name": "Meowth"
+    },
+    {
+     "huntLevel": 10,
+     "id": 11,
+     "name": "Metapod"
+    },
+    {
+     "huntLevel": 10,
+     "id": 29,
+     "name": "Nidoran Female"
+    },
+    {
+     "huntLevel": 10,
+     "id": 32,
+     "name": "Nidoran Male"
+    },
+    {
+     "huntLevel": 1,
+     "id": 43,
+     "name": "Oddish"
+    },
+    {
+     "huntLevel": 1,
+     "id": 46,
+     "name": "Paras"
+    },
+    {
+     "huntLevel": 20,
+     "id": 17,
+     "name": "Pidgeotto"
+    },
+    {
+     "huntLevel": 1,
+     "id": 16,
+     "name": "Pidgey"
+    },
+    {
+     "huntLevel": 10,
+     "id": 204,
+     "name": "Pineco"
+    },
+    {
+     "huntLevel": 1,
+     "id": 60,
+     "name": "Poliwag"
+    },
+    {
+     "huntLevel": 20,
+     "id": 77,
+     "name": "Ponyta"
+    },
+    {
+     "huntLevel": 20,
+     "id": 54,
+     "name": "Psyduck"
+    },
+    {
+     "huntLevel": 1,
+     "id": 19,
+     "name": "Rattata"
+    },
+    {
+     "huntLevel": 10,
+     "id": 223,
+     "name": "Remoraid"
+    },
+    {
+     "huntLevel": 20,
+     "id": 27,
+     "name": "Sandshrew"
+    },
+    {
+     "huntLevel": 10,
+     "id": 273,
+     "name": "Seedot"
+    },
+    {
+     "huntLevel": 10,
+     "id": 161,
+     "name": "Sentret"
+    },
+    {
+     "huntLevel": 10,
+     "id": 90,
+     "name": "Shellder"
+    },
+    {
+     "huntLevel": 10,
+     "id": 79,
+     "name": "Slowpoke"
+    },
+    {
+     "huntLevel": 10,
+     "id": 218,
+     "name": "Slugma"
+    },
+    {
+     "huntLevel": 10,
+     "id": 21,
+     "name": "Spearow"
+    },
+    {
+     "huntLevel": 10,
+     "id": 167,
+     "name": "Spinarak"
+    },
+    {
+     "huntLevel": 20,
+     "id": 120,
+     "name": "Staryu"
+    },
+    {
+     "huntLevel": 1,
+     "id": 191,
+     "name": "Sunkern"
+    },
+    {
+     "huntLevel": 10,
+     "id": 220,
+     "name": "Swinub"
+    },
+    {
+     "huntLevel": 10,
+     "id": 72,
+     "name": "Tentacool"
+    },
+    {
+     "huntLevel": 20,
+     "id": 48,
+     "name": "Venonat"
+    },
+    {
+     "huntLevel": 10,
+     "id": 100,
+     "name": "Voltorb"
+    },
+    {
+     "huntLevel": 20,
+     "id": 37,
+     "name": "Vulpix"
+    },
+    {
+     "huntLevel": 1,
+     "id": 13,
+     "name": "Weedle"
+    },
+    {
+     "huntLevel": 10,
+     "id": 41,
+     "name": "Zubat"
+    }
+   ]
+  },
+  {
+   "key": "easy",
+   "label": "Easy",
+   "maxLevel": 79,
+   "minLevel": 60,
+   "reward": {
+    "items": [
+     {
+      "icon": "/assets/items/devoted_token.png",
+      "itemId": 13115,
+      "name": "Devoted Token",
+      "qty": 2
+     },
+     {
+      "icon": "",
+      "itemId": -1,
+      "name": "Newbie Gift",
+      "qty": 1
+     }
+    ],
+    "xp": 0,
+    "xpMax": 100525,
+    "xpMin": 330
+   },
+   "rewardText": [
+    "4× Devoted Token",
+    "2× Newbie Gift"
+   ],
+   "species": [
+    {
+     "huntLevel": 40,
+     "id": 24,
+     "name": "Arbok"
+    },
+    {
+     "huntLevel": 40,
+     "id": 168,
+     "name": "Ariados"
+    },
+    {
+     "huntLevel": 30,
+     "id": 304,
+     "name": "Aron"
+    },
+    {
+     "huntLevel": 30,
+     "id": 343,
+     "name": "Baltoy"
+    },
+    {
+     "huntLevel": 30,
+     "id": 15,
+     "name": "Beedrill"
+    },
+    {
+     "huntLevel": 20,
+     "id": 374,
+     "name": "Beldum"
+    },
+    {
+     "huntLevel": 20,
+     "id": 1,
+     "name": "Bulbasaur"
+    },
+    {
+     "huntLevel": 30,
+     "id": 12,
+     "name": "Butterfree"
+    },
+    {
+     "huntLevel": 20,
+     "id": 4,
+     "name": "Charmander"
+    },
+    {
+     "huntLevel": 20,
+     "id": 152,
+     "name": "Chikorita"
+    },
+    {
+     "huntLevel": 20,
+     "id": 173,
+     "name": "Cleffa"
+    },
+    {
+     "huntLevel": 30,
+     "id": 341,
+     "name": "Corphish"
+    },
+    {
+     "huntLevel": 20,
+     "id": 155,
+     "name": "Cyndaquil"
+    },
+    {
+     "huntLevel": 40,
+     "id": 51,
+     "name": "Dugtrio"
+    },
+    {
+     "huntLevel": 30,
+     "id": 206,
+     "name": "Dunsparce"
+    },
+    {
+     "huntLevel": 30,
+     "id": 309,
+     "name": "Electrike"
+    },
+    {
+     "huntLevel": 40,
+     "id": 101,
+     "name": "Electrode"
+    },
+    {
+     "huntLevel": 40,
+     "id": 162,
+     "name": "Furret"
+    },
+    {
+     "huntLevel": 20,
+     "id": 92,
+     "name": "Gastly"
+    },
+    {
+     "huntLevel": 30,
+     "id": 44,
+     "name": "Gloom"
+    },
+    {
+     "huntLevel": 40,
+     "id": 42,
+     "name": "Golbat"
+    },
+    {
+     "huntLevel": 30,
+     "id": 58,
+     "name": "Growlithe"
+    },
+    {
+     "huntLevel": 20,
+     "id": 228,
+     "name": "Houndour"
+    },
+    {
+     "huntLevel": 20,
+     "id": 174,
+     "name": "Igglybuff"
+    },
+    {
+     "huntLevel": 40,
+     "id": 166,
+     "name": "Ledian"
+    },
+    {
+     "huntLevel": 20,
+     "id": 270,
+     "name": "Lotad"
+    },
+    {
+     "huntLevel": 20,
+     "id": 66,
+     "name": "Machop"
+    },
+    {
+     "huntLevel": 20,
+     "id": 179,
+     "name": "Mareep"
+    },
+    {
+     "huntLevel": 20,
+     "id": 183,
+     "name": "Marill"
+    },
+    {
+     "huntLevel": 30,
+     "id": 307,
+     "name": "Meditite"
+    },
+    {
+     "huntLevel": 20,
+     "id": 258,
+     "name": "Mudkip"
+    },
+    {
+     "huntLevel": 30,
+     "id": 177,
+     "name": "Natu"
+    },
+    {
+     "huntLevel": 30,
+     "id": 30,
+     "name": "Nidorina"
+    },
+    {
+     "huntLevel": 30,
+     "id": 33,
+     "name": "Nidorino"
+    },
+    {
+     "huntLevel": 30,
+     "id": 322,
+     "name": "Numel"
+    },
+    {
+     "huntLevel": 30,
+     "id": 274,
+     "name": "Nuzleaf"
+    },
+    {
+     "huntLevel": 50,
+     "id": 53,
+     "name": "Persian"
+    },
+    {
+     "huntLevel": 20,
+     "id": 231,
+     "name": "Phanpy"
+    },
+    {
+     "huntLevel": 20,
+     "id": 172,
+     "name": "Pichu"
+    },
+    {
+     "huntLevel": 30,
+     "id": 61,
+     "name": "Poliwhirl"
+    },
+    {
+     "huntLevel": 30,
+     "id": 261,
+     "name": "Poochyena"
+    },
+    {
+     "huntLevel": 30,
+     "id": 280,
+     "name": "Ralts"
+    },
+    {
+     "huntLevel": 30,
+     "id": 20,
+     "name": "Raticate"
+    },
+    {
+     "huntLevel": 30,
+     "id": 111,
+     "name": "Rhyhorn"
+    },
+    {
+     "huntLevel": 30,
+     "id": 447,
+     "name": "Riolu"
+    },
+    {
+     "huntLevel": 50,
+     "id": 119,
+     "name": "Seaking"
+    },
+    {
+     "huntLevel": 20,
+     "id": 86,
+     "name": "Seel"
+    },
+    {
+     "huntLevel": 40,
+     "id": 213,
+     "name": "Shuckle"
+    },
+    {
+     "huntLevel": 30,
+     "id": 188,
+     "name": "Skiploom"
+    },
+    {
+     "huntLevel": 30,
+     "id": 361,
+     "name": "Snorunt"
+    },
+    {
+     "huntLevel": 30,
+     "id": 209,
+     "name": "Snubbull"
+    },
+    {
+     "huntLevel": 30,
+     "id": 363,
+     "name": "Spheal"
+    },
+    {
+     "huntLevel": 20,
+     "id": 325,
+     "name": "Spoink"
+    },
+    {
+     "huntLevel": 20,
+     "id": 7,
+     "name": "Squirtle"
+    },
+    {
+     "huntLevel": 30,
+     "id": 276,
+     "name": "Taillow"
+    },
+    {
+     "huntLevel": 20,
+     "id": 255,
+     "name": "Torchic"
+    },
+    {
+     "huntLevel": 20,
+     "id": 158,
+     "name": "Totodile"
+    },
+    {
+     "huntLevel": 20,
+     "id": 328,
+     "name": "Trapinch"
+    },
+    {
+     "huntLevel": 20,
+     "id": 252,
+     "name": "Treecko"
+    },
+    {
+     "huntLevel": 30,
+     "id": 70,
+     "name": "Weepinbell"
+    },
+    {
+     "huntLevel": 20,
+     "id": 293,
+     "name": "Whismur"
+    },
+    {
+     "huntLevel": 30,
+     "id": 278,
+     "name": "Wingull"
+    },
+    {
+     "huntLevel": 20,
+     "id": 194,
+     "name": "Wooper"
+    }
+   ]
+  },
+  {
+   "key": "medium",
+   "label": "Medium",
+   "maxLevel": 149,
+   "minLevel": 80,
+   "reward": {
+    "items": [
+     {
+      "icon": "/assets/items/devoted_token.png",
+      "itemId": 13115,
+      "name": "Devoted Token",
+      "qty": 2
+     },
+     {
+      "icon": "/assets/items/bronze_dimensional_key.png",
+      "itemId": 21287,
+      "name": "Bronze Dimensional Key",
+      "qty": 1
+     }
+    ],
+    "xp": 0,
+    "xpMax": 400525,
+    "xpMin": 730
+   },
+   "rewardText": [
+    "4× Devoted Token",
+    "2× Bronze Dimensional Key"
+   ],
+   "species": [
+    {
+     "huntLevel": 40,
+     "id": 190,
+     "name": "Aipom"
+    },
+    {
+     "huntLevel": 40,
+     "id": 371,
+     "name": "Bagon"
+    },
+    {
+     "huntLevel": 40,
+     "id": 153,
+     "name": "Bayleef"
+    },
+    {
+     "huntLevel": 40,
+     "id": 5,
+     "name": "Charmeleon"
+    },
+    {
+     "huntLevel": 40,
+     "id": 35,
+     "name": "Clefairy"
+    },
+    {
+     "huntLevel": 60,
+     "id": 91,
+     "name": "Cloyster"
+    },
+    {
+     "huntLevel": 40,
+     "id": 256,
+     "name": "Combusken"
+    },
+    {
+     "huntLevel": 50,
+     "id": 222,
+     "name": "Corsola"
+    },
+    {
+     "huntLevel": 40,
+     "id": 159,
+     "name": "Croconaw"
+    },
+    {
+     "huntLevel": 40,
+     "id": 225,
+     "name": "Delibird"
+    },
+    {
+     "huntLevel": 60,
+     "id": 85,
+     "name": "Dodrio"
+    },
+    {
+     "huntLevel": 40,
+     "id": 355,
+     "name": "Duskull"
+    },
+    {
+     "huntLevel": 100,
+     "id": 103,
+     "name": "Exeggutor"
+    },
+    {
+     "huntLevel": 50,
+     "id": 83,
+     "name": "Farfetchd"
+    },
+    {
+     "huntLevel": 50,
+     "id": 22,
+     "name": "Fearow"
+    },
+    {
+     "huntLevel": 40,
+     "id": 180,
+     "name": "Flaaffy"
+    },
+    {
+     "huntLevel": 80,
+     "id": 205,
+     "name": "Forretress"
+    },
+    {
+     "huntLevel": 40,
+     "id": 207,
+     "name": "Gligar"
+    },
+    {
+     "huntLevel": 40,
+     "id": 75,
+     "name": "Graveler"
+    },
+    {
+     "huntLevel": 40,
+     "id": 253,
+     "name": "Grovyle"
+    },
+    {
+     "huntLevel": 50,
+     "id": 93,
+     "name": "Haunter"
+    },
+    {
+     "huntLevel": 40,
+     "id": 2,
+     "name": "Ivysaur"
+    },
+    {
+     "huntLevel": 40,
+     "id": 39,
+     "name": "Jigglypuff"
+    },
+    {
+     "huntLevel": 50,
+     "id": 64,
+     "name": "Kadabra"
+    },
+    {
+     "huntLevel": 60,
+     "id": 99,
+     "name": "Kingler"
+    },
+    {
+     "huntLevel": 50,
+     "id": 271,
+     "name": "Lombre"
+    },
+    {
+     "huntLevel": 50,
+     "id": 294,
+     "name": "Loudred"
+    },
+    {
+     "huntLevel": 40,
+     "id": 67,
+     "name": "Machoke"
+    },
+    {
+     "huntLevel": 80,
+     "id": 82,
+     "name": "Magneton"
+    },
+    {
+     "huntLevel": 40,
+     "id": 296,
+     "name": "Makuhita"
+    },
+    {
+     "huntLevel": 40,
+     "id": 259,
+     "name": "Marshtomp"
+    },
+    {
+     "huntLevel": 70,
+     "id": 224,
+     "name": "Octillery"
+    },
+    {
+     "huntLevel": 60,
+     "id": 95,
+     "name": "Onix"
+    },
+    {
+     "huntLevel": 50,
+     "id": 47,
+     "name": "Parasect"
+    },
+    {
+     "huntLevel": 60,
+     "id": 25,
+     "name": "Pikachu"
+    },
+    {
+     "huntLevel": 30,
+     "id": 57,
+     "name": "Primeape"
+    },
+    {
+     "huntLevel": 40,
+     "id": 156,
+     "name": "Quilava"
+    },
+    {
+     "huntLevel": 50,
+     "id": 211,
+     "name": "Qwilfish"
+    },
+    {
+     "huntLevel": 50,
+     "id": 117,
+     "name": "Seadra"
+    },
+    {
+     "huntLevel": 40,
+     "id": 287,
+     "name": "Slakoth"
+    },
+    {
+     "huntLevel": 60,
+     "id": 80,
+     "name": "Slowbro"
+    },
+    {
+     "huntLevel": 50,
+     "id": 215,
+     "name": "Sneasel"
+    },
+    {
+     "huntLevel": 50,
+     "id": 234,
+     "name": "Stantler"
+    },
+    {
+     "huntLevel": 80,
+     "id": 121,
+     "name": "Starmie"
+    },
+    {
+     "huntLevel": 30,
+     "id": 192,
+     "name": "Sunflora"
+    },
+    {
+     "huntLevel": 40,
+     "id": 333,
+     "name": "Swablu"
+    },
+    {
+     "huntLevel": 50,
+     "id": 114,
+     "name": "Tangela"
+    },
+    {
+     "huntLevel": 60,
+     "id": 128,
+     "name": "Tauros"
+    },
+    {
+     "huntLevel": 80,
+     "id": 73,
+     "name": "Tentacruel"
+    },
+    {
+     "huntLevel": 60,
+     "id": 49,
+     "name": "Venomoth"
+    },
+    {
+     "huntLevel": 50,
+     "id": 329,
+     "name": "Vibrava"
+    },
+    {
+     "huntLevel": 40,
+     "id": 8,
+     "name": "Wartortle"
+    },
+    {
+     "huntLevel": 60,
+     "id": 110,
+     "name": "Weezing"
+    },
+    {
+     "huntLevel": 50,
+     "id": 193,
+     "name": "Yanma"
+    }
+   ]
+  },
+  {
+   "key": "hard",
+   "label": "Hard",
+   "maxLevel": 199,
+   "minLevel": 150,
+   "reward": {
+    "items": [
+     {
+      "icon": "/assets/items/devoted_token.png",
+      "itemId": 13115,
+      "name": "Devoted Token",
+      "qty": 3
+     },
+     {
+      "icon": "/assets/items/bronze_dimensional_key.png",
+      "itemId": 21287,
+      "name": "Bronze Dimensional Key",
+      "qty": 1
+     }
+    ],
+    "xp": 0,
+    "xpMax": 400525,
+    "xpMin": 10
+   },
+   "rewardText": [
+    "6× Devoted Token",
+    "2× Bronze Dimensional Key"
+   ],
+   "species": [
+    {
+     "huntLevel": 100,
+     "id": 65,
+     "name": "Alakazam"
+    },
+    {
+     "huntLevel": 80,
+     "id": 334,
+     "name": "Altaria"
+    },
+    {
+     "huntLevel": 80,
+     "id": 181,
+     "name": "Ampharos"
+    },
+    {
+     "huntLevel": 100,
+     "id": 59,
+     "name": "Arcanine"
+    },
+    {
+     "huntLevel": 60,
+     "id": 184,
+     "name": "Azumarill"
+    },
+    {
+     "huntLevel": 80,
+     "id": 354,
+     "name": "Banette"
+    },
+    {
+     "huntLevel": 50,
+     "id": 182,
+     "name": "Bellossom"
+    },
+    {
+     "huntLevel": 80,
+     "id": 9,
+     "name": "Blastoise"
+    },
+    {
+     "huntLevel": 80,
+     "id": 257,
+     "name": "Blaziken"
+    },
+    {
+     "huntLevel": 80,
+     "id": 323,
+     "name": "Camerupt"
+    },
+    {
+     "huntLevel": 80,
+     "id": 6,
+     "name": "Charizard"
+    },
+    {
+     "huntLevel": 80,
+     "id": 344,
+     "name": "Claydol"
+    },
+    {
+     "huntLevel": 80,
+     "id": 36,
+     "name": "Clefable"
+    },
+    {
+     "huntLevel": 80,
+     "id": 342,
+     "name": "Crawdaunt"
+    },
+    {
+     "huntLevel": 80,
+     "id": 169,
+     "name": "Crobat"
+    },
+    {
+     "huntLevel": 60,
+     "id": 87,
+     "name": "Dewgong"
+    },
+    {
+     "huntLevel": 80,
+     "id": 232,
+     "name": "Donphan"
+    },
+    {
+     "huntLevel": 30,
+     "id": 147,
+     "name": "Dratini"
+    },
+    {
+     "huntLevel": 30,
+     "id": 239,
+     "name": "Elekid"
+    },
+    {
+     "huntLevel": 80,
+     "id": 160,
+     "name": "Feraligatr"
+    },
+    {
+     "huntLevel": 100,
+     "id": 94,
+     "name": "Gengar"
+    },
+    {
+     "huntLevel": 80,
+     "id": 362,
+     "name": "Glalie"
+    },
+    {
+     "huntLevel": 80,
+     "id": 55,
+     "name": "Golduck"
+    },
+    {
+     "huntLevel": 80,
+     "id": 76,
+     "name": "Golem"
+    },
+    {
+     "huntLevel": 80,
+     "id": 210,
+     "name": "Granbull"
+    },
+    {
+     "huntLevel": 80,
+     "id": 326,
+     "name": "Grumpig"
+    },
+    {
+     "huntLevel": 100,
+     "id": 130,
+     "name": "Gyarados"
+    },
+    {
+     "huntLevel": 60,
+     "id": 107,
+     "name": "Hitmonchan"
+    },
+    {
+     "huntLevel": 60,
+     "id": 106,
+     "name": "Hitmonlee"
+    },
+    {
+     "huntLevel": 100,
+     "id": 229,
+     "name": "Houndoom"
+    },
+    {
+     "huntLevel": 60,
+     "id": 97,
+     "name": "Hypno"
+    },
+    {
+     "huntLevel": 50,
+     "id": 189,
+     "name": "Jumpluff"
+    },
+    {
+     "huntLevel": 20,
+     "id": 140,
+     "name": "Kabuto"
+    },
+    {
+     "huntLevel": 100,
+     "id": 230,
+     "name": "Kingdra"
+    },
+    {
+     "huntLevel": 60,
+     "id": 281,
+     "name": "Kirlia"
+    },
+    {
+     "huntLevel": 60,
+     "id": 305,
+     "name": "Lairon"
+    },
+    {
+     "huntLevel": 80,
+     "id": 171,
+     "name": "Lanturn"
+    },
+    {
+     "huntLevel": 30,
+     "id": 246,
+     "name": "Larvitar"
+    },
+    {
+     "huntLevel": 60,
+     "id": 108,
+     "name": "Lickitung"
+    },
+    {
+     "huntLevel": 80,
+     "id": 448,
+     "name": "Lucario"
+    },
+    {
+     "huntLevel": 80,
+     "id": 68,
+     "name": "Machamp"
+    },
+    {
+     "huntLevel": 30,
+     "id": 240,
+     "name": "Magby"
+    },
+    {
+     "huntLevel": 80,
+     "id": 219,
+     "name": "Magcargo"
+    },
+    {
+     "huntLevel": 80,
+     "id": 310,
+     "name": "Manectric"
+    },
+    {
+     "huntLevel": 50,
+     "id": 105,
+     "name": "Marowak"
+    },
+    {
+     "huntLevel": 80,
+     "id": 303,
+     "name": "Mawile"
+    },
+    {
+     "huntLevel": 80,
+     "id": 308,
+     "name": "Medicham"
+    },
+    {
+     "huntLevel": 80,
+     "id": 154,
+     "name": "Meganium"
+    },
+    {
+     "huntLevel": 80,
+     "id": 375,
+     "name": "Metang"
+    },
+    {
+     "huntLevel": 80,
+     "id": 89,
+     "name": "Muk"
+    },
+    {
+     "huntLevel": 80,
+     "id": 34,
+     "name": "Nidoking"
+    },
+    {
+     "huntLevel": 80,
+     "id": 31,
+     "name": "Nidoqueen"
+    },
+    {
+     "huntLevel": 100,
+     "id": 38,
+     "name": "Ninetales"
+    },
+    {
+     "huntLevel": 60,
+     "id": 164,
+     "name": "Noctowl"
+    },
+    {
+     "huntLevel": 20,
+     "id": 138,
+     "name": "Omanyte"
+    },
+    {
+     "huntLevel": 80,
+     "id": 279,
+     "name": "Pelipper"
+    },
+    {
+     "huntLevel": 80,
+     "id": 18,
+     "name": "Pidgeot"
+    },
+    {
+     "huntLevel": 80,
+     "id": 221,
+     "name": "Piloswine"
+    },
+    {
+     "huntLevel": 70,
+     "id": 186,
+     "name": "Politoed"
+    },
+    {
+     "huntLevel": 80,
+     "id": 62,
+     "name": "Poliwrath"
+    },
+    {
+     "huntLevel": 60,
+     "id": 195,
+     "name": "Quagsire"
+    },
+    {
+     "huntLevel": 80,
+     "id": 26,
+     "name": "Raichu"
+    },
+    {
+     "huntLevel": 80,
+     "id": 78,
+     "name": "Rapidash"
+    },
+    {
+     "huntLevel": 80,
+     "id": 112,
+     "name": "Rhydon"
+    },
+    {
+     "huntLevel": 60,
+     "id": 302,
+     "name": "Sableye"
+    },
+    {
+     "huntLevel": 60,
+     "id": 28,
+     "name": "Sandslash"
+    },
+    {
+     "huntLevel": 80,
+     "id": 254,
+     "name": "Sceptile"
+    },
+    {
+     "huntLevel": 60,
+     "id": 364,
+     "name": "Sealeo"
+    },
+    {
+     "huntLevel": 60,
+     "id": 372,
+     "name": "Shelgon"
+    },
+    {
+     "huntLevel": 80,
+     "id": 275,
+     "name": "Shiftry"
+    },
+    {
+     "huntLevel": 30,
+     "id": 238,
+     "name": "Smoochum"
+    },
+    {
+     "huntLevel": 80,
+     "id": 260,
+     "name": "Swampert"
+    },
+    {
+     "huntLevel": 80,
+     "id": 277,
+     "name": "Swellow"
+    },
+    {
+     "huntLevel": 1,
+     "id": 175,
+     "name": "Togepi"
+    },
+    {
+     "huntLevel": 80,
+     "id": 176,
+     "name": "Togetic"
+    },
+    {
+     "huntLevel": 80,
+     "id": 157,
+     "name": "Typhlosion"
+    },
+    {
+     "huntLevel": 80,
+     "id": 3,
+     "name": "Venusaur"
+    },
+    {
+     "huntLevel": 60,
+     "id": 71,
+     "name": "Victreebel"
+    },
+    {
+     "huntLevel": 60,
+     "id": 288,
+     "name": "Vigoroth"
+    },
+    {
+     "huntLevel": 60,
+     "id": 45,
+     "name": "Vileplume"
+    },
+    {
+     "huntLevel": 80,
+     "id": 40,
+     "name": "Wigglytuff"
+    },
+    {
+     "huntLevel": 80,
+     "id": 178,
+     "name": "Xatu"
+    }
+   ]
+  }
+ ],
+ "total": 2
+}

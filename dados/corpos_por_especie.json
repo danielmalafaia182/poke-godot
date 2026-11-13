@@ -5,6 +5,10 @@
   "C1.jsonl": "266d997809947d3163c00d9dbc2fc13ab39d302eb8b23edbe7a9e9e88fc1d1a2",
   "C6.jsonl": "47c7c4902d2e3566ade21731d010733d7bb42db03562e1e106e1facbca85b37c",
   "C8.jsonl": "05e9ad8cf2a5350f936c050e67ebd082a54f45edccb108e276da7609f23f3a5f",
+  "G5.jsonl": "c028c0a08f6158223a7937718d651d0ef742218bffc78ff4107e85a6f61b454f",
+  "G6.jsonl": "0e71e41346fbb8cab4094e2ca30286efd241f555d53de4dfd0f880265b6b4887",
+  "G7.jsonl": "300ec2ffe49faaaeb0e6ed90364bf935fbcfb539cf3a0b47f7d67f235601b303",
+  "G8.jsonl": "c2aa44c127c759bc9948f2defd856fcc10858317ca2a9ab06c1aff853aa2b995",
   "M1.jsonl": "5344694d50f54bdd01a07c81ee6b8163c8708e0d983f3bbe4b831072612796f8",
   "M2.jsonl": "6fa7e006006b7607fc2c159eefcabfa10324d44164c3b57e9a2deb036d8d2036",
   "M3.jsonl": "560acc5676b2a9088a9f88057327e58f84d42a764ecda3c02fc4158f188d34f9",
@@ -37,9 +41,9 @@
   },
   "9": {
    "corpo": 2931,
-   "n": 7138,
+   "n": 7308,
    "contagem": {
-    "2931": 7138
+    "2931": 7308
    }
   },
   "19": {
@@ -103,6 +107,20 @@
    "n": 4658,
    "contagem": {
     "6073": 4658
+   }
+  },
+  "246": {
+   "corpo": 10749,
+   "n": 1519,
+   "contagem": {
+    "10749": 1519
+   }
+  },
+  "248": {
+   "corpo": 10734,
+   "n": 1619,
+   "contagem": {
+    "10734": 1619
    }
   },
   "10524": {

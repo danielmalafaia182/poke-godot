@@ -127,8 +127,9 @@ const PARAMETROS := {
 	# Boosts (C: "XP Boost +50% trainer XP", "Pokémon XP Boost +50%", "Loot Boost +40% loot chance", "Capture Boost:
 	# doubles the catch chance"); o pct vem no próprio boost ({key, until, pct}, A). F: parcela = % da XP base.
 	"boost_captura_bonus": 1.0,             # C: dobra a chance (multiplica a chance por arremesso)
-	# Tipo do Dia (A: evento "type-of-day", "+20% de XP e +20% de loot em Pokémon do tipo X"): parcela typeDay = 20% da
-	# base (F: sobre a base) e chance de cada drop × 1,2 (F: "loot" lido como chance).
+	# Tipo do Dia (A: evento "type-of-day", "+20% de XP e +20% de loot em Pokémon do tipo X"): parcela typeDay =
+	# floor(20% da base) (A, G8: 61/61) e chance de cada drop × 1,2 (F: na G8 os drops vieram 1,42× a tabela em 61
+	# abates — ×1,2 esperaria 125 e vieram 148, 2,9σ acima; ×1,4 caberia; uma gravação só, não trocado).
 	"tipo_do_dia_pct": 20,                    # E: sem shiny na fase 1
 }
 

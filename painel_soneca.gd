@@ -1,7 +1,8 @@
 extends Control
-## "Enquanto você estava fora…" (Modo Soneca, fase 4, lote 2), como a janela do original (C): hunt da amostra, tempo
-## fora (teto de 24 h), abates da amostra e estimados, itens consumidos, desmaio, e o botão Coletar (+XP, 50%). O turbo
-## com diamantes não existe offline (E). Contas em sim/servico_jogador.gd.
+## "Enquanto você estava fora…" (Modo Soneca, fase 4), como a janela do original (C; campos do relatório A, G6): hunt
+## da amostra, tempo fora (teto de 24 h), abates da amostra e estimados, XP da amostra (já entregue), itens consumidos,
+## desmaio, o Pokémon líder e o botão Coletar (+XP, 50% da taxa pelo tempo fora). O turbo com diamantes não existe
+## offline (E). Contas em sim/servico_jogador.gd.
 
 const ESTILO: Script = preload("res://estilo_hud_original.gd")
 var janela: PanelContainer
@@ -58,8 +59,15 @@ func _montar() -> void:
 		c.queue_free()
 	var r: Dictionary = relatorio["report"]
 	_rotulo("💤 Enquanto você estava fora…")
-	_rotulo("Seu líder caçou em %s por %s%s." % [r["sample"]["slug"], _duracao(int(r["seconds"])), " (máx. 24h)" if r.get("cappedAt") != null else ""])
-	_rotulo("%d abates na amostra (5 min) · ~%d abates estimados no total" % [int(r["sample"]["kills"]), int(r["estKills"])], Color("b9c3cf"))
+	var poke: Dictionary = r.get("poke", {}) if r.get("poke") is Dictionary else {}
+	var nome := ""
+	if poke.has("speciesId"):
+		var esp = preload("res://ponte_cidade.gd").especie_por_id(int(poke["speciesId"]))
+		nome = "%s Lv.%d" % [esp.nome if esp != null else "#" + str(poke["speciesId"]), int(poke.get("level", 1))]
+	_rotulo("Seu líder%s caçou em %s; fora há %s%s." % [(" " + nome) if nome != "" else "", r["sample"]["slug"], _duracao(int(r["seconds"])),
+		" (máx. 24h)" if not (r.get("cappedAt") is bool) else ""])
+	_rotulo("Amostra de 5 min: %d abates, +%d XP (já recebidos) · ~%d abates estimados no tempo fora" % [int(r["sample"]["kills"]),
+		int(r["sample"]["xpSample"]), int(r["estKills"])], Color("b9c3cf"))
 	if bool(r["sample"]["fainted"]):
 		_rotulo("⚠️ Seu líder desmaiou durante a soneca — a caçada parou ali e o rendimento reflete isso.", Color("ff8c7a"))
 	var usados: Dictionary = r["sample"].get("itemsUsed", {})

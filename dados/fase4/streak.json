@@ -1,0 +1,55 @@
+{
+ "fonte": "A: GET /api/game/streak e POST /api/game/streak/spend (sem a lista de abates)",
+ "respostas": [
+  {
+   "arquivo": "G7.jsonl",
+   "corpo": {
+    "available": 663,
+    "bonusPct": {
+     "exp": 0,
+     "loot": 0,
+     "shiny": 1.9000000000000001
+    },
+    "canBuy": true,
+    "earned": 682,
+    "gold": 80116751,
+    "killsPerPoint": 1000,
+    "nextCost": 500000,
+    "spent": 19,
+    "toNext": 38,
+    "totalKills": 682962,
+    "tracks": {
+     "exp": 0,
+     "loot": 0,
+     "shiny": 19
+    }
+   },
+   "metodo": "GET"
+  },
+  {
+   "arquivo": "G7.jsonl",
+   "corpo": {
+    "available": 662,
+    "bonusPct": {
+     "exp": 0.1,
+     "loot": 0,
+     "shiny": 1.9000000000000001
+    },
+    "canBuy": true,
+    "earned": 682,
+    "gold": 79616751,
+    "killsPerPoint": 1000,
+    "nextCost": 525000,
+    "spent": 20,
+    "toNext": 35,
+    "totalKills": 682965,
+    "tracks": {
+     "exp": 1,
+     "loot": 0,
+     "shiny": 19
+    }
+   },
+   "metodo": "POST"
+  }
+ ]
+}

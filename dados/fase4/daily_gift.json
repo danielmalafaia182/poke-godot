@@ -1,0 +1,230 @@
+{
+ "fonte": "A: G7.jsonl, GET /api/game/daily (mês 2026-11)",
+ "rewards": [
+  {
+   "day": 1,
+   "icon": "/assets/markitems/pokeball.png",
+   "kind": "ball",
+   "label": "Poké Ball",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 2,
+   "icon": "/assets/markitems/small_potion.png",
+   "kind": "item",
+   "label": "Small Potion",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 3,
+   "icon": "/assets/markitems/idleball.png",
+   "kind": "idleball",
+   "label": "Idle Ball",
+   "qty": 15,
+   "tag": "VIP"
+  },
+  {
+   "day": 4,
+   "icon": "/assets/markitems/pokeball.png",
+   "kind": "ball",
+   "label": "Poké Ball",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 5,
+   "icon": "/assets/markitems/exp.png",
+   "kind": "xpboost",
+   "label": "XP Boost +50% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 6,
+   "icon": "/assets/markitems/great_potion.png",
+   "kind": "item",
+   "label": "Great Potion",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 7,
+   "icon": "/assets/markitems/ultimate_potion.png",
+   "kind": "item",
+   "label": "Ultimate Potion",
+   "qty": 10,
+   "tag": null
+  },
+  {
+   "day": 8,
+   "icon": "/assets/markitems/loot.png",
+   "kind": "lootboost",
+   "label": "Loot Boost +20% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 9,
+   "icon": "/assets/markitems/idleball.png",
+   "kind": "idleball",
+   "label": "Idle Ball",
+   "qty": 30,
+   "tag": "VIP"
+  },
+  {
+   "day": 10,
+   "icon": "/assets/markitems/exp.png",
+   "kind": "xpboost",
+   "label": "XP Boost +50% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 11,
+   "icon": "/assets/markitems/ultra_potion.png",
+   "kind": "item",
+   "label": "Ultra Potion",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 12,
+   "icon": "/assets/markitems/ultimate_potion.png",
+   "kind": "item",
+   "label": "Ultimate Potion",
+   "qty": 10,
+   "tag": null
+  },
+  {
+   "day": 13,
+   "icon": "/assets/markitems/loot.png",
+   "kind": "lootboost",
+   "label": "Loot Boost +20% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 14,
+   "icon": "/assets/markitems/superball.png",
+   "kind": "ball",
+   "label": "Super Ball",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 15,
+   "icon": "/assets/markitems/loot.png",
+   "kind": "lootboost",
+   "label": "Loot Boost +20% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 16,
+   "icon": "/assets/markitems/ultraball.png",
+   "kind": "ball",
+   "label": "Ultra Ball",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 17,
+   "icon": "/assets/markitems/hyper_potion.png",
+   "kind": "item",
+   "label": "Hyper Potion",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 18,
+   "icon": "/assets/markitems/idleball.png",
+   "kind": "idleball",
+   "label": "Idle Ball",
+   "qty": 50,
+   "tag": "VIP"
+  },
+  {
+   "day": 19,
+   "icon": "/assets/markitems/ultraball.png",
+   "kind": "ball",
+   "label": "Ultra Ball",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 20,
+   "icon": "/assets/markitems/loot.png",
+   "kind": "lootboost",
+   "label": "Loot Boost +20% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 21,
+   "icon": "/assets/markitems/ultimate_potion.png",
+   "kind": "item",
+   "label": "Ultimate Potion",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 22,
+   "icon": "/assets/markitems/ultraball.png",
+   "kind": "ball",
+   "label": "Ultra Ball",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 23,
+   "icon": "/assets/markitems/ultimate_potion.png",
+   "kind": "item",
+   "label": "Ultimate Potion",
+   "qty": 10,
+   "tag": null
+  },
+  {
+   "day": 24,
+   "icon": "/assets/markitems/loot.png",
+   "kind": "lootboost",
+   "label": "Loot Boost +20% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 25,
+   "icon": "/assets/markitems/exp.png",
+   "kind": "xpboost",
+   "label": "XP Boost +50% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  },
+  {
+   "day": 26,
+   "icon": "/assets/markitems/ultra_potion.png",
+   "kind": "item",
+   "label": "Ultra Potion",
+   "qty": 100,
+   "tag": null
+  },
+  {
+   "day": 27,
+   "icon": "/assets/markitems/idleball.png",
+   "kind": "idleball",
+   "label": "Idle Ball",
+   "qty": 100,
+   "tag": "VIP"
+  },
+  {
+   "day": 28,
+   "icon": "/assets/markitems/exp.png",
+   "kind": "xpboost",
+   "label": "XP Boost +50% (1h)",
+   "qty": 1,
+   "tag": "BOOST"
+  }
+ ],
+ "total": 28
+}

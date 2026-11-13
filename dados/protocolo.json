@@ -32,6 +32,10 @@
   "c5.jsonl",
   "g1.jsonl",
   "t1_transacoes.jsonl",
+  "G5.jsonl",
+  "G6.jsonl",
+  "G7.jsonl",
+  "G8.jsonl",
   "geodude-3.jsonl",
   "loogs.txt",
   "logs rhyhorn.txt",
@@ -41,8 +45,8 @@
   "tipos": 145,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 56,
-  "rest_vistos": 15
+  "vistos_em_logs": 57,
+  "rest_vistos": 27
  },
  "mensagens": {
   "addon-used": {
@@ -77,8 +81,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -158,8 +164,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -226,8 +234,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 30,
+    "vezes": 32,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "M3.jsonl",
      "c5.jsonl"
@@ -428,11 +438,15 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 27901,
+    "vezes": 28900,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -460,11 +474,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1634,
+    "vezes": 1766,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -611,11 +629,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 20,
+    "vezes": 21,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -644,11 +663,13 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 34,
+    "vezes": 36,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -703,11 +724,15 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 123,
+    "vezes": 133,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -759,11 +784,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1615,
+    "vezes": 1744,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M3.jsonl",
      "S2.jsonl",
      "S4.jsonl",
@@ -961,11 +989,12 @@
     ]
    },
    "visto_out": {
-    "vezes": 21,
+    "vezes": 22,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1008,11 +1037,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 129,
+    "vezes": 143,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1097,11 +1130,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 24757,
+    "vezes": 25607,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1513,8 +1549,11 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 73,
+    "vezes": 80,
     "fontes": [
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "S1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
@@ -1530,11 +1569,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 94,
+    "vezes": 102,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1645,11 +1687,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2140,
+    "vezes": 2269,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1854,6 +1899,26 @@
        "int"
       ],
       "exemplo": 20851232
+     },
+     "typeDay": {
+      "tipos": [
+       "object"
+      ],
+      "opcional": true,
+      "campos": {
+       "emoji": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "🌑"
+       },
+       "type": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "DARK"
+       }
+      }
      },
      "xpGained": {
       "tipos": [
@@ -2267,8 +2332,10 @@
   "history": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -2277,13 +2344,91 @@
        "list"
       ],
       "itens": {
-       "tipos": []
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "at": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "2026-11-10T16:05:19.928Z"
+        },
+        "body": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Boa Tarde, lembrem de doar para abrir mais vagas para guild!"
+        },
+        "channel": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "guild"
+        },
+        "fromName": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "DinhoOvoPreto"
+        },
+        "guildTag": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "TJF"
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cmwavstywabqc4ozuxx317kkx"
+        },
+        "isAdmin": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isCm": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isCreator": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isTutor": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "isVip": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "level": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 675
+        }
+       }
       }
      },
      "guildTag": {
       "tipos": [
-       "null"
-      ]
+       "null",
+       "str"
+      ],
+      "exemplo": "TJF"
      },
      "help": {
       "tipos": [
@@ -2642,6 +2787,26 @@
   "hunt-resume": {
    "no_cliente": {
     "assinado": true
+   },
+   "visto_in": {
+    "vezes": 1,
+    "fontes": [
+     "G7.jsonl"
+    ],
+    "esquema": {
+     "name": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Blastoise"
+     },
+     "slug": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "blastoise"
+     }
+    }
    }
   },
   "inv-get": {
@@ -2686,9 +2851,11 @@
   "invasion-energy": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 151,
+    "vezes": 153,
     "fontes": [
      "C8.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "c5.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
@@ -2792,11 +2959,15 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2820,
+    "vezes": 2949,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -2894,8 +3065,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2,
+    "vezes": 4,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "rhydon-1h.jsonl"
     ],
@@ -2932,8 +3105,10 @@
   "offline-notice": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 2,
+    "vezes": 6,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -2951,8 +3126,10 @@
   "offline-notice-get": {
    "no_cliente": {},
    "visto_out": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -2973,11 +3150,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1148,
+    "vezes": 1157,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3067,11 +3247,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 19,
+    "vezes": 20,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3393,11 +3574,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2140,
+    "vezes": 2269,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3515,8 +3699,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 6,
+    "vezes": 11,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "geodude-10min.jsonl",
      "rhydon-1h.jsonl"
@@ -3536,6 +3722,13 @@
           "int"
          ],
          "exemplo": 196
+        },
+        "breedingBox": {
+         "tipos": [
+          "bool"
+         ],
+         "opcional": true,
+         "exemplo": true
         },
         "evolveNeedLevel": {
          "tipos": [
@@ -3628,7 +3821,8 @@
         },
         "quality": {
          "tipos": [
-          "float"
+          "float",
+          "int"
          ],
          "exemplo": 1.137
         },
@@ -3995,8 +4189,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 12,
+    "vezes": 15,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "S1.jsonl",
      "S2.jsonl",
@@ -4169,15 +4365,19 @@
     "assinado": true
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
    },
    "visto_in": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -4288,8 +4488,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -4312,8 +4514,10 @@
     ]
    },
    "visto_out": {
-    "vezes": 7,
+    "vezes": 9,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl",
      "g1.jsonl",
      "geodude-10min.jsonl",
@@ -4444,8 +4648,10 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -4480,8 +4686,10 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 1,
+    "vezes": 3,
     "fontes": [
+     "G6.jsonl",
+     "G7.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -4627,11 +4835,14 @@
     ]
    },
    "visto_out": {
-    "vezes": 94,
+    "vezes": 102,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -4670,11 +4881,15 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 128,
+    "vezes": 142,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G5.jsonl",
+     "G6.jsonl",
+     "G7.jsonl",
+     "G8.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -4703,6 +4918,31 @@
   }
  },
  "rest": {
+  "GET /api/game/blocks": {
+   "vezes": 2,
+   "fontes": [
+    "G6.jsonl",
+    "G7.jsonl"
+   ],
+   "status": {
+    "200": 2
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "blocked": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": []
+      }
+     }
+    }
+   }
+  },
   "GET /api/game/capture-log": {
    "vezes": 5,
    "fontes": [
@@ -4828,13 +5068,15 @@
    }
   },
   "GET /api/game/city-npcs": {
-   "vezes": 4,
+   "vezes": 6,
    "fontes": [
+    "G6.jsonl",
+    "G7.jsonl",
     "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 4
+    "200": 6
    },
    "esquema": {
     "tipos": [
@@ -4875,6 +5117,713 @@
         "int"
        ],
        "exemplo": -29
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/daily": {
+   "vezes": 1,
+   "fontes": [
+    "G7.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "blockedByVip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "canClaim": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "claimedToday": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "nextDay": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 14
+     },
+     "rewards": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "claimed": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "current": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "day": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/pokeball.png"
+        },
+        "kind": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "ball"
+        },
+        "label": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Poké Ball"
+        },
+        "locked": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "qty": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 100
+        },
+        "tag": {
+         "tipos": [
+          "null",
+          "str"
+         ],
+         "exemplo": "VIP"
+        }
+       }
+      }
+     },
+     "total": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 28
+     },
+     "vip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "ym": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "2026-11"
+     }
+    }
+   }
+  },
+  "GET /api/game/daily-catch": {
+   "vezes": 4,
+   "fontes": [
+    "G5.jsonl"
+   ],
+   "status": {
+    "200": 4
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "claims": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 400
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Larvitar"
+        },
+        "slot": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 246
+        },
+        "tierKey": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "hard"
+        },
+        "tierLabel": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Hard"
+        },
+        "type1": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "ROCK"
+        },
+        "type2": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "GROUND"
+        },
+        "xp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 14613
+        }
+       }
+      }
+     },
+     "dayKey": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "2026-11-13"
+     },
+     "resetAt": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794625200000
+     },
+     "tiers": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "key": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "superEasy"
+        },
+        "label": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Super Easy"
+        },
+        "maxLevel": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 59
+        },
+        "minLevel": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 25
+        },
+        "reward": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "items": {
+           "tipos": [
+            "list"
+           ],
+           "itens": {
+            "tipos": [
+             "object"
+            ],
+            "campos": {
+             "icon": {
+              "tipos": [
+               "str"
+              ],
+              "exemplo": "/assets/items/devoted_token.png"
+             },
+             "itemId": {
+              "tipos": [
+               "int"
+              ],
+              "exemplo": 13115
+             },
+             "name": {
+              "tipos": [
+               "str"
+              ],
+              "exemplo": "Devoted Token"
+             },
+             "qty": {
+              "tipos": [
+               "int"
+              ],
+              "exemplo": 2
+             }
+            }
+           }
+          },
+          "xp": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 0
+          },
+          "xpMax": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 36525
+          },
+          "xpMin": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 10
+          }
+         }
+        },
+        "rewardText": {
+         "tipos": [
+          "list"
+         ],
+         "itens": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "1× Newbie Gift"
+         }
+        },
+        "species": {
+         "tipos": [
+          "list"
+         ],
+         "itens": {
+          "tipos": [
+           "object"
+          ],
+          "campos": {
+           "huntLevel": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 10
+           },
+           "id": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 63
+           },
+           "looktype": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 262
+           },
+           "name": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "Abra"
+           },
+           "type1": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "PSYCHIC"
+           },
+           "type2": {
+            "tipos": [
+             "str"
+            ],
+            "opcional": true,
+            "exemplo": "POISON"
+           }
+          }
+         }
+        }
+       }
+      }
+     },
+     "total": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 2
+     },
+     "used": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 2
+     }
+    }
+   }
+  },
+  "GET /api/game/daily-kill": {
+   "vezes": 4,
+   "fontes": [
+    "G5.jsonl"
+   ],
+   "status": {
+    "200": 4
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "cards": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "claimed": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "dayKey": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "2026-11-13"
+     },
+     "locked": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "minLevel": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 25
+     },
+     "options": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "done": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "have": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 80
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Furious Pidgeot"
+        },
+        "qty": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 798
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 10546
+        },
+        "type1": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "NORMAL"
+        },
+        "type2": {
+         "tipos": [
+          "str"
+         ],
+         "opcional": true,
+         "exemplo": "FLYING"
+        },
+        "xp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 28745024
+        }
+       }
+      }
+     },
+     "pickedIdx": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": -1
+     },
+     "rerollCost": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "rerollMax": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "rerolls": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "resetAt": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794625200000
+     },
+     "reward": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "items": {
+        "tipos": [
+         "list"
+        ],
+        "itens": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "icon": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "/assets/items/devoted_token.png"
+          },
+          "itemId": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 13115
+          },
+          "name": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "Devoted Token"
+          },
+          "qty": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 6
+          }
+         }
+        }
+       },
+       "xp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       }
+      }
+     },
+     "rewardText": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "str"
+       ],
+       "exemplo": "6× Devoted Token"
+      }
+     },
+     "tierKey": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "hard"
+     },
+     "tierLabel": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Hard"
+     }
+    }
+   }
+  },
+  "GET /api/game/dailys-summary": {
+   "vezes": 3,
+   "fontes": [
+    "G5.jsonl"
+   ],
+   "status": {
+    "200": 3
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "catch": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "total": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 2
+       },
+       "used": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 2
+       }
+      }
+     },
+     "kill": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "claimed": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "done": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "have": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "locked": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "picked": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "qty": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "target": {
+        "tipos": [
+         "null",
+         "str"
+        ],
+        "exemplo": "Politoed"
+       }
+      }
+     },
+     "resetAt": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794625200000
+     },
+     "tasks": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "ready": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       }
       }
      }
     }
@@ -4999,16 +5948,17 @@
    }
   },
   "GET /api/game/hunt-config": {
-   "vezes": 12,
+   "vezes": 13,
    "fontes": [
     "C8.jsonl",
+    "G7.jsonl",
     "M3.jsonl",
     "c5.jsonl",
     "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 12
+    "200": 13
    },
    "esquema": {
     "tipos": [
@@ -5108,15 +6058,17 @@
    }
   },
   "GET /api/game/map-markers": {
-   "vezes": 8,
+   "vezes": 10,
    "fontes": [
     "C8.jsonl",
+    "G6.jsonl",
+    "G7.jsonl",
     "M3.jsonl",
     "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 8
+    "200": 10
    },
    "esquema": {
     "tipos": [
@@ -5203,6 +6155,200 @@
          "int"
         ],
         "exemplo": 1788
+       }
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/offline": {
+   "vezes": 3,
+   "fontes": [
+    "G6.jsonl",
+    "G7.jsonl"
+   ],
+   "status": {
+    "200": 3
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "report": {
+      "tipos": [
+       "null",
+       "object"
+      ],
+      "campos": {
+       "boostCost": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 2
+       },
+       "cappedAt": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": false
+       },
+       "estKills": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 23
+       },
+       "poke": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "id": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "cmu9y6y5cntw5iiyrt3u78fys"
+         },
+         "level": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 169
+         },
+         "nickname": {
+          "tipos": [
+           "null"
+          ]
+         },
+         "speciesId": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 3
+         }
+        }
+       },
+       "pokeStatus": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "ok"
+       },
+       "pokeXp100": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 278
+       },
+       "pokeXp50": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 139
+       },
+       "sample": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "endedAt": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1794586777526
+         },
+         "fainted": {
+          "tipos": [
+           "bool"
+          ],
+          "exemplo": false
+         },
+         "ghostId": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "1a36b147-d4fe-402c-a8e0-4ef4768505e9"
+         },
+         "itemsUsed": {
+          "tipos": [
+           "object"
+          ]
+         },
+         "kills": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 32
+         },
+         "killsBySpecies": {
+          "tipos": [
+           "object"
+          ],
+          "campos": {
+           "74": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 32
+           }
+          }
+         },
+         "leaderId": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "cmu9y6y5cntw5iiyrt3u78fys"
+         },
+         "pokeXpSample": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 384
+         },
+         "sampleMs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 300551
+         },
+         "slug": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "geodude"
+         },
+         "startedAt": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1794586476975
+         },
+         "xpSample": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 384
+         }
+        }
+       },
+       "seconds": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 217
+       },
+       "xp100": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 278
+       },
+       "xp50": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 139
        }
       }
      }
@@ -5342,6 +6488,58 @@
        "int"
       ],
       "exemplo": 9894
+     }
+    }
+   }
+  },
+  "GET /api/game/patchnotes": {
+   "vezes": 2,
+   "fontes": [
+    "G6.jsonl",
+    "G7.jsonl"
+   ],
+   "status": {
+    "200": 2
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "notes": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "date": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "09 Oct 2026"
+        },
+        "items": {
+         "tipos": [
+          "list"
+         ],
+         "itens": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "## 🔔 Atualização no ar! Poke Idle World"
+         }
+        },
+        "v": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "1.9"
+        }
+       }
+      }
      }
     }
    }
@@ -5657,6 +6855,346 @@
           "int"
          ],
          "exemplo": 5
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/streak": {
+   "vezes": 1,
+   "fontes": [
+    "G7.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "available": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 663
+     },
+     "bonusPct": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "exp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "loot": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "shiny": {
+        "tipos": [
+         "float"
+        ],
+        "exemplo": 1.9000000000000001
+       }
+      }
+     },
+     "canBuy": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "earned": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 682
+     },
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 80116751
+     },
+     "kills": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "kills": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 171617
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 55
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Blastoise"
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 9
+        }
+       }
+      }
+     },
+     "killsPerPoint": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1000
+     },
+     "nextCost": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 500000
+     },
+     "spent": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 19
+     },
+     "toNext": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 38
+     },
+     "totalKills": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 682962
+     },
+     "tracks": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "exp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "loot": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "shiny": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 19
+       }
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/tasks": {
+   "vezes": 51,
+   "fontes": [
+    "G5.jsonl"
+   ],
+   "status": {
+    "200": 51
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "cities": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "str"
+       ],
+       "exemplo": "Viridian"
+      }
+     },
+     "tasks": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "cash": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "city": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Viridian"
+        },
+        "claimed": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "complete": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "goalProgress": {
+         "tipos": [
+          "list"
+         ],
+         "itens": {
+          "tipos": [
+           "object"
+          ],
+          "campos": {
+           "done": {
+            "tipos": [
+             "bool"
+            ],
+            "exemplo": true
+           },
+           "have": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 15
+           },
+           "kind": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "kill"
+           },
+           "looktype": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 36
+           },
+           "name": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "Rattata"
+           },
+           "pokeId": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 19
+           },
+           "qty": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 15
+           },
+           "type1": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "NORMAL"
+           },
+           "type2": {
+            "tipos": [
+             "str"
+            ],
+            "opcional": true,
+            "exemplo": "FLYING"
+           }
+          }
+         }
+        },
+        "goals": {
+         "tipos": [
+          "list"
+         ],
+         "itens": {
+          "tipos": [
+           "object"
+          ],
+          "campos": {
+           "kind": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "kill"
+           },
+           "name": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "Rattata"
+           },
+           "pokeId": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 19
+           },
+           "qty": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 15
+           }
+          }
+         }
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "paul"
+        },
+        "npc": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Paul"
+        },
+        "xp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 920
         }
        }
       }
@@ -6000,6 +7538,221 @@
     }
    }
   },
+  "POST /api/game/daily-kill/pick": {
+   "vezes": 1,
+   "fontes": [
+    "G5.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "cards": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "claimed": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "dayKey": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "2026-11-13"
+     },
+     "locked": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "minLevel": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 25
+     },
+     "options": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "done": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "have": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 80
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Furious Pidgeot"
+        },
+        "qty": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 798
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 10546
+        },
+        "type1": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "NORMAL"
+        },
+        "type2": {
+         "tipos": [
+          "str"
+         ],
+         "opcional": true,
+         "exemplo": "FLYING"
+        },
+        "xp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 28745024
+        }
+       }
+      }
+     },
+     "pickedIdx": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 2
+     },
+     "rerollCost": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "rerollMax": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "rerolls": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "resetAt": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794625200000
+     },
+     "reward": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "items": {
+        "tipos": [
+         "list"
+        ],
+        "itens": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "icon": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "/assets/items/devoted_token.png"
+          },
+          "itemId": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 13115
+          },
+          "name": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "Devoted Token"
+          },
+          "qty": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 6
+          }
+         }
+        }
+       },
+       "xp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 9425738
+       }
+      }
+     },
+     "rewardText": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "str"
+       ],
+       "exemplo": "6× Devoted Token"
+      }
+     },
+     "tierKey": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "hard"
+     },
+     "tierLabel": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Hard"
+     }
+    }
+   }
+  },
   "POST /api/game/depot/move": {
    "vezes": 3,
    "fontes": [
@@ -6114,6 +7867,118 @@
        "int"
       ],
       "exemplo": 200
+     }
+    }
+   }
+  },
+  "POST /api/game/offline": {
+   "vezes": 1,
+   "fontes": [
+    "G6.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "boosted": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "diamonds": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "estKills": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 24
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 169
+     },
+     "poke": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "id": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "cmu9y6y5cntw5iiyrt3u78fys"
+       },
+       "level": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 169
+       },
+       "nickname": {
+        "tipos": [
+         "null"
+        ]
+       },
+       "speciesId": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 3
+       }
+      }
+     },
+     "pokeApplied": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "pokeStatus": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "ok"
+     },
+     "pokeXpGained": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 145
+     },
+     "seconds": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 227
+     },
+     "slug": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "geodude"
+     },
+     "totalXp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 81332668
+     },
+     "xpGained": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 145
      }
     }
    }
@@ -6240,6 +8105,162 @@
        "int"
       ],
       "exemplo": 1
+     }
+    }
+   }
+  },
+  "POST /api/game/streak/spend": {
+   "vezes": 1,
+   "fontes": [
+    "G7.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "available": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 662
+     },
+     "bonusPct": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "exp": {
+        "tipos": [
+         "float"
+        ],
+        "exemplo": 0.1
+       },
+       "loot": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "shiny": {
+        "tipos": [
+         "float"
+        ],
+        "exemplo": 1.9000000000000001
+       }
+      }
+     },
+     "canBuy": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "earned": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 682
+     },
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 79616751
+     },
+     "kills": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "kills": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 171620
+        },
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 55
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Blastoise"
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 9
+        }
+       }
+      }
+     },
+     "killsPerPoint": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1000
+     },
+     "nextCost": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 525000
+     },
+     "spent": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 20
+     },
+     "toNext": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 35
+     },
+     "totalKills": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 682965
+     },
+     "tracks": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "exp": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "loot": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "shiny": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 19
+       }
+      }
      }
     }
    }

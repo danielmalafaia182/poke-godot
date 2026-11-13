@@ -1,0 +1,2576 @@
+{
+ "cidades": [
+  "Viridian",
+  "Pewter",
+  "Cerulean",
+  "Vermilion",
+  "Lavender",
+  "Celadon",
+  "Cinnabar",
+  "Fuchsia",
+  "Butterfree's Island",
+  "Butwal Island",
+  "Golden Island",
+  "Hamlin Island",
+  "Kabuto Fossil Island",
+  "Lance's Island",
+  "Magma Island",
+  "Mandarin Island",
+  "Moro Island",
+  "Murcott Island",
+  "Old Village",
+  "Power Plant",
+  "Seafoam Island",
+  "Shamouti Island",
+  "Alto Mare",
+  "Arborville Town",
+  "Astral Ruins",
+  "Azalea Town",
+  "Blackthorn City",
+  "Dark Cave",
+  "Dragonstone Island",
+  "Ecrutreak City",
+  "Goldenrod City",
+  "Mt Ember",
+  "New Bark Town",
+  "Olivine Town",
+  "Palm Island",
+  "Spark Island",
+  "Sunny Islands",
+  "Violet City",
+  "Whirl Islands",
+  "Cianwood City",
+  "Agate",
+  "Gateon Port",
+  "Phenac"
+ ],
+ "fonte": "A: G5.jsonl, GET /api/game/tasks",
+ "tarefas": [
+  {
+   "cash": 0,
+   "city": "Viridian",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Rattata",
+     "pokeId": 19,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Zubat",
+     "pokeId": 41,
+     "qty": 5
+    }
+   ],
+   "id": "paul",
+   "npc": "Paul",
+   "xp": 920
+  },
+  {
+   "cash": 80,
+   "city": "Viridian",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Weedle",
+     "pokeId": 13,
+     "qty": 10
+    },
+    {
+     "kind": "kill",
+     "name": "Kakuna",
+     "pokeId": 14,
+     "qty": 10
+    }
+   ],
+   "id": "louie",
+   "npc": "Little Louie",
+   "xp": 1920
+  },
+  {
+   "cash": 80,
+   "city": "Viridian",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Caterpie",
+     "pokeId": 10,
+     "qty": 10
+    },
+    {
+     "kind": "kill",
+     "name": "Metapod",
+     "pokeId": 11,
+     "qty": 10
+    }
+   ],
+   "id": "meiko",
+   "npc": "Meiko",
+   "xp": 1920
+  },
+  {
+   "cash": 0,
+   "city": "Viridian",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Butterfree",
+     "pokeId": 12,
+     "qty": 5
+    },
+    {
+     "kind": "kill",
+     "name": "Beedrill",
+     "pokeId": 15,
+     "qty": 5
+    }
+   ],
+   "id": "hammond",
+   "npc": "Hammond",
+   "xp": 3080
+  },
+  {
+   "cash": 0,
+   "city": "Pewter",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Paras",
+     "pokeId": 46,
+     "qty": 30
+    }
+   ],
+   "id": "yvette",
+   "npc": "Yvette",
+   "xp": 1350
+  },
+  {
+   "cash": 0,
+   "city": "Pewter",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Pidgeotto",
+     "pokeId": 17,
+     "qty": 10
+    },
+    {
+     "kind": "kill",
+     "name": "Pidgey",
+     "pokeId": 16,
+     "qty": 30
+    }
+   ],
+   "id": "oscar",
+   "npc": "Oscar",
+   "xp": 3600
+  },
+  {
+   "cash": 0,
+   "city": "Cerulean",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Diglett",
+     "pokeId": 50,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Sandshrew",
+     "pokeId": 27,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Cubone",
+     "pokeId": 104,
+     "qty": 30
+    }
+   ],
+   "id": "cleston",
+   "npc": "Cleston",
+   "xp": 16875
+  },
+  {
+   "cash": 0,
+   "city": "Cerulean",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Beedrill",
+     "pokeId": 15,
+     "qty": 120
+    }
+   ],
+   "id": "hebert",
+   "npc": "Hebert",
+   "xp": 33750
+  },
+  {
+   "cash": 0,
+   "city": "Cerulean",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Snorlax",
+     "pokeId": 143,
+     "qty": 30
+    }
+   ],
+   "id": "fiona",
+   "npc": "Fiona",
+   "xp": 60000
+  },
+  {
+   "cash": 0,
+   "city": "Cerulean",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Golem",
+     "pokeId": 76,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Rhydon",
+     "pokeId": 112,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Marowak",
+     "pokeId": 105,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Sandslash",
+     "pokeId": 28,
+     "qty": 60
+    }
+   ],
+   "id": "xavier",
+   "npc": "Xavier",
+   "xp": 256500
+  },
+  {
+   "cash": 0,
+   "city": "Vermilion",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Bellsprout",
+     "pokeId": 69,
+     "qty": 20
+    },
+    {
+     "kind": "kill",
+     "name": "Gloom",
+     "pokeId": 44,
+     "qty": 45
+    }
+   ],
+   "id": "benjamin",
+   "npc": "Benjamin",
+   "xp": 13556
+  },
+  {
+   "cash": 0,
+   "city": "Vermilion",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Tangela",
+     "pokeId": 114,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Vileplume",
+     "pokeId": 45,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Victreebel",
+     "pokeId": 71,
+     "qty": 30
+    }
+   ],
+   "id": "bia",
+   "npc": "Bia",
+   "xp": 54000
+  },
+  {
+   "cash": 0,
+   "city": "Vermilion",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Venusaur",
+     "pokeId": 3,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Ivysaur",
+     "pokeId": 2,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Bulbasaur",
+     "pokeId": 1,
+     "qty": 60
+    }
+   ],
+   "id": "delilah",
+   "npc": "Delilah",
+   "xp": 162000
+  },
+  {
+   "cash": 0,
+   "city": "Lavender",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Alakazam",
+     "pokeId": 65,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Hypno",
+     "pokeId": 97,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Persian",
+     "pokeId": 53,
+     "qty": 30
+    }
+   ],
+   "id": "sirnigel",
+   "npc": "Sir Nigel",
+   "xp": 131625
+  },
+  {
+   "cash": 0,
+   "city": "Lavender",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Gengar",
+     "pokeId": 94,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Haunter",
+     "pokeId": 93,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Gastly",
+     "pokeId": 92,
+     "qty": 90
+    }
+   ],
+   "id": "boniek",
+   "npc": "Boniek",
+   "xp": 162000
+  },
+  {
+   "cash": 0,
+   "city": "Lavender",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Gyarados",
+     "pokeId": 130,
+     "qty": 150
+    }
+   ],
+   "id": "sucellus",
+   "npc": "Sucellus",
+   "xp": 202500
+  },
+  {
+   "cash": 0,
+   "city": "Celadon",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Pidgey",
+     "pokeId": 16,
+     "qty": 20
+    },
+    {
+     "kind": "kill",
+     "name": "Rattata",
+     "pokeId": 19,
+     "qty": 20
+    }
+   ],
+   "id": "julie",
+   "npc": "Julie",
+   "xp": 1400
+  },
+  {
+   "cash": 0,
+   "city": "Celadon",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Magikarp",
+     "pokeId": 129,
+     "qty": 3000
+    }
+   ],
+   "id": "kelly",
+   "npc": "Kelly",
+   "xp": 18000
+  },
+  {
+   "cash": 0,
+   "city": "Celadon",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Golbat",
+     "pokeId": 42,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Zubat",
+     "pokeId": 41,
+     "qty": 60
+    }
+   ],
+   "id": "deacon",
+   "npc": "Deacon",
+   "xp": 30375
+  },
+  {
+   "cash": 0,
+   "city": "Celadon",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Slowbro",
+     "pokeId": 80,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Wartortle",
+     "pokeId": 8,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Starmie",
+     "pokeId": 121,
+     "qty": 30
+    }
+   ],
+   "id": "marinetti",
+   "npc": "Marinetti",
+   "xp": 51469
+  },
+  {
+   "cash": 0,
+   "city": "Cinnabar",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Rattata",
+     "pokeId": 19,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Zubat",
+     "pokeId": 41,
+     "qty": 30
+    }
+   ],
+   "id": "carli",
+   "npc": "Carli",
+   "xp": 4125
+  },
+  {
+   "cash": 0,
+   "city": "Cinnabar",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Ponyta",
+     "pokeId": 77,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Vulpix",
+     "pokeId": 37,
+     "qty": 30
+    }
+   ],
+   "id": "charlotte",
+   "npc": "Charlotte",
+   "xp": 11813
+  },
+  {
+   "cash": 0,
+   "city": "Cinnabar",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Magmar",
+     "pokeId": 126,
+     "qty": 90
+    }
+   ],
+   "id": "royce",
+   "npc": "Royce",
+   "xp": 121500
+  },
+  {
+   "cash": 0,
+   "city": "Cinnabar",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Charizard",
+     "pokeId": 6,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Charmeleon",
+     "pokeId": 5,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Charmander",
+     "pokeId": 4,
+     "qty": 60
+    }
+   ],
+   "id": "joshua",
+   "npc": "Joshua",
+   "xp": 162000
+  },
+  {
+   "cash": 0,
+   "city": "Fuchsia",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Ekans",
+     "pokeId": 23,
+     "qty": 30
+    }
+   ],
+   "id": "andersonf",
+   "npc": "Mr. Anderson",
+   "xp": 5063
+  },
+  {
+   "cash": 0,
+   "city": "Fuchsia",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Mr. Mime",
+     "pokeId": 122,
+     "qty": 60
+    }
+   ],
+   "id": "merlow",
+   "npc": "Merlow",
+   "xp": 47250
+  },
+  {
+   "cash": 0,
+   "city": "Fuchsia",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Pinsir",
+     "pokeId": 127,
+     "qty": 60
+    }
+   ],
+   "id": "tucker",
+   "npc": "Tucker",
+   "xp": 74250
+  },
+  {
+   "cash": 0,
+   "city": "Fuchsia",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Tauros",
+     "pokeId": 128,
+     "qty": 150
+    }
+   ],
+   "id": "lecy",
+   "npc": "Lecy",
+   "xp": 75937
+  },
+  {
+   "cash": 0,
+   "city": "Fuchsia",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Nidoqueen",
+     "pokeId": 31,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Nidoking",
+     "pokeId": 34,
+     "qty": 90
+    }
+   ],
+   "id": "barney",
+   "npc": "Barney",
+   "xp": 162000
+  },
+  {
+   "cash": 500,
+   "city": "Viridian",
+   "goals": [
+    {
+     "kind": "capture",
+     "name": "Pikachu",
+     "pokeId": 25,
+     "qty": 1
+    }
+   ],
+   "id": "oakstarter",
+   "npc": "Prof. Oak",
+   "xp": 5000
+  },
+  {
+   "cash": 0,
+   "city": "Cerulean",
+   "goals": [
+    {
+     "kind": "capture",
+     "name": "Eevee",
+     "pokeId": 133,
+     "qty": 1
+    }
+   ],
+   "id": "billeevee",
+   "npc": "Bill",
+   "xp": 12000
+  },
+  {
+   "cash": 0,
+   "city": "Butterfree's Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Venusaur",
+     "pokeId": 3,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Meganium",
+     "pokeId": 154,
+     "qty": 300
+    }
+   ],
+   "id": "zulu94",
+   "npc": "Zulu",
+   "xp": 810000
+  },
+  {
+   "cash": 0,
+   "city": "Butterfree's Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Charizard",
+     "pokeId": 6,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Typhlosion",
+     "pokeId": 157,
+     "qty": 300
+    }
+   ],
+   "id": "caesar95",
+   "npc": "Caesar",
+   "xp": 810000
+  },
+  {
+   "cash": 0,
+   "city": "Butterfree's Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Blastoise",
+     "pokeId": 9,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Feraligatr",
+     "pokeId": 160,
+     "qty": 300
+    }
+   ],
+   "id": "limubai96",
+   "npc": "Li Mu Bai",
+   "xp": 810000
+  },
+  {
+   "cash": 0,
+   "city": "Butwal Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Meganium",
+     "pokeId": 154,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Bayleef",
+     "pokeId": 153,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Chikorita",
+     "pokeId": 152,
+     "qty": 60
+    }
+   ],
+   "id": "yuri147",
+   "npc": "Yuri",
+   "xp": 162000
+  },
+  {
+   "cash": 0,
+   "city": "Butwal Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Lanturn",
+     "pokeId": 171,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Octillery",
+     "pokeId": 224,
+     "qty": 30
+    }
+   ],
+   "id": "centurion148",
+   "npc": "Centurion",
+   "xp": 91125
+  },
+  {
+   "cash": 0,
+   "city": "Golden Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Houndoom",
+     "pokeId": 229,
+     "qty": 120
+    },
+    {
+     "kind": "kill",
+     "name": "Houndour",
+     "pokeId": 228,
+     "qty": 120
+    }
+   ],
+   "id": "franz185",
+   "npc": "Franz",
+   "xp": 175500
+  },
+  {
+   "cash": 0,
+   "city": "Hamlin Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Electrode",
+     "pokeId": 101,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Voltorb",
+     "pokeId": 100,
+     "qty": 150
+    }
+   ],
+   "id": "angelina108",
+   "npc": "Angelina",
+   "xp": 75937
+  },
+  {
+   "cash": 0,
+   "city": "Hamlin Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Hoppip",
+     "pokeId": 187,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Sentret",
+     "pokeId": 161,
+     "qty": 15
+    }
+   ],
+   "id": "archer109",
+   "npc": "Archer",
+   "xp": 3881
+  },
+  {
+   "cash": 0,
+   "city": "Hamlin Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Ampharos",
+     "pokeId": 181,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Flaaffy",
+     "pokeId": 180,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Mareep",
+     "pokeId": 179,
+     "qty": 60
+    }
+   ],
+   "id": "elisha110",
+   "npc": "Elisha",
+   "xp": 121500
+  },
+  {
+   "cash": 0,
+   "city": "Kabuto Fossil Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Skarmory",
+     "pokeId": 227,
+     "qty": 120
+    },
+    {
+     "kind": "kill",
+     "name": "Fearow",
+     "pokeId": 22,
+     "qty": 120
+    }
+   ],
+   "id": "timothy197",
+   "npc": "Timothy",
+   "xp": 229500
+  },
+  {
+   "cash": 0,
+   "city": "Kabuto Fossil Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Kabuto",
+     "pokeId": 140,
+     "qty": 150
+    }
+   ],
+   "id": "noah199",
+   "npc": "Noah",
+   "xp": 168750
+  },
+  {
+   "cash": 0,
+   "city": "Lance's Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Dragonite",
+     "pokeId": 149,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Tyranitar",
+     "pokeId": 248,
+     "qty": 60
+    }
+   ],
+   "id": "hawk86",
+   "npc": "Hawk",
+   "xp": 360000
+  },
+  {
+   "cash": 0,
+   "city": "Magma Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Donphan",
+     "pokeId": 232,
+     "qty": 150
+    }
+   ],
+   "id": "antoni160",
+   "npc": "Antoni",
+   "xp": 202625
+  },
+  {
+   "cash": 0,
+   "city": "Magma Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Magmar",
+     "pokeId": 126,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Magby",
+     "pokeId": 240,
+     "qty": 60
+    }
+   ],
+   "id": "jacqueline161",
+   "npc": "Jacqueline",
+   "xp": 101250
+  },
+  {
+   "cash": 0,
+   "city": "Magma Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Magcargo",
+     "pokeId": 219,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Slugma",
+     "pokeId": 218,
+     "qty": 100
+    }
+   ],
+   "id": "miyagi162",
+   "npc": "Miyagi",
+   "xp": 185625
+  },
+  {
+   "cash": 0,
+   "city": "Mandarin Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Girafarig",
+     "pokeId": 203,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Xatu",
+     "pokeId": 178,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Natu",
+     "pokeId": 177,
+     "qty": 60
+    }
+   ],
+   "id": "roxanne165",
+   "npc": "Roxanne",
+   "xp": 229500
+  },
+  {
+   "cash": 0,
+   "city": "Mandarin Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Snubbull",
+     "pokeId": 209,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Pidgey",
+     "pokeId": 16,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Rattata",
+     "pokeId": 19,
+     "qty": 15
+    }
+   ],
+   "id": "peggy169",
+   "npc": "Peggy",
+   "xp": 6112
+  },
+  {
+   "cash": 0,
+   "city": "Mandarin Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Aipom",
+     "pokeId": 190,
+     "qty": 120
+    }
+   ],
+   "id": "bobbyz172",
+   "npc": "Bobby Z",
+   "xp": 54000
+  },
+  {
+   "cash": 0,
+   "city": "Moro Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Haunter",
+     "pokeId": 93,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Gastly",
+     "pokeId": 92,
+     "qty": 60
+    }
+   ],
+   "id": "drraymondstantz156",
+   "npc": "Dr. Raymond Stantz",
+   "xp": 43875
+  },
+  {
+   "cash": 0,
+   "city": "Murcott Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Forretress",
+     "pokeId": 205,
+     "qty": 300
+    }
+   ],
+   "id": "bauer178",
+   "npc": "Bauer",
+   "xp": 405000
+  },
+  {
+   "cash": 0,
+   "city": "Murcott Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Ariados",
+     "pokeId": 168,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Spinarak",
+     "pokeId": 167,
+     "qty": 100
+    }
+   ],
+   "id": "keithr179",
+   "npc": "Keith R.",
+   "xp": 70312
+  },
+  {
+   "cash": 0,
+   "city": "Murcott Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Pinsir",
+     "pokeId": 127,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Heracross",
+     "pokeId": 214,
+     "qty": 150
+    }
+   ],
+   "id": "nadia180",
+   "npc": "Nadia",
+   "xp": 405000
+  },
+  {
+   "cash": 0,
+   "city": "Old Village",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Venusaur",
+     "pokeId": 3,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Blastoise",
+     "pokeId": 9,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Charizard",
+     "pokeId": 6,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Gengar",
+     "pokeId": 94,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Alakazam",
+     "pokeId": 65,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Meganium",
+     "pokeId": 154,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Feraligatr",
+     "pokeId": 160,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Typhlosion",
+     "pokeId": 157,
+     "qty": 15
+    }
+   ],
+   "id": "ethan175",
+   "npc": "Ethan",
+   "xp": 158625
+  },
+  {
+   "cash": 0,
+   "city": "Pewter",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Tentacruel",
+     "pokeId": 73,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Golduck",
+     "pokeId": 55,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Seadra",
+     "pokeId": 117,
+     "qty": 60
+    }
+   ],
+   "id": "walter39",
+   "npc": "Walter",
+   "xp": 158625
+  },
+  {
+   "cash": 0,
+   "city": "Power Plant",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Blastoise",
+     "pokeId": 9,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Wartortle",
+     "pokeId": 8,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Squirtle",
+     "pokeId": 7,
+     "qty": 60
+    }
+   ],
+   "id": "jakesully99",
+   "npc": "Jake Sully",
+   "xp": 162000
+  },
+  {
+   "cash": 0,
+   "city": "Power Plant",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Electabuzz",
+     "pokeId": 125,
+     "qty": 90
+    },
+    {
+     "kind": "kill",
+     "name": "Elekid",
+     "pokeId": 239,
+     "qty": 90
+    }
+   ],
+   "id": "elektra101",
+   "npc": "Elektra",
+   "xp": 151875
+  },
+  {
+   "cash": 0,
+   "city": "Seafoam Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Piloswine",
+     "pokeId": 221,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Swinub",
+     "pokeId": 220,
+     "qty": 60
+    }
+   ],
+   "id": "bart90",
+   "npc": "Bart",
+   "xp": 84375
+  },
+  {
+   "cash": 0,
+   "city": "Seafoam Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Jynx",
+     "pokeId": 124,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Smoochum",
+     "pokeId": 238,
+     "qty": 60
+    }
+   ],
+   "id": "shaun92",
+   "npc": "Shaun",
+   "xp": 101250
+  },
+  {
+   "cash": 0,
+   "city": "Shamouti Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Snorlax",
+     "pokeId": 143,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Ursaring",
+     "pokeId": 217,
+     "qty": 30
+    }
+   ],
+   "id": "pennylane114",
+   "npc": "Penny Lane",
+   "xp": 120000
+  },
+  {
+   "cash": 0,
+   "city": "Shamouti Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Kingdra",
+     "pokeId": 230,
+     "qty": 90
+    }
+   ],
+   "id": "norman115",
+   "npc": "Norman",
+   "xp": 180000
+  },
+  {
+   "cash": 0,
+   "city": "Alto Mare",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Raticate",
+     "pokeId": 20,
+     "qty": 10
+    },
+    {
+     "kind": "kill",
+     "name": "Rattata",
+     "pokeId": 19,
+     "qty": 30
+    }
+   ],
+   "id": "alfredo282",
+   "npc": "Alfredo",
+   "xp": 4560
+  },
+  {
+   "cash": 0,
+   "city": "Alto Mare",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Pidgeot",
+     "pokeId": 18,
+     "qty": 120
+    }
+   ],
+   "id": "iris287",
+   "npc": "Iris",
+   "xp": 162000
+  },
+  {
+   "cash": 0,
+   "city": "Alto Mare",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Poliwag",
+     "pokeId": 60,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Remoraid",
+     "pokeId": 223,
+     "qty": 20
+    }
+   ],
+   "id": "italo288",
+   "npc": "Italo",
+   "xp": 4608
+  },
+  {
+   "cash": 0,
+   "city": "Arborville Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Miltank",
+     "pokeId": 241,
+     "qty": 300
+    }
+   ],
+   "id": "luuk295",
+   "npc": "Luuk",
+   "xp": 405000
+  },
+  {
+   "cash": 0,
+   "city": "Astral Ruins",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Xatu",
+     "pokeId": 178,
+     "qty": 250
+    }
+   ],
+   "id": "rogerio296",
+   "npc": "Rogerio",
+   "xp": 337500
+  },
+  {
+   "cash": 0,
+   "city": "Azalea Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Parasect",
+     "pokeId": 47,
+     "qty": 100
+    }
+   ],
+   "id": "douglas298",
+   "npc": "Douglas",
+   "xp": 56250
+  },
+  {
+   "cash": 0,
+   "city": "Azalea Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Caterpie",
+     "pokeId": 10,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Kakuna",
+     "pokeId": 14,
+     "qty": 5
+    },
+    {
+     "kind": "kill",
+     "name": "Metapod",
+     "pokeId": 11,
+     "qty": 5
+    },
+    {
+     "kind": "kill",
+     "name": "Paras",
+     "pokeId": 46,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Spinarak",
+     "pokeId": 167,
+     "qty": 10
+    },
+    {
+     "kind": "kill",
+     "name": "Weedle",
+     "pokeId": 13,
+     "qty": 15
+    }
+   ],
+   "id": "george299",
+   "npc": "George",
+   "xp": 4704
+  },
+  {
+   "cash": 0,
+   "city": "Azalea Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Beedrill",
+     "pokeId": 15,
+     "qty": 20
+    },
+    {
+     "kind": "kill",
+     "name": "Butterfree",
+     "pokeId": 12,
+     "qty": 20
+    }
+   ],
+   "id": "hector300",
+   "npc": "Hector",
+   "xp": 15840
+  },
+  {
+   "cash": 0,
+   "city": "Azalea Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Heracross",
+     "pokeId": 214,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Pinsir",
+     "pokeId": 127,
+     "qty": 60
+    },
+    {
+     "kind": "kill",
+     "name": "Venomoth",
+     "pokeId": 49,
+     "qty": 60
+    }
+   ],
+   "id": "nelson301",
+   "npc": "Nelson",
+   "xp": 216000
+  },
+  {
+   "cash": 0,
+   "city": "Azalea Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Scizor",
+     "pokeId": 212,
+     "qty": 50
+    }
+   ],
+   "id": "oscar302",
+   "npc": "Oscar",
+   "xp": 125000
+  },
+  {
+   "cash": 0,
+   "city": "Blackthorn City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Onix",
+     "pokeId": 95,
+     "qty": 50
+    }
+   ],
+   "id": "michael305",
+   "npc": "Michael",
+   "xp": 39375
+  },
+  {
+   "cash": 0,
+   "city": "Dark Cave",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Ursaring",
+     "pokeId": 217,
+     "qty": 200
+    }
+   ],
+   "id": "kingursaring217331",
+   "npc": "King Ursaring217",
+   "xp": 400000
+  },
+  {
+   "cash": 0,
+   "city": "Dragonstone Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Pupitar",
+     "pokeId": 247,
+     "qty": 100
+    },
+    {
+     "kind": "kill",
+     "name": "Dragonair",
+     "pokeId": 148,
+     "qty": 100
+    }
+   ],
+   "id": "carlos332",
+   "npc": "Carlos",
+   "xp": 225000
+  },
+  {
+   "cash": 0,
+   "city": "Ecrutreak City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Arcanine",
+     "pokeId": 59,
+     "qty": 200
+    },
+    {
+     "kind": "kill",
+     "name": "Magmar",
+     "pokeId": 126,
+     "qty": 100
+    },
+    {
+     "kind": "kill",
+     "name": "Ninetales",
+     "pokeId": 38,
+     "qty": 100
+    }
+   ],
+   "id": "clinton338",
+   "npc": "Clinton",
+   "xp": 540000
+  },
+  {
+   "cash": 0,
+   "city": "Ecrutreak City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Misdreavus",
+     "pokeId": 200,
+     "qty": 100
+    }
+   ],
+   "id": "martina340",
+   "npc": "Martina",
+   "xp": 135000
+  },
+  {
+   "cash": 0,
+   "city": "Goldenrod City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Yanma",
+     "pokeId": 193,
+     "qty": 30
+    }
+   ],
+   "id": "kau347",
+   "npc": "Kau",
+   "xp": 21600
+  },
+  {
+   "cash": 0,
+   "city": "Goldenrod City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Nidoranfe",
+     "pokeId": 29,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Nidoranma",
+     "pokeId": 32,
+     "qty": 15
+    },
+    {
+     "kind": "kill",
+     "name": "Nidorina",
+     "pokeId": 30,
+     "qty": 25
+    },
+    {
+     "kind": "kill",
+     "name": "Nidorino",
+     "pokeId": 33,
+     "qty": 25
+    }
+   ],
+   "id": "mariana349",
+   "npc": "Mariana",
+   "xp": 25920
+  },
+  {
+   "cash": 0,
+   "city": "Mt Ember",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Magcargo",
+     "pokeId": 219,
+     "qty": 120
+    }
+   ],
+   "id": "ecarym352",
+   "npc": "Ecarym",
+   "xp": 162000
+  },
+  {
+   "cash": 0,
+   "city": "Mt Ember",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Typhlosion",
+     "pokeId": 157,
+     "qty": 80
+    }
+   ],
+   "id": "seth356",
+   "npc": "Seth",
+   "xp": 108000
+  },
+  {
+   "cash": 0,
+   "city": "Mt Ember",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Fearow",
+     "pokeId": 22,
+     "qty": 65
+    },
+    {
+     "kind": "kill",
+     "name": "Spearow",
+     "pokeId": 21,
+     "qty": 10
+    }
+   ],
+   "id": "wendy358",
+   "npc": "Wendy",
+   "xp": 48240
+  },
+  {
+   "cash": 0,
+   "city": "Mt Ember",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Charmander",
+     "pokeId": 4,
+     "qty": 40
+    },
+    {
+     "kind": "kill",
+     "name": "Cyndaquil",
+     "pokeId": 155,
+     "qty": 40
+    }
+   ],
+   "id": "zonglee359",
+   "npc": "Zonglee",
+   "xp": 23040
+  },
+  {
+   "cash": 0,
+   "city": "New Bark Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Spearow",
+     "pokeId": 21,
+     "qty": 20
+    },
+    {
+     "kind": "kill",
+     "name": "Fearow",
+     "pokeId": 22,
+     "qty": 2
+    }
+   ],
+   "id": "miriam362",
+   "npc": "Miriam",
+   "xp": 4320
+  },
+  {
+   "cash": 0,
+   "city": "New Bark Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Rapidash",
+     "pokeId": 78,
+     "qty": 90
+    }
+   ],
+   "id": "hankmccoy363",
+   "npc": "Hank McCoy",
+   "xp": 121500
+  },
+  {
+   "cash": 0,
+   "city": "New Bark Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Skarmory",
+     "pokeId": 227,
+     "qty": 250
+    }
+   ],
+   "id": "glades364",
+   "npc": "Glades",
+   "xp": 337500
+  },
+  {
+   "cash": 0,
+   "city": "Olivine Town",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Gloom",
+     "pokeId": 44,
+     "qty": 20
+    },
+    {
+     "kind": "kill",
+     "name": "Weepinbell",
+     "pokeId": 70,
+     "qty": 30
+    }
+   ],
+   "id": "grayson371",
+   "npc": "Grayson",
+   "xp": 18000
+  },
+  {
+   "cash": 0,
+   "city": "Palm Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Tangela",
+     "pokeId": 114,
+     "qty": 100
+    }
+   ],
+   "id": "livia375",
+   "npc": "Livia",
+   "xp": 67500
+  },
+  {
+   "cash": 0,
+   "city": "Palm Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Lanturn",
+     "pokeId": 171,
+     "qty": 40
+    },
+    {
+     "kind": "kill",
+     "name": "Kingler",
+     "pokeId": 99,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Cloyster",
+     "pokeId": 91,
+     "qty": 30
+    }
+   ],
+   "id": "antony377",
+   "npc": "Antony",
+   "xp": 104625
+  },
+  {
+   "cash": 0,
+   "city": "Spark Island",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Electabuzz",
+     "pokeId": 125,
+     "qty": 150
+    }
+   ],
+   "id": "cremilda383",
+   "npc": "Cremilda",
+   "xp": 202500
+  },
+  {
+   "cash": 0,
+   "city": "Sunny Islands",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Starmie",
+     "pokeId": 121,
+     "qty": 100
+    }
+   ],
+   "id": "yeda386",
+   "npc": "Yeda",
+   "xp": 135000
+  },
+  {
+   "cash": 0,
+   "city": "Violet City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Alakazam",
+     "pokeId": 65,
+     "qty": 150
+    }
+   ],
+   "id": "zetti392",
+   "npc": "Zetti",
+   "xp": 202500
+  },
+  {
+   "cash": 0,
+   "city": "Violet City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Machoke",
+     "pokeId": 67,
+     "qty": 50
+    }
+   ],
+   "id": "martin394",
+   "npc": "Martin",
+   "xp": 28800
+  },
+  {
+   "cash": 0,
+   "city": "Whirl Islands",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Kingdra",
+     "pokeId": 230,
+     "qty": 300
+    }
+   ],
+   "id": "hyago398",
+   "npc": "Hyago",
+   "xp": 600000
+  },
+  {
+   "cash": 0,
+   "city": "Cianwood City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Aron",
+     "pokeId": 304,
+     "qty": 30
+    },
+    {
+     "kind": "kill",
+     "name": "Lairon",
+     "pokeId": 305,
+     "qty": 15
+    }
+   ],
+   "id": "felix329",
+   "npc": "Felix",
+   "xp": 25920
+  },
+  {
+   "cash": 0,
+   "city": "Cianwood City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Aggron",
+     "pokeId": 306,
+     "qty": 50
+    }
+   ],
+   "id": "mason330",
+   "npc": "Mason",
+   "xp": 150000
+  },
+  {
+   "cash": 0,
+   "city": "Cianwood City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Girafarig",
+     "pokeId": 203,
+     "qty": 140
+    }
+   ],
+   "id": "celeste378",
+   "npc": "Celeste",
+   "xp": 241920
+  },
+  {
+   "cash": 0,
+   "city": "Cianwood City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Scyther",
+     "pokeId": 123,
+     "qty": 100
+    }
+   ],
+   "id": "vincent380",
+   "npc": "Vincent",
+   "xp": 135000
+  },
+  {
+   "cash": 0,
+   "city": "Cianwood City",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Dunsparce",
+     "pokeId": 206,
+     "qty": 100
+    }
+   ],
+   "id": "nubia326",
+   "npc": "Nubia",
+   "xp": 43200
+  },
+  {
+   "cash": 0,
+   "city": "Agate",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Shiftry",
+     "pokeId": 275,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Nuzleaf",
+     "pokeId": 274,
+     "qty": 150
+    }
+   ],
+   "id": "enrico263",
+   "npc": "Enrico",
+   "xp": 732000
+  },
+  {
+   "cash": 0,
+   "city": "Agate",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Vigoroth",
+     "pokeId": 288,
+     "qty": 250
+    },
+    {
+     "kind": "kill",
+     "name": "Slakoth",
+     "pokeId": 287,
+     "qty": 100
+    }
+   ],
+   "id": "chloe265",
+   "npc": "Chloe",
+   "xp": 410400
+  },
+  {
+   "cash": 0,
+   "city": "Agate",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Flygon",
+     "pokeId": 330,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Vibrava",
+     "pokeId": 329,
+     "qty": 100
+    }
+   ],
+   "id": "charlene266",
+   "npc": "Charlene",
+   "xp": 757200
+  },
+  {
+   "cash": 0,
+   "city": "Agate",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Crawdaunt",
+     "pokeId": 342,
+     "qty": 350
+    },
+    {
+     "kind": "kill",
+     "name": "Corphish",
+     "pokeId": 341,
+     "qty": 200
+    }
+   ],
+   "id": "goulard268",
+   "npc": "Goulard",
+   "xp": 909800
+  },
+  {
+   "cash": 0,
+   "city": "Agate",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Camerupt",
+     "pokeId": 323,
+     "qty": 350
+    },
+    {
+     "kind": "kill",
+     "name": "Numel",
+     "pokeId": 322,
+     "qty": 200
+    }
+   ],
+   "id": "manuele269",
+   "npc": "Manuele",
+   "xp": 909800
+  },
+  {
+   "cash": 0,
+   "city": "Agate",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Manectric",
+     "pokeId": 310,
+     "qty": 450
+    },
+    {
+     "kind": "kill",
+     "name": "Electrike",
+     "pokeId": 309,
+     "qty": 100
+    }
+   ],
+   "id": "luck271",
+   "npc": "Luck",
+   "xp": 974700
+  },
+  {
+   "cash": 0,
+   "city": "Agate",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Mightyena",
+     "pokeId": 262,
+     "qty": 425
+    },
+    {
+     "kind": "kill",
+     "name": "Poochyena",
+     "pokeId": 261,
+     "qty": 100
+    }
+   ],
+   "id": "gordon274",
+   "npc": "Gordon",
+   "xp": 940500
+  },
+  {
+   "cash": 0,
+   "city": "Gateon Port",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Mightyena",
+     "pokeId": 262,
+     "qty": 350
+    }
+   ],
+   "id": "susan278",
+   "npc": "Susan",
+   "xp": 718200
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Sceptile",
+     "pokeId": 254,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Blaziken",
+     "pokeId": 257,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Swampert",
+     "pokeId": 260,
+     "qty": 300
+    }
+   ],
+   "id": "alessa227",
+   "npc": "Alessa",
+   "xp": 1969200
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Dusclops",
+     "pokeId": 356,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Sableye",
+     "pokeId": 302,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Banette",
+     "pokeId": 354,
+     "qty": 200
+    }
+   ],
+   "id": "salvatore228",
+   "npc": "Salvatore",
+   "xp": 981800
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Claydol",
+     "pokeId": 344,
+     "qty": 200
+    },
+    {
+     "kind": "kill",
+     "name": "Grumpig",
+     "pokeId": 326,
+     "qty": 200
+    }
+   ],
+   "id": "antonella229",
+   "npc": "Antonella",
+   "xp": 875200
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Medicham",
+     "pokeId": 308,
+     "qty": 300
+    },
+    {
+     "kind": "kill",
+     "name": "Meditite",
+     "pokeId": 307,
+     "qty": 100
+    }
+   ],
+   "id": "greggy235",
+   "npc": "Greggy",
+   "xp": 649800
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Exploud",
+     "pokeId": 295,
+     "qty": 350
+    },
+    {
+     "kind": "kill",
+     "name": "Loudred",
+     "pokeId": 294,
+     "qty": 250
+    },
+    {
+     "kind": "kill",
+     "name": "Whismur",
+     "pokeId": 293,
+     "qty": 100
+    }
+   ],
+   "id": "roger238",
+   "npc": "Roger",
+   "xp": 966150
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Swellow",
+     "pokeId": 277,
+     "qty": 200
+    },
+    {
+     "kind": "kill",
+     "name": "Altaria",
+     "pokeId": 334,
+     "qty": 200
+    }
+   ],
+   "id": "anice239",
+   "npc": "Anice",
+   "xp": 875200
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Lucario",
+     "pokeId": 448,
+     "qty": 250
+    },
+    {
+     "kind": "kill",
+     "name": "Riolu",
+     "pokeId": 447,
+     "qty": 100
+    }
+   ],
+   "id": "vanny243",
+   "npc": "Vanny",
+   "xp": 598500
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Seviper",
+     "pokeId": 336,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Zangoose",
+     "pokeId": 335,
+     "qty": 150
+    }
+   ],
+   "id": "austin246",
+   "npc": "Austin",
+   "xp": 656400
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Ludicolo",
+     "pokeId": 272,
+     "qty": 400
+    },
+    {
+     "kind": "kill",
+     "name": "Lombre",
+     "pokeId": 271,
+     "qty": 200
+    }
+   ],
+   "id": "khyara247",
+   "npc": "Khyara",
+   "xp": 1076800
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Glalie",
+     "pokeId": 362,
+     "qty": 500
+    }
+   ],
+   "id": "galvao251",
+   "npc": "Galvao",
+   "xp": 1094000
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Sealeo",
+     "pokeId": 364,
+     "qty": 150
+    },
+    {
+     "kind": "kill",
+     "name": "Spheal",
+     "pokeId": 363,
+     "qty": 75
+    }
+   ],
+   "id": "lizzie252",
+   "npc": "Lizzie",
+   "xp": 237975
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Grumpig",
+     "pokeId": 326,
+     "qty": 16
+    }
+   ],
+   "id": "billbo254",
+   "npc": "Billbo",
+   "xp": 180000
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Sableye",
+     "pokeId": 302,
+     "qty": 54
+    }
+   ],
+   "id": "angelinna255",
+   "npc": "Angelinna",
+   "xp": 260000
+  },
+  {
+   "cash": 0,
+   "city": "Phenac",
+   "goals": [
+    {
+     "kind": "kill",
+     "name": "Shelgon",
+     "pokeId": 372,
+     "qty": 200
+    },
+    {
+     "kind": "kill",
+     "name": "Metang",
+     "pokeId": 375,
+     "qty": 200
+    },
+    {
+     "kind": "kill",
+     "name": "Mawile",
+     "pokeId": 303,
+     "qty": 200
+    }
+   ],
+   "id": "victorine259",
+   "npc": "Victorine",
+   "xp": 1312800
+  },
+  {
+   "cash": 2700,
+   "city": "Azalea Town",
+   "goals": [
+    {
+     "kind": "deliver",
+     "name": "Bag of Pollen",
+     "pokeId": 4,
+     "qty": 20
+    },
+    {
+     "kind": "deliver",
+     "name": "Mushroom",
+     "pokeId": 90,
+     "qty": 2
+    }
+   ],
+   "id": "douglas298b",
+   "npc": "Douglas",
+   "xp": 0
+  },
+  {
+   "cash": 450,
+   "city": "Azalea Town",
+   "goals": [
+    {
+     "kind": "deliver",
+     "name": "Pot of Moss Bug",
+     "pokeId": 102,
+     "qty": 20
+    }
+   ],
+   "id": "george299b",
+   "npc": "George",
+   "xp": 3000
+  },
+  {
+   "cash": 9225,
+   "city": "Blackthorn City",
+   "goals": [
+    {
+     "kind": "deliver",
+     "name": "cat ear",
+     "pokeId": 11541,
+     "qty": 35
+    }
+   ],
+   "id": "doug304b",
+   "npc": "Doug",
+   "xp": 0
+  },
+  {
+   "cash": 11000,
+   "city": "Ecrutreak City",
+   "goals": [
+    {
+     "kind": "deliver",
+     "name": "Traces of Ghost",
+     "pokeId": 137,
+     "qty": 20
+    }
+   ],
+   "id": "wander342b",
+   "npc": "Wander",
+   "xp": 0
+  }
+ ]
+}

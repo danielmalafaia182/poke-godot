@@ -182,7 +182,8 @@ func _tratar(msg: Dictionary) -> void:
 			_sincronizar_hp(msg.get("bossTeam", []))
 		"field-kill":
 			registro["abates"] += 1
-			EstadoJogo.registrar_abates(1)
+			EstadoJogo.registrar_abates(1, int(msg.get("speciesId", -1)))
+			EstadoJogo.diaria_abate(int(msg.get("speciesId", -1)))   # tarefas e Daily Kill
 			EstadoJogo.registrar_recompensa_treinador(int(msg["xpGained"]))
 			registro["xp_treinador"] += int(msg["xpGained"])
 			_receber_loot(msg.get("loot", []))
@@ -207,6 +208,7 @@ func _tratar(msg: Dictionary) -> void:
 			_sequencia_captura += 1
 			if bool(msg.get("success", false)):
 				_registrar_captura(String(msg.get("speciesName", "")))
+				EstadoJogo.diaria_captura(preload("res://ponte_cidade.gd").id_especie(String(msg.get("speciesName", ""))))   # tarefas e Daily Catch
 			# hud_caca conta as capturas da instância pelo id (o contador "N wilds" do painel Capture)
 			captura_resolvida.emit({"sucesso": bool(msg.get("success", false)), "id": "%s#%d" % [String(sim.hunt_key), _sequencia_captura]})
 		"field-none":

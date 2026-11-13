@@ -40,6 +40,7 @@ var painel_loja: Control
 var placa_loja: PlacaInteracao
 var painel_config: PanelContainer
 var painel_streak: Control
+var painel_diarias: Control
 var painel_soneca: Control
 var rotulo_ouro: Label
 # 0 = cidade inteira. Mantém placas e ações disponíveis à distância, como
@@ -307,7 +308,7 @@ func _perto_nurse() -> bool:
 	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_NURSE)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
 
 func _modal_aberto() -> bool:
-	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_soneca != null and painel_soneca.visible)
+	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_diarias != null and painel_diarias.visible) or (painel_soneca != null and painel_soneca.visible)
 
 func _clicar_nurse() -> void:
 	if not _perto_nurse() or personagem.andando or _modal_aberto():
@@ -393,6 +394,17 @@ func _criar_ouro_e_config() -> void:
 	botao_streak.pressed.connect(func() -> void:
 		painel_config.hide()
 		painel_streak.abrir())
+	# Fase 4, item 3: Quests, Tasks & Dailys (Daily Gift, Daily Kill, Daily Catch, tarefas por cidade).
+	var botao_diarias := Button.new()
+	botao_diarias.name = "Diarias"
+	botao_diarias.text = "Quests, Tasks & Dailys"
+	coluna.add_child(botao_diarias)
+	painel_diarias = load("res://painel_diarias.gd").new()
+	painel_diarias.name = "PainelDiarias"
+	get_node("Interface").add_child(painel_diarias)
+	botao_diarias.pressed.connect(func() -> void:
+		painel_config.hide()
+		painel_diarias.abrir())
 	painel_soneca = load("res://painel_soneca.gd").new()
 	painel_soneca.name = "PainelSoneca"
 	get_node("Interface").add_child(painel_soneca)

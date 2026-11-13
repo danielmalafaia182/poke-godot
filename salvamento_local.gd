@@ -148,6 +148,17 @@ func _validar(dados: Variant) -> String:
 				return "Streak inválido."
 	if dados.has("soneca") and (not dados["soneca"] is Dictionary or JSON.stringify(dados["soneca"]).length() > 200000):
 		return "Soneca inválida."
+	if dados.has("streak") and dados["streak"].has("bySpecies") and (not dados["streak"]["bySpecies"] is Dictionary or dados["streak"]["bySpecies"].size() > 5000):
+		return "Streak inválido."
+	# Fase 4, item 3 (opcionais): diárias/tarefas e boosts ativos.
+	if dados.has("diarias") and (not dados["diarias"] is Dictionary or JSON.stringify(dados["diarias"]).length() > 500000):
+		return "Diárias inválidas."
+	if dados.has("boosts"):
+		if not dados["boosts"] is Array or dados["boosts"].size() > 50:
+			return "Boosts inválidos."
+		for b in dados["boosts"]:
+			if not b is Dictionary or not b.get("key") is String or not _inteiro(b.get("until", 0), 0, 9007199254740991) or not _inteiro(b.get("pct", 0), 0, 1000):
+				return "Boosts inválidos."
 	var cidade: Variant = dados["cidade"]
 	if not cidade is Dictionary or cidade.get("mapa") != "cerulean" or not cidade.get("definida") is bool:
 		return "Cidade inválida."
@@ -263,7 +274,14 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 	var gastos := {}
 	for t in st.get("spent", {}):
 		gastos[String(t)] = int(st["spent"][t])
-	estado.streak = {"totalKills": int(st.get("totalKills", 0)), "spent": gastos}
+	var por_especie := {}
+	for k in st.get("bySpecies", {}):
+		por_especie[String(k)] = int(st["bySpecies"][k])
+	estado.streak = {"totalKills": int(st.get("totalKills", 0)), "spent": gastos, "bySpecies": por_especie}
+	estado.diarias = (dados.get("diarias", {}) as Dictionary).duplicate(true)
+	estado.boosts = []
+	for b in dados.get("boosts", []):
+		estado.boosts.append({"key": String(b["key"]), "until": int(b["until"]), "pct": int(b["pct"])})
 	estado.soneca = (dados.get("soneca", {}) as Dictionary).duplicate(true)
 	# B-relatado/E: a sessão expira com 15 min de jogo fechado (o salvo_em_unix é o último save antes de fechar).
 	# Regra da sessão em sim/servico_jogador.gd (sem soneca, 15 min fechado expira; com soneca valendo, não).
@@ -332,6 +350,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
 		"captura_medidor": estado.medidor_captura.duplicate(true), "ultima_hunt": estado.ultima_hunt_slug,
 		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
+		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true),
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 

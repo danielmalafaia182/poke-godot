@@ -4,17 +4,18 @@ extends RefCounted
 ## da simulação da amostra (semente no comando). Mesmo contrato do servico_cidade: tratar(estado, cmd) → mensagens.
 ##
 ## Estado (no save; ver ponte_cidade.gd):
-##   streak: {totalKills, spent: {exp, loot, shiny}}         gold: int
-##   soneca: {} ou {inicio, fim, amostra{slug, kills, fainted, itemsUsed, xpTrainer, xpPokemon, loot, seconds}}
+##   streak: {totalKills, spent: {exp, loot, shiny}, bySpecies: {"<speciesId>": abates}}         gold: int
+##   soneca: {} ou {inicio, fim, entregue, amostra{slug, startedAt, endedAt, sampleMs, itemsUsed, fainted, killsBySpecies,
+##            leaderId, kills, xpSample, pokeXpSample, loot}}   (formato da amostra = A, G6; `loot` e `entregue` são E)
 ##   sessao: {fechado_em (unix do último fechamento)}
 ##
 ## Comandos (nomes do original quando existem; C = cliente, A = gravação, E = projeto):
-##   streak-get                       ≈ GET  /api/game/streak               (C: campos da janela)
-##   streak-spend {track}             ≈ POST /api/game/streak/spend {track} (C)
+##   streak-get                       = GET  /api/game/streak               (A, G7)
+##   streak-spend {track}             = POST /api/game/streak/spend {track} (A, G7: responde o mesmo objeto)
 ##   sleep-mode {agora, amostra}      = WS sleep-mode → sleep-ok            (C; a amostra é calculada por quem tem a
 ##                                                                           hunt: amostra_soneca(), abaixo)
-##   offline-get {agora}              ≈ GET  /api/game/offline → {report?}  (C: campos da janela)
-##   offline-claim {agora, boost}     ≈ POST /api/game/offline {boost}      (C)
+##   offline-get {agora, poke}        = GET  /api/game/offline → {report?}  (A, G6) [+ offline-sample, E]
+##   offline-claim {agora, boost, poke} = POST /api/game/offline {boost}    (A, G6)
 ##   sessao {fechado_em, agora}       E: decide se a sessão expirou (regra do usuário)
 ##   eventos {agora}                  E: Tipo do Dia offline (formato da mensagem events, A)
 
@@ -36,11 +37,11 @@ const PARAMETROS := {
 	"streak_custo_base": 25000,
 	"streak_trilhas": ["exp", "loot", "shiny"],
 	# Tipo do Dia (A: evento type-of-day, +20% XP e loot no tipo; termina às 03:00 UTC = meia-noite de Brasília).
-	# E: offline, rotação fixa ancorada nos dois dias observados (09/11/2026 Dragão, 10/11/2026 Inseto).
+	# E: offline, rotação fixa ancorada nos três dias observados (A: 09/11/2026 Dragão, 10/11 Inseto, 13/11 Sombrio).
 	"dia_virada_utc_s": 10800,
 	"dia_ancora": 20766,              # dia (unix/86400, deslocado pela virada) de 09/11/2026 em Brasília
-	"rotacao_tipos": ["DRAGON", "BUG", "FIRE", "WATER", "GRASS", "ELECTRIC", "ICE", "FIGHTING", "POISON", "GROUND",
-		"FLYING", "PSYCHIC", "ROCK", "GHOST", "DARK", "STEEL", "FAIRY", "NORMAL"],
+	"rotacao_tipos": ["DRAGON", "BUG", "FIRE", "WATER", "DARK", "GRASS", "ELECTRIC", "ICE", "FIGHTING", "POISON",
+		"GROUND", "FLYING", "PSYCHIC", "ROCK", "GHOST", "STEEL", "FAIRY", "NORMAL"],
 	"nomes_tipos": {"BUG": ["Inseto", "🐛"], "DARK": ["Sombrio", "🌑"], "DRAGON": ["Dragão", "🐉"], "ELECTRIC": ["Elétrico", "⚡"],
 		"FAIRY": ["Fada", "🧚"], "FIGHTING": ["Lutador", "🥊"], "FIRE": ["Fogo", "🔥"], "FLYING": ["Voador", "🕊️"],
 		"GHOST": ["Fantasma", "👻"], "GRASS": ["Planta", "🌿"], "GROUND": ["Terra", "⛰️"], "ICE": ["Gelo", "❄️"],
@@ -65,9 +66,9 @@ func tratar(estado: Dictionary, cmd: Dictionary) -> Array:
 		"sleep-mode":
 			return _dormir(estado, cmd)
 		"offline-get":
-			return [_relatorio(estado, int(cmd.get("agora", 0)))]
+			return _relatorio_msgs(estado, int(cmd.get("agora", 0)), cmd.get("poke", {}))
 		"offline-claim":
-			return _coletar(estado, int(cmd.get("agora", 0)), bool(cmd.get("boost", false)))
+			return _coletar(estado, int(cmd.get("agora", 0)), bool(cmd.get("boost", false)), cmd.get("poke", {}))
 		"sessao":
 			return [_sessao(estado, int(cmd.get("fechado_em", 0)), int(cmd.get("agora", 0)))]
 		"eventos":
@@ -99,6 +100,8 @@ func _streak(estado: Dictionary) -> Dictionary:
 		s["totalKills"] = 0
 	if not s.has("spent"):
 		s["spent"] = {}
+	if not s.has("bySpecies"):
+		s["bySpecies"] = {}
 	for t in p.streak_trilhas:
 		if not s["spent"].has(t):
 			s["spent"][t] = 0
@@ -112,19 +115,30 @@ func _gastos(s: Dictionary) -> int:
 	return n
 
 
-func msg_streak(estado: Dictionary) -> Dictionary:
-	## Campos que a janela do original lê (C): totalKills, available, spent, toNext, killsPerPoint; e por trilha
-	## (pontos e bônus) e o custo do próximo ponto.
+func msg_streak(estado: Dictionary, dados = null) -> Dictionary:
+	## A (G7): GET /api/game/streak = {totalKills, killsPerPoint, earned, spent, available, toNext, nextCost, canBuy, gold,
+	## tracks{exp, loot, shiny} (pontos), bonusPct{…} (0,1% por ponto), kills[{speciesId, name, looktype, kills}]
+	## (abates por espécie, do maior para o menor)}. Custos conferidos: 20º ponto = 500.000, 21º = 525.000 (A).
 	var s := _streak(estado)
 	var por := int(p.streak_abates_por_ponto)
 	var ganhos := int(s["totalKills"]) / por
 	var gastos := _gastos(s)
 	var trilhas := {}
+	var bonus := {}
 	for t in p.streak_trilhas:
-		trilhas[t] = {"points": int(s["spent"][t]), "pct": snappedf(int(s["spent"][t]) * 0.1, 0.1)}
-	return {"type": "streak", "totalKills": int(s["totalKills"]), "available": maxi(0, ganhos - gastos), "spent": gastos,
-		"toNext": por - (int(s["totalKills"]) % por), "killsPerPoint": por, "nextCost": int(p.streak_custo_base) * (gastos + 1),
-		"tracks": trilhas}
+		trilhas[t] = int(s["spent"][t])
+		bonus[t] = int(s["spent"][t]) * 0.1
+	var custo := int(p.streak_custo_base) * (gastos + 1)
+	var lista: Array = []
+	for k in s["bySpecies"]:
+		var e: Dictionary = dados.especie(int(k)) if dados != null else {}
+		lista.append({"speciesId": int(k), "name": String(e.get("nome", "")), "looktype": int(e.get("looktype", 0)), "kills": int(s["bySpecies"][k])})
+	lista.sort_custom(func(a, b): return int(a["kills"]) > int(b["kills"]) or (int(a["kills"]) == int(b["kills"]) and int(a["speciesId"]) < int(b["speciesId"])))
+	var disp := maxi(0, ganhos - gastos)
+	return {"type": "streak", "totalKills": int(s["totalKills"]), "killsPerPoint": por, "earned": ganhos, "spent": gastos,
+		"available": disp, "toNext": por - (int(s["totalKills"]) % por), "nextCost": custo,
+		"canBuy": disp > 0 and int(estado.get("gold", 0)) >= custo, "gold": int(estado.get("gold", 0)),
+		"tracks": trilhas, "bonusPct": bonus, "kills": lista}
 
 
 func _gastar_streak(estado: Dictionary, trilha: String) -> Array:
@@ -139,14 +153,19 @@ func _gastar_streak(estado: Dictionary, trilha: String) -> Array:
 		return [_erro("Ouro insuficiente.")]
 	estado["gold"] = int(estado.get("gold", 0)) - custo
 	s["spent"][trilha] = int(s["spent"][trilha]) + 1
-	return [msg_streak(estado), {"type": "currency", "gold": int(estado["gold"])}]
+	return [msg_streak(estado)]   # A (G7): a resposta é o próprio objeto do streak (gold já descontado)
 
 
-static func somar_abates(estado: Dictionary, n: int) -> void:
-	## Abates contam para o Streak (C: "1 point every 1000 total kills"). Chamado pelo cliente a cada field-kill.
+static func somar_abates(estado: Dictionary, n: int, especie: int = -1) -> void:
+	## Abates contam para o Streak (C: "1 point every 1000 total kills"; A: a janela lista abates por espécie).
 	if not estado.has("streak"):
 		estado["streak"] = {"totalKills": 0, "spent": {}}
 	estado["streak"]["totalKills"] = int(estado["streak"].get("totalKills", 0)) + n
+	if especie >= 0:
+		if not estado["streak"].has("bySpecies"):
+			estado["streak"]["bySpecies"] = {}
+		var k := str(especie)
+		estado["streak"]["bySpecies"][k] = int(estado["streak"]["bySpecies"].get(k, 0)) + n
 
 
 func efeitos_streak(estado: Dictionary) -> Dictionary:
@@ -157,9 +176,11 @@ func efeitos_streak(estado: Dictionary) -> Dictionary:
 
 # ============================================================================== Modo Soneca
 
-static func amostra_soneca(sim, segundos: int) -> Dictionary:
+static func amostra_soneca(sim, segundos: int, agora_ms: int = 0) -> Dictionary:
 	## Roda a hunt atual por `segundos` (C: 5 min no servidor; combate, XP, loot e Auto-Potion; sem bolas) a partir do
-	## estado em que está e resume a amostra. `sim` é uma simulacao_hunt já iniciada; a captura é desligada.
+	## estado em que está e resume a amostra no formato gravado (A, G6: sample{slug, startedAt, endedAt, sampleMs,
+	## itemsUsed, fainted, killsBySpecies, leaderId, kills, xpSample, pokeXpSample}). `loot` vai junto para o cliente
+	## entregar (a amostra aconteceu de verdade, A: o XP dela já estava no Pokémon antes da coleta).
 	sim.cfg["auto_catch"] = false
 	var inv_antes: Dictionary = sim.inventario.duplicate()
 	var xp_t0 := int(sim.treinador["xp"])
@@ -168,11 +189,15 @@ static func amostra_soneca(sim, segundos: int) -> Dictionary:
 	var abates0 := int(sim.estatisticas["abates"])
 	var desmaio_s := -1
 	var loot := {}
+	var por_especie := {}
 	var ticks := segundos * 1000 / int(sim.p.tick_ms)
+	var t_fim := ticks
 	for t in ticks:
 		for reg in sim.passo():
 			var m: Dictionary = reg.get("msg", reg)
 			if String(m.get("type", "")) == "field-kill":
+				var k := str(int(m.get("speciesId", 0)))
+				por_especie[k] = int(por_especie.get(k, 0)) + 1
 				for it in m.get("loot", []):
 					loot[str(int(it["itemId"]))] = int(loot.get(str(int(it["itemId"])), 0)) + int(it["qty"])
 			if String(m.get("type", "")) == "field-none":
@@ -180,16 +205,18 @@ static func amostra_soneca(sim, segundos: int) -> Dictionary:
 		if sim.encerrada:
 			if desmaio_s < 0:
 				desmaio_s = t * int(sim.p.tick_ms) / 1000
+			t_fim = t + 1
 			break
 	var usados := {}
 	for k in inv_antes:
 		var gasto := int(inv_antes[k]) - int(sim.inventario.get(k, 0))
 		if gasto > 0:
 			usados[str(int(k))] = gasto
-	return {"slug": String(sim.slug), "kills": int(sim.estatisticas["abates"]) - abates0, "fainted": desmaio_s >= 0,
-		"faintedAtS": desmaio_s, "itemsUsed": usados, "loot": loot, "seconds": segundos,
-		"xpTrainer": int(sim.treinador["xp"]) - xp_t0, "xpPokemon": int(ativo0["xp"]) - xp_p0,
-		"pokemonId": String(ativo0.get("id", ""))}
+	var ms := t_fim * int(sim.p.tick_ms)
+	return {"slug": String(sim.slug), "startedAt": agora_ms, "endedAt": agora_ms + ms, "sampleMs": ms,
+		"itemsUsed": usados, "fainted": desmaio_s >= 0, "killsBySpecies": por_especie, "leaderId": String(ativo0.get("id", "")),
+		"kills": int(sim.estatisticas["abates"]) - abates0, "xpSample": int(sim.treinador["xp"]) - xp_t0,
+		"pokeXpSample": int(ativo0["xp"]) - xp_p0, "loot": loot}
 
 
 func _dormir(estado: Dictionary, cmd: Dictionary) -> Array:
@@ -203,21 +230,40 @@ func _dormir(estado: Dictionary, cmd: Dictionary) -> Array:
 
 
 func _contas(estado: Dictionary, agora: int) -> Dictionary:
+	## A (G6): a taxa é a da amostra sobre os 300 s NOMINAIS (não o sampleMs de 300.551) e o arredondamento é round:
+	## 384 XP, 217 s fora → xp100 = round(384/300 × 217) = 278, xp50 = round(… × 0,5) = 139, estKills = round(32/300 × 217)
+	## = 23; na coleta, 227 s → 145 (os três batem exatamente).
 	var s: Dictionary = estado.get("soneca", {})
 	var a: Dictionary = s["amostra"]
 	var bruto := maxi(0, agora - int(s["fim"]))
 	var seg := mini(bruto, int(p.soneca_teto_s))
-	var base_s := maxi(1, int(a.get("seconds", p.soneca_amostra_s)))
-	var taxa_t := float(a.get("xpTrainer", 0)) / base_s
-	var taxa_p := float(a.get("xpPokemon", 0)) / base_s
-	return {"seconds": seg, "capped": bruto > seg, "estKills": int(round(float(a.get("kills", 0)) / base_s * seg)),
-		"xp50": int(floor(taxa_t * seg * float(p.soneca_fracao))), "xp100": int(floor(taxa_t * seg * float(p.soneca_fracao_turbo))),
-		"xpPoke50": int(floor(taxa_p * seg * float(p.soneca_fracao))), "xpPoke100": int(floor(taxa_p * seg * float(p.soneca_fracao_turbo)))}
+	var base_s := float(p.soneca_amostra_s)
+	var taxa_t := float(a.get("xpSample", 0)) / base_s
+	var taxa_p := float(a.get("pokeXpSample", 0)) / base_s
+	return {"seconds": seg, "capped": bruto > seg, "estKills": Regras.js_round(float(a.get("kills", 0)) / base_s * seg),
+		"xp50": Regras.js_round(taxa_t * seg * float(p.soneca_fracao)), "xp100": Regras.js_round(taxa_t * seg * float(p.soneca_fracao_turbo)),
+		"pokeXp50": Regras.js_round(taxa_p * seg * float(p.soneca_fracao)), "pokeXp100": Regras.js_round(taxa_p * seg * float(p.soneca_fracao_turbo))}
 
 
-func _relatorio(estado: Dictionary, agora: int) -> Dictionary:
-	## C: GET /api/game/offline → {report?}; report = {sample{slug, kills, fainted, itemsUsed}, seconds, cappedAt,
-	## estKills, xp50, xp100, boostCost}. Voltar antes de 5 min cancela a soneca (C): sem relatório, sessão nova.
+func _relatorio_msgs(estado: Dictionary, agora: int, poke: Dictionary = {}) -> Array:
+	## A amostra (5 min de hunt de verdade) é entregue uma vez, quando termina: o XP dela já estava no Pokémon antes da
+	## coleta (A, G6). Offline não há servidor rodando a hunt enquanto o jogo está fechado, então ela é calculada no Zzz
+	## e entregue na primeira leitura do relatório depois dos 5 min (E). Voltar antes cancela sem entregar nada (E: o
+	## original cancela, C; o que ele faz com a amostra parcial não foi gravado).
+	var rel := _relatorio(estado, agora, poke)
+	var s: Dictionary = estado.get("soneca", {})
+	if rel.get("report") == null or bool(s.get("entregue", false)):
+		return [rel]
+	s["entregue"] = true
+	var a: Dictionary = s["amostra"]
+	return [{"type": "offline-sample", "xp": int(a.get("xpSample", 0)), "pokeXp": int(a.get("pokeXpSample", 0)),
+		"pokemonId": String(a.get("leaderId", "")), "loot": a.get("loot", {}), "itemsUsed": a.get("itemsUsed", {}),
+		"killsBySpecies": a.get("killsBySpecies", {}), "kills": int(a.get("kills", 0))}, rel]
+
+
+func _relatorio(estado: Dictionary, agora: int, poke: Dictionary = {}) -> Dictionary:
+	## A (G6): GET /api/game/offline → {report: {sample{…}, seconds, cappedAt, estKills, xp50, xp100, pokeXp50,
+	## pokeXp100, boostCost, poke{id, speciesId, nickname, level}, pokeStatus}}. Voltar antes de 5 min cancela (C).
 	var s: Dictionary = estado.get("soneca", {})
 	if s.is_empty():
 		return {"type": "offline", "report": null}
@@ -225,31 +271,32 @@ func _relatorio(estado: Dictionary, agora: int) -> Dictionary:
 		estado["soneca"] = {}
 		return {"type": "offline", "report": null, "canceled": true}
 	var c := _contas(estado, agora)
-	var a: Dictionary = s["amostra"]
-	return {"type": "offline", "report": {"sample": {"slug": a["slug"], "kills": int(a["kills"]), "fainted": bool(a["fainted"]),
-		"itemsUsed": a.get("itemsUsed", {})}, "seconds": int(c["seconds"]), "cappedAt": int(p.soneca_teto_s) if bool(c["capped"]) else null,
-		"estKills": int(c["estKills"]), "xp50": int(c["xp50"]), "xp100": int(c["xp100"]), "boostCost": int(p.soneca_turbo_custo),
-		"xpPokemon50": int(c["xpPoke50"])}}
+	var amostra: Dictionary = (s["amostra"] as Dictionary).duplicate(true)
+	amostra.erase("loot")
+	return {"type": "offline", "report": {"sample": amostra, "seconds": int(c["seconds"]),
+		"cappedAt": int(p.soneca_teto_s) if bool(c["capped"]) else false, "estKills": int(c["estKills"]),
+		"xp50": int(c["xp50"]), "xp100": int(c["xp100"]), "pokeXp50": int(c["pokeXp50"]), "pokeXp100": int(c["pokeXp100"]),
+		"boostCost": int(p.soneca_turbo_custo), "poke": poke, "pokeStatus": "ok"}}
 
 
-func _coletar(estado: Dictionary, agora: int, turbo: bool) -> Array:
-	var rel := _relatorio(estado, agora)
+func _coletar(estado: Dictionary, agora: int, turbo: bool, poke: Dictionary = {}) -> Array:
+	## A (G6): POST /api/game/offline {boost} → {xpGained, pokeXpGained, boosted, totalXp, level, seconds, estKills, poke,
+	## pokeApplied, pokeStatus, slug, diamonds}. Só o tempo fora entra (o XP da amostra já foi entregue na hora: o Venusaur
+	## tinha 81.113.299 antes da coleta e 81.113.444 depois = +145 = xpGained).
+	if turbo and not bool(p.soneca_turbo_disponivel) and not (estado.get("soneca", {}) as Dictionary).is_empty():
+		return [_erro("Turbo indisponível (sem diamantes no jogo offline).")]
+	var msgs := _relatorio_msgs(estado, agora, poke)
+	var rel: Dictionary = msgs[msgs.size() - 1]
 	if rel.get("report") == null:
 		return [_erro("Nenhuma soneca para coletar."), rel] if not rel.has("canceled") else [rel]
-	if turbo and not bool(p.soneca_turbo_disponivel):
-		return [_erro("Turbo indisponível (sem diamantes no jogo offline).")]
-	var s: Dictionary = estado["soneca"]
-	var a: Dictionary = s["amostra"]
+	msgs.pop_back()
+	var a: Dictionary = estado["soneca"]["amostra"]
 	var c := _contas(estado, agora)
-	# A amostra de 5 min aconteceu de verdade (XP, loot e poções dela valem, C) e o tempo fora rende 50% da taxa
-	# de XP no treinador E no Pokémon que lutava (C: "The XP goes to the trainer AND the Pokémon that was fighting").
-	var xp_t := int(a.get("xpTrainer", 0)) + int(c["xp100"] if turbo else c["xp50"])
-	var xp_p := int(a.get("xpPokemon", 0)) + int(c["xpPoke100"] if turbo else c["xpPoke50"])
 	estado["soneca"] = {}
-	return [{"type": "offline-claimed", "xpTrainer": xp_t, "xpPokemon": xp_p, "pokemonId": String(a.get("pokemonId", "")),
-		"loot": a.get("loot", {}), "itemsUsed": a.get("itemsUsed", {}), "kills": int(a["kills"]) + int(c["estKills"]),
-		"sampleKills": int(a["kills"]),   # F: só os abates da amostra (que aconteceram) contam para o Streak; os estimados não
-		"seconds": int(c["seconds"])}]
+	return msgs + [{"type": "offline-claimed", "xpGained": int(c["xp100"] if turbo else c["xp50"]),
+		"pokeXpGained": int(c["pokeXp100"] if turbo else c["pokeXp50"]), "boosted": turbo, "seconds": int(c["seconds"]),
+		"estKills": int(c["estKills"]), "poke": poke, "pokeApplied": not poke.is_empty(), "pokeStatus": "ok",
+		"slug": String(a.get("slug", "")), "diamonds": 0, "pokemonId": String(a.get("leaderId", ""))}]
 
 
 # ============================================================================== Tipo do Dia (evento)

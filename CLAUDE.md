@@ -41,13 +41,15 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `testes/diag_ilhas.gd` | Ilha da grade do `start` e de cada spawn do hunt-config, por hunt |
 | `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
-| `dados/protocolo.json` | 144 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 50 vistos nas gravações |
+| `dados/protocolo.json` | 145 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 57 vistos nas gravações; 27 caminhos REST (com as gravações da fase 4) |
 | `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas × modelo do medidor (partindo do used-balls do início), lock de entrada |
 | `ferramentas/gravador/rest.py` | Lê as linhas `dir: "rest"` do gravador v1.1 (respostas de `/api/game/*`); medidor de captura do used-balls e a diferença entre duas respostas |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
 | `sim/servico_cidade.gd`, `ponte_cidade.gd` | Fase 4, lote 1: serviços da cidade (evolução, loja do Mark, Nurse Joy, depot) puros na `sim/`; a ponte monta o estado do save, manda o comando e aplica as mensagens no `EstadoJogo`. Regras e fontes em `CALIBRACAO_FASE4.md` |
 | `sim/servico_jogador.gd` | Fase 4, lote 2: sessão, Modo Soneca (amostra de 5 min pela própria sim, coleta de 50%), Streak Points e Tipo do Dia; parcelas `streak`/`boost`/`typeDay` e efeitos de loot na `simulacao_hunt.gd`. Regras em `CALIBRACAO_FASE4.md` |
 | `painel_soneca.gd`, `painel_streak.gd` | Coleta da soneca ao abrir a cidade e janela de Streak Points (⚙ → Streak Points); botão 💤 Zzz na HUD da hunt |
+| `sim/servico_diarias.gd`, `painel_diarias.gd` | Fase 4, item 3: Daily Gift, Quests & Tasks (124 tarefas, 43 cidades), Daily Kill e Daily Catch, puros na `sim/` com os dados gravados em `dados/fase4/` (gerados por `ferramentas/gravador/extrair_fase4.py`); janela ⚙ → Quests, Tasks & Dailys |
+| `ferramentas/fase4/ajustar_dano.py` | Item 1: confere variantes da fórmula de dano contra todos os golpes gravados → `dados/relatorios/ajuste_dano.md` |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
 
@@ -771,3 +773,23 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   20 min); `test_sim_diferencial.sh` aceita `PARAMS=...`; `varrer_sementes_sim.gd` aceita `--formula`, `--nivel`,
   `--encher_hp`, `--heroi`, `--slug`. 40 sementes: 0/40 abatem em 60 s com a fórmula atual (e com qualquer variante sem
   encher o HP). Limite: falta snapshot dos stats do selvagem de nível 1 (o resto do erro está nessa faixa).
+- 13/11/2026 — **Fase 4, item 3** (gravações G5–G8; detalhe em `CALIBRACAO_FASE4.md`).
+  - G6 (soneca, A; só a volta foi gravada): a taxa é XP da amostra ÷ 300 s nominais com **round** (xp50 139, xp100
+    278, estKills 23 aos 217 s; coleta de 145 aos 227 s: batem exatamente). **Corrigido**: a coleta entrega só os
+    50% do tempo fora (antes somava a amostra); a amostra entra antes, na 1ª leitura do relatório depois dos 5 min
+    (E); formatos do relatório e da coleta iguais aos gravados.
+  - G7 (A): Streak no formato gravado (`tracks` em pontos, `bonusPct`, `earned`, `canBuy`, `gold`, abates por
+    espécie, agora no save); custo 25.000 × n e bônus 0,1% confirmados; parcela `streak` = floor (era round).
+    **Daily Gift** implementado: 28 prêmios gravados, um por dia em sequência, dia VIP bloqueia sem VIP (C), boosts
+    de 1 h (C; vão no save); itens direto na BAG (E: no original, Gift Center).
+  - G8 (A): `typeDay` = floor(20% da base) (61/61; era round); 13/11 = Sombrio (rotação corrigida, E nos outros
+    dias); loot no tipo do dia veio ×1,42 da tabela (×1,2 fica, F, com o indício registrado).
+  - G5 (A): **Quests & Tasks** (124 tarefas, 43 cidades, progresso por abate/captura/entrega), **Daily Kill** (3
+    opções, xp = floor(qtd × xpAbate × 8/3) em 3/3, prêmio do tier, sem reroll) e **Daily Catch** (2 slots por dia,
+    faixas por nível; xp do slot F). Sorteio das opções e quantidades do Daily Kill: E (o servidor não mostra a regra).
+  - Testes novos: `test_sim_diarias` 36/36, `test_ciclo_diarias` 14/14; `test_sim_lote2` 36/36 (compara com as
+    respostas gravadas da G6/G7 campo a campo), `test_ciclo_lote2` 16/16. Saída padrão da sim idêntica byte a byte
+    (Rhydon 20 min). Protocolo regenerado com a fase 4 (145 tipos, 57 vistos, 27 caminhos REST); cadáveres: 14
+    espécies normais. Corrigido no caminho: o `test_compatibilidade_save` do P04 não esperava a migração das bolas do
+    depot (item 2; commit à parte). Faltam: G3 e as gravações G6b, G9, G10, G11 (roteiros no fim do
+    `CALIBRACAO_FASE4.md`).

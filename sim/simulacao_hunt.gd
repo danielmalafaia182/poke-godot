@@ -698,11 +698,13 @@ func _abate(m: Dictionary) -> void:
 	var base := int(esp.get("xpAbate", 0))
 	var vip := Regras.js_round(float(base) * float(p.vip_fracao)) if cfg.get("vip", false) else 0
 	# Fase 4, lote 2 (F: cada parcela é um % da base): streak (só treinador), boost xp / pokexp, tipo do dia.
-	var streak_xp := Regras.js_round(float(base) * float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("exp", 0)))
+	# A (G7): streak = floor(base × 0,1% × pontos) — Blastoise base 3848 com 1 ponto → 3 (round daria 4)
+	var streak_xp := int(floor(float(base) * float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("exp", 0)) + 1e-9))
 	var boost_t := Regras.js_round(float(base) * _pct_boost("xp") / 100.0)
 	var boost_p := Regras.js_round(float(base) * _pct_boost("pokexp") / 100.0)
 	var tipo_dia := _tipo_do_dia_ativo(esp)
-	var parcela_dia := Regras.js_round(float(base) * float(p.tipo_do_dia_pct) / 100.0) if tipo_dia else 0
+	# A (G8): typeDay = floor(20% da base) — Tyranitar base 6008 → 1201 em 61/61 abates (round daria 1202)
+	var parcela_dia := int(floor(float(base) * float(p.tipo_do_dia_pct) / 100.0 + 1e-9)) if tipo_dia else 0
 	var total := base + vip + streak_xp + boost_t + parcela_dia
 	var total_p := base + vip + boost_p + parcela_dia
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.

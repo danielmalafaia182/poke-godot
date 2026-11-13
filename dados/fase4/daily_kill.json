@@ -1,0 +1,71 @@
+{
+ "dia": {
+  "cards": 0,
+  "claimed": false,
+  "dayKey": "2026-11-13",
+  "locked": false,
+  "minLevel": 25,
+  "options": [
+   {
+    "done": false,
+    "have": 0,
+    "looktype": 80,
+    "name": "Furious Pidgeot",
+    "qty": 798,
+    "speciesId": 10546,
+    "type1": "NORMAL",
+    "type2": "FLYING",
+    "xp": 28745024
+   },
+   {
+    "done": false,
+    "have": 0,
+    "looktype": 197,
+    "name": "Ancient Marowak",
+    "qty": 1497,
+    "speciesId": 10547,
+    "type1": "GROUND",
+    "xp": 53923936
+   },
+   {
+    "done": false,
+    "have": 0,
+    "looktype": 359,
+    "name": "Politoed",
+    "qty": 1199,
+    "speciesId": 186,
+    "type1": "WATER",
+    "xp": 9425738
+   }
+  ],
+  "pickedIdx": 2,
+  "rerollCost": 1,
+  "rerollMax": 0,
+  "rerolls": 0,
+  "resetAt": 1794625200000,
+  "reward": {
+   "items": [
+    {
+     "icon": "/assets/items/devoted_token.png",
+     "itemId": 13115,
+     "name": "Devoted Token",
+     "qty": 6
+    },
+    {
+     "icon": "/assets/items/bronze_dimensional_key.png",
+     "itemId": 21287,
+     "name": "Bronze Dimensional Key",
+     "qty": 2
+    }
+   ],
+   "xp": 9425738
+  },
+  "rewardText": [
+   "6× Devoted Token",
+   "2× Bronze Dimensional Key"
+  ],
+  "tierKey": "hard",
+  "tierLabel": "Hard"
+ },
+ "fonte": "A: G5.jsonl, GET/POST /api/game/daily-kill"
+}

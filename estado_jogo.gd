@@ -94,11 +94,16 @@ const PONTE_CIDADE := preload("res://ponte_cidade.gd")
 # Fase 4, lote 2: Streak Points e Modo Soneca (regras em sim/servico_jogador.gd; vão no save).
 const SERVICO_JOGADOR := preload("res://sim/servico_jogador.gd")
 static var _servico_jogador = null
-var streak: Dictionary = {"totalKills": 0, "spent": {}}
+var streak: Dictionary = {"totalKills": 0, "spent": {}, "bySpecies": {}}
 var soneca: Dictionary = {}
 # Boosts ativos ({key, until(ms), pct}, A: formato). E: o jogo offline ainda não tem fonte de boosts (no original vêm
 # da loja de diamantes, do Daily Gift e de itens); o campo existe para a simulação e para sistemas futuros.
 var boosts: Array = []
+# Fase 4, item 3: diárias e tarefas (sim/servico_diarias.gd): gift, kill, catch, contagem por espécie, tarefas entregues.
+const SERVICO_DIARIAS := preload("res://sim/servico_diarias.gd")
+static var _servico_diarias = null
+var diarias: Dictionary = {}
+signal diarias_alteradas
 # Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
 var slug_caca: String = ""
 # Fase 3: medidor de captura por espécie (C: /api/game/used-balls) — speciesId (str, "s" no fim = shiny) →
@@ -343,12 +348,12 @@ func _voltar_estado_jogador(e: Dictionary) -> void:
 	streak = e["streak"]
 	soneca = e["soneca"]
 
-func registrar_abates(n: int = 1) -> void:
-	## C: "1 point every 1000 total kills" — a hunt chama a cada field-kill.
-	SERVICO_JOGADOR.somar_abates(_estado_jogador(), n)
+func registrar_abates(n: int = 1, especie: int = -1) -> void:
+	## C: "1 point every 1000 total kills"; A (G7): a janela lista os abates por espécie. A hunt chama a cada field-kill.
+	SERVICO_JOGADOR.somar_abates(_estado_jogador(), n, especie)
 
 func streak_info() -> Dictionary:
-	return servico_jogador().tratar(_estado_jogador(), {"type": "streak-get"})[0]
+	return servico_jogador().msg_streak(_estado_jogador(), PONTE_CIDADE.dados())
 
 func gastar_streak(trilha: String) -> String:
 	var e := _estado_jogador()
@@ -369,24 +374,68 @@ func eventos_do_dia(agora_unix: int) -> Array:
 func boosts_ativos(agora_ms: int) -> Array:
 	return boosts.filter(func(b): return int(b.get("until", 0)) > agora_ms)
 
-# Modo Soneca (C): a hunt atual roda 5 min (amostra) e o jogo fecha; ao voltar, o tempo fora rende 50% da taxa de XP.
+# Modo Soneca (C; contas e formatos A, G6): a hunt atual roda 5 min (amostra) e o jogo fecha. A amostra entra quando os
+# 5 min se completam (na 1ª leitura do relatório, E); a coleta dá 50% da taxa da amostra pelo tempo fora.
 func dormir(sim, agora_unix: int) -> String:
-	var amostra: Dictionary = SERVICO_JOGADOR.amostra_soneca(sim, int(servico_jogador().p.soneca_amostra_s))
+	var amostra: Dictionary = SERVICO_JOGADOR.amostra_soneca(sim, int(servico_jogador().p.soneca_amostra_s), agora_unix * 1000)
 	var e := _estado_jogador()
 	var msgs: Array = servico_jogador().tratar(e, {"type": "sleep-mode", "agora": agora_unix, "amostra": amostra})
 	_voltar_estado_jogador(e)
 	solicitar_salvamento()
 	return "" if bool(msgs[0].get("ghost", false)) else "Sem hunt para a soneca."
 
+func _pokemon_por_id(id: String) -> DadosPokemon:
+	for pk in time_pokemon + pokemons_capturados:
+		if pk != null and pk.id_persistente == id:
+			return pk
+	return null
+
+func _poke_soneca() -> Dictionary:
+	## A (G6): poke {id, speciesId, nickname, level} do líder da amostra.
+	var pk := _pokemon_por_id(String(soneca.get("amostra", {}).get("leaderId", "")))
+	if pk == null:
+		return {}
+	return {"id": pk.id_persistente, "speciesId": PONTE_CIDADE.id_especie(pk.especie.nome) if pk.especie != null else 0, "nickname": null, "level": int(pk.nivel)}
+
+func _aplicar_msgs_soneca(msgs: Array) -> void:
+	for m in msgs:
+		if String(m.get("type", "")) == "offline-sample":
+			# a amostra (5 min de hunt de verdade): XP do treinador e do líder, loot, poções gastas, abates no Streak
+			registrar_recompensa_treinador(int(m["xp"]))
+			var lider := _pokemon_por_id(String(m["pokemonId"]))
+			if lider != null:
+				conceder_experiencia(lider, int(m["pokeXp"]))
+			var loot: Array[Dictionary] = []
+			for k in m.get("loot", {}):
+				var interno: int = preload("res://regras_loot.gd").id_interno(int(k))
+				if not preload("res://regras_loot.gd").obter(interno).is_empty():
+					loot.append({"itemId": interno, "qty": int(m["loot"][k])})
+			inventario.receber_loot(loot)
+			for k in m.get("itemsUsed", {}):
+				for i in int(m["itemsUsed"][k]):
+					inventario.consumir_pocao(int(k))
+			for k in m.get("killsBySpecies", {}):
+				registrar_abates(int(m["killsBySpecies"][k]), int(k))
+		elif String(m.get("type", "")) == "offline-claimed":
+			registrar_recompensa_treinador(int(m["xpGained"]))
+			var lider := _pokemon_por_id(String(m["pokemonId"]))
+			if lider != null:
+				conceder_experiencia(lider, int(m["pokeXpGained"]))
+			m["totalXp"] = experiencia_treinador_acumulada   # A: a resposta traz o total e o nível do treinador
+			m["level"] = nivel_treinador
+
 func relatorio_offline(agora_unix: int) -> Dictionary:
 	var e := _estado_jogador()
-	var r: Dictionary = servico_jogador().tratar(e, {"type": "offline-get", "agora": agora_unix})[0]
+	var msgs: Array = servico_jogador().tratar(e, {"type": "offline-get", "agora": agora_unix, "poke": _poke_soneca()})
 	_voltar_estado_jogador(e)   # voltar antes de 5 min cancela (o serviço zera a soneca)
-	return r
+	_aplicar_msgs_soneca(msgs)
+	solicitar_salvamento()
+	return msgs[msgs.size() - 1]
 
 func coletar_offline(agora_unix: int) -> Dictionary:
+	var poke := _poke_soneca()
 	var e := _estado_jogador()
-	var msgs: Array = servico_jogador().tratar(e, {"type": "offline-claim", "agora": agora_unix, "boost": false})
+	var msgs: Array = servico_jogador().tratar(e, {"type": "offline-claim", "agora": agora_unix, "boost": false, "poke": poke})
 	_voltar_estado_jogador(e)
 	var c: Dictionary = {}
 	for m in msgs:
@@ -394,22 +443,60 @@ func coletar_offline(agora_unix: int) -> Dictionary:
 			c = m
 	if c.is_empty():
 		return {"erro": PONTE_CIDADE.primeiro_erro(msgs)}
-	registrar_recompensa_treinador(int(c["xpTrainer"]))
-	registrar_abates(int(c.get("sampleKills", 0)))
-	for pk in time_pokemon:
-		if pk.id_persistente == String(c["pokemonId"]):
-			conceder_experiencia(pk, int(c["xpPokemon"]))
-	var loot: Array[Dictionary] = []
-	for k in c.get("loot", {}):
-		var interno: int = preload("res://regras_loot.gd").id_interno(int(k))
-		if not preload("res://regras_loot.gd").obter(interno).is_empty():
-			loot.append({"itemId": interno, "qty": int(c["loot"][k])})
-	inventario.receber_loot(loot)
-	for k in c.get("itemsUsed", {}):
-		for i in int(c["itemsUsed"][k]):
-			inventario.consumir_pocao(int(k))
+	_aplicar_msgs_soneca(msgs)
 	solicitar_salvamento()
 	return c
+
+# ---------------------------------------------------------------- diárias e tarefas (fase 4, item 3)
+func servico_diarias():
+	if _servico_diarias == null:
+		_servico_diarias = SERVICO_DIARIAS.new(PONTE_CIDADE.dados())
+	return _servico_diarias
+
+func diarias_tratar(cmd: Dictionary) -> Dictionary:
+	## Monta o estado (o mesmo da ponte da cidade + nível, VIP, boosts e diárias), manda o comando e aplica as
+	## mensagens: BAG, bolas e ouro pela ponte; boosts; XP do treinador (tarefas, Daily Kill, Daily Catch).
+	var leve := String(cmd.get("type", "")) == "abate"   # por abate da hunt: sem montar a BAG (custo por abate)
+	var e: Dictionary = {} if leve else PONTE_CIDADE.estado_de(self, cidade_atual())
+	e["nivel"] = nivel_treinador
+	e["vip"] = vip
+	e["boosts"] = boosts.duplicate(true)
+	e["diarias"] = diarias
+	var msgs: Array = servico_diarias().tratar(e, cmd)
+	diarias = e["diarias"]
+	var r := {"msg": msgs[0] if not msgs.is_empty() else {}, "msgs": msgs}
+	var erro := PONTE_CIDADE.primeiro_erro(msgs)
+	if not erro.is_empty():
+		r["erro"] = erro
+		return r
+	if not leve:
+		PONTE_CIDADE.aplicar(self, msgs)
+	for m in msgs:
+		match String(m.get("type", "")):
+			"boosts":
+				boosts = (m["boosts"] as Array).duplicate(true)
+			"tasks-claimed":
+				registrar_recompensa_treinador(int(m["xp"]))
+				r["aviso"] = "🎁 +%d XP%s" % [int(m["xp"]), (" · +💲%d" % int(m["cash"])) if int(m["cash"]) > 0 else ""]
+			"daily-kill-claimed":
+				registrar_recompensa_treinador(int(m["payout"]["xp"]))
+				r["aviso"] = "🎁 +%d XP · %s" % [int(m["payout"]["xp"]), " · ".join((m["payout"]["items"] as Array).map(func(i): return String(i["label"])))]
+			"daily-catch-claimed":
+				registrar_recompensa_treinador(int(m["xp"]))
+				r["aviso"] = "Daily Catch: %s +%d XP" % [String(m["claim"]["name"]), int(m["xp"])]
+			"daily":
+				if m.has("claimed"):
+					r["aviso"] = "🎉 %d× %s!" % [int(m["claimed"]["qty"]), String(m["claimed"]["label"])]
+	if String(cmd.get("type", "")).ends_with("claim") or String(cmd.get("type", "")).ends_with("pick") or String(cmd.get("type", "")) == "captura":
+		diarias_alteradas.emit()
+		solicitar_salvamento()
+	return r
+
+func diaria_abate(especie: int) -> void:
+	diarias_tratar({"type": "abate", "speciesId": especie, "agora": int(Time.get_unix_time_from_system())})
+
+func diaria_captura(especie: int) -> Dictionary:
+	return diarias_tratar({"type": "captura", "speciesId": especie, "agora": int(Time.get_unix_time_from_system())})
 
 # ---------------------------------------------------------------- loja do Mark
 func loja() -> Dictionary:

@@ -70,19 +70,24 @@ func atualizar() -> void:
 	for trilha in ["exp", "loot", "shiny"]:
 		var h := HBoxContainer.new()
 		var l := Label.new()
-		l.text = "%s: %d ponto(s), +%.1f%%" % [trilha.to_upper(), int(s["tracks"][trilha]["points"]), float(s["tracks"][trilha]["pct"])]
+		l.text = "%s: %d ponto(s), +%.1f%%" % [trilha.to_upper(), int(s["tracks"][trilha]), float(s["bonusPct"][trilha])]
 		l.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		h.add_child(l)
 		var b := Button.new()
 		b.name = "Investir_" + trilha
 		b.text = "+ Investir (💲%d)" % int(s["nextCost"])
-		b.disabled = int(s["available"]) <= 0 or ej.ouro < int(s["nextCost"])
+		b.disabled = not bool(s["canBuy"])
 		b.pressed.connect(func() -> void:
 			var erro: String = ej.gastar_streak(trilha)
 			aviso = erro if not erro.is_empty() else "Ponto investido em %s (+0,1%%)." % trilha.to_upper()
 			atualizar())
 		h.add_child(b)
 		corpo.add_child(h)
+	var mais: Array = []
+	for k in (s.get("kills", []) as Array).slice(0, 5):
+		mais.append("%s %d" % [String(k["name"]), int(k["kills"])])
+	if not mais.is_empty():
+		_rotulo("Mais abatidos: " + " · ".join(mais), Color("b9c3cf"))
 	_rotulo("Shiny: o jogo offline ainda não tem shiny (o ponto fica guardado).", Color("8a96a3"))
 	if not aviso.is_empty():
 		_rotulo(aviso, Color("f0c040"))

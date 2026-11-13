@@ -79,25 +79,38 @@ func _process(_d: float) -> bool:
 			if caca.sim.tick >= int(60 * 1000 / 200) or caca._encerrada:
 				var abates := int(caca.registro["abates"])
 				checar(abates > 0 and int(ej.streak["totalKills"]) == 990 + abates, "abates da hunt contam para o Streak", "%d abates → %d" % [abates, int(ej.streak["totalKills"])])
+				var soma_esp := 0
+				for k in ej.streak.get("bySpecies", {}):
+					soma_esp += int(ej.streak["bySpecies"][k])
+				var soma_diar := 0
+				for k in ej.diarias.get("contagem", {}).get("kill", {}):
+					soma_diar += int(ej.diarias["contagem"]["kill"][k])
+				checar(soma_esp == abates and soma_diar == abates, "abates da hunt contam por espécie no Streak e nas diárias/tarefas (A: lista kills)", "%d / %d / %d" % [abates, soma_esp, soma_diar])
 				var xp_t: int = ej.experiencia_treinador_acumulada
 				var erro: String = caca.soneca()
 				var am: Dictionary = ej.soneca.get("amostra", {})
-				checar(erro.is_empty() and not ej.soneca.is_empty() and int(am.get("kills", 0)) > 0 and int(am.get("seconds", 0)) == 300,
+				checar(erro.is_empty() and not ej.soneca.is_empty() and int(am.get("kills", 0)) > 0 and int(am.get("sampleMs", 0)) == 300000,
 					"Zzz: amostra de 5 min gravada na soneca (C)", "%d abates na amostra" % int(am.get("kills", 0)))
-				checar(ej.experiencia_treinador_acumulada == xp_t, "a amostra não entrega XP na hora (vai na coleta)")
+				checar(ej.experiencia_treinador_acumulada == xp_t, "a amostra não entrega XP na hora (entra quando os 5 min se completam)")
 				checar(ej.salvar_agora(), "save com a soneca gravado")
 				var lido: Dictionary = preload("res://salvamento_local.gd").new().decodificar(FileAccess.get_file_as_string("user://progresso_v1.json"))
 				checar(lido.has("dados") and not (lido["dados"].get("soneca", {}) as Dictionary).is_empty() and int(lido["dados"]["streak"]["totalKills"]) == int(ej.streak["totalKills"]),
 					"save relido: soneca e Streak", str(lido.get("erro", "")))
 				# volta 2 h depois do fim da amostra
 				var agora: int = int(ej.soneca["fim"]) + 2 * 3600
+				var xp_t0: int = ej.experiencia_treinador_acumulada
+				var xp_v0: int = venusaur.experiencia_total
 				var rel: Dictionary = ej.relatorio_offline(agora)
+				checar(ej.experiencia_treinador_acumulada == xp_t0 + int(am["xpSample"]) and venusaur.experiencia_total == xp_v0 + int(am["pokeXpSample"])
+					and int(ej.streak["totalKills"]) == 990 + abates + int(am["kills"]),
+					"ao abrir depois dos 5 min: a amostra entra (XP do treinador e do Venusaur, abates no Streak; A: antes da coleta)")
 				checar(rel.get("report") != null and int(rel["report"]["seconds"]) == 7200 and int(rel["report"]["xp50"]) > 0, "relatório da soneca: 2 h fora", str(rel.get("report", {}).get("xp50", -1)))
 				var xp_v: int = venusaur.experiencia_total
+				var xp_t1: int = ej.experiencia_treinador_acumulada
 				var c: Dictionary = ej.coletar_offline(agora)
-				checar(not c.has("erro") and ej.experiencia_treinador_acumulada == xp_t + int(c["xpTrainer"]) and venusaur.experiencia_total == xp_v + int(c["xpPokemon"])
-					and int(c["xpTrainer"]) == int(am["xpTrainer"]) + int(rel["report"]["xp50"]) and ej.soneca.is_empty(),
-					"coleta: XP da amostra + 50% no treinador e no Venusaur; soneca zerada (C)")
+				checar(not c.has("erro") and ej.experiencia_treinador_acumulada == xp_t1 + int(c["xpGained"]) and venusaur.experiencia_total == xp_v + int(c["pokeXpGained"])
+					and int(c["xpGained"]) == int(rel["report"]["xp50"]) and int(c["totalXp"]) == ej.experiencia_treinador_acumulada and ej.soneca.is_empty(),
+					"coleta: só os 50% do tempo fora, no treinador e no Venusaur; soneca zerada (A, G6)")
 				checar(int(ej.streak["totalKills"]) == 990 + abates + int(am["kills"]), "abates da amostra contam para o Streak; os estimados não (F)", str(ej.streak["totalKills"]))
 				# regra da sessão ao carregar o save
 				var sl = preload("res://salvamento_local.gd").new()

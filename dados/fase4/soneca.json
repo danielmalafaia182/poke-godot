@@ -1,0 +1,81 @@
+{
+ "fonte": "A: GET/POST /api/game/offline",
+ "respostas": [
+  {
+   "arquivo": "G6.jsonl",
+   "corpo": {
+    "report": {
+     "boostCost": 2,
+     "cappedAt": false,
+     "estKills": 23,
+     "poke": {
+      "id": "cmu9y6y5cntw5iiyrt3u78fys",
+      "level": 169,
+      "nickname": null,
+      "speciesId": 3
+     },
+     "pokeStatus": "ok",
+     "pokeXp100": 278,
+     "pokeXp50": 139,
+     "sample": {
+      "endedAt": 1794586777526,
+      "fainted": false,
+      "ghostId": "1a36b147-d4fe-402c-a8e0-4ef4768505e9",
+      "itemsUsed": {},
+      "kills": 32,
+      "killsBySpecies": {
+       "74": 32
+      },
+      "leaderId": "cmu9y6y5cntw5iiyrt3u78fys",
+      "pokeXpSample": 384,
+      "sampleMs": 300551,
+      "slug": "geodude",
+      "startedAt": 1794586476975,
+      "xpSample": 384
+     },
+     "seconds": 217,
+     "xp100": 278,
+     "xp50": 139
+    }
+   },
+   "metodo": "GET"
+  },
+  {
+   "arquivo": "G6.jsonl",
+   "corpo": {
+    "boosted": false,
+    "diamonds": 0,
+    "estKills": 24,
+    "level": 169,
+    "poke": {
+     "id": "cmu9y6y5cntw5iiyrt3u78fys",
+     "level": 169,
+     "nickname": null,
+     "speciesId": 3
+    },
+    "pokeApplied": true,
+    "pokeStatus": "ok",
+    "pokeXpGained": 145,
+    "seconds": 227,
+    "slug": "geodude",
+    "totalXp": 81332668,
+    "xpGained": 145
+   },
+   "metodo": "POST"
+  },
+  {
+   "arquivo": "G6.jsonl",
+   "corpo": {
+    "report": null
+   },
+   "metodo": "GET"
+  },
+  {
+   "arquivo": "G7.jsonl",
+   "corpo": {
+    "report": null
+   },
+   "metodo": "GET"
+  }
+ ]
+}
