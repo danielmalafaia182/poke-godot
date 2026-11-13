@@ -24,7 +24,8 @@ func _init() -> void:
 	var seg := int(_arg("segundos", "60"))
 	var slug := _arg("slug", "geodude")
 	var nivel := int(_arg("nivel", "1"))
-	var encher := _arg("encher_hp", "0") == "1"   # como o test_movimento_selvagens: HP do aliado cheio a cada passo
+	var encher := _arg("encher_hp", "0") == "1"
+	var formula := _arg("formula", "")   # como o test_movimento_selvagens: HP do aliado cheio a cada passo
 	var larv: DadosPokemon = load("res://dados/pokemons/larvitar_inicial.tres")
 	var especie_heroi := _arg("heroi", "Larvitar")   # outra espécie: IV 16 / Quality 1,0 (indivíduo mediano)
 	var dados = DadosJogo.carregar()
@@ -40,6 +41,8 @@ func _init() -> void:
 	var sem_abate := 0
 	for s in range(1, n + 1):
 		var cfg := CenarioJogo.configurar(jogo, dados, s, 0)
+		if formula != "":
+			cfg["parametros"]["formula_dano"] = formula   # variante da fórmula (sim/regras.gd PARAMETROS.formula_dano)
 		var sim = Simulacao.new(cfg, dados, mapa)
 		sim.iniciar()
 		var primeiro := -1
@@ -68,5 +71,5 @@ func _init() -> void:
 			("%.1f" % (primeiro * 0.2)) if primeiro >= 0 else "-", int(sim.estatisticas["hits_aliado"]),
 			int(sim.equipe[0]["hp"]), int(sim.equipe[0]["max_hp"])])
 	print("DANOS do aliado (golpe→dano: vezes): ", danos)
-	print("SEM_ABATE %d de %d (slug %s, nível %d, %d s, HP cheio %s)" % [sem_abate, n, slug, nivel, seg, encher])
+	print("SEM_ABATE %d de %d (slug %s, nível %d, %d s, HP cheio %s, fórmula %s)" % [sem_abate, n, slug, nivel, seg, encher, formula if formula != "" else "atual"])
 	quit(0)

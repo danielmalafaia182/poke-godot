@@ -6,6 +6,7 @@
 # Uso: testes/test_sim_diferencial.sh [antiga|1h]      (saídas em saida_testes/, ignoradas pelo git)
 #   antiga: gravacoes_unicas (9,3 min, Venusaur 109) × 20 instâncias de 10 min
 #   1h:     rhydon-1h (88 min, Venusaur 119–124) × 20 instâncias de 60 min   [referência principal]
+# PARAMS (opcional): sobrescreve PARAMETROS da sim, ex. PARAMS='formula_dano="sem_piso_divisor"' (experimentos).
 set -uo pipefail
 RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$RAIZ"
@@ -20,7 +21,7 @@ PARALELO="${PARALELO:-4}"          # instâncias simultâneas (cada uma é um pr
 rm -f saida_testes/dif_${CASO}_s*.jsonl
 for s in $(seq 1 "$N"); do
   TEMPO_MAX=900 testes/rodar.sh res://testes/rodar_sim.gd --estado "$ESTADO" --segundos "$SEG" --semente "$s" \
-    --saida "saida_testes/dif_${CASO}_s$s.jsonl" > /dev/null 2>&1 &
+    --saida "saida_testes/dif_${CASO}_s$s.jsonl" ${PARAMS:+--params "$PARAMS"} > /dev/null 2>&1 &
   if (( s % PARALELO == 0 )); then wait; fi
 done
 wait

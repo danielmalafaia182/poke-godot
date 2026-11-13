@@ -140,7 +140,17 @@ Parâmetros `stats_dano_selvagem` / `stats_dano_aliado` ("continuo"/"inteiro") v
 
 Envelopes previstos contêm os observados em: Venusaur 109 Solar Beam → Rhydon 80 (910–2282) e → Kangaskhan 80 (128–230);
 Rhydon Stone Edge → Venusaur (241–432); Kangaskhan Mega Punch → Venusaur (136–207).
-Em aberto (**desvio conhecido, medido em 11/11**): no nível 1 o Geodude tira 6 ou 8 em Rattata (A, geodude-10min, 153 hits; nível 2: 8–10, nível 3: 12–14, nível 4: 20–23) e a sim tira 2 (o piso) — Larvitar Lv.1 → Geodude e Geodude Lv.1 → Rattata dão 2 em 100% dos hits; por isso um time de nível 1 não abate nada em 60 s na sim (40/40 sementes, `testes/varrer_sementes_sim.gd`). Não corrigido (aguarda decisão); sugere stats sem arredondar ou piso interno de stat.
+Em aberto (**desvio conhecido, medido em 11/11; ajuste tentado em 13/11, não aplicado**): no nível 1 o Geodude tira 6 ou 8 em Rattata (A, geodude-10min, 153 hits; nível 2: 8–10, nível 3: 12–14, nível 4: 20–23) e a sim tira 2 (o piso); um time de nível 1 não abate nada em 60 s na sim (40/40 sementes, `testes/varrer_sementes_sim.gd`).
+Ajuste (`ferramentas/fase4/ajustar_dano.py` → `dados/relatorios/ajuste_dano.md`; 26 gravações, 7389 golpes; stat desconhecido do selvagem varrido na faixa contínua que o maxHp permite, indivíduo separado a cada captura). % de golpes explicados:
+
+| Variante (`formula_dano`) | aliado 1–4 (472) | aliado 80–199 (4376) | aliado 200+ (653, C5) | selvagem 1–4 (101) | selvagem 80–199 (1787) | dif. 1h | dif. antiga | 40 sementes sem abate (HP cheio a cada passo) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| c `atual` (piso, divisor ≥ 1) | 32,6 | 99,6 | 47,3 | 100 | 99,2 | 27/30 | 23/26 | 40/40 (40/40) |
+| a `classica` (+2 antes dos mods) | 66,5 | 99,8 | 47,3 | **0** | 98,9 | 26/30 | 23/26 | 40/40 (9/40) |
+| b `mais2_fim` (+2 no fim) | 66,5 | 99,7 | 47,3 | **0** | 98,8 | 25/30 | 23/26 | 40/40 (4/40) |
+| e `sem_piso_divisor` (D contínuo < 1 permitido) | 90,5 | 99,6 | 80,9 | 100 | 99,2 | 27/30 | 23/26 | 40/40 (40/40) |
+
+a e b caem para 0% no selvagem de nível 1 (o +2 passa do envelope em todos os golpes; erro médio 1,0) e pioram o diferencial; e é ≥ c em toda gravação, mas não explica todas as faixas (o resto fica no limite de baixo da faixa de stat do selvagem de nível baixo). Pela regra do pedido, nenhuma foi aplicada (`formula_dano` "atual"); e é a candidata. Nas 40 sementes (Larvitar Lv.1 no geodude, 60 s), e não muda nada: a Def do Geodude é ≥ 1 e o divisor nunca entra.
 Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes/geodude-*.jsonl`).
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
@@ -755,3 +765,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   poções), a tela do depot não lista bolas, e o save antigo com bolas no depot as devolve para a BAG ao carregar.
   Testes: `testes/test_migracao_depot_bolas.gd` 7/7 (fixture `dados/testes/save_antigo_bolas_no_depot.json`), serviço
   46/46; `test_consistencia` e `test_qualidade` (P04) ajustados à regra nova (a bola não vai para o depot).
+- 13/11/2026 — Fase 4, item 1 (dano em nível baixo): ajuste com as variantes a/b/c (+ e/d) contra todos os golpes
+  gravados; tabela no desvio de dano acima. **Nenhuma variante explica todas as faixas sem piorar alguma gravação: não
+  aplicada.** A fórmula ganhou o parâmetro `formula_dano` (padrão "atual": saída da sim idêntica byte a byte, Rhydon
+  20 min); `test_sim_diferencial.sh` aceita `PARAMS=...`; `varrer_sementes_sim.gd` aceita `--formula`, `--nivel`,
+  `--encher_hp`, `--heroi`, `--slug`. 40 sementes: 0/40 abatem em 60 s com a fórmula atual (e com qualquer variante sem
+  encher o HP). Limite: falta snapshot dos stats do selvagem de nível 1 (o resto do erro está nessa faixa).
