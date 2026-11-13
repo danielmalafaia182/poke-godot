@@ -163,10 +163,11 @@ func _init() -> void:
 		"mensagem do depot = {inventory, depot}, itens {id, name, icon, category, npcPrice, quantity} (A, G4)", str(md["depot"][0].keys()))
 	r = sv.tratar(d, {"type": "depot-move", "itemId": 4, "dir": "withdraw"})
 	checar(int(d["itens"]["4"]) == 10 and not d["depot"]["itens"].has("4"), "retirar item do depot")
-	checar(tipo(sv.tratar(d, {"type": "depot-move", "ballId": 7, "dir": "store"}), "error").size() > 0, "bola vinculada fica na BAG (A: bound; E)")
+	checar(tipo(sv.tratar(d, {"type": "depot-move", "ballId": 1, "dir": "store"}), "error").size() > 0 and int(d["bolas"]["1"]) == 10,
+		"bolas não vão para o depot (A, G4)")
 	r = sv.tratar(d, {"type": "depot-move", "all": true})
-	checar(d["itens"].is_empty() and int(d["bolas"]["1"]) == 0 and int(d["bolas"]["7"]) == 1 and int(d["depot"]["bolas"]["1"]) == 10,
-		"guardar tudo (C: {all: true}); a vinculada fica")
+	checar(d["itens"].is_empty() and int(d["bolas"]["1"]) == 10 and int(d["bolas"]["7"]) == 1 and (d["depot"].get("bolas", {}) as Dictionary).is_empty() and int(d["depot"]["itens"]["200"]) == 3,
+		"guardar tudo leva os itens (inclusive poções) e deixa as bolas na BAG (A, G4)")
 	var cheia := estado_base()
 	for i in 200:
 		cheia["depot"]["itens"][str(1000 + i)] = 1

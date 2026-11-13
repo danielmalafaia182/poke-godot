@@ -58,15 +58,16 @@ func testar() -> void:
 	var eventos: Dictionary = {"bolas":0,"pocoes":0,"depot":0,"completo":true}
 	inventario.estoque_bolas_alterado.connect(func() -> void:
 		eventos["bolas"] += 1
-		eventos["completo"] = eventos["completo"] and inventario.estoque_bolas[1]==0 and inventario.estoque_pocoes[200]==0
+		eventos["completo"] = eventos["completo"] and inventario.estoque_pocoes[200]==0
 	)
 	inventario.estoque_pocoes_alterado.connect(func() -> void: eventos["pocoes"] += 1)
 	inventario.depot_alterado.connect(func() -> void: eventos["depot"] += 1)
 	checar(inventario.guardar_todos_itens_depot()=="Itens guardados.","lote completo aceito")
-	checar(eventos["bolas"]==1 and eventos["pocoes"]==1 and eventos["depot"]==1,"sinais agrupados")
+	# Fase 4 (A, G4): as bolas não vão para o depot; só itens e poções.
+	checar(eventos["bolas"]==0 and eventos["pocoes"]==1 and eventos["depot"]==1,"sinais agrupados")
 	checar(eventos["completo"],"observadores recebem estado concluído")
-	checar(inventario.itens_depot[1]==100 and inventario.itens_depot[200]==20,"quantidades conservadas")
-	checar(inventario.mover_item_depot(1,false)=="" and inventario.estoque_bolas[1]==100,"retirada compatível")
+	checar(not inventario.itens_depot.has(1) and inventario.itens_depot[200]==20 and inventario.estoque_bolas[1]==100,"quantidades conservadas; bolas na BAG")
+	checar(inventario.mover_item_depot(1,true)!="" and inventario.estoque_bolas[1]==100,"bola não vai para o depot")
 	# Limpa callbacks que capturam o inventário neste teste isolado.
 	for sinal in [inventario.estoque_bolas_alterado,inventario.estoque_pocoes_alterado,inventario.depot_alterado]:
 		for conexao in sinal.get_connections():

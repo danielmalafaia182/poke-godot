@@ -113,10 +113,7 @@ func consumir_pocao(id: int) -> bool:
 
 func catalogo_itens_depot() -> Array[Dictionary]:
 	var resultado: Array[Dictionary] = []
-	var icones: Dictionary = {1: "pokeball", 2: "greatball", 3: "superball", 4: "ultraball", 5: "masterball", 6: "idleball", 7: "idleball_gold"}
-	for bola in CATALOGO_BOLAS:
-		var id: int = int(bola["id"])
-		resultado.append({"id": id, "nome": bola["nome"], "categoria": "Poké Balls", "icone": "res://assets/interface/depot/" + str(icones[id]) + ".png", "vinculado": bool(bola["vinculada"]) or bool(bola["infinita"])})
+	# Fase 4 (A, G4): o depot do original só guarda itens; as Poké Balls não aparecem nele.
 	for pocao in CATALOGO_POCOES:
 		resultado.append({"id": pocao["id"], "nome": pocao["nome"], "categoria": "Potions", "icone": "res://assets/interface/pocoes/" + str(pocao["icone"]) + ".png", "vinculado": false})
 	resultado.append_array(LOOT.catalogo())

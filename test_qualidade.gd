@@ -47,7 +47,9 @@ func testar() -> void:
 	checar(estado.time_pokemon.size()==6 and estado.mover_pokemon_depot(excedente,false)!="","limite TEAM seis")
 	checar(estado.time_pokemon == estado.colecao.time_pokemon,"fachada usa coleção do módulo")
 	# Inventário: ida e volta sem duplicação, consumos e restrições.
-	for id in [1,200]:
+	# Fase 4 (A, G4): bolas não vão para o depot; o vaivém fica só com itens/poções.
+	checar(estado.mover_item_depot(1,true)!="","bola não vai para o depot")
+	for id in [200]:
 		var antes: int = estado.quantidade_item_bag(id)
 		checar(estado.mover_item_depot(id,true)=="","guarda item")
 		checar(estado.quantidade_item_bag(id)==0 and int(estado.itens_depot[id])==antes,"estoque único transferido")

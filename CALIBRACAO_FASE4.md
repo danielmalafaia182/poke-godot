@@ -34,7 +34,7 @@ Testes:
 | `shop-sell {items[{itemId, qty}]}` | `POST /api/game/shop/sell` → `{ok, soldKinds, soldCount, goldGained, gold}` | **A** (G1: 1 Bag of Pollen por 40) |
 | `pokemon-sell {pokeIds}` | `POST /api/game/pokemon/sell` → `{sold, goldGained, gold}` | **A** (G2) |
 | `joy-heal` | WS `joy-heal` → `{type: "joy-healed"}` sem campos, no mesmo instante; depois o servidor reenvia a lista de Pokémon | **A** (G4); aqui a lista vai como `poke-delta` dos curados (E) |
-| `depot`, `depot-move {itemId, dir} \| {all: true}` | `GET/POST /api/game/depot[/move]` → `{inventory[…], depot[…]}`, itens `{id, name, icon, category, npcPrice, quantity}` | **A** (G4); `ballId`/`balls` são E (no original as bolas não ficam no depot) |
+| `depot`, `depot-move {itemId, dir} \| {all: true}` | `GET/POST /api/game/depot[/move]` → `{inventory[…], depot[…]}`, itens `{id, name, icon, category, npcPrice, quantity}` | **A** (G4); só itens (bolas recusadas, A) |
 | `poke-store {id}`, `poke-withdraw {id}` | WS `poke-store`, `poke-withdraw` | C (nomes); os campos são E |
 | Mensagens de estado | `balls {catalog, counts, gold, selected}`, `inventory {items}`, `poke-delta {poke}` | A (formato gravado) |
 | | `currency {gold}` | C (o tipo existe) |
@@ -88,7 +88,7 @@ Testes:
 | Mover leva a pilha inteira; "guardar tudo" esvazia a BAG (inclusive poções); vinculada (Golden Idle) fica | **A** (G4) / A (`bound`) / E (vinculada fica) | G4: 24 Bag of Pollen numa vez, 15 Ancient Stone retiradas numa vez, "guardar tudo" levou 62 pilhas e deixou a BAG vazia |
 | O inicial não vai para a BOX; depositar o líder passa a liderança ao inicial | E | regras do P04 mantidas |
 
-| Bolas no depot | **A** × E | G4: as bolas nunca aparecem no depot (nem na lista da BAG, nem na do depot); o P04 guarda bolas no depot e isso **ficou como está** até decisão |
+| Bolas não ficam no depot | **A** (G4) | as bolas nunca aparecem no depot do original; aplicado em 13/11: o serviço recusa `ballId`, "guardar tudo" só leva itens, a tela do depot não lista bolas, e um save antigo com bolas no depot as devolve para a BAG ao carregar (`testes/test_migracao_depot_bolas.gd` 7/7) |
 
 ## VIP
 

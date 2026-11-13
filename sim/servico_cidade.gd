@@ -9,7 +9,7 @@ extends RefCounted
 ##   pokes: [{id, speciesId, xp, ivs{hp,atk,def,spAtk,spDef,speed}, quality, hp (−1 = cheio), shiny, team, slot,
 ##            leader, starter}]
 ##   itens: {"<itemId>": qtd} (BAG: poções, pedras, loot) · bolas: {"<ballId>": qtd}
-##   depot: {"itens": {"<itemId>": qtd}, "bolas": {"<ballId>": qtd}}
+##   depot: {"itens": {"<itemId>": qtd}}   (A: o depot só guarda itens; bolas ficam na BAG)
 ##
 ## Comandos (nomes do original quando existem; C = chunk 0gx72gz9qjk5j.js, E = decisão do projeto):
 ##   evolve-info {capturedId, destId?}        ≈ GET  /api/game/evolve?capturedId=&destId=   (C; resposta: campos que a tela lê)
@@ -543,16 +543,13 @@ func _lista_itens_depot(d: Dictionary) -> Array:
 
 
 func _msg_depot(estado: Dictionary) -> Dictionary:
-	## A (G4): GET/POST /api/game/depot[/move] → {inventory, depot}. "balls" é E: no original as bolas não aparecem no
-	## depot (só itens); o P04 guarda bolas no depot e isso ficou como está (ver CALIBRACAO_FASE4.md).
+	## A (G4): GET/POST /api/game/depot[/move] → {inventory, depot}; só itens — as bolas não ficam no depot (A).
 	var dep: Dictionary = estado.get("depot", {})
-	return {"type": "depot", "inventory": _lista_itens_depot(estado.get("itens", {})), "depot": _lista_itens_depot(dep.get("itens", {})),
-		"balls": _msg_depot_lista(dep.get("bolas", {}), "ballId")}
+	return {"type": "depot", "inventory": _lista_itens_depot(estado.get("itens", {})), "depot": _lista_itens_depot(dep.get("itens", {}))}
 
 
 func _pilhas(estado: Dictionary) -> int:
-	var dep: Dictionary = estado["depot"]
-	return dep["itens"].size() + dep["bolas"].size()
+	return estado["depot"]["itens"].size()
 
 
 func _mover_depot(estado: Dictionary, cmd: Dictionary) -> Array:
@@ -560,34 +557,24 @@ func _mover_depot(estado: Dictionary, cmd: Dictionary) -> Array:
 		return [_erro("Não há depot nesta cidade.")]
 	estado["depot"] = estado.get("depot", {})
 	estado["depot"]["itens"] = estado["depot"].get("itens", {})
-	estado["depot"]["bolas"] = estado["depot"].get("bolas", {})
+	if cmd.has("ballId"):
+		return [_erro("Poké Balls não vão para o depot.")]   # A (G4): o depot do original só tem itens
 	if bool(cmd.get("all", false)):
-		# C: {all: true} guarda tudo; vinculadas (Golden Idle Ball) ficam na BAG (E, regra do P04)
+		# A (G4): {all: true} leva a BAG de itens inteira (inclusive poções); as bolas ficam onde estão
 		var novas := 0
 		for k in estado["itens"]:
 			if not estado["depot"]["itens"].has(k):
-				novas += 1
-		for k in estado["bolas"]:
-			if int(estado["bolas"][k]) > 0 and not bool(_bola(int(k)).get("bound", false)) and not estado["depot"]["bolas"].has(k):
 				novas += 1
 		if _pilhas(estado) + novas > int(p.capacidade_depot_pilhas):
 			return [_erro("Depot cheio: nada foi guardado.")]
 		for k in estado["itens"].keys():
 			estado["depot"]["itens"][k] = int(estado["depot"]["itens"].get(k, 0)) + int(estado["itens"][k])
 		estado["itens"].clear()
-		for k in estado["bolas"].keys():
-			if bool(_bola(int(k)).get("bound", false)) or int(estado["bolas"][k]) <= 0:
-				continue
-			estado["depot"]["bolas"][k] = int(estado["depot"]["bolas"].get(k, 0)) + int(estado["bolas"][k])
-			estado["bolas"][k] = 0
-		return [_msg_depot(estado), msg_inventario(estado), msg_balls(estado)]
+		return [_msg_depot(estado), msg_inventario(estado)]
 	var guardar := String(cmd.get("dir", "")) in ["store", "in", "deposit"]
-	var e_bola := cmd.has("ballId")
-	var k := str(int(cmd.get("ballId" if e_bola else "itemId", -1)))
-	var bag: Dictionary = estado["bolas" if e_bola else "itens"]
-	var dep: Dictionary = estado["depot"]["bolas" if e_bola else "itens"]
-	if e_bola and bool(_bola(int(k)).get("bound", false)):
-		return [_erro("Este item vinculado permanece na BAG.")]
+	var k := str(int(cmd.get("itemId", -1)))
+	var bag: Dictionary = estado["itens"]
+	var dep: Dictionary = estado["depot"]["itens"]
 	var origem: Dictionary = bag if guardar else dep
 	var q := int(origem.get(k, 0))
 	if q <= 0:
@@ -595,12 +582,9 @@ func _mover_depot(estado: Dictionary, cmd: Dictionary) -> Array:
 	if guardar and not dep.has(k) and _pilhas(estado) >= int(p.capacidade_depot_pilhas):
 		return [_erro("Depot cheio.")]
 	var destino: Dictionary = dep if guardar else bag
-	destino[k] = int(destino.get(k, 0)) + q
-	if e_bola and guardar:
-		bag[k] = 0
-	else:
-		origem.erase(k)
-	return [_msg_depot(estado), msg_balls(estado) if e_bola else msg_inventario(estado)]
+	destino[k] = int(destino.get(k, 0)) + q   # A (G4): move a pilha inteira
+	origem.erase(k)
+	return [_msg_depot(estado), msg_inventario(estado)]
 
 
 func _mover_poke(estado: Dictionary, id: String, guardar: bool) -> Array:

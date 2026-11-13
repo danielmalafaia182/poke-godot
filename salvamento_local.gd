@@ -242,6 +242,10 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 	for chave in dados["pocoes"]:
 		estado.estoque_pocoes[int(chave)] = int(dados["pocoes"][chave])
 	for chave in dados["depot"]:
+		# Fase 4 (A, G4): bolas não ficam no depot; save antigo com bola no depot → volta para a BAG.
+		if int(chave) in BOLAS:
+			estado.estoque_bolas[int(chave)] = int(estado.estoque_bolas.get(int(chave), 0)) + int(dados["depot"][chave])
+			continue
 		estado.itens_depot[int(chave)] = int(dados["depot"][chave])
 	for campo in dados["configuracoes"]:
 		# Lista explícita; nunca atribui propriedades arbitrárias vindas do arquivo.

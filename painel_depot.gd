@@ -230,7 +230,7 @@ func _construir_corpo() -> void:
 	categoria.custom_minimum_size.x = 88
 	categoria.add_item("All categories" if aba == 0 else "All types")
 	if aba == 0:
-		for valor in ["Poké Balls","Potions","Materials"]: categoria.add_item(valor)
+		for valor in ["Potions","Materials"]: categoria.add_item(valor)
 	else:
 		for chave in TIPOS.CORES:
 			categoria.add_item(str(chave).capitalize())

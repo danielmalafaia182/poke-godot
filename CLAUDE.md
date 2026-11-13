@@ -751,3 +751,7 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     vêm do servidor (gravações G5 e G7). Também G3 (receita das pedras), G6 (soneca real) e G8 (Tipo do Dia num abate).
   **Testes:** lote 2 puro 28/28, ciclo do lote 2 na cena 14/14, P04 43/43 (compatibilidade com os campos novos),
   serviço da cidade 46/46, regressão verde, diferencial 1h 27/30 e antiga 23/26 (iguais).
+- 13/11/2026 — Bolas fora do depot (A, G4): o serviço da cidade recusa `ballId`, "guardar tudo" só leva itens (inclusive
+  poções), a tela do depot não lista bolas, e o save antigo com bolas no depot as devolve para a BAG ao carregar.
+  Testes: `testes/test_migracao_depot_bolas.gd` 7/7 (fixture `dados/testes/save_antigo_bolas_no_depot.json`), serviço
+  46/46; `test_consistencia` e `test_qualidade` (P04) ajustados à regra nova (a bola não vai para o depot).
