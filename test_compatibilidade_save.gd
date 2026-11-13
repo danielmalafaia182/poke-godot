@@ -39,8 +39,16 @@ func executar() -> void:
 			registro[campo]=modelo.get(campo)
 			antigo_p.set(campo,modelo.get(campo))
 		registro["vida_atual"]=0 if hp==0 else clampi(roundi(float(hp)/maxi(1,maximo)*antigo_p.obter_vida_maxima()),1,antigo_p.obter_vida_maxima())
+	# Fase 4, item 2 (A, G4): bolas não ficam no depot; as do save anterior voltam para a BAG ao carregar.
+	for chave in esperado.get("depot",{}).keys():
+		if int(chave) in s.BOLAS:
+			esperado["bolas"][chave]=int(esperado["bolas"].get(chave,0))+int(esperado["depot"][chave])
+			esperado["depot"].erase(chave)
 	# JSON representa todos os números da mesma forma na comparação estrutural.
 	esperado=JSON.parse_string(JSON.stringify(esperado))
+	for k in atual.keys() + esperado.keys():
+		if JSON.stringify(atual.get(k)) != JSON.stringify(esperado.get(k)):
+			print("  difere: ", k, "  atual=", JSON.stringify(atual.get(k)).left(200), "  esperado=", JSON.stringify(esperado.get(k)).left(200))
 	checar(esperado==atual,"save preservado exceto IVs/HP do inicial migrado")
 	checar(e.time_pokemon.size()==3 and e.pokemons_capturados.size()==2,"TEAM/BOX anteriores")
 	checar(e.obter_lider()==e.time_pokemon[1],"identidade do líder anterior")
