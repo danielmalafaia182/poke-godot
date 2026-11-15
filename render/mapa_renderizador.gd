@@ -22,6 +22,7 @@ const DadosDesenho := preload("res://render/dados_desenho.gd")
 const CacheMapa := preload("res://render/cache_mapa.gd")
 const AtlasMapa := preload("res://render/atlas_mapa.gd")
 const Fontes := preload("res://sim/fontes.gd")
+const Sombras := preload("res://render/sombras.gd")
 
 const CHUNK := 8
 const MARGEM_TILES := 10          # streamChunks (C): ±10 tiles além da metade da vista
@@ -71,6 +72,23 @@ var _camada := {}                  # página -> camada no array
 var _array: Texture2DArray
 var _branca: ImageTexture
 var _material: ShaderMaterial
+# Sombras e iluminação (render/sombras.gd, C): uma camada por andar em modo canvas group, com a transformação da luz.
+# Parâmetro: liga/desliga (no original, setShadows). DESLIGADO por padrão até o p99 com sombras ser medido com a máquina
+# livre (15/11: a medição saiu contaminada; ver Estado). POKE_SOMBRAS=1 liga; POKE_SOMBRAS=simples liga no modo sem grupo.
+static var sombras_ligadas := OS.get_environment("POKE_SOMBRAS") in ["1", "simples"]
+static var luz_forcada := ""           # testes/capturas: usa a luz de outro mapa (ex.: "mt-moon")
+# true (padrão, fiel): a camada vira um canvas group com blur e alpha de grupo (sombras cruzadas não escurecem duas vezes).
+# false (mais barato): sem grupo nem blur; cada sombra leva o alpha da luz direto (cruzamentos escurecem mais: F de desempenho).
+static var sombras_grupo := OS.get_environment("POKE_SOMBRAS") != "simples"
+var cor_sombra := Color.BLACK
+var luz: Dictionary = {}
+var _m_sombra := Transform2D.IDENTITY
+var _m_sombra_inv := Transform2D.IDENTITY
+var _sombra_de: Dictionary = {}        # rid do sprite animado -> rid da sombra própria (acompanha o quadro)
+var _sombra_chunk: Dictionary = {}     # chave do chunk -> rid com as sombras dos sprites estáticos, em lote
+var _sombras_no_chunk: Dictionary = {} # chave do chunk -> nº de sombras (estatística)
+var _material_sombra: ShaderMaterial
+var estat_sombras := 0
 
 
 func carregar(slug_mapa: String, centro_inicial = null) -> void:
@@ -94,12 +112,20 @@ func carregar(slug_mapa: String, centro_inicial = null) -> void:
 	var zs: Array = (c["andares"] as Dictionary).keys()
 	zs.sort()
 	zs.reverse()          # buildWorld (C): andares adicionados do maior z ao menor → o menor fica por cima
+	luz = Sombras.luz(luz_forcada if luz_forcada != "" else slug)
+	cor_sombra = Color.BLACK if sombras_grupo else Color(0.0, 0.0, 0.0, float(luz["opacity"]))
+	_m_sombra = Sombras.transformacao(luz)
+	_m_sombra_inv = _m_sombra.affine_inverse()
+	_material_sombra = ShaderMaterial.new()
+	_material_sombra.shader = load("res://render/sombra_grupo.gdshader")
+	_material_sombra.set_shader_parameter("opacidade", float(luz["opacity"]))
+	_material_sombra.set_shader_parameter("suave", float(luz["soft"]))
 	for z in zs:
 		var rid := RenderingServer.canvas_item_create()
 		RenderingServer.canvas_item_set_parent(rid, get_canvas_item())
 		RenderingServer.canvas_item_set_transform(rid, Transform2D(0.0, Vector2((int(z) - ground_z) * 32, (int(z) - ground_z) * 32)))
 		RenderingServer.canvas_item_set_default_texture_filter(rid, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
-		_andares[int(z)] = {"rid": rid, "a": c["andares"][z], "alpha": 1.0}
+		_andares[int(z)] = {"rid": rid, "a": c["andares"][z], "alpha": 1.0, "sombra": _criar_camada_sombra(rid, c["andares"][z])}
 	# páginas: as dos chunks em volta do início agora; o resto em segundo plano
 	var t2 := Time.get_ticks_msec()
 	if centro_inicial != null:
@@ -157,6 +183,38 @@ func posto_entidade(z_index: float, z_andar: int = -999999) -> int:
 	if a.is_empty():
 		return 0
 	return 2 * (a["a"]["zi"] as PackedFloat64Array).bsearch(z_index, true) + 1
+
+
+func rid_sombra(z: int = -999999) -> RID:
+	## Camada de sombra do andar (criaturas desenham a delas aqui; ver vista_hunt.gd).
+	var a: Dictionary = _andares.get(ground_z if z == -999999 else z, {})
+	return a.get("sombra", RID())
+
+
+func m_sombra_inv() -> Transform2D:
+	return _m_sombra_inv
+
+
+func definir_sombras(ligadas: bool) -> void:
+	## setShadows (C): mostra/esconde as camadas; as sombras continuam montadas.
+	sombras_ligadas = ligadas
+	for z in _andares:
+		RenderingServer.canvas_item_set_visible(_andares[z]["sombra"], ligadas)
+
+
+func _criar_camada_sombra(rid_andar_: RID, a: Dictionary) -> RID:
+	## buildWorld (C): Container com zIndex 7,5e6 em cada andar, filtros de blur e alpha. Aqui: canvas group com o shader
+	## de grupo e a transformação linear da luz; draw_index logo antes do 1º sprite com zIndex ≥ 7,5e6.
+	var s := RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(s, rid_andar_)
+	RenderingServer.canvas_item_set_transform(s, _m_sombra)
+	RenderingServer.canvas_item_set_default_texture_filter(s, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
+	RenderingServer.canvas_item_set_draw_index(s, 2 * (a["zi"] as PackedFloat64Array).bsearch(Sombras.Z_CAMADA, true) - 1)
+	if sombras_grupo:
+		RenderingServer.canvas_item_set_canvas_group_mode(s, RenderingServer.CANVAS_GROUP_MODE_TRANSPARENT, 5.0, true, 0.0, false)
+		RenderingServer.canvas_item_set_material(s, _material_sombra.get_rid())
+	RenderingServer.canvas_item_set_visible(s, sombras_ligadas)
+	return s
 
 
 func rid_andar(z: int = -999999) -> RID:
@@ -415,6 +473,8 @@ func _carregar_chunk(chave: String) -> void:
 	var ys: PackedInt32Array = a["y"]
 	var an: PackedByteArray = a["anim"]
 	var lista: Array = []
+	var rs_lote := RID()     # sombras dos sprites estáticos do chunk num canvas item só (desempenho; a geometria é a mesma)
+	var n_sombras := 0
 	for i in _chunks[chave]:
 		var asset: Dictionary = _assets[str(ids[i])]
 		var rid := RenderingServer.canvas_item_create()
@@ -423,6 +483,20 @@ func _carregar_chunk(chave: String) -> void:
 		RenderingServer.canvas_item_set_default_texture_filter(rid, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
 		if usar_array and not usar_atlas_mapa:
 			RenderingServer.canvas_item_set_use_parent_material(rid, true)
+		if Sombras.tem_sombra(float((a["zi"] as PackedFloat64Array)[i]), int(asset["height"])):
+			n_sombras += 1
+			if an[i] == 1:
+				var rs := RenderingServer.canvas_item_create()   # makeShadow (C): cópia preta na camada do andar
+				RenderingServer.canvas_item_set_parent(rs, andar["sombra"])
+				RenderingServer.canvas_item_set_default_texture_filter(rs, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
+				_sombra_de[rid] = rs
+			else:
+				if not rs_lote.is_valid():
+					rs_lote = RenderingServer.canvas_item_create()
+					RenderingServer.canvas_item_set_parent(rs_lote, andar["sombra"])
+					RenderingServer.canvas_item_set_default_texture_filter(rs_lote, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
+				var rl := Sombras.retangulo(_m_sombra_inv, Vector2(xs[i], ys[i] + float(asset["height"])), float(asset["width"]), float(asset["height"]), 0.0)
+				_desenhar_regiao(rs_lote, asset, qs[i], rl, cor_sombra, false)
 		_desenhar_quadro(rid, asset, qs[i], xs[i], ys[i])
 		if an[i] == 1:
 			var com_padrao := int(asset.get("patternX", 0)) != 0 or int(asset.get("patternY", 0)) != 0
@@ -434,34 +508,60 @@ func _carregar_chunk(chave: String) -> void:
 			_agendar(rid, sa)
 		lista.append(rid)
 	_carregados[chave] = lista
+	if rs_lote.is_valid():
+		_sombra_chunk[chave] = rs_lote
+	_sombras_no_chunk[chave] = n_sombras
+	estat_sombras += n_sombras
 	estatisticas["sprites_carregados"] = int(estatisticas["sprites_carregados"]) + lista.size()
 
 
 func _descarregar(chave: String) -> void:
 	for rid in _carregados[chave]:
 		_animados.erase(rid)
+		var rs = _sombra_de.get(rid)
+		if rs != null:
+			RenderingServer.free_rid(rs)
+			_sombra_de.erase(rid)
 		RenderingServer.free_rid(rid)
+	estat_sombras -= int(_sombras_no_chunk.get(chave, 0))
+	_sombras_no_chunk.erase(chave)
+	var rl = _sombra_chunk.get(chave)
+	if rl != null:
+		RenderingServer.free_rid(rl)
+		_sombra_chunk.erase(chave)
 	estatisticas["sprites_carregados"] = int(estatisticas["sprites_carregados"]) - (_carregados[chave] as Array).size()
 	_carregados.erase(chave)
 
 
 func _desenhar_quadro(rid: RID, a: Dictionary, quadro: int, x: int, y: int) -> void:
+	_desenhar_regiao(rid, a, quadro, Rect2(x, y, float(a["width"]), float(a["height"])), Color.WHITE)
+	var rs = _sombra_de.get(rid)
+	if rs != null:
+		# syncShadow (C): mesma textura/quadro, preta, pés em (x, y + altura), na camada com a transformação da luz
+		var r := Sombras.retangulo(_m_sombra_inv, Vector2(x, y + float(a["height"])), float(a["width"]), float(a["height"]), 0.0)
+		_desenhar_regiao(rs, a, quadro, r, cor_sombra)
+
+
+func _desenhar_regiao(rid: RID, a: Dictionary, quadro: int, destino: Rect2, cor: Color, limpar: bool = true) -> void:
 	var f: Dictionary = a["frames"][quadro]
-	RenderingServer.canvas_item_clear(rid)
+	var x := destino.position.x
+	var y := destino.position.y
+	if limpar:
+		RenderingServer.canvas_item_clear(rid)
 	if usar_atlas_mapa:
 		var p: Vector2i = _rect_atlas.get(int(a["id"]) * 4096 + quadro, Vector2i(-1, -1))
 		if p.x >= 0:
 			RenderingServer.canvas_item_add_texture_rect_region(rid, Rect2(x, y, float(a["width"]), float(a["height"])),
-				_tex_atlas.get_rid(), Rect2(float(p.x), float(p.y), float(f["w"]), float(f["h"])))
+				_tex_atlas.get_rid(), Rect2(float(p.x), float(p.y), float(f["w"]), float(f["h"])), cor)
 		return
 	if usar_array:
 		var ox := float(int(_camada[int(f["page"])]) * LADO_CAMADA)
 		RenderingServer.canvas_item_add_texture_rect_region(rid, Rect2(x, y, float(a["width"]), float(a["height"])),
-			_branca.get_rid(), Rect2(float(f["x"]) + ox, float(f["y"]), float(f["w"]), float(f["h"])))
+			_branca.get_rid(), Rect2(float(f["x"]) + ox, float(f["y"]), float(f["w"]), float(f["h"])), cor)
 		return
 	var tex: Texture2D = _paginas[int(f["page"])]
 	RenderingServer.canvas_item_add_texture_rect_region(rid, Rect2(x, y, float(a["width"]), float(a["height"])),
-		tex.get_rid(), Rect2(float(f["x"]), float(f["y"]), float(f["w"]), float(f["h"])))
+		tex.get_rid(), Rect2(float(f["x"]), float(f["y"]), float(f["w"]), float(f["h"])), cor)
 
 
 func _animar(ms: float) -> void:
@@ -528,5 +628,6 @@ func _exit_tree() -> void:
 	for chave in _carregados.keys():
 		_descarregar(chave)
 	for z in _andares:
+		RenderingServer.free_rid(_andares[z]["sombra"])
 		RenderingServer.free_rid(_andares[z]["rid"])
 	_andares.clear()

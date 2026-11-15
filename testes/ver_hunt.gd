@@ -12,7 +12,7 @@ const Simulacao := preload("res://sim/simulacao_hunt.gd")
 const Vista := preload("res://render/vista_hunt.gd")
 
 var args := {"slug": "rhydon", "segundos": "60", "saida": "saida_testes/hunt", "estado": "dados/testes/estado_rhydon_venusaur_1h.json",
-	"semente": "1", "capturas": "5,20,40", "aquecimento": "3"}
+	"semente": "1", "capturas": "5,20,40", "aquecimento": "3", "sombras": "1", "luz": "", "grupo": "1"}
 var sim: RefCounted
 var vista: Node2D
 var t0 := 0.0
@@ -37,6 +37,10 @@ func _initialize() -> void:
 			i += 1
 	for c in String(args["capturas"]).split(",", false):
 		capturas.append(float(c))
+	var MR := preload("res://render/mapa_renderizador.gd")
+	MR.sombras_ligadas = String(args["sombras"]) != "0"
+	MR.luz_forcada = String(args["luz"])
+	MR.sombras_grupo = String(args["grupo"]) != "0"
 	# janela sem borda de 1920×1080 na origem: a área de desenho é exatamente 1920×1080 (com borda, a barra de título
 	# tira ~20 px da altura)
 	DisplayServer.window_set_flag(DisplayServer.WINDOW_FLAG_BORDERLESS, true)

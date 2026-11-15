@@ -10,6 +10,7 @@ extends Node2D
 
 signal hit_mostrado(hit: Dictionary)
 
+const Sombras := preload("res://render/sombras.gd")
 const Renderizador := preload("res://render/mapa_renderizador.gd")
 const EstadoVista := preload("res://render/estado_vista.gd")
 const Outfits := preload("res://render/outfits.gd")
@@ -183,10 +184,15 @@ func _entidade(chave: String, looktype: int, vista: Dictionary, ox: float, oy: f
 		var rid := RenderingServer.canvas_item_create()
 		RenderingServer.canvas_item_set_parent(rid, mapa.rid_andar())
 		RenderingServer.canvas_item_set_default_texture_filter(rid, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
-		e = {"rid": rid, "chave_quadro": "", "posto": -1}
+		# sombra da criatura (syncCreatures/makeShadow, C) na camada de sombra do andar
+		var rs := RenderingServer.canvas_item_create()
+		RenderingServer.canvas_item_set_parent(rs, mapa.rid_sombra())
+		RenderingServer.canvas_item_set_default_texture_filter(rs, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
+		e = {"rid": rid, "sombra": rs, "chave_quadro": "", "posto": -1}
 		_ents[chave] = e
 	var rid: RID = e["rid"]
 	RenderingServer.canvas_item_set_visible(rid, visivel)
+	RenderingServer.canvas_item_set_visible(e["sombra"], visivel)   # syncShadow: invisível → sem sombra
 	if not visivel:
 		return
 	var o: Dictionary = outfits.obter(looktype, cores_treinador if chave == "treinador" else {})
@@ -212,6 +218,11 @@ func _entidade(chave: String, looktype: int, vista: Dictionary, ox: float, oy: f
 		e["chave_quadro"] = chave_q
 		RenderingServer.canvas_item_clear(rid)
 		RenderingServer.canvas_item_add_texture_rect_region(rid, Rect2(px, py, w, h), (q["tex"] as Texture2D).get_rid(), q["rect"])
+		# feetBaseY (C): pés 11,52 px abaixo do centro do tile; âncora da sombra (0,5; 1)
+		var rs: RID = e["sombra"]
+		RenderingServer.canvas_item_clear(rs)
+		var r := Sombras.retangulo(mapa.m_sombra_inv(), Vector2(32.0 * tx + 16.0, 32.0 * ty + 16.0 + Sombras.PES_CRIATURA), w, h, 0.5)
+		RenderingServer.canvas_item_add_texture_rect_region(rs, r, (q["tex"] as Texture2D).get_rid(), q["rect"], mapa.cor_sombra)
 	var z := 1.0e7 + Regras.sx(roundi(tx), floori(ty + 1.5 - 0.64)) + 0.4
 	var posto: int = mapa.posto_entidade(z)
 	if posto != int(e["posto"]):
@@ -420,6 +431,7 @@ func _danos_quadro(agora: float, _tela: Vector2) -> void:
 
 func _exit_tree() -> void:
 	for k in _ents.keys():
+		RenderingServer.free_rid(_ents[k]["sombra"])
 		RenderingServer.free_rid(_ents[k]["rid"])
 	_ents.clear()
 	for k in _cadaveres.keys():
