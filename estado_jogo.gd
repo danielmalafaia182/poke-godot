@@ -125,6 +125,10 @@ var medidor_captura: Dictionary = {}
 # mesma hunt pela cidade não penaliza. `ultima_hunt_slug` vai no save; `sessao_expirada` é decidida ao carregar.
 var ultima_hunt_slug: String = ""
 var sessao_expirada: bool = true
+# Jogo fechado numa hunt (B-relatado, 15/11): `hunt_ao_fechar` vai no save; ao reabrir sem soneca, a sim recupera até 15 min
+# de caça (sim/servico_jogador.gd segundos_recuperar / rodar_recuperacao). `fechado_em_unix` = último save antes de fechar.
+var hunt_ao_fechar: String = ""
+var fechado_em_unix: int = 0
 const SESSAO_EXPIRA_S := 900
 var celula_cidade_salva: Vector2i = Vector2i(-1, 3)
 var direcao_cidade_salva: int = 2
@@ -610,6 +614,94 @@ func novo_jogo(especie_id: int, nome_treinador: String = "Treinador", semente: i
 	estoque_pocoes_alterado.emit()
 	estoque_bolas_alterado.emit()
 	solicitar_salvamento()
+	return r
+
+# ---------------------------------------------------------------- hunt a partir do save (cena e recuperação)
+func extrair_jogo_hunt(nome_hunt: String) -> Dictionary:
+	## {jogo (entrada de sim/cenario_jogo.gd configurar), membros (DadosPokemon na ordem da equipe)}.
+	var membros: Array = []
+	var equipe: Array = []
+	for pk in time_pokemon:
+		if pk == null or pk.especie == null:
+			continue
+		pk.normalizar_atributos()
+		membros.append(pk)
+		equipe.append({"id": pk.id_persistente, "nome": String(pk.especie.nome), "xp": pk.experiencia_total,
+			"ivs": {"hp": pk.iv_hp, "atk": pk.iv_atk, "def": pk.iv_def, "spAtk": pk.iv_sp_atk, "spDef": pk.iv_sp_def, "speed": pk.iv_spd},
+			"quality": pk.qualidade, "hp": pk.obter_vida_atual()})
+	var inventario: Array = []
+	for id in estoque_pocoes:
+		inventario.append({"itemId": int(id), "quantity": int(estoque_pocoes[id])})
+	var nomes_bolas := {}
+	for id in estoque_bolas:
+		nomes_bolas[id] = String(obter_dados_bola(int(id)).get("nome", "Ball"))
+	var lider = obter_lider()
+	return {"membros": membros, "jogo": {"hunt": nome_hunt, "equipe": equipe, "lider": maxi(0, membros.find(lider)),
+		"treinador_xp": experiencia_treinador_acumulada, "inventario": inventario, "bolas": estoque_bolas.duplicate(),
+		"nomes_bolas": nomes_bolas, "auto_catch": auto_catch, "bola_auto_catch": auto_catch_ball_id, "auto_potion": auto_potion,
+		"pocao_id": auto_potion_item_id, "limite_pocao": auto_potion_threshold, "medidor_captura": medidor_captura, "vip": vip}}
+
+func registrar_captura_especie(nome: String) -> bool:
+	## A: o capturado chega no nível 1; IVs e Quality pelo sorteio do próprio jogo (DadosPokemon), como no P04.
+	var especie = preload("res://especies_importadas.gd").obter_todas().get(nome)
+	if especie == null:
+		return false
+	var novo := DadosPokemon.new()
+	novo.especie = especie
+	novo.nivel = 1
+	novo.sortear_ivs()
+	novo.sortear_qualidade()
+	novo.normalizar_atributos()
+	novo.vida_atual = novo.obter_vida_maxima()
+	return registrar_captura(novo)
+
+func recuperar_hunt_fechada(agora_unix: int) -> Dictionary:
+	## Jogo fechado numa hunt sem soneca (B-relatado): roda a caça do tempo fechado, até 15 min, e aplica o resultado
+	## (XP, loot, capturas, bolas, poções, HP). Com soneca ou sem hunt, nada. Devolve o resumo ({} se nada).
+	var e := {"hunt_ao_fechar": hunt_ao_fechar, "soneca": soneca}
+	var seg: int = servico_jogador().segundos_recuperar(e, fechado_em_unix, agora_unix)
+	var slug := hunt_ao_fechar
+	hunt_ao_fechar = ""
+	if seg <= 0:
+		return {}
+	var dados = PONTE_CIDADE.dados()
+	var ext := extrair_jogo_hunt(slug)
+	var jogo: Dictionary = ext["jogo"]
+	jogo["slug"] = slug
+	var cfg: Dictionary = preload("res://sim/cenario_jogo.gd").configurar(jogo, dados, fechado_em_unix, fechado_em_unix * 1000)
+	cfg["entrada_nova"] = false   # é a mesma instância que seguiu rodando no servidor
+	var Fontes := preload("res://sim/fontes.gd")
+	var mapa = preload("res://sim/mapa_hunt.gd").carregar(slug, Fontes.ler_mapa(slug), Fontes.ler_colisao())
+	var sim = preload("res://sim/simulacao_hunt.gd").new(cfg, dados, mapa)
+	sim.iniciar()
+	var r: Dictionary = SERVICO_JOGADOR.rodar_recuperacao(sim, seg)
+	registrar_recompensa_treinador(int(r["xpTreinador"]))
+	for pk in ext["membros"]:
+		var ganho := int(r["xpMembros"].get(pk.id_persistente, 0))
+		if ganho > 0:
+			conceder_experiencia(pk, ganho)
+		if r["hp"].has(pk.id_persistente):
+			registrar_vida_pokemon(pk, int(r["hp"][pk.id_persistente]))
+	var loot: Array[Dictionary] = []
+	for k in r["loot"]:
+		var interno: int = preload("res://regras_loot.gd").id_interno(int(k))
+		if not preload("res://regras_loot.gd").obter(interno).is_empty():
+			loot.append({"itemId": interno, "qty": int(r["loot"][k])})
+	inventario.receber_loot(loot)
+	for k in r["pocoes"]:
+		for i in int(r["pocoes"][k]):
+			inventario.consumir_pocao(int(k))
+	for k in r["bolas"]:
+		for i in int(r["bolas"][k]):
+			consumir_bola(int(k))
+	for nome in r["capturas"]:
+		registrar_captura_especie(String(nome))
+	for k in r["killsBySpecies"]:
+		registrar_abates(int(r["killsBySpecies"][k]), int(k))
+		diaria_abate(int(k))
+	medidor_captura = sim.medidor.duplicate(true)
+	solicitar_salvamento()
+	r["slug"] = slug
 	return r
 
 # ---------------------------------------------------------------- loja do Mark

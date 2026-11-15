@@ -26,6 +26,9 @@ const PARAMETROS := {
 	# Sessão (B-relatado / regra do usuário, 11/11): sem soneca, 15 min com o jogo fechado matam a sessão; voltar à
 	# mesma hunt pela cidade não penaliza (CenarioJogo.penalizar_entrada). Com soneca coletada, a sessão segue (E).
 	"sessao_expira_s": 900,
+	# Jogo fechado em hunt, sem soneca (B-relatado pelo usuário, 15/11): o servidor segue caçando até a sessão morrer, 15 min
+	# depois de fechar; ao reabrir, offline a sim recupera esse tempo (até 15 min) e descarta o resto.
+	"fechado_caca_max_s": 900,
 	# Modo Soneca (C, guia "Nap Mode" e janela "While you were away"):
 	"soneca_amostra_s": 300,          # C: "the hunt continues on the server for 5 minutes" (combate, XP, loot, Auto-Potion; sem bolas)
 	"soneca_teto_s": 86400,           # C: "Time counts from the end of the nap until login, with a cap of 24h"
@@ -90,6 +93,71 @@ func _sessao(estado: Dictionary, fechado_em: int, agora: int) -> Dictionary:
 	if not soneca.is_empty() and agora - int(soneca.get("inicio", 0)) >= int(p.soneca_amostra_s):
 		expirou = false   # E: com a soneca valendo, a sessão continua
 	return {"type": "sessao", "expirada": expirou, "fechadoS": maxi(0, agora - fechado_em)}
+
+
+# ============================================================================== jogo fechado em hunt (sem soneca)
+
+func segundos_recuperar(estado: Dictionary, fechado_em: int, agora: int) -> int:
+	## Quanto da caça recuperar ao reabrir: fechado numa hunt (estado.hunt_ao_fechar) e sem soneca → min(tempo fechado,
+	## 15 min); com soneca, 0 (vale a regra da soneca); sem hunt, 0.
+	if String(estado.get("hunt_ao_fechar", "")) == "" or fechado_em <= 0:
+		return 0
+	if not (estado.get("soneca", {}) as Dictionary).is_empty():
+		return 0
+	return clampi(agora - fechado_em, 0, int(p.fechado_caca_max_s))
+
+
+static func rodar_recuperacao(sim, segundos: int) -> Dictionary:
+	## Roda a hunt por `segundos` com as configurações do jogador (Auto-Catch e Auto-Potion como estavam) e resume:
+	## abates por espécie, XP do treinador e de cada membro, loot, capturas (espécie), bolas e poções gastas, HP no fim.
+	var xp_t0 := int(sim.treinador["xp"])
+	var xp0 := {}
+	for e in sim.equipe:
+		xp0[String(e.get("id", ""))] = int(e["xp"])
+	var inv0: Dictionary = sim.inventario.duplicate()
+	var bolas0: Dictionary = (sim.balls.get("counts", {}) as Dictionary).duplicate()
+	var por_especie := {}
+	var loot := {}
+	var capturas: Array = []
+	var ticks := segundos * 1000 / int(sim.p.tick_ms)
+	var feitos := 0
+	for t in ticks:
+		for reg in sim.passo():
+			var m: Dictionary = reg.get("msg", reg)
+			match String(m.get("type", "")):
+				"field-kill":
+					var k := str(int(m.get("speciesId", 0)))
+					por_especie[k] = int(por_especie.get(k, 0)) + 1
+					for it in m.get("loot", []):
+						loot[str(int(it["itemId"]))] = int(loot.get(str(int(it["itemId"])), 0)) + int(it["qty"])
+				"catch-result":
+					if bool(m.get("success", false)):
+						capturas.append(String(m.get("speciesName", "")))
+		feitos = t + 1
+		if sim.encerrada:
+			break
+	var xp_membros := {}
+	var hp := {}
+	for e in sim.equipe:
+		var id := String(e.get("id", ""))
+		xp_membros[id] = int(e["xp"]) - int(xp0.get(id, 0))
+		hp[id] = int(e["hp"])
+	var pocoes := {}
+	for k in inv0:
+		var g := int(inv0[k]) - int(sim.inventario.get(k, 0))
+		if g > 0:
+			pocoes[str(int(k))] = g
+	var bolas := {}
+	for k in bolas0:
+		var g2 := int(bolas0[k]) - int(sim.balls.get("counts", {}).get(k, 0))
+		if g2 > 0:
+			bolas[str(k)] = g2
+	var kills := 0
+	for k in por_especie:
+		kills += int(por_especie[k])
+	return {"segundos": feitos * int(sim.p.tick_ms) / 1000, "kills": kills, "killsBySpecies": por_especie,
+		"xpTreinador": int(sim.treinador["xp"]) - xp_t0, "xpMembros": xp_membros, "hp": hp, "loot": loot,
+		"capturas": capturas, "pocoes": pocoes, "bolas": bolas, "encerrada": bool(sim.encerrada)}
 
 
 # ============================================================================== Streak Points

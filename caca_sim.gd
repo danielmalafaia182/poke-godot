@@ -98,6 +98,7 @@ func _ready() -> void:
 	# Penalidade de entrada (B-relatado): hunt diferente da última ou sessão expirada; a mesma hunt de novo não.
 	cfg["entrada_nova"] = CenarioJogo.penalizar_entrada(EstadoJogo.sessao_expirada, EstadoJogo.ultima_hunt_slug, String(cfg["slug"]))
 	EstadoJogo.ultima_hunt_slug = String(cfg["slug"])
+	EstadoJogo.hunt_ao_fechar = String(cfg["slug"])   # se o jogo fechar aqui, a caça continua até 15 min (B-relatado)
 	EstadoJogo.sessao_expirada = false
 	var t1 := Time.get_ticks_msec()
 	var mapa = MapaHunt.carregar(cfg["slug"], Fontes.ler_mapa(cfg["slug"]), Fontes.ler_colisao())
@@ -125,28 +126,9 @@ func _ready() -> void:
 
 
 func _extrair_save(nome_hunt: String) -> Dictionary:
-	membros = []
-	var equipe: Array = []
-	for pk in EstadoJogo.time_pokemon:
-		if pk == null or pk.especie == null:
-			continue
-		pk.normalizar_atributos()
-		membros.append(pk)
-		equipe.append({"id": pk.id_persistente, "nome": String(pk.especie.nome), "xp": pk.experiencia_total,
-			"ivs": {"hp": pk.iv_hp, "atk": pk.iv_atk, "def": pk.iv_def, "spAtk": pk.iv_sp_atk, "spDef": pk.iv_sp_def, "speed": pk.iv_spd},
-			"quality": pk.qualidade, "hp": pk.obter_vida_atual()})
-	var inventario: Array = []
-	for id in EstadoJogo.estoque_pocoes:
-		inventario.append({"itemId": int(id), "quantity": int(EstadoJogo.estoque_pocoes[id])})
-	var nomes_bolas := {}
-	for id in EstadoJogo.estoque_bolas:
-		nomes_bolas[id] = String(EstadoJogo.obter_dados_bola(int(id)).get("nome", "Ball"))
-	var lider = EstadoJogo.obter_lider()
-	return {"hunt": nome_hunt, "equipe": equipe, "lider": maxi(0, membros.find(lider)), "treinador_xp": EstadoJogo.experiencia_treinador_acumulada,
-		"inventario": inventario, "bolas": EstadoJogo.estoque_bolas.duplicate(), "nomes_bolas": nomes_bolas,
-		"auto_catch": EstadoJogo.auto_catch, "bola_auto_catch": EstadoJogo.auto_catch_ball_id,
-		"auto_potion": EstadoJogo.auto_potion, "pocao_id": EstadoJogo.auto_potion_item_id,
-		"limite_pocao": EstadoJogo.auto_potion_threshold, "medidor_captura": EstadoJogo.medidor_captura, "vip": EstadoJogo.vip}
+	var r: Dictionary = EstadoJogo.extrair_jogo_hunt(nome_hunt)
+	membros = r["membros"]
+	return r["jogo"]
 
 
 var tipos_no_quadro: Array = []   # diagnóstico (varredura): mensagens tratadas no último quadro
@@ -259,17 +241,7 @@ func _receber_loot(loot: Array) -> void:
 func _registrar_captura(nome: String) -> void:
 	## A: o Pokémon capturado chega como poke-delta de nível 1 (5/5 capturas da rhydon-1h); IVs e Quality pelo sorteio
 	## do próprio jogo (DadosPokemon), como nas capturas do P04.
-	var especie = ESPECIES.obter_todas().get(nome)
-	if especie == null:
-		return
-	var novo := DadosPokemon.new()
-	novo.especie = especie
-	novo.nivel = 1
-	novo.sortear_ivs()
-	novo.sortear_qualidade()
-	novo.normalizar_atributos()
-	novo.vida_atual = novo.obter_vida_maxima()
-	if EstadoJogo.registrar_captura(novo):
+	if EstadoJogo.registrar_captura_especie(nome):
 		registro["capturas"] += 1
 
 
@@ -303,6 +275,7 @@ func _sair(motivo: String) -> void:
 	if _encerrada:
 		return
 	_encerrada = true
+	EstadoJogo.hunt_ao_fechar = ""
 	# HP do time como a simulação deixou (sem curar; desmaiado fica com 0)
 	if sim != null:
 		for i in mini(membros.size(), sim.equipe.size()):

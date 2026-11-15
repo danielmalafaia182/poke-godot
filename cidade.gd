@@ -432,7 +432,14 @@ func _criar_ouro_e_config() -> void:
 	atualizar.call()
 
 func verificar_soneca() -> void:
-	## Ao abrir a cidade: soneca pendente → janela de coleta; voltou antes de 5 min → cancelada (C), sem janela.
+	## Ao abrir a cidade: fechado numa hunt sem soneca → recupera até 15 min de caça (B-relatado); soneca pendente →
+	## janela de coleta; voltou antes de 5 min → cancelada com a parte rodada (A, G6b).
+	if EstadoJogo.hunt_ao_fechar != "" and EstadoJogo.soneca.is_empty():
+		var rec: Dictionary = EstadoJogo.recuperar_hunt_fechada(int(Time.get_unix_time_from_system()))
+		if not rec.is_empty():
+			painel_soneca.abrir_texto("🌙 Enquanto o jogo esteve fechado", "Seu time seguiu caçando em %s por %d min: %d abates, +%d XP, %d captura(s). Depois de 15 min fechado, a sessão acaba." % [
+				String(rec["slug"]), int(rec["segundos"]) / 60, int(rec["kills"]), int(rec["xpTreinador"]), (rec["capturas"] as Array).size()])
+		return
 	if EstadoJogo.soneca.is_empty():
 		return
 	var r: Dictionary = EstadoJogo.relatorio_offline(int(Time.get_unix_time_from_system()))

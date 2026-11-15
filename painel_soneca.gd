@@ -34,6 +34,23 @@ func abrir(rel: Dictionary) -> void:
 	_montar()
 
 
+func abrir_texto(titulo: String, texto: String) -> void:
+	relatorio = {}
+	show()
+	for c in corpo.get_children():
+		corpo.remove_child(c)
+		c.queue_free()
+	_rotulo(titulo)
+	_rotulo(texto, Color("b9c3cf"))
+	var b := Button.new()
+	b.name = "Ok"
+	b.text = "OK"
+	b.pressed.connect(hide)
+	corpo.add_child(b)
+	_ajustar()
+	call_deferred("_ajustar")
+
+
 func abrir_aviso(aviso: Dictionary) -> void:
 	## A (G6b): offline-notice {kind: "cancelled", reason: "reconnect", ms, kills, xp, pokeXp}: voltou antes dos 5 min.
 	relatorio = {}

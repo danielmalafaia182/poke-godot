@@ -928,3 +928,10 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   priceGold) e o Geodude custa 300 (A: precoNpc); a chance vai de 1,36% (1ª tentativa) a 2,62% (50ª); esperado 0,99 captura
   em 50 e 37% de chance de nenhuma (o real deu 0/47 no C5). 20 sementes × 10 min na sim: 985 bolas jogadas, 17 capturas
   contra 18,0 esperadas. Teste `testes/test_captura_jogo_novo.gd` 5/5.
+- 15/11/2026 — Jogo fechado numa hunt sem soneca (B-relatado: o servidor segue caçando até a sessão morrer, 15 min depois
+  de fechar). Antes, ao reabrir, só se decidia se a sessão tinha expirado; a caça do tempo fechado não existia. Agora a hunt
+  grava `hunt_ao_fechar` (save) e, ao abrir a cidade, `EstadoJogo.recuperar_hunt_fechada` roda até 15 min daquela caça
+  (`servico_jogador.segundos_recuperar` / `rodar_recuperacao`) e aplica XP, loot, capturas, bolas, poções e HP; o resto se
+  perde; com soneca vale a soneca. Fica E: reabrir dentro de 15 min volta para a cidade (o original retoma a hunt).
+  A extração do save para a sim saiu da cena para `EstadoJogo.extrair_jogo_hunt` (a hunt e a recuperação usam a mesma).
+  `testes/test_jogo_fechado.gd` 11/11: 5 min → 300 s (28 abates); 20 min → 900 s (81 abates); com soneca e na cidade, nada.
