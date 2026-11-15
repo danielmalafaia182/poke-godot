@@ -16,12 +16,15 @@ var _rotulo_aviso_save: Label
 var _tempo_aviso_save: Timer
 var _timer_salvamento: Timer
 
+var jogo_novo := false   # true quando o jogo abriu sem nenhum save (o novo jogo do original começa pela escolha do inicial)
+
 func iniciar(fachada: Node) -> void:
 	estado = fachada
 	estado.iniciar_depot()
 	_persistencia = SALVAMENTO_LOCAL.new()
 	_criar_aviso_save()
 	var carregou: bool = _persistencia.carregar(estado)
+	jogo_novo = not _persistencia.encontrado
 	# Novo: normaliza sem perder nível, indivíduos ou proporção de HP do save antigo.
 	for pokemon in estado.time_pokemon + estado.pokemons_capturados:
 		pokemon.normalizar_atributos()

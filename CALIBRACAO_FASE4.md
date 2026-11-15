@@ -213,6 +213,37 @@ recebe `cfg.insignias`. Teste: `testes/test_sim_mundo.gd` (14/14, puro).
 | **Profissões** | C: Botânico (ervas das hunts → berries; talentos por rank: berry de tipo, neutra, de cura; "Lasts 30 minutes", "Identical berries do not stack"), Prestige Trainer (foto automática de shiny → Rare Pokémon Picture, item de rank), Cientista e Pesquisador "em breve"; ranks E, D, C, B, A, S; bônus de captura direta por rank até ×1,18 no S; bônus "mentor" de XP quando o treinador está mais de N níveis acima do Pokémon (é a parcela `mentor` vista na conta B, A). A (c5): `profession-photo {ok, msg, slot, row, col, speciesId, itemName, pictures}` — 2 de 5 fotos deram certo. Pesca (C): habilidade por nível, faixas bloqueadas acima da habilidade, faixa menor dá 50% do progresso, recarga | N e % do mentor, % por rank, custo das receitas do Botânico e chance das ervas, chance da foto, tabela da pesca: servidor (`/api/game/professions/*`, `fishing*`). Nada implementado: sem esses números não há regra para escrever |
 | **Invasão** | Calendário (A, 8 invasões de 09/11 a 15/11): a cada 2 h nas horas UTC ímpares; entrada até hh:10, fim às hh:30; mensagens `invasion-state`, `invasion-energy` (máx. 10) e `invasion-announce` (texto com `{nome}` literal) no formato gravado; entrada vista aberta às hh−1:58 e hh:00, fechada de hh:08:48 em diante; `live` falso 71 s antes do fim (bordas exatas F) | A luta (ondas? chefes? prêmio por energia?): nenhuma gravação de dentro da invasão |
 
+## Começo do jogo (15/11/2026): jogo novo do zero
+
+Onde mora: `sim/servico_novo_jogo.gd` (puro), `EstadoJogo.novo_jogo`, `painel_novo_jogo.gd` (abre só quando o jogo começa
+de verdade sem save; os testes antigos continuam com o começo do P04). Teste `testes/test_jogo_novo.gd` (14/14, save
+isolado), passo a passo:
+
+| Passo | O que acontece no jogo novo | Original |
+| --- | --- | --- |
+| 0 | Sem save, o P04 começava com **Larvitar** Lv.1, 20 Small + 5 Great + 3 Ultra + 2 Hyper + 1 Ultimate Potion, 100 Poké + 10 Great + 10 Super Balls | — |
+| 1 | Tela de escolha: nome e **Bulbasaur, Charmander ou Squirtle** no nível 1; kit de **100 Small Potions e 100 Poké Balls**; ouro 0 | C: "CHOOSE YOUR STARTER POKÉMON", `ck = {1, 4, 7}`, nível 1; "Every new player starts with 100 Small Potions and 100 Poké Balls"; ouro: E |
+| 2 | Cerulean; Auto-Catch ligado com Poké Ball, Auto-Potion ligado (padrão do P04) | C: Cerulean é a casa; padrões do Auto-Helper do original: não gravados (E) |
+| 3 | A tela indica a primeira hunt: Bulbasaur/Squirtle → **Geodude**, Charmander → **Paras** (vantagem ×4). 10 min no Geodude com o Bulbasaur: ~50 abates, nível 3, 18–24 curas, 0–1 captura com Poké Ball | C: tutorial `cy` e textos "your grass attacks deal ×4"; A: Poké Ball no Geodude 1, 0/47 (C5) |
+| 4–7 | Vende o loot ao Mark (+376 a +811 de ouro em 10 min), compra Poké Balls (5 cada), Nurse Joy cura de graça | A/C (lote 1) |
+| 8 | Evoluir: o Bulbasaur só evolui no nível 40 (Ivysaur); no Geodude (8 de XP por abate) isso não chega — é preciso subir de hunt pelo mapa | A/C: `evolveLevel` 40; o mapa lista as hunts por nível (C) |
+
+| O que diverge ou falta | Fonte | Situação |
+| --- | --- | --- |
+| Inicial fixo (Larvitar) | P04 | **corrigido** no jogo novo: escolha entre os três (C) |
+| Kit inicial | P04 | **corrigido** no jogo novo (C) |
+| A validação do save só aceitava a linha do Larvitar como inicial | P04 | **corrigido**: aceita também as linhas do Bulbasaur, do Charmander e do Squirtle |
+| IV e Quality do inicial | servidor | E: sorteados (IV 1..32, Quality pelos pesos do cliente) com a semente do jogo |
+| Ouro inicial | servidor | E: 0 |
+| Escolha do treinador (gênero e visual, "CHOOSE YOUR TRAINER") | C | não feito: só o nome |
+| Tutorial do Professor Oak (passos welcome → done, com setas e "Skip tutorial") | C | não feito: a tela de escolha mostra só a hunt recomendada |
+| Padrões do Auto-Helper numa conta nova | servidor | E: os do P04 (Auto-Catch e Auto-Potion ligados) |
+| Market (troca entre jogadores) | — | online, fora do offline |
+
+Gravação que fecha o resto: **NJ1 — conta nova, primeiros 5 min**: criar um personagem novo com o gravador ligado (escolher
+um inicial), seguir o tutorial até a primeira hunt e caçar 2 min. Traz a resposta da criação, o inicial (IV/Quality), o
+ouro, o inventário, as bolas e o Auto-Helper iniciais, e os passos do tutorial.
+
 ## O que ainda pede evidência do original (gravador v1.2)
 
 Feitas: G1, G2, G4 (11/11); G5, G7, G8 (13/11); G3, G9, G10 (15/11). G6 e G6b parciais: só a volta e o cancelamento.
@@ -230,6 +261,8 @@ Mostra a mensagem do Zzz e se o loot e as poções da amostra já estão na BAG 
 **G11 — dano em nível baixo, com os stats do selvagem (10 min)** (já combinada). Hunt do Geodude ou do Rattata, time de
 nível 1–4 (Larvitar ou Geodude), Auto-Catch com Super Ball; depois de cada captura, abra o capturado em My Pokes (2 s).
 Separa "piso 3 no ataque do aliado" de "stats do nível 2" e explica a faixa estreita do dano real no nível 1.
+
+**Começo do jogo:** NJ1 (acima, 5 min).
 
 **Lote 4 (no máximo 4; ginásios, bosses, profissões e invasão):**
 

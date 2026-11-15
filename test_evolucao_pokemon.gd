@@ -55,7 +55,7 @@ func executar() -> void:
  checar(estado.pokemon_inicial.especie.nome=="Tyranitar" and estado.obter_lider().id_persistente==id,"Reload mantém evolução e liderança")
  var copia: Dictionary=dados.duplicate(true)
  for registro in copia["team"]:
-  if registro["id"]==copia["inicial_id"]:registro["especie"]="Bulbasaur"
+  if registro["id"]==copia["inicial_id"]:registro["especie"]="Pikachu"  # fora das linhas de inicial (Larvitar, Bulbasaur, Charmander, Squirtle)
  checar(not save._validar(copia).is_empty(),"Não aceita espécie alheia à linhagem inicial")
  # A exigência de cidade é verificada no backend, mesmo quando invocado diretamente.
  current_scene=null

@@ -541,6 +541,48 @@ func usar_item(cmd: Dictionary) -> Dictionary:
 func berries_ativas(agora_unix: int) -> Dictionary:
 	return servico_itens().berries_ativas({"itens_uso": itens_uso}, agora_unix)
 
+# ---------------------------------------------------------------- jogo novo (como o original, C; sim/servico_novo_jogo.gd)
+func novo_jogo(especie_id: int, nome_treinador: String = "Treinador", semente: int = 0) -> Dictionary:
+	## Troca o começo do P04 (Larvitar, inventário de teste) pelo do original: inicial escolhido no nível 1 e o kit de
+	## 100 Small Potions + 100 Poké Balls; ouro 0 (E).
+	var r: Dictionary = preload("res://sim/servico_novo_jogo.gd").criar(especie_id, semente if semente != 0 else int(Time.get_unix_time_from_system()), nome_treinador)
+	if r.has("erro"):
+		return r
+	var ini: Dictionary = r["inicial"]
+	var pk := DadosPokemon.new()
+	pk.especie = preload("res://especies_importadas.gd").obter_todas().get(String(ini["nome"]))
+	if pk.especie == null:
+		return {"erro": "Espécie sem recurso: " + String(ini["nome"])}
+	pk.experiencia_total = int(ini["xp"])
+	var mapa_iv := {"hp": "iv_hp", "atk": "iv_atk", "def": "iv_def", "spAtk": "iv_sp_atk", "spDef": "iv_sp_def", "speed": "iv_spd"}
+	for k in mapa_iv:
+		pk.set(mapa_iv[k], int(ini["ivs"][k]))
+	pk.qualidade = float(ini["quality"])
+	pk.id_persistente = Crypto.new().generate_random_bytes(16).hex_encode()
+	pk.normalizar_atributos()
+	pk.vida_atual = pk.obter_vida_maxima()
+	var time: Array[DadosPokemon] = [pk]
+	colecao.time_pokemon = time
+	colecao.pokemons_capturados.clear()
+	colecao.pokemon_inicial = pk
+	colecao.pokemon_lider = pk
+	for id in inventario.estoque_pocoes.keys():
+		inventario.estoque_pocoes[id] = int(r["pocoes"].get(id, 0))
+	for id in inventario.estoque_bolas.keys():
+		inventario.estoque_bolas[id] = int(r["bolas"].get(id, 0))
+	inventario.estoque_materiais.clear()
+	itens_depot.clear()
+	ouro = int(r["ouro"])
+	definir_perfil_treinador(String(r["treinador"]), 1)
+	ultima_hunt_slug = ""
+	salvamento.jogo_novo = false
+	lider_alterado.emit()
+	ouro_alterado.emit()
+	estoque_pocoes_alterado.emit()
+	estoque_bolas_alterado.emit()
+	solicitar_salvamento()
+	return r
+
 # ---------------------------------------------------------------- loja do Mark
 func loja() -> Dictionary:
 	return PONTE_CIDADE.servico().tratar(PONTE_CIDADE.estado_de(self, cidade_atual()), {"type": "shop"})[0]

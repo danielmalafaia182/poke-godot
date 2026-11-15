@@ -52,6 +52,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `sim/servico_itens.gd`, `painel_itens_uso.gd` | Fase 4, lote 3: Rare Candy e berries (efeito das berries no combate em `simulacao_hunt.gd`); janela ⚙ → Usar itens |
 | `sim/servico_ginasios.gd`, `sim/servico_invasao.gd` | Fase 4, lote 4: insígnias de ginásio (+ parcela `gym` na hunt), catálogo de bosses e calendário da invasão |
 | `ferramentas/processar_gravacao.py` | Um comando por gravação: quais regras de CALIBRACAO_FASE3/4 ela cobre, o que confirmou, o que contradisse (com números) e o que não cobre → `dados/relatorios/gravacoes/gravacao_<nome>.md`. Teste `testes/test_processar_gravacao.py` (as conclusões já registradas) |
+| `sim/servico_novo_jogo.gd`, `painel_novo_jogo.gd` | Jogo novo como o original: Bulbasaur/Charmander/Squirtle no nível 1, 100 Small Potions e 100 Poké Balls, primeira hunt recomendada; a tela só abre quando o jogo começa de verdade sem save |
 | `ferramentas/fase4/comparar_nivel_baixo.py` | Item 2: real × sim por minuto (abates, desmaios, HP, dano dado/recebido, níveis) para time de nível baixo |
 | `ferramentas/fase4/ajustar_dano.py` | Item 1: confere variantes da fórmula de dano contra todos os golpes gravados → `dados/relatorios/ajuste_dano.md` |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
@@ -215,16 +216,18 @@ IA de movimento dos selvagens (desvio conhecido, seção abaixo), medidor de cap
 vista na conta B (×1,554 em vez de ×1,5; a conta B tem uma parcela `guild`, 24 em 548 no Rhyhorn, A, e o Pokémon dela recebe `mentor`), efeitos de status,
 regras de respawn (tempo exato).
 
-### Pendência visual: sombras e iluminação do cliente (não portadas; não bloqueiam)
+### Sombras e iluminação do cliente (portadas em 15/11; desligadas por padrão até medir o p99 com a máquina livre)
 
-Como o original faz (C, `makeShadow`/`syncShadow`/`applyShadowFilters`/`sb`/`sj` em 0gx72gz9qjk5j.js): cada sprite do mapa
-na banda de itens (zIndex > 7,5e6) com altura > 32 e cada criatura ganha uma cópia preta (tint 0) numa camada de sombra
-por andar (zIndex 7,5e6, entre cadáveres e itens), ancorada nos pés (anchor y = 1), altura × tan(latitude), skew x =
-−longitude, alpha do sprite; a camada inteira leva blur (`soft` = 1) e alpha de grupo = diffuse/(ambient + diffuse) = 0,45
-(luz padrão longitude 45°, latitude 45°, ambient 0,55, diffuse 0,45; `rock-tunnel` e `mt-moon`: latitude 20, diffuse 0,3,
-ambient 0,7). Porte em Godot: um canvas item de grupo por andar (canvas_group com shader de blur e alpha), mais um canvas
-item por sprite alto/criatura com Transform2D com skew. Estimativa: meio dia, com risco para a ordem de desenho e o frame
-time; fica para depois (decisão registrada no passo 2b.7).
+Receita (C, `makeShadow`/`syncShadow`/`applyShadowFilters`/`sb`/`sj`/`feetBaseY`): `render/sombras.gd`. Sprite do mapa com
+zIndex > 7,5e6 e altura > 32, toda criatura: cópia preta na camada do andar (zIndex 7,5e6), âncora nos pés, altura ×
+tan(latitude), skew x = −longitude; camada com blur (`soft`) e alpha de grupo diffuse/(ambient + diffuse) = 0,45 (luz 45°/45°,
+0,55/0,45; `rock-tunnel` e `mt-moon` 20°, 0,7/0,3 — nenhum dos 455 mapas do snapshot tem esses nomes). Porte: um canvas group
+por andar (`render/sombra_grupo.gdshader`, blur de 9 pontos: aproximação F) com a transformação linear da luz; sombras dos
+sprites estáticos em lote por chunk, as dos animados e das criaturas com item próprio. Conferido contra o original no Node
+(`testes/test_render_sombras.sh`, `ferramentas/render/referencia_sombras.js`): rhydon 15.360, geodude 12.972 e
+nightmare_steelix 45.217 sombras com os mesmos sprites, a mesma ordem e a mesma geometria; luz e sombra de criatura iguais.
+Liga com `POKE_SOMBRAS=1` (ou `mapa_renderizador.sombras_ligadas`); `POKE_SOMBRAS=simples` usa o modo sem grupo (não
+ficou mais barato). p99: `dados/relatorios/p99_sombras_2026-11-15.md`.
 
 ### Desvio conhecido: movimento dos selvagens (fase 3 fechada; a sim fica com `visao_meia_altura` 7)
 
@@ -899,3 +902,15 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   registradas: 25/25 (G3, G6–G10, rhydon-1h, C5). Relatórios das gravações da fase 4 em `dados/relatorios/gravacoes/`.
 - 15/11/2026 — Investigação "o servidor mudou entre 09/11 e 10/11?": não há sinal nas outras grandezas (tabela no desvio de
   dano). Só registrado, nenhuma regra mudou. Ferramenta `ferramentas/fase4/comparar_dias.py`.
+- 15/11/2026 — Jogo novo do zero (`testes/test_jogo_novo.gd` 14/14; tabela em `CALIBRACAO_FASE4.md`): o começo do P04
+  (Larvitar, inventário de teste) dava lugar ao do original (C): escolha entre Bulbasaur, Charmander e Squirtle no nível
+  1, 100 Small Potions e 100 Poké Balls, Cerulean e a primeira hunt recomendada (Geodude ou Paras, vantagem ×4). No
+  Geodude, o Bulbasaur faz ~50 abates em 10 min e chega ao nível 3. A validação do save aceita as três linhas novas.
+  E/abertos: IV/Quality do inicial, ouro 0, padrões do Auto-Helper, tutorial do Oak e escolha do visual (gravação NJ1).
+- 15/11/2026 — Sombras e iluminação portadas (seção acima). Geometria idêntica ao original em 3 mapas (73.549 sombras;
+  `test_render_sombras` 11/11 em rhydon e geodude). Desempenho: um canvas item por sombra custava +1 a +5 ms de p99; com as
+  estáticas em lote por chunk, o comparativo limpo (5 hunts, ligadas × desligadas em sequência) ficou igual dentro do
+  ruído (ex.: raichu 18,2 × 16,6; elekid 17,8 × 19,2). A medição formal de 3 rodadas saiu contaminada (máquina em uso: 22 de
+  48 corridas com a janela limitada a 15–40% dos quadros), e já sem sombra 3 das 16 medianas passavam de 16,7 ms. **Critério
+  não demonstrado → desligadas por padrão.** Refazer com a máquina livre: `POKE_SOMBRAS=1 python -I testes/test_todas_hunts.py
+  --velocidade 1 ...` contra a mesma lista sem a variável.

@@ -421,6 +421,12 @@ func _criar_ouro_e_config() -> void:
 	painel_soneca.name = "PainelSoneca"
 	get_node("Interface").add_child(painel_soneca)
 	call_deferred("verificar_soneca")
+	# Jogo novo (C): sem save, o jogo começa pela escolha do inicial. Só no jogo de verdade (nos testes, o SceneTree é o
+	# script do teste e o começo continua o do P04).
+	if EstadoJogo.salvamento.jogo_novo and get_tree().get_script() == null:
+		var pn: Control = load("res://painel_novo_jogo.gd").new()
+		pn.name = "PainelNovoJogo"
+		get_node("Interface").add_child(pn)
 	var atualizar := func() -> void: rotulo_ouro.text = "💲 %d" % EstadoJogo.ouro
 	EstadoJogo.ouro_alterado.connect(atualizar)
 	atualizar.call()

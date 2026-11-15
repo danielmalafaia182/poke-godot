@@ -75,7 +75,9 @@ func _validar(dados: Variant) -> String:
 				if not _inteiro(p.get(campo), 1, 32):
 					return "IV inválido: " + campo
 			if p["id"] == dados["inicial_id"]:
-				if grupo != "team" or p["especie"] not in ["Larvitar","Pupitar","Tyranitar"]:
+				# Linhas evolutivas aceitas para o inicial: a do P04 (Larvitar) e as três do original (C: Bulbasaur, Charmander,
+				# Squirtle; jogo novo, sim/servico_novo_jogo.gd).
+				if grupo != "team" or p["especie"] not in ["Larvitar","Pupitar","Tyranitar","Bulbasaur","Ivysaur","Venusaur","Charmander","Charmeleon","Charizard","Squirtle","Wartortle","Blastoise"]:
 					return "Inicial ausente do time ou com espécie incorreta."
 				inicial_encontrado = true
 	if not inicial_encontrado:
