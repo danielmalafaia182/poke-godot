@@ -924,3 +924,7 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   descartar o atraso acima de 10 s (agora recupera tudo, com teto de 1 h). Sombras ligadas por padrão (o custo com a janela
   em foco ficou dentro do ruído no comparativo limpo). Teste `testes/test_modo_fundo.gd` 5/5: 10,0 quadros/s, 100 ticks em
   20,1 s, e 80 ticks em 16 s atravessando uma trava de 12 s.
+- 15/11/2026 — Revisão das capturas do jogo novo (0 em 50 Poké Balls): **sem erro**. Poké Ball vale 5 no medidor (A:
+  priceGold) e o Geodude custa 300 (A: precoNpc); a chance vai de 1,36% (1ª tentativa) a 2,62% (50ª); esperado 0,99 captura
+  em 50 e 37% de chance de nenhuma (o real deu 0/47 no C5). 20 sementes × 10 min na sim: 985 bolas jogadas, 17 capturas
+  contra 18,0 esperadas. Teste `testes/test_captura_jogo_novo.gd` 5/5.
