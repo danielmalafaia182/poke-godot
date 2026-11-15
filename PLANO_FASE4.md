@@ -3,7 +3,8 @@
 **Situação:** lote 1 (itens 1 a 4: evolução, loja e economia, Nurse Joy, depot) implementado em 10/11/2026. Lote 2 começado em 11/11/2026: sessão, Modo Soneca, Streak Points, boosts e Tipo do Dia implementados; tarefas e diárias esperam as gravações G5/G7 (o servidor manda alvos e prêmios). Regras, fontes
 e o que pede gravação em `CALIBRACAO_FASE4.md`. VIP virou opção do jogador (desligada por padrão). Lote 3 começado em 15/11/2026:
 Rare Candy e berries implementados; held, TM, breeding, Pokédex, Golden Stars e Pokécards documentados com o que falta
-gravar (`CALIBRACAO_FASE4.md`). Itens 11 a 14: não começados.
+gravar (`CALIBRACAO_FASE4.md`). Lote 4 começado em 15/11/2026: insígnias de ginásio (bônus na hunt), catálogo de bosses e
+calendário da invasão; as lutas e as profissões esperam as gravações GB1, BS1, PR1, IV1. Item 14: não começado.
 
 Objetivo: o jogo offline ter os sistemas do original que dão progressão fora da hunt, na mesma arquitetura: a regra
 mora na simulação ou num módulo de regras puro (`RefCounted`, sem cena), com as mensagens/respostas do original, e a

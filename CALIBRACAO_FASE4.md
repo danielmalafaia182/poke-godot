@@ -200,6 +200,19 @@ Não implementado ainda, com o que já se sabe (para não inventar números do s
 | Golden Stars (Poke Slot Machine) | **A** (G9): slot com estrela ativa `{speciesId, bonusType (exp, critDamage…), pct (10, 13), rarity, startedAt, expiresAt}` com duração de **6 h**; rolagem grátis a cada **12 h** (freeRollAt); 9 candidatos por rolagem; slots 2 e 3 travados (10.000.000 de ouro, VIP, ou 5 cartas por 24 h); C: o bônus só vale ao interagir com a espécie sorteada | a tabela de bônus × raridade × pct e a chance de cada um |
 | Pokécards | A: `pokecards.json` (sets e cartas, no snapshot); C: "Poke Card Pack" abre 1 carta aleatória para o álbum | a chance de cada carta e o efeito do álbum |
 
+## Lote 4 (15/11/2026, começo): ginásios e bosses, profissões, invasão
+
+Onde mora: `sim/servico_ginasios.gd` (insígnias e catálogo de bosses), `sim/servico_invasao.gd` (calendário) e a parcela
+`gym` em `sim/simulacao_hunt.gd` (com 0 insígnias, a saída da sim é idêntica). Save: campo opcional `ginasios`; a hunt
+recebe `cfg.insignias`. Teste: `testes/test_sim_mundo.gd` (14/14, puro).
+
+| Sistema | O que já entrou (fonte) | O que falta e por quê |
+| --- | --- | --- |
+| **Ginásios** | Insígnia dura 48 h e vencer de novo renova; cada insígnia ATIVA dá +1% de XP e +1% de chance de uma rolagem extra de drop; 18 ginásios, 8 em Kanto e 10 na outra região (C, janela Gym Rewards). Na hunt: parcela `gym` = floor(base × 1% × insígnias) no treinador e no Pokémon (a chave existe no `xpParts`, A; floor e o Pokémon, F) e +1% de rolagem extra por insígnia (mesmo mecanismo do Streak Loot, C). Ginásios conhecidos (A, `gym-global`): spikemuth DARK (Piers, NPC), cerulean WATER, mahogany ICE (Pryce, NPC), pewter ROCK | A lista dos 18 com os líderes e os times, as regras da luta (time livre no modo insígnia, C) e as recompensas vêm de `/api/game/gyms` (não gravado). Sem a luta, a insígnia entra por `insignia-ganha` (E) e o jogo ainda não tem como ganhá-la. Liderança e pagamento diário: online |
+| **Bosses** | Catálogo (A, `bossCatalog.json`): 87 bosses com nome, categoria, nível e nomes dos drops; 85 dos 258 drops casam com itens do catálogo (fichas e baús não estão no items.json). C: entrada com ficha; Auto Boss repete lutas até acabar a fila ou as fichas, perde a ficha se o time cair, só fora de hunt; formato `auto-boss {active, bossKey, total, wins, losses, loot, fee, spent, elapsedMs}` (A, G10, inativo). Altar: sacrifica uma Shiny Card para enfrentar o shiny lendário (C) | HP, golpes e rounds da luta, custo em fichas, chance de cada drop: `/api/game/boss/*` e as mensagens da luta (não gravados). Altar depende de shiny (ausente offline, E) |
+| **Profissões** | C: Botânico (ervas das hunts → berries; talentos por rank: berry de tipo, neutra, de cura; "Lasts 30 minutes", "Identical berries do not stack"), Prestige Trainer (foto automática de shiny → Rare Pokémon Picture, item de rank), Cientista e Pesquisador "em breve"; ranks E, D, C, B, A, S; bônus de captura direta por rank até ×1,18 no S; bônus "mentor" de XP quando o treinador está mais de N níveis acima do Pokémon (é a parcela `mentor` vista na conta B, A). A (c5): `profession-photo {ok, msg, slot, row, col, speciesId, itemName, pictures}` — 2 de 5 fotos deram certo. Pesca (C): habilidade por nível, faixas bloqueadas acima da habilidade, faixa menor dá 50% do progresso, recarga | N e % do mentor, % por rank, custo das receitas do Botânico e chance das ervas, chance da foto, tabela da pesca: servidor (`/api/game/professions/*`, `fishing*`). Nada implementado: sem esses números não há regra para escrever |
+| **Invasão** | Calendário (A, 8 invasões de 09/11 a 15/11): a cada 2 h nas horas UTC ímpares; entrada até hh:10, fim às hh:30; mensagens `invasion-state`, `invasion-energy` (máx. 10) e `invasion-announce` (texto com `{nome}` literal) no formato gravado; entrada vista aberta às hh−1:58 e hh:00, fechada de hh:08:48 em diante; `live` falso 71 s antes do fim (bordas exatas F) | A luta (ondas? chefes? prêmio por energia?): nenhuma gravação de dentro da invasão |
+
 ## O que ainda pede evidência do original (gravador v1.2)
 
 Feitas: G1, G2, G4 (11/11); G5, G7, G8 (13/11); G3, G9, G10 (15/11). G6 e G6b parciais: só a volta e o cancelamento.
@@ -217,6 +230,23 @@ Mostra a mensagem do Zzz e se o loot e as poções da amostra já estão na BAG 
 **G11 — dano em nível baixo, com os stats do selvagem (10 min)** (já combinada). Hunt do Geodude ou do Rattata, time de
 nível 1–4 (Larvitar ou Geodude), Auto-Catch com Super Ball; depois de cada captura, abra o capturado em My Pokes (2 s).
 Separa "piso 3 no ataque do aliado" de "stats do nível 2" e explica a faixa estreita do dano real no nível 1.
+
+**Lote 4 (no máximo 4; ginásios, bosses, profissões e invasão):**
+
+**GB1 — ginásio (5 min).** Abra a janela de Ginásios no modo Insígnia e espere 5 s; clique em 3 ginásios (2 s cada);
+desafie um líder que o time vença e espere a luta acabar; abra a janela de novo.
+Traz `/api/game/gyms` (os 18, líderes, times, níveis), as mensagens da luta e a resposta da insígnia.
+
+**BS1 — boss (5 min).** Abra Bosses e espere 5 s; enfrente 1 boss (o de entrada grátis, se houver) até o fim; abra a BAG.
+Traz HP, golpes e rounds do boss, a ficha gasta e o loot.
+
+**PR1 — profissões e pesca (6 min).** Abra Professions e espere 5 s em cada aba (rank, talentos do Botânico); pesque
+3 min na faixa da sua habilidade.
+Traz o N e o % do mentor, o bônus por rank, as receitas do Botânico e as taxas da pesca.
+
+**IV1 — invasão (até 30 min, numa hora UTC ímpar: 14:00, 16:00, 18:00… de Brasília).** Entre na invasão às hh:00–hh:08
+e grave até o fim.
+Traz a luta inteira (inimigos, ondas, energia, prêmio).
 
 **Lote 3 (no máximo 4):**
 

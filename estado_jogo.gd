@@ -108,6 +108,13 @@ signal diarias_alteradas
 const SERVICO_ITENS := preload("res://sim/servico_itens.gd")
 static var _servico_itens = null
 var itens_uso: Dictionary = {}
+# Fase 4, lote 4: insígnias de ginásio (sim/servico_ginasios.gd): {insignias: {"<gymId>": until_ms}}. Sem luta de ginásio
+# offline ainda (o servidor manda líderes e times): o campo existe para a hunt já aplicar o bônus (C).
+const SERVICO_GINASIOS := preload("res://sim/servico_ginasios.gd")
+var ginasios: Dictionary = {}
+
+func insignias_ativas(agora_unix: int) -> int:
+	return SERVICO_GINASIOS.new(null).ativas({"ginasios": ginasios}, agora_unix)
 # Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
 var slug_caca: String = ""
 # Fase 3: medidor de captura por espécie (C: /api/game/used-balls) — speciesId (str, "s" no fim = shiny) →

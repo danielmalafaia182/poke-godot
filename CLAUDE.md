@@ -50,6 +50,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `painel_soneca.gd`, `painel_streak.gd` | Coleta da soneca ao abrir a cidade e janela de Streak Points (⚙ → Streak Points); botão 💤 Zzz na HUD da hunt |
 | `sim/servico_diarias.gd`, `painel_diarias.gd` | Fase 4, item 3: Daily Gift, Quests & Tasks (124 tarefas, 43 cidades), Daily Kill e Daily Catch, puros na `sim/` com os dados gravados em `dados/fase4/` (gerados por `ferramentas/gravador/extrair_fase4.py`); janela ⚙ → Quests, Tasks & Dailys |
 | `sim/servico_itens.gd`, `painel_itens_uso.gd` | Fase 4, lote 3: Rare Candy e berries (efeito das berries no combate em `simulacao_hunt.gd`); janela ⚙ → Usar itens |
+| `sim/servico_ginasios.gd`, `sim/servico_invasao.gd` | Fase 4, lote 4: insígnias de ginásio (+ parcela `gym` na hunt), catálogo de bosses e calendário da invasão |
 | `ferramentas/fase4/comparar_nivel_baixo.py` | Item 2: real × sim por minuto (abates, desmaios, HP, dano dado/recebido, níveis) para time de nível baixo |
 | `ferramentas/fase4/ajustar_dano.py` | Item 1: confere variantes da fórmula de dano contra todos os golpes gravados → `dados/relatorios/ajuste_dano.md` |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
@@ -874,3 +875,10 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   correto (0 caractere de substituição) e regenerar não muda nada; os "�" eram a saída do console do Windows (cp1252).
   O importador passa a imprimir em UTF-8; o código que "consertava" o `�` no Daily Gift saiu (não havia `�` nos dados).
   A única mojibake nos dados é um exemplo de chat de log antigo dentro do `protocolo.json` (texto de terceiro, sem uso).
+- 15/11/2026 — **Fase 4, lote 4 começado** (detalhe em `CALIBRACAO_FASE4.md`).
+  - Ginásios (C): insígnia de 48 h, +1% de XP (parcela `gym`, floor, F) e +1% de rolagem extra de drop por insígnia ativa;
+    18 ginásios; 4 conhecidos pelo `gym-global` (A). Sem a luta (servidor), a insígnia ainda não se ganha offline.
+  - Bosses: catálogo do snapshot (A, 87); luta não implementada. Invasão: calendário A (horas UTC ímpares, entrada até
+    hh:10, fim hh:30) e as mensagens no formato gravado; a luta não foi gravada. Profissões: só o levantamento (C/A), os
+    números são do servidor.
+  - Teste `test_sim_mundo` 14/14; com 0 insígnias a saída da sim é idêntica. Gravações GB1, BS1, PR1, IV1.

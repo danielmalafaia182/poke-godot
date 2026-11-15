@@ -142,6 +142,9 @@ const PARAMETROS := {
 	# 148 drops, esperado 146,3 com ×1,4 (z 0,2) e 125,4 com ×1,2 (z 2,8: rejeitado); a mesma hunt num dia Veneno (G10, 91
 	# abates): 161 × 155,9 pela tabela (controle). ×1,44 (= 1,2²) também cabe: não se separa de 1,4 com uma gravação.
 	"tipo_do_dia_loot": 1.4,
+	# Insígnias de ginásio (C, Gym Rewards): cada insígnia ATIVA dá +1% de XP e +1% de chance de uma rolagem extra de drop.
+	"insignia_pct_xp": 1.0,
+	"insignia_pct_drop": 1.0,
 	"tipo_do_dia_pct": 20,                    # E: sem shiny na fase 1
 }
 

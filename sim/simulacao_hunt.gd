@@ -705,8 +705,13 @@ func _abate(m: Dictionary) -> void:
 	var tipo_dia := _tipo_do_dia_ativo(esp)
 	# A (G8): typeDay = floor(20% da base) — Tyranitar base 6008 → 1201 em 61/61 abates (round daria 1202)
 	var parcela_dia := int(floor(float(base) * float(p.tipo_do_dia_pct) / 100.0 + 1e-9)) if tipo_dia else 0
-	var total := base + vip + streak_xp + boost_t + parcela_dia
-	var total_p := base + vip + boost_p + parcela_dia
+	# Insígnias de ginásio (C, janela Gym Rewards: "Each ACTIVE badge grants +1% XP and +1% chance of an extra drop roll";
+	# cfg.insignias = nº de insígnias ativas, sim/servico_ginasios.gd). Parcela `gym` (A: a chave existe no xpParts e no
+	# pokeXp.parts, sempre 0 nas gravações); F: floor sobre a base, como streak e typeDay, e no Pokémon também.
+	var n_ins := int(cfg.get("insignias", 0))
+	var gym_xp := int(floor(float(base) * float(p.insignia_pct_xp) / 100.0 * n_ins + 1e-9)) if n_ins > 0 else 0
+	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp
+	var total_p := base + vip + boost_p + parcela_dia + gym_xp
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
 	var debuff_p := 0
@@ -730,7 +735,7 @@ func _abate(m: Dictionary) -> void:
 	var loot: Array = []
 	# Rolagens de drop: 1 + as extras da trilha Loot do Streak (C). Sem pontos, uma rolagem e nenhum sorteio a mais.
 	var rolagens := 1
-	var extra := float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("loot", 0))
+	var extra := float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("loot", 0)) + float(p.insignia_pct_drop) / 100.0 * n_ins
 	if extra > 0.0:
 		rolagens += int(floor(extra))
 		if rng.randf() < extra - floor(extra):
@@ -741,8 +746,8 @@ func _abate(m: Dictionary) -> void:
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
-		"xpParts": _com_debuff({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": 0, "gym": 0, "typeDay": parcela_dia}, debuff),
-		"pokeXp": {"xpGained": total_p, "parts": _com_debuff({"base": base, "boost": boost_p, "vip": vip, "event": 0, "mentor": 0, "gym": 0, "typeDay": parcela_dia}, debuff_p),
+		"xpParts": _com_debuff({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": 0, "gym": gym_xp, "typeDay": parcela_dia}, debuff),
+		"pokeXp": {"xpGained": total_p, "parts": _com_debuff({"base": base, "boost": boost_p, "vip": vip, "event": 0, "mentor": 0, "gym": gym_xp, "typeDay": parcela_dia}, debuff_p),
 			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
 		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
 	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total_p,
