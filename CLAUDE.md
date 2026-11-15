@@ -177,6 +177,25 @@ os indivíduos; a sim sorteia Def contínua 0,3–1,4) e os golpes recebidos/cur
 encostam na sim). "Piso 3" e "stats do nível 2" não se separam com um atacante só (G11). Teste das 40 sementes (Larvitar
 Lv.1 na hunt do Geodude, sem poção e sem reserva): 38/40 sem abate, porque o Larvitar desmaia depois de 11–18 golpes; não
 há gravação desse cenário.
+**15/11, dispersão do dano no nível 1 (5–19 na sim × 6–8 no real):** não vem de golpe, efetividade, STAB nem crítico
+(Geodude Lv.1 só usa Tackle, eficácia 1, nos dois lados). Vem da **defesa do selvagem por indivíduo**: na sim, dentro de cada
+indivíduo o dano varia só pelo aleatório e entre indivíduos vai de 5 a 18. No real, os 10 Rattata atingidos no nível 1 levam
+6–8 todos, inclusive os capturados com Def exibida 0 (contínua < 0,5) e 1. `ferramentas/fase4/stat_comum.py` →
+`dados/relatorios/defesa_comum.md` (intervalo de defesa comum a todos os indivíduos):
+
+| Gravação | Selvagem (nível) | Golpe do aliado | Indivíduos | Defesa comum |
+| --- | --- | --- | --- | --- |
+| S1 | Oddish (1) | Stone Edge, Earthquake (Rhydon 425, Golem 387) | 15 | **0,767–0,774** |
+| S2 | Rattata (1) | Hammer Arm (Rhydon 425) | 13 | **0,765–0,773** |
+| geodude-10min | Rattata (1) | Tackle (Geodude Lv.1, com o piso 3) | 10 | 0,942–0,960 |
+| c5 | Geodude (1) | Earthquake (Rhydon 425) | 52 | vazio (1,54 > 0,77) |
+| rhydon-1h, M1–M3, G9 | Rhydon 80, Kangaskhan 80, Arbok 40 | vários | 9–26 | vazio (os indivíduos diferem) |
+
+Leitura: no selvagem de nível 1 a defesa no dano parece **não depender do indivíduo nem da espécie** (Oddish e Rattata, bases 55 e
+35, dão o mesmo 0,77); nos níveis 40–80 depende. O c5 (Geodude nível 1) contradiz, e a geodude-10min (09/11) pede outro valor
+(0,95 com piso 3 no ataque; com 0,77, o ataque efetivo do Geodude teria de ser 2,43): pode ser mudança no servidor entre
+09/11 e 10/11, ou uma regra que ainda não aparece. **Não corrigido** (a causa da dispersão está clara, a regra não). A G11
+(capturas de nível 1 com stats exatos, depois de apanharem) decide.
 Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes/geodude-*.jsonl`).
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
@@ -848,3 +867,6 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Achado: o `itens.json` gerado perde os acentos das descrições (importador); o leitor das berries não depende deles.
   - Testes: `test_sim_itens` 18/18, `test_ciclo_itens` 6/6. Protocolo 146 tipos, 59 vistos, 36 caminhos REST;
     cadáveres 15 espécies normais.
+- 15/11/2026 — Pós-lote 3, item 1 (dispersão do dano no nível 1): causa = defesa do selvagem por indivíduo na sim; no real,
+  nível 1 dá a mesma defesa para todos os indivíduos (S1, S2: 0,77). Regra não fechada (c5 e geodude-10min destoam):
+  não aplicada; tabela no desvio de dano. Ferramenta `ferramentas/fase4/stat_comum.py`.
