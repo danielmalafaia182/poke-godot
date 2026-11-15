@@ -1,0 +1,328 @@
+{
+ "balls": {
+  "catalog": [
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 1,
+    "iconUrl": "/assets/markitems/pokeball.png",
+    "id": 1,
+    "infinite": false,
+    "name": "Poké Ball",
+    "priceGold": 5
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 2,
+    "iconUrl": "/assets/markitems/greatball.png",
+    "id": 2,
+    "infinite": false,
+    "name": "Great Ball",
+    "priceGold": 20
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 3,
+    "iconUrl": "/assets/markitems/superball.png",
+    "id": 3,
+    "infinite": false,
+    "name": "Super Ball",
+    "priceGold": 50
+   },
+   {
+    "bound": false,
+    "buyable": true,
+    "catchRate": 4,
+    "iconUrl": "/assets/markitems/ultraball.png",
+    "id": 4,
+    "infinite": false,
+    "name": "Ultra Ball",
+    "priceGold": 130
+   },
+   {
+    "bound": false,
+    "buyable": false,
+    "catchRate": 5,
+    "iconUrl": "/assets/markitems/idleball.png",
+    "id": 6,
+    "infinite": false,
+    "name": "Idle Ball",
+    "priceGold": 400
+   },
+   {
+    "bound": true,
+    "buyable": false,
+    "catchRate": 5,
+    "iconUrl": "/assets/markitems/idleball_gold.png",
+    "id": 7,
+    "infinite": true,
+    "name": "Golden Idle Ball",
+    "priceGold": 400
+   },
+   {
+    "bound": false,
+    "buyable": false,
+    "catchRate": 255,
+    "iconUrl": null,
+    "id": 5,
+    "infinite": false,
+    "name": "Master Ball",
+    "priceGold": 0
+   }
+  ],
+  "counts": {
+   "1": 96,
+   "2": 6,
+   "3": 10862,
+   "6": 100
+  },
+  "expires": {},
+  "gold": 12695,
+  "selected": 1
+ },
+ "cadaveres": {
+  "19": 2848
+ },
+ "fieldInit": {
+  "bike": false,
+  "cols": 105,
+  "heroStepMs": 500,
+  "huntKey": "rattata:1794194542239:r1",
+  "minTx": -52,
+  "minTy": -42,
+  "mobStepMs": 1000,
+  "rows": 85,
+  "slug": "rattata",
+  "tickMs": 200,
+  "trainerStepMs": 500,
+  "type": "field-init"
+ },
+ "fonte": "geodude-10min.jsonl",
+ "formato": "poke-estado-inicial-v1",
+ "huntKey": "rattata:1794194542239:r1",
+ "inventario": [
+  {
+   "itemId": 39,
+   "quantity": 26517
+  },
+  {
+   "itemId": 68,
+   "quantity": 66
+  },
+  {
+   "itemId": 69,
+   "quantity": 8
+  },
+  {
+   "itemId": 73,
+   "quantity": 4
+  },
+  {
+   "itemId": 81,
+   "quantity": 7
+  },
+  {
+   "itemId": 109,
+   "quantity": 100
+  },
+  {
+   "itemId": 110,
+   "quantity": 53
+  },
+  {
+   "itemId": 112,
+   "quantity": 2099
+  },
+  {
+   "itemId": 120,
+   "quantity": 78049
+  },
+  {
+   "itemId": 126,
+   "quantity": 12678
+  },
+  {
+   "itemId": 128,
+   "quantity": 347
+  },
+  {
+   "itemId": 140,
+   "quantity": 74
+  },
+  {
+   "itemId": 200,
+   "quantity": 59
+  },
+  {
+   "itemId": 201,
+   "quantity": 911
+  },
+  {
+   "itemId": 203,
+   "quantity": 9855
+  },
+  {
+   "itemId": 240,
+   "quantity": 22
+  },
+  {
+   "itemId": 5309,
+   "quantity": 931
+  },
+  {
+   "itemId": 5310,
+   "quantity": 1082
+  },
+  {
+   "itemId": 6352,
+   "quantity": 2
+  },
+  {
+   "itemId": 11560,
+   "quantity": 518
+  },
+  {
+   "itemId": 13115,
+   "quantity": 6
+  },
+  {
+   "itemId": 21287,
+   "quantity": 2
+  },
+  {
+   "itemId": 37288,
+   "quantity": 11
+  }
+ ],
+ "pokeDelta": {
+  "barLooktype": 196,
+  "evolveNeedLevel": 40,
+  "evolvesToName": "Graveler",
+  "hasEvolution": true,
+  "hp": 24,
+  "id": "cmvyzawpzfjbnsvchnzmjfpu4",
+  "ivTotal": 173,
+  "leader": true,
+  "level": 2,
+  "locked": true,
+  "looktype": 196,
+  "maxHp": 24,
+  "name": "Geodude",
+  "power": 17,
+  "quality": 1.137,
+  "sellValue": 300,
+  "shiny": false,
+  "slot": 0,
+  "speciesId": 74,
+  "starter": false,
+  "stats": {
+   "atk": 3,
+   "def": 4,
+   "hp": 2,
+   "spAtk": 2,
+   "spDef": 2,
+   "speed": 2
+  },
+  "team": true,
+  "type1": "ROCK",
+  "type2": "GROUND",
+  "xp": 102
+ },
+ "primeiroCatchResult": {
+  "auto": true,
+  "ballId": 3,
+  "ballName": "Super Ball",
+  "col": 45,
+  "row": 45,
+  "speciesName": "Rattata",
+  "success": false
+ },
+ "primeiroField": {
+  "bossActiveIdx": 0,
+  "bossTeam": [
+   {
+    "hp": 14,
+    "maxHp": 24
+   },
+   {
+    "hp": 24,
+    "maxHp": 24
+   },
+   {
+    "hp": 1452,
+    "maxHp": 1452
+   }
+  ],
+  "heroHp": 14,
+  "heroLooktype": 196,
+  "heroMaxHp": 24,
+  "heroName": "Geodude",
+  "mobsMaxHp": [
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120,
+   120
+  ],
+  "seq": 98,
+  "serverNow": 1794194561668
+ },
+ "primeiroFieldKill": {
+  "level": 109,
+  "pokeXp": {
+   "level": 1,
+   "parts": {
+    "base": 8,
+    "boost": 0,
+    "debuff": -9,
+    "event": 0,
+    "gym": 0,
+    "mentor": 0,
+    "typeDay": 0,
+    "vip": 4
+   },
+   "speciesId": 74,
+   "xpGained": 3
+  },
+  "speciesId": 19,
+  "totalXp": 20850057,
+  "xpGained": 3,
+  "xpParts": {
+   "base": 8,
+   "boost": 0,
+   "debuff": -9,
+   "event": 0,
+   "gym": 0,
+   "streak": 0,
+   "typeDay": 0,
+   "vip": 4
+  }
+ },
+ "primeiroPokeXp": {
+  "id": "cmvyzawpzfjbnsvchnzmjfpu4",
+  "level": 1,
+  "leveledUp": false,
+  "speciesId": 74,
+  "type": "poke-xp",
+  "xp": 3,
+  "xpGained": 3
+ },
+ "sessao": "2026-11-09T02-57-09-181Z",
+ "slug": "rattata",
+ "vip": {
+  "type": "vip",
+  "until": 1796135385546
+ }
+}

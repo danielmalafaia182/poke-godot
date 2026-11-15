@@ -153,6 +153,28 @@ Ajuste (`ferramentas/fase4/ajustar_dano.py` → `dados/relatorios/ajuste_dano.md
 | e `sem_piso_divisor` (D contínuo < 1 permitido) | 90,5 | 99,6 | 80,9 | 100 | 99,2 | 27/30 | 23/26 | 40/40 (40/40) |
 
 a e b caem para 0% no selvagem de nível 1 (o +2 passa do envelope em todos os golpes; erro médio 1,0) e pioram o diferencial; e é ≥ c em toda gravação, mas não explica todas as faixas (o resto fica no limite de baixo da faixa de stat do selvagem de nível baixo). Em 13/11 nenhuma foi aplicada; **desde 15/11 a e é o padrão** (decisão do usuário: igual ou melhor em todas as gravações; diferencial 27/30 e 23/26, iguais). Nas 40 sementes (Larvitar Lv.1 no geodude, 60 s), e não muda nada: a Def do Geodude é ≥ 1 e o divisor nunca entra.
+**15/11, causa do 0/40 (item 2):** reproduzindo na sim o estado da `geodude-10min` (Geodude Lv.1, Q 1,137, IV 173, hunt
+`rattata`, VIP, Small Potion, Super Ball; `dados/testes/estado_rattata_geodude_nivel1.json`) e comparando por minuto
+(`ferramentas/fase4/comparar_nivel_baixo.py`, 20 sementes × 8 min, só fields do Geodude na `rattata`), a única grandeza
+que diverge é o **dano do aliado no nível 1**: real 6–8 (média 7,24, 153 golpes), sim 2–6 (2,82). HP do aliado (0,755 × 0,778),
+HP do selvagem (120 × 120) e dano recebido (1 × 1) batem; HP 24 = max(24, 12×stat) confere. O servidor mostra Atk 1 nesse
+Geodude e o dano pede ~3: **piso 3 no ataque do aliado** (`piso_ataque_aliado`, F) → aliado 1–4 98,1% dos golpes
+explicados (90,5% sem), nenhuma outra faixa ou gravação muda; no selvagem o piso piora (100% → 85,1%), então só no aliado.
+
+| Por minuto (geodude-10min, rattata) | Real | Sim antes (p05–p95) | Sim com o piso (p05–p95) |
+| --- | --- | --- | --- |
+| Abates | 2,55 | 0,75 (0,62–1,12) | **2,62** (2,25–3,00) |
+| Níveis ganhos | 0,232 | 0 (0–0,125) | **0,25** (0,25–0,25) |
+| Dano dado no nível 1 (mín–média–máx) | 6–7,24–8 | 2–2,82–6 | 5–8,69–19 |
+| HP médio do aliado | 0,755 | 0,778 | 0,775 |
+| Golpes recebidos | 72,9 | 52,1 | 31,1 |
+| Curas | 5,8 | 4,38 | 2,62 |
+
+Ficam abertos: a dispersão do dano no nível 1 (o real é estreito, 6–8, como se a Def do Rattata ficasse perto de 1 em todos
+os indivíduos; a sim sorteia Def contínua 0,3–1,4) e os golpes recebidos/curas (desvio de movimento: menos selvagens
+encostam na sim). "Piso 3" e "stats do nível 2" não se separam com um atacante só (G11). Teste das 40 sementes (Larvitar
+Lv.1 na hunt do Geodude, sem poção e sem reserva): 38/40 sem abate, porque o Larvitar desmaia depois de 11–18 golpes; não
+há gravação desse cenário.
 Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes/geodude-*.jsonl`).
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
@@ -796,3 +818,7 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
 - 15/11/2026 — Fase 4, item 1: `formula_dano` passa a "sem_piso_divisor" por padrão (E sobre a tabela F do desvio de
   dano; o parâmetro continua). Diferencial 1h 27/30 e antiga 23/26 (iguais); regras 41/41, determinismo, regras do
   usuário 17/17, lote 2 36/36, caminho 8/8. A saída da sim muda só onde a defesa contínua do alvo é < 1.
+- 15/11/2026 — Fase 4, item 2 (0/40): causa = dano do aliado no nível 1 (tabela no desvio de dano). `piso_ataque_aliado`
+  3 (F) na fórmula: o time da `geodude-10min` upa na sim no ritmo do real (abates/min 2,62 × 2,55; níveis/min 0,25 ×
+  0,23). Rhydon 20 min idêntico byte a byte com e sem o piso (diferencial igual). Regras 43/43. Ferramentas:
+  `comparar_nivel_baixo.py`, `ajustar_dano.py` com variantes de piso ("+aN", "+adN", "+AN").

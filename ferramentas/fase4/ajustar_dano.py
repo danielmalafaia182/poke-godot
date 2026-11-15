@@ -45,6 +45,18 @@ def faixa_de(n):
 
 
 def dano_variante(var, nivel, poder, a, d, stab, eff, selvagem, r):
+    """var = letra base (a, b, c, d, e) + sufixo opcional de piso de stat no cálculo (F, item 2 de 15/11):
+    "+aN" = ataque do atacante >= N; "+adN" = ataque e defesa >= N (os dois lados); "+AN" = só o ataque do aliado."""
+    if "+" in var:
+        var, suf = var.split("+", 1)
+        n = float(suf.lstrip("adA"))
+        if suf.startswith("A"):             # "+AN": só o aliado atacando (o selvagem não tem piso)
+            if not selvagem:
+                a = max(a, n)
+        else:
+            a = max(a, n)
+            if suf.startswith("ad"):
+                d = max(d, n)
     piso = 1 if selvagem else 2
     if eff == 0:
         return piso
@@ -160,7 +172,7 @@ def avaliar(ind, especies, hunts, variantes):
                 candidatos = [lo + (hi - lo) * i / PASSOS for i in range(PASSOS + 1)]
                 for var in variantes:
                     melhor = None
-                    deltas_aliado = [-0.5 + i / 10.0 for i in range(10)] if var == "d" else [0.0]
+                    deltas_aliado = [-0.5 + i / 10.0 for i in range(10)] if var.split("+")[0] == "d" else [0.0]
                     for s, da in [(s0, d0) for s0 in candidatos for d0 in deltas_aliado]:
                         ok = 0
                         err = 0.0
@@ -197,7 +209,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--json")
     ap.add_argument("--md")
-    ap.add_argument("--variantes", default="c,a,b,e,d")
+    ap.add_argument("--variantes", default="c,a,b,e,d,e+A3")
     a = ap.parse_args()
     variantes = a.variantes.split(",")
     especies = {e["id"]: e for e in R.carregar(os.path.join(RAIZ, "dados", "gerados", "especies.json"))}
@@ -210,7 +222,7 @@ def main():
     for f in arquivos:
         ind.update(coletar(f))
     res, por_g = avaliar(ind, especies, hunts, variantes)
-    linhas = ["# Ajuste da fórmula de dano (fase 4, item 1)", "",
+    linhas = ["# Ajuste da fórmula de dano (fase 4, itens 1 e 2)", "",
               "Gerado por `ferramentas/fase4/ajustar_dano.py` sobre %d gravações. Golpe explicado = cabe no envelope "
               "[aleatório 0,85; 1,00] com o melhor valor do stat desconhecido do selvagem (um por indivíduo × golpe). "
               "Erro = soma, nos não explicados, da distância ao envelope, dividida pelo nº de golpes." % len(arquivos), ""]

@@ -73,6 +73,12 @@ func _init() -> void:
 	# --- Dano: piso 2 aliado / 1 selvagem inclusive com eff 0
 	checar(Regras.dano(1, 50, 1, 500, false, 0.0, false, 1.0) == 2 and Regras.dano(1, 50, 1, 500, false, 0.0, true, 1.0) == 1, "piso de dano com eff 0")
 	checar(Regras.dano(1, 50, 1, 500, false, 1.0 / 3.0, true, 0.85) == 1, "piso 1 do selvagem resistido")
+	# Fase 4, item 2 (F): piso 3 no ataque do aliado — Geodude Lv.1 (Atk exibido 1) com Tackle 50 em Rattata Lv.1 (Def ~0,95)
+	# tira 6–8 como na gravação geodude-10min; sem o piso tiraria 2–3. O selvagem não tem piso.
+	var d_lo := Regras.dano(1, 50, 1, 0.95, false, 1.0, false, 0.85)
+	var d_hi := Regras.dano(1, 50, 1, 0.95, false, 1.0, false, 1.0)
+	checar(d_lo >= 6 and d_hi <= 8, "piso de ataque do aliado: Geodude Lv.1 → Rattata 6–8 (A: 153 golpes)", "%d–%d" % [d_lo, d_hi])
+	checar(Regras.dano(1, 50, 1, 2.1, false, 1.0 / 3.0, true, 1.0) == 1, "selvagem sem piso: Rattata Lv.1 → Geodude segue 1 (A)")
 
 	# --- Quality e IV seguem as faixas do cliente
 	var rng = Rng.new(123)

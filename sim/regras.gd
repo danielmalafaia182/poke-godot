@@ -69,6 +69,13 @@ const PARAMETROS := {
 	# Padrão desde 15/11 (E, decisão do usuário sobre a tabela F): "sem_piso_divisor", igual ou melhor que "atual" em
 	# todas as gravações (aliado 1–4: 90,5% × 32,6% dos golpes explicados; o resto igual).
 	"formula_dano": "sem_piso_divisor",
+	# Fase 4, item 2 (F, 15/11): piso do stat de ataque (Atk/SpA) do ALIADO no cálculo do dano. O Geodude Lv.1 das
+	# gravações geodude-10min/geodeude-2 mostra Atk 1 e tira 6–8 no Rattata (153 golpes): com Atk 1 a fórmula dá 2–3;
+	# com 3, 6–8. No ajuste com todas as gravações (ajustar_dano.py, variante "e+A3"): aliado nível 1–4 98,1% dos golpes
+	# explicados (90,5% sem o piso), nenhuma outra faixa nem gravação muda; no selvagem o piso piora (100% → 85,1% no
+	# nível 1–4), por isso só no aliado. Um atacante só (o Geodude): "piso 3" e "stats do nível 2" não se separam (G11).
+	# 0 = desligado. Só pesa em stat de ataque < 3 (níveis 1–3, em geral).
+	"piso_ataque_aliado": 3.0,
 	# Stats na fórmula de dano (F, forte). Selvagem sem arredondar: na rhydon-1h o Solar Beam é explicado por uma SpD
 	# inteira em 2/15 indivíduos e por uma SpD contínua em 15/15. Aliado arredondado (o valor exibido no poke-delta):
 	# com a SpA exibida 15/15; com a SpA recalculada sem arredondar (IVs e Q exatos) só 10/15.
@@ -350,6 +357,8 @@ static func dano(nivel: int, poder: int, ataque: float, defesa: float, stab: boo
 	if eff == 0.0:
 		return piso
 	var formula := String(p.get("formula_dano", "sem_piso_divisor"))
+	if not selvagem:
+		ataque = maxf(ataque, float(p.get("piso_ataque_aliado", 0.0)))
 	var divisor := maxf(1e-6, defesa) if formula == "sem_piso_divisor" else maxf(1.0, defesa)
 	var k := (2.0 * float(nivel) / 5.0 + 2.0) * float(poder) * ataque / divisor / 50.0
 	var mods := 1.0
