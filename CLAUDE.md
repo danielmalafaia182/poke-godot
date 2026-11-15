@@ -51,6 +51,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `sim/servico_diarias.gd`, `painel_diarias.gd` | Fase 4, item 3: Daily Gift, Quests & Tasks (124 tarefas, 43 cidades), Daily Kill e Daily Catch, puros na `sim/` com os dados gravados em `dados/fase4/` (gerados por `ferramentas/gravador/extrair_fase4.py`); janela ⚙ → Quests, Tasks & Dailys |
 | `sim/servico_itens.gd`, `painel_itens_uso.gd` | Fase 4, lote 3: Rare Candy e berries (efeito das berries no combate em `simulacao_hunt.gd`); janela ⚙ → Usar itens |
 | `sim/servico_ginasios.gd`, `sim/servico_invasao.gd` | Fase 4, lote 4: insígnias de ginásio (+ parcela `gym` na hunt), catálogo de bosses e calendário da invasão |
+| `ferramentas/processar_gravacao.py` | Um comando por gravação: quais regras de CALIBRACAO_FASE3/4 ela cobre, o que confirmou, o que contradisse (com números) e o que não cobre → `dados/relatorios/gravacoes/gravacao_<nome>.md`. Teste `testes/test_processar_gravacao.py` (as conclusões já registradas) |
 | `ferramentas/fase4/comparar_nivel_baixo.py` | Item 2: real × sim por minuto (abates, desmaios, HP, dano dado/recebido, níveis) para time de nível baixo |
 | `ferramentas/fase4/ajustar_dano.py` | Item 1: confere variantes da fórmula de dano contra todos os golpes gravados → `dados/relatorios/ajuste_dano.md` |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
@@ -882,3 +883,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     hh:10, fim hh:30) e as mensagens no formato gravado; a luta não foi gravada. Profissões: só o levantamento (C/A), os
     números são do servidor.
   - Teste `test_sim_mundo` 14/14; com 0 insígnias a saída da sim é idêntica. Gravações GB1, BS1, PR1, IV1.
+- 15/11/2026 — Processamento automático de gravações: `python -I ferramentas/processar_gravacao.py <arquivo>` verifica
+  HP (aliado/selvagem), XP base/VIP/debuff/typeDay, loot × tabela (normal, lock, tipo do dia), Auto-Potion (gatilho e
+  escolha; com poção fixa no Auto-Helper a regra não se aplica), passos, cadência, pisos, fórmula de dano por faixa,
+  golpe fixo por indivíduo, lock de 60 s (abates a ±1 s do until fora), soneca, Daily Kill/Catch/Gift, tarefas, Streak,
+  receita de pedras e a rotação do Tipo do Dia, com as constantes lidas de `sim/*.gd`. Teste contra as conclusões
+  registradas: 25/25 (G3, G6–G10, rhydon-1h, C5). Relatórios das gravações da fase 4 em `dados/relatorios/gravacoes/`.
