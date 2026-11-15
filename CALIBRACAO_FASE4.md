@@ -169,46 +169,82 @@ Onde mora: `sim/servico_diarias.gd` (puro; dados gravados em `dados/fase4/`, ger
 | Faixa de uma espécie que está em mais de uma | E | a mais alta liberada |
 | `dailys-summary` → `{resetAt, kill{locked, picked, done, claimed, target, have, qty}, catch{used, total}, tasks{ready}}` | **A** (G5) | — |
 
-## O que ainda pede evidência do original (gravador v1.2; no máximo 5)
+## Lote 3 (15/11/2026, começo): itens de uso, breeding e coleção
 
-**G3 — evolução com pedras (3 min), ainda pendente.** Com um Pokémon que já pode evoluir e com pedras na BAG:
-1. Abra a janela de evolução (botão ⬆ no time) e espere 5 s.
-2. Evolua com pedras.
-3. Só abra (sem evoluir) a janela de uma espécie de dois tipos (Ivysaur, Charmeleon ou Geodude) e espere 5 s.
+Onde mora: `sim/servico_itens.gd` (Rare Candy e berries, puro) e o efeito das berries em `sim/simulacao_hunt.gd`
+(sem berry ativa, a saída da sim é idêntica). Cliente: `EstadoJogo.usar_item` (campo `itens_uso` no save),
+`painel_itens_uso.gd` (⚙ → Usar itens) e a hunt recebe as berries ativas (`cfg.berries`). Testes:
+`testes/test_sim_itens.gd` (18/18, puro, inclusive o efeito no combate) e `testes/test_ciclo_itens.gd` (6/6, na cena).
 
-As respostas de `GET /api/game/evolve` trazem a receita real (`stones`): fecham ou derrubam a hipótese F.
+| Regra | Fonte | Evidência |
+| --- | --- | --- |
+| Rare Candy (90124): +1 nível na hora, com exatamente o XP que falta para o próximo | C ("goes up exactly 1 level right away") / A (descrição do items.json) | — |
+| Só no time; nível ≤ 100; no máximo 10 por Pokémon | C ("Pokémon in the depot, above level 100, or already at the limit cannot receive it"; "at most 10") | contagem por Pokémon no save (`itens_uso.candy`) |
+| Resposta do uso | E | não gravada (`candy-used {pokeId, xpGained, level, used, max}`) |
+| Berries: escolhe um Pokémon do time, consumida na hora, efeito por 30 min | C ("It is consumed right away and the effect lasts 30 minutes"; "Used on 1 Pokémon in your team") | — |
+| A mesma berry não acumula ("já ativa (N min)"); berries diferentes valem juntas | C ("Identical berries do not stack"; `berryActiveRow`) / E (diferentes somam) | — |
+| Efeito e % de cada berry: os da descrição do items.json — 38 reduzem o dano de golpes de um tipo (5% e 10%, "FORTEMENTE"), 2 aumentam a cura das poções (+40% e +80%) | **A** (dado do servidor, 40/40 lidas) | "Noturno" = DARK; "Neutro" = golpes neutros dos bosses (C) |
+| Redução: dano recebido × (1 − pct), arredondado, piso 1; cura: poção × (1 + pct), ainda limitada ao que falta | F (aplicação) | teste: berry de Pedra 10% → dano recebido 0,9× do Stone Edge; cura +80% → Hyper passa de 1000 |
+| O itens.json gerado perde os acentos das descrições | D (problema do importador, a corrigir) | o leitor compara só as letras a–z, então funciona com e sem acento |
 
-**G6b — soneca do começo ao fim (≥ 10 min fora) e o cancelamento.** A G6 só tem a volta (10 s).
-1. Numa hunt, abra o inventário (BAG) e espere 3 s; volte à hunt; clique 💤 Zzz e deixe gravar até a página sair.
-2. Feche o jogo por 10 min. Reabra com o gravador já ligado; **antes** de coletar, abra a BAG (3 s).
-3. Colete (sem turbo) e abra a BAG de novo (3 s).
-4. Outra vez: Zzz, feche por **2 min**, reabra, abra a BAG.
+Não implementado ainda, com o que já se sabe (para não inventar números do servidor):
 
-Mostra a mensagem do Zzz, se loot/poções da amostra já estão na BAG antes da coleta (A: o XP estava) e o que o
-cancelamento faz com a amostra parcial (hoje E: nada).
+| Sistema | O que o cliente/os dados mostram | Falta (A) |
+| --- | --- | --- |
+| Held items (64, tiers 1–5) e Held Machine | C: troca de Devoted Tokens por 1 held aleatório de um tier ("Trade {{n}}× {{token}} for 1 random held"); `use-held`, `held-replace-confirm`; "Random Held T5" abre 1 held tier 5 | efeito de cada held (X-Attack, X-Defense, X-Experience, X-Boost, X-Lucky…): nem o items.json nem os textos trazem números; custo da máquina e pool por tier |
+| TMs (19 discos) e TM Researcher | C: "Trade {{n}}× TM Disk Piece for one disk"; AoE TM: "all of the Pokémon's Normal moves start splashing"; Ditto não usa TM | o que o disco elemental muda no golpe (tipo? poder?), nº de peças |
+| Borage Flower | C/A: 2 h de chance de shiny muito maior | sem shiny no jogo offline (E): fica guardada |
+| Breeding | C: pais da mesma espécie, da BOX, consumidos; filho = qualidade do melhor pai + Δ; com feromônios Δ +0,15 a +0,30, sem feromônios ~20× menor; IV por stat: copia o do pai de maior qualidade com uma chance (`{{pct}}%`), senão sorteia 1..32; "dobrar as pedras" dá 5% de +1 IV; um pai shiny → filho shiny e sem regra de diferença de qualidade; dois normais nunca dão shiny; ovo choca com abates nas hunts; inicial e Ditto não cruzam; libera num nível do treinador | o `{{pct}}` da herança, a diferença máxima de qualidade, o teto, a taxa em ouro, as pedras por elemento, os abates para chocar e o nível de liberação (todos vêm do servidor em `/api/game/breeding`) |
+| Ditto / Shiny Ditto | C: entra como Ditto nível 1 com stats fixos (IV 15/15/15/15/14/15, Q 1,4; shiny IV 20…/19, Q 2,0); transforma por 12 h (shiny: permanente); −25% em HP, Atk, Def, SpA, SpD (shiny: −25%/−20%) | como se obtém offline (no original é item da loja de diamantes) |
+| Pokédex | C: "Claim +25% XP bonus" depois de derrotar N da espécie; bônus de captura pela soma de derrotas | o N por espécie e o efeito exato do +25% (`/api/game/pokedex`) |
+| Golden Stars (Poke Slot Machine) | **A** (G9): slot com estrela ativa `{speciesId, bonusType (exp, critDamage…), pct (10, 13), rarity, startedAt, expiresAt}` com duração de **6 h**; rolagem grátis a cada **12 h** (freeRollAt); 9 candidatos por rolagem; slots 2 e 3 travados (10.000.000 de ouro, VIP, ou 5 cartas por 24 h); C: o bônus só vale ao interagir com a espécie sorteada | a tabela de bônus × raridade × pct e a chance de cada um |
+| Pokécards | A: `pokecards.json` (sets e cartas, no snapshot); C: "Poke Card Pack" abre 1 carta aleatória para o álbum | a chance de cada carta e o efeito do álbum |
 
-**G9 — resgates (5 min, no dia seguinte à G7).**
-1. Daily Gift: colete o prêmio do dia.
-2. Daily Kill: se a missão estiver completa, colete; senão escolha uma e grave a janela.
-3. Quests & Tasks: entregue uma tarefa completa (de preferência uma de entrega de item).
-4. Daily Catch: capture **uma** espécie da tabela de uma faixa diferente de hard (ex.: Bellsprout em superEasy) e
-   abra a janela.
+## O que ainda pede evidência do original (gravador v1.2)
 
-Traz as respostas dos POST (formato de `claimed`, `payout`, `tasks/claim`), confere o Gift Center e testa o XP do
-Daily Catch (F: 10 × / 14 × pelo slot) com outra espécie e outra faixa.
+Feitas: G1, G2, G4 (11/11); G5, G7, G8 (13/11); G3, G9, G10 (15/11). G6 e G6b parciais: só a volta e o cancelamento.
 
-**G10 — Tipo do Dia, controle de loot (10 min).** Na **mesma hunt da G8** (Tyranitar), num dia em que o tipo do dia
-**não** é Sombrio, grave 10 min com o mesmo time e as mesmas configurações. Anote o tipo do dia mostrado.
+**Pendentes da fase 4:**
 
-Separa ×1,2 de ×1,4 no loot (G8 deu ×1,42) e acrescenta um dia à rotação.
+**G6c — soneca completa, do Zzz à coleta (≥ 10 min fora).** A G6b só trouxe o cancelamento.
+1. Numa hunt, abra a BAG e espere 3 s; volte à hunt.
+2. Clique 💤 Zzz e deixe o gravador ligado até a página sair.
+3. Feche o jogo por 10 min. Reabra com o gravador já ligado.
+4. **Antes** de coletar, abra a BAG (3 s). Colete (sem turbo). Abra a BAG de novo (3 s).
 
-**G11 — dano em nível baixo, com os stats do selvagem (10 min).** Na hunt do Geodude (ou Rattata), com um time de
-nível 1–4 (Larvitar ou Geodude), Auto-Catch ligado com Super Ball. Depois de cada captura, abra o Pokémon capturado
-em My Pokes (2 s).
+Mostra a mensagem do Zzz e se o loot e as poções da amostra já estão na BAG antes da coleta (hoje E).
 
-O `poke-delta` do capturado traz stats/IV/Quality exatos de um selvagem de nível 1–4 que apanhou do time: fecha o
-resíduo do item 1 (o erro está no limite de baixo da faixa de stat do selvagem de nível baixo).
+**G11 — dano em nível baixo, com os stats do selvagem (10 min)** (já combinada). Hunt do Geodude ou do Rattata, time de
+nível 1–4 (Larvitar ou Geodude), Auto-Catch com Super Ball; depois de cada captura, abra o capturado em My Pokes (2 s).
+Separa "piso 3 no ataque do aliado" de "stats do nível 2" e explica a faixa estreita do dano real no nível 1.
 
-**G1, G2, G4 — feitas (11/11).** G1: compra e venda com o formato das respostas (A); poções e pedras não aparecem
-para venda (C). G2: valor = `sellValue` da espécie (A). G4: Nurse Joy `joy-healed` vazio e regras do depot (A).
-**G5, G7, G8 — feitas (13/11); G6 parcial (só a volta).**
+**Lote 3 (no máximo 4):**
+
+**L1 — held items (8 min).**
+1. Abra a Held Machine e espere 5 s (não troque, se não quiser gastar tokens).
+2. Equipe um held conhecido (X-Attack ou X-Defense) no líder: abra o Pokémon antes e depois (2 s cada).
+3. Grave 5 min numa hunt conhecida (rhydon ou geodude) com o held equipado.
+
+Traz o formato do `use-held`, o pool da máquina e o efeito no dano (comparado com as gravações da mesma hunt sem held).
+
+**L2 — breeding (5 min).**
+1. Abra o Breeding Center e espere 5 s.
+2. Escolha dois Pokémon da mesma espécie na BOX (pode cancelar antes de criar) e espere 5 s com o par escolhido.
+3. Se puder gastar, crie 1 ovo e abra o incubador; quando chocar, abra o filhote em My Pokes.
+
+Traz `/api/game/breeding`: a chance da herança de IV, a diferença máxima de qualidade, o teto, a taxa, as pedras, os
+abates para chocar e o nível de liberação.
+
+**L3 — Pokédex, Golden Stars e Pokécards (4 min).**
+1. Abra a Pokédex, abra o detalhe de 2 espécies (uma com o bônus disponível) e resgate um "+25% XP", se houver.
+2. Abra a Poke Slot Machine e espere 5 s (a rolagem grátis, se estiver pronta).
+3. Se tiver um Poke Card Pack, abra-o e abra o álbum.
+
+Traz o N de derrotas e o efeito do bônus da Pokédex, a tabela de bônus das Golden Stars e o formato das cartas.
+
+**L4 — TM e Rare Candy (4 min).**
+1. Abra o TM Researcher e espere 5 s.
+2. Se tiver um disco, use-o num Pokémon e abra o Pokémon antes e depois (2 s cada).
+3. Use 1 Rare Candy num Pokémon do time e 1 berry (qualquer), com o Pokémon aberto antes e depois.
+
+Traz o efeito do TM no golpe e as respostas do `use-candy` e do `use-berry` (hoje E).

@@ -41,7 +41,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `testes/diag_ilhas.gd` | Ilha da grade do `start` e de cada spawn do hunt-config, por hunt |
 | `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
-| `dados/protocolo.json` | 145 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 57 vistos nas gravações; 27 caminhos REST (com as gravações da fase 4) |
+| `dados/protocolo.json` | 146 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 59 vistos nas gravações; 36 caminhos REST (com as gravações da fase 4) |
 | `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas × modelo do medidor (partindo do used-balls do início), lock de entrada |
 | `ferramentas/gravador/rest.py` | Lê as linhas `dir: "rest"` do gravador v1.1 (respostas de `/api/game/*`); medidor de captura do used-balls e a diferença entre duas respostas |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
@@ -49,6 +49,8 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `sim/servico_jogador.gd` | Fase 4, lote 2: sessão, Modo Soneca (amostra de 5 min pela própria sim, coleta de 50%), Streak Points e Tipo do Dia; parcelas `streak`/`boost`/`typeDay` e efeitos de loot na `simulacao_hunt.gd`. Regras em `CALIBRACAO_FASE4.md` |
 | `painel_soneca.gd`, `painel_streak.gd` | Coleta da soneca ao abrir a cidade e janela de Streak Points (⚙ → Streak Points); botão 💤 Zzz na HUD da hunt |
 | `sim/servico_diarias.gd`, `painel_diarias.gd` | Fase 4, item 3: Daily Gift, Quests & Tasks (124 tarefas, 43 cidades), Daily Kill e Daily Catch, puros na `sim/` com os dados gravados em `dados/fase4/` (gerados por `ferramentas/gravador/extrair_fase4.py`); janela ⚙ → Quests, Tasks & Dailys |
+| `sim/servico_itens.gd`, `painel_itens_uso.gd` | Fase 4, lote 3: Rare Candy e berries (efeito das berries no combate em `simulacao_hunt.gd`); janela ⚙ → Usar itens |
+| `ferramentas/fase4/comparar_nivel_baixo.py` | Item 2: real × sim por minuto (abates, desmaios, HP, dano dado/recebido, níveis) para time de nível baixo |
 | `ferramentas/fase4/ajustar_dano.py` | Item 1: confere variantes da fórmula de dano contra todos os golpes gravados → `dados/relatorios/ajuste_dano.md` |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
@@ -835,3 +837,14 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - G10 (A): loot do tipo do dia × 1,4 (×1,2 rejeitado, z 2,8; controle na mesma hunt 1,03×); 15/11 = Veneno (rotação).
   - `dados/fase4/` regenerado com G9 (claims do Daily Catch das duas gravações). Testes: cidade 48/48, lote 2 39/39,
     diárias 40/40, ciclos 14/14, 16/16, 20/20, cena 22/22.
+- 15/11/2026 — **Fase 4, lote 3 começado** (detalhe e pendências em `CALIBRACAO_FASE4.md`).
+  - `sim/servico_itens.gd` (puro): **Rare Candy** (C: +1 nível, só time, nível ≤ 100, até 10 por Pokémon; A: exatamente o
+    XP que falta) e **berries** (C: um Pokémon do time, 30 min, a mesma não acumula; A: efeito e % das 40 pela descrição
+    do items.json — 38 de redução de dano por tipo, 2 de cura). Efeito no combate (F na aplicação): dano recebido ×
+    (1 − pct), cura × (1 + pct); sem berry ativa a saída é idêntica. Save: campo opcional `itens_uso`.
+  - Held items, TMs, breeding, Ditto, Pokédex, Golden Stars e Pokécards: regras do cliente (C) e o que a G9 mostrou das
+    Golden Stars (A: 6 h por estrela, rolagem grátis a cada 12 h, 9 candidatos) registrados; os números ficam no servidor
+    (gravações L1–L4).
+  - Achado: o `itens.json` gerado perde os acentos das descrições (importador); o leitor das berries não depende deles.
+  - Testes: `test_sim_itens` 18/18, `test_ciclo_itens` 6/6. Protocolo 146 tipos, 59 vistos, 36 caminhos REST;
+    cadáveres 15 espécies normais.

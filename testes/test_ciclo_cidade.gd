@@ -100,6 +100,11 @@ func _process(_d: float) -> bool:
 				var r: Dictionary = caca.registro
 				checar(int(r["abates"]) > 0 and not (r["loot"] as Dictionary).is_empty(), "hunt: abates e loot", "%d abates" % int(r["abates"]))
 				checar(int(r["xp_treinador"]) > 0, "XP do treinador ganha", str(r["xp_treinador"]))
+				# A semente da hunt vem do relógio: às vezes uma Hyper Potion no limiar (726 + 1000) termina com o HP cheio.
+				# Para a checagem "a hunt não cura" ser determinística, o HP da sim fica pela metade nesse caso.
+				var ativo_sim: Dictionary = caca.sim.equipe[caca.sim.ativo]
+				if int(ativo_sim["hp"]) >= int(ativo_sim["max_hp"]):
+					ativo_sim["hp"] = int(ativo_sim["max_hp"]) / 2
 				caca.voltar_cidade()
 				etapa = 4
 				quadros = 0

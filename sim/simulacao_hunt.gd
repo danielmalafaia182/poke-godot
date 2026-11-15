@@ -754,6 +754,17 @@ func _abate(m: Dictionary) -> void:
 	_fim_abate(m, bola)
 
 
+func _berry_pct(poke: Dictionary, efeito: String) -> float:
+	## Berries ativas (cfg.berries: {"<id do Pokémon>": [{efeito, pct, until}]}, sim/servico_itens.gd): efeito = tipo do golpe
+	## (redução do dano recebido) ou "heal" (cura das poções). Soma as diferentes (E); a mesma não acumula (C).
+	var lista: Array = cfg.get("berries", {}).get(str(poke.get("id", "")), [])
+	var t := 0.0
+	for b in lista:
+		if String(b.get("efeito", "")) == efeito and agora_ms() < int(b.get("until", 0)):
+			t += float(b.get("pct", 0))
+	return minf(t, 100.0)
+
+
 func _pct_boost(chave: String) -> float:
 	## Boost ativo (cfg.boosts: [{key, until, pct}], A: formato da mensagem boosts) → pct; 0 sem boost.
 	for b in cfg.get("boosts", []):
@@ -958,6 +969,10 @@ func _ataque_selvagem(m: Dictionary) -> void:
 	var a := float(m["stats_dano"]["spAtk"] if especial else m["stats_dano"]["atk"])
 	var d := float(poke["stats_dano"]["spDef"] if especial else poke["stats_dano"]["def"])
 	var v := Regras.dano(int(m["nivel"]), int(g["poder"]), a, d, g["stab"], float(g["eff"]), true, _aleatorio(), p)
+	var red := _berry_pct(poke, String(g["tipo"]))
+	if red > 0.0:
+		# Lote 3 (A: texto do items.json "Reduz … o dano sofrido de golpes do tipo X (N% de redução)"); F: round e piso 1
+		v = maxi(int(p.piso_selvagem), Regras.js_round(float(v) * (1.0 - red / 100.0)))
 	hits.append({"slot": -1, "amount": v, "eff": g["eff"], "move": g["nome"], "type": g["tipo"]})
 	estatisticas["hits_selvagem"] += 1
 	poke["hp"] = maxi(0, int(poke["hp"]) - v)
@@ -997,7 +1012,10 @@ func _pos_dano() -> void:
 	if pid < 0:
 		return
 	var item: Dictionary = dados.itens.get(pid, {})
-	var cura := mini(int(item.get("cura", 0)), falta)  # A: limitado ao que falta
+	var bonus := _berry_pct(poke, "heal")
+	# Lote 3 (A: texto do items.json "Aumenta … a cura recebida de todas as poções usadas neste Pokémon (+N% de cura)");
+	# F: a poção cura × (1 + N%) e continua limitada ao que falta (A)
+	var cura := mini(Regras.js_round(float(item.get("cura", 0)) * (1.0 + bonus / 100.0)) if bonus > 0.0 else int(item.get("cura", 0)), falta)
 	if cura <= 0:
 		return
 	poke["hp"] = int(poke["hp"]) + cura

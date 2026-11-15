@@ -41,6 +41,7 @@ var placa_loja: PlacaInteracao
 var painel_config: PanelContainer
 var painel_streak: Control
 var painel_diarias: Control
+var painel_itens: Control
 var painel_soneca: Control
 var rotulo_ouro: Label
 # 0 = cidade inteira. Mantém placas e ações disponíveis à distância, como
@@ -308,7 +309,7 @@ func _perto_nurse() -> bool:
 	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_NURSE)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
 
 func _modal_aberto() -> bool:
-	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_diarias != null and painel_diarias.visible) or (painel_soneca != null and painel_soneca.visible)
+	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_diarias != null and painel_diarias.visible) or (painel_itens != null and painel_itens.visible) or (painel_soneca != null and painel_soneca.visible)
 
 func _clicar_nurse() -> void:
 	if not _perto_nurse() or personagem.andando or _modal_aberto():
@@ -405,6 +406,17 @@ func _criar_ouro_e_config() -> void:
 	botao_diarias.pressed.connect(func() -> void:
 		painel_config.hide()
 		painel_diarias.abrir())
+	# Fase 4, lote 3: itens de uso (Rare Candy e berries).
+	var botao_itens := Button.new()
+	botao_itens.name = "ItensUso"
+	botao_itens.text = "Usar itens (Rare Candy, berries)"
+	coluna.add_child(botao_itens)
+	painel_itens = load("res://painel_itens_uso.gd").new()
+	painel_itens.name = "PainelItensUso"
+	get_node("Interface").add_child(painel_itens)
+	botao_itens.pressed.connect(func() -> void:
+		painel_config.hide()
+		painel_itens.abrir())
 	painel_soneca = load("res://painel_soneca.gd").new()
 	painel_soneca.name = "PainelSoneca"
 	get_node("Interface").add_child(painel_soneca)

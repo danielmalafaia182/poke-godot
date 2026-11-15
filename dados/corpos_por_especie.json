@@ -5,10 +5,14 @@
   "C1.jsonl": "266d997809947d3163c00d9dbc2fc13ab39d302eb8b23edbe7a9e9e88fc1d1a2",
   "C6.jsonl": "47c7c4902d2e3566ade21731d010733d7bb42db03562e1e106e1facbca85b37c",
   "C8.jsonl": "05e9ad8cf2a5350f936c050e67ebd082a54f45edccb108e276da7609f23f3a5f",
+  "G10.jsonl": "b30927ab0a3ac3137fd6f92852b3ea9ae45e1509e280a73ded2f7df673a53261",
+  "G3.jsonl": "1d0532c0dbb1d775a00b055a82c9e3eb12fb84c7d431ce67fc5e6dd7831ab815",
   "G5.jsonl": "c028c0a08f6158223a7937718d651d0ef742218bffc78ff4107e85a6f61b454f",
   "G6.jsonl": "0e71e41346fbb8cab4094e2ca30286efd241f555d53de4dfd0f880265b6b4887",
+  "G6b.jsonl": "5bd307822fba4f218a90bb00d137de892cdb4fb3bead67e084efa9760c8e4d80",
   "G7.jsonl": "300ec2ffe49faaaeb0e6ed90364bf935fbcfb539cf3a0b47f7d67f235601b303",
   "G8.jsonl": "c2aa44c127c759bc9948f2defd856fcc10858317ca2a9ab06c1aff853aa2b995",
+  "G9.jsonl": "34663ab598e553ceca21eda5d68bdc9c9c845e6f59e42aee1eda44b33656b643",
   "M1.jsonl": "5344694d50f54bdd01a07c81ee6b8163c8708e0d983f3bbe4b831072612796f8",
   "M2.jsonl": "6fa7e006006b7607fc2c159eefcabfa10324d44164c3b57e9a2deb036d8d2036",
   "M3.jsonl": "560acc5676b2a9088a9f88057327e58f84d42a764ecda3c02fc4158f188d34f9",
@@ -58,6 +62,13 @@
    "n": 2070,
    "contagem": {
     "2826": 2070
+   }
+  },
+  "24": {
+   "corpo": 2881,
+   "n": 781,
+   "contagem": {
+    "2881": 781
    }
   },
   "37": {
@@ -111,16 +122,16 @@
   },
   "246": {
    "corpo": 10749,
-   "n": 1519,
+   "n": 1721,
    "contagem": {
-    "10749": 1519
+    "10749": 1721
    }
   },
   "248": {
    "corpo": 10734,
-   "n": 1619,
+   "n": 4448,
    "contagem": {
-    "10734": 1619
+    "10734": 4448
    }
   },
   "10524": {

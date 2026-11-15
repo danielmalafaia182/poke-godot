@@ -27,7 +27,8 @@ func executar() -> void:
 		"campos do lote 2 (Streak, soneca) entram zerados")
 	# Fase 4, item 3: diárias e boosts entram vazios num save anterior.
 	checar((atual.get("diarias",{}) as Dictionary).is_empty() and (atual.get("boosts",[]) as Array).is_empty(), "campos do item 3 (diárias, boosts) entram vazios")
-	for campo in ["captura_medidor","ultima_hunt","ouro","vip","streak","soneca","diarias","boosts"]:
+	checar((atual.get("itens_uso",{}) as Dictionary).is_empty(), "campo do lote 3 (itens de uso) entra vazio")
+	for campo in ["captura_medidor","ultima_hunt","ouro","vip","streak","soneca","diarias","boosts","itens_uso"]:
 		atual.erase(campo)
 	var esperado: Dictionary=anterior.duplicate(true)
 	for registro in esperado["team"]:

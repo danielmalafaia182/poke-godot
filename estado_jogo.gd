@@ -104,6 +104,10 @@ const SERVICO_DIARIAS := preload("res://sim/servico_diarias.gd")
 static var _servico_diarias = null
 var diarias: Dictionary = {}
 signal diarias_alteradas
+# Fase 4, lote 3: itens de uso (sim/servico_itens.gd): Rare Candies usados por Pokémon e berries ativas.
+const SERVICO_ITENS := preload("res://sim/servico_itens.gd")
+static var _servico_itens = null
+var itens_uso: Dictionary = {}
 # Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
 var slug_caca: String = ""
 # Fase 3: medidor de captura por espécie (C: /api/game/used-balls) — speciesId (str, "s" no fim = shiny) →
@@ -501,6 +505,34 @@ func diaria_abate(especie: int) -> void:
 
 func diaria_captura(especie: int) -> Dictionary:
 	return diarias_tratar({"type": "captura", "speciesId": especie, "agora": int(Time.get_unix_time_from_system())})
+
+# ---------------------------------------------------------------- itens de uso (fase 4, lote 3)
+func servico_itens():
+	if _servico_itens == null:
+		_servico_itens = SERVICO_ITENS.new(PONTE_CIDADE.dados())
+	return _servico_itens
+
+func usar_item(cmd: Dictionary) -> Dictionary:
+	## use-candy {pokeId} / use-berry {itemId, pokeId}: monta o estado da ponte + itens_uso, aplica BAG e XP do candy.
+	var e: Dictionary = PONTE_CIDADE.estado_de(self, cidade_atual())
+	e["itens_uso"] = itens_uso
+	cmd["agora"] = int(Time.get_unix_time_from_system())
+	var msgs: Array = servico_itens().tratar(e, cmd)
+	var erro := PONTE_CIDADE.primeiro_erro(msgs)
+	if not erro.is_empty():
+		return {"erro": erro}
+	itens_uso = e["itens_uso"]
+	PONTE_CIDADE.aplicar(self, msgs)
+	var r: Dictionary = msgs[0]
+	if String(r.get("type", "")) == "candy-used":
+		var pk := _pokemon_por_id(String(r["pokeId"]))
+		if pk != null:
+			conceder_experiencia(pk, int(r["xpGained"]))
+	solicitar_salvamento()
+	return r
+
+func berries_ativas(agora_unix: int) -> Dictionary:
+	return servico_itens().berries_ativas({"itens_uso": itens_uso}, agora_unix)
 
 # ---------------------------------------------------------------- loja do Mark
 func loja() -> Dictionary:

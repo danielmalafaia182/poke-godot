@@ -153,6 +153,8 @@ func _validar(dados: Variant) -> String:
 	# Fase 4, item 3 (opcionais): diárias/tarefas e boosts ativos.
 	if dados.has("diarias") and (not dados["diarias"] is Dictionary or JSON.stringify(dados["diarias"]).length() > 500000):
 		return "Diárias inválidas."
+	if dados.has("itens_uso") and (not dados["itens_uso"] is Dictionary or JSON.stringify(dados["itens_uso"]).length() > 200000):
+		return "Itens de uso inválidos."
 	if dados.has("boosts"):
 		if not dados["boosts"] is Array or dados["boosts"].size() > 50:
 			return "Boosts inválidos."
@@ -279,6 +281,7 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 		por_especie[String(k)] = int(st["bySpecies"][k])
 	estado.streak = {"totalKills": int(st.get("totalKills", 0)), "spent": gastos, "bySpecies": por_especie}
 	estado.diarias = (dados.get("diarias", {}) as Dictionary).duplicate(true)
+	estado.itens_uso = (dados.get("itens_uso", {}) as Dictionary).duplicate(true)
 	estado.boosts = []
 	for b in dados.get("boosts", []):
 		estado.boosts.append({"key": String(b["key"]), "until": int(b["until"]), "pct": int(b["pct"])})
@@ -350,7 +353,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
 		"captura_medidor": estado.medidor_captura.duplicate(true), "ultima_hunt": estado.ultima_hunt_slug,
 		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
-		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true),
+		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true),
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 

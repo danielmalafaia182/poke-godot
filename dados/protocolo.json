@@ -32,21 +32,25 @@
   "c5.jsonl",
   "g1.jsonl",
   "t1_transacoes.jsonl",
+  "G10.jsonl",
+  "G3.jsonl",
   "G5.jsonl",
   "G6.jsonl",
+  "G6b.jsonl",
   "G7.jsonl",
   "G8.jsonl",
+  "G9.jsonl",
   "geodude-3.jsonl",
   "loogs.txt",
   "logs rhyhorn.txt",
   "logs hitmonlee.txt"
  ],
  "totais": {
-  "tipos": 145,
+  "tipos": 146,
   "enviados_no_cliente": 65,
   "assinados_no_cliente": 72,
-  "vistos_em_logs": 57,
-  "rest_vistos": 27
+  "vistos_em_logs": 59,
+  "rest_vistos": 36
  },
  "mensagens": {
   "addon-used": {
@@ -81,10 +85,13 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -164,10 +171,13 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -191,8 +201,9 @@
   "auto-heal": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 782,
+    "vezes": 788,
     "fontes": [
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "geodeude-2.jsonl",
@@ -234,10 +245,13 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 32,
+    "vezes": 36,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M3.jsonl",
      "c5.jsonl"
@@ -408,8 +422,9 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 23,
+    "vezes": 24,
     "fontes": [
+     "G9.jsonl",
      "M1.jsonl",
      "M3.jsonl",
      "c5.jsonl"
@@ -438,15 +453,19 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 28900,
+    "vezes": 30279,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
+     "G3.jsonl",
      "G5.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -474,15 +493,18 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1766,
+    "vezes": 1917,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -629,12 +651,13 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 21,
+    "vezes": 22,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -663,13 +686,16 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 36,
+    "vezes": 43,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -724,15 +750,18 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 133,
+    "vezes": 139,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -784,14 +813,16 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1744,
+    "vezes": 1891,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M3.jsonl",
      "S2.jsonl",
      "S4.jsonl",
@@ -989,12 +1020,13 @@
     ]
    },
    "visto_out": {
-    "vezes": 22,
+    "vezes": 24,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1037,15 +1069,18 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 143,
+    "vezes": 154,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1130,14 +1165,16 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 25607,
+    "vezes": 26694,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1549,11 +1586,12 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 80,
+    "vezes": 81,
     "fontes": [
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "S1.jsonl",
      "geodeude-2.jsonl",
      "geodude-10min.jsonl",
@@ -1569,7 +1607,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 102,
+    "vezes": 105,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -1577,6 +1615,7 @@
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1687,14 +1726,16 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2269,
+    "vezes": 2416,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -1836,6 +1877,13 @@
           ],
           "exemplo": 0
          },
+         "star": {
+          "tipos": [
+           "int"
+          ],
+          "opcional": true,
+          "exemplo": 54
+         },
          "typeDay": {
           "tipos": [
            "int"
@@ -1893,6 +1941,32 @@
        "str"
       ],
       "exemplo": "Rattata"
+     },
+     "star": {
+      "tipos": [
+       "object"
+      ],
+      "opcional": true,
+      "campos": {
+       "lootPct": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "name": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "⭐ Slot Bônus: Larvitar"
+       },
+       "xpPct": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 10
+       }
+      }
      },
      "totalXp": {
       "tipos": [
@@ -1969,6 +2043,13 @@
         ],
         "exemplo": 0
        },
+       "star": {
+        "tipos": [
+         "int"
+        ],
+        "opcional": true,
+        "exemplo": 54
+       },
        "streak": {
         "tipos": [
          "int"
@@ -2032,6 +2113,13 @@
    "no_cliente": {
     "enviado": true,
     "chaves_literal": []
+   },
+   "visto_out": {
+    "vezes": 2,
+    "fontes": [
+     "G9.jsonl"
+    ],
+    "esquema": {}
    }
   },
   "guild": {
@@ -2332,10 +2420,13 @@
   "history": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -2789,8 +2880,9 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1,
+    "vezes": 2,
     "fontes": [
+     "G10.jsonl",
      "G7.jsonl"
     ],
     "esquema": {
@@ -2798,13 +2890,13 @@
       "tipos": [
        "str"
       ],
-      "exemplo": "Blastoise"
+      "exemplo": "Magnetic Electabuzz"
      },
      "slug": {
       "tipos": [
        "str"
       ],
-      "exemplo": "blastoise"
+      "exemplo": "magnetic_electabuzz"
      }
     }
    }
@@ -2851,11 +2943,14 @@
   "invasion-energy": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 153,
+    "vezes": 156,
     "fontes": [
      "C8.jsonl",
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "c5.jsonl",
      "gravacoes_unicas_2026-11-09.jsonl",
@@ -2959,15 +3054,18 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2949,
+    "vezes": 3084,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3044,8 +3142,9 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 8,
+    "vezes": 9,
     "fontes": [
+     "G9.jsonl",
      "g1.jsonl",
      "geodude-10min.jsonl",
      "loogs.txt",
@@ -3065,10 +3164,13 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 4,
+    "vezes": 8,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "rhydon-1h.jsonl"
     ],
@@ -3105,10 +3207,13 @@
   "offline-notice": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 6,
+    "vezes": 13,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -3117,7 +3222,117 @@
        "list"
       ],
       "itens": {
-       "tipos": []
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "at": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1794751361642
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "a0838b1e-8531-4984-a6c5-ac7639792a1b"
+        },
+        "kills": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 16
+        },
+        "kind": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cancelled"
+        },
+        "ms": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 91981
+        },
+        "poke": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "id": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "cmu9y6y5cntw5iiyrt3u78fys"
+          },
+          "level": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 172
+          },
+          "nickname": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "speciesId": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 3
+          }
+         }
+        },
+        "pokeXp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 14016
+        },
+        "reason": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "reconnect"
+        },
+        "slug": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "larvitar"
+        },
+        "xp": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 14016
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "offline-notice-ack": {
+   "no_cliente": {},
+   "visto_out": {
+    "vezes": 1,
+    "fontes": [
+     "G6b.jsonl"
+    ],
+    "esquema": {
+     "ids": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "str"
+       ],
+       "exemplo": "a0838b1e-8531-4984-a6c5-ac7639792a1b"
       }
      }
     }
@@ -3126,10 +3341,13 @@
   "offline-notice-get": {
    "no_cliente": {},
    "visto_out": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -3150,7 +3368,7 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 1157,
+    "vezes": 1159,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -3158,6 +3376,7 @@
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3247,12 +3466,13 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 20,
+    "vezes": 21,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3274,10 +3494,11 @@
   "poke-delta": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 292,
+    "vezes": 294,
     "fontes": [
      "C1.jsonl",
      "C8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "S4.jsonl",
@@ -3519,8 +3740,9 @@
     ]
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 4,
     "fontes": [
+     "G10.jsonl",
      "M3.jsonl",
      "S1.jsonl",
      "c5.jsonl"
@@ -3540,8 +3762,9 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2,
+    "vezes": 3,
     "fontes": [
+     "G10.jsonl",
      "S1.jsonl",
      "c5.jsonl"
     ],
@@ -3574,14 +3797,16 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 2269,
+    "vezes": 2416,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -3699,10 +3924,14 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 11,
+    "vezes": 19,
     "fontes": [
+     "G10.jsonl",
+     "G3.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "geodude-10min.jsonl",
      "rhydon-1h.jsonl"
@@ -4189,10 +4418,14 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 15,
+    "vezes": 20,
     "fontes": [
+     "G10.jsonl",
+     "G3.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "S1.jsonl",
      "S2.jsonl",
@@ -4365,19 +4598,25 @@
     "assinado": true
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
    },
    "visto_in": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -4488,10 +4727,13 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -4514,10 +4756,13 @@
     ]
    },
    "visto_out": {
-    "vezes": 9,
+    "vezes": 12,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "g1.jsonl",
      "geodude-10min.jsonl",
@@ -4648,10 +4893,13 @@
     "assinado": true
    },
    "visto_in": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {
@@ -4686,10 +4934,13 @@
     "chaves_literal": []
    },
    "visto_out": {
-    "vezes": 3,
+    "vezes": 6,
     "fontes": [
+     "G10.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
+     "G9.jsonl",
      "M1.jsonl"
     ],
     "esquema": {}
@@ -4835,7 +5086,7 @@
     ]
    },
    "visto_out": {
-    "vezes": 102,
+    "vezes": 105,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
@@ -4843,6 +5094,7 @@
      "G5.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -4881,15 +5133,18 @@
   "vip": {
    "no_cliente": {},
    "visto_in": {
-    "vezes": 142,
+    "vezes": 153,
     "fontes": [
      "C1.jsonl",
      "C6.jsonl",
      "C8.jsonl",
+     "G10.jsonl",
      "G5.jsonl",
      "G6.jsonl",
+     "G6b.jsonl",
      "G7.jsonl",
      "G8.jsonl",
+     "G9.jsonl",
      "M1.jsonl",
      "M2.jsonl",
      "M3.jsonl",
@@ -4919,13 +5174,16 @@
  },
  "rest": {
   "GET /api/game/blocks": {
-   "vezes": 2,
+   "vezes": 5,
    "fontes": [
+    "G10.jsonl",
     "G6.jsonl",
-    "G7.jsonl"
+    "G6b.jsonl",
+    "G7.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 2
+    "200": 5
    },
    "esquema": {
     "tipos": [
@@ -4944,12 +5202,13 @@
    }
   },
   "GET /api/game/capture-log": {
-   "vezes": 5,
+   "vezes": 8,
    "fontes": [
+    "G9.jsonl",
     "c5.jsonl"
    ],
    "status": {
-    "200": 5
+    "200": 8
    },
    "esquema": {
     "tipos": [
@@ -5068,15 +5327,18 @@
    }
   },
   "GET /api/game/city-npcs": {
-   "vezes": 6,
+   "vezes": 9,
    "fontes": [
+    "G10.jsonl",
     "G6.jsonl",
+    "G6b.jsonl",
     "G7.jsonl",
+    "G9.jsonl",
     "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 6
+    "200": 9
    },
    "esquema": {
     "tipos": [
@@ -5123,12 +5385,13 @@
    }
   },
   "GET /api/game/daily": {
-   "vezes": 1,
+   "vezes": 2,
    "fontes": [
-    "G7.jsonl"
+    "G7.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 1
+    "200": 2
    },
    "esquema": {
     "tipos": [
@@ -5248,12 +5511,13 @@
    }
   },
   "GET /api/game/daily-catch": {
-   "vezes": 4,
+   "vezes": 6,
    "fontes": [
-    "G5.jsonl"
+    "G5.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 4
+    "200": 6
    },
    "esquema": {
     "tipos": [
@@ -5315,6 +5579,7 @@
          "tipos": [
           "str"
          ],
+         "opcional": true,
          "exemplo": "GROUND"
         },
         "xp": {
@@ -5511,12 +5776,13 @@
    }
   },
   "GET /api/game/daily-kill": {
-   "vezes": 4,
+   "vezes": 5,
    "fontes": [
-    "G5.jsonl"
+    "G5.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 4
+    "200": 5
    },
    "esquema": {
     "tipos": [
@@ -5726,12 +5992,13 @@
    }
   },
   "GET /api/game/dailys-summary": {
-   "vezes": 3,
+   "vezes": 8,
    "fontes": [
-    "G5.jsonl"
+    "G5.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 3
+    "200": 8
    },
    "esquema": {
     "tipos": [
@@ -5947,18 +6214,662 @@
     }
    }
   },
+  "GET /api/game/evolve": {
+   "vezes": 1,
+   "fontes": [
+    "G3.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "canEvolve": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "destId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 75
+     },
+     "destName": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Graveler"
+     },
+     "hasStones": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "itemOnly": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "keepLevel": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 40
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 40
+     },
+     "name": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Geodude"
+     },
+     "needLevel": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 40
+     },
+     "resetLevel": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1
+     },
+     "stones": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "have": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 209
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/items/rock_stone.gif"
+        },
+        "itemId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 109
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Rock Stone"
+        },
+        "need": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/gifts": {
+   "vezes": 1,
+   "fontes": [
+    "G9.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "gifts": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "createdAt": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "2026-11-15T13:36:59.403Z"
+        },
+        "grantedBy": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Presente Diário"
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/loot.png"
+        },
+        "id": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "cmwhvpbm3fsoyjxw304dgmmq6"
+        },
+        "kind": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "boost"
+        },
+        "label": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Loot Boost +20% (1h)"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "GET /api/game/golden-stars": {
+   "vezes": 1,
+   "fontes": [
+    "G9.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "cardIcon": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "/assets/items/poke_golden_card.png"
+     },
+     "cardItemId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 90126
+     },
+     "cards": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "config": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "autoLockCards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 5
+       },
+       "autoMaxLateMs": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 86400000
+       },
+       "autoRerollBonusCards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "bonusRerollNeverWorse": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "bonuses": {
+        "tipos": [
+         "list"
+        ],
+        "itens": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "color": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "#5bd7ff"
+          },
+          "durationMs": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 21600000
+          },
+          "icon": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "/assets/topmenu/exp.png"
+          },
+          "maxPct": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 50
+          },
+          "type": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "exp"
+          }
+         }
+        }
+       },
+       "candidates": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 9
+       },
+       "critDamageBaseCritPct": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 5
+       },
+       "durationMs": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 21600000
+       },
+       "freeRollCooldownMs": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 43200000
+       },
+       "lootScope": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "species"
+       },
+       "noRepeatBonusAcrossSlots": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "noRepeatSpeciesAcrossSlots": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "pickSpeciesCards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 5
+       },
+       "rarities": {
+        "tipos": [
+         "list"
+        ],
+        "itens": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "color": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "#9aa6b3"
+          },
+          "key": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "common"
+          },
+          "max": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 10
+          },
+          "min": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 5
+          }
+         }
+        }
+       },
+       "rerollBonusCards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "rerollCostCards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "rollCostCards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "slots": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 3
+       }
+      }
+     },
+     "diamonds": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "gold": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1375755
+     },
+     "isVip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 173
+     },
+     "now": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794749857335
+     },
+     "slots": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "active": {
+         "tipos": [
+          "null"
+         ]
+        },
+        "autoMode": {
+         "tipos": [
+          "null"
+         ]
+        },
+        "candidates": {
+         "tipos": [
+          "list",
+          "null"
+         ],
+         "itens": {
+          "tipos": [
+           "object"
+          ],
+          "campos": {
+           "looktype": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 350
+           },
+           "name": {
+            "tipos": [
+             "str"
+            ],
+            "exemplo": "Flaaffy"
+           },
+           "speciesId": {
+            "tipos": [
+             "int"
+            ],
+            "exemplo": 180
+           }
+          }
+         }
+        },
+        "expired": {
+         "tipos": [
+          "null",
+          "object"
+         ],
+         "campos": {
+          "bonusType": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "critDamage"
+          },
+          "expiresAt": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1794194155409
+          },
+          "looktype": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 3674
+          },
+          "name": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "Elekid"
+          },
+          "pct": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 13
+          },
+          "rarity": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "uncommon"
+          },
+          "speciesId": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 239
+          },
+          "startedAt": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1794172555409
+          }
+         }
+        },
+        "freeReady": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "freeRollAt": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1794442736065
+        },
+        "rolls": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 5
+        },
+        "slot": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 0
+        },
+        "unlockPerm": {
+         "tipos": [
+          "null",
+          "object"
+         ],
+         "campos": {
+          "amount": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 10000000
+          },
+          "kind": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "gold"
+          },
+          "vipOnly": {
+           "tipos": [
+            "bool"
+           ],
+           "opcional": true,
+           "exemplo": true
+          }
+         }
+        },
+        "unlockTemp": {
+         "tipos": [
+          "null",
+          "object"
+         ],
+         "campos": {
+          "amount": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 5
+          },
+          "hours": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 24
+          },
+          "kind": {
+           "tipos": [
+            "str"
+           ],
+           "exemplo": "cards"
+          },
+          "vipOnly": {
+           "tipos": [
+            "bool"
+           ],
+           "opcional": true,
+           "exemplo": true
+          }
+         }
+        },
+        "unlocked": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "unlockedPerm": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "unlockedUntil": {
+         "tipos": [
+          "null"
+         ]
+        },
+        "vipLocked": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "GET /api/game/hunt-config": {
-   "vezes": 13,
+   "vezes": 15,
    "fontes": [
     "C8.jsonl",
     "G7.jsonl",
+    "G9.jsonl",
     "M3.jsonl",
     "c5.jsonl",
     "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 13
+    "200": 15
    },
    "esquema": {
     "tipos": [
@@ -6058,17 +6969,20 @@
    }
   },
   "GET /api/game/map-markers": {
-   "vezes": 10,
+   "vezes": 15,
    "fontes": [
     "C8.jsonl",
+    "G10.jsonl",
     "G6.jsonl",
+    "G6b.jsonl",
     "G7.jsonl",
+    "G9.jsonl",
     "M3.jsonl",
     "g1.jsonl",
     "t1_transacoes.jsonl"
    ],
    "status": {
-    "200": 10
+    "200": 15
    },
    "esquema": {
     "tipos": [
@@ -6162,13 +7076,16 @@
    }
   },
   "GET /api/game/offline": {
-   "vezes": 3,
+   "vezes": 8,
    "fontes": [
+    "G10.jsonl",
     "G6.jsonl",
-    "G7.jsonl"
+    "G6b.jsonl",
+    "G7.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 3
+    "200": 8
    },
    "esquema": {
     "tipos": [
@@ -6356,12 +7273,13 @@
    }
   },
   "GET /api/game/outfits": {
-   "vezes": 4,
+   "vezes": 5,
    "fontes": [
+    "G9.jsonl",
     "c5.jsonl"
    ],
    "status": {
-    "200": 4
+    "200": 5
    },
    "esquema": {
     "tipos": [
@@ -6493,13 +7411,16 @@
    }
   },
   "GET /api/game/patchnotes": {
-   "vezes": 2,
+   "vezes": 5,
    "fontes": [
+    "G10.jsonl",
     "G6.jsonl",
-    "G7.jsonl"
+    "G6b.jsonl",
+    "G7.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 2
+    "200": 5
    },
    "esquema": {
     "tipos": [
@@ -6545,12 +7466,13 @@
    }
   },
   "GET /api/game/profile": {
-   "vezes": 4,
+   "vezes": 5,
    "fontes": [
+    "G9.jsonl",
     "c5.jsonl"
    ],
    "status": {
-    "200": 4
+    "200": 5
    },
    "esquema": {
     "tipos": [
@@ -6564,6 +7486,7 @@
      },
      "clan": {
       "tipos": [
+       "null",
        "object"
       ],
       "campos": {
@@ -7019,12 +7942,13 @@
    }
   },
   "GET /api/game/tasks": {
-   "vezes": 51,
+   "vezes": 57,
    "fontes": [
-    "G5.jsonl"
+    "G5.jsonl",
+    "G9.jsonl"
    ],
    "status": {
-    "200": 51
+    "200": 57
    },
    "esquema": {
     "tipos": [
@@ -7538,13 +8462,222 @@
     }
    }
   },
-  "POST /api/game/daily-kill/pick": {
+  "POST /api/game/capture-log/clear": {
    "vezes": 1,
    "fontes": [
-    "G5.jsonl"
+    "G9.jsonl"
    ],
    "status": {
     "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "removed": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 10057
+     }
+    }
+   }
+  },
+  "POST /api/game/daily": {
+   "vezes": 1,
+   "fontes": [
+    "G9.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "blockedByVip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "canClaim": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "claimed": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "day": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 13
+       },
+       "icon": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "/assets/markitems/loot.png"
+       },
+       "kind": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "lootboost"
+       },
+       "label": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "Loot Boost +20% (1h)"
+       },
+       "qty": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1
+       },
+       "refId": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "tag": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "BOOST"
+       }
+      }
+     },
+     "claimedToday": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "nextDay": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 14
+     },
+     "rewards": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "claimed": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": true
+        },
+        "current": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "day": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        },
+        "icon": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "/assets/markitems/pokeball.png"
+        },
+        "kind": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "ball"
+        },
+        "label": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Poké Ball"
+        },
+        "locked": {
+         "tipos": [
+          "bool"
+         ],
+         "exemplo": false
+        },
+        "qty": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 100
+        },
+        "tag": {
+         "tipos": [
+          "null",
+          "str"
+         ],
+         "exemplo": "VIP"
+        }
+       }
+      }
+     },
+     "toGiftCenter": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "total": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 28
+     },
+     "vip": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "ym": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "2026-11"
+     }
+    }
+   }
+  },
+  "POST /api/game/daily-kill/pick": {
+   "vezes": 2,
+   "fontes": [
+    "G5.jsonl",
+    "G9.jsonl"
+   ],
+   "status": {
+    "200": 2
    },
    "esquema": {
     "tipos": [
@@ -7867,6 +9000,1119 @@
        "int"
       ],
       "exemplo": 200
+     }
+    }
+   }
+  },
+  "POST /api/game/evolve": {
+   "vezes": 1,
+   "fontes": [
+    "G3.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "destId": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 75
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 40
+     },
+     "name": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "Graveler"
+     },
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "stonesSpent": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "itemId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 109
+        },
+        "qty": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 1
+        }
+       }
+      }
+     },
+     "usedStone": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     }
+    }
+   }
+  },
+  "POST /api/game/golden-stars/pick": {
+   "vezes": 1,
+   "fontes": [
+    "G9.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "active": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "bonusType": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "exp"
+       },
+       "expiresAt": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1794771463021
+       },
+       "looktype": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 400
+       },
+       "name": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "Larvitar"
+       },
+       "pct": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 10
+       },
+       "rarity": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "uncommon"
+       },
+       "speciesId": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 246
+       },
+       "startedAt": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1794749863021
+       }
+      }
+     },
+     "bonusKept": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "slot": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "state": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "cardIcon": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "/assets/items/poke_golden_card.png"
+       },
+       "cardItemId": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 90126
+       },
+       "cards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "config": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "autoLockCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 5
+         },
+         "autoMaxLateMs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 86400000
+         },
+         "autoRerollBonusCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "bonusRerollNeverWorse": {
+          "tipos": [
+           "bool"
+          ],
+          "exemplo": true
+         },
+         "bonuses": {
+          "tipos": [
+           "list"
+          ],
+          "itens": {
+           "tipos": [
+            "object"
+           ],
+           "campos": {
+            "color": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "#5bd7ff"
+            },
+            "durationMs": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 21600000
+            },
+            "icon": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "/assets/topmenu/exp.png"
+            },
+            "maxPct": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 50
+            },
+            "type": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "exp"
+            }
+           }
+          }
+         },
+         "candidates": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 9
+         },
+         "critDamageBaseCritPct": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 5
+         },
+         "durationMs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 21600000
+         },
+         "freeRollCooldownMs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 43200000
+         },
+         "lootScope": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "species"
+         },
+         "noRepeatBonusAcrossSlots": {
+          "tipos": [
+           "bool"
+          ],
+          "exemplo": true
+         },
+         "noRepeatSpeciesAcrossSlots": {
+          "tipos": [
+           "bool"
+          ],
+          "exemplo": true
+         },
+         "pickSpeciesCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 5
+         },
+         "rarities": {
+          "tipos": [
+           "list"
+          ],
+          "itens": {
+           "tipos": [
+            "object"
+           ],
+           "campos": {
+            "color": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "#9aa6b3"
+            },
+            "key": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "common"
+            },
+            "max": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 10
+            },
+            "min": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 5
+            }
+           }
+          }
+         },
+         "rerollBonusCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "rerollCostCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "rollCostCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "slots": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 3
+         }
+        }
+       },
+       "diamonds": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "gold": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1375755
+       },
+       "isVip": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "level": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 173
+       },
+       "now": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1794749863027
+       },
+       "slots": {
+        "tipos": [
+         "list"
+        ],
+        "itens": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "active": {
+           "tipos": [
+            "null",
+            "object"
+           ],
+           "campos": {
+            "bonusType": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "exp"
+            },
+            "expiresAt": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 1794771463021
+            },
+            "looktype": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 400
+            },
+            "name": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "Larvitar"
+            },
+            "pct": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 10
+            },
+            "rarity": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "uncommon"
+            },
+            "speciesId": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 246
+            },
+            "startedAt": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 1794749863021
+            }
+           }
+          },
+          "autoMode": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "candidates": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "expired": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "freeReady": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": false
+          },
+          "freeRollAt": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1794793059245
+          },
+          "rolls": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 6
+          },
+          "slot": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 0
+          },
+          "unlockPerm": {
+           "tipos": [
+            "null",
+            "object"
+           ],
+           "campos": {
+            "amount": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 10000000
+            },
+            "kind": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "gold"
+            },
+            "vipOnly": {
+             "tipos": [
+              "bool"
+             ],
+             "opcional": true,
+             "exemplo": true
+            }
+           }
+          },
+          "unlockTemp": {
+           "tipos": [
+            "null",
+            "object"
+           ],
+           "campos": {
+            "amount": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 5
+            },
+            "hours": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 24
+            },
+            "kind": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "cards"
+            },
+            "vipOnly": {
+             "tipos": [
+              "bool"
+             ],
+             "opcional": true,
+             "exemplo": true
+            }
+           }
+          },
+          "unlocked": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": true
+          },
+          "unlockedPerm": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": false
+          },
+          "unlockedUntil": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "vipLocked": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": false
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "POST /api/game/golden-stars/roll": {
+   "vezes": 1,
+   "fontes": [
+    "G9.jsonl"
+   ],
+   "status": {
+    "200": 1
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "candidates": {
+      "tipos": [
+       "list"
+      ],
+      "itens": {
+       "tipos": [
+        "object"
+       ],
+       "campos": {
+        "looktype": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 114
+        },
+        "name": {
+         "tipos": [
+          "str"
+         ],
+         "exemplo": "Ninetales"
+        },
+        "speciesId": {
+         "tipos": [
+          "int"
+         ],
+         "exemplo": 38
+        }
+       }
+      }
+     },
+     "cost": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "freeRollAt": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1794793059245
+     },
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "paidWith": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "free"
+     },
+     "slot": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "state": {
+      "tipos": [
+       "object"
+      ],
+      "campos": {
+       "cardIcon": {
+        "tipos": [
+         "str"
+        ],
+        "exemplo": "/assets/items/poke_golden_card.png"
+       },
+       "cardItemId": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 90126
+       },
+       "cards": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "config": {
+        "tipos": [
+         "object"
+        ],
+        "campos": {
+         "autoLockCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 5
+         },
+         "autoMaxLateMs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 86400000
+         },
+         "autoRerollBonusCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "bonusRerollNeverWorse": {
+          "tipos": [
+           "bool"
+          ],
+          "exemplo": true
+         },
+         "bonuses": {
+          "tipos": [
+           "list"
+          ],
+          "itens": {
+           "tipos": [
+            "object"
+           ],
+           "campos": {
+            "color": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "#5bd7ff"
+            },
+            "durationMs": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 21600000
+            },
+            "icon": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "/assets/topmenu/exp.png"
+            },
+            "maxPct": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 50
+            },
+            "type": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "exp"
+            }
+           }
+          }
+         },
+         "candidates": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 9
+         },
+         "critDamageBaseCritPct": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 5
+         },
+         "durationMs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 21600000
+         },
+         "freeRollCooldownMs": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 43200000
+         },
+         "lootScope": {
+          "tipos": [
+           "str"
+          ],
+          "exemplo": "species"
+         },
+         "noRepeatBonusAcrossSlots": {
+          "tipos": [
+           "bool"
+          ],
+          "exemplo": true
+         },
+         "noRepeatSpeciesAcrossSlots": {
+          "tipos": [
+           "bool"
+          ],
+          "exemplo": true
+         },
+         "pickSpeciesCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 5
+         },
+         "rarities": {
+          "tipos": [
+           "list"
+          ],
+          "itens": {
+           "tipos": [
+            "object"
+           ],
+           "campos": {
+            "color": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "#9aa6b3"
+            },
+            "key": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "common"
+            },
+            "max": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 10
+            },
+            "min": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 5
+            }
+           }
+          }
+         },
+         "rerollBonusCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "rerollCostCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "rollCostCards": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 1
+         },
+         "slots": {
+          "tipos": [
+           "int"
+          ],
+          "exemplo": 3
+         }
+        }
+       },
+       "diamonds": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 0
+       },
+       "gold": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1375755
+       },
+       "isVip": {
+        "tipos": [
+         "bool"
+        ],
+        "exemplo": true
+       },
+       "level": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 173
+       },
+       "now": {
+        "tipos": [
+         "int"
+        ],
+        "exemplo": 1794749859252
+       },
+       "slots": {
+        "tipos": [
+         "list"
+        ],
+        "itens": {
+         "tipos": [
+          "object"
+         ],
+         "campos": {
+          "active": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "autoMode": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "candidates": {
+           "tipos": [
+            "list",
+            "null"
+           ],
+           "itens": {
+            "tipos": [
+             "object"
+            ],
+            "campos": {
+             "looktype": {
+              "tipos": [
+               "int"
+              ],
+              "exemplo": 114
+             },
+             "name": {
+              "tipos": [
+               "str"
+              ],
+              "exemplo": "Ninetales"
+             },
+             "speciesId": {
+              "tipos": [
+               "int"
+              ],
+              "exemplo": 38
+             }
+            }
+           }
+          },
+          "expired": {
+           "tipos": [
+            "null",
+            "object"
+           ],
+           "campos": {
+            "bonusType": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "critDamage"
+            },
+            "expiresAt": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 1794194155409
+            },
+            "looktype": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 3674
+            },
+            "name": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "Elekid"
+            },
+            "pct": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 13
+            },
+            "rarity": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "uncommon"
+            },
+            "speciesId": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 239
+            },
+            "startedAt": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 1794172555409
+            }
+           }
+          },
+          "freeReady": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": false
+          },
+          "freeRollAt": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 1794793059245
+          },
+          "rolls": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 6
+          },
+          "slot": {
+           "tipos": [
+            "int"
+           ],
+           "exemplo": 0
+          },
+          "unlockPerm": {
+           "tipos": [
+            "null",
+            "object"
+           ],
+           "campos": {
+            "amount": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 10000000
+            },
+            "kind": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "gold"
+            },
+            "vipOnly": {
+             "tipos": [
+              "bool"
+             ],
+             "opcional": true,
+             "exemplo": true
+            }
+           }
+          },
+          "unlockTemp": {
+           "tipos": [
+            "null",
+            "object"
+           ],
+           "campos": {
+            "amount": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 5
+            },
+            "hours": {
+             "tipos": [
+              "int"
+             ],
+             "exemplo": 24
+            },
+            "kind": {
+             "tipos": [
+              "str"
+             ],
+             "exemplo": "cards"
+            },
+            "vipOnly": {
+             "tipos": [
+              "bool"
+             ],
+             "opcional": true,
+             "exemplo": true
+            }
+           }
+          },
+          "unlocked": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": true
+          },
+          "unlockedPerm": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": false
+          },
+          "unlockedUntil": {
+           "tipos": [
+            "null"
+           ]
+          },
+          "vipLocked": {
+           "tipos": [
+            "bool"
+           ],
+           "exemplo": false
+          }
+         }
+        }
+       }
+      }
      }
     }
    }
@@ -8261,6 +10507,64 @@
         "exemplo": 19
        }
       }
+     }
+    }
+   }
+  },
+  "POST /api/game/tasks/claim": {
+   "vezes": 3,
+   "fontes": [
+    "G9.jsonl"
+   ],
+   "status": {
+    "200": 3
+   },
+   "esquema": {
+    "tipos": [
+     "object"
+    ],
+    "campos": {
+     "cash": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 0
+     },
+     "level": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 173
+     },
+     "leveledUp": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": false
+     },
+     "ok": {
+      "tipos": [
+       "bool"
+      ],
+      "exemplo": true
+     },
+     "taskId": {
+      "tipos": [
+       "str"
+      ],
+      "exemplo": "yvette"
+     },
+     "totalXp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 87970003
+     },
+     "xp": {
+      "tipos": [
+       "int"
+      ],
+      "exemplo": 1350
      }
     }
    }
