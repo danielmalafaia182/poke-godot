@@ -66,7 +66,9 @@ const PARAMETROS := {
 	# Fase 4, item 1 (F, `ferramentas/fase4/ajustar_dano.py`, tabela em dados/relatorios/ajuste_dano.md): variante da
 	# fórmula. "atual" = a de sempre, com o divisor ≥ 1; "sem_piso_divisor" = igual, sem o max(1, D) (stats contínuos do
 	# selvagem no nível 1–4 ficam em 0,3–1,0); "classica" = (K + 2) × mods; "mais2_fim" = K × mods + 2.
-	"formula_dano": "atual",
+	# Padrão desde 15/11 (E, decisão do usuário sobre a tabela F): "sem_piso_divisor", igual ou melhor que "atual" em
+	# todas as gravações (aliado 1–4: 90,5% × 32,6% dos golpes explicados; o resto igual).
+	"formula_dano": "sem_piso_divisor",
 	# Stats na fórmula de dano (F, forte). Selvagem sem arredondar: na rhydon-1h o Solar Beam é explicado por uma SpD
 	# inteira em 2/15 indivíduos e por uma SpD contínua em 15/15. Aliado arredondado (o valor exibido no poke-delta):
 	# com a SpA exibida 15/15; com a SpA recalculada sem arredondar (IVs e Q exatos) só 10/15.
@@ -347,7 +349,7 @@ static func dano(nivel: int, poder: int, ataque: float, defesa: float, stab: boo
 	var piso: int = int(p.piso_selvagem) if selvagem else int(p.piso_aliado)
 	if eff == 0.0:
 		return piso
-	var formula := String(p.get("formula_dano", "atual"))
+	var formula := String(p.get("formula_dano", "sem_piso_divisor"))
 	var divisor := maxf(1e-6, defesa) if formula == "sem_piso_divisor" else maxf(1.0, defesa)
 	var k := (2.0 * float(nivel) / 5.0 + 2.0) * float(poder) * ataque / divisor / 50.0
 	var mods := 1.0

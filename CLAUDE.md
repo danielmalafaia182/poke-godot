@@ -152,7 +152,7 @@ Ajuste (`ferramentas/fase4/ajustar_dano.py` → `dados/relatorios/ajuste_dano.md
 | b `mais2_fim` (+2 no fim) | 66,5 | 99,7 | 47,3 | **0** | 98,8 | 25/30 | 23/26 | 40/40 (4/40) |
 | e `sem_piso_divisor` (D contínuo < 1 permitido) | 90,5 | 99,6 | 80,9 | 100 | 99,2 | 27/30 | 23/26 | 40/40 (40/40) |
 
-a e b caem para 0% no selvagem de nível 1 (o +2 passa do envelope em todos os golpes; erro médio 1,0) e pioram o diferencial; e é ≥ c em toda gravação, mas não explica todas as faixas (o resto fica no limite de baixo da faixa de stat do selvagem de nível baixo). Pela regra do pedido, nenhuma foi aplicada (`formula_dano` "atual"); e é a candidata. Nas 40 sementes (Larvitar Lv.1 no geodude, 60 s), e não muda nada: a Def do Geodude é ≥ 1 e o divisor nunca entra.
+a e b caem para 0% no selvagem de nível 1 (o +2 passa do envelope em todos os golpes; erro médio 1,0) e pioram o diferencial; e é ≥ c em toda gravação, mas não explica todas as faixas (o resto fica no limite de baixo da faixa de stat do selvagem de nível baixo). Em 13/11 nenhuma foi aplicada; **desde 15/11 a e é o padrão** (decisão do usuário: igual ou melhor em todas as gravações; diferencial 27/30 e 23/26, iguais). Nas 40 sementes (Larvitar Lv.1 no geodude, 60 s), e não muda nada: a Def do Geodude é ≥ 1 e o divisor nunca entra.
 Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes/geodude-*.jsonl`).
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
@@ -793,3 +793,6 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     espécies normais. Corrigido no caminho: o `test_compatibilidade_save` do P04 não esperava a migração das bolas do
     depot (item 2; commit à parte). Faltam: G3 e as gravações G6b, G9, G10, G11 (roteiros no fim do
     `CALIBRACAO_FASE4.md`).
+- 15/11/2026 — Fase 4, item 1: `formula_dano` passa a "sem_piso_divisor" por padrão (E sobre a tabela F do desvio de
+  dano; o parâmetro continua). Diferencial 1h 27/30 e antiga 23/26 (iguais); regras 41/41, determinismo, regras do
+  usuário 17/17, lote 2 36/36, caminho 8/8. A saída da sim muda só onde a defesa contínua do alvo é < 1.
