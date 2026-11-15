@@ -134,6 +134,35 @@ var aviso_salvamento: String:
 var erro_salvamento: bool:
 	get: return salvamento.erro_salvamento
 
+# Segundo plano (E, 15/11): o jogo é idle e roda quase sempre sem foco. Sem foco (ou minimizado), o desenho cai para
+# FPS_FUNDO quadros por segundo e a simulação ganha mais tempo por quadro para seguir o relógio; com foco, volta ao normal.
+const FPS_FUNDO := 10
+const ORCAMENTO_SIM_FRENTE_MS := 4.0
+const ORCAMENTO_SIM_FUNDO_MS := 25.0
+var em_fundo := false
+var _fps_frente := 0
+signal modo_fundo_alterado(fundo: bool)
+
+func definir_modo_fundo(fundo: bool) -> void:
+	if fundo == em_fundo:
+		return
+	if fundo:
+		_fps_frente = Engine.max_fps
+		Engine.max_fps = FPS_FUNDO
+	else:
+		Engine.max_fps = _fps_frente
+	em_fundo = fundo
+	modo_fundo_alterado.emit(fundo)
+
+func orcamento_sim_ms() -> float:
+	return ORCAMENTO_SIM_FUNDO_MS if em_fundo else ORCAMENTO_SIM_FRENTE_MS
+
+func _notification(what: int) -> void:
+	if what == NOTIFICATION_APPLICATION_FOCUS_OUT:
+		definir_modo_fundo(true)
+	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
+		definir_modo_fundo(false)
+
 func _ready() -> void:
 	configuracao.inventario = inventario
 	inventario.estoque_bolas_alterado.connect(estoque_bolas_alterado.emit)

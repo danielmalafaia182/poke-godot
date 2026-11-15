@@ -41,6 +41,7 @@ var vista: Node2D
 var apresentacao = Apresentacao.new()
 var membros: Array = []                # DadosPokemon do time, na ordem da simulação
 var _proximo_tick_ms := 0.0
+const ATRASO_MAX_MS := 3600000.0
 var _encerrada := false
 var registro := {"xp_treinador": 0, "xp_pokemon": 0, "loot": {}, "loot_fora_do_catalogo": {}, "pocoes": {},
 	"bolas": {}, "capturas": 0, "abates": 0, "cartoes": 0}
@@ -159,7 +160,13 @@ func _process(_delta: float) -> void:
 	var passo := float(sim.p.tick_ms) / maxf(0.001, velocidade)
 	var n := 0
 	tipos_no_quadro.clear()
-	while agora >= _proximo_tick_ms and n < 50:
+	# Jogo idle (E, 15/11): atraso não se perde. Os ticks atrasados (quadro lento, janela em segundo plano ou minimizada)
+	# são recuperados com um orçamento de tempo por quadro; o atraso passa ao quadro seguinte. Teto de 1 h de atraso (E:
+	# depois de o PC dormir, não recalcula horas — isso é papel da soneca).
+	if agora - _proximo_tick_ms > ATRASO_MAX_MS:
+		_proximo_tick_ms = agora - ATRASO_MAX_MS
+	var limite_us := _t0 + int(EstadoJogo.orcamento_sim_ms() * 1000.0)
+	while agora >= _proximo_tick_ms and (n == 0 or Time.get_ticks_usec() < limite_us):
 		for m in sim.passo():
 			var _tm := Time.get_ticks_usec()
 			_tratar(m["msg"])
@@ -169,8 +176,6 @@ func _process(_delta: float) -> void:
 		_proximo_tick_ms += passo
 		n += 1
 		_conferir_troca_por_ko()
-	if n >= 50:
-		_proximo_tick_ms = agora + passo      # parou (ex.: janela minimizada): não despeja minutos de ticks
 	perfil_sim_us += Time.get_ticks_usec() - _t0
 	perfil_sim_max_us = maxi(perfil_sim_max_us, Time.get_ticks_usec() - _t0)
 

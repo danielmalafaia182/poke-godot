@@ -86,6 +86,10 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 
 ### Decisões do usuário (E — valem mesmo sem confirmação no original)
 
+- **Jogo idle roda em segundo plano** (15/11): o critério de quadro (p99 ≤ 16,7 ms) vale com a janela em foco; sem foco, o
+  que se cobra é a simulação seguir o relógio (nenhum tick perdido) e gastar pouco. Sem foco ou minimizado, o desenho cai
+  para 10 quadros/s (`EstadoJogo.definir_modo_fundo`); atraso de ticks é recuperado, com teto de 1 h.
+
 - Troca automática após KO: **aleatória** entre membros vivos e válidos do TIME (não do box), sem curar;
   depois dela, 5 s de cooldown para troca manual. Volta à cidade só quando não há reserva viva.
 - Interações da cidade por **clique** (NPCs/depot); nada de tecla obrigatória. HUD responsivo, referência 1920×1080.
@@ -216,7 +220,7 @@ IA de movimento dos selvagens (desvio conhecido, seção abaixo), medidor de cap
 vista na conta B (×1,554 em vez de ×1,5; a conta B tem uma parcela `guild`, 24 em 548 no Rhyhorn, A, e o Pokémon dela recebe `mentor`), efeitos de status,
 regras de respawn (tempo exato).
 
-### Sombras e iluminação do cliente (portadas em 15/11; desligadas por padrão até medir o p99 com a máquina livre)
+### Sombras e iluminação do cliente (portadas em 15/11; ligadas por padrão)
 
 Receita (C, `makeShadow`/`syncShadow`/`applyShadowFilters`/`sb`/`sj`/`feetBaseY`): `render/sombras.gd`. Sprite do mapa com
 zIndex > 7,5e6 e altura > 32, toda criatura: cópia preta na camada do andar (zIndex 7,5e6), âncora nos pés, altura ×
@@ -226,7 +230,7 @@ por andar (`render/sombra_grupo.gdshader`, blur de 9 pontos: aproximação F) co
 sprites estáticos em lote por chunk, as dos animados e das criaturas com item próprio. Conferido contra o original no Node
 (`testes/test_render_sombras.sh`, `ferramentas/render/referencia_sombras.js`): rhydon 15.360, geodude 12.972 e
 nightmare_steelix 45.217 sombras com os mesmos sprites, a mesma ordem e a mesma geometria; luz e sombra de criatura iguais.
-Liga com `POKE_SOMBRAS=1` (ou `mapa_renderizador.sombras_ligadas`); `POKE_SOMBRAS=simples` usa o modo sem grupo (não
+Desliga com `POKE_SOMBRAS=0` (ou `mapa_renderizador.sombras_ligadas`); `POKE_SOMBRAS=simples` usa o modo sem grupo (não
 ficou mais barato). p99: `dados/relatorios/p99_sombras_2026-11-15.md`.
 
 ### Desvio conhecido: movimento dos selvagens (fase 3 fechada; a sim fica com `visao_meia_altura` 7)
@@ -914,3 +918,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   48 corridas com a janela limitada a 15–40% dos quadros), e já sem sombra 3 das 16 medianas passavam de 16,7 ms. **Critério
   não demonstrado → desligadas por padrão.** Refazer com a máquina livre: `POKE_SOMBRAS=1 python -I testes/test_todas_hunts.py
   --velocidade 1 ...` contra a mesma lista sem a variável.
+- 15/11/2026 — Segundo plano (decisão do usuário: o jogo é idle). Nas 48 corridas da medição das sombras, mesmo com a janela
+  limitada pelo sistema a 5–15 quadros/s, a simulação fez 300 ticks em 60 s em todas: o progresso não depende do desenho.
+  Novo: sem foco, `Engine.max_fps` = 10 e a simulação ganha 25 ms por quadro (4 ms com foco); o laço da hunt deixou de
+  descartar o atraso acima de 10 s (agora recupera tudo, com teto de 1 h). Sombras ligadas por padrão (o custo com a janela
+  em foco ficou dentro do ruído no comparativo limpo). Teste `testes/test_modo_fundo.gd` 5/5: 10,0 quadros/s, 100 ticks em
+  20,1 s, e 80 ticks em 16 s atravessando uma trava de 12 s.

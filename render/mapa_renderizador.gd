@@ -73,9 +73,9 @@ var _array: Texture2DArray
 var _branca: ImageTexture
 var _material: ShaderMaterial
 # Sombras e iluminação (render/sombras.gd, C): uma camada por andar em modo canvas group, com a transformação da luz.
-# Parâmetro: liga/desliga (no original, setShadows). DESLIGADO por padrão até o p99 com sombras ser medido com a máquina
-# livre (15/11: a medição saiu contaminada; ver Estado). POKE_SOMBRAS=1 liga; POKE_SOMBRAS=simples liga no modo sem grupo.
-static var sombras_ligadas := OS.get_environment("POKE_SOMBRAS") in ["1", "simples"]
+# Parâmetro: liga/desliga (no original, setShadows, ligado). Ligado por padrão; POKE_SOMBRAS=0 desliga e
+# POKE_SOMBRAS=simples usa o modo sem grupo (medição de desempenho sem mexer no código).
+static var sombras_ligadas := OS.get_environment("POKE_SOMBRAS") != "0"
 static var luz_forcada := ""           # testes/capturas: usa a luz de outro mapa (ex.: "mt-moon")
 # true (padrão, fiel): a camada vira um canvas group com blur e alpha de grupo (sombras cruzadas não escurecem duas vezes).
 # false (mais barato): sem grupo nem blur; cada sombra leva o alpha da luz direto (cruzamentos escurecem mais: F de desempenho).
