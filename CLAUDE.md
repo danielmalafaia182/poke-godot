@@ -864,9 +864,13 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Held items, TMs, breeding, Ditto, Pokédex, Golden Stars e Pokécards: regras do cliente (C) e o que a G9 mostrou das
     Golden Stars (A: 6 h por estrela, rolagem grátis a cada 12 h, 9 candidatos) registrados; os números ficam no servidor
     (gravações L1–L4).
-  - Achado: o `itens.json` gerado perde os acentos das descrições (importador); o leitor das berries não depende deles.
+  - (Corrigido em 15/11: o `itens.json` não perde acentos; era a saída do console do Windows.)
   - Testes: `test_sim_itens` 18/18, `test_ciclo_itens` 6/6. Protocolo 146 tipos, 59 vistos, 36 caminhos REST;
     cadáveres 15 espécies normais.
 - 15/11/2026 — Pós-lote 3, item 1 (dispersão do dano no nível 1): causa = defesa do selvagem por indivíduo na sim; no real,
   nível 1 dá a mesma defesa para todos os indivíduos (S1, S2: 0,77). Regra não fechada (c5 e geodude-10min destoam):
   não aplicada; tabela no desvio de dano. Ferramenta `ferramentas/fase4/stat_comum.py`.
+- 15/11/2026 — Pós-lote 3, item 2 (acentos): **o importador não perde acentos** — `dados/gerados/itens.json` está em UTF-8
+  correto (0 caractere de substituição) e regenerar não muda nada; os "�" eram a saída do console do Windows (cp1252).
+  O importador passa a imprimir em UTF-8; o código que "consertava" o `�` no Daily Gift saiu (não havia `�` nos dados).
+  A única mojibake nos dados é um exemplo de chat de log antigo dentro do `protocolo.json` (texto de terceiro, sem uso).

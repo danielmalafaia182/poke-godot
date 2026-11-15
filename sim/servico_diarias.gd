@@ -203,8 +203,7 @@ func msg_gift(estado: Dictionary, agora: int) -> Dictionary:
 	var lista: Array = []
 	for r in rewards:
 		var d := int(r["day"])
-		# a gravação traz "Pok� Ball" (acento perdido no arquivo, A); E: a tela mostra "Poké"
-		lista.append({"day": d, "label": String(r["label"]).replace("�", "é"), "icon": String(r["icon"]), "qty": int(r["qty"]), "tag": r.get("tag"),
+		lista.append({"day": d, "label": String(r["label"]), "icon": String(r["icon"]), "qty": int(r["qty"]), "tag": r.get("tag"),
 			"kind": String(r["kind"]), "locked": str(r.get("tag", "")) == "VIP" and not vip, "claimed": d <= int(g["feitos"]),
 			"current": d == prox})
 	return {"type": "daily", "ym": String(g["ym"]), "vip": vip, "total": total, "nextDay": prox,
@@ -288,7 +287,7 @@ func _gift_coletar(estado: Dictionary, agora: int) -> Array:
 		ref = _bola_do_icone(String(r["icon"]))
 	elif kind == "item":
 		ref = _id_item_por_nome(String(r["label"]))
-	novo["claimed"] = {"day": int(r["day"]), "kind": kind, "refId": ref, "qty": qtd, "label": String(r["label"]).replace("�", "é"),
+	novo["claimed"] = {"day": int(r["day"]), "kind": kind, "refId": ref, "qty": qtd, "label": String(r["label"]),
 		"icon": String(r["icon"]), "tag": r.get("tag")}
 	novo["toGiftCenter"] = false
 	return [novo] + saida

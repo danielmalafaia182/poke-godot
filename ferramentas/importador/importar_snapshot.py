@@ -83,6 +83,7 @@ def norm_especie(c, itens_por_nome, rel):
 
 
 def main():
+    sys.stdout.reconfigure(encoding="utf-8")   # o console do Windows (cp1252) trocava os acentos por "?" na saída
     ap = argparse.ArgumentParser()
     ap.add_argument("snapshot")
     ap.add_argument("--correcoes", required=True)

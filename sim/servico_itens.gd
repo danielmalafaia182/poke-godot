@@ -22,8 +22,7 @@ const PARAMETROS := {
 	"candy_max_por_pokemon": 10,       # C
 	"candy_nivel_max": 100,            # C: "level 100 or below"
 	"berry_duracao_s": 1800,           # C: "the effect lasts 30 minutes"
-	# Nome do tipo na descrição (A, português) → tipo do jogo, comparado só pelas letras a–z ("Aço" e o "A�o" do itens.json
-	# gerado, que perde os acentos, viram os dois "ao").
+	# Nome do tipo na descrição (A, português) → tipo do jogo, comparado só pelas letras a–z ("Aço" → "ao", "Água" → "gua").
 	# "Neutro" = golpes neutros dos bosses (C, talentos do Botânico: "Berry that protects from Neutral-type moves").
 	"tipos_berry": {"ao": "STEEL", "drago": "DRAGON", "eltrico": "ELECTRIC", "fada": "FAIRY", "fantasma": "GHOST",
 		"fogo": "FIRE", "gelo": "ICE", "inseto": "BUG", "lutador": "FIGHTING", "neutro": "NEUTRAL", "normal": "NORMAL",
@@ -46,7 +45,7 @@ static func _erro(t: String) -> Dictionary:
 
 
 static func _sem_acento(t: String) -> String:
-	## Só as letras a–z, minúsculas: "Água" e "�gua" viram os dois "gua".
+	## Só as letras a–z, minúsculas: "Água" vira "gua".
 	var r := ""
 	for c in t.to_lower():
 		if c >= "a" and c <= "z":

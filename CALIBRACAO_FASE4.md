@@ -185,7 +185,7 @@ Onde mora: `sim/servico_itens.gd` (Rare Candy e berries, puro) e o efeito das be
 | A mesma berry não acumula ("já ativa (N min)"); berries diferentes valem juntas | C ("Identical berries do not stack"; `berryActiveRow`) / E (diferentes somam) | — |
 | Efeito e % de cada berry: os da descrição do items.json — 38 reduzem o dano de golpes de um tipo (5% e 10%, "FORTEMENTE"), 2 aumentam a cura das poções (+40% e +80%) | **A** (dado do servidor, 40/40 lidas) | "Noturno" = DARK; "Neutro" = golpes neutros dos bosses (C) |
 | Redução: dano recebido × (1 − pct), arredondado, piso 1; cura: poção × (1 + pct), ainda limitada ao que falta | F (aplicação) | teste: berry de Pedra 10% → dano recebido 0,9× do Stone Edge; cura +80% → Hyper passa de 1000 |
-| O itens.json gerado perde os acentos das descrições | D (problema do importador, a corrigir) | o leitor compara só as letras a–z, então funciona com e sem acento |
+| ~~O itens.json gerado perde os acentos~~ — **errado** (15/11): o arquivo está em UTF-8 correto; os "�" vinham do console do Windows (cp1252) ao imprimir. O importador agora imprime em UTF-8 e a regeneração não muda nada | D | o leitor compara só as letras a–z, então funciona com e sem acento |
 
 Não implementado ainda, com o que já se sabe (para não inventar números do servidor):
 
