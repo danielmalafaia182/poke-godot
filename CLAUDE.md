@@ -935,3 +935,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   perde; com soneca vale a soneca. Fica E: reabrir dentro de 15 min volta para a cidade (o original retoma a hunt).
   A extração do save para a sim saiu da cena para `EstadoJogo.extrair_jogo_hunt` (a hunt e a recuperação usam a mesma).
   `testes/test_jogo_fechado.gd` 11/11: 5 min → 300 s (28 abates); 20 min → 900 s (81 abates); com soneca e na cidade, nada.
+- 15/11/2026 — p99 em foco das 5 hunts mais pesadas com sombras: **não medido**. As 15 corridas (3 rodadas) rodaram sem
+  foco — uma janela aberta por processo em segundo plano não recebe foco no Windows com o PC em uso — e o modo de fundo
+  entrou (10 quadros/s, p99 100–178 ms = o intervalo do limite). Do que dá para ler sem foco (`dados/relatorios/
+  sombras_custo_render_2026-11-15.md`): o render da CPU por quadro (p99) sobe de 6,9–8,5 ms sem sombra para 8,2–11,2 ms com
+  sombra (+1 a +3 ms), e os draw calls de ~147 para ~170 (camada em grupo por andar + lotes por chunk); a GPU medida saiu
+  contaminada pela espera da janela. Para medir em foco: `POKE_MODO_FUNDO=0 python -I testes/test_todas_hunts.py --velocidade 1
+  --segundos 60 --slugs nightmare_raichu,nightmare_elekid,rapidash,ancient_pinsir,nightmare_luxray` com a janela do Godot
+  na frente e o PC parado (~8 min por rodada).

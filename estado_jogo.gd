@@ -148,7 +148,8 @@ var _fps_frente := 0
 signal modo_fundo_alterado(fundo: bool)
 
 func definir_modo_fundo(fundo: bool) -> void:
-	if fundo == em_fundo:
+	## POKE_MODO_FUNDO=0 desliga a troca (medir o quadro com a janela sem foco, como nas varreduras de desempenho).
+	if fundo == em_fundo or (fundo and OS.get_environment("POKE_MODO_FUNDO") == "0"):
 		return
 	if fundo:
 		_fps_frente = Engine.max_fps
