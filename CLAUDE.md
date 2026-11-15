@@ -198,6 +198,14 @@ Leitura: no selvagem de nível 1 a defesa no dano parece **não depender do indi
 (0,95 com piso 3 no ataque; com 0,77, o ataque efetivo do Geodude teria de ser 2,43): pode ser mudança no servidor entre
 09/11 e 10/11, ou uma regra que ainda não aparece. **Não corrigido** (a causa da dispersão está clara, a regra não). A G11
 (capturas de nível 1 com stats exatos, depois de apanharem) decide.
+**15/11, mudança no servidor entre 09/11 e 10/11?** (`ferramentas/fase4/comparar_dias.py` → `dados/relatorios/servidor_09x10.md`):
+nenhuma outra grandeza mudou. HP do aliado e do selvagem, XP base, VIP, debuff, typeDay, loot × tabela (normal, lock e tipo do
+dia), passos, cadência, Auto-Potion, pisos e o lock de 60 s confirmam igual em 09/11 e em 10/11–15/11. O maxHp dos selvagens
+contra o previsto pela fórmula (IV 1–32, Quality pelos pesos do cliente) dá z médio −0,80 em 09/11 e −0,57 em 10/11 (sem
+deslocamento entre os dias; o Rhydon de 10/11 sai −2,46, mas o Rhyhorn do mesmo dia +2,02). A diferença de defesa
+(0,95 × 0,77) fica sem explicação por data: a geodude-10min é a única com atacante de nível 1, e S1/S2 têm atacante 425 —
+pode depender do atacante, não do dia. Achado de passagem (A): na hunt typhlosion os Rattata ficam no piso de 120 de HP,
+ou seja, não estão no nível 80 da hunt.
 Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes/geodude-*.jsonl`).
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
@@ -889,3 +897,5 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   golpe fixo por indivíduo, lock de 60 s (abates a ±1 s do until fora), soneca, Daily Kill/Catch/Gift, tarefas, Streak,
   receita de pedras e a rotação do Tipo do Dia, com as constantes lidas de `sim/*.gd`. Teste contra as conclusões
   registradas: 25/25 (G3, G6–G10, rhydon-1h, C5). Relatórios das gravações da fase 4 em `dados/relatorios/gravacoes/`.
+- 15/11/2026 — Investigação "o servidor mudou entre 09/11 e 10/11?": não há sinal nas outras grandezas (tabela no desvio de
+  dano). Só registrado, nenhuma regra mudou. Ferramenta `ferramentas/fase4/comparar_dias.py`.
