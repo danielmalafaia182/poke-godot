@@ -60,6 +60,23 @@ func _init() -> void:
 		"IV e Quality mantidos, stats recalculados da base nova (C)", "%d → %d HP" % [int(geo_antes["stats"]["hp"]), int(pd["stats"]["hp"])])
 	checar(absf(float(pd["hp"]) / float(pd["maxHp"]) - 30.0 / float(geo_antes["maxHp"])) < 0.02, "HP mantém a fração (E)")
 	checar(tipo(r, "inventory").size() > 0, "inventory enviado depois de gastar pedra")
+	# A (G3): Geodude Lv.40 com 209 Rock Stones → GET /evolve e POST /evolve gravados, campo a campo
+	var g3 := {"gold": 0, "cidade": "cerulean", "itens": {"109": 209}, "pokes": [{"id": "g3", "speciesId": 74, "xp": Regras.xp_total_para_nivel(40),
+		"ivs": ivs(16), "quality": 1.0, "hp": -1, "team": true}]}
+	var i3: Dictionary = sv.tratar(g3, {"type": "evolve-info", "capturedId": "g3"})[0]
+	var esperado_i := {"name": "Geodude", "destId": 75, "destName": "Graveler", "level": 40, "needLevel": 40, "canEvolve": true,
+		"stones": [{"itemId": 109, "name": "Rock Stone", "icon": "/assets/items/rock_stone.gif", "need": 1, "have": 209}],
+		"hasStones": true, "keepLevel": 40, "resetLevel": 1, "itemOnly": false}
+	var ok_i := true
+	for k in esperado_i:
+		if JSON.stringify(i3.get(k)) != JSON.stringify(esperado_i[k]):
+			ok_i = false
+			print("  difere ", k, ": ", i3.get(k), " × ", esperado_i[k])
+	checar(ok_i, "GET /evolve do Geodude 40 igual ao gravado (A, G3: 1 Rock Stone, só o tipo principal)")
+	var e3: Dictionary = tipo(sv.tratar(g3, {"type": "evolve", "capturedId": "g3", "useStone": true}), "evolved")
+	checar(bool(e3.get("ok")) and e3["name"] == "Graveler" and int(e3["destId"]) == 75 and int(e3["level"]) == 40 and bool(e3["usedStone"])
+		and JSON.stringify(e3["stonesSpent"]) == JSON.stringify([{"itemId": 109, "qty": 1}]) and int(g3["itens"]["109"]) == 208,
+		"POST /evolve igual ao gravado: {ok, name, destId, level 40, usedStone, stonesSpent [{109, 1}]} (A, G3)", JSON.stringify(e3))
 	# sem pedra: volta ao nível 1
 	var ini: Dictionary = sv.tratar(e, {"type": "evolve-info", "capturedId": "ini"})[0]
 	checar(ini["destName"] == "Pupitar" and not ini["hasStones"], "Larvitar 60 → Pupitar, sem Rock Stone na BAG", str(ini["stones"]))

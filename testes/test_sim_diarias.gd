@@ -38,6 +38,9 @@ func _init() -> void:
 	var r: Array = sv.tratar(e, {"type": "daily-claim", "agora": D13})
 	checar(int(e["bolas"].get("1", 0)) == 100 and tipo(r, "daily")["claimedToday"] and not tipo(r, "daily")["canClaim"] and int(tipo(r, "daily")["nextDay"]) == 2,
 		"coletar o dia 1: +100 Poké Balls; já coletado hoje (A: claimedToday)")
+	var cla: Dictionary = tipo(r, "daily").get("claimed", {})
+	checar(cla.keys() == ["day", "kind", "refId", "qty", "label", "icon", "tag"] and int(cla["refId"]) == 1 and tipo(r, "daily")["toGiftCenter"] == false,
+		"resposta do POST /daily: claimed {day, kind, refId, qty, label, icon, tag} + toGiftCenter (A, G9; false offline, E)", JSON.stringify(cla))
 	checar(tipo(sv.tratar(e, {"type": "daily-claim", "agora": D13 + 3600}), "error").size() > 0, "um prêmio por dia (C)")
 	sv.tratar(e, {"type": "daily-claim", "agora": D13 + 86400})
 	checar(int(e["itens"].get("200", 0)) == 100, "dia seguinte: dia 2 = Small Potion ×100 (A)")
@@ -77,6 +80,7 @@ func _init() -> void:
 	r = sv.tratar(t, {"type": "tasks-claim", "taskId": "paul"})
 	checar(int(tipo(r, "tasks-claimed")["xp"]) == 920 and int(t["gold"]) == 0 and tipo(sv.tratar(t, {"type": "tasks-claim", "taskId": "paul"}), "error").size() > 0,
 		"entregar: +920 XP (A); só uma vez (E)")
+	checar(bool(tipo(r, "tasks-claimed").get("ok", false)) and String(tipo(r, "tasks-claimed")["taskId"]) == "paul", "resposta do claim com ok e taskId (A, G9)")
 	t["itens"]["4"] = 25
 	t["itens"]["90"] = 2
 	r = sv.tratar(t, {"type": "tasks-claim", "taskId": "douglas298b"})
@@ -130,9 +134,18 @@ func _init() -> void:
 	checar(sv.tratar({"nivel": 70}, {"type": "daily-catch-get", "agora": D13})[0]["tiers"].size() == 2, "nível 70: superEasy e easy (A: minLevel 25 e 60)")
 	r = sv.tratar(c, {"type": "captura", "speciesId": 246, "agora": D13})
 	var cl: Dictionary = tipo(r, "daily-catch-claimed")
-	checar(int(cl["claim"]["slot"]) == 1 and int(cl["xp"]) == 14613 and String(cl["claim"]["tierKey"]) == "hard", "Larvitar, slot 1: 14613 XP (A, F na regra)", JSON.stringify(cl.get("claim", {})))
+	var m1 := float(cl["xp"]) / (548.0 * 8.0 / 3.0)
+	checar(int(cl["claim"]["slot"]) == 1 and String(cl["claim"]["tierKey"]) == "hard" and absf(m1 * 2.0 - round(m1 * 2.0)) < 0.01 and m1 >= 1.49 and m1 <= 18.01,
+		"Larvitar, slot 1: xp = floor(548 × 8/3 × m), m múltiplo de 0,5 em [1,5; 18] (A: 10, 14, 1,5, 18 gravados)", "%d (m %.2f)" % [int(cl["xp"]), m1])
+	var c_rep := {"gold": 0, "itens": {}, "bolas": {}, "nivel": 169}
+	checar(int(tipo(sv.tratar(c_rep, {"type": "captura", "speciesId": 246, "agora": D13}), "daily-catch-claimed")["xp"]) == int(cl["xp"]), "mesmo dia e slot → mesmo XP (E: semente)")
+	var ok_m := true
+	for par in [[548, 14613], [548, 20458], [968, 3872], [968, 46464]]:
+		var mm := float(par[1]) / (float(par[0]) * 8.0 / 3.0)
+		ok_m = ok_m and int(floor(float(par[0]) * 8.0 / 3.0 * round(mm * 2.0) / 2.0 + 1e-6)) == int(par[1]) and round(mm * 2.0) / 2.0 >= 1.5 and round(mm * 2.0) / 2.0 <= 18.0
+	checar(ok_m, "os 4 XP gravados do Daily Catch cabem na regra (Larvitar 14613/20458, Arbok 3872/46464)")
 	r = sv.tratar(c, {"type": "captura", "speciesId": 246, "agora": D13})
-	checar(int(tipo(r, "daily-catch-claimed")["xp"]) == 20458 and int(c["itens"].get("13115", 0)) == 6, "Larvitar, slot 2: 20458 XP (A); itens do tier por captura (F)")
+	checar(int(tipo(r, "daily-catch-claimed")["claim"]["slot"]) == 2 and int(c["itens"].get("13115", 0)) == 6, "Larvitar, slot 2; itens do tier por captura (F)")
 	checar(sv.tratar(c, {"type": "captura", "speciesId": 246, "agora": D13}).is_empty(), "terceira captura: sem prêmio (A: total 2)")
 	checar(sv.tratar(c, {"type": "captura", "speciesId": 246, "agora": D13 + 86400}).size() > 0, "dia seguinte: slots livres de novo")
 	checar(sv.tratar({"nivel": 169}, {"type": "captura", "speciesId": 10546, "agora": D13}).is_empty(), "espécie fora da tabela: não conta")

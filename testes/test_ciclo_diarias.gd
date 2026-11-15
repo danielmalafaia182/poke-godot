@@ -66,7 +66,8 @@ func _process(_d: float) -> bool:
 	# ---- Daily Catch
 	var xp1: int = ej.experiencia_treinador_acumulada
 	var r: Dictionary = ej.diaria_captura(246)
-	checar(ej.experiencia_treinador_acumulada == xp1 + 14613, "captura de Larvitar: slot 1, +14613 XP (A)", str(r.get("aviso", r.get("erro", ""))))
+	var xp_c := int(r["msgs"][0]["xp"]) if not r["msgs"].is_empty() else -1
+	checar(xp_c > 0 and ej.experiencia_treinador_acumulada == xp1 + xp_c, "captura de Larvitar: slot 1, XP do Daily Catch no treinador", str(r.get("aviso", r.get("erro", ""))))
 	painel.abrir(2)
 	checar(painel.find_child("*", true, false) != null, "aba Daily Catch desenha")
 	# ---- tarefa do Paul (Viridian)

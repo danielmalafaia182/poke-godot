@@ -62,20 +62,6 @@
     "xpGained": 145
    },
    "metodo": "POST"
-  },
-  {
-   "arquivo": "G6.jsonl",
-   "corpo": {
-    "report": null
-   },
-   "metodo": "GET"
-  },
-  {
-   "arquivo": "G7.jsonl",
-   "corpo": {
-    "report": null
-   },
-   "metodo": "GET"
   }
  ]
 }

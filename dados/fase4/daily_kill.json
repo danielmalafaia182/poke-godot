@@ -2,47 +2,49 @@
  "dia": {
   "cards": 0,
   "claimed": false,
-  "dayKey": "2026-11-13",
+  "dayKey": "2026-11-15",
   "locked": false,
   "minLevel": 25,
   "options": [
    {
     "done": false,
     "have": 0,
-    "looktype": 80,
-    "name": "Furious Pidgeot",
-    "qty": 798,
-    "speciesId": 10546,
-    "type1": "NORMAL",
+    "looktype": 397,
+    "name": "Magcargo",
+    "qty": 1251,
+    "speciesId": 219,
+    "type1": "FIRE",
+    "type2": "ROCK",
+    "xp": 12836928
+   },
+   {
+    "done": false,
+    "have": 0,
+    "looktype": 400,
+    "name": "Larvitar",
+    "qty": 937,
+    "speciesId": 246,
+    "type1": "ROCK",
+    "type2": "GROUND",
+    "xp": 1369269
+   },
+   {
+    "done": false,
+    "have": 0,
+    "looktype": 358,
+    "name": "Jumpluff",
+    "qty": 751,
+    "speciesId": 189,
+    "type1": "GRASS",
     "type2": "FLYING",
-    "xp": 28745024
-   },
-   {
-    "done": false,
-    "have": 0,
-    "looktype": 197,
-    "name": "Ancient Marowak",
-    "qty": 1497,
-    "speciesId": 10547,
-    "type1": "GROUND",
-    "xp": 53923936
-   },
-   {
-    "done": false,
-    "have": 0,
-    "looktype": 359,
-    "name": "Politoed",
-    "qty": 1199,
-    "speciesId": 186,
-    "type1": "WATER",
-    "xp": 9425738
+    "xp": 3020021
    }
   ],
-  "pickedIdx": 2,
+  "pickedIdx": -1,
   "rerollCost": 1,
   "rerollMax": 0,
   "rerolls": 0,
-  "resetAt": 1794625200000,
+  "resetAt": 1794798000000,
   "reward": {
    "items": [
     {
@@ -58,7 +60,7 @@
      "qty": 2
     }
    ],
-   "xp": 9425738
+   "xp": 0
   },
   "rewardText": [
    "6× Devoted Token",
@@ -67,5 +69,5 @@
   "tierKey": "hard",
   "tierLabel": "Hard"
  },
- "fonte": "A: G5.jsonl, GET/POST /api/game/daily-kill"
+ "fonte": "A: G9.jsonl, GET/POST /api/game/daily-kill"
 }

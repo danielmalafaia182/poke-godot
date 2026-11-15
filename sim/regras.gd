@@ -137,8 +137,11 @@ const PARAMETROS := {
 	# doubles the catch chance"); o pct vem no próprio boost ({key, until, pct}, A). F: parcela = % da XP base.
 	"boost_captura_bonus": 1.0,             # C: dobra a chance (multiplica a chance por arremesso)
 	# Tipo do Dia (A: evento "type-of-day", "+20% de XP e +20% de loot em Pokémon do tipo X"): parcela typeDay =
-	# floor(20% da base) (A, G8: 61/61) e chance de cada drop × 1,2 (F: na G8 os drops vieram 1,42× a tabela em 61
-	# abates — ×1,2 esperaria 125 e vieram 148, 2,9σ acima; ×1,4 caberia; uma gravação só, não trocado).
+	# floor(20% da base) (A, G8: 61/61); loot em `tipo_do_dia_loot` (A: × 1,4, não 1,2).
+	# Loot no tipo do dia (A, G8 × G10, 15/11): chance de cada drop × 1,4 (cap 1). Tyranitar no dia Sombrio (G8, 61 abates):
+	# 148 drops, esperado 146,3 com ×1,4 (z 0,2) e 125,4 com ×1,2 (z 2,8: rejeitado); a mesma hunt num dia Veneno (G10, 91
+	# abates): 161 × 155,9 pela tabela (controle). ×1,44 (= 1,2²) também cabe: não se separa de 1,4 com uma gravação.
+	"tipo_do_dia_loot": 1.4,
 	"tipo_do_dia_pct": 20,                    # E: sem shiny na fase 1
 }
 

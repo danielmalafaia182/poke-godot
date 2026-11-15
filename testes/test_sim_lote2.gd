@@ -122,6 +122,8 @@ func _init() -> void:
 		"amostra de 5 min com abates e XP, sem bolas (C)", "%d abates, %d XP" % [int(a1["kills"]), int(a1["xpSample"])])
 	var chaves_a: Array = a1.keys()
 	chaves_a.erase("loot")
+	chaves_a.erase("linha")
+	chaves_a.erase("pocoes")
 	checar(chaves_a == ["slug", "startedAt", "endedAt", "sampleMs", "itemsUsed", "fainted", "killsBySpecies", "leaderId", "kills", "xpSample", "pokeXpSample"],
 		"amostra com os campos gravados (A: sample do GET /offline)", str(chaves_a))
 	var soma_k := 0
@@ -131,7 +133,26 @@ func _init() -> void:
 	var es := {"soneca": {}}
 	checar(bool(tipo(sv.tratar(es, {"type": "sleep-mode", "agora": 5000, "amostra": a1}), "sleep-ok")["ghost"]), "sleep-mode → sleep-ok {ghost: true} (C)")
 	var rel_m: Array = sv.tratar(es.duplicate(true), {"type": "offline-get", "agora": 5000 + 299})
-	checar(rel_m.size() == 1 and rel_m[0]["report"] == null and bool(rel_m[0].get("canceled", false)), "voltar antes de 5 min cancela a soneca, sem entregar a amostra (C/E)")
+	checar(tipo(rel_m, "offline")["report"] == null and bool(tipo(rel_m, "offline").get("canceled", false)), "voltar antes de 5 min cancela a soneca (C)")
+	# A (G6b): o cancelamento entrega o que já rodou — aos 92 s, os abates da linha do tempo até 92.000 ms
+	var es_c := es.duplicate(true)
+	var canc: Array = sv.tratar(es_c, {"type": "offline-get", "agora": 5000 + 92})
+	var nt: Dictionary = tipo(canc, "offline-notice")
+	var av: Dictionary = nt.get("notices", [{}])[0]
+	var esp_k := 0
+	var esp_xp := 0
+	for lk in a1["linha"]:
+		if int(lk[0]) <= 92000:
+			esp_k += 1
+			esp_xp += int(lk[1])
+	checar(String(av.get("kind", "")) == "cancelled" and String(av["reason"]) == "reconnect" and int(av["ms"]) == 92000 and int(av["kills"]) == esp_k
+		and int(av["xp"]) == esp_xp and esp_k > 0 and esp_k < int(a1["kills"]) and av.keys() == ["kind", "reason", "slug", "ms", "kills", "xp", "pokeXp", "poke", "id", "at"],
+		"cancelado aos 92 s: offline-notice {kind cancelled, reason reconnect, ms, kills, xp, pokeXp, …} com a parte rodada (A, G6b)", JSON.stringify(av))
+	checar(int(tipo(canc, "offline-sample").get("xp", -1)) == esp_xp and (es_c["soneca"] as Dictionary).is_empty(), "a parte rodada é entregue e a soneca acaba")
+	var soma_lx := 0
+	for lk in a1["linha"]:
+		soma_lx += int(lk[1])
+	checar(soma_lx == int(a1["xpSample"]) and (a1["linha"] as Array).size() == int(a1["kills"]), "linha do tempo soma o XP e os abates da amostra")
 	var horas := 2 * 3600
 	rel_m = sv.tratar(es, {"type": "offline-get", "agora": 5000 + 300 + horas})
 	var ent: Dictionary = tipo(rel_m, "offline-sample")

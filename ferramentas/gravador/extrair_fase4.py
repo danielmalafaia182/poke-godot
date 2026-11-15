@@ -7,7 +7,7 @@
                       species[{id, name, huntLevel}]}], claimsGravados[{slot, speciesId, xp}]}
   daily_kill.json     GET /api/game/daily-kill (G5): o dia gravado (tier, opções, prêmio, minLevel, reroll)
   daily_gift.json     GET /api/game/daily (G7): {total, rewards[{day, kind, label, qty, tag, icon}]}
-  soneca.json         GET/POST /api/game/offline (G6): o relatório e a resposta da coleta gravados
+  soneca.json         GET/POST /api/game/offline (G6): o relatório e a resposta da coleta gravados (GET com report null fica fora)
   streak.json         GET /api/game/streak e POST /streak/spend (G7), sem a lista de abates por espécie
 
 Uso: python -I ferramentas/gravador/extrair_fase4.py
@@ -47,13 +47,21 @@ def main():
     ult = {}
     soneca = []
     streak = []
+    claims = []
+    vistos_catch = set()
     for arq, m in rest(arqs):
         c = m.get("corpo")
         if m.get("status") != 200 or not isinstance(c, dict):
             continue
         ult[m["caminho"]] = (arq, c)
-        if m["caminho"] == "/api/game/offline":
+        if m["caminho"] == "/api/game/offline" and (m["metodo"] != "GET" or c.get("report") is not None):
             soneca.append({"arquivo": arq, "metodo": m["metodo"], "corpo": c})
+        if m["caminho"] == "/api/game/daily-catch":
+            for x in c.get("claims", []):
+                k = (arq, x["slot"], x["speciesId"], x["xp"])
+                if k not in vistos_catch:
+                    vistos_catch.add(k)
+                    claims.append(dict({kk: x[kk] for kk in ("slot", "speciesId", "xp", "tierKey")}, arquivo=arq))
         if m["caminho"].startswith("/api/game/streak"):
             streak.append({"arquivo": arq, "metodo": m["metodo"], "corpo": {k: v for k, v in c.items() if k != "kills"}})
     fonte = lambda caminho: ult[caminho][0]
@@ -67,7 +75,7 @@ def main():
                                            "reward": x["reward"], "rewardText": x["rewardText"],
                                            "species": [{"id": s["id"], "name": s["name"], "huntLevel": s["huntLevel"]} for s in x["species"]]}
                                           for x in dc["tiers"]],
-                                "claimsGravados": [{k: x[k] for k in ("slot", "speciesId", "xp", "tierKey")} for x in dc["claims"]]})
+                                "claimsGravados": claims})
     dk = ult["/api/game/daily-kill"][1]
     gravar("daily_kill.json", {"fonte": "A: %s, GET/POST /api/game/daily-kill" % fonte("/api/game/daily-kill"), "dia": dk})
     dg = ult["/api/game/daily"][1]

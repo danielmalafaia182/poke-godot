@@ -6,7 +6,8 @@ extends RefCounted
 ## Estado (no save; ver ponte_cidade.gd):
 ##   streak: {totalKills, spent: {exp, loot, shiny}, bySpecies: {"<speciesId>": abates}}         gold: int
 ##   soneca: {} ou {inicio, fim, entregue, amostra{slug, startedAt, endedAt, sampleMs, itemsUsed, fainted, killsBySpecies,
-##            leaderId, kills, xpSample, pokeXpSample, loot}}   (formato da amostra = A, G6; `loot` e `entregue` são E)
+##            leaderId, kills, xpSample, pokeXpSample, loot, linha, pocoes}}   (formato da amostra = A, G6; `loot`, `linha`,
+##            `pocoes` e `entregue` são E)
 ##   sessao: {fechado_em (unix do último fechamento)}
 ##
 ## Comandos (nomes do original quando existem; C = cliente, A = gravação, E = projeto):
@@ -37,15 +38,16 @@ const PARAMETROS := {
 	"streak_custo_base": 25000,
 	"streak_trilhas": ["exp", "loot", "shiny"],
 	# Tipo do Dia (A: evento type-of-day, +20% XP e loot no tipo; termina às 03:00 UTC = meia-noite de Brasília).
-	# E: offline, rotação fixa ancorada nos três dias observados (A: 09/11/2026 Dragão, 10/11 Inseto, 13/11 Sombrio).
+	# E: offline, rotação fixa ancorada nos quatro dias observados (A: 09/11/2026 Dragão, 10/11 Inseto, 13/11 Sombrio,
+	# 15/11 Veneno); as outras posições são E.
 	"dia_virada_utc_s": 10800,
 	"dia_ancora": 20766,              # dia (unix/86400, deslocado pela virada) de 09/11/2026 em Brasília
-	"rotacao_tipos": ["DRAGON", "BUG", "FIRE", "WATER", "DARK", "GRASS", "ELECTRIC", "ICE", "FIGHTING", "POISON",
+	"rotacao_tipos": ["DRAGON", "BUG", "FIRE", "WATER", "DARK", "GRASS", "POISON", "ELECTRIC", "ICE", "FIGHTING",
 		"GROUND", "FLYING", "PSYCHIC", "ROCK", "GHOST", "STEEL", "FAIRY", "NORMAL"],
 	"nomes_tipos": {"BUG": ["Inseto", "🐛"], "DARK": ["Sombrio", "🌑"], "DRAGON": ["Dragão", "🐉"], "ELECTRIC": ["Elétrico", "⚡"],
 		"FAIRY": ["Fada", "🧚"], "FIGHTING": ["Lutador", "🥊"], "FIRE": ["Fogo", "🔥"], "FLYING": ["Voador", "🕊️"],
 		"GHOST": ["Fantasma", "👻"], "GRASS": ["Planta", "🌿"], "GROUND": ["Terra", "⛰️"], "ICE": ["Gelo", "❄️"],
-		"NORMAL": ["Normal", "⚪"], "POISON": ["Venenoso", "☠️"], "PSYCHIC": ["Psíquico", "🔮"], "ROCK": ["Pedra", "🪨"],
+		"NORMAL": ["Normal", "⚪"], "POISON": ["Veneno", "☠️"], "PSYCHIC": ["Psíquico", "🔮"], "ROCK": ["Pedra", "🪨"],
 		"STEEL": ["Aço", "⚙️"], "WATER": ["Água", "💧"]},
 }
 
@@ -192,16 +194,38 @@ static func amostra_soneca(sim, segundos: int, agora_ms: int = 0) -> Dictionary:
 	var por_especie := {}
 	var ticks := segundos * 1000 / int(sim.p.tick_ms)
 	var t_fim := ticks
+	# Linha do tempo (E, para o cancelamento entregar só o que já rodou, A G6b): [ms, xp, pokeXp, speciesId, {loot}] por
+	# abate e [ms, itemId, qtd] por poção gasta.
+	var linha: Array = []
+	var pocoes: Array = []
+	var xp_t_ant := xp_t0
+	var xp_p_ant := xp_p0
+	var inv_ant: Dictionary = inv_antes.duplicate()
 	for t in ticks:
+		var ms_t := (t + 1) * int(sim.p.tick_ms)
+		var curou := false
 		for reg in sim.passo():
 			var m: Dictionary = reg.get("msg", reg)
 			if String(m.get("type", "")) == "field-kill":
 				var k := str(int(m.get("speciesId", 0)))
 				por_especie[k] = int(por_especie.get(k, 0)) + 1
+				var lk := {}
 				for it in m.get("loot", []):
 					loot[str(int(it["itemId"]))] = int(loot.get(str(int(it["itemId"])), 0)) + int(it["qty"])
+					lk[str(int(it["itemId"]))] = int(lk.get(str(int(it["itemId"])), 0)) + int(it["qty"])
+				linha.append([ms_t, int(sim.treinador["xp"]) - xp_t_ant, int(ativo0["xp"]) - xp_p_ant, int(m.get("speciesId", 0)), lk])
+				xp_t_ant = int(sim.treinador["xp"])
+				xp_p_ant = int(ativo0["xp"])
+			if String(m.get("type", "")) == "auto-heal":
+				curou = true
 			if String(m.get("type", "")) == "field-none":
 				desmaio_s = t * int(sim.p.tick_ms) / 1000
+		if curou:
+			for k in inv_ant:
+				var g := int(inv_ant[k]) - int(sim.inventario.get(k, 0))
+				if g > 0:
+					pocoes.append([ms_t, int(k), g])
+			inv_ant = sim.inventario.duplicate()
 		if sim.encerrada:
 			if desmaio_s < 0:
 				desmaio_s = t * int(sim.p.tick_ms) / 1000
@@ -216,7 +240,7 @@ static func amostra_soneca(sim, segundos: int, agora_ms: int = 0) -> Dictionary:
 	return {"slug": String(sim.slug), "startedAt": agora_ms, "endedAt": agora_ms + ms, "sampleMs": ms,
 		"itemsUsed": usados, "fainted": desmaio_s >= 0, "killsBySpecies": por_especie, "leaderId": String(ativo0.get("id", "")),
 		"kills": int(sim.estatisticas["abates"]) - abates0, "xpSample": int(sim.treinador["xp"]) - xp_t0,
-		"pokeXpSample": int(ativo0["xp"]) - xp_p0, "loot": loot}
+		"pokeXpSample": int(ativo0["xp"]) - xp_p0, "loot": loot, "linha": linha, "pocoes": pocoes}
 
 
 func _dormir(estado: Dictionary, cmd: Dictionary) -> Array:
@@ -250,6 +274,9 @@ func _relatorio_msgs(estado: Dictionary, agora: int, poke: Dictionary = {}) -> A
 	## coleta (A, G6). Offline não há servidor rodando a hunt enquanto o jogo está fechado, então ela é calculada no Zzz
 	## e entregue na primeira leitura do relatório depois dos 5 min (E). Voltar antes cancela sem entregar nada (E: o
 	## original cancela, C; o que ele faz com a amostra parcial não foi gravado).
+	var s0: Dictionary = estado.get("soneca", {})
+	if not s0.is_empty() and agora - int(s0["inicio"]) < int(p.soneca_amostra_s) and not bool(s0.get("entregue", false)):
+		return _cancelar(estado, agora, poke)
 	var rel := _relatorio(estado, agora, poke)
 	var s: Dictionary = estado.get("soneca", {})
 	if rel.get("report") == null or bool(s.get("entregue", false)):
@@ -259,6 +286,41 @@ func _relatorio_msgs(estado: Dictionary, agora: int, poke: Dictionary = {}) -> A
 	return [{"type": "offline-sample", "xp": int(a.get("xpSample", 0)), "pokeXp": int(a.get("pokeXpSample", 0)),
 		"pokemonId": String(a.get("leaderId", "")), "loot": a.get("loot", {}), "itemsUsed": a.get("itemsUsed", {}),
 		"killsBySpecies": a.get("killsBySpecies", {}), "kills": int(a.get("kills", 0))}, rel]
+
+
+func _cancelar(estado: Dictionary, agora: int, poke: Dictionary) -> Array:
+	## A (G6b): voltar antes dos 5 min cancela, mas o que a amostra já rodou fica: offline-notice {notices: [{kind:
+	## "cancelled", reason: "reconnect", slug, ms, kills, xp, pokeXp, poke, id, at}]} (voltou aos 91.981 ms com 16 abates e
+	## 14.016 XP no treinador e no Pokémon) e o relatório fica null. Loot e poções da parte rodada: entregues também (E: a
+	## gravação não mostra a BAG). Aqui a parte rodada sai da linha do tempo da amostra (abates com ms <= o tempo fora).
+	var s: Dictionary = estado["soneca"]
+	var a: Dictionary = s["amostra"]
+	var ms := maxi(0, (agora - int(s["inicio"])) * 1000)
+	var xp := 0
+	var pxp := 0
+	var abates := 0
+	var por_especie := {}
+	var loot := {}
+	for e in a.get("linha", []):
+		if int(e[0]) > ms:
+			break
+		abates += 1
+		xp += int(e[1])
+		pxp += int(e[2])
+		por_especie[str(int(e[3]))] = int(por_especie.get(str(int(e[3])), 0)) + 1
+		for k in e[4]:
+			loot[k] = int(loot.get(k, 0)) + int(e[4][k])
+	var usados := {}
+	for e in a.get("pocoes", []):
+		if int(e[0]) <= ms:
+			usados[str(int(e[1]))] = int(usados.get(str(int(e[1])), 0)) + int(e[2])
+	estado["soneca"] = {}
+	var aviso := {"kind": "cancelled", "reason": "reconnect", "slug": String(a.get("slug", "")), "ms": ms, "kills": abates,
+		"xp": xp, "pokeXp": pxp, "poke": poke, "id": "soneca-%d" % int(s["inicio"]), "at": agora * 1000}
+	return [{"type": "offline-notice", "notices": [aviso]},
+		{"type": "offline-sample", "xp": xp, "pokeXp": pxp, "pokemonId": String(a.get("leaderId", "")), "loot": loot,
+			"itemsUsed": usados, "killsBySpecies": por_especie, "kills": abates},
+		{"type": "offline", "report": null, "canceled": true}]
 
 
 func _relatorio(estado: Dictionary, agora: int, poke: Dictionary = {}) -> Dictionary:
@@ -273,6 +335,8 @@ func _relatorio(estado: Dictionary, agora: int, poke: Dictionary = {}) -> Dictio
 	var c := _contas(estado, agora)
 	var amostra: Dictionary = (s["amostra"] as Dictionary).duplicate(true)
 	amostra.erase("loot")
+	amostra.erase("linha")
+	amostra.erase("pocoes")
 	return {"type": "offline", "report": {"sample": amostra, "seconds": int(c["seconds"]),
 		"cappedAt": int(p.soneca_teto_s) if bool(c["capped"]) else false, "estKills": int(c["estKills"]),
 		"xp50": int(c["xp50"]), "xp100": int(c["xp100"]), "pokeXp50": int(c["pokeXp50"]), "pokeXp100": int(c["pokeXp100"]),
@@ -288,7 +352,7 @@ func _coletar(estado: Dictionary, agora: int, turbo: bool, poke: Dictionary = {}
 	var msgs := _relatorio_msgs(estado, agora, poke)
 	var rel: Dictionary = msgs[msgs.size() - 1]
 	if rel.get("report") == null:
-		return [_erro("Nenhuma soneca para coletar."), rel] if not rel.has("canceled") else [rel]
+		return [_erro("Nenhuma soneca para coletar."), rel] if not rel.has("canceled") else msgs
 	msgs.pop_back()
 	var a: Dictionary = estado["soneca"]["amostra"]
 	var c := _contas(estado, agora)

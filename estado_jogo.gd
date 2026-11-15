@@ -430,7 +430,11 @@ func relatorio_offline(agora_unix: int) -> Dictionary:
 	_voltar_estado_jogador(e)   # voltar antes de 5 min cancela (o serviço zera a soneca)
 	_aplicar_msgs_soneca(msgs)
 	solicitar_salvamento()
-	return msgs[msgs.size() - 1]
+	var r: Dictionary = (msgs[msgs.size() - 1] as Dictionary).duplicate()
+	for m in msgs:
+		if String(m.get("type", "")) == "offline-notice" and not (m["notices"] as Array).is_empty():
+			r["notice"] = m["notices"][0]   # A (G6b): soneca cancelada ao voltar antes dos 5 min, com a parte rodada
+	return r
 
 func coletar_offline(agora_unix: int) -> Dictionary:
 	var poke := _poke_soneca()

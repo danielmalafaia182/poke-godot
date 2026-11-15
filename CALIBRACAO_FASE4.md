@@ -48,7 +48,7 @@ Testes:
 | Só em Cerulean; travada na hunt | C | "Only works in Cerulean — the button is locked during a hunt" |
 | Dois caminhos: com pedras mantém o nível; sem pedras é grátis e volta ao Lv.1 | C | "Evolving with a stone keeps the level"; "free … goes back to Lv.1"; "No gold involved" |
 | Quantidade: espécie de hunt ≥ 40 gasta 4 pedras no total, divididas por igual; até 39, 1 de cada | C | texto do guia |
-| **Receita**: pedra do tipo principal da origem + pedra de cada tipo que a evolução ganha | **F** | bate com os dois exemplos do guia (Ivysaur = 4× Leaf; Charmeleon = 2× Fire + 2× Feather); a receita real vem do servidor |
+| **Receita**: pedra do tipo principal da origem + pedra de cada tipo que a evolução ganha | **A** num caso (G3) / F no resto | G3 (15/11): Geodude (Pedra/Terra, hunt 1) Lv.40 → Graveler gastou **1 Rock Stone** — só o tipo principal, sem Ground, e 1 porque a hunt da origem é < 40, como a regra previa. `GET /evolve` = `{name, destId, destName, level, needLevel, canEvolve, stones[{itemId, name, icon, need, have}], hasStones, keepLevel, resetLevel, itemOnly}`; `POST /evolve` = `{ok, name, destId, level, usedStone, stonesSpent[{itemId, qty}]}` (a sim emite os mesmos campos; teste campo a campo). Ainda F: origem de hunt ≥ 40 (4 pedras divididas) e evolução que ganha tipo (Charmeleon → Charizard: Fire + Feather) |
 | Tipo → pedra (Ghost → Darkness, Normal/Fairy → Heart) | F | nomes do `items.json` |
 | Divisão que não fecha em 4 (3 pedras) → arredonda para cima | F | sem caso conhecido |
 | Eevee: um destino por pedra, 1 pedra, nível 80; sem pedra → Vaporeon | C (sistema próprio) + B/F (ramos do canon) | o `creatures.json` só traz Vaporeon |
@@ -113,10 +113,10 @@ conferidos de novo em 13/11). Cliente: `EstadoJogo` (`streak`, `soneca` no save)
 | Sem soneca, 15 min com o jogo fechado matam a sessão (a próxima hunt penaliza); voltar à mesma hunt pela cidade não penaliza | B-relatado (regra do usuário) | não gravado; implementado em `servico_jogador` (comando `sessao`) e usado ao carregar o save |
 | Com soneca valendo (amostra completa), a sessão continua | E | dedução: o original mantém o jogador "na hunt" durante a soneca |
 | Soneca: botão Zzz na hunt; a caçada segue 5 min (combate, XP, loot, Auto-Potion; **sem bolas**) | C / **A** (G6: `sampleMs` 300.551) | guia "Nap Mode"; a amostra gravada tem 32 abates de Geodude em 300.551 ms |
-| Voltar antes dos 5 min cancela a soneca (sessão nova, sem farm offline) | C | guia; o que o original faz com a amostra parcial não foi gravado → offline não entrega nada dela (E) |
+| Voltar antes dos 5 min cancela a soneca, **mas a parte que já rodou fica** | C / **A** (G6b) | voltou aos 91.981 ms: `offline-notice {notices: [{kind: "cancelled", reason: "reconnect", slug, ms, kills 16, xp 14.016, pokeXp 14.016, poke, id, at}]}` e `GET /offline` = `{report: null}`. Corrigido (antes, E: nada). A amostra guarda a linha do tempo (abates, XP, loot, poções por instante) e o cancelamento entrega até o tempo fora; loot e poções da parte rodada: E (a G6b não mostra a BAG) |
 | **Taxa da coleta = XP da amostra ÷ 300 s nominais, com round**: `xp100 = round(xpSample/300 × s)`, `xp50 = round(xpSample/300 × s × 0,5)`, `estKills = round(kills/300 × s)`; s = do fim da amostra até agora, teto 24 h | **A** (G6) | 384 XP, 217 s → 278 / 139 / 23; na coleta, 227 s → 145 / 24: os cinco números batem exatamente (com `sampleMs` 300.551 e floor não batem). Corrigido: antes era floor |
 | A coleta entrega **só** os 50% do tempo fora, no treinador e no Pokémon líder | **A** (G6) | o Venusaur tinha 81.113.299 antes e 81.113.444 depois = +145 = `xpGained` = `pokeXpGained`. Corrigido: antes a coleta somava também o XP da amostra |
-| O XP, o loot e as poções da amostra entram **antes** da coleta | A (o XP já estava no Pokémon) / E (momento) | offline não há servidor rodando a amostra com o jogo fechado: ela é calculada no Zzz e entregue na 1ª leitura do relatório depois dos 5 min (mensagem `offline-sample`, E) |
+| O XP, o loot e as poções da amostra entram **antes** da coleta | A (o XP já estava no Pokémon) / E (momento) | offline não há servidor rodando a amostra com o jogo fechado: ela é calculada no Zzz e entregue na 1ª leitura do relatório depois dos 5 min (mensagem `offline-sample`, E). A G6b não trouxe a soneca completa (só o cancelamento): o momento do Zzz e a BAG antes/depois seguem sem gravação |
 | Se o time cai na amostra, ela para ali e o rendimento reflete | C | janela: "Your leader fainted during the nap" |
 | Turbo (100%, 2💎) | C / A (`boostCost` 2) | recusado offline (E: sem diamantes) |
 | Abates da amostra contam para o Streak (por espécie); os estimados não | F | não gravado |
@@ -131,8 +131,8 @@ conferidos de novo em 13/11). Cliente: `EstadoJogo` (`streak`, `soneca` no save)
 | Fonte de boosts offline | C/E | o Daily Gift (abaixo) dá XP Boost +50% e Loot Boost +20% por 1 h; os boosts agora vão no save |
 | Tipo do Dia: +20% de XP e +20% de loot nos selvagens do tipo; o dia vira às 03:00 UTC | A (formato, texto e horário) | — |
 | Parcela `typeDay` = **floor**(base × 20%) | **A** (G8) | Tyranitar base 6008 → 1201 em 61/61 abates (round daria 1202). Corrigido: antes era round |
-| Loot no tipo do dia = chance × 1,2 | F (indício contra) | G8: 148 drops em 61 abates contra 104,5 pela tabela (×1,42; ×1,2 esperaria 125,4, 2,9σ abaixo do observado); controle G5 (sem tipo do dia): ×1,03. Uma gravação só: mantido ×1,2 e registrado o indício de ×1,4 (pede G10) |
-| Rotação do Tipo do Dia | E (âncoras A) | três dias gravados: 09/11 Dragão, 10/11 Inseto, 13/11 **Sombrio** (a rotação antiga previa Planta: corrigida, Sombrio entra na 5ª posição; os outros 15 continuam E) |
+| Loot no tipo do dia = chance de cada drop **× 1,4** (limite 1) | **A** (G8 × G10) | mesma hunt (Tyranitar): dia Sombrio (G8, 61 abates) 148 drops — esperado 146,3 com ×1,4 (z 0,2), 125,4 com ×1,2 (z 2,8: rejeitado); dia Veneno (G10, 91 abates) 161 × 155,9 pela tabela (controle: 1,03). ×1,44 (= 1,2²) também cabe. `tipo_do_dia_loot` 1,4 (era 1,2) |
+| Rotação do Tipo do Dia | E (âncoras A) | quatro dias gravados: 09/11 Dragão, 10/11 Inseto, 13/11 Sombrio, **15/11 Veneno** (G10; a rotação anterior previa Elétrico: corrigida); os outros 14 continuam E. Nome: "Veneno" (A; estava "Venenoso") |
 
 ## G5 e G7 (13/11/2026): Daily Gift, Quests & Tasks, Daily Kill e Daily Catch
 
@@ -145,26 +145,26 @@ Onde mora: `sim/servico_diarias.gd` (puro; dados gravados em `dados/fase4/`, ger
 | Regra | Fonte | Evidência |
 | --- | --- | --- |
 | Daily Gift: calendário de **28 prêmios** do mês (bolas, poções, Idle Balls VIP, XP Boost +50% 1 h, Loot Boost +20% 1 h) | **A** (G7) | `GET /api/game/daily`: `{ym, vip, total 28, nextDay, canClaim, claimedToday, blockedByVip, rewards[{day, label, icon, qty, tag, kind, locked, claimed, current}]}`; a tabela inteira em `dados/fase4/daily_gift.json` |
-| Um prêmio por dia, em sequência (`nextDay` = coletados + 1); recomeça no mês novo | A (13 coletados em 13/11 → `nextDay` 14) / C ("Come back every day and collect the month's 28 rewards") / E (mês de Brasília; dia perdido não pula) | — |
+| Um prêmio por dia, em sequência (`nextDay` = coletados + 1); dia perdido não pula; recomeça no mês novo | **A** (G7: 13 coletados em 13/11; G9: `nextDay` 13 em 15/11, coletou o 13) / C / E (mês de Brasília) | — |
 | Dia VIP bloqueia quem não é VIP (`blockedByVip`) | C ("Today's reward is VIP-exclusive — subscribe to VIP") | o calendário fica parado até o VIP (C: o botão vira "Subscribe to VIP") |
 | Boost do Daily Gift ativa na hora por 1 h | C ("{{label}} activated for 1h!") | o mesmo boost ativo soma 1 h (E) |
-| Bolas e itens vão direto para a BAG | E | no original vão para o Gift Center (C: "sent to the Gift Center! Claim it in 📨 Messages"); a resposta do POST não foi gravada (C: devolve o estado e `claimed.label`) |
+| Bolas, itens e boosts vão direto para a BAG/boosts | E | no original vão para o Gift Center (A, G9: `toGiftCenter: true`; `GET /gifts` lista `{id, kind, label, icon, grantedBy, createdAt}` e o boost fica lá até ser resgatado em Mensagens). POST /daily (A, G9) = o estado + `claimed {day, kind, refId, qty, label, icon, tag}` + `toGiftCenter`: a sim responde igual, com `toGiftCenter: false` |
 | O mesmo calendário todo mês | E | só novembro foi gravado |
 | Quests & Tasks: **124 tarefas em 43 cidades**, cada uma `{id, npc, city, goals[{pokeId, name, qty, kind: kill/capture/deliver}], xp, cash}` | **A** (G5) | `GET /api/game/tasks` (`dados/fase4/tarefas.json`, sem o progresso da conta que gravou) |
 | Progresso: `goalProgress[{…, have, done, looktype, type1, type2?}]`, `have` limitado a `qty`; `complete` quando todos os objetivos fecham | A (formato; Rattata 15/15 numa conta com 680 mil abates) | — |
 | De onde vem o `have` | E | kill/capture: contagem por espécie desde que o contador existe no save (o original mostra o do servidor); deliver: o que está na BAG agora |
-| Entregar: `POST /tasks/claim {taskId}` → `{xp, cash, totalXp, level, leveledUp}`; XP no treinador, `cash` em ouro | C | resposta não gravada |
+| Entregar: `POST /tasks/claim {taskId}` → `{ok, taskId, xp, cash, totalXp, level, leveledUp}`; XP no treinador, `cash` em ouro | **A** (G9: yvette 1350/0, douglas298b 0/2700 — entrega —, george299b 3000/450, todos iguais ao `tasks.json`) | o consumo dos itens da entrega não aparece (nenhum `inventory` depois dos claims): E |
 | Cada tarefa paga uma vez; a de entrega consome os itens | E | — |
 | Daily Kill: 3 opções por dia, uma escolha (`pick {idx}`), sem reroll offline (`rerollMax` 0), trava abaixo do nível 25 (`minLevel`) | **A** (G5) | `GET/POST /api/game/daily-kill[/pick]` (formato em `dados/fase4/daily_kill.json`) |
 | XP da opção = **floor(qtd × xpAbate × 8/3)** | **A** (G5) | 3/3: Furious Pidgeot 798 × 13508 → 28.745.024; Ancient Marowak 1497 × 13508 → 53.923.936; Politoed 1199 × 2948 → 9.425.738 |
 | Prêmio do tier hard: 6 Devoted Token + 2 Bronze Dimensional Key = 2 × os itens do tier hard do Daily Catch | A (hard) / E (os outros tiers, mesma regra) | — |
 | `have` conta só depois do pick e só a espécie escolhida | A (0 logo depois do pick) / C (a janela soma o `have` da escolhida) | — |
 | Coletar: `POST /daily-kill/claim` → `{state, payout{xp, items[{label}], totalXp, level, leveledUp}}` | C | resposta não gravada |
-| **Geração das opções** | E | o original sorteia no servidor (não visível): tier pelo nível do treinador na tabela do Daily Catch (acima de 199, hard); espécies sorteadas da lista do tier (as gravadas — Furious Pidgeot, Ancient Marowak — **não** estão nela: a lista real é outra, desconhecida); qtd por tier: superEasy 100–300, easy 200–600, medium 400–1200, hard 500–1500 (A só no hard: 798–1497); semente = dia, então o dia sorteia sempre o mesmo |
+| **Geração das opções** | E | o original sorteia no servidor (não visível): tier pelo nível do treinador na tabela do Daily Catch (acima de 199, hard); espécies sorteadas da lista do tier (das 6 opções gravadas — G5 e G9 — 4 estão na lista do hard; Furious Pidgeot e Ancient Marowak não); qtd por tier: superEasy 100–300, easy 200–600, medium 400–1200, hard 500–1500 (A só no hard: 751–1497); semente = dia. G9: mais 3 opções com xp = floor(qtd × xpAbate × 8/3) exato (Magcargo, Larvitar, Jumpluff) e o `have` contando só depois do pick (8 → 11 abates de Larvitar) |
 | Virada do dia às 03:00 UTC (`resetAt`), `dayKey` "AAAA-MM-DD" | **A** (G5) | `resetAt` 1794625200000 em 13/11 |
 | Daily Catch: 2 capturas premiadas por dia; faixas superEasy 25–59, easy 60–79, medium 80–149, hard 150–199, com a lista de espécies e os itens de cada uma; só as faixas do nível aparecem ("Faixas liberadas") | **A** (G5) / C | `GET /api/game/daily-catch` (`dados/fase4/daily_catch.json`) |
 | Capturar espécie da tabela preenche o próximo slot e paga na hora | C ("Slot livre — capture um Pokémon da tabela") | — |
-| XP do slot = floor(xpAbate × 8/3 × (10 + 4 × (slot − 1))), limitado a [xpMin, xpMax] da faixa | **F** | os dois casos gravados: Larvitar (548) → 14.613 no slot 1 e 20.458 no slot 2 |
+| XP da captura premiada = floor(xpAbate × 8/3 × m), m múltiplo de 0,5 | A (forma: 4/4) / F (m sorteado entre 1,5 e 18) | Larvitar (548) m 10 e 14 (G5); Arbok (968, easy) m **1,5** no slot 1 e **18** no slot 2 (G9): a regra "m pelo slot" de 13/11 caiu. O que decide m não aparece (as duas capturas do Arbok tinham Q 1,43 e 1,49) |
 | Itens da faixa a cada captura premiada; Newbie Gift (`itemId` −1) não entra | F / E | o `rewardText` mostra o dobro da quantidade (2 slots: F) |
 | Faixa de uma espécie que está em mais de uma | E | a mais alta liberada |
 | `dailys-summary` → `{resetAt, kill{locked, picked, done, claimed, target, have, qty}, catch{used, total}, tasks{ready}}` | **A** (G5) | — |

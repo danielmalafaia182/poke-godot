@@ -735,7 +735,7 @@ func _abate(m: Dictionary) -> void:
 		rolagens += int(floor(extra))
 		if rng.randf() < extra - floor(extra):
 			rolagens += 1
-	var mult_loot := (1.0 + _pct_boost("loot") / 100.0) * (1.0 + float(p.tipo_do_dia_pct) / 100.0 if tipo_dia else 1.0)
+	var mult_loot := (1.0 + _pct_boost("loot") / 100.0) * (float(p.tipo_do_dia_loot) if tipo_dia else 1.0)
 	for _r in rolagens:
 		_rolar_loot(esp, lock, mult_loot, loot)
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],

@@ -34,6 +34,25 @@ func abrir(rel: Dictionary) -> void:
 	_montar()
 
 
+func abrir_aviso(aviso: Dictionary) -> void:
+	## A (G6b): offline-notice {kind: "cancelled", reason: "reconnect", ms, kills, xp, pokeXp}: voltou antes dos 5 min.
+	relatorio = {}
+	show()
+	for c in corpo.get_children():
+		corpo.remove_child(c)
+		c.queue_free()
+	_rotulo("💤 Soneca cancelada")
+	_rotulo("Você voltou depois de %s, antes dos 5 minutos da amostra. O que já rodou ficou: %d abates, +%d XP." % [
+		_duracao(int(aviso.get("ms", 0)) / 1000), int(aviso.get("kills", 0)), int(aviso.get("xp", 0))], Color("b9c3cf"))
+	var b := Button.new()
+	b.name = "Ok"
+	b.text = "OK"
+	b.pressed.connect(hide)
+	corpo.add_child(b)
+	_ajustar()
+	call_deferred("_ajustar")
+
+
 func _ajustar() -> void:
 	janela.size = Vector2(440, 220).max(janela.get_combined_minimum_size())
 	janela.position = (size - janela.size) * 0.5

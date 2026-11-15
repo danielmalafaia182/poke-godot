@@ -35,10 +35,13 @@ const PARAMETROS := {
 	"kill_qtd": {"superEasy": [100, 300], "easy": [200, 600], "medium": [400, 1200], "hard": [500, 1500]},
 	"kill_itens_mult": 2,
 	# Daily Catch (A, G5): 2 capturas premiadas por dia; faixas por nível do treinador; capturar espécie da tabela
-	# preenche o próximo slot (C: "capture um Pokémon da tabela"). F: xp = floor(xpAbate × 8/3 × (10 + 4 × (slot − 1)))
-	# — Larvitar (548): 14613 no slot 1 e 20458 no slot 2, os dois casos gravados —, limitado a [xpMin, xpMax] do tier.
+	# preenche o próximo slot (C: "capture um Pokémon da tabela"). XP = floor(xpAbate × 8/3 × m): A, os 4 casos gravados
+	# dão m múltiplo de 0,5 — Larvitar (548) 10 e 14 (G5), Arbok (968) 1,5 e 18 (G9). A regra "m pelo slot" (F de 13/11)
+	# caiu (Arbok slot 1 = 1,5, slot 2 = 18). F/E: m sorteado (semente = dia e slot) entre os múltiplos de 0,5 de 1,5 a 18
+	# (a faixa observada); limitado a [xpMin, xpMax] da faixa.
 	"catch_total": 2,
-	"catch_mult_slot": [10, 14],
+	"catch_mult_min": 1.5,
+	"catch_mult_max": 18.0,
 }
 
 var p: Dictionary = PARAMETROS.duplicate(true)
@@ -277,7 +280,17 @@ func _gift_coletar(estado: Dictionary, agora: int) -> Array:
 	g["feitos"] = int(g["feitos"]) + 1
 	g["ultimo"] = chave_dia(agora)
 	var novo := msg_gift(estado, agora)
-	novo["claimed"] = {"day": int(r["day"]), "label": String(r["label"]).replace("�", "é"), "qty": qtd, "kind": kind}
+	# A (G9): POST /daily → o estado + claimed {day, kind, refId, qty, label, icon, tag} + toGiftCenter (true no original:
+	# o prêmio vai para o Gift Center). Offline vai direto para a BAG/boosts (E), então toGiftCenter = false. refId 0 nos
+	# boosts (A); nas bolas e itens, o id (E: não gravado).
+	var ref := 0
+	if kind in ["ball", "idleball"]:
+		ref = _bola_do_icone(String(r["icon"]))
+	elif kind == "item":
+		ref = _id_item_por_nome(String(r["label"]))
+	novo["claimed"] = {"day": int(r["day"]), "kind": kind, "refId": ref, "qty": qtd, "label": String(r["label"]).replace("�", "é"),
+		"icon": String(r["icon"]), "tag": r.get("tag")}
+	novo["toGiftCenter"] = false
 	return [novo] + saida
 
 
@@ -342,7 +355,8 @@ func _tarefa_coletar(estado: Dictionary, id: String) -> Array:
 				saida = [_msg_inventario(estado)]
 		estado["diarias"]["tarefas"][id] = {"claimed": true}
 		estado["gold"] = int(estado.get("gold", 0)) + int(t["cash"])
-		return [{"type": "tasks-claimed", "taskId": id, "xp": int(t["xp"]), "cash": int(t["cash"])},
+		# A (G9): {ok, taskId, xp, cash, totalXp, level, leveledUp} (totalXp/level/leveledUp: o cliente completa)
+		return [{"type": "tasks-claimed", "ok": true, "taskId": id, "xp": int(t["xp"]), "cash": int(t["cash"])},
 			{"type": "currency", "gold": int(estado["gold"])}] + saida
 	return [_erro("Tarefa desconhecida.")]
 
@@ -397,9 +411,11 @@ func _captura(estado: Dictionary, agora: int, especie: int) -> Array:
 				tier = t
 	if tier.is_empty():
 		return []
-	var mult: Array = p.catch_mult_slot
+	var rng = Rng.new(dia(agora) * 104729 + slot * 7 + 3)
+	var passos := int(round((float(p.catch_mult_max) - float(p.catch_mult_min)) / 0.5))
+	var m := float(p.catch_mult_min) + 0.5 * float(int(rng.randf() * (passos + 1)))
 	var xp_abate := float(_especie(especie).get("xpAbate", 0))
-	var xp := int(floor(xp_abate * float(p.kill_xp_fator) * float(mult[mini(slot - 1, mult.size() - 1)]) + 1e-6))
+	var xp := int(floor(xp_abate * float(p.kill_xp_fator) * m + 1e-6))
 	var rw: Dictionary = tier["reward"]
 	xp = clampi(xp, int(rw.get("xpMin", 0)), int(rw.get("xpMax", xp))) if rw.has("xpMax") else xp
 	var claim := {"slot": slot, "speciesId": especie, "tierKey": String(tier["key"]), "tierLabel": String(tier["label"]), "xp": xp}

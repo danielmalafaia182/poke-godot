@@ -822,3 +822,16 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   3 (F) na fórmula: o time da `geodude-10min` upa na sim no ritmo do real (abates/min 2,62 × 2,55; níveis/min 0,25 ×
   0,23). Rhydon 20 min idêntico byte a byte com e sem o piso (diferencial igual). Regras 43/43. Ferramentas:
   `comparar_nivel_baixo.py`, `ajustar_dano.py` com variantes de piso ("+aN", "+adN", "+AN").
+- 15/11/2026 — Fase 4, item 3 (G3, G6b, G9, G10; detalhe em `CALIBRACAO_FASE4.md`).
+  - G3 (A): Geodude → Graveler gastou 1 Rock Stone (só o tipo principal; hunt da origem < 40): a receita F acerta esse
+    caso; mensagens de evolução com os campos gravados (`icon`; `ok`, `usedStone`, `stonesSpent`).
+  - G6b (A): só o cancelamento foi gravado. Voltar antes dos 5 min **entrega a parte rodada** (`offline-notice
+    {kind: cancelled, reason: reconnect, ms, kills, xp, pokeXp…}`); corrigido (antes, E: nada). A amostra guarda a linha
+    do tempo; a cidade mostra o aviso.
+  - G9 (A): POST /daily (`claimed {day, kind, refId, qty, label, icon, tag}`, `toGiftCenter`; offline false, E), tasks/claim
+    (`{ok, taskId, xp, cash, …}`, 3/3 iguais ao tasks.json), Daily Kill (+3 opções exatas, `have` só depois do pick).
+    Daily Catch: XP = floor(xpAbate × 8/3 × m) com m múltiplo de 0,5 (4/4), mas **m não é pelo slot** (Arbok 1,5 e 18):
+    m sorteado em [1,5; 18] (F).
+  - G10 (A): loot do tipo do dia × 1,4 (×1,2 rejeitado, z 2,8; controle na mesma hunt 1,03×); 15/11 = Veneno (rotação).
+  - `dados/fase4/` regenerado com G9 (claims do Daily Catch das duas gravações). Testes: cidade 48/48, lote 2 39/39,
+    diárias 40/40, ciclos 14/14, 16/16, 20/20, cena 22/22.

@@ -1,20 +1,36 @@
 {
  "claimsGravados": [
   {
+   "arquivo": "G5.jsonl",
    "slot": 1,
    "speciesId": 246,
    "tierKey": "hard",
    "xp": 14613
   },
   {
+   "arquivo": "G5.jsonl",
    "slot": 2,
    "speciesId": 246,
    "tierKey": "hard",
    "xp": 20458
+  },
+  {
+   "arquivo": "G9.jsonl",
+   "slot": 1,
+   "speciesId": 24,
+   "tierKey": "easy",
+   "xp": 3872
+  },
+  {
+   "arquivo": "G9.jsonl",
+   "slot": 2,
+   "speciesId": 24,
+   "tierKey": "easy",
+   "xp": 46464
   }
  ],
- "fonte": "A: G5.jsonl, GET /api/game/daily-catch",
- "resetAt": 1794625200000,
+ "fonte": "A: G9.jsonl, GET /api/game/daily-catch",
+ "resetAt": 1794798000000,
  "tiers": [
   {
    "key": "superEasy",

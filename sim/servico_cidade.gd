@@ -257,8 +257,10 @@ func _ramos(origem: Dictionary) -> Array:
 func _com_posse(estado: Dictionary, pedras: Array) -> Array:
 	var r: Array = []
 	for s in pedras:
-		var x: Dictionary = s.duplicate()
-		x["have"] = int(estado.get("itens", {}).get(str(int(s["itemId"])), 0))
+		# A (G3): {itemId, name, icon, need, have}; icon = /assets/items/<ícone do items.json>
+		var x := {"itemId": int(s["itemId"]), "name": String(s["name"]),
+			"icon": "/assets/items/" + String(dados.itens.get(int(s["itemId"]), {}).get("icone", "")), "need": int(s["need"]),
+			"have": int(estado.get("itens", {}).get(str(int(s["itemId"])), 0))}
 		r.append(x)
 	return r
 
@@ -344,8 +346,14 @@ func _evoluir(estado: Dictionary, cmd: Dictionary) -> Array:
 	pk["speciesId"] = int(info["destId"])
 	# IVs e Quality mantidos; stats recalculados da base nova (C: "Growth/Quality are kept — stats are recalculated").
 	pk["hp"] = clampi(roundi(fracao * max_hp(pk)), 0, max_hp(pk))   # E: mantém a fração da vida
-	var r: Array = [{"type": "evolved", "capturedId": String(pk["id"]), "name": String(info["destName"]),
-		"destId": int(info["destId"]), "useStone": com_pedra, "level": Regras.nivel_por_xp(int(pk["xp"]))}, {"type": "poke-delta", "poke": poke_delta(pk)}]
+	# A (G3): POST /evolve → {ok, name, destId, level, usedStone, stonesSpent[{itemId, qty}]} (+ capturedId e useStone, E)
+	var gastas: Array = []
+	if com_pedra:
+		for s in info["stones"]:
+			gastas.append({"itemId": int(s["itemId"]), "qty": int(s["need"])})
+	var r: Array = [{"type": "evolved", "ok": true, "capturedId": String(pk["id"]), "name": String(info["destName"]),
+		"destId": int(info["destId"]), "level": Regras.nivel_por_xp(int(pk["xp"])), "usedStone": com_pedra, "stonesSpent": gastas,
+		"useStone": com_pedra}, {"type": "poke-delta", "poke": poke_delta(pk)}]
 	if com_pedra:
 		r.append(msg_inventario(estado))
 	return r

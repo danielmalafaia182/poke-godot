@@ -420,3 +420,5 @@ func verificar_soneca() -> void:
 	var r: Dictionary = EstadoJogo.relatorio_offline(int(Time.get_unix_time_from_system()))
 	if r.get("report") != null:
 		painel_soneca.abrir(r)
+	elif r.has("notice"):
+		painel_soneca.abrir_aviso(r["notice"])
