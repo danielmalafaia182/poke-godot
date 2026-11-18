@@ -34,6 +34,10 @@ const PARAMETROS := {
 	# F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do
 	# herói). Sem isso, o herói fica preso num selvagem de outra ilha e a busca no mapa inteiro roda a cada passo.
 	"alvo_so_alcancavel": true,
+	# A (18/11, medir_alvo.py: 2295/2400 trocas × 2067 com Chebyshev): alvo = menor tempo de caminho até encostar.
+	# "chebyshev" volta à regra anterior (linha reta). Em labirinto (nightmare_elekid) a linha reta mandava o herói a um
+	# selvagem a > 60 s de caminho e ele não abatia nada em 60 s (13/20 sementes).
+	"alvo_criterio": "caminho",
 	# F: sem caminho até o alvo (corredor fechado por outros selvagens; banette) e com selvagem encostado, o herói passa a
 	# atacar o encostado mais próximo. Sem isso, apanha parado até morrer. O original não foi observado nesse caso.
 	"alvo_troca_se_bloqueado": true,

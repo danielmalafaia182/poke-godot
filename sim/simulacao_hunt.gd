@@ -407,16 +407,38 @@ func _poke_ativo() -> Dictionary:
 
 
 func _escolher_alvo(so_encostados: bool = false) -> int:
-	# A (19 de 23 trocas): o selvagem vivo mais próximo em Chebyshev; desempate por distância euclidiana e slot (F).
+	# A (18/11, ferramentas/gravador/medir_alvo.py, 2400 trocas em 16 hunts): o selvagem vivo com o menor TEMPO DE CAMINHO
+	# até encostar acerta 2295 (Chebyshev 2067); nos 457 casos em que os dois discordam, caminho 408 × Chebyshev 180.
+	# `alvo_criterio` "caminho" (padrão) ou "chebyshev" (o de antes). Desempate: Chebyshev, distância euclidiana, slot (F).
+	# O campo de tempo ignora os outros selvagens (F, como na medição).
+	var por_caminho := String(p.get("alvo_criterio", "caminho")) == "caminho" and not so_encostados
+	var campo := PackedInt32Array()
+	if por_caminho:
+		campo = _campo_tempo(heroi["pos"], Rect2i(0, 0, int(mapa.cols), int(mapa.rows)), _custos(int(p.hero_step_ms)), {})
 	var melhor := -1
-	var chave := Vector2i(1 << 30, 1 << 30)
+	var chave := Vector3i(INF, INF, INF)
 	for m in mobs:
 		if m["dead"] or not _alvo_valido(m) or (so_encostados and _cheb(m["pos"], heroi["pos"]) > 1):
 			continue
-		var k := Vector2i(_cheb(m["pos"], heroi["pos"]), _dist2(m["pos"], heroi["pos"]))
-		if k.x < chave.x or (k.x == chave.x and k.y < chave.y):
+		var c := _cheb(m["pos"], heroi["pos"])
+		var tempo := 0
+		if por_caminho and c > 1:
+			tempo = _tempo_ate_encostar(campo, m["pos"])
+		var k := Vector3i(tempo, c, _dist2(m["pos"], heroi["pos"]))
+		if k < chave:
 			chave = k
 			melhor = m["slot"]
+	return melhor
+
+
+func _tempo_ate_encostar(campo: PackedInt32Array, alvo: Vector2i) -> int:
+	## Menor tempo (ticks, campo do herói no mapa inteiro) até um tile livre a Chebyshev 1 do alvo; INF se não há.
+	var cols := int(mapa.cols)
+	var melhor := INF
+	for d in DIRECOES:
+		var g: Vector2i = alvo + d
+		if g.x >= 0 and g.y >= 0 and g.x < cols and g.y < int(mapa.rows):
+			melhor = mini(melhor, campo[g.y * cols + g.x])
 	return melhor
 
 

@@ -56,6 +56,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/fase4/comparar_nivel_baixo.py` | Item 2: real × sim por minuto (abates, desmaios, HP, dano dado/recebido, níveis) para time de nível baixo |
 | `ferramentas/fase4/ajustar_dano.py` | Item 1: confere variantes da fórmula de dano contra todos os golpes gravados → `dados/relatorios/ajuste_dano.md` |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
+| `ferramentas/gravador/medir_alvo.py` | Escolha de alvo do herói nas gravações: mais próximo em linha reta × menor tempo de caminho, por hunt |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
 
 Dados grandes/de referência — **ficam dentro desta pasta**, fora do git (`.gitignore`) e fora do scan do Godot (`.gdignore`).
@@ -133,6 +134,7 @@ Proposta da fase 4 (não implementada): `PLANO_FASE4.md`.
 | Captura com Super Ball: 59% em Rattata nível 1 (35/59); no Rhydon 80, 0 em 167 (gravações antigas) e 5 em 608 na rhydon-1h (~0,8%); Vulpix nível 20: 2 em 37 (fase3/S4); o capturado chega como poke-delta de nível 1 | gravações; `hunt-config.catchChance` é 0 em todas |
 | A chance sobe com o investimento desde a última captura da espécie (medidor, C: tutorial e tela used-balls). **`goldSpent` do used-balls = ouro gasto desde a última captura** (zera com ela, como `attempts`): Rattata attempts 1 → 50, Vulpix 16 → 800, Spearow 0 → 0 (Super Ball = 50). Por tentativa desde a última captura: Rattata 1 (preço 80) 15/34, 15/18, 3/3; Spearow 10 (preço 100) 13/28, 7/14, 7/7. **O nível não pesa**: Meowth 20 e Geodude 1, os dois com preço 300, ajustam o mesmo fator (0,75 × 0,84, ganho de logL 0,13); Meowth 17/87 partindo de medidor zero (espécie ausente do used-balls do início), o modelo esperava 18,4 | geodude-10min, geodeude-2, C1, S4, c2, C6, C5, C8, T1, rhydon-1h (A); forma da sim F |
 | **Valor da bola no medidor = ouro pago (priceGold), não catchRate.** Geodude 1 (preço 300), mesma conta e hunt, esperado pelo ouro × pela eficiência (mesmo c/k): Poké 0,9 × 4,0 (obs. 0/47), Great 5,1 × 9,8 (6/60), Super 12,9 × 13,7 (10/59), Ultra 33,1 × 20,3 (37/69), Idle 73,0 × 26,2 (73/73); logL −190,6 × −294,5; valor livre por bola: Great 23, Ultra 143 (ouro 20, 130). Toda falha de Idle Ball (5: S2, C5, M3) foi em shiny | fase3/C5 (conta B), S2, M3 |
+| **Alvo do herói = selvagem vivo com o menor tempo de caminho até encostar** (não o mais perto em linha reta). Os dois critérios discordam em 457 trocas: o caminho acerta 408 delas, a linha reta 180 | `medir_alvo.py`, 16 hunts, 2400 trocas de alvo: caminho 2295 (95,6%) × Chebyshev 2067 (86,1%); rhydon-1h 605/636 × 530/636 |
 | Selvagens perseguem o herói só com \|dx\| ≤ 13 **e** \|dy\| ≤ 13 (0,16–0,43 de chance de se aproximar por intervalo até 13; zero a partir de 14 nos dois eixos). Fora disso ficam parados no lugar (100% dos intervalos com a caixa 13×13) | rhydon-1h (centenas de intervalos por distância), M1, M2 |
 | `view {hc, hr}` = {ceil(25/zoom/2) + 2, ceil(13/zoom/2) + 2}, enviado no field-init e quando o zoom muda; o tamanho da janela não entra. 27×15 (zoom 0,5) em todas as gravações | (C) chunk 0gx72gz9qjk5j.js; M2 |
 | 15 spawns por hunt em Kanto/Outland, 16 em Orre, até 56 em Nightmare | `hunt-config` |
@@ -948,3 +950,18 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   10,07; nightmare_luxray 9,84; nightmare_elekid 9,56; nightmare_raichu 9,14; rapidash 7,56 → **critério cumprido 5/5**
   (pior p99 individual 12,55). Render CPU p99 3,3–4,0 ms, GPU 2,5–2,9, ~170 draw calls. Sombras seguem ligadas por padrão.
   À parte: nightmare_elekid 0 abates em 60 s em 2 das 3 rodadas (time de teste E; não afeta o quadro).
+- 18/11/2026 — **Alvo do herói pelo tempo de caminho** (A). Investigando o 0 abates do nightmare_elekid na varredura:
+  na sim pura, 13 de 20 sementes não abatiam nada em 60 s. O herói escolhia o selvagem mais perto em linha reta, a 23
+  tiles, que no labirinto fica a mais de 60 s de caminho, e nunca chegava. Nas gravações (`ferramentas/gravador/medir_alvo.py`,
+  2400 trocas de alvo), o menor tempo de caminho até encostar acerta 2295 e a linha reta 2067. Nos 457 casos em que os
+  dois discordam, o caminho acerta 408 e a linha reta 180. Parâmetro `alvo_criterio` ("caminho", o padrão; "chebyshev" é a
+  regra anterior). O campo de tempo cobre o mapa inteiro e ignora os outros selvagens (F). Desempate: Chebyshev, distância
+  euclidiana, slot (F).
+  - Na própria saída, a sim acerta 99,4% pelo caminho e 83,8% pela linha reta; no real, 95,1% e 83,3%.
+  - Diferencial: 1h **28/30** (passou "hits selvagens por minuto lutando", 18,4 dentro de 17,4–27,2) e antiga 23/26 (igual).
+    Seguem fora o ms/tile do herói e o do selvagem.
+  - Tick da sim: p99 1,81 ms com qualquer dos dois critérios.
+  - Teste novo `test_sim_alvo.gd` (nightmare_elekid e nightmare_snorunt, 20 sementes cada): 2/2. Com `--criterio=chebyshev`
+    dá 0/2, com 13/20 e 12/20 sementes sem abate. Era também o "labirinto" do snorunt na varredura 2b.6.
+  - A saída da sim muda de propósito (Rhydon 20 min não é mais idêntica).
+  - Regressão: os 27 testes da sim e da cena, protocolo, compatibilidade 22/22, ponte 11/11, save em thread 15/15 e P04 43/43, tudo verde.
