@@ -41,12 +41,12 @@ const PARAMETROS := {
 	"streak_custo_base": 25000,
 	"streak_trilhas": ["exp", "loot", "shiny"],
 	# Tipo do Dia (A: evento type-of-day, +20% XP e loot no tipo; termina às 03:00 UTC = meia-noite de Brasília).
-	# E: offline, rotação fixa ancorada nos quatro dias observados (A: 09/11/2026 Dragão, 10/11 Inseto, 13/11 Sombrio,
-	# 15/11 Veneno); as outras posições são E.
+	# E: offline, rotação fixa ancorada nos cinco dias observados (A: 09/11/2026 Dragão, 10/11 Inseto, 13/11 Sombrio,
+	# 15/11 Veneno, 18/11 Fantasma — G11); as outras posições são E.
 	"dia_virada_utc_s": 10800,
 	"dia_ancora": 20766,              # dia (unix/86400, deslocado pela virada) de 09/11/2026 em Brasília
-	"rotacao_tipos": ["DRAGON", "BUG", "FIRE", "WATER", "DARK", "GRASS", "POISON", "ELECTRIC", "ICE", "FIGHTING",
-		"GROUND", "FLYING", "PSYCHIC", "ROCK", "GHOST", "STEEL", "FAIRY", "NORMAL"],
+	"rotacao_tipos": ["DRAGON", "BUG", "FIRE", "WATER", "DARK", "GRASS", "POISON", "ELECTRIC", "ICE", "GHOST",
+		"GROUND", "FLYING", "PSYCHIC", "ROCK", "FIGHTING", "STEEL", "FAIRY", "NORMAL"],
 	"nomes_tipos": {"BUG": ["Inseto", "🐛"], "DARK": ["Sombrio", "🌑"], "DRAGON": ["Dragão", "🐉"], "ELECTRIC": ["Elétrico", "⚡"],
 		"FAIRY": ["Fada", "🧚"], "FIGHTING": ["Lutador", "🥊"], "FIRE": ["Fogo", "🔥"], "FLYING": ["Voador", "🕊️"],
 		"GHOST": ["Fantasma", "👻"], "GRASS": ["Planta", "🌿"], "GROUND": ["Terra", "⛰️"], "ICE": ["Gelo", "❄️"],

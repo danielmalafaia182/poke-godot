@@ -1,4 +1,4 @@
-# Placar do escopo (critério de pronto) — 18/11/2026
+# Placar do escopo (critério de pronto) — 18/11/2026 (atualizado com a G11)
 
 Escopo (decisão do usuário, 18/11): começar do zero com treinador nível 1 e um Geodude nível 1, ir a todas as hunts, XP
 do treinador e do Pokémon, escolha e dano dos golpes, combate completo igual ao original em todas as hunts, loot,
@@ -20,15 +20,15 @@ Decisões do usuário (Geodude como inicial, VIP desligado etc.) ficam fora da c
 | 3. XP do treinador | 75% | 6/8 | Parcelas `gym` e `guild` |
 | 4. XP do Pokémon | 80% | 4/5 | Parcela `mentor` |
 | 5. Escolha do golpe | 67% | 2/3 | Desempate por cooldown (um só caso gravado) |
-| 6. Dano dos golpes | 50% | 4/8 | Fórmula (F), defesa do selvagem nível 1, faixa 200+, piso 3 |
+| 6. Dano dos golpes | 40% | 4/10 | Fórmula (F), aliado no nível 1 (×2 e o Vulpix), Tackle do selvagem subindo com o nível do aliado, faixa 200+ |
 | 7. Combate completo | 64% | 9/14 | Movimento (5 grandezas), status, troca após KO (E), respawn exato |
 | 8. Loot | 83% | 5/6 | Mecanismo do −73% no lock (chance × quantidade) |
 | 9. Auto-Potion | 100% | 4/4 | — |
 | 10. Auto-Catch | 50% | 4/8 | Forma do medidor (c, k são F), raridade, shiny, filtro de nomes |
 | 11. Nurse Joy | 100% | 3/3 | — |
 | 12. Depot | 67% | 4/6 | Limite de pilhas; o que acontece com o time > 6 |
-| 13. IV e Quality | 71% | 5/7 | Arredondamento dos stats no dano (F), IV/Q do capturado (servidor) |
-| **Total** | **69%** | **58/84** | |
+| 13. IV e Quality | 90% | 9/10 | Arredondamento dos stats no dano (F) |
+| **Total** | **70%** | **62/89** | |
 
 Jogável de ponta a ponta (D, não entra na %): campanha do zero e varredura das 451 hunts em
 `dados/relatorios/campanha_2026-11-18.md`. Nenhuma hunt trava (0 abates sem morte, alvo inalcançável, herói parado).
@@ -100,7 +100,9 @@ Golpes explicados pela sim, de 7.567 gravados (`dados/relatorios/ajuste_dano.md`
 | Selvagem ×1,8 | A | ✅ | envelopes de Rhydon, Kangaskhan, Venusaur |
 | Fórmula (2L/5+2)·Poder·A/D/50·STAB | F | ❌ | coerente com 97,8% dos golpes, mas é hipótese |
 | Stats contínuos no selvagem, arredondados no aliado | F forte | ❌ | 15/15 indivíduos na rhydon-1h |
-| Defesa do selvagem nível 1 (comum a todos os indivíduos, 0,77) | A (o efeito) | ❌ | regra não fechada (c5 e geodude-10min destoam); pede G11 |
+| Defesa do selvagem nível 1 comum a todos os indivíduos | A (o efeito) | ❌ | G11: SpD 0,81 explica 177/177 golpes do Vulpix nível 2–3; o S1/S2 dá 0,77 e o c5 destoa. Não implementado (a sim sorteia a defesa por indivíduo) |
+| Aliado no nível 1: dano só em valores pares (×2) | A (o efeito) | ❌ | G11 (14/16) e geodude-10min (6/8); o modelo `x2` explica o Geodude, mas não o Vulpix (0/88) |
+| Tackle do selvagem nível 1 sobe quando o aliado sobe (5 → 7) | A (o efeito) | ❌ | G11, 80 golpes; nenhum ataque constante explica (41/80) |
 | Piso 3 no ataque do aliado; faixa 200+ (80,9%) | F | ❌ | geodude-10min; c5 61,7% |
 
 ## 7. Combate completo — 9/14 (64%)
@@ -174,7 +176,7 @@ Golpes explicados pela sim, de 7.567 gravados (`dados/relatorios/ajuste_dano.md`
 | Limite de pilhas (89 sem aviso no original; 200 é E) | — | ❌ | não visto o teto |
 | BOX 3000 (conta VIP) e time de 6 | A/C | ❌ | o limite da conta sem VIP não foi visto |
 
-## 13. IV e Quality — 5/7 (71%)
+## 13. IV e Quality — 9/10 (90%)
 
 | Regra | Fonte | Situação | Evidência |
 | --- | --- | --- | --- |
@@ -184,4 +186,7 @@ Golpes explicados pela sim, de 7.567 gravados (`dados/relatorios/ajuste_dano.md`
 | Power = round(Σ stats × Q) | C+A | ✅ | idem |
 | HP de combate a partir do stat de HP | A | ✅ | ver item 7 |
 | Stats contínuos no dano do selvagem | F | ❌ | item 6 |
-| IV e Quality do Pokémon capturado | — | ❌ | o servidor sorteia; a sim usa o sorteio do cliente (E) |
+| O capturado é um sorteio novo (não herda o IV e a Quality do selvagem) | A | ✅ | 12 de 57 capturas incompatíveis com o maxHp do selvagem (por acaso: 15%); `dados/relatorios/capturado_x_selvagem.md` |
+| Quality do capturado pelos pesos do cliente | A+C | ✅ | 218 capturas, χ² = 2,8 (8 gl); o jogo sorteia com a mesma tabela (`dados_pokemon.gd`) |
+| IV do capturado 1..32 uniforme por stat | A+C | ✅ | ivTotal médio 97,2 (dp 21,7) × 99 (22,6) |
+| Stats exibidos do capturado no nível 1 = fórmula com Quality e IV | A+C | ✅ | 218/218 |

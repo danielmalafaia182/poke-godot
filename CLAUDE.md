@@ -1034,3 +1034,18 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Ferramenta: `ferramentas/fase4/relatorio_campanha.py`.
   - Limites: a política é E (sonda de 2 min por candidata, bloqueio de +10 níveis depois de morrer, nota XP + pedras).
     Não há gravação de um time no mesmo nível da hunt para dizer se a dificuldade é a do original.
+- 18/11/2026 — G11 (nível 1–4 na `rattata`; `dados/relatorios/g11_nivel1.md`, `dados/relatorios/capturado_x_selvagem.md`).
+  - **Capturado** (A, todas as gravações):
+    - É um sorteio novo, não o indivíduo selvagem: 12 de 57 capturas são incompatíveis com o maxHp do selvagem.
+    - A Quality segue os pesos do cliente (218 capturas, χ² 2,8) e o IV é 1..32 uniforme (ivTotal 97,2 ± 21,7).
+    - Os stats exibidos no nível 1 batem com a fórmula (218/218).
+    - O jogo já fazia assim (`dados_pokemon.gd`); passa de E para A.
+  - **Dano de nível 1** (A, não fechado e não aplicado):
+    - O aliado no nível 1 só dá valores pares: Vulpix 14/16 e Geodude 6/8.
+    - O Vulpix tira mais no nível 1 (14–16) que no 2 (11–12).
+    - A SpD comum do Rattata nível 1 de 0,81 explica 177/177 golpes do Vulpix nos níveis 2–3.
+    - O Tackle do Rattata sobe de 5 para 7 quando o Vulpix vai do nível 1 ao 2.
+    - Melhor variante (`x2`): 83,7% contra 82,6% da atual. Ferramentas: `grupos_nivel_baixo.py`, `ajuste_nivel1.py`,
+      `capturado_x_selvagem.py`, `nivel1_individuos.py`.
+  - Tipo do Dia de 18/11 = Fantasma (A): rotação corrigida.
+  - Placar: 62/89 (70%). IV e Quality 9/10; dano 4/10, com duas linhas novas de efeito A ainda sem regra.
