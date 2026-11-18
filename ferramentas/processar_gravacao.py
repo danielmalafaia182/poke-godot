@@ -10,9 +10,17 @@ As regras verificadas usam as mesmas constantes da sim (lidas de sim/*.gd quando
   entrada (60 s), soneca (GET/POST /offline), Daily Kill, Daily Catch, tarefas, Streak, Daily Gift, receita de pedras
   (/evolve) e o Tipo do Dia (nome e rotação).
 
-Uso: python -I ferramentas/processar_gravacao.py <arquivo.jsonl> [--saida dados/relatorios] [--sem-dano]
+Gravação livre (18/11): aceita vários arquivos ou uma pasta (ex.: `poke har/gravacoes/livre/`). As exportações diárias
+são juntadas sem repetir linha (sessão, instante, direção, conteúdo) e cortadas em trechos por
+`ferramentas/gravador/segmentar.py`: cidade × hunt, entrada nova × retomada e janela da penalidade, troca de time, mudança
+de zoom e buracos (aba em segundo plano). Passos, cadência e Auto-Potion rodam só nos pedaços sem buraco; o resto, na
+gravação inteira (as regras já separam lock, Tipo do Dia e líder). O relatório ganha a tabela de trechos.
+
+Uso: python -I ferramentas/processar_gravacao.py <arquivo.jsonl | pasta> [...] [--nome N] [--saida dados/relatorios/gravacoes]
+     [--sem-dano]
 """
 import argparse
+import glob
 import json
 import math
 import os
@@ -387,22 +395,64 @@ def regra_tipo_do_dia(msgs, R, cobertas):
 REGRAS_CONHECIDAS = ["hunt", "soneca", "daily-kill", "daily-catch", "tarefas", "streak", "daily-gift", "evolucao", "tipo-do-dia"]
 
 
+def juntar(entradas, destino):
+    """Junta exportações (arquivos ou pastas) num só .jsonl, na ordem do primeiro instante de cada arquivo, sem repetir
+    linha (sessão, instante, direção, conteúdo)."""
+    import segmentar as SG
+    vistas = set()
+    n = 0
+    with open(destino, "w", encoding="utf-8", newline="\n") as f:
+        for arq in SG.arquivos_de(entradas):
+            for l in open(arq, encoding="utf-8", errors="replace"):
+                l = l.strip()
+                if not l:
+                    continue
+                try:
+                    o = json.loads(l)
+                except Exception:
+                    continue
+                if not isinstance(o, dict):
+                    continue
+                k = (o.get("sessao"), o.get("t"), o.get("dir"), json.dumps(o.get("msg"), sort_keys=True))
+                if k in vistas:
+                    continue
+                vistas.add(k)
+                f.write(l + "\n")
+                n += 1
+    return n
+
+
 def processar(caminho, sem_dano=False):
+    import segmentar as SG
+    import tempfile
     esp = {e["id"]: e for e in carregar("especies.json")}
     msgs = [(o, o["msg"]) for o in linhas(caminho)]
     R = Relatorio()
     cobertas = set()
+    trechos = SG.segmentar([caminho], guardar_msgs=True)
+    hunts = [x for x in trechos if x["tipo"] == "hunt"]
+    cortes = sum(1 for x in hunts if x["motivo_inicio"] in ("buraco", "troca de time", "zoom"))
+    # passos, cadência e Auto-Potion: só nos pedaços sem buraco, quando a gravação tem cortes ou várias instâncias
+    limpo = caminho
+    if cortes or len({x["huntKey"] for x in hunts}) > 1:
+        tmp = tempfile.mkdtemp(prefix="trechos_")
+        SG.exportar([x for x in trechos if "passos" in x.get("uteis", [])], tmp)
+        limpo = os.path.join(tmp, "continuos.jsonl")
+        with open(limpo, "w", encoding="utf-8", newline="\n") as f:
+            for c in sorted(glob.glob(os.path.join(tmp, "trecho_*.jsonl"))):
+                f.write(open(c, encoding="utf-8").read())
     regras_hunt(msgs, R, esp, cobertas)
     if "hunt" in cobertas:
         regra_hp(msgs, R, esp)
-        regra_pocao(caminho, R)
-        regra_passos(caminho, R)
-        regra_cadencia(caminho, R)
+        regra_pocao(limpo, R)
+        regra_passos(limpo, R)
+        regra_cadencia(limpo, R)
         regra_penalidade(caminho, R)
         if not sem_dano:
             regra_dano(caminho, R, esp)
     regras_rest(msgs, R, esp, cobertas)
     regra_tipo_do_dia(msgs, R, cobertas)
+    R.trechos = [{k: v for k, v in x.items() if k != "_msgs"} for x in trechos]
     return R, cobertas
 
 
@@ -418,18 +468,30 @@ def markdown(nome, R, cobertas):
         linhas_md.append("")
     faltam = [r for r in REGRAS_CONHECIDAS if r not in cobertas]
     linhas_md += ["## Não coberto por esta gravação", "", ", ".join(faltam) if faltam else "—", ""]
+    if getattr(R, "trechos", None):
+        import segmentar as SG
+        linhas_md += ["## Trechos", "", SG.markdown(R.trechos).split("\n", 2)[2]]
     return "\n".join(linhas_md)
 
 
 def main():
     sys.stdout.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
-    ap.add_argument("arquivo")
-    ap.add_argument("--saida", default=os.path.join(RAIZ, "dados", "relatorios"))
+    ap.add_argument("arquivos", nargs="+", help="um .jsonl, vários, ou uma pasta (gravação livre)")
+    ap.add_argument("--nome", help="nome do relatório (padrão: o do arquivo, ou o da pasta)")
+    ap.add_argument("--saida", default=os.path.join(RAIZ, "dados", "relatorios", "gravacoes"))
     ap.add_argument("--sem-dano", action="store_true", help="pula o ajuste da fórmula de dano (o passo mais lento)")
     a = ap.parse_args()
-    R, cobertas = processar(a.arquivo, a.sem_dano)
-    nome = os.path.splitext(os.path.basename(a.arquivo))[0]
+    import tempfile
+    if len(a.arquivos) == 1 and os.path.isfile(a.arquivos[0]):
+        caminho = a.arquivos[0]
+        nome = a.nome or os.path.splitext(os.path.basename(caminho))[0]
+    else:
+        caminho = os.path.join(tempfile.mkdtemp(prefix="livre_"), "juntado.jsonl")
+        n = juntar(a.arquivos, caminho)
+        nome = a.nome or os.path.basename(os.path.normpath(a.arquivos[0]))
+        print("juntadas %d linhas de %s" % (n, ", ".join(a.arquivos)))
+    R, cobertas = processar(caminho, a.sem_dano)
     md = markdown(nome, R, cobertas)
     os.makedirs(a.saida, exist_ok=True)
     destino = os.path.join(a.saida, "gravacao_%s.md" % re.sub(r"[^A-Za-z0-9_.-]+", "_", nome))

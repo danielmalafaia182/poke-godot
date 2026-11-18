@@ -51,6 +51,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `sim/servico_diarias.gd`, `painel_diarias.gd` | Fase 4, item 3: Daily Gift, Quests & Tasks (124 tarefas, 43 cidades), Daily Kill e Daily Catch, puros na `sim/` com os dados gravados em `dados/fase4/` (gerados por `ferramentas/gravador/extrair_fase4.py`); janela ⚙ → Quests, Tasks & Dailys |
 | `sim/servico_itens.gd`, `painel_itens_uso.gd` | Fase 4, lote 3: Rare Candy e berries (efeito das berries no combate em `simulacao_hunt.gd`); janela ⚙ → Usar itens |
 | `sim/servico_ginasios.gd`, `sim/servico_invasao.gd` | Fase 4, lote 4: insígnias de ginásio (+ parcela `gym` na hunt), catálogo de bosses e calendário da invasão |
+| `ferramentas/gravador/segmentar.py` | Gravação livre (pasta `poke har/gravacoes/livre/`, uma exportação por dia): junta sem repetir e corta em trechos (cidade × hunt, entrada × retomada e lock, troca de time, zoom, buraco de aba), com o uso de cada um |
 | `ferramentas/processar_gravacao.py` | Um comando por gravação: quais regras de CALIBRACAO_FASE3/4 ela cobre, o que confirmou, o que contradisse (com números) e o que não cobre → `dados/relatorios/gravacoes/gravacao_<nome>.md`. Teste `testes/test_processar_gravacao.py` (as conclusões já registradas) |
 | `sim/servico_novo_jogo.gd`, `painel_novo_jogo.gd` | Jogo novo como o original: Bulbasaur/Charmander/Squirtle no nível 1, 100 Small Potions e 100 Poké Balls, primeira hunt recomendada; a tela só abre quando o jogo começa de verdade sem save |
 | `ferramentas/fase4/comparar_nivel_baixo.py` | Item 2: real × sim por minuto (abates, desmaios, HP, dano dado/recebido, níveis) para time de nível baixo |
@@ -1049,3 +1050,20 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
       `capturado_x_selvagem.py`, `nivel1_individuos.py`.
   - Tipo do Dia de 18/11 = Fantasma (A): rotação corrigida.
   - Placar: 62/89 (70%). IV e Quality 9/10; dano 4/10, com duas linhas novas de efeito A ainda sem regra.
+- 18/11/2026 — Gravação livre, item 1 (`ferramentas/gravador/segmentar.py`; `processar_gravacao.py` aceita pasta ou
+  vários arquivos).
+  - As exportações diárias são juntadas sem repetir linha.
+  - Os trechos são cortados por:
+    - cidade × hunt;
+    - entrada nova × retomada `:rN`, com a janela do lock (boost shinylock);
+    - troca de time (heroName/looktype do field);
+    - zoom (comando `view` com outro {hc, hr});
+    - buraco de mais de 5 s entre fields (aba em segundo plano).
+  - Cada pedaço diz para que serve: xp, loot, dano, passos/cadência (sem buraco, ≥ 60 s), movimento, resultado
+    (≥ 5 min com líder conhecido), penalidade, cidade.
+  - Passos, cadência e Auto-Potion rodam só nos pedaços sem buraco. O relatório vai para `dados/relatorios/gravacoes/`
+    (antes caía em `dados/relatorios/`) com a tabela de trechos.
+  - Achado (A): mesmo com a aba na frente, só 30–50% dos pares de fields têm Δseq = 2. "Contínuo" é ≥ 25%; o que marca
+    a aba em segundo plano é o buraco.
+  - Testes: `testes/test_segmentar.py` 10/10 (exportações sobrepostas, buraco, zoom e troca de time sobre T1 + G11);
+    `test_processar_gravacao.py` 25/25.
