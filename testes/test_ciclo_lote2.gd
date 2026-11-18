@@ -57,6 +57,9 @@ func _process(_d: float) -> bool:
 		1:
 			if quadros == 3:
 				var mapa: Node = current_scene.get_child(current_scene.get_child_count() - 1)
+				# Desde 18/11 o mapa cobra o nível do treinador (C): a hunt do Rhydon é nível 80.
+				var estado = get_root().get_node("EstadoJogo")
+				estado.definir_perfil_treinador(estado.nome_treinador, maxi(80, estado.nivel_treinador))
 				for r in mapa.catalogo:
 					if String(r["name"]) == "Rhydon":
 						mapa._selecionar_registro(r)
