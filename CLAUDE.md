@@ -1020,3 +1020,17 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     64–67%: combate, golpe, depot. 50–60%: dano, Auto-Catch, começo do jogo.
   - Cada linha diz o que falta.
   - Achado de passagem (A): cada `poke-xp` traz um Pokémon só, o ativo (807/807).
+- 18/11/2026 — Escopo novo, item 3 (campanha do zero e jogabilidade; `dados/relatorios/campanha_2026-11-18.md`).
+  - **Campanha** (`testes/campanha.gd`, sim pura, política do jogador E no cabeçalho): Geodude Lv.1 do jogo novo → 300,6 h
+    jogadas → treinador e Golem **346**, 43 hunts de Kanto e Outland. Usa os comandos do serviço da cidade (Nurse,
+    venda, evolução com pedra, compra de poção e bola). Evoluiu para Graveler às 21 h e para Golem às 102 h (as 4 Rock
+    Stones exigem farmar pedra).
+  - 29 mortes em 318 sessões e **nenhuma morte em loop** (nunca duas sessões seguidas morrendo na mesma hunt). Nenhuma
+    hunt com 0 abates e nenhuma travada ≥ 60 s (o maior trecho parado foi 1,2 s).
+  - Orre (500) e Nightmare (2000) não foram alcançados em 300 h.
+  - **Jogabilidade** (`testes/jogabilidade_hunts.gd`, 451 hunts × 5 min): com a linha do Geodude no nível da hunt, 212
+    passam e 239 morrem (dificuldade). Com o time forte, **451/451**. Nenhuma trava de mecânica e nenhum 0 abate sem
+    morte. Primeiro abate mais demorado: magnemite, 173 s.
+  - Ferramenta: `ferramentas/fase4/relatorio_campanha.py`.
+  - Limites: a política é E (sonda de 2 min por candidata, bloqueio de +10 níveis depois de morrer, nota XP + pedras).
+    Não há gravação de um time no mesmo nível da hunt para dizer se a dificuldade é a do original.
