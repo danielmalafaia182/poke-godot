@@ -41,6 +41,7 @@ def medir(caminhos, slug):
     spawn = {}
     atual, ant = None, None
     busca = None                # [tiles, cheb0, t0, alvo]
+    chegadas = [0, 0]           # [não-alvos que chegaram ao lado do herói vindo de d ≥ 2, ms de pares consecutivos]
     for d, m, _ in ler_logs(caminhos):
         if d != "in":
             continue
@@ -67,6 +68,11 @@ def medir(caminhos, slug):
                     spawn[x["slot"]] = (x["row"], x["col"])   # reapareceu aqui
         if consecutivo:
             hp = ant["hero"]
+            chegadas[1] += m["serverNow"] - ant["serverNow"]
+            for x in vivos:
+                p = pa.get(x["slot"])
+                if p and not p["dead"] and x["slot"] != m.get("targetSlot") and cheb(p, hp) >= 2 and cheb(x, h) <= 1:
+                    chegadas[0] += 1
             n = 0
             for x in dentro:
                 p = pa.get(x["slot"])
@@ -101,7 +107,7 @@ def medir(caminhos, slug):
                     caminhos_heroi.append((busca[0], busca[1], m["serverNow"] - busca[2]))
                 busca = None
         ant = m
-    return adj, visao, persegue, fora, dist_spawn_fora, caminhos_heroi
+    return adj, visao, persegue, fora, dist_spawn_fora, caminhos_heroi, chegadas
 
 
 def dist(c):
@@ -111,14 +117,17 @@ def dist(c):
 
 
 def resumo(caminhos, slug):
-    adj, visao, persegue, fora, dsp, cam = medir(caminhos, slug)
+    adj, visao, persegue, fora, dsp, cam, cheg = medir(caminhos, slug)
     tf = sum(fora.values())
     r = {"adjacentes_por_field": dist(adj), "na_visao_por_field": dist(visao),
          "perseguindo_por_field": dist(persegue),
          "fora_da_visao": {"intervalos": tf, **({k: round(v / tf, 3) for k, v in fora.items()} if tf else {}),
                            "dist_spawn_mediana": statistics.median(dsp) if dsp else None,
                            "dist_spawn_p90": sorted(dsp)[int(0.9 * len(dsp))] if dsp else None},
-         "caminho_heroi": {"n": len(cam)}}
+         "caminho_heroi": {"n": len(cam)},
+         # selvagem que não é o alvo chegando ao lado do herói (de d ≥ 2 a d ≤ 1 entre fields consecutivos), por minuto
+         "chegadas_nao_alvo_por_min": round(cheg[0] / (cheg[1] / 60000.0), 2) if cheg[1] else None,
+         "minutos_consecutivos": round(cheg[1] / 60000.0, 1)}
     if cam:
         razoes = sorted(a / b for a, b, _ in cam if b)
         r["caminho_heroi"].update({

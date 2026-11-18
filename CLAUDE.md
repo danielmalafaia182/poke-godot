@@ -287,6 +287,15 @@ Em luta curta o real junta **menos** não-alvos que a sim; em luta longa, **mais
 
 A sim fica com 7 até haver evidência nova. Opcionais: M4 (coleira), M5 (zoom × raio), M6 (luta de duração média, para
 achar onde o desvio muda de sinal); ver `PLANO_GRAVACOES_FASE3.md`.
+**Reaberto em 18/11** (depois do alvo pelo tempo de caminho; `dados/relatorios/movimento_2026-11-18.md`, ferramenta
+`ferramentas/fase4/comparar_movimento.py`):
+- A cadência de cada passo é igual nos dois lados (A × sim, pelo tick exato).
+- Com 7, as chegadas de não-alvos ficam dentro em rhydon-1h, M2 e M3; só o M1 fica fora (o M2, mesmo estado, fica
+  dentro). Com 13, junta demais em luta curta.
+- O selvagem perseguindo anda ~18% mais devagar na sim em luta curta. Parte disso pode ser amostragem (pares Δseq = 2).
+- O real se aproxima mais com o herói parado sem lutar e menos durante a luta.
+- Hipóteses que sobram: H5 (histerese), H6 (borda = `view`), H7 (reação à posição antiga do herói), H8 (amostragem), H2.
+- Gravações MV1 (luta média, `blastoise`), MV2 (zoom, `rhydon`) e MV3 (herói lento, `rattata`), com o roteiro no relatório.
 
 ## Protocolo (resumo; detalhes em `dados/protocolo.json` e nos logs)
 
@@ -997,3 +1006,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     - Pokepedia (B) não consultada: não há cópia local, e o cliente não traz outro requisito.
   - Testes: `test_acesso_hunts` 13/13. P04 `test_cerco_acesso`, `test_mapa_fiel` e `test_mapa_entre_hunts` foram
     atualizados à regra do original (antes afirmavam acesso livre e "região não implementada").
+- 18/11/2026 — Escopo novo, item 5 (movimento reaberto): tabela real × sim (7 e 13) em `dados/relatorios/movimento_2026-11-18.md`.
+  - Diverge: adjacentes, ms por tile do selvagem em luta curta, ms por tile do herói (sinal misto) e chegadas no M1.
+  - Igual: cadência por passo. Chegadas com 7 em 3 de 4 gravações.
+  - Ferramentas: `comparar_movimento.py`; `medir_movimento.py` ganhou "chegadas de não-alvos por minuto";
+    `testes/duracao_luta.gd` escolheu a hunt da luta média (Venusaur na `blastoise`, 11,5 s).
+  - 3 gravações com roteiro (MV1–MV3). Nenhuma regra mudou.
