@@ -77,10 +77,11 @@ func executar() -> void:
  for d in mapa.catalogo:
   if d["name"]=="Dragonite": alvo=d;break
  checar(not alvo.is_empty() and int(alvo.get("level",0))>1,"Destino de nível alto")
+ var cena_antes: Node=current_scene
  mapa._selecionar_registro(alvo)
  for i in range(3): await process_frame
- # Fase 2 (E): hunt com mapa e hunt-config no snapshot abre a cena nova (caca_sim.tscn), não a antiga.
- checar(estado.especie_caca.nome=="Dragonite" and current_scene!=null and current_scene.scene_file_path=="res://caca_sim.tscn","Treinador Lv1 entra em hunt de nível alto")
+ # Desde 18/11 o mapa cobra o nível como o original (C, sim/regras_acesso.gd): o treinador é barrado com o aviso.
+ checar(mapa.aviso.visible and mapa.aviso.text.contains("nível %d" % int(alvo["level"])) and current_scene==cena_antes,"Treinador Lv1 é barrado em hunt de nível alto (C)")
  checar(estado.nivel_treinador==1,"Nível salvo não é adulterado")
  print("CERCO E ACESSO: %d verificações; %d falhas" % [checks,falhas])
  quit(1 if falhas else 0)

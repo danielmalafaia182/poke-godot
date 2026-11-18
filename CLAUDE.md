@@ -975,3 +975,25 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   mostra o Geodude, e a caixa "Iniciais do original" troca para os três do original (C). `servico_novo_jogo.gd` ganhou os
   modos `projeto` e `original`. A validação do save aceita a linha Geodude → Graveler → Golem como inicial.
   `test_jogo_novo` 17/17.
+- 18/11/2026 — Escopo novo, item 2 (acesso às hunts; `sim/regras_acesso.gd`, mapa-múndi). Regras do cliente (C, janela do
+  mapa `tA` e o clique no marcador) aplicadas:
+  - Região pelo nível do treinador: Kanto 0, Outland 150, Orre 500, Nightmare 2000. Johto aparece como "em
+    desenvolvimento".
+  - Cada hunt pede nível do treinador ≥ nível da hunt. Mensagens iguais às do original ("Você precisa ser nível N para
+    caçar em X. 🔒", "Outland desbloqueia no nível 150. 🔒").
+  - A aba de região bloqueada abre para ver; o bloqueio vale no clique da hunt.
+  - Orre pergunta "…TMs AoE e de elemento…, deseja entrar?" (Sim/Não) e deixa entrar.
+  - Nada de item, insígnia, passagem ou custo para viajar entre regiões: o clique leva direto à hunt.
+  - O nível cobrado é o do treinador (`level` do field-kill). A curva de XP do treinador é a mesma do Pokémon (A: 19
+    níveis gravados, de 109 a 633, todos coerentes).
+  - O mapa-múndi agora cobra o nível (`acesso_hunts_sem_limite` = false). As abas mostram as 4 regiões, com os 454
+    marcadores do map-markers (A) e a viagem pelo slug.
+  - **E / em aberto:**
+    - O servidor não foi visto recusando `enter-hunt` (F: igual ao cliente).
+    - Sem TMs no jogo (lote 3 congelado), o aviso de Orre aparece sempre.
+    - O snapshot não tem as imagens grandes de Outland, Orre e Nightmare: fundo liso do tamanho dos marcadores (E). O
+      coletor passa a baixá-las.
+    - `hunt-cooldown {ms}` (C) não aparece em gravação nenhuma e não é simulado.
+    - Pokepedia (B) não consultada: não há cópia local, e o cliente não traz outro requisito.
+  - Testes: `test_acesso_hunts` 13/13. P04 `test_cerco_acesso`, `test_mapa_fiel` e `test_mapa_entre_hunts` foram
+    atualizados à regra do original (antes afirmavam acesso livre e "região não implementada").

@@ -16,6 +16,8 @@
     '/game/asset-packs/version.json', '/game/asset-packs/outfits-index.json',
     '/game/maps/arena_pvp.json', '/assets/effects/moves/index.json', '/assets/maps/marker-atlas.json',
     '/fonts/verdana-11px-rounded.json', '/api/game/map-markers',
+    // imagens das regiões do mapa-múndi (18/11: faltavam; o mapa-múndi usa fundo liso sem elas)
+    '/assets/maps/hunts.png', '/assets/maps/outland.png', '/assets/maps/orre.png', '/assets/maps/nightmare.png',
   ];
   const ETAPAS = ['dados', 'hunts', 'mapas', 'atlas', 'outfits', 'icones'];
   const st = { manifest: [], erros: [], feitos: 0, bytes: 0, etapa: '', inicio: 0, parar: false, raiz: null };

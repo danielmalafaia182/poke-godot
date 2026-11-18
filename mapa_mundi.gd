@@ -1,11 +1,18 @@
 extends Control
 # Catálogo original para apresentação; somente destinos implementados podem viajar.
-@export var acesso_hunts_sem_limite: bool=true
+# C (18/11): o original cobra o nível do treinador (região e hunt; sim/regras_acesso.gd). true só para testes antigos.
+@export var acesso_hunts_sem_limite: bool=false
 @export var destinos: Array[DadosDestinoCaca]=[]
 const UI: Script=preload("res://estilo_ui_fiel.gd")
 const ESTILO: Script=preload("res://estilo_mapa_fiel.gd")
 const TIPOS: Script=preload("res://tipos_pokemon.gd")
 const MARCADOR: Script=preload("res://marcador_mapa_fiel.gd")
+const ACESSO: Script=preload("res://sim/regras_acesso.gd")
+var regiao_atual: String="kanto"
+var titulo_mapa: Label
+var confirmacao: ConfirmationDialog
+var _registro_confirmar: Dictionary={}
+var _texturas_regiao: Dictionary={}
 const ORDEM: Array[String]=["STEEL","WATER","DRAGON","ELECTRIC","FAIRY","GHOST","FIRE","ICE","BUG","FIGHTING","NORMAL","ROCK","GRASS","PSYCHIC","DARK","GROUND","POISON","FLYING"]
 var janela: PanelContainer
 var buscas: LineEdit
@@ -76,6 +83,7 @@ func _ready() -> void:
 	resized.connect(_ajustar)
 	visibility_changed.connect(_visibilidade)
 	_ajustar()
+	_marcar_regioes()
 	_aplicar_filtros()
 	call_deferred("_inicializar_visao")
 func _botao(texto: String, tamanho: int=12) -> Button:
@@ -117,6 +125,7 @@ func _cabecalho(coluna: VBoxContainer) -> void:
 	icone.size_flags_vertical=Control.SIZE_SHRINK_CENTER
 	linha.add_child(icone)
 	var titulo: Label=UI.texto("Map · Kanto",18,Color("e8c98a"),true)
+	titulo_mapa=titulo
 	titulo.add_theme_font_override("font",UI.TITULO)
 	titulo.size_flags_horizontal=Control.SIZE_EXPAND_FILL
 	titulo.vertical_alignment=VERTICAL_ALIGNMENT_CENTER
@@ -145,7 +154,8 @@ func _regioes(coluna: VBoxContainer) -> void:
 	for regiao in ["kanto","outland","orre","nightmare"]:
 		var b: Button=Button.new()
 		b.custom_minimum_size=Vector2(150,72)
-		b.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND if regiao=="kanto" else Control.CURSOR_HELP
+		b.name="Regiao_"+regiao
+		b.mouse_default_cursor_shape=Control.CURSOR_POINTING_HAND
 		for estado in ["normal","hover","pressed","focus"]: b.add_theme_stylebox_override(estado,StyleBoxEmpty.new())
 		var imagem: TextureRect=TextureRect.new()
 		imagem.texture=load("res://assets/interface/mapa/fiel/"+regiao+".png")
@@ -156,10 +166,10 @@ func _regioes(coluna: VBoxContainer) -> void:
 		b.add_child(imagem)
 		linha.add_child(b)
 		botoes_regioes.append(b)
-		b.tooltip_text="Kanto" if regiao=="kanto" else regiao.capitalize()+" — região ainda não implementada no protótipo"
-		b.pressed.connect(func() -> void:
-			if regiao!="kanto": _mostrar_aviso(regiao.capitalize()+": região ainda não implementada.")
-		)
+		var desbloqueio: int=int(ACESSO.DESBLOQUEIO_AREA[regiao])
+		b.tooltip_text="Área inicial" if desbloqueio==0 else "Desbloqueia no nível %d" % desbloqueio   # C: tabTitle*
+		b.set_meta("regiao",regiao)
+		b.pressed.connect(func() -> void: selecionar_regiao(regiao))   # C: a aba bloqueada abre; o bloqueio é no clique da hunt
 func _campo(placeholder: String, largura: float) -> LineEdit:
 	var e: LineEdit=LineEdit.new()
 	e.placeholder_text=placeholder
@@ -244,13 +254,61 @@ func _tipos(coluna: VBoxContainer) -> void:
 		)
 		grade.add_child(b)
 		botoes_tipos[tipo]=b
+func _registros_outras_regioes() -> Array:
+	## Outland, Orre e Nightmare (A: map-markers do snapshot, importado em dados/gerados/hunts.json: nome, nível, área,
+	## pixel, looktype). Tipos do filtro = os da espécie do 1º spawn.
+	var r: Array=[]
+	var dj=_dados_sim()
+	for h in dj.hunts.values():
+		var area: String=String(h.get("area","kanto"))
+		if area=="kanto": continue
+		var tipos: Array=[]
+		var sp: Array=h.get("spawns",[])
+		if not sp.is_empty(): tipos=dj.especie(int(sp[0].get("pokeId",0))).get("tipos",[])
+		r.append({"slug":String(h["slug"]),"name":String(h["nome"]),"looktype":int(h["looktype"]),"level":int(h["nivel"]),
+			"pixel":h["pixel"],"type1":String(tipos[0]) if tipos.size()>0 else "","type2":String(tipos[1]) if tipos.size()>1 else "","area":area})
+	return r
+func _textura_regiao(regiao: String) -> Texture2D:
+	## Kanto: a imagem do original. As outras: o snapshot não tem /assets/maps/<área>.png (o coletor não baixava; agora
+	## baixa) → fundo liso do tamanho dos marcadores (E) até a próxima coleta (res://assets/interface/mapa/regioes/<área>.png).
+	if regiao=="kanto": return preload("res://assets/interface/mapa/hunts.png")
+	if _texturas_regiao.has(regiao): return _texturas_regiao[regiao]
+	var caminho: String="res://assets/interface/mapa/regioes/%s.png" % regiao
+	var t: Texture2D=load(caminho) if ResourceLoader.exists(caminho) else null
+	if t==null:
+		var lim: Vector2=Vector2(400,300)
+		for reg in catalogo:
+			if String(reg.get("area","kanto"))==regiao: lim=lim.max(Vector2(float(reg["pixel"][0]),float(reg["pixel"][1]))+Vector2(80,90))
+		var img: Image=Image.create(int(lim.x),int(lim.y),false,Image.FORMAT_RGB8)
+		img.fill({"outland":Color("2a2418"),"orre":Color("3a2a16"),"nightmare":Color("1a1024")}.get(regiao,Color("101820")))
+		t=ImageTexture.create_from_image(img)
+	_texturas_regiao[regiao]=t
+	return t
+func selecionar_regiao(regiao: String) -> void:
+	regiao_atual=regiao
+	imagem_mapa.texture=_textura_regiao(regiao)
+	imagem_mapa.size=imagem_mapa.texture.get_size()
+	if titulo_mapa!=null: titulo_mapa.text="Map · "+String(ACESSO.NOMES_AREA.get(regiao,regiao))
+	_marcar_regioes()
+	_aplicar_filtros()
+	if navegacao!=null and is_visible_in_tree():
+		navegacao.centralizar(Vector2(761,409) if regiao=="kanto" else imagem_mapa.size*0.5)
+func _marcar_regioes() -> void:
+	var nivel: int=100000 if acesso_hunts_sem_limite else EstadoJogo.nivel_treinador
+	for b in botoes_regioes:
+		var rg: String=String(b.get_meta("regiao","kanto"))
+		b.modulate=Color(1,1,1,1) if nivel>=int(ACESSO.DESBLOQUEIO_AREA[rg]) else Color(0.5,0.5,0.5,1)   # C: classe "locked"
+		b.self_modulate=Color(1.2,1.12,0.85) if rg==regiao_atual else Color(1,1,1)
 func _criar_marcadores() -> void:
 	var dados: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://dados/referencias/mapa_kanto.json"))
 	var atlas_dados: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/interface/mapa/fiel/marker-atlas.json"))
 	var textura: Texture2D=preload("res://assets/interface/mapa/fiel/marker-atlas-72c2c2858beb.png")
 	for registro in dados["hunts"]:
+		registro["area"]="kanto"
+	var todos: Array=dados["hunts"]+_registros_outras_regioes()
+	for registro in todos:
 		# Fase 2: a hunt existe se a simulação tem o mapa real e o hunt-config (snapshot); senão vale o catálogo antigo
-		registro["simulada"] = _cenario_jogo().disponivel(_dados_sim(), str(registro["name"]))
+		registro["simulada"] = _cenario_jogo().disponivel(_dados_sim(), str(registro["name"]), str(registro.get("slug", "")))
 		registro["implementado"] = bool(registro["simulada"]) or not preload("res://catalogo_hunts.gd").obter(str(registro["name"])).is_empty()
 		catalogo.append(registro)
 		var celula: Array=atlas_dados["slots"][str(int(registro["looktype"]))]
@@ -264,6 +322,7 @@ func _criar_marcadores() -> void:
 		marcador.pressed.connect(_selecionar_registro.bind(registro))
 		marcadores[marcador]=registro
 func corresponde(registro: Dictionary) -> bool:
+	if String(registro.get("area","kanto"))!=regiao_atual: return false
 	var busca: String=_normalizar(buscas.text.strip_edges())
 	if not busca.is_empty() and not _normalizar(str(registro["name"])).contains(busca): return false
 	if not tipo_selecionado.is_empty() and tipo_selecionado not in [registro["type1"],registro["type2"]]: return false
@@ -282,7 +341,10 @@ func _aplicar_filtros() -> void:
 		marcador.set_meta("atende_filtro",atende)
 		if atende: quantidade+=1
 		_reposicionar_um(marcador)
-	contador.text="%d of %d" % [quantidade,catalogo.size()]
+	var na_regiao: int=0
+	for reg in catalogo:
+		if String(reg.get("area","kanto"))==regiao_atual: na_regiao+=1
+	contador.text="%d of %d" % [quantidade,na_regiao]
 	for tipo in botoes_tipos:
 		var ativo: bool=tipo_selecionado==tipo
 		var cor: Color=TIPOS.cor(tipo)
@@ -315,8 +377,37 @@ func _selecionar_registro(dados: Dictionary) -> void:
 	if not bool(dados["implementado"]):
 		_mostrar_aviso(str(dados["name"])+": caça ainda não implementada.")
 		return
-	if not acesso_hunts_sem_limite and EstadoJogo.nivel_treinador<int(dados["level"]):
-		_mostrar_aviso("Requer nível %d do treinador." % int(dados["level"]))
+	if not acesso_hunts_sem_limite:
+		var v: Dictionary=ACESSO.verificar(String(dados.get("area","kanto")),int(dados["level"]),str(dados["name"]),EstadoJogo.nivel_treinador)
+		if not bool(v["ok"]):
+			_mostrar_aviso(String(v["texto"]))
+			return
+		if bool(v["confirmar"]):
+			_perguntar_orre(dados,String(v["texto"]))
+			return
+	_viajar(dados)
+func _perguntar_orre(dados: Dictionary, texto: String) -> void:
+	## C: aviso de TMs em Orre (Sim entra, Não fica). O jogo ainda não tem TMs (E): aparece sempre em Orre.
+	if confirmacao==null:
+		confirmacao=ConfirmationDialog.new()
+		confirmacao.name="ConfirmacaoOrre"
+		confirmacao.title="Caçar em Orre"
+		confirmacao.ok_button_text="Sim"
+		confirmacao.cancel_button_text="Não"
+		confirmacao.dialog_autowrap=true
+		confirmacao.min_size=Vector2i(420,0)
+		confirmacao.confirmed.connect(func() -> void: _viajar(_registro_confirmar))
+		add_child(confirmacao)
+	_registro_confirmar=dados
+	confirmacao.dialog_text=texto
+	confirmacao.popup_centered()
+func _viajar(dados: Dictionary) -> void:
+	if bool(dados.get("simulada",false)) and str(dados.get("slug",""))!="":
+		# hunt com mapa e hunt-config no snapshot: entra sempre pelo slug (nomes de Outland/Orre/Nightmare não são espécies);
+		# a espécie fica registrada quando o nome é uma (telas antigas a leem), mas a cena usa o slug.
+		EstadoJogo.especie_caca=preload("res://especies_importadas.gd").obter_especies().get(str(dados["name"]))
+		EstadoJogo.slug_caca=str(dados["slug"])
+		get_tree().change_scene_to_file("res://caca_sim.tscn")
 		return
 	for destino in destinos:
 		if destino!=null and destino.especie!=null and destino.especie.nome==dados["name"]:
@@ -393,6 +484,7 @@ func _inicializar_visao() -> void:
 	navegacao.modulate.a=1
 
 func _atualizar_perfil() -> void:
+	_marcar_regioes()
 	for marcador in marcadores: marcador.atualizar_nivel(100000 if acesso_hunts_sem_limite else EstadoJogo.nivel_treinador)
 func _normalizar(texto: String) -> String:
 	var valor: String=texto.to_lower()

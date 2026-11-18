@@ -58,7 +58,8 @@ func executar() -> void:
 	await quadros()
 	var mapa: Control=cidade.mapa_mundi
 	checar(mapa.visible and mapa.janela.size==Vector2(704,900),"modal desktop 704x900")
-	checar(mapa.catalogo.size()==227 and mapa.marcadores.size()==227 and mapa.contador.text=="227 of 227","catálogo original completo de Kanto")
+	# Desde 18/11 o catálogo tem as 4 regiões (227 de Kanto + 227 de Outland/Orre/Nightmare); a aba inicial é Kanto.
+	checar(mapa.catalogo.size()==454 and mapa.marcadores.size()==454 and mapa.contador.text=="227 of 227","catálogo original completo de Kanto")
 	checar(mapa.botoes_regioes.size()==4 and mapa.botoes_tipos.size()==18,"quatro banners e dezoito tipos")
 	checar(is_equal_approx(mapa.navegacao.zoom,1.25) and mapa.imagem_mapa.position.x<0,"primeira abertura enquadra o destino após layout visível")
 	var geodude: Button
@@ -111,7 +112,9 @@ func executar() -> void:
 	mapa._selecionar_registro(mapa.marcadores[outro])
 	checar(current_scene==cidade and mapa.aviso.visible,"destino de referência não inicia outra caça")
 	mapa.botoes_regioes[1].pressed.emit()
-	checar(mapa.aviso.text.contains("não implementada") and current_scene==cidade,"outras regiões não simulam conteúdo disponível")
+	# Desde 18/11: as abas trocam de região (C); a bloqueada abre e o bloqueio é no clique da hunt.
+	checar(mapa.regiao_atual=="outland" and mapa.titulo_mapa.text=="Map · Outland" and current_scene==cidade,"aba Outland mostra a região, sem viajar")
+	mapa.botoes_regioes[0].pressed.emit()
 	for resolucao in [Vector2i(1920,1080),Vector2i(1152,648),Vector2i(800,450)]:
 		root.size=resolucao
 		await quadros()
