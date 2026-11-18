@@ -1067,3 +1067,14 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     a aba em segundo plano é o buraco.
   - Testes: `testes/test_segmentar.py` 10/10 (exportações sobrepostas, buraco, zoom e troca de time sobre T1 + G11);
     `test_processar_gravacao.py` 25/25.
+- 18/11/2026 — Gravador v1.3, item 2 (`ferramentas/gravador/gravador_ws.user.js`).
+  - Exporta sozinho, a cada 2 h, só o que é novo desde a última exportação: `poke_livre_<data>_<hora>.jsonl`, com a
+    marca do último registro no localStorage.
+  - Ao fechar ou recarregar a aba, baixa da memória o que falta (`_ao_fechar`; até ~20 MB). Se o navegador bloquear,
+    ao abrir o jogo de novo o que ficou sem exportar é baixado (`_recuperado`). As repetições entre arquivos saem no
+    `segmentar.py`.
+  - Os registros exportados com mais de 3 dias são apagados do navegador. Trava contra duas exportações ao mesmo tempo.
+  - Botão "exportar novos" no painel.
+  - Teste `testes/test_gravador.js` (Node, navegador simulado, relógio falso) 9/9: 2 abas, 5 h, todas as mensagens na
+    união dos arquivos.
+  - Não testado num navegador de verdade: se o download no fechamento passa depende do navegador; a recuperação cobre.

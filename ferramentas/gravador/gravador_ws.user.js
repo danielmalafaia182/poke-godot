@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Gravador WS — Poke Idle World
 // @namespace    poke-idle-godot
-// @version      1.2
+// @version      1.3
 // @description  Grava as mensagens do jogo e as respostas de /api/game/* (sem token, URL de conexão ou cabeçalhos).
 // @match        https://poke.idleworld.online/play*
 // @run-at       document-start
@@ -18,12 +18,26 @@
  * por espécie; pokes do painel do time), com dir "rest". Guarda caminho, parâmetros (sem os que parecem credencial), status e corpo.
  * v1.2: se outra versão do gravador já estiver ativa na página, avisa (a antiga não grava REST) em vez de sair calada;
  * a linha meta __open leva versaoGravador 3 e restHook, para conferir no arquivo que o gancho REST estava ligado.
- * Painel no canto inferior esquerdo: pausar, exportar JSONL, limpar.
+ * v1.3 (gravação livre): exporta sozinho, sem precisar lembrar.
+ *   - A cada 2 h, baixa só o que é novo desde a última exportação: poke_livre_<data>_<hora>.jsonl.
+ *   - Ao fechar ou recarregar a aba, tenta baixar o que ainda não foi exportado (o navegador pode bloquear downloads no
+ *     fechamento).
+ *   - Por isso, ao abrir o jogo de novo, o que ficou sem exportar é baixado logo no começo. Nada se perde; uma linha
+ *     repetida entre dois arquivos é descartada pelo ferramentas/gravador/segmentar.py.
+ *   - Os registros já exportados com mais de 3 dias são apagados do navegador.
+ *   - Na 1ª exportação automática, o Chrome pode perguntar se o site pode baixar vários arquivos: permita.
+ *   Ponha os arquivos em poke har/gravacoes/livre/ (ou aponte a pasta de downloads do navegador para lá).
+ * Painel no canto inferior esquerdo: pausar, exportar novos, exportar sessão, tudo, limpar.
  */
 (function () {
   'use strict';
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-  const VERSAO = 3;
+  const VERSAO = 4;
+  const INTERVALO_AUTO_MS = 2 * 60 * 60 * 1000;     // exportação automática a cada 2 h
+  const GUARDAR_DIAS = 3;                            // registros já exportados ficam 3 dias no navegador
+  const MEMORIA_MAX = 20 * 1024 * 1024;              // cópia em memória para o download ao fechar a aba (até ~20 MB)
+  const MARCA = 'poke_gravador_marca';               // id do último registro exportado (localStorage)
+  const ULTIMA = 'poke_gravador_ultima_exportacao';
   if (W.__pokeGravador) {
     if ((W.__pokeGravador.versao || 0) < VERSAO) {
       alert('Gravador WS: uma versão antiga já está ativa nesta página e NÃO grava as respostas REST (used-balls). ' +
@@ -38,6 +52,9 @@
   const REST_NAO = /^\/api\/game\/(chat|dm|friends|messages|mail)/;
   let pausado = false, total = 0, porTipo = {};
   const fila = [];
+  let memoria = [], memoriaBytes = 0, memoriaCheia = false;   // linhas ainda não exportadas (para o fechamento da aba)
+  const lerLS = (k, d) => { try { const v = localStorage.getItem(k); return v === null ? d : Number(v); } catch { return d; } };
+  const gravarLS = (k, v) => { try { localStorage.setItem(k, String(v)); } catch { } };
 
   // ---------- IndexedDB ----------
   let db = null;
@@ -65,7 +82,13 @@
     let tipo = '?';
     try { tipo = JSON.parse(dados).type ?? '?'; } catch { /* binário ou texto livre */ }
     if (DESCARTAR.has(tipo)) return;
-    fila.push({ sessao: SESSAO, t: Date.now(), dir, tipo, dados });
+    const reg = { sessao: SESSAO, t: Date.now(), dir, tipo, dados };
+    fila.push(reg);
+    if (!memoriaCheia) {
+      const l = linha(reg);
+      memoria.push(l); memoriaBytes += l.length;
+      if (memoriaBytes > MEMORIA_MAX) { memoria = []; memoriaBytes = 0; memoriaCheia = true; }   // fica só a recuperação
+    }
     total++; porTipo[tipo] = (porTipo[tipo] || 0) + 1;
     if (total % 25 === 0) atualizar();
   }
@@ -128,16 +151,70 @@
       req.onerror = () => erro(req.error);
     });
   }
-  async function exportar(soEsta) {
-    const msgs = await lerTudo(soEsta ? SESSAO : null);
-    const linhas = msgs.map(m => JSON.stringify({ sessao: m.sessao, t: m.t, dir: m.dir, msg: (() => { try { return JSON.parse(m.dados); } catch { return m.dados; } })() }));
+  function linha(m) {
+    return JSON.stringify({ sessao: m.sessao, t: m.t, dir: m.dir, msg: (() => { try { return JSON.parse(m.dados); } catch { return m.dados; } })() });
+  }
+  function baixar(linhas, nome) {
     const blob = new Blob([linhas.join('\n') + '\n'], { type: 'application/x-ndjson' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
-    a.download = `poke_ws_${soEsta ? SESSAO : 'todas'}.jsonl`;
-    document.body.appendChild(a); a.click(); a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 30000);
+    a.download = nome;
+    (document.body || document.documentElement).appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 60000);
   }
+  function carimbo() {
+    const d = new Date(), z = n => String(n).padStart(2, '0');
+    return `${d.getFullYear()}-${z(d.getMonth() + 1)}-${z(d.getDate())}_${z(d.getHours())}-${z(d.getMinutes())}`;
+  }
+  async function exportar(soEsta) {
+    const msgs = await lerTudo(soEsta ? SESSAO : null);
+    baixar(msgs.map(linha), `poke_ws_${soEsta ? SESSAO : 'todas'}.jsonl`);
+  }
+  // Exporta os registros com id > marca: os novos desde a última exportação, desta aba ou de uma aba fechada antes.
+  let exportando = false;
+  async function exportarNovos(motivo) {
+    if (exportando) return 0;                 // uma exportação por vez (a verificação de 1 min não duplica arquivos)
+    exportando = true;
+    try { return await exportarNovos_(motivo); } finally { exportando = false; }
+  }
+  async function exportarNovos_(motivo) {
+    await descarregar(); await abrir;
+    const marca = lerLS(MARCA, 0);
+    const novos = await new Promise((ok, erro) => {
+      const out = [];
+      const req = db.transaction('msgs').objectStore('msgs').openCursor(IDBKeyRange.lowerBound(marca, true));
+      req.onsuccess = () => { const c = req.result; if (c) { out.push(c.value); c.continue(); } else ok(out); };
+      req.onerror = () => erro(req.error);
+    });
+    if (!novos.length) return 0;
+    baixar(novos.map(linha), `poke_livre_${carimbo()}${motivo === 'recuperacao' ? '_recuperado' : ''}.jsonl`);
+    gravarLS(MARCA, novos[novos.length - 1].id);
+    gravarLS(ULTIMA, Date.now());
+    memoria = []; memoriaBytes = 0; memoriaCheia = false;
+    limparAntigos().catch(() => {});
+    atualizar();
+    return novos.length;
+  }
+  async function limparAntigos() {
+    const marca = lerLS(MARCA, 0), limite = Date.now() - GUARDAR_DIAS * 86400000;
+    await abrir;
+    const req = db.transaction('msgs', 'readwrite').objectStore('msgs').openCursor(IDBKeyRange.upperBound(marca));
+    req.onsuccess = () => { const c = req.result; if (c) { if (c.value.t < limite) c.delete(); c.continue(); } };
+  }
+  // Automático: ao abrir (o que ficou de uma aba fechada), a cada 2 h, e ao fechar a aba (melhor esforço, da memória).
+  setTimeout(() => { exportarNovos('recuperacao').catch(() => {}); }, 15000);
+  setInterval(() => {
+    if (Date.now() - lerLS(ULTIMA, 0) >= INTERVALO_AUTO_MS) exportarNovos('auto').catch(() => {});
+  }, 60000);
+  if (!lerLS(ULTIMA, 0)) gravarLS(ULTIMA, Date.now());
+  let saiu = false;
+  function aoSair() {
+    if (saiu || !memoria.length) return;
+    saiu = true;
+    try { baixar(memoria, `poke_livre_${carimbo()}_ao_fechar.jsonl`); } catch { }
+  }
+  W.addEventListener('pagehide', aoSair);
+  W.addEventListener('beforeunload', aoSair);
   async function limpar() {
     if (!confirm('Apagar todas as gravações guardadas neste navegador?')) return;
     await abrir;
@@ -151,10 +228,13 @@
     painel = document.createElement('div');
     painel.style.cssText = 'position:fixed;left:8px;bottom:8px;z-index:2147483647;background:#111d;color:#fff;font:11px/1.35 monospace;padding:6px 8px;border-radius:6px;max-width:260px';
     painel.innerHTML = '<b>● REC WS</b> <span id="pg-n">0</span> msgs<div id="pg-t" style="opacity:.75"></div>' +
-      '<button id="pg-p">pausar</button> <button id="pg-e">exportar sessão</button> <button id="pg-a">tudo</button> <button id="pg-l">limpar</button> <button id="pg-x">×</button>';
+      '<div id="pg-auto" style="opacity:.75"></div>' +
+      '<button id="pg-p">pausar</button> <button id="pg-n2">exportar novos</button> <button id="pg-e">sessão</button> <button id="pg-a">tudo</button> <button id="pg-l">limpar</button> <button id="pg-x">×</button>';
     document.body.appendChild(painel);
     painel.querySelector('#pg-p').onclick = e => { pausado = !pausado; e.target.textContent = pausado ? 'retomar' : 'pausar'; painel.querySelector('b').textContent = pausado ? '❚❚ PAUSA' : '● REC WS'; };
     painel.querySelector('#pg-e').onclick = () => exportar(true);
+    painel.querySelector('#pg-n2').onclick = () => exportarNovos('manual');
+    setInterval(atualizar, 30000);
     painel.querySelector('#pg-a').onclick = () => exportar(false);
     painel.querySelector('#pg-l').onclick = () => limpar();
     painel.querySelector('#pg-x').onclick = () => { painel.style.display = 'none'; };
@@ -165,8 +245,10 @@
     painel.querySelector('#pg-n').textContent = total;
     const top = Object.entries(porTipo).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([k, v]) => `${k}:${v}`).join(' ');
     painel.querySelector('#pg-t').textContent = top;
+    const falta = Math.max(0, INTERVALO_AUTO_MS - (Date.now() - lerLS(ULTIMA, Date.now())));
+    painel.querySelector('#pg-auto').textContent = `auto: próxima em ${Math.round(falta / 60000)} min` + (memoriaCheia ? ' · ao fechar: só na próxima abertura' : '');
   }
   if (document.body) montar(); else document.addEventListener('DOMContentLoaded', montar);
 
-  W.__pokeGravador = { versao: VERSAO, exportar, lerTudo, sessao: SESSAO, mostrar: () => { if (painel) painel.style.display = 'block'; } };
+  W.__pokeGravador = { versao: VERSAO, exportar, exportarNovos, lerTudo, sessao: SESSAO, mostrar: () => { if (painel) painel.style.display = 'block'; } };
 })();
