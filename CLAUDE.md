@@ -943,3 +943,8 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   contaminada pela espera da janela. Para medir em foco: `POKE_MODO_FUNDO=0 python -I testes/test_todas_hunts.py --velocidade 1
   --segundos 60 --slugs nightmare_raichu,nightmare_elekid,rapidash,ancient_pinsir,nightmare_luxray` com a janela do Godot
   na frente e o PC parado (~8 min por rodada).
+- 18/11/2026 — p99 **em foco** com sombras (medição do usuário, PC parado; `dados/relatorios/p99_foco_sombras_2026-11-18.md`):
+  5 hunts mais pesadas × 3 rodadas, 60 s a 1×, 163–176 quadros/s (foco conferido pela contagem). Medianas: ancient_pinsir
+  10,07; nightmare_luxray 9,84; nightmare_elekid 9,56; nightmare_raichu 9,14; rapidash 7,56 → **critério cumprido 5/5**
+  (pior p99 individual 12,55). Render CPU p99 3,3–4,0 ms, GPU 2,5–2,9, ~170 draw calls. Sombras seguem ligadas por padrão.
+  À parte: nightmare_elekid 0 abates em 60 s em 2 das 3 rodadas (time de teste E; não afeta o quadro).
