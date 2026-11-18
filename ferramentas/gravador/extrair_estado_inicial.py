@@ -62,7 +62,10 @@ def main():
             est["vip"] = m
         if t == "poke-delta":
             deltas.append(m["poke"])
-        if t == "pokes-chunk":
+        if t == "pokes":
+            # time completo (A; gravação livre põe o time no começo do trecho): as reservas reais para a sim
+            est["time"] = [x for x in m.get("list", []) if x.get("team")]
+        if t in ("pokes-chunk", "pokes"):
             # lista do time (A): serve de poke-delta quando a gravação não tem um do herói (ex.: M3)
             chunk.extend(x for x in m.get("list", []) if x.get("team"))
         if not dentro:
@@ -94,6 +97,9 @@ def main():
         elif t == "balls" and "balls" not in est:
             est["balls"] = {k: v for k, v in m.items() if k != "type"}
     est["cadaveres"] = cadaveres
+    # VIP sem a mensagem vip na gravação: a parcela vip do 1º abate diz (A: +50% da base em parcela própria)
+    if "vip" not in est and int((est.get("primeiroFieldKill", {}).get("xpParts") or {}).get("vip", 0)) > 0:
+        est["vip"] = {"type": "vip", "inferido": "xpParts.vip do primeiro abate"}
     # poke-delta do herói: o primeiro com o nome do herói do primeiro field (A: na gravação de 1 h o primeiro
     # poke-delta é de um Pokémon nível 1 vindo de pacote de cartas, não do Venusaur)
     heroi = est.get("primeiroField", {}).get("heroName")

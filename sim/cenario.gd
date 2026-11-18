@@ -38,12 +38,26 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int, o
 		"shiny": pd.get("shiny", false), "finalStage": pd.get("finalStage", false), "leader": pd.get("leader", false),
 		"starter": pd.get("starter", false), "sellValue": int(pd.get("sellValue", 0))}
 	var equipe: Array = [heroi]
-	# Reservas: o field só mostra hp/maxHp (24/24, piso do combatHp). Espécie/stats reais não gravados:
-	# F — Geodude nível 1, IV 16, Quality 1,0 (dá maxHp 24, igual ao observado). Só importam se o herói cair.
-	var bt: Array = est["primeiroField"]["bossTeam"]
-	for i in range(1, bt.size()):
-		equipe.append({"id": "reserva-%d" % i, "speciesId": 74, "nivel": 1, "ivs": {"hp": 16, "atk": 16, "def": 16, "spAtk": 16, "spDef": 16, "speed": 16},
-			"quality": 1.0, "leader": false, "starter": false, "sellValue": 0})
+	var time_real: Array = est.get("time", [])
+	if time_real.size() > 1:
+		# A (gravação livre, 18/11): o time inteiro vem no `pokes.list`; IVs estimados dos stats exibidos (D), XP da mensagem.
+		for p in time_real:
+			if String(p.get("id", "")) == String(pd["id"]):
+				continue
+			var e2: Dictionary = dados.especie(int(p["speciesId"]))
+			var c2 := Regras.estimar_ivs(e2["base"], p["stats"], int(p["level"]), float(p["quality"]))
+			var iv2 := {}
+			for k in Regras.CHAVES_STATS:
+				iv2[k] = (c2[k] as Array)[0] if (c2[k] as Array).size() > 0 else 16
+			equipe.append({"id": String(p["id"]), "speciesId": int(p["speciesId"]), "xp": int(p.get("xp", Regras.xp_total_para_nivel(int(p["level"])))),
+				"ivs": iv2, "quality": float(p["quality"]), "leader": false, "starter": bool(p.get("starter", false)), "sellValue": int(p.get("sellValue", 0))})
+	else:
+		# Reservas: o field só mostra hp/maxHp (24/24, piso do combatHp). Espécie/stats reais não gravados:
+		# F — Geodude nível 1, IV 16, Quality 1,0 (dá maxHp 24, igual ao observado). Só importam se o herói cair.
+		var bt: Array = est["primeiroField"]["bossTeam"]
+		for i in range(1, bt.size()):
+			equipe.append({"id": "reserva-%d" % i, "speciesId": 74, "nivel": 1, "ivs": {"hp": 16, "atk": 16, "def": 16, "spAtk": 16, "spDef": 16, "speed": 16},
+				"quality": 1.0, "leader": false, "starter": false, "sellValue": 0})
 	var base_ms := int(String(est["huntKey"]).split(":")[1])
 	var balls: Dictionary = est.get("balls", {})
 	return {

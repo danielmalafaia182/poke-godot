@@ -21,14 +21,14 @@ Decisões do usuário (Geodude como inicial, VIP desligado etc.) ficam fora da c
 | 4. XP do Pokémon | 80% | 4/5 | Parcela `mentor` |
 | 5. Escolha do golpe | 67% | 2/3 | Desempate por cooldown (um só caso gravado) |
 | 6. Dano dos golpes | 40% | 4/10 | Fórmula (F), aliado no nível 1 (×2 e o Vulpix), Tackle do selvagem subindo com o nível do aliado, faixa 200+ |
-| 7. Combate completo | 64% | 9/14 | Movimento (5 grandezas), status, troca após KO (E), respawn exato |
+| 7. Combate completo | 69% | 9/13 | Resultado por trecho ±10% (hoje 32/55), status, troca após KO (E), respawn exato |
 | 8. Loot | 83% | 5/6 | Mecanismo do −73% no lock (chance × quantidade) |
 | 9. Auto-Potion | 100% | 4/4 | — |
 | 10. Auto-Catch | 50% | 4/8 | Forma do medidor (c, k são F), raridade, shiny, filtro de nomes |
 | 11. Nurse Joy | 100% | 3/3 | — |
 | 12. Depot | 67% | 4/6 | Limite de pilhas; o que acontece com o time > 6 |
 | 13. IV e Quality | 90% | 9/10 | Arredondamento dos stats no dano (F) |
-| **Total** | **70%** | **62/89** | |
+| **Total** | **70%** | **62/88** | |
 
 Jogável de ponta a ponta (D, não entra na %): campanha do zero e varredura das 451 hunts em
 `dados/relatorios/campanha_2026-11-18.md`. Nenhuma hunt trava (0 abates sem morte, alvo inalcançável, herói parado).
@@ -105,7 +105,7 @@ Golpes explicados pela sim, de 7.567 gravados (`dados/relatorios/ajuste_dano.md`
 | Tackle do selvagem nível 1 sobe quando o aliado sobe (5 → 7) | A (o efeito) | ❌ | G11, 80 golpes; nenhum ataque constante explica (41/80) |
 | Piso 3 no ataque do aliado; faixa 200+ (80,9%) | F | ❌ | geodude-10min; c5 61,7% |
 
-## 7. Combate completo — 9/14 (64%)
+## 7. Combate completo — 9/13 (69%)
 
 | Regra | Fonte | Situação | Evidência |
 | --- | --- | --- | --- |
@@ -118,8 +118,7 @@ Golpes explicados pela sim, de 7.567 gravados (`dados/relatorios/ajuste_dano.md`
 | Golpes que o cliente não recebe vão no próximo field; field-kill antes do golpe final | A | ✅ | rhydon-1h |
 | Respawn 60 s no mesmo spawn, o mesmo indivíduo | A | ✅ | diferencial; maxHp constante por slot |
 | Penalidade de entrada (lock 60 s; mesma hunt pela cidade não penaliza) | A | ✅ | 12 entradas, T1 |
-| Movimento: chegadas, adjacentes, ms/tile do selvagem e do herói | A × sim | ❌ | desvio conhecido (`dados/relatorios/movimento_2026-11-18.md`); MV1–MV3 |
-| Borda de perseguição da sim (7) igual à real (13) | — | ❌ | com 13 a sim junta selvagens demais |
+| Resultado por trecho de hunt, real × sim, ±10% (abates/min, XP/h, mortes/h, ouro/h, ao lado do herói) — critério do movimento desde 18/11 | A × sim | ❌ | 32/55 em 11 trechos (`dados/relatorios/resultado_trechos_2026-11-18.md`): mortes 11/11, ao lado 7/11, abates 6/11, XP 6/11, ouro 2/11; quando diverge, a sim mata menos |
 | Troca automática após KO (aleatória, 5 s de recarga) | E | ❌ | decisão do usuário; não gravado |
 | Efeitos de status | — | ❌ | não implementado |
 | Tempo exato de respawn em onda (`waveRespawnAt`) | — | ❌ | não medido |

@@ -91,6 +91,7 @@ class Pedaco:
         self.adj = 0
         self.niveis = set()
         self.msgs = []
+        self.contexto = []      # vip, inventory, balls, autohelper e o líder no começo do pedaço (para a sim)
 
     def resumo(self, lock):
         dur = max(0.0, (self.t1 - self.t0) / 1000.0)
@@ -131,6 +132,16 @@ def segmentar(entradas, guardar_msgs=False):
     ult_field = None
     pokes = {}
     lider_id = None
+    ultimo = {}             # última mensagem de cada tipo de contexto (vip, inventory, balls, autohelper)
+
+    def contexto():
+        c = [ultimo[k] for k in ("vip", "inventory", "balls", "autohelper") if k in ultimo]
+        time = sorted([p for p in pokes.values() if p.get("team")], key=lambda p: (p.get("slot") is None, p.get("slot") or 0))
+        if time:
+            c.append({"type": "pokes", "list": [dict(p, leader=(p["id"] == lider_id)) for p in time]})
+        if lider_id in pokes:
+            c.append({"type": "poke-delta", "poke": dict(pokes[lider_id], team=True, leader=True)})
+        return c
 
     def fechar_ped():
         nonlocal ped
@@ -138,6 +149,7 @@ def segmentar(entradas, guardar_msgs=False):
             r = ped.resumo(lock)
             if guardar_msgs:
                 r["_msgs"] = [inst["init"]] + ped.msgs
+                r["_contexto"] = ped.contexto
             trechos.append(r)
         ped = None
 
@@ -154,6 +166,8 @@ def segmentar(entradas, guardar_msgs=False):
 
     for d, m, _ in ler_logs(fs, rest=False):
         t = m.get("type")
+        if d == "in" and t in ("vip", "inventory", "balls", "autohelper"):
+            ultimo[t] = m
         if d == "out":
             if t == "view":
                 v = [m.get("hc"), m.get("hr")]
@@ -228,6 +242,8 @@ def segmentar(entradas, guardar_msgs=False):
                 cand = [p for p in pokes.values() if p.get("name") == m.get("heroName") and p.get("team")]
                 if cand:
                     lider_id = cand[0]["id"]
+            if ped.fields == 1:          # 1º field do pedaço (já contado acima)
+                ped.contexto = contexto()
             if lider_id in pokes and pokes[lider_id].get("name") == m.get("heroName"):
                 ped.niveis.add(pokes[lider_id].get("level"))
             if m.get("fainted") and not (ult_field or {}).get("fainted"):
@@ -256,6 +272,17 @@ def segmentar(entradas, guardar_msgs=False):
             ped.capturas += int(bool(m.get("success")))
     fechar_ped()
     fechar_cidade(ult_field["serverNow"] if ult_field else 0)
+    # Líder desconhecido no começo do pedaço (gravação sem pokes/poke-delta antes): usa o que se soube dele depois, pelo
+    # nome. IV e Quality não mudam; o XP do momento vem do 1º poke-xp do pedaço (extrair_estado_inicial.py).
+    if guardar_msgs:
+        for x in trechos:
+            if x["tipo"] != "hunt" or any(m.get("type") == "poke-delta" for m in x.get("_contexto", [])):
+                continue
+            nome = (x.get("lider") or [None])[0]
+            cand = [p for p in pokes.values() if p.get("name") == nome]
+            if cand:
+                x.setdefault("_contexto", []).append({"type": "poke-delta", "poke": dict(cand[0], team=True, leader=True)})
+                x["lider_de_depois"] = True
     return trechos
 
 
@@ -285,8 +312,13 @@ def exportar(trechos, pasta):
         if x["tipo"] != "hunt" or "_msgs" not in x:
             continue
         c = os.path.join(pasta, "trecho_%03d_%s.jsonl" % (i, x["slug"]))
+        init = dict(x["_msgs"][0])
+        if (x["motivo_inicio"] != "entrada" or not x.get("lock_s")) and ":r" not in init.get("huntKey", ""):
+            # pedaço do meio, ou entrada sem lock no real (A: nem toda entrada penaliza): a sim não aplica a penalidade
+            init["huntKey"] = init.get("huntKey", "") + ":r1"
+        msgs = [init] + x.get("_contexto", []) + x["_msgs"][1:]
         with open(c, "w", encoding="utf-8", newline="\n") as f:
-            for j, m in enumerate(x["_msgs"]):
+            for j, m in enumerate(msgs):
                 f.write(json.dumps({"sessao": x["huntKey"], "t": x["t0"] + j, "dir": "in", "msg": m}, ensure_ascii=False) + "\n")
         x["arquivo"] = c
         feitos.append(c)

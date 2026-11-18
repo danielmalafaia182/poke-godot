@@ -1,5 +1,7 @@
 # Movimento dos selvagens — desvio reaberto em 18/11/2026
 
+> **Superado em 18/11:** o critério do movimento passou a ser o resultado por trecho (`resultado_trechos_2026-11-18.md`). As gravações MV1–MV3 abaixo deixaram de existir.
+
 Situação depois da regra nova de alvo (o menor tempo de caminho, A, 18/11). Tabela gerada por
 `python -I ferramentas/fase4/comparar_movimento.py`.
 
