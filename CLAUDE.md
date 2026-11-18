@@ -1012,3 +1012,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Ferramentas: `comparar_movimento.py`; `medir_movimento.py` ganhou "chegadas de não-alvos por minuto";
     `testes/duracao_luta.gd` escolheu a hunt da luta média (Venusaur na `blastoise`, 11,5 s).
   - 3 gravações com roteiro (MV1–MV3). Nenhuma regra mudou.
+- 18/11/2026 — Escopo novo, item 4 (placar): `PLACAR_ESCOPO.md` é o critério de pronto. Cada item do escopo foi
+  quebrado nas regras que o original decide. Conta como confirmada a regra vista no original (A, ou C quando ela mora no
+  cliente), feita igual pela sim e com teste ou ferramenta que confere. B, E e F não contam.
+  - Total **58/84 (69%)**.
+  - 100%: Auto-Potion e Nurse Joy. 80–83%: XP do Pokémon e loot. 71–75%: acesso, XP do treinador, IV/Quality.
+    64–67%: combate, golpe, depot. 50–60%: dano, Auto-Catch, começo do jogo.
+  - Cada linha diz o que falta.
+  - Achado de passagem (A): cada `poke-xp` traz um Pokémon só, o ativo (807/807).
