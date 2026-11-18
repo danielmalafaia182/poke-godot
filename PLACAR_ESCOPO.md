@@ -30,6 +30,20 @@ Decisões do usuário (Geodude como inicial, VIP desligado etc.) ficam fora da c
 | 13. IV e Quality | 90% | 9/10 | Arredondamento dos stats no dano (F) |
 | **Total** | **70%** | **62/88** | |
 
+## Onde jogar (gravador sempre ligado; cobre o que falta)
+
+- **rattata** com um **Slugma** nível 1 (capturado na slugma) — dano no nível 1, golpe especial sem STAB
+- **rattata** com um **Oddish** ou **Sunkern** nível 1 — dano no nível 1, especial com STAB
+- **rattata** com um **Rattata** ou **Pidgey** nível 1, até o nível 5 — dano físico com STAB no nível 1 e o Tackle do selvagem subindo com o nível do aliado
+- **rhydon** ou **kangaskhan** com o **Rhydon 425** (conta B) — dano do aliado 200+
+- qualquer hunt com a **conta B** — parcelas `guild` e `mentor`
+- **bulbasaur** com Auto-Catch de **Super Ball** — raridade na captura
+- várias hunts diferentes no mesmo dia, entrando e saindo — loot no lock (chance × quantidade)
+- uma hunt um pouco forte demais com **3 no time** — troca automática depois do desmaio
+- sessões de 1 h ou mais na **rhydon** e na **kangaskhan** com o **Venusaur** — resultado por trecho (abates/min, ouro/h)
+- uma **conta nova**, uma vez — IV, Quality e ouro do inicial
+- o depot com **mais de 200 pilhas**, uma vez — limite do depot
+
 Jogável de ponta a ponta (D, não entra na %): campanha do zero e varredura das 451 hunts em
 `dados/relatorios/campanha_2026-11-18.md`. Nenhuma hunt trava (0 abates sem morte, alvo inalcançável, herói parado).
 
