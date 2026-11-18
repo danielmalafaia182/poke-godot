@@ -33,6 +33,29 @@ func _novo_jogo(ej) -> void:
 	checar(ej.salvamento.jogo_novo, "abriu sem save: jogo novo")
 	passo("0. Sem save: o começo herdado do P04 é %s Lv.%d, %d Small Potions, %d Poké Balls, %d Super Balls" % [
 		ej.pokemon_inicial.especie.nome, ej.pokemon_inicial.nivel, ej.obter_quantidade_pocao(200), ej.obter_quantidade_bola(1), ej.obter_quantidade_bola(3)])
+	# Inicial do projeto (E, 18/11): Geodude Lv.1 é o padrão; os três do original ficam como opção.
+	var NJ := preload("res://sim/servico_novo_jogo.gd")
+	checar(not NJ.criar(74, 7).has("erro") and NJ.criar(1, 7).has("erro") and NJ.criar(74, 7, "T", NJ.MODO_ORIGINAL).has("erro")
+		and not NJ.criar(1, 7, "T", NJ.MODO_ORIGINAL).has("erro"), "modo padrão = só o Geodude; modo original = só os três (E/C)")
+	var painel: Control = load("res://painel_novo_jogo.gd").new()
+	get_root().add_child(painel)
+	var nomes_padrao := []
+	for c in painel.find_children("Inicial_*", "Button", true, false):
+		if not c.is_queued_for_deletion(): nomes_padrao.append(String(c.text))
+	painel.find_child("IniciaisOriginal", true, false).button_pressed = true
+	var nomes_orig := []
+	for c in painel.find_children("Inicial_*", "Button", true, false):
+		if not c.is_queued_for_deletion(): nomes_orig.append(String(c.text))
+	painel.queue_free()
+	checar(nomes_padrao == ["Geodude"] and nomes_orig == ["Bulbasaur", "Charmander", "Squirtle"],
+		"tela de jogo novo: Geodude por padrão; a caixa \"Iniciais do original\" mostra os três", "%s → %s" % [str(nomes_padrao), str(nomes_orig)])
+	var rg: Dictionary = ej.novo_jogo(74, "Brock", 7)
+	var geo: DadosPokemon = ej.pokemon_inicial
+	checar(not rg.has("erro") and geo.especie.nome == "Geodude" and geo.nivel == 1 and ej.time_pokemon.size() == 1
+		and ej.obter_quantidade_pocao(200) == 100 and ej.obter_quantidade_bola(1) == 100 and ej.ouro == 0
+		and String(rg["hunt_recomendada"]) == "rattata" and ej.salvar_agora(),
+		"jogo novo padrão: Geodude Lv.1 sozinho no time, mesmo kit, recomendada Rattata (A: geodude-10min), save válido",
+		"Q %.3f, IV %d" % [geo.qualidade, geo.obter_total_ivs()])
 	checar(ej.novo_jogo(25, "Ash", 7).has("erro"), "inicial fora dos três: recusa (C)")
 	var r: Dictionary = ej.novo_jogo(1, "Ash", 7)
 	bulba = ej.pokemon_inicial

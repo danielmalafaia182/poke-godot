@@ -91,6 +91,11 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
   que se cobra é a simulação seguir o relógio (nenhum tick perdido) e gastar pouco. Sem foco ou minimizado, o desenho cai
   para 10 quadros/s (`EstadoJogo.definir_modo_fundo`); atraso de ticks é recuperado, com teto de 1 h.
 
+- **Escopo atual (18/11)**: lotes 3 e 4 congelados. Foco: do zero (treinador 1, Geodude 1) a todas as hunts, com XP,
+  golpes e dano, combate, loot, Auto-Potion, Auto-Catch, Nurse Joy, depot, IV e Quality iguais ao original. Critério de
+  pronto: o placar em `PLACAR_ESCOPO.md`.
+- **Inicial do jogo novo: Geodude nível 1** (18/11). Os iniciais do original (Bulbasaur, Charmander, Squirtle) ficam como
+  opção na tela de jogo novo (caixa "Iniciais do original"). Primeira hunt recomendada para o Geodude: Rattata (A: geodude-10min).
 - Troca automática após KO: **aleatória** entre membros vivos e válidos do TIME (não do box), sem curar;
   depois dela, 5 s de cooldown para troca manual. Volta à cidade só quando não há reserva viva.
 - Interações da cidade por **clique** (NPCs/depot); nada de tecla obrigatória. HUD responsivo, referência 1920×1080.
@@ -965,3 +970,8 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     dá 0/2, com 13/20 e 12/20 sementes sem abate. Era também o "labirinto" do snorunt na varredura 2b.6.
   - A saída da sim muda de propósito (Rhydon 20 min não é mais idêntica).
   - Regressão: os 27 testes da sim e da cena, protocolo, compatibilidade 22/22, ponte 11/11, save em thread 15/15 e P04 43/43, tudo verde.
+- 18/11/2026 — Escopo novo, item 1 (inicial): o jogo novo começa com o **Geodude nível 1** (E), com o mesmo kit (100 Small
+  Potions e 100 Poké Balls) e ouro 0, e a primeira hunt recomendada é a Rattata (A: geodude-10min). A tela de jogo novo
+  mostra o Geodude, e a caixa "Iniciais do original" troca para os três do original (C). `servico_novo_jogo.gd` ganhou os
+  modos `projeto` e `original`. A validação do save aceita a linha Geodude → Graveler → Golem como inicial.
+  `test_jogo_novo` 17/17.

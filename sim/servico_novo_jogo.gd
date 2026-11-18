@@ -12,6 +12,10 @@ extends RefCounted
 ##   - Primeira cidade: Cerulean (C: o botão "Back to Cerulean" é a casa; A: o jogo grava `set-city` cerulean).
 ##   - Primeira hunt recomendada (C, tutorial `cy`): Bulbasaur → Geodude ("Rock/Ground — your grass attacks deal ×4"),
 ##     Charmander → Paras ("Bug/Grass — your fire attacks deal ×4"), Squirtle → Geodude (água ×4). As três são nível 1.
+##   - **Inicial do projeto (E, 18/11, decisão do usuário): Geodude (74) no nível 1.** É o padrão do jogo novo; os três do
+##     original ficam como opção (`MODO_ORIGINAL`, caixa "Iniciais do original" na tela de jogo novo). Primeira hunt do
+##     Geodude: Rattata (A: a gravação geodude-10min é um Geodude Lv.1 upando na hunt `rattata`; Tackle neutro no Rattata
+##     Normal, e o Tackle do Rattata é resistido pela Rocha). Mesmo kit e mesmo ouro dos outros.
 ##   - Tutorial (C): welcome, party, menu, walk, nurse, depot, shop, market, openMap, firstHunt, hunting, throwBall, …,
 ##     replay, done; "Skip tutorial". Aqui só a lista de passos (o roteiro na tela é E: ainda não feito).
 
@@ -21,6 +25,10 @@ const Rng := preload("res://sim/rng.gd")
 const INICIAIS := {1: {"nome": "Bulbasaur", "hunt": "geodude", "por_que": "Rock/Ground — seus golpes de planta dão ×4"},
 	4: {"nome": "Charmander", "hunt": "paras", "por_que": "Bug/Grass — seus golpes de fogo dão ×4"},
 	7: {"nome": "Squirtle", "hunt": "geodude", "por_que": "Rock/Ground — seus golpes de água dão ×4"}}
+const INICIAL_PROJETO := 74                                 # E (decisão do usuário, 18/11)
+const INICIAIS_PROJETO := {74: {"nome": "Geodude", "hunt": "rattata", "por_que": "Normal — o Tackle acerta cheio e o Tackle dele é resistido pela sua Rocha"}}
+const MODO_PROJETO := "projeto"    # E: só o Geodude
+const MODO_ORIGINAL := "original"  # C: Bulbasaur, Charmander, Squirtle
 const KIT := {"pocoes": {200: 100}, "bolas": {1: 100}}    # C
 const OURO_INICIAL := 0                                     # E
 const CIDADE_INICIAL := "cerulean"                          # C/A
@@ -28,16 +36,21 @@ const PASSOS_TUTORIAL := ["welcome", "party", "menu", "walk", "nurse", "depot", 
 	"hunting", "throwBall", "captureMgmt", "openInv", "replay", "done"]   # C (ordem do cliente; os do fim, aproximada)
 
 
-static func criar(especie_id: int, semente: int, nome: String = "Treinador") -> Dictionary:
+static func iniciais(modo: String) -> Dictionary:
+	return INICIAIS if modo == MODO_ORIGINAL else INICIAIS_PROJETO
+
+
+static func criar(especie_id: int, semente: int, nome: String = "Treinador", modo: String = MODO_PROJETO) -> Dictionary:
 	## Estado inicial do jogador: {inicial {speciesId, nome, nivel, xp, ivs, quality}, pocoes, bolas, ouro, cidade,
-	## hunt_recomendada, tutorial}. Espécie fora das três → erro.
-	if not INICIAIS.has(especie_id):
-		return {"erro": "Inicial inválido: escolha Bulbasaur, Charmander ou Squirtle."}
+	## hunt_recomendada, tutorial, modo}. Espécie fora das do modo → erro.
+	var lista := iniciais(modo)
+	if not lista.has(especie_id):
+		return {"erro": "Inicial inválido: escolha Bulbasaur, Charmander ou Squirtle." if modo == MODO_ORIGINAL else "Inicial inválido: o jogo começa com o Geodude."}
 	var rng = Rng.new(semente * 2654435761 % 2147483647 + especie_id)
 	var ivs: Dictionary = Regras.sortear_ivs(rng)   # C: rollGrowthSet (IV 1..32)
 	var q: float = Regras.sortear_qualidade(rng)
-	var i: Dictionary = INICIAIS[especie_id]
+	var i: Dictionary = lista[especie_id]
 	return {"inicial": {"speciesId": especie_id, "nome": String(i["nome"]), "nivel": 1, "xp": Regras.xp_total_para_nivel(1),
 		"ivs": ivs, "quality": q}, "pocoes": KIT["pocoes"].duplicate(), "bolas": KIT["bolas"].duplicate(), "ouro": OURO_INICIAL,
 		"cidade": CIDADE_INICIAL, "hunt_recomendada": String(i["hunt"]), "por_que": String(i["por_que"]), "treinador": nome,
-		"tutorial": PASSOS_TUTORIAL.duplicate()}
+		"tutorial": PASSOS_TUTORIAL.duplicate(), "modo": modo}

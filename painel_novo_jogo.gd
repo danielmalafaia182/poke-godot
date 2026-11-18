@@ -1,6 +1,7 @@
 extends Control
-## Jogo novo (como a tela "CHOOSE YOUR STARTER POKÉMON" do original, C): nome do treinador e um de três iniciais —
-## Bulbasaur, Charmander ou Squirtle — no nível 1, com 100 Small Potions e 100 Poké Balls. Depois de escolher, mostra a
+## Jogo novo (como a tela "CHOOSE YOUR STARTER POKÉMON" do original, C): nome do treinador e o inicial no nível 1, com
+## 100 Small Potions e 100 Poké Balls. Padrão do projeto (E): Geodude. A caixa "Iniciais do original" troca para os três
+## do original (Bulbasaur, Charmander, Squirtle; C). Depois de escolher, mostra a
 ## primeira hunt recomendada pelo tutorial do original (C). Só desenha e manda o comando: regras em sim/servico_novo_jogo.gd
 ## (EstadoJogo.novo_jogo). Aparece só quando o jogo abre sem save (cidade.gd).
 
@@ -9,6 +10,7 @@ const NovoJogo := preload("res://sim/servico_novo_jogo.gd")
 var janela: PanelContainer
 var corpo: VBoxContainer
 var nome: LineEdit
+var modo: String = NovoJogo.MODO_PROJETO
 signal concluido(resultado: Dictionary)
 
 
@@ -52,23 +54,40 @@ func _montar() -> void:
 	nome.max_length = 16
 	corpo.add_child(nome)
 	var linha := HBoxContainer.new()
+	linha.name = "Iniciais"
 	linha.add_theme_constant_override("separation", 8)
 	corpo.add_child(linha)
-	for id in [1, 4, 7]:
-		var b := Button.new()
-		b.name = "Inicial_%d" % id
-		b.text = String(NovoJogo.INICIAIS[id]["nome"])
-		b.custom_minimum_size = Vector2(150, 48)
-		b.pressed.connect(func() -> void: escolher(id))
-		linha.add_child(b)
+	var original := CheckBox.new()
+	original.name = "IniciaisOriginal"
+	original.text = "Iniciais do original (Bulbasaur, Charmander, Squirtle)"
+	original.toggled.connect(func(lig: bool) -> void:
+		modo = NovoJogo.MODO_ORIGINAL if lig else NovoJogo.MODO_PROJETO
+		_botoes(linha))
+	corpo.add_child(original)
+	_botoes(linha)
 	_rotulo("Todo jogador novo começa com 100 Small Potions e 100 Poké Balls.", 13, Color("8a96a3"))
 	_ajustar()
 	call_deferred("_ajustar")
 
 
+func _botoes(linha: HBoxContainer) -> void:
+	for c in linha.get_children():
+		linha.remove_child(c)
+		c.queue_free()
+	var lista: Dictionary = NovoJogo.iniciais(modo)
+	for id in lista:
+		var b := Button.new()
+		b.name = "Inicial_%d" % id
+		b.text = String(lista[id]["nome"])
+		b.custom_minimum_size = Vector2(150, 48)
+		b.pressed.connect(func() -> void: escolher(id))
+		linha.add_child(b)
+	call_deferred("_ajustar")
+
+
 func escolher(id: int) -> void:
 	var n := nome.text.strip_edges()
-	var r: Dictionary = get_node("/root/EstadoJogo").novo_jogo(id, n if n.length() >= 3 else "Treinador")
+	var r: Dictionary = get_node("/root/EstadoJogo").novo_jogo(id, n if n.length() >= 3 else "Treinador", 0, modo)
 	if r.has("erro"):
 		return
 	for c in corpo.get_children():
