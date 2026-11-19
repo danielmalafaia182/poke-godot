@@ -21,8 +21,20 @@ extends SceneTree
 ## Por hunt: minutos jogados, abates/min, mortes, XP/h do treinador, ouro/h (venda do loot daquela hunt), poções/h, e o
 ## maior trecho travado (herói parado, sem lutar, com selvagem vivo e alvo definido).
 ##
+## Ciclo 2 (`--completo 1`): tudo que o offline tem ligado, com relógio de calendário (início 19/11/2026 03:00 UTC):
+##   - Dia = `--horas_dia` (16) h de jogo ativo + o resto em Modo Soneca (sim/servico_jogador.gd: amostra de 5 min na
+##     última hunt, sem bolas; coleta de 50% da taxa pelo tempo fora, A/C).
+##   - Streak Points (C/A): abates contam; na cidade compra ponto na trilha EXP quando o ouro passa de 1,5× o custo (E).
+##   - Daily Gift todo dia (boosts de 1 h vão para a sim; itens e bolas para a BAG), Daily Kill (escolhe a opção de mais XP
+##     cuja espécie está numa hunt liberada que o líder aguenta; a nota da hunt soma o XP marginal da missão), Daily Catch
+##     (capturas dão XP), Quests & Tasks (entrega tudo que completar, antes de vender o loot).
+##   - Tipo do Dia pela rotação (sim/servico_jogador.gd), boosts ativos, VIP por `--vip 0|1`.
+##   - Insígnias: 0 (offline não há luta de ginásio para ganhá-las). Berries e Rare Candy: lote 3 congelado, fora.
+##   - Auto-Catch Shiny ligado com a melhor bola que tiver (decisão do ciclo 2).
+##   - Metas visíveis (sim/metas.gd): a cada sessão registra a hunt recomendada, a próxima meta e os marcos.
+##
 ## Uso: testes/rodar.sh res://testes/campanha.gd [--horas N] [--nivel_alvo N] [--semente N] [--saida caminho.json]
-##      (padrão: 300 h simuladas ou treinador 2000)
+##      [--completo 1] [--vip 1] [--horas_dia 16]   (padrão: 300 h simuladas ou treinador 2000)
 
 const Regras := preload("res://sim/regras.gd")
 const Fontes := preload("res://sim/fontes.gd")
@@ -33,13 +45,17 @@ const Simulacao := preload("res://sim/simulacao_hunt.gd")
 const ServicoCidade := preload("res://sim/servico_cidade.gd")
 const NovoJogo := preload("res://sim/servico_novo_jogo.gd")
 const Acesso := preload("res://sim/regras_acesso.gd")
+const ServicoJogador := preload("res://sim/servico_jogador.gd")
+const ServicoDiarias := preload("res://sim/servico_diarias.gd")
+const Metas := preload("res://sim/metas.gd")
 
 const TICKS_MIN := 300
 var dados
 var cidade
 var mapas := {}
 var hunts_lista: Array = []
-var args := {"horas": 300.0, "nivel_alvo": 2000, "semente": 1, "saida": "saida_testes/campanha.json", "sessao_min": 60, "sonda_min": 2}
+var args := {"horas": 300.0, "nivel_alvo": 2000, "semente": 1, "saida": "saida_testes/campanha.json", "sessao_min": 60, "sonda_min": 2,
+	"completo": 0, "vip": 0, "horas_dia": 16.0}
 
 # estado do jogador (formato do sim/servico_cidade.gd)
 var est := {}
@@ -54,6 +70,18 @@ var pedras_obtidas := {}   # itemId -> qtd (loot de pedra na campanha)
 var linha_tempo: Array = []
 var minutos_jogados := 0.0
 var t0 := 0
+# ciclo 2
+var jogador
+var diarias
+var agora_s := 0          # relógio de calendário (unix s)
+var ativo_no_dia := 0.0   # minutos de jogo ativo no dia atual
+var dia_atual := -1
+var colecao := {}         # speciesId -> true (espécies capturadas)
+var nome_para_id := {}
+var extras := {"soneca_xp": 0, "soneca_pxp": 0, "sonecas": 0, "tarefas_xp": 0, "tarefas_ouro": 0, "tarefas": 0, "kill_xp": 0,
+	"kills_diarios": 0, "catch_xp": 0, "gift": 0, "streak_pontos": 0, "streak_ouro": 0, "shiny_vistos": 0, "shiny_capturados": 0}
+var marcos_vistos := {}
+var metas_linha: Array = []
 
 
 func _init() -> void:
@@ -66,6 +94,11 @@ func _init() -> void:
 	dados = DadosJogo.carregar()
 	cidade = ServicoCidade.new(dados)
 	hunts_lista = dados.hunts.values()
+	jogador = ServicoJogador.new()
+	diarias = ServicoDiarias.new(dados)
+	agora_s = int(Time.get_unix_time_from_datetime_string("2026-11-19T03:00:00"))
+	for id in dados.especies:
+		nome_para_id[String(dados.especies[id]["nome"])] = int(id)
 	_novo_jogo()
 	_campanha()
 	_relatorio()
@@ -83,7 +116,7 @@ func _mapa(slug: String):
 func _novo_jogo() -> void:
 	var r: Dictionary = NovoJogo.criar(NovoJogo.INICIAL_PROJETO, int(args["semente"]), "Campanha")
 	var ini: Dictionary = r["inicial"]
-	est = {"gold": int(r["ouro"]), "cidade": "cerulean", "vip": false, "itens": {}, "bolas": {}, "depot": {"itens": {}},
+	est = {"gold": int(r["ouro"]), "cidade": "cerulean", "vip": int(args["vip"]) == 1, "streak": {}, "boosts": [], "itens": {}, "bolas": {}, "depot": {"itens": {}},
 		"pokes": [{"id": "lider", "speciesId": int(ini["speciesId"]), "xp": int(ini["xp"]), "ivs": ini["ivs"],
 			"quality": float(ini["quality"]), "hp": -1, "shiny": false, "team": true, "slot": 0, "leader": true, "starter": true}]}
 	for k in r["pocoes"]:
@@ -125,17 +158,38 @@ func _jogo(slug: String, penalizar: bool) -> Dictionary:
 		"nome": String(dados.especie(int(l["speciesId"]))["nome"]), "xp": int(l["xp"]), "ivs": l["ivs"], "quality": float(l["quality"]),
 		"hp": int(l["hp"])}], "lider": 0, "treinador_xp": treinador_xp, "inventario": inv, "bolas": bolas,
 		"auto_catch": int(est["bolas"].get("1", 0)) > 0, "bola_auto_catch": 1, "auto_potion": true, "pocao_id": 0,
-		"medidor_captura": medidor, "vip": false, "penalizar": penalizar}
+		"medidor_captura": medidor, "vip": int(args["vip"]) == 1, "penalizar": penalizar,
+		"auto_catch_shiny": completo(), "bola_auto_catch_shiny": _bola_shiny()}
 
 
-func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool) -> Dictionary:
+func completo() -> bool:
+	return int(args["completo"]) == 1
+
+
+func _bola_shiny() -> int:
+	for id in [7, 6, 4, 3, 2, 1]:
+		if int(est["bolas"].get(str(id), 0)) > 0:
+			return id
+	return 0
+
+
+func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bolas: bool = false) -> Dictionary:
 	semente_seq += 1
-	var cfg := CenarioJogo.configurar(_jogo(slug, penalizar), dados, int(args["semente"]) * 100003 + semente_seq, 0)
+	var cfg := CenarioJogo.configurar(_jogo(slug, penalizar), dados, int(args["semente"]) * 100003 + semente_seq, agora_s * 1000 if completo() else 0)
+	if completo():
+		cfg["streak"] = jogador.efeitos_streak(est)
+		cfg["eventos"] = jogador.msg_eventos(agora_s)["events"]
+		cfg["boosts"] = (est["boosts"] as Array).filter(func(b): return int(b.get("until", 0)) > agora_s * 1000)
+		cfg["insignias"] = 0
+		if sem_bolas:
+			cfg["auto_catch"] = false
+			cfg["auto_catch_shiny"] = false
 	var sim = Simulacao.new(cfg, dados, _mapa(slug))
 	sim.iniciar()
 	var r := {"slug": slug, "ticks": 0, "abates": 0, "morte": false, "xp": 0, "loot": {}, "capturas": 0, "pocoes": 0,
-		"travado_max_s": 0.0}
+		"travado_max_s": 0.0, "por_especie": {}, "capturas_especie": [], "pxp": 0, "shiny": 0, "shiny_cap": 0}
 	var xp0 := treinador_xp
+	var pxp0 := int(_lider()["xp"])
 	var parado := 0
 	var ult_pos := Vector2i(-999, -999)
 	var n := int(minutos * TICKS_MIN)
@@ -145,6 +199,10 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool) -> Dic
 			match String(m.get("type", "")):
 				"field-kill":
 					r["abates"] += 1
+					var ke := str(int(m.get("speciesId", -1)))
+					r["por_especie"][ke] = int(r["por_especie"].get(ke, 0)) + 1
+					if bool(m.get("shiny", false)):
+						r["shiny"] += 1
 					for it in m.get("loot", []):
 						var k := str(int(it.get("itemId", 0)))
 						r["loot"][k] = int(r["loot"].get(k, 0)) + int(it.get("qty", 0))
@@ -153,6 +211,9 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool) -> Dic
 				"catch-result":
 					if bool(m.get("success", false)):
 						r["capturas"] += 1
+						r["capturas_especie"].append(int(nome_para_id.get(String(m.get("speciesName", "")), -1)))
+						if int(m.get("ballId", 0)) == int(cfg.get("bola_auto_catch_shiny", -1)) and int(cfg.get("bola_auto_catch_shiny", -1)) != int(cfg.get("bola_auto_catch", -2)):
+							r["shiny_cap"] += 1
 				"auto-heal":
 					r["pocoes"] += 1
 				"field-none":
@@ -175,6 +236,7 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool) -> Dic
 		if sim.encerrada:
 			break
 	r["xp"] = int(sim.treinador["xp"]) - xp0
+	r["pxp"] = int(sim.equipe[0]["xp"]) - pxp0
 	if aplicar:
 		treinador_xp = int(sim.treinador["xp"])
 		var e: Dictionary = sim.equipe[0]
@@ -189,7 +251,27 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool) -> Dic
 		for k in sim.balls["counts"]:
 			est["bolas"][str(k)] = int(sim.balls["counts"][k])
 		medidor = sim.medidor.duplicate(true)
+		if completo():
+			_pos_hunt(r)
 	return r
+
+
+func _pos_hunt(r: Dictionary) -> void:
+	## Streak, diárias e coleção com o resultado de um trecho aplicado.
+	for k in r["por_especie"]:
+		ServicoJogador.somar_abates(est, int(r["por_especie"][k]), int(k))
+		diarias.tratar(est, {"type": "abate", "speciesId": int(k), "n": int(r["por_especie"][k])})
+	for sid in r["capturas_especie"]:
+		if sid < 0:
+			continue
+		colecao[sid] = true
+		est["nivel"] = _nivel_treinador()
+		for m in diarias.tratar(est, {"type": "captura", "speciesId": sid, "agora": agora_s}):
+			if String(m.get("type", "")) == "daily-catch-claimed":
+				treinador_xp += int(m["xp"])
+				extras["catch_xp"] += int(m["xp"])
+	extras["shiny_vistos"] += int(r["shiny"])
+	extras["shiny_capturados"] += int(r["shiny_cap"])
 
 
 func _cidade() -> Dictionary:
@@ -321,6 +403,7 @@ func _escolher() -> String:
 		var mins := maxf(0.1, r["ticks"] / float(TICKS_MIN))
 		var xp := float(r["xp"]) / mins
 		var pd := float(r["abates"]) / mins * _chance_pedra(s, pedras) if not pedras.is_empty() else 0.0
+		xp += _bonus_kill(r, mins)
 		notas.append([s, xp, pd, r["morte"]])
 		melhor_xp = maxf(melhor_xp, xp)
 		melhor_pedra = maxf(melhor_pedra, pd)
@@ -334,10 +417,118 @@ func _escolher() -> String:
 	return melhor
 
 
+func _bonus_kill(r: Dictionary, mins: float) -> float:
+	## XP/min marginal da Daily Kill escolhida: prêmio × (abates da espécie por min ÷ quantidade que falta).
+	if not completo():
+		return 0.0
+	var k: Dictionary = est.get("diarias", {}).get("kill", {})
+	if int(k.get("pickedIdx", -1)) < 0 or bool(k.get("claimed", false)):
+		return 0.0
+	var o: Dictionary = k["opcoes"][int(k["pickedIdx"])]
+	var falta := maxi(1, int(o["qty"]) - int(k.get("have", 0)))
+	var taxa := float(r["por_especie"].get(str(int(o["speciesId"])), 0)) / mins
+	return float(diarias._kill_xp(o)) * minf(1.0, taxa / falta)
+
+
+func _dia_novo() -> void:
+	## Daily Gift e escolha da Daily Kill (a opção de mais XP cuja espécie está numa hunt liberada que o líder aguenta).
+	est["nivel"] = _nivel_treinador()
+	for m in diarias.tratar(est, {"type": "daily-claim", "agora": agora_s}):
+		if String(m.get("type", "")) == "daily-gift" or m.has("claimed"):
+			extras["gift"] += 1
+		if String(m.get("type", "")) == "boosts":
+			est["boosts"] = (m["boosts"] as Array).duplicate(true)
+	var mk: Dictionary = diarias.tratar(est, {"type": "daily-kill-get", "agora": agora_s})[0]
+	if bool(mk.get("locked", true)) or int(mk.get("pickedIdx", -1)) >= 0:
+		return
+	var aguenta := {}
+	var pl := Metas.poder_lider(dados, _lider())
+	for slug in _liberadas():
+		if Metas.poder_hunt(dados, slug) <= pl:
+			for x in dados.hunts[slug].get("spawns", []):
+				aguenta[int(x.get("pokeId", 0))] = true
+	var melhor := -1
+	var melhor_xp := -1
+	for i in (mk["options"] as Array).size():
+		var o: Dictionary = mk["options"][i]
+		if aguenta.has(int(o["speciesId"])) and int(o["xp"]) > melhor_xp:
+			melhor = i
+			melhor_xp = int(o["xp"])
+	if melhor >= 0:
+		diarias.tratar(est, {"type": "daily-kill-pick", "idx": melhor, "agora": agora_s})
+
+
+func _diarias_cidade() -> void:
+	## Antes da venda: tarefas completas, Daily Kill completa, Streak.
+	est["nivel"] = _nivel_treinador()
+	var mt: Dictionary = diarias.tratar(est, {"type": "tasks-get", "agora": agora_s})[0]
+	for t in mt["tasks"]:
+		if bool(t["complete"]) and not bool(t["claimed"]):
+			for m in diarias.tratar(est, {"type": "tasks-claim", "taskId": String(t["id"]), "agora": agora_s}):
+				if String(m.get("type", "")) == "tasks-claimed":
+					treinador_xp += int(m["xp"])
+					extras["tarefas_xp"] += int(m["xp"])
+					extras["tarefas_ouro"] += int(m["cash"])
+					extras["tarefas"] += 1
+	for m in diarias.tratar(est, {"type": "daily-kill-claim", "agora": agora_s}):
+		if String(m.get("type", "")) == "daily-kill-claimed":
+			treinador_xp += int(m["payout"]["xp"])
+			extras["kill_xp"] += int(m["payout"]["xp"])
+			extras["kills_diarios"] += 1
+	while true:
+		var ms: Dictionary = jogador.msg_streak(est)
+		if int(ms["available"]) <= 0 or int(est["gold"]) < int(ms["nextCost"]) * 3 / 2:
+			break
+		extras["streak_ouro"] += int(ms["nextCost"])
+		jogador.tratar(est, {"type": "streak-spend", "track": "exp"})
+		extras["streak_pontos"] += 1
+
+
+func _soneca() -> void:
+	## Fim do dia ativo: Zzz na última hunt (amostra de 5 min, sem bolas) e coleta ao acordar (50%, A/C).
+	var fora := int((24.0 - float(args["horas_dia"])) * 3600.0)
+	if ultima_hunt != "" and fora > 300:
+		var r := _rodar(ultima_hunt, 5.0, false, true, true)
+		var e := {"soneca": {"inicio": agora_s, "fim": agora_s + 300, "amostra": {"xpSample": int(r["xp"]), "pokeXpSample": int(r["pxp"]),
+			"kills": int(r["abates"]), "slug": ultima_hunt, "leaderId": "lider"}}}
+		for m in jogador.tratar(e, {"type": "offline-claim", "agora": agora_s + fora, "boost": false}):
+			if String(m.get("type", "")) == "offline-claimed":
+				treinador_xp += int(m["xpGained"])
+				_lider()["xp"] = int(_lider()["xp"]) + int(m["pokeXpGained"])
+				extras["soneca_xp"] += int(m["xpGained"])
+				extras["soneca_pxp"] += int(m["pokeXpGained"])
+				extras["sonecas"] += 1
+	agora_s += fora
+	ativo_no_dia = 0.0
+
+
+func _registrar_metas() -> Dictionary:
+	var esp := colecao.keys()
+	var mt := Metas.resumo(dados, hunts_lista, treinador_xp, _lider(), esp)
+	var rec: Dictionary = mt["hunt"]
+	var marco := int(mt["marco"]["anterior"])
+	if not marcos_vistos.has("nivel_%d" % marco):
+		marcos_vistos["nivel_%d" % marco] = snappedf(minutos_jogados / 60.0, 0.01)
+	var cm := int(mt["colecao"]["especies"])
+	for m in Metas.parametros().metas_marcos_colecao:
+		if cm >= int(m) and not marcos_vistos.has("colecao_%d" % int(m)):
+			marcos_vistos["colecao_%d" % int(m)] = snappedf(minutos_jogados / 60.0, 0.01)
+	return {"rec": String(rec["atual"].get("slug", "")), "rec_xp_min": rec["atual"].get("xp_min", 0),
+		"prox": String(rec["proxima"].get("slug", "")), "prox_lv": int(rec["proxima"].get("nivel_lider", -1)),
+		"prox_salto": bool(rec["proxima"].get("salto", false)), "prox_ganho": int(rec["proxima"].get("ganho_pct", 0)),
+		"marco": int(mt["marco"]["proximo"]), "colecao": cm, "regiao_cap": "%d/%d" % [int(mt["colecao"]["liberadas_capturadas"]), int(mt["colecao"]["liberadas_total"])]}
+
+
 func _campanha() -> void:
 	var horas_max := float(args["horas"])
 	var sessao := 0
 	while minutos_jogados < horas_max * 60.0 and _nivel_treinador() < int(args["nivel_alvo"]):
+		if completo():
+			var d: int = diarias.dia(agora_s)
+			if d != dia_atual:
+				dia_atual = d
+				_dia_novo()
+			_diarias_cidade()
 		var c := _cidade()
 		var slug := _escolher()
 		if slug == "":
@@ -351,6 +542,13 @@ func _campanha() -> void:
 			bloqueadas[slug] = nl0
 		var mins: float = r["ticks"] / float(TICKS_MIN)
 		minutos_jogados += mins
+		var mt := {}
+		if completo():
+			agora_s += int(mins * 60.0)
+			ativo_no_dia += mins
+			mt = _registrar_metas()
+			if ativo_no_dia >= float(args["horas_dia"]) * 60.0:
+				_soneca()
 		var ouro_loot := 0
 		for k in r["loot"]:
 			ouro_loot += cidade.preco_venda(int(k)) * int(r["loot"][k])
@@ -373,6 +571,10 @@ func _campanha() -> void:
 		var linha := {"sessao": sessao, "h": snappedf(minutos_jogados / 60.0, 0.01), "slug": slug, "nivel_hunt": int(dados.hunts[slug]["nivel"]),
 			"treinador": "%d→%d" % [nt0, _nivel_treinador()], "lider": "%s %d→%d" % [esp, nl0, _nivel_lider()], "abates": int(r["abates"]),
 			"morte": r["morte"], "ouro": int(est["gold"]), "evoluiu": c["evoluiu"], "pedras_bag": _pedras_bag(), "venda": c["ouro_venda"], "travado_s": r["travado_max_s"]}
+		if completo():
+			linha["dias"] = snappedf(float(agora_s - int(Time.get_unix_time_from_datetime_string("2026-11-19T03:00:00"))) / 86400.0, 0.01)
+			linha["metas"] = mt
+			linha["streak"] = jogador.efeitos_streak(est)["exp"]
 		linha_tempo.append(linha)
 		print("SESSAO ", JSON.stringify(linha))
 
@@ -399,7 +601,8 @@ func _relatorio() -> void:
 			problemas.append(h["slug"])
 	var saida := {"args": args, "minutos_jogados": minutos_jogados, "treinador_final": _nivel_treinador(), "lider_final": _nivel_lider(),
 		"especie_final": String(dados.especie(int(_lider()["speciesId"]))["nome"]), "ouro_final": int(est["gold"]),
-		"por_hunt": lista, "linha_tempo": linha_tempo, "pedras_obtidas": pedras_obtidas, "problemas": problemas, "segundos_reais": (Time.get_ticks_msec() - t0) / 1000.0}
+		"por_hunt": lista, "linha_tempo": linha_tempo, "pedras_obtidas": pedras_obtidas, "problemas": problemas, "segundos_reais": (Time.get_ticks_msec() - t0) / 1000.0,
+		"extras": extras, "marcos": marcos_vistos, "colecao": colecao.size()}
 	var f := FileAccess.open(String(args["saida"]), FileAccess.WRITE)
 	f.store_string(JSON.stringify(saida, "  "))
 	f.close()

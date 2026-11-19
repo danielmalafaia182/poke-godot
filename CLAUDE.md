@@ -1141,3 +1141,25 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     - 4 muros com proposta, sem aplicar.
   - **Testes novos:** `test_balanceamento` 8/8, `test_auto_catch_filtro` 3/3. Regressão verde (31 testes do Godot,
     scripts, P04 43/43).
+- 19/11/2026 — **Ciclo 2** (decisões do ciclo 1 aplicadas; detalhe nos relatórios citados).
+  - **Shiny (A/C):** só espécies com forma shiny (190, `dados/gerados/shiny.json` do cliente) aparecem shiny, 1/260 por
+    abate nelas (42/10.914 na gravação livre; 0/3.323 nas outras), nenhum no lock. Auto-Catch Shiny ligado com a melhor
+    bola; shinyBase por tier é classe 3. O capturado shiny fica shiny (save: campo opcional). `test_shiny` 7/7.
+  - **Garantia de pedra (classe 3):** 3× os abates esperados; contador no save. `test_garantia_pedra` 5/5.
+  - **Revisão:** o alvo não vem de fora da borda real (0 de 9.120 intervalos): regra do ciclo 1 revertida; critério formal
+    da classe 2 (intervalo de 95%) em `ESTRATEGIA.md`. Validador **159/160** (antes 157/160).
+  - **Ranking (A):** topo 1872, ninguém em 2000 (`dados/relatorios/ranking_2026-11-19.md`).
+  - **Campanha com tudo ligado** (`dados/relatorios/campanha_ciclo2_2026-11-19.md`; soneca 8 h/dia, Streak, diárias,
+    boosts, Tipo do Dia; insígnias 0): VIP — Outland 52 h, Orre **312 h** (19 dias), Nightmare ~14.700 h (projeção);
+    sem VIP — Outland 66 h, Orre ~467 h, Nightmare ~25.900 h. ~20% do XP vem de soneca e diárias.
+  - **Metas visíveis** (`sim/metas.gd`, classe 3): hunt recomendada (0 mortes em 46 sessões nela), próxima meta, marcos.
+  - **XP por região** (`combate.xp_regiao`): implementado na parcela `event`, **em 1** até a decisão. `test_xp_regiao` 4/4.
+  - **Backlog do cliente** (`INVENTARIO_CLIENTE.md`: 25 feitos, 13 parciais, 38 faltando, 23 deles online): pacote de
+    textos do original, Hunt Analyzer, Gerenciamento de Captura, Log de Capturas, Perfil, Pokédex, Todos os Shinys,
+    Inventário, avisos (level up, shiny, boosts), tutorial, tamanho da interface e tela cheia.
+  - **Build Windows** `builds/ciclo2/` (`ferramentas/build/montar_build.sh`): exe (binário do Godot; sem templates) + pck +
+    dados + snapshot; verificado com APPDATA isolado (jogo novo com Geodude, hunt, save). Save em
+    `%APPDATA%\Godotpp_userdata\PokeIdle\progresso_v1.json`.
+  - **Testes:** novos `test_shiny`, `test_garantia_pedra`, `test_metas` 14/14, `test_janelas_ciclo2` 26/26, `test_tutorial`
+    10/10, `test_xp_regiao` 4/4; regressão verde (41 do Godot, scripts, P04 43/43); diferencial 1h 29/30, antiga 22/26.
+
