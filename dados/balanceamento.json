@@ -57,10 +57,10 @@
       "valor": {
         "kanto": 1.0,
         "outland": 1.0,
-        "orre": 1.0,
+        "orre": 10.0,
         "nightmare": 1.0
       },
-      "motivo": "proposta do ciclo 2 (decisão pendente do usuário): multiplicador de XP por região, sem mudar o XP da espécie; 1 = como o original"
+      "motivo": "decisão do usuário (ciclo 3): Orre ×10 (500 → 2000 em ~89 dias de calendário em vez de ~2,5 anos, campanha do ciclo 2); Nightmare sem multiplicador; parcela event, XP da espécie igual"
     }
   },
   "apresentacao": {
@@ -132,6 +132,10 @@
     "catch_mult_max": {
       "valor": 18.0,
       "motivo": "teto do multiplicador do Daily Catch (A: maior valor gravado)"
+    },
+    "gift_pular_vip": {
+      "valor": true,
+      "motivo": "decisão do usuário (ciclo 3): sem VIP, o dia VIP do Daily Gift é pulado em vez de travar o calendário (no original trava)"
     }
   },
   "jogador": {

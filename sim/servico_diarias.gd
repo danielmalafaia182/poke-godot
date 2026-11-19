@@ -27,6 +27,7 @@ const PARAMETROS := {
 	# boost ativa por 1 h (C: "activated for 1h!"). E: o mês é o de Brasília; o calendário gravado vale todo mês;
 	# offline o prêmio vai direto para a BAG (no original vai para o Gift Center, C).
 	"gift_boost_ms": 3600000,
+	"gift_pular_vip": false,           # classe 3 (balanceamento.json): sem VIP, pula o dia VIP
 	# Daily Kill (A, G5): xp = floor(qtd × xpAbate × 8/3) (3/3 opções); 3 opções; minLevel 25; sem reroll (rerollMax 0);
 	# prêmio do tier "hard" = 2 × os itens do tier hard do Daily Catch (A). E: o tier sai do nível do treinador pela
 	# tabela do Daily Catch; as espécies saem da lista do tier; as quantidades por faixa abaixo (A só no hard: 798–1497).
@@ -199,6 +200,11 @@ func msg_gift(estado: Dictionary, agora: int) -> Dictionary:
 	var prox := int(g["feitos"]) + 1
 	var hoje := String(g["ultimo"]) == chave_dia(agora)
 	var vip := bool(estado.get("vip", false))
+	# Classe 3 (decisão do usuário, ciclo 3; `gift_pular_vip`): sem VIP, o dia VIP é pulado em vez de travar o calendário
+	# (no original ele trava, C). O pulado fica marcado como `skipped`.
+	if not vip and bool(p.get("gift_pular_vip", false)):
+		while prox <= total and str(rewards[prox - 1].get("tag", "")) == "VIP":
+			prox += 1
 	var bloqueado := false
 	if prox <= total and not hoje:
 		bloqueado = str(rewards[prox - 1].get("tag", "")) == "VIP" and not vip
@@ -206,8 +212,8 @@ func msg_gift(estado: Dictionary, agora: int) -> Dictionary:
 	for r in rewards:
 		var d := int(r["day"])
 		lista.append({"day": d, "label": String(r["label"]), "icon": String(r["icon"]), "qty": int(r["qty"]), "tag": r.get("tag"),
-			"kind": String(r["kind"]), "locked": str(r.get("tag", "")) == "VIP" and not vip, "claimed": d <= int(g["feitos"]),
-			"current": d == prox})
+			"kind": String(r["kind"]), "locked": str(r.get("tag", "")) == "VIP" and not vip, "claimed": d <= int(g["feitos"]) and not (str(r.get("tag", "")) == "VIP" and not vip),
+			"skipped": d < prox and str(r.get("tag", "")) == "VIP" and not vip, "current": d == prox})
 	return {"type": "daily", "ym": String(g["ym"]), "vip": vip, "total": total, "nextDay": prox,
 		"canClaim": prox <= total and not hoje and not bloqueado, "claimedToday": hoje, "blockedByVip": bloqueado, "rewards": lista}
 
@@ -278,7 +284,7 @@ func _gift_coletar(estado: Dictionary, agora: int) -> Array:
 		_:
 			return [_erro("Prêmio desconhecido: " + kind)]
 	var g := _gift_estado(estado, agora)
-	g["feitos"] = int(g["feitos"]) + 1
+	g["feitos"] = int(m["nextDay"])   # o dia coletado (os VIP pulados antes dele contam como passados)
 	g["ultimo"] = chave_dia(agora)
 	var novo := msg_gift(estado, agora)
 	# A (G9): POST /daily → o estado + claimed {day, kind, refId, qty, label, icon, tag} + toGiftCenter (true no original:

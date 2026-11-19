@@ -51,12 +51,24 @@ func _init() -> void:
 	var bst: Array = tipo(r, "boosts").get("boosts", [])
 	checar(bst.size() == 1 and String(bst[0]["key"]) == "xp" and int(bst[0]["pct"]) == 50 and int(bst[0]["until"]) == (D13 + 4 * 86400) * 1000 + 3600000,
 		"dia 5: XP Boost +50% por 1 h (C: 'activated for 1h!')", str(bst))
+	var svo = sv.get_script().new(sv.dados, {"gift_pular_vip": false})   # a regra do original (C)
 	var nv := {"gold": 0, "itens": {}, "bolas": {}, "vip": false, "nivel": 100}
-	sv.tratar(nv, {"type": "daily-claim", "agora": D13})
-	sv.tratar(nv, {"type": "daily-claim", "agora": D13 + 86400})
-	var g3: Dictionary = sv.tratar(nv, {"type": "daily-get", "agora": D13 + 2 * 86400})[0]
-	checar(bool(g3["blockedByVip"]) and not bool(g3["canClaim"]) and tipo(sv.tratar(nv, {"type": "daily-claim", "agora": D13 + 2 * 86400}), "error").size() > 0
-		and bool(g3["rewards"][2]["locked"]), "sem VIP, o dia 3 (VIP) bloqueia (C: 'subscribe to VIP')")
+	svo.tratar(nv, {"type": "daily-claim", "agora": D13})
+	svo.tratar(nv, {"type": "daily-claim", "agora": D13 + 86400})
+	var g3: Dictionary = svo.tratar(nv, {"type": "daily-get", "agora": D13 + 2 * 86400})[0]
+	checar(bool(g3["blockedByVip"]) and not bool(g3["canClaim"]) and tipo(svo.tratar(nv, {"type": "daily-claim", "agora": D13 + 2 * 86400}), "error").size() > 0
+		and bool(g3["rewards"][2]["locked"]), "original: sem VIP, o dia 3 (VIP) bloqueia (C: 'subscribe to VIP')")
+	# ciclo 3 (classe 3, decisão do usuário): o jogo pula o dia VIP
+	var nv2 := {"gold": 0, "itens": {}, "bolas": {}, "vip": false, "nivel": 100}
+	sv.tratar(nv2, {"type": "daily-claim", "agora": D13})
+	sv.tratar(nv2, {"type": "daily-claim", "agora": D13 + 86400})
+	var g4: Dictionary = sv.tratar(nv2, {"type": "daily-get", "agora": D13 + 2 * 86400})[0]
+	var r4 := sv.tratar(nv2, {"type": "daily-claim", "agora": D13 + 2 * 86400})
+	var dias_pulados := 0
+	for x in g4["rewards"]:
+		dias_pulados += 1 if bool(x.get("skipped", false)) else 0
+	checar(bool(g4["canClaim"]) and int(g4["nextDay"]) > 3 and tipo(r4, "error").is_empty() and dias_pulados >= 1,
+		"jogo: sem VIP, o dia VIP é pulado e o calendário segue (dia %d)" % int(g4["nextDay"]))
 	var dez: Dictionary = sv.tratar(e, {"type": "daily-get", "agora": D13 + 20 * 86400})[0]
 	checar(String(dez["ym"]) == "2026-12" and int(dez["nextDay"]) == 1, "mês novo: o calendário recomeça (E)")
 	# A: a conta gravada (13 coletados, VIP, 13/11) → nextDay 14, claimedToday

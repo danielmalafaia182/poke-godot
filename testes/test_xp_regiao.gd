@@ -44,7 +44,7 @@ func _init() -> void:
 	var dados = DadosJogo.carregar()
 	var mapa = MapaHunt.carregar("larvitar", Fontes.ler_mapa("larvitar"), Fontes.ler_colisao())
 	var v = B.valor("combate", "xp_regiao", {})
-	checar(v is Dictionary and float(v.get("kanto", 0)) == 1.0 and float(v.get("orre", 0)) == 1.0, "balanceamento.json: xp_regiao em 1 (proposta, não aplicada)")
+	checar(v is Dictionary and float(v.get("kanto", 0)) == 1.0 and float(v.get("orre", 0)) == 10.0 and float(v.get("nightmare", 0)) == 1.0, "balanceamento.json: Orre ×10, Nightmare e Kanto ×1 (decisão do ciclo 3)")
 	var p1 := rodar(dados, mapa, {})
 	checar(not p1.is_empty() and p1.all(func(x): return int(x["event"]) == 0), "padrão: parcela event 0 em todo abate", "%d abates" % p1.size())
 	var area := String(dados.hunts["larvitar"]["area"])
