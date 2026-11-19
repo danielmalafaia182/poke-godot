@@ -106,7 +106,12 @@ func _desenhar_boosts() -> void:
 		if nome == "":
 			nome = {"shinylock": "🔒 Shiny lock", "xp": "⭐ XP +%d%%" % int(b.get("pct", 0)), "loot": "🎁 Loot +%d%%" % int(b.get("pct", 0)),
 				"pokexp": "⭐ Poké XP +%d%%" % int(b.get("pct", 0)), "capture": "🎯 Captura ×2"}.get(key, key)
-		l.text = nome + (("  %d:%02d" % [resto / 60, resto % 60]) if resto >= 0 and resto < 36000 else "")
+		var tempo := ""
+		if resto >= 3600:
+			tempo = "  %dh%02d" % [resto / 3600, (resto % 3600) / 60]
+		elif resto >= 0:
+			tempo = "  %d:%02d" % [resto / 60, resto % 60]
+		l.text = nome + tempo
 		l.tooltip_text = String(b.get("desc", "")) if b.has("desc") else _efeito(key, int(b.get("pct", 0)))
 		l.mouse_filter = Control.MOUSE_FILTER_STOP
 		l.add_theme_color_override("font_color", Color("ff9a8a") if key == "shinylock" else Color("9fe0a0"))

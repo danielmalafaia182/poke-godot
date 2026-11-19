@@ -17,7 +17,7 @@ const LADO_MAX := 16384
 
 
 static func caminho(slug: String) -> String:
-	return ProjectSettings.globalize_path(CacheMapa.PASTA) + "/" + slug + ".atlas.bin"
+	return CacheMapa.pasta_abs() + "/" + slug + ".atlas.bin"
 
 
 static func _chave(slug: String, dados: RefCounted) -> String:
@@ -124,7 +124,7 @@ static func montar(slug: String, dados: RefCounted, cache: Dictionary) -> Dictio
 			img.blit_rect(origem, Rect2i(int(fr["x"]), int(fr["y"]), int(fr["w"]), int(fr["h"])), p)
 		rects.append_array([int(quadros[i][0]), int(quadros[i][1]), p.x, p.y])
 	var d := {"versao": VERSAO, "chave": _chave(slug, dados), "w": img.get_width(), "h": img.get_height(), "rects": rects}
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(CacheMapa.PASTA))
+	DirAccess.make_dir_recursive_absolute(CacheMapa.pasta_abs())
 	var f := FileAccess.open_compressed(caminho(slug), FileAccess.WRITE, FileAccess.COMPRESSION_ZSTD)
 	if f != null:
 		f.store_var(d)

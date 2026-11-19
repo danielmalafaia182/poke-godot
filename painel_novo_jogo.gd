@@ -103,7 +103,10 @@ func escolher(id: int) -> void:
 	ok.text = "🎮 Começar a jornada!"
 	ok.pressed.connect(func() -> void:
 		concluido.emit(r)
-		queue_free())
+		queue_free()
+		# a cidade foi montada com o time de antes (o do P04): recarrega para a HUD mostrar o inicial escolhido
+		if is_inside_tree() and get_tree().current_scene != null and get_tree().current_scene.scene_file_path == "res://cidade.tscn":
+			get_tree().reload_current_scene.call_deferred())
 	corpo.add_child(ok)
 	_ajustar()
 	call_deferred("_ajustar")

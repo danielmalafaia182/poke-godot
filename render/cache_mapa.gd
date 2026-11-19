@@ -16,7 +16,14 @@ extends RefCounted
 const Fontes := preload("res://sim/fontes.gd")
 
 const VERSAO := 2          # subir quando mudar regras_desenho.gd ou este formato (2: zstd)
-const PASTA := "res://cache/mapas"
+const PASTA := "res://cache/mapas"   # do código-fonte; no jogo exportado, user://cache/mapas (pasta_abs)
+
+
+static func pasta_abs() -> String:
+	var r := ProjectSettings.globalize_path("res://").trim_suffix("/")
+	if r != "" and FileAccess.file_exists(r + "/project.godot"):
+		return ProjectSettings.globalize_path(PASTA)
+	return ProjectSettings.globalize_path("user://cache/mapas")
 const CHUNK := 8
 
 
@@ -31,7 +38,7 @@ static func chave(slug: String, dados: RefCounted) -> String:
 
 
 static func caminho(slug: String) -> String:
-	return ProjectSettings.globalize_path(PASTA) + "/" + slug + ".bin"
+	return pasta_abs() + "/" + slug + ".bin"
 
 
 static func ler(slug: String, dados: RefCounted) -> Dictionary:
@@ -103,7 +110,7 @@ static func montar(slug: String, dados: RefCounted, mapa: Dictionary) -> Diction
 	pags.sort()
 	var d := {"versao": VERSAO, "chave": chave(slug, dados), "ground_z": gz, "min_z": mn, "max_z": mx,
 		"paginas": PackedInt32Array(pags), "andares": andares, "chunks": chunks, "paginas_chunk": paginas_chunk, "chao": chao}
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(PASTA))
+	DirAccess.make_dir_recursive_absolute(pasta_abs())
 	var f := FileAccess.open_compressed(caminho(slug), FileAccess.WRITE, FileAccess.COMPRESSION_ZSTD)
 	if f != null:
 		f.store_var(d)

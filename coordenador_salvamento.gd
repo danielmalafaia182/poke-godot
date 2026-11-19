@@ -68,8 +68,14 @@ func _informar_salvamento(texto: String, falhou: bool) -> void:
 var intervalo_minimo_ms: int = 0
 var _ultimo_save_ms: int = -1000000
 
+func _aguardando_inicial() -> bool:
+	## Jogo novo de verdade (sem save, fora dos testes): até a escolha do inicial não há o que gravar. Gravar antes deixava
+	## o time provisório do P04 no disco, e a próxima abertura pulava a tela de jogo novo.
+	return jogo_novo and Engine.get_main_loop() != null and Engine.get_main_loop().get_script() == null
+
+
 func solicitar_salvamento() -> void:
-	if not _persistencia_pronta or _persistencia.bloqueado:
+	if not _persistencia_pronta or _persistencia.bloqueado or _aguardando_inicial():
 		return
 	_salvamento_pendente = true
 	if intervalo_minimo_ms > 0:
@@ -96,6 +102,9 @@ func gravando() -> bool:
 	return _tarefa != -1
 
 func _iniciar_gravacao_em_thread() -> void:
+	if _aguardando_inicial():
+		_salvamento_pendente = false
+		return
 	if not _persistencia_pronta or _persistencia.bloqueado or _tarefa != -1:
 		return
 	var _t0 := Time.get_ticks_usec()
@@ -146,6 +155,8 @@ func salvar_agora() -> bool:
 	## Síncrono: espera a gravação em andamento (se houver) e grava o estado atual na thread principal.
 	if not _persistencia_pronta:
 		return false
+	if _aguardando_inicial():
+		return true
 	if _tarefa != -1:
 		_concluir_thread()
 	if _persistencia.bloqueado:

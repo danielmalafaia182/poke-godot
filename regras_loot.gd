@@ -39,7 +39,7 @@ static func _categoria(gerada: String) -> String:
 
 
 static func _icone_snapshot(icone: String) -> String:
-	var raiz := ProjectSettings.globalize_path("res://").trim_suffix("/") + "/" + SNAPSHOT_RELATIVO
+	var raiz := preload("res://sim/fontes.gd").raiz_projeto() + "/" + SNAPSHOT_RELATIVO
 	return raiz + (icone if icone.begins_with("/") else "/assets/items/" + icone)
 
 
@@ -61,7 +61,7 @@ static func _carregar() -> void:
 		if g.has("iconeAnimado"):
 			# GIF do snapshot convertido pelo importador numa folha PNG (o cliente anima o GIF via <img>, C)
 			var an: Dictionary = g["iconeAnimado"]
-			icone_gerado = ProjectSettings.globalize_path("res://dados/gerados/" + String(an["folha"]))
+			icone_gerado = preload("res://sim/fontes.gd").pasta_dados() + "/gerados/" + String(an["folha"])
 			_animacoes[icone_gerado] = an
 		var item := {"id": id, "id_original": orig, "nome": String(g["nome"]),
 			"categoria": String(antigo.get("categoria", _categoria(String(g.get("categoria", "loot"))))),

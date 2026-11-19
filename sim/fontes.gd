@@ -10,7 +10,12 @@ const SNAPSHOT_ALTERNATIVO := "C:/Users/dmala/Desktop/poke har/extraido/snapshot
 
 
 static func raiz_projeto() -> String:
-	return ProjectSettings.globalize_path("res://").trim_suffix("/")
+	## Rodando do código-fonte: a pasta do projeto. Jogo exportado (exe + pck): a pasta do executável, onde ficam `dados/`
+	## e o snapshot (o res:// do pck não é uma pasta do disco).
+	var r := ProjectSettings.globalize_path("res://").trim_suffix("/")
+	if r != "" and FileAccess.file_exists(r + "/project.godot"):
+		return r
+	return OS.get_executable_path().get_base_dir().replace("\\", "/")
 
 
 static func pasta_snapshot() -> String:
