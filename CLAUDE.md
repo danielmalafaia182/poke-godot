@@ -42,7 +42,7 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/analisar_gravacao.py` | Resume gravações: cadência, faixas de dano, XP, loot, capturas |
 | `ferramentas/protocolo/gerar_protocolo.py`, `regenerar.sh` | Gera `dados/protocolo.json` (`regenerar.sh` fixa as fontes: 5 chunks do jogo + todas as gravações) |
 | `ferramentas/gravador/medir_passos.py`, `medir_pocao.py` | Medem nas gravações a duração dos passos (por tick exato) e o gatilho/escolha do Auto-Potion |
-| `caca_sim.gd`, `caca_sim.tscn` | Fase 2: cena de hunt sobre a simulação (mapa real, sim em processo, save atualizado pelas mensagens). O mapa-múndi abre esta cena quando a hunt existe no snapshot; `Caca.tscn` (antiga) fica para o resto e para os testes antigos |
+| `caca_sim.gd`, `caca_sim.tscn` | Cena de hunt sobre a simulação (mapa real, sim em processo, save atualizado pelas mensagens). Única cena de hunt desde o ciclo 3 (a antiga, `Caca.tscn`, foi removida) |
 | `render/` | Fase 2: `regras_desenho.gd` (ordem/posição dos sprites do mapa), `mapa_renderizador.gd` (desenho em lote), `interpolacao.gd` (walkFrom/stepStartAt/relógio). Portes conferidos contra o JS original rodado no Node (`ferramentas/render/referencia_*.js`) |
 | `ferramentas/gravador/medir_movimento.py` | Adjacentes/perseguição por field, coleira (spawn), caminho do herói até o alvo |
 | `ferramentas/gravador/relatorio_individuos.py` | Por indivíduo selvagem: maxHp → stat HP → faixa de IV/Quality → dano previsto × observado (para a fase 3) |
@@ -57,7 +57,12 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `textos.gd`, `dados/pacotes/textos_pt.json` | Pacote de textos do cliente original (trocável), gerado por `ferramentas/inventario/gerar_pacote_textos.py` |
 | `janela_base.gd`, `janelas_dock.gd` | Janelas do ciclo 2 nos ícones do dock: Perfil, Bolas usadas, Log de Capturas, Hunt Analyzer, Pokédex, Todos os Shinys, Inventário, Streak, Diário |
 | `avisos_hud.gd`, `painel_tutorial.gd` | Avisos da hunt (level up, shiny, barra de boosts) e o tutorial do Professor Carvalho |
-| `ferramentas/build/montar_build.sh` | Monta `builds/<nome>/` (exe + pck + dados + snapshot) e verifica com APPDATA isolado (`verificar_build.gd`) |
+| `ferramentas/build/montar_build.sh` | Monta `builds/<nome>/` (exe do template oficial + pck + `jogo/` + `dados/` mínimos) e verifica em 3 fases com APPDATA isolado (`verificar_build.gd`) |
+| `ferramentas/build/gerar_pacote_jogo.gd` | Pacote de execução `jogo/`: mapas `.json.zst`, atlas, outfits, cadáveres, hunt-config, ícones (sem o snapshot bruto) |
+| `sim/servico_ginasios.gd`, `painel_ginasios.gd` | Ciclo 3: 18 ginásios, luta automática, insígnias; times em `balanceamento.json` "ginasios" (`ferramentas/balanceamento/gerar_ginasios.py`) |
+| `sim/servico_bosses.gd`, `painel_bosses.gd` | Ciclo 3: 87 bosses, token, Auto Boss, Altar; `balanceamento.json` "bosses" (`gerar_bosses.py`) |
+| `sim/servico_cards.gd`, `painel_album.gd` | Ciclo 3: álbum de Pokécards (430, `dados/gerados/pokecards.json`) |
+| `seletor_visual.gd`, `painel_visual.gd` | Ciclo 3: visual do treinador (criação e Perfil), desenhado pelo `render/outfits.gd` |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
 | `dados/protocolo.json` | 146 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 59 vistos nas gravações; 36 caminhos REST (com as gravações da fase 4) |
 | `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas × modelo do medidor (partindo do used-balls do início), lock de entrada |

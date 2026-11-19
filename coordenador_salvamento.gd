@@ -47,6 +47,35 @@ func iniciar(fachada: Node) -> void:
 	if not _persistencia.encontrado or inicial_corrigido:
 		solicitar_salvamento()
 
+# Ciclo 3: o jogo exportado usa a própria pasta (%APPDATA%/PokeIdle, use_custom_user_dir); a do projeto
+# (%APPDATA%/Godot/app_userdata/PokeIdle) fica só para desenvolvimento. Na 1ª execução sem save, a cidade oferece importar
+# uma CÓPIA do save do projeto (nunca move).
+static func caminho_save_projeto() -> String:
+	return OS.get_environment("APPDATA").replace("\\", "/") + "/Godot/app_userdata/PokeIdle/progresso_v1.json"
+
+
+func save_do_projeto_disponivel() -> bool:
+	var antigo := caminho_save_projeto()
+	var meu := ProjectSettings.globalize_path(_persistencia.caminho)
+	return jogo_novo and FileAccess.file_exists(antigo) and antigo.to_lower() != meu.replace("\\", "/").to_lower()
+
+
+func importar_save_do_projeto() -> String:
+	## Copia o save do projeto (e o .bak, se houver) para a pasta do jogo e carrega. "" = ok, senão o motivo.
+	var antigo := caminho_save_projeto()
+	var destino := ProjectSettings.globalize_path(_persistencia.caminho)
+	DirAccess.make_dir_recursive_absolute(destino.get_base_dir())
+	if DirAccess.copy_absolute(antigo, destino) != OK:
+		return "Não foi possível copiar o save."
+	if FileAccess.file_exists(antigo + ".bak"):
+		DirAccess.copy_absolute(antigo + ".bak", destino + ".bak")
+	var carregou: bool = _persistencia.carregar(estado)
+	jogo_novo = not _persistencia.encontrado
+	for pokemon in estado.time_pokemon + estado.pokemons_capturados:
+		pokemon.normalizar_atributos()
+	return "" if carregou else String(_persistencia.erro)
+
+
 func _informar_salvamento(texto: String, falhou: bool) -> void:
 	if aviso_salvamento == texto and erro_salvamento == falhou:
 		return

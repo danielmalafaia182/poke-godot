@@ -40,7 +40,7 @@ static func disponivel(dados: RefCounted, nome: String, slug: String = "") -> bo
 	if s == "":
 		return false
 	var pasta := Fontes.pasta_snapshot()
-	return FileAccess.file_exists(pasta + "/game/maps/%s.json" % s) and FileAccess.file_exists(pasta + "/api/hunt-config/%s.json" % s)
+	return Fontes.existe(pasta + "/game/maps/%s.json" % s) and Fontes.existe(pasta + "/api/hunt-config/%s.json" % s)
 
 
 static func id_especie(dados: RefCounted, nome: String) -> int:

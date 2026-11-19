@@ -28,6 +28,7 @@ const CHUNK := 8
 
 
 static func _md5(caminho: String) -> String:
+	caminho = Fontes.arquivo(caminho)
 	return FileAccess.get_md5(caminho) if FileAccess.file_exists(caminho) else "-"
 
 

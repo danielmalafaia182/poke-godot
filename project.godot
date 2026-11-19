@@ -13,6 +13,10 @@ config_version=5
 config/name="PokeIdle"
 run/main_scene="uid://dlin33mnayurm"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+config/icon="res://assets/interface/icone/icone_256.png"
+config/windows_native_icon="res://assets/interface/icone/icone_jogo.ico"
+config/use_custom_user_dir.template=true
+config/custom_user_dir_name.template="PokeIdle"
 
 [autoload]
 

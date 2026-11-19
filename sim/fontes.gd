@@ -22,6 +22,11 @@ static func pasta_snapshot() -> String:
 	var env := OS.get_environment("POKE_SNAPSHOT")
 	if env != "" and DirAccess.dir_exists_absolute(env):
 		return env.replace("\\", "/").trim_suffix("/")
+	# Jogo exportado (ciclo 3): o pacote de execução `jogo/` ao lado do executável (ferramentas/build/gerar_pacote_jogo.gd):
+	# só o que o jogo lê, com os mapas comprimidos (.json.zst). O snapshot bruto não vai no build.
+	var pacote := raiz_projeto() + "/jogo"
+	if DirAccess.dir_exists_absolute(pacote + "/game"):
+		return pacote
 	var local := raiz_projeto() + "/" + SNAPSHOT_RELATIVO
 	if DirAccess.dir_exists_absolute(local):
 		return local
@@ -34,11 +39,27 @@ static func pasta_dados() -> String:
 	return raiz_projeto() + "/dados"
 
 
+static func arquivo(caminho: String) -> String:
+	## O arquivo como está, ou a versão comprimida (`.zst`, pacote de execução) se só ela existe.
+	if not FileAccess.file_exists(caminho) and FileAccess.file_exists(caminho + ".zst"):
+		return caminho + ".zst"
+	return caminho
+
+
+static func existe(caminho: String) -> bool:
+	return FileAccess.file_exists(caminho) or FileAccess.file_exists(caminho + ".zst")
+
+
 static func ler_json(caminho: String) -> Variant:
-	if not FileAccess.file_exists(caminho):
+	var texto := ""
+	if not FileAccess.file_exists(caminho) and FileAccess.file_exists(caminho + ".zst"):
+		var f := FileAccess.open_compressed(caminho + ".zst", FileAccess.READ, FileAccess.COMPRESSION_ZSTD)
+		texto = f.get_as_text() if f != null else ""
+	elif not FileAccess.file_exists(caminho):
 		push_error("Arquivo não encontrado: " + caminho)
 		return null
-	var texto := FileAccess.get_file_as_string(caminho)
+	else:
+		texto = FileAccess.get_file_as_string(caminho)
 	var dados: Variant = JSON.parse_string(texto)
 	if dados == null:
 		push_error("JSON inválido: " + caminho)

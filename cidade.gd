@@ -429,9 +429,18 @@ func _criar_ouro_e_config() -> void:
 	# Jogo novo (C): sem save, o jogo começa pela escolha do inicial. Só no jogo de verdade (nos testes, o SceneTree é o
 	# script do teste e o começo continua o do P04).
 	if EstadoJogo.salvamento.jogo_novo and get_tree().get_script() == null:
-		var pn: Control = load("res://painel_novo_jogo.gd").new()
-		pn.name = "PainelNovoJogo"
-		get_node("Interface").add_child(pn)
+		if EstadoJogo.salvamento.save_do_projeto_disponivel():
+			# ciclo 3: jogo exportado na 1ª execução, com save do projeto: oferece importar uma cópia
+			var pi: Control = load("res://painel_importar_save.gd").new()
+			pi.name = "PainelImportarSave"
+			pi.decidido.connect(func(importou: bool) -> void:
+				if importou:
+					get_tree().reload_current_scene.call_deferred()
+				else:
+					_abrir_novo_jogo())
+			get_node("Interface").add_child(pi)
+		else:
+			_abrir_novo_jogo()
 	var atualizar := func() -> void: rotulo_ouro.text = "💲 %d" % EstadoJogo.ouro
 	EstadoJogo.ouro_alterado.connect(atualizar)
 	atualizar.call()
@@ -499,6 +508,11 @@ func _criar_ouro_e_config() -> void:
 	botao_metas.pressed.connect(func() -> void:
 		painel_config.hide()
 		painel_metas.abrir())
+
+func _abrir_novo_jogo() -> void:
+	var pn: Control = load("res://painel_novo_jogo.gd").new()
+	pn.name = "PainelNovoJogo"
+	get_node("Interface").add_child(pn)
 
 func atualizar_meta() -> void:
 	if botao_meta != null:

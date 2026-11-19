@@ -296,6 +296,13 @@ func _notification(what: int) -> void:
 
 func _ready() -> void:
 	configuracao.inventario = inventario
+	# Verificação do build (ciclo 3; ferramentas/build/verificar_build.gd): o template de release não roda --script, então
+	# POKE_VERIFICAR aponta um script (Node) do disco que dirige o jogo de verdade. Sem a variável, nada acontece.
+	var verif := OS.get_environment("POKE_VERIFICAR")
+	if verif != "" and FileAccess.file_exists(verif):
+		var sc = load(verif)
+		if sc != null:
+			get_tree().root.add_child.call_deferred(sc.new())
 	inventario.estoque_bolas_alterado.connect(estoque_bolas_alterado.emit)
 	inventario.estoque_pocoes_alterado.connect(estoque_pocoes_alterado.emit)
 	inventario.depot_alterado.connect(depot_alterado.emit)
