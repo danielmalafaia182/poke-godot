@@ -29,7 +29,8 @@ extends SceneTree
 ##     cuja espécie está numa hunt liberada que o líder aguenta; a nota da hunt soma o XP marginal da missão), Daily Catch
 ##     (capturas dão XP), Quests & Tasks (entrega tudo que completar, antes de vender o loot).
 ##   - Tipo do Dia pela rotação (sim/servico_jogador.gd), boosts ativos, VIP por `--vip 0|1`.
-##   - Insígnias: 0 (offline não há luta de ginásio para ganhá-las). Berries e Rare Candy: lote 3 congelado, fora.
+##   - Ginásios (ciclo 3): na cidade desafia os liberados sem insígnia ativa, só com o líder; as ativas valem na hunt.
+##   - Orre ×10 de XP (balanceamento.json xp_regiao, decisão do ciclo 3). Berries e Rare Candy: lote 3 congelado, fora.
 ##   - Auto-Catch Shiny ligado com a melhor bola que tiver (decisão do ciclo 2).
 ##   - Metas visíveis (sim/metas.gd): a cada sessão registra a hunt recomendada, a próxima meta e os marcos.
 ##
@@ -48,6 +49,7 @@ const Acesso := preload("res://sim/regras_acesso.gd")
 const ServicoJogador := preload("res://sim/servico_jogador.gd")
 const ServicoDiarias := preload("res://sim/servico_diarias.gd")
 const Metas := preload("res://sim/metas.gd")
+const Ginasios := preload("res://sim/servico_ginasios.gd")
 
 const TICKS_MIN := 300
 var dados
@@ -73,13 +75,14 @@ var t0 := 0
 # ciclo 2
 var jogador
 var diarias
+var gin
 var agora_s := 0          # relógio de calendário (unix s)
 var ativo_no_dia := 0.0   # minutos de jogo ativo no dia atual
 var dia_atual := -1
 var colecao := {}         # speciesId -> true (espécies capturadas)
 var nome_para_id := {}
 var extras := {"soneca_xp": 0, "soneca_pxp": 0, "sonecas": 0, "tarefas_xp": 0, "tarefas_ouro": 0, "tarefas": 0, "kill_xp": 0,
-	"kills_diarios": 0, "catch_xp": 0, "gift": 0, "streak_pontos": 0, "streak_ouro": 0, "shiny_vistos": 0, "shiny_capturados": 0}
+	"kills_diarios": 0, "catch_xp": 0, "ginasios_vitorias": 0, "ginasios_derrotas": 0, "insignias_max": 0, "gift": 0, "streak_pontos": 0, "streak_ouro": 0, "shiny_vistos": 0, "shiny_capturados": 0}
 var marcos_vistos := {}
 var metas_linha: Array = []
 
@@ -96,6 +99,7 @@ func _init() -> void:
 	hunts_lista = dados.hunts.values()
 	jogador = ServicoJogador.new()
 	diarias = ServicoDiarias.new(dados)
+	gin = Ginasios.new(dados)
 	agora_s = int(Time.get_unix_time_from_datetime_string("2026-11-19T03:00:00"))
 	for id in dados.especies:
 		nome_para_id[String(dados.especies[id]["nome"])] = int(id)
@@ -180,7 +184,7 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 		cfg["streak"] = jogador.efeitos_streak(est)
 		cfg["eventos"] = jogador.msg_eventos(agora_s)["events"]
 		cfg["boosts"] = (est["boosts"] as Array).filter(func(b): return int(b.get("until", 0)) > agora_s * 1000)
-		cfg["insignias"] = 0
+		cfg["insignias"] = gin.ativas(est, agora_s)   # ciclo 3: insígnias de ginásio (+1% XP e drop cada)
 		if sem_bolas:
 			cfg["auto_catch"] = false
 			cfg["auto_catch_shiny"] = false
@@ -484,6 +488,30 @@ func _diarias_cidade() -> void:
 		extras["streak_pontos"] += 1
 
 
+func _ginasios() -> void:
+	## Ciclo 3: na cidade, desafia cada ginásio liberado sem insígnia ativa (o time é só o líder, a política da campanha).
+	est["nivel"] = _nivel_treinador()
+	var l: Dictionary = _lider()
+	var time := [{"speciesId": int(l["speciesId"]), "xp": int(l["xp"]), "ivs": l["ivs"], "quality": float(l["quality"])}]
+	for g in gin.p.lista:
+		var gid := String(g["id"])
+		if _nivel_treinador() < int(g["nivel_treinador"]):
+			continue
+		if int(est.get("ginasios", {}).get("insignias", {}).get(gid, 0)) > agora_s * 1000:
+			continue
+		var m: Array = gin.tratar(est, {"type": "ginasio-desafiar", "gymId": gid, "agora": agora_s, "nivel": _nivel_treinador(), "time": time, "semente": agora_s + semente_seq})
+		if String(m[0].get("type", "")) != "gym-result":
+			continue
+		if bool(m[0]["venceu"]):
+			extras["ginasios_vitorias"] += 1
+		else:
+			extras["ginasios_derrotas"] += 1
+	extras["insignias_max"] = maxi(int(extras["insignias_max"]), gin.ativas(est, agora_s))
+	var chave := "insignias_%d" % gin.ativas(est, agora_s)
+	if not marcos_vistos.has(chave):
+		marcos_vistos[chave] = snappedf(minutos_jogados / 60.0, 0.01)
+
+
 func _soneca() -> void:
 	## Fim do dia ativo: Zzz na última hunt (amostra de 5 min, sem bolas) e coleta ao acordar (50%, A/C).
 	var fora := int((24.0 - float(args["horas_dia"])) * 3600.0)
@@ -529,6 +557,7 @@ func _campanha() -> void:
 				dia_atual = d
 				_dia_novo()
 			_diarias_cidade()
+			_ginasios()
 		var c := _cidade()
 		var slug := _escolher()
 		if slug == "":
@@ -575,6 +604,7 @@ func _campanha() -> void:
 			linha["dias"] = snappedf(float(agora_s - int(Time.get_unix_time_from_datetime_string("2026-11-19T03:00:00"))) / 86400.0, 0.01)
 			linha["metas"] = mt
 			linha["streak"] = jogador.efeitos_streak(est)["exp"]
+			linha["insignias"] = gin.ativas(est, agora_s)
 		linha_tempo.append(linha)
 		print("SESSAO ", JSON.stringify(linha))
 
