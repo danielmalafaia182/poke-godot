@@ -28,6 +28,7 @@ var estado = EstadoVista.new()
 var outfits: RefCounted
 var nomes_especie: Dictionary = {}     # speciesId -> nome
 var looktype_especie: Dictionary = {}  # speciesId -> looktype
+var looktype_shiny: Dictionary = {}    # speciesId -> looktype do sprite shiny (C: SHINY_BY_DEX, dados/gerados/shiny.json)
 var nome_treinador := "Treinador"
 var looktype_treinador := 5759
 # E: o save não guarda as cores do outfit do treinador; padrão = as do personagem do poke-local (head 94, body 95)
@@ -58,6 +59,11 @@ func _ready() -> void:
 	for e in _ler_especies():
 		nomes_especie[int(e["id"])] = String(e["nome"])
 		looktype_especie[int(e["id"])] = int(e.get("looktype", 0))
+	var sh = Fontes.ler_json(Fontes.pasta_dados() + "/gerados/shiny.json") if FileAccess.file_exists(Fontes.pasta_dados() + "/gerados/shiny.json") else null
+	if sh is Dictionary:
+		for k in sh:
+			if sh[k].get("looktype") != null:
+				looktype_shiny[int(k)] = int(sh[k]["looktype"])
 	_carregar_cadaveres()
 
 
@@ -165,6 +171,8 @@ func _processar() -> void:
 	for slot in v["mobs"]:
 		var m: Dictionary = v["mobs"][slot]
 		var lt := int(looktype_especie.get(int(m["speciesId"]), 0))
+		if bool(m.get("shiny", false)) and looktype_shiny.has(int(m["speciesId"])) and not outfits.obter(int(looktype_shiny[int(m["speciesId"])])).is_empty():
+			lt = int(looktype_shiny[int(m["speciesId"])])   # C: o cliente troca o sprite pelo da forma shiny
 		_entidade("mob%d" % int(slot), lt, m, ox, oy, not bool(m["dead"]))
 		vivos["mob%d" % int(slot)] = true
 	for k in _ents.keys():

@@ -132,6 +132,11 @@ const PARAMETROS := {
 	"captura_garantida_eficiencia": 255,    # C/B-relatado: Master Ball (catchRate 255) garante
 	# Shiny (C, barra de captura: pct = min(1, shinyBase × catchRate)); shinyBase por tier vem do servidor (F: vazio)
 	"captura_shiny_base": {},
+	# Shiny (A, 19/11, todas as gravações): só espécies com forma shiny (C: SHINY_BY_DEX) aparecem shiny — 0 em 3.323 abates
+	# das outras; nas com forma, 42 em 10.914 abates fora do lock = 1/260. Nenhum durante o lock de entrada (A, C: shinylock).
+	# Por tier a taxa variou (C 11/881, B 26/9.156, D 3/511, E 2/366): amostra pequena fora do B; fica a taxa única.
+	"shiny_chance": 42.0 / 10914.0,
+	"captura_shiny_base_padrao": 0.01,       # classe 3 (balanceamento.json): 0 capturas em 31 tentativas gravadas
 	"hp_selvagem_por_stat": 35,             # A
 	"hp_selvagem_minimo": 120,              # A
 	"golpe_poder_maximo": 599,              # F: golpes de poder 600 (assinatura) nunca aparecem nas gravações
@@ -356,7 +361,7 @@ static func chance_captura(bola: int, investido_antes: float, preco_npc: float, 
 
 static func chance_captura_shiny(bola: int, tier: String, p: Dictionary = PARAMETROS) -> float:
 	## C: min(1, shinyBase(tier) × catchRate); sem shinyBase conhecido → 0 (F).
-	var base := float(p.captura_shiny_base.get(tier, 0.0))
+	var base := float(p.captura_shiny_base.get(tier, p.get("captura_shiny_base_padrao", 0.0)))
 	return clampf(base * float(p.captura_eficiencia.get(str(bola), 0)), 0.0, 1.0)
 
 

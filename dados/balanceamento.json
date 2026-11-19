@@ -36,8 +36,18 @@
       "motivo": "golpes de poder 600 (assinatura) ficam fora da escolha: nunca apareceram nas gravações"
     },
     "captura_shiny_base": {
-      "valor": {},
-      "motivo": "chance de shiny na captura por tier (min(1, base × catchRate), C): vazio enquanto a sim não sorteia selvagens shiny (backlog)"
+      "valor": {
+        "A": 0.004,
+        "B": 0.007,
+        "C": 0.01,
+        "D": 0.015,
+        "E": 0.02
+      },
+      "motivo": "chance base de captura do shiny por tier (×catchRate da bola, C); o servidor não mostra o valor. Gradiente do tier raro (A) ao comum (E), coerente com 0 capturas em 31 tentativas gravadas (B, C, Super/Idle)"
+    },
+    "captura_shiny_base_padrao": {
+      "valor": 0.01,
+      "motivo": "shiny de espécie sem tier na tabela do cliente: o mesmo do tier C"
     }
   },
   "apresentacao": {

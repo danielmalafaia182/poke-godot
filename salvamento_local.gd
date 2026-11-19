@@ -120,6 +120,10 @@ func _validar(dados: Variant) -> String:
 		return "Bola selecionada inválida."
 	if not config.get("auto_catch_names") is String or config["auto_catch_names"].length() > 4096:
 		return "Filtro de nomes inválido."
+	if config.has("auto_catch_shiny") and not config["auto_catch_shiny"] is bool:
+		return "Auto-Catch Shiny inválido."
+	if config.has("auto_catch_shiny_ball_id") and (not _inteiro(config["auto_catch_shiny_ball_id"], 0, 7) or int(config["auto_catch_shiny_ball_id"]) == 5):
+		return "Bola do Auto-Catch Shiny inválida."
 	if not _inteiro(config.get("auto_potion_threshold"), 0, 100) or not [25, 40, 50, 60, 75, 90].has(int(config["auto_potion_threshold"])):
 		return "Limite de cura inválido."
 	if not _inteiro(config.get("auto_potion_item_id"), 0, 204) or (int(config["auto_potion_item_id"]) != 0 and not POCOES.has(int(config["auto_potion_item_id"]))):
@@ -268,8 +272,8 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 		estado.itens_depot[int(chave)] = int(dados["depot"][chave])
 	for campo in dados["configuracoes"]:
 		# Lista explícita; nunca atribui propriedades arbitrárias vindas do arquivo.
-		if campo in ["auto_catch", "auto_catch_ball_id", "auto_catch_names", "bola_selecionada", "auto_potion", "auto_potion_threshold", "auto_potion_item_id"]:
-			estado.set(campo, dados["configuracoes"][campo] if campo in ["auto_catch", "auto_potion", "auto_catch_names"] else int(dados["configuracoes"][campo]))
+		if campo in ["auto_catch", "auto_catch_ball_id", "auto_catch_names", "bola_selecionada", "auto_potion", "auto_potion_threshold", "auto_potion_item_id", "auto_catch_shiny", "auto_catch_shiny_ball_id"]:
+			estado.set(campo, dados["configuracoes"][campo] if campo in ["auto_catch", "auto_potion", "auto_catch_names", "auto_catch_shiny"] else int(dados["configuracoes"][campo]))
 	estado.medidor_captura = {}
 	for k in dados.get("captura_medidor", {}):
 		var v: Dictionary = dados["captura_medidor"][k]
@@ -358,7 +362,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"lider_id": estado.obter_lider().id_persistente,
 		"materiais": _estoque_json(estado.inventario.estoque_materiais),
 		"bolas": _estoque_json(estado.estoque_bolas), "pocoes": _estoque_json(estado.estoque_pocoes), "depot": _estoque_json(estado.itens_depot),
-		"configuracoes": {"auto_catch": estado.auto_catch, "auto_catch_ball_id": estado.auto_catch_ball_id, "auto_catch_names": estado.auto_catch_names, "bola_selecionada": estado.bola_selecionada, "auto_potion": estado.auto_potion, "auto_potion_threshold": estado.auto_potion_threshold, "auto_potion_item_id": estado.auto_potion_item_id},
+		"configuracoes": {"auto_catch": estado.auto_catch, "auto_catch_ball_id": estado.auto_catch_ball_id, "auto_catch_names": estado.auto_catch_names, "bola_selecionada": estado.bola_selecionada, "auto_potion": estado.auto_potion, "auto_potion_threshold": estado.auto_potion_threshold, "auto_potion_item_id": estado.auto_potion_item_id, "auto_catch_shiny": estado.auto_catch_shiny, "auto_catch_shiny_ball_id": estado.auto_catch_shiny_ball_id},
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
 		"captura_medidor": estado.medidor_captura.duplicate(true), "ultima_hunt": estado.ultima_hunt_slug,
 		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),

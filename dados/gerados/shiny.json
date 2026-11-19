@@ -1,0 +1,1142 @@
+{
+ "1": {
+  "cadaver": 33414,
+  "icone": 33396,
+  "looktype": 5483,
+  "tier": "C"
+ },
+ "100": {
+  "cadaver": null,
+  "icone": 8906,
+  "looktype": 514,
+  "tier": "D"
+ },
+ "101": {
+  "cadaver": null,
+  "icone": 12466,
+  "looktype": 513,
+  "tier": "D"
+ },
+ "102": {
+  "cadaver": 58268,
+  "icone": 58265,
+  "looktype": 8810,
+  "tier": "C"
+ },
+ "103": {
+  "cadaver": 58248,
+  "icone": 58245,
+  "looktype": 8805,
+  "tier": "C"
+ },
+ "104": {
+  "cadaver": null,
+  "icone": 10110,
+  "looktype": 578,
+  "tier": "C"
+ },
+ "105": {
+  "cadaver": null,
+  "icone": 10111,
+  "looktype": 579,
+  "tier": "C"
+ },
+ "106": {
+  "cadaver": null,
+  "icone": 8755,
+  "looktype": 526,
+  "tier": "D"
+ },
+ "107": {
+  "cadaver": null,
+  "icone": 8764,
+  "looktype": 486,
+  "tier": "D"
+ },
+ "109": {
+  "cadaver": 32277,
+  "icone": 32279,
+  "looktype": 5204,
+  "tier": "D"
+ },
+ "110": {
+  "cadaver": 23487,
+  "icone": 25904,
+  "looktype": 3604,
+  "tier": "D"
+ },
+ "111": {
+  "cadaver": 58272,
+  "icone": 58269,
+  "looktype": 8811,
+  "tier": "C"
+ },
+ "112": {
+  "cadaver": 31489,
+  "icone": 59725,
+  "looktype": 1573,
+  "tier": "C"
+ },
+ "114": {
+  "cadaver": null,
+  "icone": 12474,
+  "looktype": 580,
+  "tier": "C"
+ },
+ "116": {
+  "cadaver": null,
+  "icone": 8736,
+  "looktype": 507,
+  "tier": "C"
+ },
+ "117": {
+  "cadaver": null,
+  "icone": 8746,
+  "looktype": 515,
+  "tier": "C"
+ },
+ "118": {
+  "cadaver": 20792,
+  "icone": 20766,
+  "looktype": 2932,
+  "tier": "D"
+ },
+ "12": {
+  "cadaver": null,
+  "icone": 8790,
+  "looktype": 485,
+  "tier": "D"
+ },
+ "121": {
+  "cadaver": 25102,
+  "icone": 25896,
+  "looktype": 3796,
+  "tier": "D"
+ },
+ "122": {
+  "cadaver": null,
+  "icone": 12490,
+  "looktype": 1506,
+  "tier": "C"
+ },
+ "123": {
+  "cadaver": null,
+  "icone": 8706,
+  "looktype": 525,
+  "tier": "C"
+ },
+ "124": {
+  "cadaver": null,
+  "icone": 12421,
+  "looktype": 499,
+  "tier": "C"
+ },
+ "125": {
+  "cadaver": null,
+  "icone": 8879,
+  "looktype": 497,
+  "tier": "A"
+ },
+ "126": {
+  "cadaver": null,
+  "icone": 12495,
+  "looktype": 1779,
+  "tier": "A"
+ },
+ "127": {
+  "cadaver": null,
+  "icone": 12475,
+  "looktype": 577,
+  "tier": "C"
+ },
+ "128": {
+  "cadaver": null,
+  "icone": 14139,
+  "looktype": 1821,
+  "tier": "B"
+ },
+ "129": {
+  "cadaver": null,
+  "icone": 8716,
+  "looktype": 504,
+  "tier": "A"
+ },
+ "13": {
+  "cadaver": 58228,
+  "icone": 58225,
+  "looktype": 8800,
+  "tier": "D"
+ },
+ "130": {
+  "cadaver": null,
+  "icone": 8726,
+  "looktype": 528,
+  "tier": "A"
+ },
+ "131": {
+  "cadaver": 57460,
+  "icone": 57462,
+  "looktype": 7987,
+  "tier": "C"
+ },
+ "132": {
+  "cadaver": null,
+  "icone": 12481,
+  "looktype": 549,
+  "tier": "D"
+ },
+ "133": {
+  "cadaver": 21454,
+  "icone": 21452,
+  "looktype": 3119,
+  "tier": "D"
+ },
+ "134": {
+  "cadaver": null,
+  "icone": 10155,
+  "looktype": 596,
+  "tier": "C"
+ },
+ "135": {
+  "cadaver": null,
+  "icone": 10156,
+  "looktype": 594,
+  "tier": "C"
+ },
+ "136": {
+  "cadaver": null,
+  "icone": 10158,
+  "looktype": 595,
+  "tier": "C"
+ },
+ "14": {
+  "cadaver": 58224,
+  "icone": 58221,
+  "looktype": 8801,
+  "tier": "D"
+ },
+ "143": {
+  "cadaver": null,
+  "icone": 10125,
+  "looktype": 548,
+  "tier": "A"
+ },
+ "147": {
+  "cadaver": null,
+  "icone": 8914,
+  "looktype": 506,
+  "tier": "B"
+ },
+ "148": {
+  "cadaver": null,
+  "icone": 10103,
+  "looktype": 575,
+  "tier": "B"
+ },
+ "15": {
+  "cadaver": null,
+  "icone": 8799,
+  "looktype": 483,
+  "tier": "D"
+ },
+ "152": {
+  "cadaver": 33417,
+  "icone": 33399,
+  "looktype": 5486,
+  "tier": "C"
+ },
+ "153": {
+  "cadaver": 56338,
+  "icone": 56316,
+  "looktype": 8232,
+  "tier": "C"
+ },
+ "154": {
+  "cadaver": 14122,
+  "icone": 14141,
+  "looktype": 1814,
+  "tier": "C"
+ },
+ "155": {
+  "cadaver": 33418,
+  "icone": 33400,
+  "looktype": 5487,
+  "tier": "C"
+ },
+ "156": {
+  "cadaver": 56339,
+  "icone": 56317,
+  "looktype": 8233,
+  "tier": "C"
+ },
+ "157": {
+  "cadaver": null,
+  "icone": 14142,
+  "looktype": 1819,
+  "tier": "C"
+ },
+ "158": {
+  "cadaver": 33419,
+  "icone": 33401,
+  "looktype": 5489,
+  "tier": "C"
+ },
+ "159": {
+  "cadaver": 56340,
+  "icone": 56318,
+  "looktype": 8234,
+  "tier": "C"
+ },
+ "16": {
+  "cadaver": 58236,
+  "icone": 58233,
+  "looktype": 8802,
+  "tier": "C"
+ },
+ "160": {
+  "cadaver": 14123,
+  "icone": 14143,
+  "looktype": 1816,
+  "tier": "C"
+ },
+ "163": {
+  "cadaver": 34681,
+  "icone": 34679,
+  "looktype": 5577,
+  "tier": "C"
+ },
+ "164": {
+  "cadaver": null,
+  "icone": 21202,
+  "looktype": 3076,
+  "tier": "C"
+ },
+ "168": {
+  "cadaver": 31488,
+  "icone": 13045,
+  "looktype": 1670,
+  "tier": "E"
+ },
+ "169": {
+  "cadaver": 14044,
+  "icone": 14042,
+  "looktype": 1781,
+  "tier": "C"
+ },
+ "17": {
+  "cadaver": 58240,
+  "icone": 58237,
+  "looktype": 8803,
+  "tier": "C"
+ },
+ "171": {
+  "cadaver": 14840,
+  "icone": 14712,
+  "looktype": 2043,
+  "tier": "C"
+ },
+ "175": {
+  "cadaver": 55426,
+  "icone": 55460,
+  "looktype": 7877,
+  "tier": "C"
+ },
+ "177": {
+  "cadaver": 58284,
+  "icone": 58281,
+  "looktype": 8814,
+  "tier": "C"
+ },
+ "178": {
+  "cadaver": null,
+  "icone": 14144,
+  "looktype": 1812,
+  "tier": "C"
+ },
+ "179": {
+  "cadaver": 56598,
+  "icone": 56538,
+  "looktype": 8284,
+  "tier": "C"
+ },
+ "18": {
+  "cadaver": null,
+  "icone": 12473,
+  "looktype": 573,
+  "tier": "C"
+ },
+ "181": {
+  "cadaver": null,
+  "icone": 14145,
+  "looktype": 1809,
+  "tier": "C"
+ },
+ "186": {
+  "cadaver": 31491,
+  "icone": 59717,
+  "looktype": 1668,
+  "tier": "C"
+ },
+ "189": {
+  "cadaver": null,
+  "icone": 56554,
+  "looktype": 8273,
+  "tier": "C"
+ },
+ "19": {
+  "cadaver": null,
+  "icone": 8735,
+  "looktype": 512,
+  "tier": "E"
+ },
+ "195": {
+  "cadaver": null,
+  "icone": 56560,
+  "looktype": 3480,
+  "tier": "C"
+ },
+ "196": {
+  "cadaver": 31493,
+  "icone": 13047,
+  "looktype": 1666,
+  "tier": "C"
+ },
+ "197": {
+  "cadaver": 31494,
+  "icone": 13048,
+  "looktype": 1667,
+  "tier": "C"
+ },
+ "2": {
+  "cadaver": 56335,
+  "icone": 56313,
+  "looktype": 8229,
+  "tier": "C"
+ },
+ "20": {
+  "cadaver": null,
+  "icone": 8745,
+  "looktype": 519,
+  "tier": "E"
+ },
+ "203": {
+  "cadaver": 60223,
+  "icone": 60220,
+  "looktype": 9329,
+  "tier": "D"
+ },
+ "204": {
+  "cadaver": 55416,
+  "icone": 55452,
+  "looktype": 7867,
+  "tier": "D"
+ },
+ "205": {
+  "cadaver": 26026,
+  "icone": 25872,
+  "looktype": 3944,
+  "tier": "C"
+ },
+ "208": {
+  "cadaver": 25101,
+  "icone": 25838,
+  "looktype": 3793,
+  "tier": "C"
+ },
+ "21": {
+  "cadaver": 55422,
+  "icone": 55456,
+  "looktype": 7873,
+  "tier": "D"
+ },
+ "210": {
+  "cadaver": 7080,
+  "icone": 59713,
+  "looktype": 7078,
+  "tier": "D"
+ },
+ "211": {
+  "cadaver": 20793,
+  "icone": 20765,
+  "looktype": 2933,
+  "tier": "D"
+ },
+ "212": {
+  "cadaver": 23163,
+  "icone": 35025,
+  "looktype": 2096,
+  "tier": "C"
+ },
+ "213": {
+  "cadaver": 29137,
+  "icone": 23020,
+  "looktype": 4464,
+  "tier": "D"
+ },
+ "217": {
+  "cadaver": 58244,
+  "icone": 58241,
+  "looktype": 8834,
+  "tier": "C"
+ },
+ "218": {
+  "cadaver": 58312,
+  "icone": 58309,
+  "looktype": 8820,
+  "tier": "D"
+ },
+ "219": {
+  "cadaver": 14839,
+  "icone": 14711,
+  "looktype": 2044,
+  "tier": "D"
+ },
+ "22": {
+  "cadaver": null,
+  "icone": 10297,
+  "looktype": 649,
+  "tier": "D"
+ },
+ "220": {
+  "cadaver": 58316,
+  "icone": 58313,
+  "looktype": 8821,
+  "tier": "C"
+ },
+ "221": {
+  "cadaver": 58320,
+  "icone": 58317,
+  "looktype": 8822,
+  "tier": "C"
+ },
+ "222": {
+  "cadaver": 20790,
+  "icone": 20767,
+  "looktype": 2930,
+  "tier": "E"
+ },
+ "225": {
+  "cadaver": 21213,
+  "icone": 21201,
+  "looktype": 3012,
+  "tier": "C"
+ },
+ "226": {
+  "cadaver": null,
+  "icone": 54911,
+  "looktype": 7634,
+  "tier": "C"
+ },
+ "227": {
+  "cadaver": null,
+  "icone": 35382,
+  "looktype": 8502,
+  "tier": "C"
+ },
+ "228": {
+  "cadaver": 57458,
+  "icone": 57456,
+  "looktype": 8648,
+  "tier": "C"
+ },
+ "229": {
+  "cadaver": 56717,
+  "icone": 56714,
+  "looktype": 7881,
+  "tier": "C"
+ },
+ "230": {
+  "cadaver": 23093,
+  "icone": 35142,
+  "looktype": 3542,
+  "tier": "C"
+ },
+ "231": {
+  "cadaver": 55417,
+  "icone": 55453,
+  "looktype": 9079,
+  "tier": "D"
+ },
+ "232": {
+  "cadaver": 26034,
+  "icone": 25864,
+  "looktype": 3921,
+  "tier": "D"
+ },
+ "234": {
+  "cadaver": 31490,
+  "icone": 13049,
+  "looktype": 1778,
+  "tier": "D"
+ },
+ "236": {
+  "cadaver": 55427,
+  "icone": 55463,
+  "looktype": 7871,
+  "tier": "D"
+ },
+ "239": {
+  "cadaver": 25098,
+  "icone": 25868,
+  "looktype": 3591,
+  "tier": "A"
+ },
+ "24": {
+  "cadaver": 24058,
+  "icone": 24055,
+  "looktype": 3673,
+  "tier": "D"
+ },
+ "240": {
+  "cadaver": 25964,
+  "icone": 25870,
+  "looktype": 3592,
+  "tier": "A"
+ },
+ "241": {
+  "cadaver": 23095,
+  "icone": 25886,
+  "looktype": 3543,
+  "tier": "C"
+ },
+ "246": {
+  "cadaver": 14119,
+  "icone": 14146,
+  "looktype": 1810,
+  "tier": "B"
+ },
+ "247": {
+  "cadaver": null,
+  "icone": 14147,
+  "looktype": 1811,
+  "tier": "B"
+ },
+ "252": {
+  "cadaver": 33420,
+  "icone": 33402,
+  "looktype": 5490,
+  "tier": "C"
+ },
+ "255": {
+  "cadaver": 33421,
+  "icone": 33403,
+  "looktype": 5491,
+  "tier": "C"
+ },
+ "256": {
+  "cadaver": 56342,
+  "icone": 56320,
+  "looktype": 8236,
+  "tier": "C"
+ },
+ "257": {
+  "cadaver": 56343,
+  "icone": 56321,
+  "looktype": 8237,
+  "tier": "C"
+ },
+ "258": {
+  "cadaver": 33422,
+  "icone": 33404,
+  "looktype": 5492,
+  "tier": "C"
+ },
+ "259": {
+  "cadaver": 56344,
+  "icone": 56322,
+  "looktype": 8238,
+  "tier": "C"
+ },
+ "26": {
+  "cadaver": null,
+  "icone": 8896,
+  "looktype": 511,
+  "tier": "C"
+ },
+ "260": {
+  "cadaver": 56345,
+  "icone": 56323,
+  "looktype": 8239,
+  "tier": "C"
+ },
+ "277": {
+  "cadaver": null,
+  "icone": 67705,
+  "looktype": 3321,
+  "tier": "C"
+ },
+ "28": {
+  "cadaver": 47696,
+  "icone": 47697,
+  "looktype": 6175,
+  "tier": "D"
+ },
+ "280": {
+  "cadaver": 59187,
+  "icone": 59185,
+  "looktype": 9071,
+  "tier": "C"
+ },
+ "281": {
+  "cadaver": 59191,
+  "icone": 59189,
+  "looktype": 9072,
+  "tier": "C"
+ },
+ "282": {
+  "cadaver": 23159,
+  "icone": 25743,
+  "looktype": 3920,
+  "tier": "C"
+ },
+ "3": {
+  "cadaver": null,
+  "icone": 12377,
+  "looktype": 496,
+  "tier": "C"
+ },
+ "303": {
+  "cadaver": 26025,
+  "icone": 25884,
+  "looktype": 3319,
+  "tier": "C"
+ },
+ "304": {
+  "cadaver": 56774,
+  "icone": 55681,
+  "looktype": 8463,
+  "tier": "C"
+ },
+ "305": {
+  "cadaver": 56775,
+  "icone": 54928,
+  "looktype": 8464,
+  "tier": "C"
+ },
+ "306": {
+  "cadaver": 56727,
+  "icone": 56729,
+  "looktype": 7883,
+  "tier": "C"
+ },
+ "31": {
+  "cadaver": 25999,
+  "icone": 25888,
+  "looktype": 3533,
+  "tier": "D"
+ },
+ "310": {
+  "cadaver": 21753,
+  "icone": 21751,
+  "looktype": 3235,
+  "tier": "B"
+ },
+ "324": {
+  "cadaver": 26004,
+  "icone": 25900,
+  "looktype": 6953,
+  "tier": "C"
+ },
+ "326": {
+  "cadaver": 25107,
+  "icone": 25876,
+  "looktype": 3827,
+  "tier": "C"
+ },
+ "34": {
+  "cadaver": null,
+  "icone": 10291,
+  "looktype": 635,
+  "tier": "D"
+ },
+ "36": {
+  "cadaver": 56668,
+  "icone": 56666,
+  "looktype": 8320,
+  "tier": "D"
+ },
+ "38": {
+  "cadaver": 31495,
+  "icone": 13042,
+  "looktype": 1665,
+  "tier": "C"
+ },
+ "4": {
+  "cadaver": 33415,
+  "icone": 33397,
+  "looktype": 5484,
+  "tier": "C"
+ },
+ "40": {
+  "cadaver": 56672,
+  "icone": 56670,
+  "looktype": 8322,
+  "tier": "D"
+ },
+ "41": {
+  "cadaver": null,
+  "icone": 8905,
+  "looktype": 521,
+  "tier": "C"
+ },
+ "43": {
+  "cadaver": null,
+  "icone": 9148,
+  "looktype": 509,
+  "tier": "D"
+ },
+ "44": {
+  "cadaver": 55425,
+  "icone": 55459,
+  "looktype": 7876,
+  "tier": "D"
+ },
+ "447": {
+  "cadaver": 55415,
+  "icone": 55451,
+  "looktype": 7866,
+  "tier": "C"
+ },
+ "448": {
+  "cadaver": 14837,
+  "icone": 14710,
+  "looktype": 2008,
+  "tier": "C"
+ },
+ "45": {
+  "cadaver": null,
+  "icone": 10293,
+  "looktype": 636,
+  "tier": "D"
+ },
+ "46": {
+  "cadaver": null,
+  "icone": 8772,
+  "looktype": 510,
+  "tier": "E"
+ },
+ "468": {
+  "cadaver": 56726,
+  "icone": 56724,
+  "looktype": 7879,
+  "tier": "C"
+ },
+ "47": {
+  "cadaver": null,
+  "icone": 8781,
+  "looktype": 501,
+  "tier": "E"
+ },
+ "472": {
+  "cadaver": 16461,
+  "icone": 54910,
+  "looktype": 7629,
+  "tier": "C"
+ },
+ "48": {
+  "cadaver": null,
+  "icone": 12359,
+  "looktype": 517,
+  "tier": "C"
+ },
+ "49": {
+  "cadaver": null,
+  "icone": 12368,
+  "looktype": 484,
+  "tier": "C"
+ },
+ "5": {
+  "cadaver": 56337,
+  "icone": 56315,
+  "looktype": 8231,
+  "tier": "C"
+ },
+ "51": {
+  "cadaver": 56604,
+  "icone": 56544,
+  "looktype": 8276,
+  "tier": "E"
+ },
+ "52": {
+  "cadaver": 56592,
+  "icone": 56532,
+  "looktype": 8282,
+  "tier": "E"
+ },
+ "54": {
+  "cadaver": 48045,
+  "icone": 48048,
+  "looktype": 6197,
+  "tier": "C"
+ },
+ "55": {
+  "cadaver": 24988,
+  "icone": 24990,
+  "looktype": 6180,
+  "tier": "C"
+ },
+ "56": {
+  "cadaver": 56600,
+  "icone": 56540,
+  "looktype": 8285,
+  "tier": "D"
+ },
+ "57": {
+  "cadaver": 56601,
+  "icone": 56541,
+  "looktype": 8275,
+  "tier": "D"
+ },
+ "58": {
+  "cadaver": null,
+  "icone": 8715,
+  "looktype": 505,
+  "tier": "B"
+ },
+ "59": {
+  "cadaver": null,
+  "icone": 8705,
+  "looktype": 493,
+  "tier": "B"
+ },
+ "6": {
+  "cadaver": null,
+  "icone": 8834,
+  "looktype": 9874,
+  "tier": "C"
+ },
+ "60": {
+  "cadaver": 58252,
+  "icone": 58249,
+  "looktype": 8806,
+  "tier": "C"
+ },
+ "61": {
+  "cadaver": 7628,
+  "icone": 7625,
+  "looktype": 8807,
+  "tier": "C"
+ },
+ "62": {
+  "cadaver": 41417,
+  "icone": 41418,
+  "looktype": 8393,
+  "tier": "C"
+ },
+ "63": {
+  "cadaver": 48283,
+  "icone": 48285,
+  "looktype": 8472,
+  "tier": "A"
+ },
+ "64": {
+  "cadaver": 50140,
+  "icone": 51541,
+  "looktype": 8590,
+  "tier": "A"
+ },
+ "65": {
+  "cadaver": null,
+  "icone": 12472,
+  "looktype": 574,
+  "tier": "A"
+ },
+ "66": {
+  "cadaver": 58260,
+  "icone": 58257,
+  "looktype": 8808,
+  "tier": "C"
+ },
+ "67": {
+  "cadaver": 25103,
+  "icone": 25882,
+  "looktype": 3797,
+  "tier": "C"
+ },
+ "68": {
+  "cadaver": null,
+  "icone": 14140,
+  "looktype": 1818,
+  "tier": "C"
+ },
+ "69": {
+  "cadaver": 4382,
+  "icone": 4380,
+  "looktype": 7664,
+  "tier": "C"
+ },
+ "7": {
+  "cadaver": 33416,
+  "icone": 33398,
+  "looktype": 5485,
+  "tier": "C"
+ },
+ "70": {
+  "cadaver": 4384,
+  "icone": 4385,
+  "looktype": 7665,
+  "tier": "C"
+ },
+ "72": {
+  "cadaver": null,
+  "icone": 8888,
+  "looktype": 502,
+  "tier": "C"
+ },
+ "73": {
+  "cadaver": null,
+  "icone": 12448,
+  "looktype": 489,
+  "tier": "C"
+ },
+ "74": {
+  "cadaver": 55423,
+  "icone": 55457,
+  "looktype": 7874,
+  "tier": "D"
+ },
+ "75": {
+  "cadaver": 55424,
+  "icone": 55458,
+  "looktype": 7875,
+  "tier": "D"
+ },
+ "76": {
+  "cadaver": null,
+  "icone": 10295,
+  "looktype": 637,
+  "tier": "D"
+ },
+ "78": {
+  "cadaver": 53722,
+  "icone": 53740,
+  "looktype": 2179,
+  "tier": "D"
+ },
+ "79": {
+  "cadaver": 54991,
+  "icone": 54989,
+  "looktype": 7650,
+  "tier": "D"
+ },
+ "8": {
+  "cadaver": 56336,
+  "icone": 56314,
+  "looktype": 8230,
+  "tier": "C"
+ },
+ "80": {
+  "cadaver": 55004,
+  "icone": 55005,
+  "looktype": 7658,
+  "tier": "D"
+ },
+ "81": {
+  "cadaver": 58158,
+  "icone": 58160,
+  "looktype": 8789,
+  "tier": "C"
+ },
+ "82": {
+  "cadaver": null,
+  "icone": 13041,
+  "looktype": 1671,
+  "tier": "C"
+ },
+ "83": {
+  "cadaver": null,
+  "icone": 8725,
+  "looktype": 520,
+  "tier": "C"
+ },
+ "84": {
+  "cadaver": 58264,
+  "icone": 58261,
+  "looktype": 8809,
+  "tier": "D"
+ },
+ "85": {
+  "cadaver": 31487,
+  "icone": 59722,
+  "looktype": 1672,
+  "tier": "D"
+ },
+ "87": {
+  "cadaver": null,
+  "icone": 56556,
+  "looktype": 8621,
+  "tier": "C"
+ },
+ "88": {
+  "cadaver": null,
+  "icone": 8878,
+  "looktype": 487,
+  "tier": "C"
+ },
+ "89": {
+  "cadaver": null,
+  "icone": 8887,
+  "looktype": 488,
+  "tier": "C"
+ },
+ "9": {
+  "cadaver": null,
+  "icone": 8843,
+  "looktype": 495,
+  "tier": "C"
+ },
+ "90": {
+  "cadaver": 55414,
+  "icone": 55450,
+  "looktype": 7865,
+  "tier": "D"
+ },
+ "91": {
+  "cadaver": 25998,
+  "icone": 25862,
+  "looktype": 3615,
+  "tier": "D"
+ },
+ "92": {
+  "cadaver": 22346,
+  "icone": 22336,
+  "looktype": 3339,
+  "tier": "B"
+ },
+ "93": {
+  "cadaver": 22347,
+  "icone": 22338,
+  "looktype": 3340,
+  "tier": "B"
+ },
+ "94": {
+  "cadaver": null,
+  "icone": 12479,
+  "looktype": 546,
+  "tier": "B"
+ },
+ "95": {
+  "cadaver": null,
+  "icone": 12469,
+  "looktype": 292,
+  "tier": "C"
+ },
+ "97": {
+  "cadaver": null,
+  "icone": 10157,
+  "looktype": 597,
+  "tier": "D"
+ },
+ "98": {
+  "cadaver": null,
+  "icone": 8852,
+  "looktype": 508,
+  "tier": "D"
+ },
+ "99": {
+  "cadaver": null,
+  "icone": 8861,
+  "looktype": 500,
+  "tier": "D"
+ }
+}

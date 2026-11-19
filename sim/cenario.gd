@@ -81,6 +81,8 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int, o
 		# Auto-Helper gravado quando existe (A); senão, pelo 1º catch-result (a bola da auto-captura não é balls.selected)
 		"auto_catch": bool(est["autohelper"].get("autoCatch")) if est.has("autohelper") and est["autohelper"].get("autoCatch") != null else est.has("primeiroCatchResult"),
 		"bola_auto_catch": int(est["autohelper"].get("autoCatchBallId")) if est.has("autohelper") and est["autohelper"].get("autoCatchBallId") != null 			else int(est.get("primeiroCatchResult", {}).get("ballId", 0)),
+		"auto_catch_shiny": bool(est.get("autohelper", {}).get("autoCatchShiny", false) == true),
+		"bola_auto_catch_shiny": int(est.get("autohelper", {}).get("autoCatchShinyBallId", 0) if est.get("autohelper", {}).get("autoCatchShinyBallId") != null else 0),
 		"auto_catch_nomes": String(est.get("autohelper", {}).get("autoCatchNames", "") if est.get("autohelper", {}).get("autoCatchNames") != null else ""),
 		"auto_potion": true,
 		"equipe": equipe,

@@ -61,7 +61,7 @@ def main():
         if t == "vip" and "vip" not in est:
             est["vip"] = m
         if t == "autohelper" and "primeiroField" not in est:
-            est["autohelper"] = {k: m.get(k) for k in ("autoCatch", "autoCatchBallId", "autoCatchNames", "autoPotion", "autoPotionItemId", "autoPotionThreshold")}
+            est["autohelper"] = {k: m.get(k) for k in ("autoCatch", "autoCatchBallId", "autoCatchNames", "autoCatchShiny", "autoCatchShinyBallId", "autoPotion", "autoPotionItemId", "autoPotionThreshold")}
         if t == "poke-delta":
             deltas.append(m["poke"])
         if t == "pokes":

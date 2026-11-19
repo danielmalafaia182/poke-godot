@@ -205,8 +205,9 @@ func _ready() -> void:
 	resumo.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	bola_coluna.add_child(resumo)
 	ativar_shiny = _criar_linha("Auto-Catch\nShiny","Shiny\nPokémon","res://assets/interface/bolas/idleball.png",true)
-	ativar_shiny.disabled = true
-	ativar_shiny.tooltip_text = "Captura de shinies ainda não implementada neste protótipo."
+	ativar_shiny.tooltip_text = "Joga a melhor bola que você tiver (Idle, Ultra, Super…) em todo Pokémon shiny. O filtro de nomes vale para os dois modos."
+	ativar_shiny.button_pressed = EstadoJogo.auto_catch_shiny
+	ativar_shiny.toggled.connect(func(lig: bool) -> void: EstadoJogo.configuracao.definir_auto_catch_shiny(lig))
 	_filtro = _subsecao()
 	var filtro_coluna: VBoxContainer = VBoxContainer.new()
 	filtro_coluna.add_theme_constant_override("separation",4)
@@ -225,7 +226,7 @@ func _ready() -> void:
 	nomes.text_changed.connect(_on_nomes_text_changed)
 	var dica: Label = UI.texto("Empty field = catch all. The filter applies to\nboth modes.",10,Color("9aa6b3"))
 	dica.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	dica.tooltip_text = "Nesta versão o filtro é aplicado ao Auto-Catch normal."
+	dica.tooltip_text = "O filtro vale para o Auto-Catch e para o Auto-Catch Shiny."
 	filtro_coluna.add_child(dica)
 	EstadoJogo.estoque_bolas_alterado.connect(atualizar)
 	EstadoJogo.auto_catch_alterado.connect(atualizar)

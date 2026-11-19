@@ -6,6 +6,7 @@ const Fontes := preload("res://sim/fontes.gd")
 var especies: Dictionary = {}   # id -> espécie (dicionário do especies.json)
 var itens: Dictionary = {}      # id -> item
 var hunts: Dictionary = {}      # slug -> hunt
+var shiny: Dictionary = {}      # speciesId -> {looktype, tier, icone, cadaver} (C: SHINY_BY_DEX; só estas têm forma shiny)
 
 
 static func carregar() -> RefCounted:
@@ -17,6 +18,11 @@ static func carregar() -> RefCounted:
 		d.itens[int(i["id"])] = i
 	for h in Fontes.ler_json(base + "hunts.json"):
 		d.hunts[String(h["slug"])] = h
+	if FileAccess.file_exists(base + "shiny.json"):
+		var sh = Fontes.ler_json(base + "shiny.json")
+		if sh is Dictionary:
+			for k in sh:
+				d.shiny[int(k)] = sh[k]
 	return d
 
 

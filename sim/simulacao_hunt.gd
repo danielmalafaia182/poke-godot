@@ -125,11 +125,10 @@ func _montar() -> void:
 				st = Regras.calcular_stats(esp["base"], ivs, nivel_selv, q)
 				mhp = Regras.hp_combate_selvagem(int(st["hp"]), p)
 				tent += 1
-		mobs.append({"slot": slot, "especie": esp, "species_id": int(s["pokeId"]), "spawn": sp, "pos": sp, "de": sp,
+		mobs.append({"slot": slot, "especie": esp, "species_id": int(s["pokeId"]), "spawn": sp, "pos": sp, "de": sp, "shiny": _sortear_shiny(int(s["pokeId"])),
 			"passo_ms": inicio_ms, "facing": "south", "ultimo_passo_tick": -1000, "hp": mhp, "max_hp": mhp, "stats": st,
 			"stats_dano": Regras.calcular_stats_dano(esp["base"], ivs, nivel_selv, q, String(p.stats_dano_selvagem)),
-			"ivs": ivs, "qualidade": q, "nivel": nivel_selv, "dead": false, "morte_tick": -1, "prox_ataque": -1,
-			"shiny": false})
+			"ivs": ivs, "qualidade": q, "nivel": nivel_selv, "dead": false, "morte_tick": -1, "prox_ataque": -1})
 		slot += 1
 
 
@@ -406,6 +405,19 @@ func _respawns() -> void:
 			m["facing"] = "south"
 			m["prox_ataque"] = -1
 			m["ultimo_passo_tick"] = tick
+			m["shiny"] = _sortear_shiny(int(m["species_id"]))   # cada aparição sorteia de novo (o indivíduo é o mesmo)
+
+
+func _sortear_shiny(especie_id: int) -> bool:
+	## A: só espécie com forma shiny; nunca durante o lock de entrada (C: "nenhum Pokémon Shiny aparece"). Streak Shiny (C):
+	## +0,1% por ponto, relativo à chance (F). Sem forma shiny, não gasta número do RNG (a saída de quem não tem fica igual).
+	if not dados.shiny.has(especie_id) or float(p.shiny_chance) <= 0.0:
+		return false
+	var r: float = rng.randf()
+	if penalidade_ativa():
+		return false
+	var mult := 1.0 + float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("shiny", 0))
+	return r < float(p.shiny_chance) * mult
 
 
 func _expirar_cadaveres() -> void:
@@ -889,13 +901,17 @@ static func nomes_filtro(texto: String) -> Array:
 
 
 func _tentar_captura(m: Dictionary) -> bool:
-	if not cfg.get("auto_catch", false):
+	# C (Auto-Helper): Auto-Catch (bola própria) e Auto-Catch Shiny (outra bola, só em shiny); o filtro de nomes vale para
+	# os dois. A (M3): com o Auto-Catch desligado e o Shiny ligado, só os shinies recebem bola (Idle Ball).
+	var shiny := bool(m["shiny"])
+	var usa_shiny := shiny and bool(cfg.get("auto_catch_shiny", false)) and int(balls.get("counts", {}).get(str(int(cfg.get("bola_auto_catch_shiny", 0))), 0)) > 0
+	if not usa_shiny and not cfg.get("auto_catch", false):
 		return false
 	var nomes: Array = nomes_filtro(String(cfg.get("auto_catch_nomes", "")))
 	if not nomes.is_empty() and not String(m["especie"].get("nome", "")).to_lower() in nomes:
 		return false
 	# A bola da auto-captura é configuração própria (A: balls.selected = 1, mas as tentativas gastam a bola 3).
-	var sel := str(int(cfg.get("bola_auto_catch", 0)))
+	var sel := str(int(cfg.get("bola_auto_catch_shiny", 0) if usa_shiny else cfg.get("bola_auto_catch", 0)))
 	var counts: Dictionary = balls.get("counts", {})
 	if sel == "" or int(counts.get(sel, 0)) <= 0:
 		return false
@@ -910,7 +926,7 @@ func _tentar_captura(m: Dictionary) -> bool:
 	med["total"] = int(med.get("total", 0)) + 1
 	med["gasto"] = int(med.get("gasto", 0)) + int(p.captura_preco_bola.get(sel, 0))
 	if bool(m["shiny"]):   # C: shiny não usa o medidor (chance fixa por tier × força da bola)
-		chance = Regras.chance_captura_shiny(int(sel), String(m["especie"].get("tierShiny", "")), p)
+		chance = Regras.chance_captura_shiny(int(sel), String(dados.shiny.get(int(m["species_id"]), {}).get("tier", "")), p)
 	var sucesso: bool = rng.randf() < chance
 	if sucesso:
 		estatisticas["capturas"] += 1

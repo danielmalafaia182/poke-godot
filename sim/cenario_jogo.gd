@@ -59,6 +59,13 @@ static func cadaveres_observados(shiny: bool = false) -> Dictionary:
 		var g: Dictionary = d.get("shiny" if shiny else "normal", {})
 		for k in g:
 			r[k] = int(g[k]["corpo"])
+	if shiny:
+		# C (SHINY_BY_DEX): o cliente tem o cadáver shiny de parte das espécies; vale onde a gravação não mostrou (A primeiro)
+		var t = Fontes.ler_json(Fontes.pasta_dados() + "/gerados/shiny.json") if FileAccess.file_exists(Fontes.pasta_dados() + "/gerados/shiny.json") else null
+		if t is Dictionary:
+			for k in t:
+				if t[k].get("cadaver") != null and not r.has(k):
+					r[k] = int(t[k]["cadaver"])
 	return r
 
 
@@ -103,6 +110,8 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"auto_catch": bool(jogo.get("auto_catch", false)),
 		"bola_auto_catch": int(jogo.get("bola_auto_catch", 0)),
 		"auto_catch_nomes": String(jogo.get("auto_catch_nomes", "")),   # C: filtro de nomes do Auto-Helper
+		"auto_catch_shiny": bool(jogo.get("auto_catch_shiny", false)),   # C: Auto-Catch Shiny (bola própria)
+		"bola_auto_catch_shiny": int(jogo.get("bola_auto_catch_shiny", 0)),
 		"auto_potion": bool(jogo.get("auto_potion", false)),
 		"pocao_fixa": int(jogo.get("pocao_id", 0)),
 		"equipe": equipe,

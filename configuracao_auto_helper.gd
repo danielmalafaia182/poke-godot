@@ -11,6 +11,23 @@ var auto_potion_item_id: int = 200
 var auto_catch: bool = true
 var auto_catch_ball_id: int = 1
 var auto_catch_names: String = ""
+# C (Auto-Helper): Auto-Catch Shiny com bola própria. Decisão do usuário (ciclo 2): ligado. Bola 0 = a melhor que tiver (E).
+var auto_catch_shiny: bool = true
+var auto_catch_shiny_ball_id: int = 0
+const ORDEM_BOLA_SHINY: Array[int] = [7, 6, 4, 3, 2, 1]   # Golden Idle, Idle, Ultra, Super, Great, Poké (catchRate C)
+
+func definir_auto_catch_shiny(ativo: bool) -> void:
+	auto_catch_shiny = ativo
+	auto_catch_alterado.emit()
+
+func bola_shiny_efetiva() -> int:
+	## A bola que o Auto-Catch Shiny vai jogar: a escolhida, ou a de maior catchRate com estoque.
+	if auto_catch_shiny_ball_id != 0:
+		return auto_catch_shiny_ball_id
+	for id in ORDEM_BOLA_SHINY:
+		if inventario != null and inventario.obter_quantidade_bola(id) > 0:
+			return id
+	return 0
 
 func definir_auto_catch(ativo: bool) -> void:
 	auto_catch = ativo
