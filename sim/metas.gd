@@ -25,6 +25,7 @@ static var _poder_hunt := {}   # slug -> Power médio dos selvagens (cache por p
 static var _cache_golpes := {}  # líder|nível|espécie|nível da hunt -> golpes por abate
 static var _P: Dictionary = {}
 static var _p: Dictionary = {}
+static var _teto_xp := {}
 
 
 static func parametros() -> Dictionary:
@@ -136,12 +137,26 @@ static func ritmo(dados, slug: String, lider: Dictionary, nivel_lider: int = -1)
 	return {"abates_min": snappedf(am, 0.01), "xp_min": snappedf(am * xp / n, 1.0)}
 
 
-static func _melhor(dados, slugs: Array, lider: Dictionary, nl: int, teto_poder: float) -> Dictionary:
+static func _teto_xp_min(dados, slug: String) -> float:
+	## Maior XP/min possível na hunt (tudo em 1 golpe): serve para descartar hunts sem rodar a estimativa.
+	if not _teto_xp.has(slug):
+		if _P.is_empty():
+			_P = Regras.PARAMETROS.duplicate(true)
+			Balanceamento.aplicar(_P, "combate")
+			_p = parametros()
+		_teto_xp[slug] = xp_abate(dados, slug) * 60.0 / (float(int(_P.ataque_aliado_ticks) * int(_P.tick_ms)) / 1000.0 + float(_p.metas_s_extra_abate))
+	return float(_teto_xp[slug])
+
+
+static func _melhor(dados, slugs: Array, lider: Dictionary, nl: int, teto_poder: float, piso_xp_min: float = 0.0) -> Dictionary:
 	var melhor := {}
 	for slug in slugs:
 		if not dados.hunts.has(slug) or (dados.hunts[slug].get("spawns", []) as Array).is_empty():
 			continue
 		if float(poder_hunt(dados, slug)) > teto_poder:
+			continue
+		var limite := maxf(piso_xp_min, float(melhor.get("xp_min", 0.0)))
+		if limite > 0.0 and _teto_xp_min(dados, slug) <= limite:
 			continue
 		var r := ritmo(dados, slug, lider, nl)
 		if melhor.is_empty() or float(r["xp_min"]) > float(melhor["xp_min"]):
@@ -169,8 +184,8 @@ static func recomendacao(dados, hunts_lista: Array, nivel_treinador: int, lider:
 		var alvo := nl + passo
 		while alvo <= nl + int(p.metas_busca_niveis):
 			var pa := Regras.power(Regras.calcular_stats(esp["base"], lider["ivs"], alvo, q), q)
-			var m := _melhor(dados, lib, lider, alvo, float(pa) * float(p.metas_fator_poder))
 			var base := float(ritmo(dados, String(atual["slug"]), lider, alvo)["xp_min"])
+			var m := _melhor(dados, lib, lider, alvo, float(pa) * float(p.metas_fator_poder), base * (1.0 + float(p.metas_ganho_min)))
 			if not m.is_empty() and String(m["slug"]) != String(atual["slug"]) and float(m["xp_min"]) >= base * (1.0 + float(p.metas_ganho_min)):
 				prox = m
 				prox["nivel_lider"] = alvo
