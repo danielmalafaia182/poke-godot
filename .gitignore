@@ -24,3 +24,5 @@ __pycache__/
 
 # Gerado por test_configuracao_hunts.gd (teste do P04) a cada execução
 cenario_teste_config.tscn
+
+/builds/

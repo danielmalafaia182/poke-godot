@@ -59,6 +59,7 @@ def var_ouro_abate(sid):
         _VAR_OURO[sid] = max(0.0, v)
     return _VAR_OURO[sid]
 TOL = 0.10
+Z95 = 1.96   # intervalo de 95% (ESTRATEGIA.md, critério formal da classe 2)
 GRANDEZAS = [("abates_min", "Abates/min"), ("xp_h", "XP/h"), ("ouro_h", "Ouro/h"), ("mortes_h", "Mortes/h"), ("capturas_h", "Capturas/h")]
 EXTRAS = [("adj", "Ao lado/field"), ("luta", "Lutando"), ("golpes_abate", "Golpes/abate"), ("andando_s", "s andando/abate")]
 
@@ -178,13 +179,13 @@ def passa(k, real, sims, minutos=60.0, sd=0.0, n=0, faixa=None):
         return True
     if k == "capturas_h":
         nr, ns = real * minutos / 60.0, m * minutos / 60.0
-        if abs(ns - nr) <= 2.0 * math.sqrt(max(nr, 1.0)):
+        if abs(ns - nr) <= Z95 * math.sqrt(max(nr, 1.0)) * math.sqrt(1.0 + 1.0 / len(sims)):
             return True
     if k == "ouro_h" and faixa and faixa[0] <= real <= faixa[1]:
         return True                                    # o ouro real cabe no que a tabela dá para os abates da sim (95%)
     if k in ("abates_min", "xp_h", "mortes_h") and n > 0:
         # contagem de Poisson: o desvio da taxa é taxa/√n (abates e XP: n = abates; mortes: n = mortes)
-        if abs(m - real) <= 2.0 * abs(real) / math.sqrt(n) * math.sqrt(1.0 + 1.0 / len(sims)):
+        if abs(m - real) <= Z95 * abs(real) / math.sqrt(n) * math.sqrt(1.0 + 1.0 / len(sims)):
             return True
     if k == "adj" and abs(m - real) <= 0.05:          # E: perto de zero, ±10% é ruído (M3: 0,03 × 0,06)
         return True
@@ -277,6 +278,24 @@ def main():
         saida.append({"gravacao": w["gravacao"], "slug": x["slug"], "lider": x["lider"], "real": real, "sim": ss})
     resumo = ["", f"**{tot_ok}/{tot} grandezas dentro de ±10% ou do ruído da amostra** ({est_ok}/{tot} só com ±10%) em {sum(1 for w in trabalhos if sims.get(id(w)))} trechos "
               f"({a.sementes} sementes cada). Por grandeza: " + ", ".join(f"{n} {por_grandeza[k][0]}/{por_grandeza[k][1]}" for k, n in GRANDEZAS) + "."]
+    # teste de sinal: um desvio sistemático aparece como muitos trechos fora de ±10% no mesmo sentido
+    sinal = []
+    for k, nome in GRANDEZAS:
+        acima = abaixo = 0
+        for w in trabalhos:
+            ss = sims.get(id(w), [])
+            if not ss:
+                continue
+            rv = medir(w["trecho"]["arquivo"])[k]
+            sv = statistics.mean([x[k] for x in ss])
+            if rv > 0 and sv > rv * (1 + TOL):
+                acima += 1
+            elif rv > 0 and sv < rv * (1 - TOL):
+                abaixo += 1
+        n = acima + abaixo
+        p = min(1.0, 2.0 * sum(math.comb(n, i) for i in range(min(acima, abaixo) + 1)) / 2 ** n) if n else 1.0
+        sinal.append(f"{nome}: {acima} acima, {abaixo} abaixo (p = {p:.2f})")
+    resumo.append("Teste de sinal dos trechos fora de ±10% (sim acima × abaixo do real; p < 0,05 = desvio sistemático): " + "; ".join(sinal) + ".")
     txt = "\n".join(linhas + resumo + diag)
     print(txt)
     if a.md:

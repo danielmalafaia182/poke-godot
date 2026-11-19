@@ -15,6 +15,26 @@ Gravações não bloqueiam mais nada.
 | **2 — equivalente no resultado** | O jogador sente o efeito, não a fórmula: movimento, dano nos extremos, chegada de selvagens | Pronto quando abates/min, XP/h, ouro/h, mortes/h e capturas/h ficam a ±10% do real em cada trecho das gravações existentes (`ferramentas/validar_resultado.py`) |
 | **3 — desenhada** | Dado só no servidor, sem gravação, ou original incoerente | Decidida pelo melhor design (ritmo, clareza, sem muros de progressão), documentada em uma linha, com o valor em `dados/balanceamento.json`, nunca fixo no código |
 
+### Critério da classe 2 (formal, desde o ciclo 2)
+
+Para cada trecho de hunt de uma gravação (≥ 5 min, líder conhecido), a sim roda o mesmo trecho (mesmo time, Auto-Helper,
+VIP, inventário, HP de cada selvagem gravado) com N = 3 sementes. Para cada métrica m (abates/min, XP/h, ouro/h,
+mortes/h, capturas/h), com r = valor real e s = média das sementes, o trecho **passa** se:
+
+1. |s − r| ≤ 0,10 · r (±10%); **ou**
+2. a diferença cabe no intervalo de 95% do ruído da amostra:
+   - **Contagens** (abates, XP, mortes, capturas): Poisson. Com n eventos reais no trecho, o desvio da taxa é r/√n, e
+     passa se |s − r| ≤ 1,96 · (r/√n) · √(1 + 1/N). O √(1 + 1/N) soma a incerteza da média das N sementes. Para XP, o n
+     são os abates, porque o XP por abate é fixo por espécie (classe 1).
+   - **Ouro:** o loot raro deixa a distribuição assimétrica, então não se usa desvio. A tabela de loot (classe 1) é
+     sorteada 2.000 vezes para os abates da sim, com a mistura de espécies do real, e passa se r cair entre os
+     percentis 2,5 e 97,5.
+   - **Perto de zero:** mortes/h e capturas/h passam se r e s ficarem abaixo de 0,5/h.
+
+O relatório (`dados/relatorios/validar_resultado.md`) mostra as duas contagens: a estrita (só ±10%) e a com o ruído. A
+classe 2 está pronta quando todo trecho passa no critério com ruído. Pelo acaso, espera-se ~5% de trechos fora; um
+desvio que se repete no mesmo sentido em vários trechos é sistemático e tem de ser corrigido.
+
 Regras do dia a dia:
 - **Nunca parar esperando gravação.** As gravações livres chegam em `poke har/gravacoes/livre/` e servem para conferir.
   Se contradisserem uma decisão, a decisão é corrigida.
