@@ -302,7 +302,7 @@ Em luta curta o real junta **menos** não-alvos que a sim; em luta longa, **mais
 A sim fica com 7 até haver evidência nova. Opcionais: M4 (coleira), M5 (zoom × raio), M6 (luta de duração média, para
 achar onde o desvio muda de sinal); ver `PLANO_GRAVACOES_FASE3.md`.
 **Critério de pronto trocado em 18/11** (decisão do usuário): resultado por trecho de hunt, real × sim, ±10% — abates/min,
-XP/h, mortes/h, ouro/h e selvagens ao lado do herói (`ferramentas/fase4/resultado_trechos.py`,
+XP/h, mortes/h, ouro/h e selvagens ao lado do herói (`ferramentas/validar_resultado.py` (antes `ferramentas/fase4/resultado_trechos.py`),
 `dados/relatorios/resultado_trechos_2026-11-18.md`). Hoje 32/55 em 11 trechos. MV1–MV3 deixaram de existir; entram os
 trechos da gravação livre. O que segue é a análise anterior por grandeza, mantida como referência.
 **Reaberto em 18/11** (depois do alvo pelo tempo de caminho; `dados/relatorios/movimento_2026-11-18.md`, ferramenta
@@ -1096,7 +1096,7 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     união dos arquivos.
   - Não testado num navegador de verdade: se o download no fechamento passa depende do navegador; a recuperação cobre.
 - 18/11/2026 — Movimento, item 3: critério de pronto = resultado por trecho, real × sim, ±10%
-  (`ferramentas/fase4/resultado_trechos.py`).
+  (`ferramentas/validar_resultado.py` (antes `ferramentas/fase4/resultado_trechos.py`)).
   - Cada trecho útil de qualquer gravação (≥ 5 min, líder conhecido) vira estado inicial, com VIP, inventário, bolas,
     Auto-Helper e o **time real** (o `sim/cenario.gd` usa as reservas do `pokes.list` quando existem, no lugar dos
     Geodudes inventados), e roda na sim pela mesma duração com 3 sementes.
@@ -1108,3 +1108,31 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     - `extrair_estado_inicial.py` lê `pokes.list` (o `time`) e infere o VIP pela parcela `vip` do primeiro abate.
     - `segmentar.py` exporta o contexto e usa o líder conhecido depois, quando falta no começo.
   - Nenhuma regra de jogo mudou. O placar fica em 62/88 (70%).
+- 19/11/2026 — **Ciclo 1 da estratégia nova** (`ESTRATEGIA.md`). Classes: 1 exata, 2 resultado, 3 desenhada.
+  - **Placar por classe** (`PLACAR_ESCOPO.md`): classe 1 **53/53**; classe 2 **157/160** no validador; classe 3
+    **22/22** decididas.
+  - **Gravação livre:** 11 exportações e duas abas (contas) gravando juntas. O `segmentar.py` separa por `sessao`, lê em
+    streaming sem repetir linha, corta o trecho quando o Auto-Helper muda e guarda mensagens só dos pedaços exportados.
+  - **Validador da classe 2** (`ferramentas/validar_resultado.py` → `dados/relatorios/validar_resultado.md`): cinco
+    métricas por trecho (abates/min, XP/h, ouro/h, mortes/h, capturas/h), real × sim, 3 sementes.
+    - Passa a ±10% ou dentro do ruído da amostra: Poisson para contagens; para o ouro, a faixa de 95% sorteada da tabela
+      de loot.
+    - Resultado: 157/160 em 32 trechos (105/160 só com ±10%). Fora: 3 trechos de ouro com loot raro (esperado ~1,6 pelo
+      acaso).
+  - **Ajustes da sim:**
+    - `alvo_vem_ao_encontro` true (H4; M3 e S1 voltam a ±10%);
+    - filtro de nomes do Auto-Catch (C);
+    - no estado das gravações: maxHp gravado por slot, Auto-Helper gravado (bola, limite, poção, nomes) e o time real nas
+      reservas.
+  - **Diferencial:** 1h 28/30 (igual). O antigo (9 min de 09/11) cai para 21/26 com o alvo vindo ao encontro; sem ele,
+    25/26. Fica o validador, que é o critério da classe 2 e cobre 32 trechos.
+  - **Classe 3 em `dados/balanceamento.json`** (23 valores com motivo, `sim/balanceamento.gd`; `test_balanceamento` 8/8).
+  - **Inventário do cliente** (`INVENTARIO_CLIENTE.md`): 76 grupos de telas e textos, 16 feitos, 18 parciais e 42
+    faltando, 22 deles online.
+  - **Campanha com metas** (`dados/relatorios/campanha_metas_2026-11-19.md`):
+    - Graveler 22 h, Golem 40–102 h (sorte das 4 Rock Stones), Outland 69–109 h.
+    - Projeção (estimativa): Orre ~640 h, Nightmare ~30 mil h.
+    - Achado (A): o XP base é o `experience` da espécie. Orre 510–560 e Nightmare rendem menos que a Outland.
+    - 4 muros com proposta, sem aplicar.
+  - **Testes novos:** `test_balanceamento` 8/8, `test_auto_catch_filtro` 3/3. Regressão verde (31 testes do Godot,
+    scripts, P04 43/43).
