@@ -50,21 +50,22 @@ func _ready() -> void:
 	menu.mapa_solicitado.connect(_abrir_mapa_mundi)
 	menu.botoes["map"].tooltip_text = "Mapa-Múndi — escolher outra hunt"
 	# Ciclo 2: ícones do dock com janela (Perfil, Bolas usadas, Log de Capturas, Hunt Analyser, Streak, Diário, Pokédex)
-	janelas_dock = load("res://janelas_dock.gd").instalar(self, menu, controlador, pokepedia.abrir)
+	janelas_dock = load("res://janelas_dock.gd").instalar(self, menu, controlador if "registro" in controlador else null, pokepedia.abrir)
 	avisos = load("res://avisos_hud.gd").new()
 	avisos.name = "AvisosHud"
 	add_child(avisos)
-	avisos.relogio_ms = func() -> int: return controlador.sim.agora_ms() if controlador.sim != null else 0
-	controlador.subiu_nivel.connect(func(nome: String, nivel: int, treinador: bool) -> void:
-		if treinador:
-			avisos.nivel_treinador(nivel)
-		else:
-			avisos.nivel_pokemon(nome, nivel))
-	controlador.shiny_apareceu.connect(avisos.shiny_apareceu)
-	controlador.capturado.connect(func(nome: String, shiny: bool) -> void:
-		if shiny:
-			avisos.shiny_capturado(String(EstadoJogo.nome_treinador), nome))
-	controlador.boosts_alterados.connect(avisos.definir_boosts)
+	avisos.relogio_ms = func() -> int: return controlador.sim.agora_ms() if "sim" in controlador and controlador.sim != null else 0
+	if controlador.has_signal("subiu_nivel"):   # só a cena nova (caca_sim); a antiga (caca.gd) não tem estes sinais
+		controlador.subiu_nivel.connect(func(nome: String, nivel: int, treinador: bool) -> void:
+			if treinador:
+				avisos.nivel_treinador(nivel)
+			else:
+				avisos.nivel_pokemon(nome, nivel))
+		controlador.shiny_apareceu.connect(avisos.shiny_apareceu)
+		controlador.capturado.connect(func(nome: String, shiny: bool) -> void:
+			if shiny:
+				avisos.shiny_capturado(String(EstadoJogo.nome_treinador), nome))
+		controlador.boosts_alterados.connect(avisos.definir_boosts)
 	tutorial = load("res://painel_tutorial.gd").new()
 	tutorial.name = "PainelTutorial"
 	tutorial.na_hunt = true

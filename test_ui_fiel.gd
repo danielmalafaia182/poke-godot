@@ -80,7 +80,7 @@ func executar() -> void:
 	var indice: int = helper.seletor_limite.get_item_index(75)
 	helper.seletor_limite.item_selected.emit(indice)
 	checar(estado.auto_potion_threshold==75,"limite segue funcional")
-	checar(helper.ativar_shiny.disabled,"Shiny identificado como indisponível")
+	checar(not helper.ativar_shiny.disabled and helper.ativar_shiny.button_pressed==estado.auto_catch_shiny,"Auto-Catch Shiny disponível e ligado como no save (ciclo 2)")
 	# Clique exterior sobre o cabeçalho do perfil fecha apenas o modal.
 	await clicar(Vector2(40,30))
 	checar(not helper.janela.visible and not helper._sombra.visible,"clique exterior fecha e remove sombra")

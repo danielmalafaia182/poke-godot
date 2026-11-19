@@ -53,6 +53,11 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/atualizar_corpos.py` | Mantém `dados/corpos_por_especie.json` (espécie → cadáver, A) somando as observações de qualquer gravação nova (cada arquivo entra uma vez, por sha256) |
 | `testes/diag_ilhas.gd` | Ilha da grade do `start` e de cada spawn do hunt-config, por hunt |
 | `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
+| `sim/metas.gd`, `painel_metas.gd` | Ciclo 2: metas visíveis (hunt recomendada pelo XP/min estimado, próxima meta, marcos de nível e coleção); classe 3 em `balanceamento.json` "metas" |
+| `textos.gd`, `dados/pacotes/textos_pt.json` | Pacote de textos do cliente original (trocável), gerado por `ferramentas/inventario/gerar_pacote_textos.py` |
+| `janela_base.gd`, `janelas_dock.gd` | Janelas do ciclo 2 nos ícones do dock: Perfil, Bolas usadas, Log de Capturas, Hunt Analyzer, Pokédex, Todos os Shinys, Inventário, Streak, Diário |
+| `avisos_hud.gd`, `painel_tutorial.gd` | Avisos da hunt (level up, shiny, barra de boosts) e o tutorial do Professor Carvalho |
+| `ferramentas/build/montar_build.sh` | Monta `builds/<nome>/` (exe + pck + dados + snapshot) e verifica com APPDATA isolado (`verificar_build.gd`) |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
 | `dados/protocolo.json` | 146 tipos de mensagem; 65 comandos que o cliente envia; 72 eventos que ele escuta; 59 vistos nas gravações; 36 caminhos REST (com as gravações da fase 4) |
 | `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas × modelo do medidor (partindo do used-balls do início), lock de entrada |
