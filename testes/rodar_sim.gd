@@ -43,7 +43,10 @@ static func ler_params(texto: String) -> Dictionary:
 static func simular(estado: String, segundos: int, semente: int, params: Dictionary = {}) -> Dictionary:
 	var dados = DadosJogo.carregar()
 	var cfg := Cenario.de_estado(caminho_absoluto(estado), dados, semente)
-	cfg["parametros"] = params
+	var base: Dictionary = cfg.get("parametros", {})
+	for k in params:
+		base[k] = params[k]
+	cfg["parametros"] = base
 	var mapa = MapaHunt.carregar(cfg["slug"], Fontes.ler_mapa(cfg["slug"]), Fontes.ler_colisao())
 	var sim = Simulacao.new(cfg, dados, mapa)
 	var grav = Gravador.new("sim-%s-%d" % [cfg["slug"], semente])

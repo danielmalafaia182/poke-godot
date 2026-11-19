@@ -50,6 +50,9 @@ const PARAMETROS := {
 	"primeiro_ataque_selvagem_ticks": 10,   # F: 1º golpe ~2000 ms depois de encostar (4 casos: 1600–3200 ms)
 	"mob_espera_apos_heroi_ticks": 0,      # F (experimento M3): selvagem só dá passo N ticks depois do último passo do herói; 0 = desligado
 	"visao_meia_largura": 13,               # A: perseguição até |dx| 13, nunca 14+ (rhydon-1h, M1, M2)
+	# Classe 2 (19/11, validador): o alvo do herói anda até ele mesmo de fora da caixa de visão (H4). Validador 124/140 com,
+	# 122/140 sem; fecha os trechos de abate num golpe só (M3 −15% → −4%, S1 −15% → 0%) sem mexer nos outros.
+	"alvo_vem_ao_encontro": true,
 	"visao_meia_altura": 7,                 # F (sim). A borda real medida em 10/11/2026 é 13 nos dois eixos: selvagens se
 	                                        # aproximam com |dy| até 13 (0,16–0,43 por intervalo em |dy| 8–13, centenas de
 	                                        # intervalos na rhydon-1h; M1/M2 iguais) e nunca com 14+. Com 13 na sim, o

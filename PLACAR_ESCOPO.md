@@ -6,13 +6,13 @@ reclassificado: cada regra caiu numa classe e é contada pelo critério dela.
 
 | Classe | Critério | Placar |
 | --- | --- | --- |
-| **1 — exata** | Igual ao original (gravação, cliente ou Pokepedia) e conferida por teste ou ferramenta | **52/53** |
-| **2 — equivalente no resultado** | As 5 métricas a ±10% do real em cada trecho (`ferramentas/validar_resultado.py`) | ver `dados/relatorios/validar_resultado.md` |
-| **3 — desenhada** | Decidida, documentada em uma linha, valor em `dados/balanceamento.json` | **14/14** decididas |
+| **1 — exata** | Igual ao original (gravação, cliente ou Pokepedia) e conferida por teste ou ferramenta | **53/53** |
+| **2 — equivalente no resultado** | As 5 métricas a ±10% do real ou dentro do ruído da amostra, em cada trecho (`ferramentas/validar_resultado.py`) | **157/160** em 32 trechos (`dados/relatorios/validar_resultado.md`) |
+| **3 — desenhada** | Decidida, documentada em uma linha, valor em `dados/balanceamento.json` | **22/22** decididas (17 com valor no JSON, 5 como regra no código) |
 
 A classe 2 conta pelo resultado, não por regra: as regras dela (lista abaixo) estão prontas quando o validador passa.
 
-## Classe 1 — exata (52/53)
+## Classe 1 — exata (53/53)
 
 | Área | Regra | Situação | Evidência |
 | --- | --- | --- | --- |
@@ -57,7 +57,7 @@ A classe 2 conta pelo resultado, não por regra: as regras dela (lista abaixo) e
 | Auto-Potion | Cura até o valor da poção, limitada ao que falta | ✅ | A |
 | Auto-Catch | Uma bola por abate (a do Auto-Helper) | ✅ | A |
 | Auto-Catch | O capturado chega no nível 1 | ✅ | A |
-| Auto-Catch | Filtro de nomes do Auto-Catch | ❌ | C (o cliente tem); não repassado à sim |
+| Auto-Catch | Filtro de nomes (vírgula; em branco = todos; vale para os dois modos) | ✅ | C; `test_auto_catch_filtro` 3/3 |
 | Nurse Joy | Cura o time inteiro, na hora, grátis, sem recarga; resposta `joy-healed` | ✅ | A (G4) |
 | Depot | Só itens (bolas ficam na BAG); move a pilha inteira; "guardar tudo" esvazia a BAG | ✅ | A (G4) |
 | Depot | Resposta `{inventory, depot}` com os campos do original; time de 6 | ✅ | A/C |
@@ -75,6 +75,30 @@ A classe 2 conta pelo resultado, não por regra: as regras dela (lista abaixo) e
 Pronta quando o validador passa nos trechos de todas as gravações. As regras abaixo são os meios; o placar é o do
 validador.
 
+**Validador (19/11):** 157/160 em 32 trechos, de 14 gravações e da gravação livre (22 h de caça em duas abas). Só com
+±10% estrito, 105/160. Por grandeza:
+
+| Grandeza | Dentro |
+| --- | --- |
+| Abates/min | 32/32 |
+| XP/h | 32/32 |
+| Mortes/h | 32/32 |
+| Capturas/h | 32/32 |
+| Ouro/h | 29/32 |
+
+- **O que ficou fora:** 3 trechos de ouro/h (larvitar 13,6 min, tyranitar 6 min, larvitar 5,4 h na borda do percentil 2,5).
+  É o loot raro e caro: pelo acaso se esperam ~1,6 trechos fora da faixa de 95%. O ouro por abate dos trechos longos bate
+  com a tabela (17,9–21 × 18,6).
+- **Ajustes da sim que fecharam o resto:**
+  - o alvo vem ao encontro do herói (`alvo_vem_ao_encontro`; fechou M3 e S1, os de abate num golpe só);
+  - a borda de perseguição continua em 7, porque com o maxHp gravado ela é a melhor (122 × 118–120 com 10, 11 e 13).
+- **Mudanças só no validador (o jogo não muda):**
+  - os selvagens da sim têm o maxHp gravado de cada slot, o que tira o ruído de instância (o M1 foi de −23% para −5%);
+  - o trecho é cortado quando o Auto-Helper muda;
+  - o estado usa o limite da Auto-Potion e a bola gravados.
+- **Dano de nível 1:** o G11 tem 32 abates no real contra 24 na sim; está dentro do ruído e foi decidido como classe 3
+  (abaixo).
+
 | Regra (meio) | Situação hoje |
 | --- | --- |
 | Movimento: passo, perseguição (13×13 no real, 7 na sim), caminho até o alvo, chegada de selvagens | Cadência por passo igual (A); o resultado é medido pelo validador |
@@ -84,26 +108,35 @@ validador.
 | Medidor de captura (forma c, k; valor da bola = ouro) | Capturas/h no validador |
 | Respawn 60 s no mesmo spawn | A |
 
-## Classe 3 — desenhada (14/14 decididas)
+## Classe 3 — desenhada (22/22 decididas)
 
-Cada uma com uma linha de motivo e o valor em `dados/balanceamento.json`.
+Os valores com número estão em `dados/balanceamento.json`, cada um com uma linha de motivo, e são lidos por
+`sim/balanceamento.gd`. O teste `test_balanceamento` confere que mudar o JSON muda o jogo.
 
-| Regra | Decisão |
-| --- | --- |
-| Ouro inicial | 0 (o kit já basta para a primeira hora) |
-| IV e Quality do inicial | Sorteio do cliente (o mesmo do capturado, A) |
-| Inicial do jogo novo | Geodude nível 1 (decisão do usuário); os três do original como opção |
-| Servidor recusar entrada sem nível | Igual ao cliente (barra no mapa) |
-| `hunt-cooldown` | 0 ms (sem espera para entrar) |
-| Parcela `gym` (insígnias) | floor(1% da base por insígnia ativa) |
-| Parcelas `guild` e `mentor` | 0 (sem guilda nem mentor no jogo offline) |
-| Desempate de golpe por cooldown | Menor cooldown |
-| Troca automática após desmaio | Aleatória entre os vivos do time, 5 s sem troca manual |
-| Efeitos de status | Sem efeito (golpes de status ficam fora da escolha) |
-| Raridade e shiny na captura | Raridade não pesa no medidor; shiny com a mesma chance × shinyBase 1 |
-| Receita das pedras de evolução | Tipo principal + tipos ganhos; 4 pedras a partir do nível 40 de hunt |
-| Daily Catch (multiplicador de XP) e Daily Kill (opções) | Sorteio por dia e slot, faixas em `balanceamento.json` |
-| Limites do depot e da BOX | 200 pilhas no depot, 3000 na BOX |
+| Regra | Decisão | Onde |
+| --- | --- | --- |
+| Ouro inicial | 0: o kit cobre a primeira hora | `jogo_novo.ouro_inicial` |
+| Troca automática após desmaio | Aleatória entre os vivos do time, 5 s sem troca manual | `combate.troca_cooldown_ms` |
+| Parcela `gym` e drop das insígnias | +1% da base e +1% de rolagem extra por insígnia ativa | `combate.insignia_pct_*` |
+| Sem caminho até o alvo | Ataca o encostado | `combate.alvo_troca_se_bloqueado` |
+| `start` numa ilha sem spawn | Começa na ilha que alcança mais spawns | `combate.inicio_ilha_com_spawns` |
+| Cadáver de espécie sem dado | O próprio sprite escurecido | `combate.cadaver_generico` |
+| Golpes de poder 600 (assinatura) | Fora da escolha | `combate.golpe_poder_maximo` |
+| Shiny na captura | Vazio enquanto a sim não sorteia shiny (backlog) | `combate.captura_shiny_base` |
+| Cartão de derrota | 4,5 s (shiny 7 s), até 30 por instância | `apresentacao.*` |
+| Limites do depot e da BOX | 200 pilhas, 3000 Pokémon | `cidade.capacidade_*` |
+| Inicial fora da BOX | Sempre no time | `cidade.starter_no_time` |
+| Limite por compra | 100 mil | `cidade.qtd_max_por_compra` |
+| Daily Gift | Boost de 1 h, somando se repetir | `diarias.gift_boost_ms` |
+| Daily Kill | 3 opções; quantidades por dificuldade | `diarias.kill_*` |
+| Daily Catch | Multiplicador de XP em [1,5; 18], múltiplo de 0,5 | `diarias.catch_mult_*` |
+| Turbo da soneca | Desligado (sem diamantes) | `jogador.soneca_turbo_disponivel` |
+| Jogo fechado numa hunt | Continua até 15 min | `jogador.fechado_caca_max_s` |
+| IV e Quality do inicial | Sorteio do cliente (o mesmo do capturado, A) | `sim/servico_novo_jogo.gd` (regra) |
+| Receita das pedras | Tipo principal + tipos ganhos; 4 pedras a partir de hunt nível 40 | `sim/servico_cidade.gd` (regra) |
+| Dano do aliado no nível 1–5 | Fórmula do nível alto com piso 3 no ataque; a diferença para o real (G11, rattata livre) fica dentro do ruído dos trechos | `sim/regras.gd` `piso_ataque_aliado` |
+| Sem servidor | Entrada sem nível barrada no mapa como no cliente; `hunt-cooldown` 0; sem guilda nem mentor (parcelas 0); golpes de status sem efeito | regras sem número |
+| Inicial do jogo novo | Geodude nível 1 (decisão do usuário) | `sim/servico_novo_jogo.gd` |
 
 ## Onde jogar (só para conferir; nada espera gravação)
 

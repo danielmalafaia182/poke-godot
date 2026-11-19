@@ -7,6 +7,7 @@ extends RefCounted
 ## Ordem dentro de um tick (E): respawns → cadáveres → herói (alvo, passo, ataque, abates) → selvagens (passo, ataque)
 ## → KO/troca → poção → `field` (nos ticks pares, com os hits acumulados desde o último field).
 
+const Balanceamento := preload("res://sim/balanceamento.gd")
 const Regras := preload("res://sim/regras.gd")
 const Rng := preload("res://sim/rng.gd")
 
@@ -49,6 +50,9 @@ var ajuste_inicio := {}            # diagnóstico: como o `start` do hunt-config
 var _pass := PackedByteArray()     # 1 = tile transitável (cópia plana da grade, para o laço do caminho)
 const _DX := [0, 1, 0, -1, 1, 1, -1, -1]   # = DIRECOES (retas antes das diagonais)
 const _DY := [-1, 0, 1, 0, -1, 1, 1, -1]
+var _campo_alvo := PackedInt32Array()           # campo do alvo vindo de fora da visão (alvo_vem_ao_encontro)
+var _campo_alvo_caixa := Rect2i()
+var _campo_alvo_chave := Vector3i(-99999, -99999, -1)
 var _campo_global := PackedInt32Array()          # campo de tempo do herói no mapa inteiro (sem selvagens), por destino
 var _campo_global_chave := Vector2i(-99999, -99999)
 var estatisticas := {"abates": 0, "hits_aliado": 0, "hits_selvagem": 0, "curas": 0, "capturas": 0, "kos": 0,
@@ -60,6 +64,7 @@ func _init(config: Dictionary, dados_jogo: RefCounted, mapa_hunt: RefCounted) ->
 	dados = dados_jogo
 	mapa = mapa_hunt
 	p = Regras.PARAMETROS.duplicate()
+	Balanceamento.aplicar(p, "combate")   # classe 3: dados/balanceamento.json
 	for k in cfg.get("parametros", {}):
 		p[k] = cfg["parametros"][k]
 	rng = Rng.new(int(cfg.get("semente", 1)))
@@ -109,6 +114,17 @@ func _montar() -> void:
 		var q := Regras.sortear_qualidade(rng)
 		var st := Regras.calcular_stats(esp["base"], ivs, nivel_selv, q)
 		var mhp := Regras.hp_combate_selvagem(int(st["hp"]), p)
+		# Validação (ferramentas/validar_resultado.py): com o maxHp gravado de cada slot, sorteia de novo até o indivíduo ter
+		# o mesmo HP (tira o ruído de instância: 15 indivíduos reais × 15 sorteados). O jogo não passa isso: sorteio livre.
+		var alvos: Array = cfg.get("maxhp_por_slot", [])
+		if slot < alvos.size() and int(alvos[slot]) > 0:
+			var tent := 0
+			while mhp != int(alvos[slot]) and tent < 3000:
+				ivs = Regras.sortear_ivs(rng)
+				q = Regras.sortear_qualidade(rng)
+				st = Regras.calcular_stats(esp["base"], ivs, nivel_selv, q)
+				mhp = Regras.hp_combate_selvagem(int(st["hp"]), p)
+				tent += 1
 		mobs.append({"slot": slot, "especie": esp, "species_id": int(s["pokeId"]), "spawn": sp, "pos": sp, "de": sp,
 			"passo_ms": inicio_ms, "facing": "south", "ultimo_passo_tick": -1000, "hp": mhp, "max_hp": mhp, "stats": st,
 			"stats_dano": Regras.calcular_stats_dano(esp["base"], ivs, nivel_selv, q, String(p.stats_dano_selvagem)),
@@ -862,8 +878,21 @@ static func _com_debuff(partes: Dictionary, debuff: int) -> Dictionary:
 	return partes
 
 
+static func nomes_filtro(texto: String) -> Array:
+	## C (Auto-Helper): "Nomes (separe por vírgula)"; "Campo em branco = capturar todos. O filtro vale pros dois modos."
+	var r: Array = []
+	for n in texto.split(",", false):
+		var t := n.strip_edges().to_lower()
+		if t != "":
+			r.append(t)
+	return r
+
+
 func _tentar_captura(m: Dictionary) -> bool:
 	if not cfg.get("auto_catch", false):
+		return false
+	var nomes: Array = nomes_filtro(String(cfg.get("auto_catch_nomes", "")))
+	if not nomes.is_empty() and not String(m["especie"].get("nome", "")).to_lower() in nomes:
 		return false
 	# A bola da auto-captura é configuração própria (A: balls.selected = 1, mas as tentativas gastam a bola 3).
 	var sel := str(int(cfg.get("bola_auto_catch", 0)))
@@ -955,7 +984,8 @@ func _turno_selvagens() -> void:
 				m["prox_ataque"] = tick + int(p.ataque_selvagem_ticks) + extra
 		else:
 			m["prox_ataque"] = -1
-			if _na_visao(m["pos"]) and _espera_minima_ok(m, int(p.mob_step_ms)) 					and tick - int(heroi["ultimo_passo_tick"]) >= int(p.mob_espera_apos_heroi_ticks):
+			var vem := _na_visao(m["pos"]) or (bool(p.alvo_vem_ao_encontro) and int(m["slot"]) == int(heroi["alvo"]))
+			if vem and _espera_minima_ok(m, int(p.mob_step_ms)) 					and tick - int(heroi["ultimo_passo_tick"]) >= int(p.mob_espera_apos_heroi_ticks):
 				_passo_mob(m)
 	_pos_dano()
 
@@ -971,7 +1001,17 @@ func _passo_mob(m: Dictionary) -> void:
 		_campo_mob = _campo_tempo(h, _campo_mob_caixa, _custos(int(p.mob_step_ms)), {})
 	var slot: int = m["slot"]
 	var pode := func(n): return _livre(n) and n != h and not _ocupado_por_mob(n, slot)
-	var melhor := _plano(m, h, func(): return _escolher_passo(atual, h, _campo_mob, _campo_mob_caixa,
+	var campo := _campo_mob
+	var caixa := _campo_mob_caixa
+	if not caixa.has_point(atual):
+		# alvo fora da caixa de visão vindo ao encontro (alvo_vem_ao_encontro): campo numa caixa que cobre os dois
+		if _campo_alvo_chave != Vector3i(h.x, h.y, slot):
+			_campo_alvo_chave = Vector3i(h.x, h.y, slot)
+			_campo_alvo_caixa = _caixa(h, atual, int(p.caminho_margem), int(p.caminho_margem))
+			_campo_alvo = _campo_tempo(h, _campo_alvo_caixa, _custos(int(p.mob_step_ms)), {})
+		campo = _campo_alvo
+		caixa = _campo_alvo_caixa
+	var melhor := _plano(m, h, func(): return _escolher_passo(atual, h, campo, caixa,
 		_custos(int(p.mob_step_ms)), pode, p.desempate_mob), pode)
 	if melhor == atual:
 		return

@@ -11,6 +11,7 @@ Tipos de trecho:
   hunt    de um field-init até o fim da instância, cortado em pedaços quando:
             - o líder muda (heroName/heroLooktype do field, poke-summon, switch)          → "troca de time"
             - o zoom muda (comando view com {hc, hr} diferente)                           → "zoom"
+            - o Auto-Helper muda (bola do Auto-Catch, poção, limite)                     → "auto-helper"
             - há um buraco nos fields (serverNow pula mais de BURACO_S: aba em segundo plano, PC dormindo,
               conexão caída)                                                             → "buraco"
           A entrada é nova (huntKey sem ":rN") ou retomada. A janela da penalidade vem do boost shinylock (A).
@@ -215,6 +216,16 @@ class _Sessao:
     def msg(self, d, m):
         t = m.get("type")
         if d == "in" and t in ("vip", "inventory", "balls", "autohelper"):
+            if t == "autohelper" and self.ped is not None and "autohelper" in self.ultimo:
+                chaves = ("autoCatch", "autoCatchBallId", "autoCatchNames", "autoPotion", "autoPotionItemId", "autoPotionThreshold")
+                antes = {c: self.ultimo["autohelper"].get(c) for c in chaves}
+                if antes != {c: m.get(c) for c in chaves}:
+                    # Auto-Helper mudou no meio da hunt (bola, poção, limite): pedaço novo (a sim usa um Auto-Helper só)
+                    tt, quem = self.ped.t1, self.ped.lider
+                    self.ultimo[t] = m
+                    self.fechar_ped()
+                    self.ped = Pedaco(self.inst, "auto-helper", tt, quem, self.view)
+                    return
             self.ultimo[t] = m
         if d == "out":
             if t == "view":

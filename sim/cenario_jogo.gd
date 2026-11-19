@@ -102,6 +102,7 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"ativo_inicial": int(jogo.get("lider", 0)),
 		"auto_catch": bool(jogo.get("auto_catch", false)),
 		"bola_auto_catch": int(jogo.get("bola_auto_catch", 0)),
+		"auto_catch_nomes": String(jogo.get("auto_catch_nomes", "")),   # C: filtro de nomes do Auto-Helper
 		"auto_potion": bool(jogo.get("auto_potion", false)),
 		"pocao_fixa": int(jogo.get("pocao_id", 0)),
 		"equipe": equipe,

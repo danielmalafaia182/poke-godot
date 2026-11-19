@@ -644,7 +644,7 @@ func extrair_jogo_hunt(nome_hunt: String) -> Dictionary:
 	return {"membros": membros, "jogo": {"hunt": nome_hunt, "equipe": equipe, "lider": maxi(0, membros.find(lider)),
 		"treinador_xp": experiencia_treinador_acumulada, "inventario": inventario, "bolas": estoque_bolas.duplicate(),
 		"nomes_bolas": nomes_bolas, "auto_catch": auto_catch, "bola_auto_catch": auto_catch_ball_id, "auto_potion": auto_potion,
-		"pocao_id": auto_potion_item_id, "limite_pocao": auto_potion_threshold, "medidor_captura": medidor_captura, "vip": vip}}
+		"pocao_id": auto_potion_item_id, "limite_pocao": auto_potion_threshold, "auto_catch_nomes": auto_catch_names, "medidor_captura": medidor_captura, "vip": vip}}
 
 func registrar_captura_especie(nome: String) -> bool:
 	## A: o capturado chega no nível 1; IVs e Quality pelo sorteio do próprio jogo (DadosPokemon), como no P04.

@@ -59,8 +59,15 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int, o
 			equipe.append({"id": "reserva-%d" % i, "speciesId": 74, "nivel": 1, "ivs": {"hp": 16, "atk": 16, "def": 16, "spAtk": 16, "spDef": 16, "speed": 16},
 				"quality": 1.0, "leader": false, "starter": false, "sellValue": 0})
 	var base_ms := int(String(est["huntKey"]).split(":")[1])
+	# maxHp de cada slot no 1º field (A): a sim sorteia indivíduos com o mesmo HP (validação de resultado por trecho)
+	var maxhp_slots: Array = est.get("primeiroField", {}).get("mobsMaxHp", [])
 	var balls: Dictionary = est.get("balls", {})
 	return {
+		"maxhp_por_slot": maxhp_slots,
+		# Auto-Helper gravado (A): limite e poção fixa da Auto-Potion
+		"parametros": ({"pocao_limiar": float(est["autohelper"].get("autoPotionThreshold", 50)) / 100.0}
+			if est.has("autohelper") and est["autohelper"].get("autoPotionThreshold") != null else {}),
+		"pocao_fixa": int(est.get("autohelper", {}).get("autoPotionItemId", 0) if est.get("autohelper", {}).get("autoPotionItemId") != null else 0),
 		"slug": slug,
 		"semente": semente,
 		"inicio_ms": base_ms,
@@ -71,8 +78,10 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int, o
 		# A: entrada nova (huntKey sem ":rN") recebe a penalidade de XP; retomada não (gravação antiga é ":r1")
 		"entrada_nova": not _eh_retomada(String(est["huntKey"])),
 		"vip": est.has("vip"),
-		"auto_catch": est.has("primeiroCatchResult"),
-		"bola_auto_catch": int(est.get("primeiroCatchResult", {}).get("ballId", 0)),  # A: não é balls.selected
+		# Auto-Helper gravado quando existe (A); senão, pelo 1º catch-result (a bola da auto-captura não é balls.selected)
+		"auto_catch": bool(est["autohelper"].get("autoCatch")) if est.has("autohelper") and est["autohelper"].get("autoCatch") != null else est.has("primeiroCatchResult"),
+		"bola_auto_catch": int(est["autohelper"].get("autoCatchBallId")) if est.has("autohelper") and est["autohelper"].get("autoCatchBallId") != null 			else int(est.get("primeiroCatchResult", {}).get("ballId", 0)),
+		"auto_catch_nomes": String(est.get("autohelper", {}).get("autoCatchNames", "") if est.get("autohelper", {}).get("autoCatchNames") != null else ""),
 		"auto_potion": true,
 		"equipe": equipe,
 		"treinador": {"xp": xp_treinador},

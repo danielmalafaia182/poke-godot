@@ -60,6 +60,8 @@ def main():
             continue
         if t == "vip" and "vip" not in est:
             est["vip"] = m
+        if t == "autohelper" and "primeiroField" not in est:
+            est["autohelper"] = {k: m.get(k) for k in ("autoCatch", "autoCatchBallId", "autoCatchNames", "autoPotion", "autoPotionItemId", "autoPotionThreshold")}
         if t == "poke-delta":
             deltas.append(m["poke"])
         if t == "pokes":
