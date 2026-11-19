@@ -23,12 +23,12 @@ static func validar(dados: Dictionary) -> String:
   var n: Variant=dados["nivel_combate"]
   if not (n is int or n is float):return "Nível de combate inválido."
   if not is_finite(float(n)) or float(n)<1 or float(n)>100000 or float(n)!=floorf(float(n)):return "Nível de combate inválido."
- for campo in ["nivel","xp","vip","cenario","navegacao","inicio","pontos","populacao","respawn"]:
+ for campo in ["nivel","xp","vip","navegacao","inicio","pontos","populacao","respawn"]:
   if not dados.has(campo): return "Campo ausente: "+campo
  for campo in ["nivel","xp","vip","populacao","respawn"]:
   if not (dados[campo] is float or dados[campo] is int): return "Número inválido: "+campo
  if dados["nivel"]<1 or dados["xp"]<0 or dados["vip"]<0 or dados["respawn"]<=0: return "Valores inválidos."
- if not dados["cenario"] is String or not ResourceLoader.exists(dados["cenario"],"PackedScene"): return "Cenário indisponível."
+ # ciclo 3: a cena de hunt antiga (cenario_caca.tscn) foi removida; o catálogo só serve a rótulos do mapa e ao comparador
  if not dados["navegacao"] is String or not FileAccess.file_exists(dados["navegacao"]): return "Navegação indisponível."
  if not _celula(dados["inicio"]): return "Posição inicial inválida."
  if not dados["pontos"] is Array or dados["populacao"]<1 or dados["populacao"]!=int(dados["populacao"]) or dados["populacao"]>dados["pontos"].size(): return "População inválida."
