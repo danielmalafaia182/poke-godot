@@ -208,5 +208,536 @@
       ],
       "motivo": "espécies diferentes capturadas; mais a 'Pokédex da região' (espécies das hunts liberadas)"
     }
+  },
+  "ginasios": {
+    "lista": {
+      "valor": [
+        {
+          "id": "pewter",
+          "regiao": "kanto",
+          "tipo": "ROCK",
+          "lider": "Brock",
+          "insignia": "Boulder Badge",
+          "nivel_treinador": 10,
+          "time": [
+            {
+              "speciesId": 76,
+              "nivel": 6
+            },
+            {
+              "speciesId": 213,
+              "nivel": 6
+            },
+            {
+              "speciesId": 142,
+              "nivel": 8
+            }
+          ]
+        },
+        {
+          "id": "cerulean",
+          "regiao": "kanto",
+          "tipo": "WATER",
+          "lider": "Misty",
+          "insignia": "Cascade Badge",
+          "nivel_treinador": 20,
+          "time": [
+            {
+              "speciesId": 131,
+              "nivel": 13
+            },
+            {
+              "speciesId": 230,
+              "nivel": 13
+            },
+            {
+              "speciesId": 130,
+              "nivel": 16
+            }
+          ]
+        },
+        {
+          "id": "vermilion",
+          "regiao": "kanto",
+          "tipo": "ELECTRIC",
+          "lider": "Lt. Surge",
+          "insignia": "Thunder Badge",
+          "nivel_treinador": 30,
+          "time": [
+            {
+              "speciesId": 26,
+              "nivel": 20
+            },
+            {
+              "speciesId": 125,
+              "nivel": 20
+            },
+            {
+              "speciesId": 181,
+              "nivel": 24
+            }
+          ]
+        },
+        {
+          "id": "celadon",
+          "regiao": "kanto",
+          "tipo": "GRASS",
+          "lider": "Erika",
+          "insignia": "Rainbow Badge",
+          "nivel_treinador": 45,
+          "time": [
+            {
+              "speciesId": 45,
+              "nivel": 29
+            },
+            {
+              "speciesId": 103,
+              "nivel": 29
+            },
+            {
+              "speciesId": 154,
+              "nivel": 29
+            },
+            {
+              "speciesId": 3,
+              "nivel": 36
+            }
+          ]
+        },
+        {
+          "id": "fuchsia",
+          "regiao": "kanto",
+          "tipo": "POISON",
+          "lider": "Koga",
+          "insignia": "Soul Badge",
+          "nivel_treinador": 60,
+          "time": [
+            {
+              "speciesId": 31,
+              "nivel": 39
+            },
+            {
+              "speciesId": 73,
+              "nivel": 39
+            },
+            {
+              "speciesId": 3,
+              "nivel": 39
+            },
+            {
+              "speciesId": 169,
+              "nivel": 48
+            }
+          ]
+        },
+        {
+          "id": "saffron",
+          "regiao": "kanto",
+          "tipo": "PSYCHIC",
+          "lider": "Sabrina",
+          "insignia": "Marsh Badge",
+          "nivel_treinador": 80,
+          "time": [
+            {
+              "speciesId": 80,
+              "nivel": 52
+            },
+            {
+              "speciesId": 65,
+              "nivel": 52
+            },
+            {
+              "speciesId": 121,
+              "nivel": 52
+            },
+            {
+              "speciesId": 103,
+              "nivel": 64
+            }
+          ]
+        },
+        {
+          "id": "cinnabar",
+          "regiao": "kanto",
+          "tipo": "FIRE",
+          "lider": "Blaine",
+          "insignia": "Volcano Badge",
+          "nivel_treinador": 100,
+          "time": [
+            {
+              "speciesId": 78,
+              "nivel": 65
+            },
+            {
+              "speciesId": 38,
+              "nivel": 65
+            },
+            {
+              "speciesId": 157,
+              "nivel": 65
+            },
+            {
+              "speciesId": 6,
+              "nivel": 65
+            },
+            {
+              "speciesId": 59,
+              "nivel": 80
+            }
+          ]
+        },
+        {
+          "id": "viridian",
+          "regiao": "kanto",
+          "tipo": "GROUND",
+          "lider": "Giovanni",
+          "insignia": "Earth Badge",
+          "nivel_treinador": 130,
+          "time": [
+            {
+              "speciesId": 76,
+              "nivel": 84
+            },
+            {
+              "speciesId": 232,
+              "nivel": 84
+            },
+            {
+              "speciesId": 34,
+              "nivel": 84
+            },
+            {
+              "speciesId": 31,
+              "nivel": 84
+            },
+            {
+              "speciesId": 208,
+              "nivel": 104
+            }
+          ]
+        },
+        {
+          "id": "violet",
+          "regiao": "johto",
+          "tipo": "FLYING",
+          "lider": "Falkner",
+          "insignia": "Zephyr Badge",
+          "nivel_treinador": 160,
+          "time": [
+            {
+              "speciesId": 123,
+              "nivel": 104
+            },
+            {
+              "speciesId": 142,
+              "nivel": 104
+            },
+            {
+              "speciesId": 6,
+              "nivel": 104
+            },
+            {
+              "speciesId": 169,
+              "nivel": 104
+            },
+            {
+              "speciesId": 130,
+              "nivel": 128
+            }
+          ]
+        },
+        {
+          "id": "azalea",
+          "regiao": "johto",
+          "tipo": "BUG",
+          "lider": "Bugsy",
+          "insignia": "Hive Badge",
+          "nivel_treinador": 190,
+          "time": [
+            {
+              "speciesId": 214,
+              "nivel": 124
+            },
+            {
+              "speciesId": 212,
+              "nivel": 124
+            },
+            {
+              "speciesId": 127,
+              "nivel": 124
+            },
+            {
+              "speciesId": 123,
+              "nivel": 124
+            },
+            {
+              "speciesId": 213,
+              "nivel": 152
+            }
+          ]
+        },
+        {
+          "id": "goldenrod",
+          "regiao": "johto",
+          "tipo": "NORMAL",
+          "lider": "Whitney",
+          "insignia": "Plain Badge",
+          "nivel_treinador": 220,
+          "time": [
+            {
+              "speciesId": 241,
+              "nivel": 143
+            },
+            {
+              "speciesId": 128,
+              "nivel": 143
+            },
+            {
+              "speciesId": 115,
+              "nivel": 143
+            },
+            {
+              "speciesId": 217,
+              "nivel": 143
+            },
+            {
+              "speciesId": 143,
+              "nivel": 176
+            }
+          ]
+        },
+        {
+          "id": "ecruteak",
+          "regiao": "johto",
+          "tipo": "GHOST",
+          "lider": "Morty",
+          "insignia": "Fog Badge",
+          "nivel_treinador": 260,
+          "time": [
+            {
+              "speciesId": 92,
+              "nivel": 169
+            },
+            {
+              "speciesId": 93,
+              "nivel": 169
+            },
+            {
+              "speciesId": 200,
+              "nivel": 169
+            },
+            {
+              "speciesId": 94,
+              "nivel": 208
+            }
+          ]
+        },
+        {
+          "id": "cianwood",
+          "regiao": "johto",
+          "tipo": "FIGHTING",
+          "lider": "Chuck",
+          "insignia": "Storm Badge",
+          "nivel_treinador": 300,
+          "time": [
+            {
+              "speciesId": 107,
+              "nivel": 195
+            },
+            {
+              "speciesId": 106,
+              "nivel": 195
+            },
+            {
+              "speciesId": 57,
+              "nivel": 195
+            },
+            {
+              "speciesId": 214,
+              "nivel": 195
+            },
+            {
+              "speciesId": 68,
+              "nivel": 195
+            },
+            {
+              "speciesId": 62,
+              "nivel": 240
+            }
+          ]
+        },
+        {
+          "id": "olivine",
+          "regiao": "johto",
+          "tipo": "STEEL",
+          "lider": "Jasmine",
+          "insignia": "Mineral Badge",
+          "nivel_treinador": 340,
+          "time": [
+            {
+              "speciesId": 81,
+              "nivel": 221
+            },
+            {
+              "speciesId": 227,
+              "nivel": 221
+            },
+            {
+              "speciesId": 205,
+              "nivel": 221
+            },
+            {
+              "speciesId": 82,
+              "nivel": 221
+            },
+            {
+              "speciesId": 212,
+              "nivel": 221
+            },
+            {
+              "speciesId": 208,
+              "nivel": 272
+            }
+          ]
+        },
+        {
+          "id": "mahogany",
+          "regiao": "johto",
+          "tipo": "ICE",
+          "lider": "Pryce",
+          "insignia": "Glacier Badge",
+          "nivel_treinador": 390,
+          "time": [
+            {
+              "speciesId": 215,
+              "nivel": 254
+            },
+            {
+              "speciesId": 221,
+              "nivel": 254
+            },
+            {
+              "speciesId": 124,
+              "nivel": 254
+            },
+            {
+              "speciesId": 87,
+              "nivel": 254
+            },
+            {
+              "speciesId": 91,
+              "nivel": 254
+            },
+            {
+              "speciesId": 131,
+              "nivel": 312
+            }
+          ]
+        },
+        {
+          "id": "blackthorn",
+          "regiao": "johto",
+          "tipo": "DRAGON",
+          "lider": "Clair",
+          "insignia": "Rising Badge",
+          "nivel_treinador": 440,
+          "time": [
+            {
+              "speciesId": 147,
+              "nivel": 286
+            },
+            {
+              "speciesId": 148,
+              "nivel": 286
+            },
+            {
+              "speciesId": 230,
+              "nivel": 352
+            }
+          ]
+        },
+        {
+          "id": "spikemuth",
+          "regiao": "galar",
+          "tipo": "DARK",
+          "lider": "Piers",
+          "insignia": "Dark Badge",
+          "nivel_treinador": 500,
+          "time": [
+            {
+              "speciesId": 228,
+              "nivel": 325
+            },
+            {
+              "speciesId": 215,
+              "nivel": 325
+            },
+            {
+              "speciesId": 229,
+              "nivel": 400
+            }
+          ]
+        },
+        {
+          "id": "laverre",
+          "regiao": "kalos",
+          "tipo": "FAIRY",
+          "lider": "Valerie",
+          "insignia": "Fairy Badge",
+          "nivel_treinador": 560,
+          "time": [
+            {
+              "speciesId": 176,
+              "nivel": 364
+            },
+            {
+              "speciesId": 184,
+              "nivel": 364
+            },
+            {
+              "speciesId": 40,
+              "nivel": 364
+            },
+            {
+              "speciesId": 210,
+              "nivel": 364
+            },
+            {
+              "speciesId": 122,
+              "nivel": 364
+            },
+            {
+              "speciesId": 36,
+              "nivel": 448
+            }
+          ]
+        }
+      ],
+      "motivo": "18 ginásios do cliente (C) com tipos A/B; times, níveis e desbloqueio desenhados para o ritmo da campanha (ferramentas/balanceamento/gerar_ginasios.py)"
+    },
+    "iv_lider": {
+      "valor": 20,
+      "motivo": "IV dos Pokémon do líder: um pouco acima do médio (16,5) para a luta pedir preparo"
+    },
+    "quality_lider": {
+      "valor": 1.15,
+      "motivo": "Quality dos Pokémon do líder: acima da média do sorteio (≈1,0)"
+    },
+    "cadencia_lider_ms": {
+      "valor": 2000,
+      "motivo": "o líder ataca no ritmo de um selvagem (A: ~2000 ms); o jogador no do aliado (A: 1600 ms)"
+    },
+    "fator_dano_lider": {
+      "valor": 1.0,
+      "motivo": "o líder não tem o ×1,8 do selvagem (é um treinador; o ×1,8 é medido só em selvagem)"
+    },
+    "recarga_derrota_s": {
+      "valor": 60,
+      "motivo": "depois de perder, 60 s até poder desafiar de novo (o cliente mostra cooldownMs; valor do servidor não gravado)"
+    },
+    "luta_max_s": {
+      "valor": 600,
+      "motivo": "teto da luta (10 min de luta simulada); passou, perde"
+    }
   }
 }

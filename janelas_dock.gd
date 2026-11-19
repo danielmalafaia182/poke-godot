@@ -11,6 +11,7 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["pokedex"] = _criar(pai, "res://painel_pokedex.gd", "PainelPokedex")
 	j["shinys"] = _criar(pai, "res://painel_todos_shinys.gd", "PainelTodosShinys")
 	j["inventario"] = _criar(pai, "res://painel_inventario.gd", "PainelInventario")
+	j["ginasios"] = _criar(pai, "res://painel_ginasios.gd", "PainelGinasios")
 	j["itens_uso"] = pai.get_node_or_null("PainelItensUso")
 	if j["itens_uso"] == null:
 		j["itens_uso"] = _criar(pai, "res://painel_itens_uso.gd", "PainelItensUso")
@@ -48,6 +49,8 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		j["analyzer"].abrir()
 	elif chave == "streak":
 		j["streak"].abrir()
+	elif chave == "gyms":
+		j["ginasios"].abrir()
 	elif chave == "inventory":
 		j["inventario"].abrir()
 	elif chave in ["daily", "quest"]:

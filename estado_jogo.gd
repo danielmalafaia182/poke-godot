@@ -121,6 +121,42 @@ var ginasios: Dictionary = {}
 
 func insignias_ativas(agora_unix: int) -> int:
 	return SERVICO_GINASIOS.new(null).ativas({"ginasios": ginasios}, agora_unix)
+
+var _servico_ginasios = null
+func servico_ginasios():
+	if _servico_ginasios == null:
+		_servico_ginasios = SERVICO_GINASIOS.new(PONTE_CIDADE.dados())
+	return _servico_ginasios
+
+func _estado_ginasios() -> Dictionary:
+	return {"ginasios": ginasios, "nivel": nivel_treinador}
+
+func ginasios_info(agora_unix: int) -> Dictionary:
+	## Ciclo 3: os 18 ginásios (classe 3), insígnias ativas, recarga e campeão.
+	return servico_ginasios().tratar(_estado_ginasios(), {"type": "ginasios-get", "agora": agora_unix})[0]
+
+func desafiar_ginasio(gym_id: String, agora_unix: int) -> Dictionary:
+	## Luta automática com o time na ordem (o líder primeiro). Devolve o gym-result ({venceu, log, …}) ou {erro}.
+	var time: Array = []
+	var lider_pk := obter_lider()
+	var ordem: Array = [lider_pk] if lider_pk != null else []
+	for pk in time_pokemon:
+		if pk != null and pk != lider_pk:
+			ordem.append(pk)
+	for pk in ordem:
+		if pk == null or pk.especie == null:
+			continue
+		var sid := PONTE_CIDADE.id_especie(String(pk.especie.nome))
+		if sid >= 0:
+			time.append({"speciesId": sid, "xp": pk.experiencia_total, "ivs": PONTE_CIDADE._ivs(pk), "quality": pk.qualidade})
+	var e := _estado_ginasios()
+	var msgs: Array = servico_ginasios().tratar(e, {"type": "ginasio-desafiar", "gymId": gym_id, "agora": agora_unix, "nivel": nivel_treinador,
+		"time": time, "semente": agora_unix})
+	ginasios = e["ginasios"]
+	solicitar_salvamento()
+	if String(msgs[0].get("type", "")) == "error":
+		return {"erro": String(msgs[0]["message"])}
+	return msgs[0]
 # Fase 2b: hunt escolhida pelo slug (dados/gerados/hunts.json); vazio = pela espécie. Não faz parte do save.
 var slug_caca: String = ""
 # Fase 3: medidor de captura por espécie (C: /api/game/used-balls) — speciesId (str, "s" no fim = shiny) →
