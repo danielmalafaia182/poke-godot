@@ -19,6 +19,7 @@ extends RefCounted
 ##   - Tutorial (C): welcome, party, menu, walk, nurse, depot, shop, market, openMap, firstHunt, hunting, throwBall, …,
 ##     replay, done; "Skip tutorial". Aqui só a lista de passos (o roteiro na tela é E: ainda não feito).
 
+const Balanceamento := preload("res://sim/balanceamento.gd")
 const Regras := preload("res://sim/regras.gd")
 const Rng := preload("res://sim/rng.gd")
 
@@ -51,6 +52,6 @@ static func criar(especie_id: int, semente: int, nome: String = "Treinador", mod
 	var q: float = Regras.sortear_qualidade(rng)
 	var i: Dictionary = lista[especie_id]
 	return {"inicial": {"speciesId": especie_id, "nome": String(i["nome"]), "nivel": 1, "xp": Regras.xp_total_para_nivel(1),
-		"ivs": ivs, "quality": q}, "pocoes": KIT["pocoes"].duplicate(), "bolas": KIT["bolas"].duplicate(), "ouro": OURO_INICIAL,
+		"ivs": ivs, "quality": q}, "pocoes": KIT["pocoes"].duplicate(), "bolas": KIT["bolas"].duplicate(), "ouro": int(Balanceamento.valor("jogo_novo", "ouro_inicial", OURO_INICIAL)),
 		"cidade": CIDADE_INICIAL, "hunt_recomendada": String(i["hunt"]), "por_que": String(i["por_que"]), "treinador": nome,
 		"tutorial": PASSOS_TUTORIAL.duplicate(), "modo": modo}

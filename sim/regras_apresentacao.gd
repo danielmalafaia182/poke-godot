@@ -7,6 +7,7 @@ extends RefCounted
 ## Tempos do cartão (E/F, herdados do projeto P04 em cartoes_derrota.gd): 4500 ms (7000 se shiny) + 220 ms de saída.
 ## Puro: o relógio vem de fora (ms).
 
+const Balanceamento := preload("res://sim/balanceamento.gd")
 const DURACAO_MS := 4500
 const DURACAO_SHINY_MS := 7000
 const SAIDA_MS := 220
@@ -30,12 +31,12 @@ func nova_instancia(chave: String) -> void:
 
 func mostrar_cartao(evento: Dictionary, agora_ms: int) -> bool:
 	## field-kill → abre cartão? (true) Atualiza o estado só quando abre.
-	if exibidos >= MAX_POR_INSTANCIA:
+	if exibidos >= int(Balanceamento.valor("apresentacao", "cartoes_por_instancia", MAX_POR_INSTANCIA)):
 		return false
 	if _livre_em >= 0 and agora_ms < _livre_em:
 		return false
 	exibidos += 1
-	var dur := DURACAO_SHINY_MS if bool(evento.get("shiny", false)) else DURACAO_MS
+	var dur := int(Balanceamento.valor("apresentacao", "cartao_shiny_ms", DURACAO_SHINY_MS)) if bool(evento.get("shiny", false)) 		else int(Balanceamento.valor("apresentacao", "cartao_ms", DURACAO_MS))
 	_livre_em = agora_ms + dur + SAIDA_MS
 	return true
 

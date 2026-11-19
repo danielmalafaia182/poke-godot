@@ -1,0 +1,124 @@
+{
+  "_doc": "Valores de classe 3 (ESTRATEGIA.md): sem dado do original ou original incoerente; decididos pelo design. Cada valor tem uma linha de motivo. Lido por sim/balanceamento.gd e aplicado sobre os PARAMETROS de cada módulo (o código só tem o valor de reserva). Mudou aqui, muda no jogo e na sim.",
+  "jogo_novo": {
+    "ouro_inicial": {
+      "valor": 0,
+      "motivo": "o kit (100 Small Potions, 100 Poké Balls) já cobre a primeira hora; o ouro vem da venda do loot"
+    }
+  },
+  "combate": {
+    "troca_cooldown_ms": {
+      "valor": 5000,
+      "motivo": "depois da troca automática por desmaio, 5 s sem troca manual: evita trocar no meio do golpe"
+    },
+    "insignia_pct_xp": {
+      "valor": 1.0,
+      "motivo": "parcela gym: floor(1% da base por insígnia ativa), o texto do cliente diz +1% por insígnia"
+    },
+    "insignia_pct_drop": {
+      "valor": 1.0,
+      "motivo": "+1% de chance de rolagem extra de drop por insígnia ativa, como o texto do cliente"
+    },
+    "alvo_troca_se_bloqueado": {
+      "valor": true,
+      "motivo": "sem caminho até o alvo e com selvagem encostado, ataca o encostado: senão o herói apanha parado"
+    },
+    "inicio_ilha_com_spawns": {
+      "valor": true,
+      "motivo": "start numa ilha sem spawn (nightmare_magby): começa na ilha que alcança mais spawns; sem isso a hunt não tem abate"
+    },
+    "cadaver_generico": {
+      "valor": true,
+      "motivo": "espécie sem cadáver conhecido usa o próprio sprite escurecido: o jogador vê onde o selvagem caiu"
+    },
+    "golpe_poder_maximo": {
+      "valor": 599,
+      "motivo": "golpes de poder 600 (assinatura) ficam fora da escolha: nunca apareceram nas gravações"
+    },
+    "captura_shiny_base": {
+      "valor": {},
+      "motivo": "chance de shiny na captura por tier (min(1, base × catchRate), C): vazio enquanto a sim não sorteia selvagens shiny (backlog)"
+    }
+  },
+  "apresentacao": {
+    "cartao_ms": {
+      "valor": 4500,
+      "motivo": "cartão de derrota na tela por 4,5 s (P04): dá para ler XP e loot sem tapar a hunt"
+    },
+    "cartao_shiny_ms": {
+      "valor": 7000,
+      "motivo": "shiny fica mais tempo: é o evento raro que o jogador quer ver"
+    },
+    "cartoes_por_instancia": {
+      "valor": 30,
+      "motivo": "decisão do usuário: no máximo 30 cartões por instância; limita só a apresentação"
+    }
+  },
+  "cidade": {
+    "capacidade_depot_pilhas": {
+      "valor": 200,
+      "motivo": "o original não mostrou teto (89 pilhas sem aviso); 200 é folgado e evita lista infinita"
+    },
+    "capacidade_box": {
+      "valor": 3000,
+      "motivo": "BOX da conta VIP (A); sem VIP não medido, vale o mesmo para não punir quem joga offline"
+    },
+    "starter_no_time": {
+      "valor": true,
+      "motivo": "o inicial não vai para a BOX: o jogador nunca fica sem o Pokémon do começo"
+    },
+    "qtd_max_por_compra": {
+      "valor": 100000,
+      "motivo": "limite de sanidade por operação de compra"
+    }
+  },
+  "diarias": {
+    "gift_boost_ms": {
+      "valor": 3600000,
+      "motivo": "boost do Daily Gift dura 1 h; o mesmo boost ativo soma mais 1 h"
+    },
+    "kill_opcoes": {
+      "valor": 3,
+      "motivo": "Daily Kill oferece 3 opções por dia (A, G9: 3 opções exatas)"
+    },
+    "kill_qtd": {
+      "valor": {
+        "superEasy": [
+          100,
+          300
+        ],
+        "easy": [
+          200,
+          600
+        ],
+        "medium": [
+          400,
+          1200
+        ],
+        "hard": [
+          500,
+          1500
+        ]
+      },
+      "motivo": "faixas de quantidade do Daily Kill por dificuldade: 15–60 min de caça na hunt sugerida"
+    },
+    "catch_mult_min": {
+      "valor": 1.5,
+      "motivo": "Daily Catch: multiplicador de XP sorteado em [1,5; 18], múltiplo de 0,5 (A: os 4 valores gravados cabem)"
+    },
+    "catch_mult_max": {
+      "valor": 18.0,
+      "motivo": "teto do multiplicador do Daily Catch (A: maior valor gravado)"
+    }
+  },
+  "jogador": {
+    "soneca_turbo_disponivel": {
+      "valor": false,
+      "motivo": "o jogo offline não tem diamantes: o turbo da soneca fica desligado"
+    },
+    "fechado_caca_max_s": {
+      "valor": 900,
+      "motivo": "jogo fechado numa hunt continua caçando até 15 min (B-relatado: a sessão morre aos 15 min)"
+    }
+  }
+}

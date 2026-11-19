@@ -20,6 +20,7 @@ extends RefCounted
 ##   sessao {fechado_em, agora}       E: decide se a sessão expirou (regra do usuário)
 ##   eventos {agora}                  E: Tipo do Dia offline (formato da mensagem events, A)
 
+const Balanceamento := preload("res://sim/balanceamento.gd")
 const Regras := preload("res://sim/regras.gd")
 
 const PARAMETROS := {
@@ -58,6 +59,7 @@ var p: Dictionary = PARAMETROS.duplicate(true)
 
 
 func _init(parametros: Dictionary = {}) -> void:
+	Balanceamento.aplicar(p, "jogador")   # classe 3: dados/balanceamento.json
 	for k in parametros:
 		p[k] = parametros[k]
 

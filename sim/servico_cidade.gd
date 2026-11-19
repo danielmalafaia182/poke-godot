@@ -26,6 +26,7 @@ extends RefCounted
 ## selected} (A: formato gravado), inventory {items[{itemId, quantity}]} (A), poke-delta {poke} (A: formato gravado),
 ## depot {items, balls} (E), pokes-removed {ids} (E).
 
+const Balanceamento := preload("res://sim/balanceamento.gd")
 const Regras := preload("res://sim/regras.gd")
 const Fontes := preload("res://sim/fontes.gd")
 
@@ -88,6 +89,7 @@ var _pedra_id: Dictionary = {}
 
 func _init(dados_jogo, parametros: Dictionary = {}) -> void:
 	dados = dados_jogo
+	Balanceamento.aplicar(p, "cidade")   # classe 3: dados/balanceamento.json
 	for k in parametros:
 		p[k] = parametros[k]
 	var c = Fontes.ler_json(Fontes.pasta_dados() + "/gerados/cidades.json")

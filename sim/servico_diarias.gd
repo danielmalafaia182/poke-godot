@@ -17,6 +17,7 @@ extends RefCounted
 ##   dailys-summary                        = GET /api/game/dailys-summary        (A)
 ##   abate {speciesId} / captura {speciesId}  E: eventos da hunt (contam para tarefas, Daily Kill e Daily Catch)
 
+const Balanceamento := preload("res://sim/balanceamento.gd")
 const Rng := preload("res://sim/rng.gd")
 
 const PARAMETROS := {
@@ -54,6 +55,7 @@ var kill_gravado: Dictionary
 
 func _init(dados_jogo, parametros: Dictionary = {}) -> void:
 	dados = dados_jogo
+	Balanceamento.aplicar(p, "diarias")   # classe 3: dados/balanceamento.json
 	for k in parametros:
 		p[k] = parametros[k]
 	gift = _ler("res://dados/fase4/daily_gift.json")
