@@ -4,9 +4,25 @@
     {
       "name": "ponte-poke-local",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-u", "ferramentas/ponte/ponte_poke_local.py", "--semente", "1"],
+      "runtimeArgs": [
+        "-u",
+        "ferramentas/ponte/ponte_poke_local.py",
+        "--semente",
+        "1"
+      ],
       "port": 8000,
       "url": "http://127.0.0.1:8000"
+    },
+    {
+      "name": "quadros-referencia",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-u",
+        "ferramentas/visual/servidor_quadros.py",
+        "8770"
+      ],
+      "port": 8770,
+      "url": "http://127.0.0.1:8770"
     }
   ]
 }

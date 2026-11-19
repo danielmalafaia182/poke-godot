@@ -26,3 +26,10 @@ __pycache__/
 cenario_teste_config.tscn
 
 /builds/
+
+# referência visual (vídeos do usuário e quadros extraídos; grandes)
+/referencia_visual/*.mp4
+/referencia_visual/quadros/brutos/
+/referencia_visual/quadros/folhas/
+/referencia_visual/quadros/*/
+!/referencia_visual/quadros/indice_telas.md
