@@ -120,143 +120,194 @@ class Pedaco:
         return r
 
 
-def segmentar(entradas, guardar_msgs=False):
-    fs = arquivos_de(entradas)
-    trechos = []
-    inst = None             # instância de hunt atual
-    ped = None
-    lock = None
-    cidade = None
-    nivel = {}
-    view = None
-    ult_field = None
-    pokes = {}
-    lider_id = None
-    ultimo = {}             # última mensagem de cada tipo de contexto (vip, inventory, balls, autohelper)
+def linhas_dedup(fs):
+    """(sessao, dir, msg) de cada linha, na ordem dos arquivos, sem repetir linha idêntica (exportações sobrepostas e
+    arquivos baixados duas vezes, como "x(1).jsonl")."""
+    vistas = set()
+    for f in fs:
+        for l in open(f, encoding="utf-8", errors="replace"):
+            l = l.strip()
+            if not l:
+                continue
+            h = hash(l)
+            if h in vistas:
+                continue
+            vistas.add(h)
+            try:
+                o = json.loads(l)
+            except Exception:
+                continue
+            if not isinstance(o, dict):
+                continue
+            m = o.get("msg")
+            if isinstance(m, str):
+                try:
+                    m = json.loads(m)
+                except Exception:
+                    continue
+            if "direcao" in o and "dados" in o:          # gravador antigo
+                try:
+                    m = json.loads(o["dados"])
+                except Exception:
+                    continue
+                yield o.get("sessao", "antigo"), ("out" if str(o["direcao"]).startswith("envi") else "in"), m
+                continue
+            if isinstance(m, dict):
+                yield o.get("sessao", "?"), o.get("dir", "in"), m
 
-    def contexto():
-        c = [ultimo[k] for k in ("vip", "inventory", "balls", "autohelper") if k in ultimo]
-        time = sorted([p for p in pokes.values() if p.get("team")], key=lambda p: (p.get("slot") is None, p.get("slot") or 0))
+
+class _Sessao:
+    """Estado de uma aba do jogo (o gravador grava as abas abertas juntas; cada uma tem a sua `sessao`)."""
+
+    def __init__(self, nome, trechos, guardar):
+        self.nome = nome
+        self.trechos = trechos
+        self.guardar = guardar
+        self.inst = None
+        self.ped = None
+        self.lock = None
+        self.cidade = None
+        self.view = None
+        self.ult_field = None
+        self.pokes = {}
+        self.lider_id = None
+        self.ultimo = {}
+
+    def contexto(self):
+        c = [self.ultimo[k] for k in ("vip", "inventory", "balls", "autohelper") if k in self.ultimo]
+        time = sorted([p for p in self.pokes.values() if p.get("team")], key=lambda p: (p.get("slot") is None, p.get("slot") or 0))
         if time:
-            c.append({"type": "pokes", "list": [dict(p, leader=(p["id"] == lider_id)) for p in time]})
-        if lider_id in pokes:
-            c.append({"type": "poke-delta", "poke": dict(pokes[lider_id], team=True, leader=True)})
+            c.append({"type": "pokes", "list": [dict(p, leader=(p["id"] == self.lider_id)) for p in time]})
+        if self.lider_id in self.pokes:
+            c.append({"type": "poke-delta", "poke": dict(self.pokes[self.lider_id], team=True, leader=True)})
         return c
 
-    def fechar_ped():
-        nonlocal ped
+    def fechar_ped(self):
+        ped = self.ped
         if ped is not None and ped.fields:
-            r = ped.resumo(lock)
-            if guardar_msgs:
-                r["_msgs"] = [inst["init"]] + ped.msgs
+            r = ped.resumo(self.lock)
+            r["sessao"] = self.nome
+            if self.guardar is not None and (self.guardar is True or set(r["uteis"]) & self.guardar):
+                r["_msgs"] = [self.inst["init"]] + ped.msgs
                 r["_contexto"] = ped.contexto
-            trechos.append(r)
-        ped = None
+                r["_pokes_final"] = self.pokes
+            self.trechos.append(r)
+        self.ped = None
 
-    def fechar_cidade(t):
-        nonlocal cidade
-        if cidade is not None:
-            cidade["t1"] = t
-            cidade["duracao_s"] = round(max(0, t - cidade["t0"]) / 1000.0, 1)
-            cidade["uteis"] = ["cidade"] if cidade["rest"] else []
-            cidade["rest"] = dict(cidade["rest"])
-            cidade["comandos"] = dict(cidade["comandos"])
-            trechos.append(cidade)
-        cidade = None
+    def abrir_cidade(self):
+        self.cidade = {"tipo": "cidade", "sessao": self.nome, "t0": self.ult_field["serverNow"] if self.ult_field else 0,
+                       "rest": Counter(), "comandos": Counter()}
 
-    for d, m, _ in ler_logs(fs, rest=False):
+    def fechar_cidade(self, t):
+        c = self.cidade
+        if c is not None:
+            c["t1"] = t
+            c["duracao_s"] = round(max(0, t - c["t0"]) / 1000.0, 1)
+            c["uteis"] = ["cidade"] if c["rest"] else []
+            c["rest"] = dict(c["rest"])
+            c["comandos"] = dict(c["comandos"])
+            self.trechos.append(c)
+        self.cidade = None
+
+    def guardando(self):
+        return self.guardar is not None
+
+    def msg(self, d, m):
         t = m.get("type")
         if d == "in" and t in ("vip", "inventory", "balls", "autohelper"):
-            ultimo[t] = m
+            self.ultimo[t] = m
         if d == "out":
             if t == "view":
                 v = [m.get("hc"), m.get("hr")]
-                if view is not None and v != view and ped is not None:
-                    tt, quem = ped.t1, ped.lider
-                    fechar_ped()
-                    ped = Pedaco(inst, "zoom", tt, quem, v)
-                view = v
-            elif t in ("leave-hunt", "set-city") and inst is not None:
-                fechar_ped()
-                inst = None
-                cidade = {"tipo": "cidade", "t0": ult_field["serverNow"] if ult_field else 0, "rest": Counter(), "comandos": Counter()}
-            elif cidade is not None:
-                cidade["comandos"][t] += 1
-            continue
+                if self.view is not None and v != self.view and self.ped is not None:
+                    tt, quem = self.ped.t1, self.ped.lider
+                    self.fechar_ped()
+                    self.ped = Pedaco(self.inst, "zoom", tt, quem, v)
+                self.view = v
+            elif t in ("leave-hunt", "set-city") and self.inst is not None:
+                self.fechar_ped()
+                self.inst = None
+                self.abrir_cidade()
+            elif self.cidade is not None:
+                self.cidade["comandos"][t] += 1
+            return
         if t in ("pokes", "pokes-chunk"):
             for p in m.get("list", m.get("pokes", [])):
-                pokes[p["id"]] = p
+                self.pokes[p["id"]] = p
                 if p.get("leader"):
-                    lider_id = p["id"]
-            continue
+                    self.lider_id = p["id"]
+            return
         if t == "poke-delta":
             p = m["poke"]
-            if p["id"] in pokes or p.get("team"):
-                pokes[p["id"]] = p
+            if p["id"] in self.pokes or p.get("team"):
+                self.pokes[p["id"]] = p
                 if p.get("leader"):
-                    lider_id = p["id"]
-            continue
+                    self.lider_id = p["id"]
+            return
         if t == "field-init":
-            fechar_ped()
-            fechar_cidade(0)
+            self.fechar_ped()
+            self.fechar_cidade(0)
             hk = m.get("huntKey", "")
             nova = ":r" not in hk
-            inst = {"slug": m.get("slug"), "huntKey": hk, "nova": nova, "init": m}
+            self.inst = {"slug": m.get("slug"), "huntKey": hk, "nova": nova, "init": m}
             if nova:
-                lock = None
-            ult_field = None
-            continue
-        if t == "boosts" and inst is not None:
+                self.lock = None
+            self.ult_field = None
+            return
+        if t == "boosts" and self.inst is not None:
             for b in m.get("boosts", []):
                 if b.get("key") == "shinylock":
-                    lock = (ult_field["serverNow"] if ult_field else b["until"] - 60000, b["until"])
-            continue
-        if t == "field-none" and inst is not None:
-            fechar_ped()
-            inst = None
-            cidade = {"tipo": "cidade", "t0": ult_field["serverNow"] if ult_field else 0, "rest": Counter(), "comandos": Counter()}
-            continue
-        if inst is None:
-            if cidade is not None and d == "rest":
-                cidade["rest"][m.get("path", "?")] += 1
-            continue
+                    self.lock = (self.ult_field["serverNow"] if self.ult_field else b["until"] - 60000, b["until"])
+            return
+        if t == "field-none" and self.inst is not None:
+            self.fechar_ped()
+            self.inst = None
+            self.abrir_cidade()
+            return
+        if self.inst is None:
+            if self.cidade is not None and d == "rest":
+                self.cidade["rest"][m.get("caminho", m.get("path", "?"))] += 1
+            return
+        ped = self.ped
         if t == "field":
             atual = (m.get("heroName"), m.get("heroLooktype"))
             sn = m["serverNow"]
+            uf = self.ult_field
             if ped is None:
-                ped = Pedaco(inst, "entrada" if inst["nova"] else "retomada", sn, atual, view)
+                ped = self.ped = Pedaco(self.inst, "entrada" if self.inst["nova"] else "retomada", sn, atual, self.view)
             elif atual != ped.lider:
-                fechar_ped()
-                ped = Pedaco(inst, "troca de time", sn, atual, view)
-            elif ult_field is not None and (sn - ult_field["serverNow"]) / 1000.0 > BURACO_S:
-                fechar_ped()
-                ped = Pedaco(inst, "buraco", sn, atual, view)
-                ped.buraco_s = (sn - ult_field["serverNow"]) / 1000.0
-            if ult_field is not None and ped.fields:
+                self.fechar_ped()
+                ped = self.ped = Pedaco(self.inst, "troca de time", sn, atual, self.view)
+            elif uf is not None and (sn - uf["serverNow"]) / 1000.0 > BURACO_S:
+                self.fechar_ped()
+                ped = self.ped = Pedaco(self.inst, "buraco", sn, atual, self.view)
+                ped.buraco_s = (sn - uf["serverNow"]) / 1000.0
+            if uf is not None and ped.fields:
                 ped.pares += 1
-                ped.pares2 += int(m["seq"] - ult_field["seq"] == 2)
+                ped.pares2 += int(m["seq"] - uf["seq"] == 2)
             ped.fields += 1
             ped.t1 = sn
-            if lider_id not in pokes or pokes[lider_id].get("name") != m.get("heroName"):
+            pk = self.pokes
+            if self.lider_id not in pk or pk[self.lider_id].get("name") != m.get("heroName"):
                 # troca automática ou pelo time: o líder do field é o Pokémon com esse nome no time
-                cand = [p for p in pokes.values() if p.get("name") == m.get("heroName") and p.get("team")]
+                cand = [p for p in pk.values() if p.get("name") == m.get("heroName") and p.get("team")]
                 if cand:
-                    lider_id = cand[0]["id"]
+                    self.lider_id = cand[0]["id"]
             if ped.fields == 1:          # 1º field do pedaço (já contado acima)
-                ped.contexto = contexto()
-            if lider_id in pokes and pokes[lider_id].get("name") == m.get("heroName"):
-                ped.niveis.add(pokes[lider_id].get("level"))
-            if m.get("fainted") and not (ult_field or {}).get("fainted"):
+                ped.contexto = self.contexto()
+            if self.lider_id in pk and pk[self.lider_id].get("name") == m.get("heroName"):
+                ped.niveis.add(pk[self.lider_id].get("level"))
+            if m.get("fainted") and not (uf or {}).get("fainted"):
                 ped.desmaios += 1
             h = m["hero"]
             ped.adj += sum(1 for x in m["mobs"] if not x["dead"] and cheb(x, h) <= 1)
-            ult_field = m
-            if guardar_msgs:
+            self.ult_field = m
+            if self.guardando():
                 ped.msgs.append(m)
-            continue
+            return
         if ped is None:
-            continue
-        if guardar_msgs:
+            return
+        if self.guardando():
             ped.msgs.append(m)
         if t == "field-kill":
             ped.abates += 1
@@ -270,19 +321,38 @@ def segmentar(entradas, guardar_msgs=False):
         elif t == "catch-result":
             ped.tentativas += 1
             ped.capturas += int(bool(m.get("success")))
-    fechar_ped()
-    fechar_cidade(ult_field["serverNow"] if ult_field else 0)
+
+    def fim(self):
+        self.fechar_ped()
+        self.fechar_cidade(self.ult_field["serverNow"] if self.ult_field else 0)
+
+
+def segmentar(entradas, guardar_msgs=False, guardar=None):
+    """Trechos de todas as abas gravadas (uma `sessao` por aba). `guardar_msgs=True` guarda as mensagens de todos os
+    pedaços; `guardar={"resultado", ...}` só dos pedaços úteis para esses usos (as gravações livres são grandes)."""
+    fs = arquivos_de(entradas)
+    trechos = []
+    g = True if guardar_msgs else (set(guardar) if guardar else None)
+    sessoes = {}
+    for sess, d, m in linhas_dedup(fs):
+        st = sessoes.get(sess)
+        if st is None:
+            st = sessoes[sess] = _Sessao(sess, trechos, g)
+        st.msg(d, m)
+    for st in sessoes.values():
+        st.fim()
     # Líder desconhecido no começo do pedaço (gravação sem pokes/poke-delta antes): usa o que se soube dele depois, pelo
     # nome. IV e Quality não mudam; o XP do momento vem do 1º poke-xp do pedaço (extrair_estado_inicial.py).
-    if guardar_msgs:
-        for x in trechos:
-            if x["tipo"] != "hunt" or any(m.get("type") == "poke-delta" for m in x.get("_contexto", [])):
-                continue
-            nome = (x.get("lider") or [None])[0]
-            cand = [p for p in pokes.values() if p.get("name") == nome]
-            if cand:
-                x.setdefault("_contexto", []).append({"type": "poke-delta", "poke": dict(cand[0], team=True, leader=True)})
-                x["lider_de_depois"] = True
+    for x in trechos:
+        pk = x.pop("_pokes_final", None)
+        if pk is None or x["tipo"] != "hunt" or any(m.get("type") == "poke-delta" for m in x.get("_contexto", [])):
+            continue
+        nome = (x.get("lider") or [None])[0]
+        cand = [p for p in pk.values() if p.get("name") == nome]
+        if cand:
+            x.setdefault("_contexto", []).append({"type": "poke-delta", "poke": dict(cand[0], team=True, leader=True)})
+            x["lider_de_depois"] = True
+    trechos.sort(key=lambda x: (x.get("t0") or 0))
     return trechos
 
 
@@ -320,6 +390,7 @@ def exportar(trechos, pasta):
         with open(c, "w", encoding="utf-8", newline="\n") as f:
             for j, m in enumerate(msgs):
                 f.write(json.dumps({"sessao": x["huntKey"], "t": x["t0"] + j, "dir": "in", "msg": m}, ensure_ascii=False) + "\n")
+        x.pop("_msgs", None)
         x["arquivo"] = c
         feitos.append(c)
     return feitos

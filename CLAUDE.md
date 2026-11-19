@@ -1,6 +1,19 @@
 # Poke Idle em Godot — instruções para o Claude Code
 
 Leia este arquivo inteiro antes de qualquer mudança. Ele é o ponto de entrada do projeto.
+
+> **Estratégia desde 19/11 (`ESTRATEGIA.md`): o melhor poke idle possível, sem esperar gravação.**
+> - **Classe 1, exata:** o que o jogador vê ou compara com a Pokepedia (XP, stats, IV ≤ 32, Quality, preços, loot,
+>   evolução, nível das hunts) é igual ao original.
+> - **Classe 2, equivalente no resultado:** movimento, dano nos extremos, chegada de selvagens. Pronto quando abates/min,
+>   XP/h, ouro/h, mortes/h e capturas/h ficam a ±10% do real por trecho (`ferramentas/validar_resultado.py`).
+> - **Classe 3, desenhada:** sem dado ou original incoerente. Decidir pelo design, documentar em uma linha e pôr o valor
+>   em `dados/balanceamento.json`, nunca fixo no código.
+> - Gravações livres (`poke har/gravacoes/livre/`) só conferem; se contradisserem uma decisão, corrigir.
+> - Perguntar só decisões de produto, em bloco no fim do ciclo. Conteúdo (sprites, nomes, sons) em pacotes trocáveis.
+>
+> A regra "não afirme fidelidade sem medir" continua valendo, mas só para a classe 1. Na classe 2 vale o validador; na 3,
+> a decisão documentada.
 Plano completo (documento vivo): https://claude.ai/artifact/8Fzh6gME8oREBhWN5paLe8
 
 ## Objetivo
