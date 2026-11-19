@@ -9,7 +9,7 @@ extends Node2D
 ##      obter_troca_restante, painel_auto_helper, _on_botao_voltar_cidade_pressed...). A troca de líder pelo painel passa
 ##      pelo EstadoJogo.validador_troca_lider (regra dos 5 s da simulação, E); a troca por KO vira o líder no save; o HP
 ##      do time vai para o save a cada field (o painel de time lê de lá); mudar o Auto-Helper durante a hunt vale na hora.
-## Cidade, mapa-múndi, painéis, inventário e save continuam os de antes. A cena antiga (Caca.tscn) segue no projeto.
+## Cidade, mapa-múndi, painéis, inventário e save continuam os de antes. A cena antiga (Caca.tscn) foi removida no ciclo 3.
 
 const Fontes := preload("res://sim/fontes.gd")
 const MapaHunt := preload("res://sim/mapa_hunt.gd")

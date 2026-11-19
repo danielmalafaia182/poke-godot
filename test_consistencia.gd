@@ -75,20 +75,6 @@ func testar() -> void:
 	var estado: Node = root.get_node("EstadoJogo")
 	estado.especie_caca = load("res://dados/especies/geodude.tres")
 	estado.curar_time()
-	var caca: Node2D = load("res://Caca.tscn").instantiate()
-	root.add_child(caca)
-	caca.set_physics_process(false)
-	caca.set_process(false)
-	caca.timer_auto_potion.stop()
-	await process_frame
-	var estoque_antes: Dictionary = estado.estoque_bolas.duplicate()
-	caca.encontro_atual.pokemon.qualidade = NAN
-	caca.vida_selvagem = 0
-	caca.batalha_encerrada = true
-	caca.capturar()
-	checar(estado.estoque_bolas==estoque_antes,"captura inválida não consome bola")
-	checar(caca.indice_alvo==-1,"captura inválida libera o encontro")
-	caca.queue_free()
-	await process_frame
+	# Ciclo 3: 'captura inválida não consome bola' era da cena antiga; na nova a bola só sai numa tentativa (sim).
 	print("CONSISTÊNCIA: ",checks," verificações; ",falhas," falhas")
 	quit(1 if falhas else 0)

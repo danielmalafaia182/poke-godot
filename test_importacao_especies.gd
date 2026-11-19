@@ -29,15 +29,11 @@ func executar() -> void:
   checar(restaurado.especie==especie and restaurado.id_persistente==p.id_persistente and restaurado.obter_total_ivs()==p.obter_total_ivs(),"Roundtrip "+nome)
  var dados: Dictionary=save.construir_dados(estado)
  checar(save._validar(dados).is_empty(),"Save com todas as espécies")
+ # Ciclo 3: antes pela cena antiga; agora pela sim (a hunt de cada inicial tem 15 spawns da própria espécie, A).
+ var dados_sim=load("res://ponte_cidade.gd").dados()
  for nome in ["Bulbasaur","Charmander","Squirtle"]:
-  estado.especie_caca=REGISTRO.obter_especies()[nome]
-  estado.curar_time()
-  var caca: Node=load("res://Caca.tscn").instantiate()
-  root.add_child(caca)
-  caca.set_process(false);caca.set_physics_process(false)
-  await process_frame
-  checar(caca.selvagens.size()==15 and caca.selvagens[0].pokemon.especie.nome==nome,"Hunt "+nome)
-  caca.queue_free()
-  await process_frame
+  var h: Dictionary=dados_sim.hunts.get(nome.to_lower(),{})
+  var sp: Array=h.get("spawns",[])
+  checar(sp.size()==15 and String(dados_sim.especie(int(sp[0]["pokeId"]))["nome"])==nome,"Hunt "+nome)
  print("IMPORTACAO ESPECIES: %d verificações; %d falhas" % [checks,falhas])
  quit(1 if falhas else 0)

@@ -35,19 +35,7 @@ func executar() -> void:
  var lv: int=p.nivel_treinador
  save._restaurar(estado,dados)
  checar(estado.nivel_treinador==lv and estado.experiencia_treinador_acumulada==xp and estado.perfil.experiencia_base_migracao==base,"Roundtrip preserva progresso")
- estado.especie_caca=load("res://dados/especies/geodude.tres")
- estado.curar_time();estado.auto_catch=false
- var caca: Node=load("res://Caca.tscn").instantiate();root.add_child(caca)
- caca.set_process(false);caca.set_physics_process(false)
- await process_frame
- caca.encontro_atual=caca.selvagens[0]
- caca.encontro_atual.vida=0
- var antes: int=estado.experiencia_treinador_acumulada
- caca._recompensar_derrota()
- var depois: int=estado.experiencia_treinador_acumulada
- caca._recompensar_derrota()
- checar(depois>antes and estado.experiencia_treinador_acumulada==depois,"Derrota concede XP uma única vez")
- caca.queue_free()
+ # Ciclo 3: 'Derrota concede XP uma única vez' era da cena antiga; a nova recebe XP por field-kill (test_caca_sim).
  hud.queue_free();await process_frame
  print("PROGRESSAO TREINADOR: %d verificações; %d falhas" % [checks,falhas])
  quit(1 if falhas else 0)

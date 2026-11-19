@@ -9,25 +9,25 @@ func quadros() -> void:
  for i in range(4): await process_frame
 func parar(caca: Node) -> void:
  caca.set_process(false);caca.set_physics_process(false)
- if "timer_combate" in caca: caca.timer_combate.stop();caca.timer_auto_potion.stop()
 func hud_de(caca: Node) -> Control:
- # cena antiga: Interface/HudCaca; cena nova (caca_sim, fase 2): a mesma HUD em hud_caca
- return caca.hud_caca if "hud_caca" in caca and caca.hud_caca!=null else caca.get_node("Interface/HudCaca")
+ return caca.hud_caca
 func executar() -> void:
  var estado: Node=root.get_node("EstadoJogo")
  estado.especie_caca=load("res://dados/especies/geodude.tres")
  estado.curar_time();estado.auto_catch=false;estado.auto_potion=false
  var lider: DadosPokemon=estado.obter_lider()
  var estoque: Dictionary=estado.estoque_bolas.duplicate()
- var caca: Node=load("res://Caca.tscn").instantiate();root.add_child(caca);current_scene=caca
+ # Ciclo 3: começa na cena nova (a antiga, Caca.tscn, foi removida); Geodude pelo slug.
+ estado.slug_caca="geodude"
+ var caca: Node=load("res://caca_sim.tscn").instantiate();root.add_child(caca);current_scene=caca
  parar(caca);await quadros()
- var hud: Control=caca.get_node("Interface/HudCaca")
- var id: String=caca.selvagens[0].id
+ var hud: Control=hud_de(caca)
+ var chave0: String=String(caca.sim.cfg["hunt_key"])
  var hp: int=lider.obter_vida_atual()
  hud.capturados_hunt=7
  hud.menu.mapa_solicitado.emit();await quadros()
  checar(hud.mapa_mundi.visible and current_scene==caca,"Botão abre popup sem voltar à cidade")
- checar(caca.selvagens[0].id==id and hud.capturados_hunt==7,"Abrir preserva encontro e contagem")
+ checar(String(caca.sim.cfg["hunt_key"])==chave0 and hud.capturados_hunt==7,"Abrir preserva a instância e a contagem")
  hud.mapa_mundi._on_fechar_pressed()
  checar(not hud.mapa_mundi.visible and current_scene==caca,"Fechar volta à mesma caça")
  hud.menu.mapa_solicitado.emit();await quadros()

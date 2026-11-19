@@ -87,9 +87,12 @@ func executar() -> void:
 	cidade.queue_free()
 	await process_frame
 	estado.especie_caca = load("res://dados/especies/geodude.tres")
-	var caca: Node2D = load("res://Caca.tscn").instantiate()
+	estado.slug_caca = "geodude"
+	var caca: Node = load("res://caca_sim.tscn").instantiate()   # ciclo 3: a cena nova (a antiga foi removida)
+	caca.trocar_de_cena_ao_sair = false
 	root.add_child(caca)
-	checar(caca.populacao_iniciada and caca.selvagens.size()==15,"cidade para caça")
+	await process_frame
+	checar(caca.sim != null and caca.sim.mobs.size()==15,"cidade para caça")
 	caca.queue_free()
 	await process_frame
 	cidade = load("res://cidade.tscn").instantiate()

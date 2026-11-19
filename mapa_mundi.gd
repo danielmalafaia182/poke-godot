@@ -426,11 +426,10 @@ func _viajar(dados: Dictionary) -> void:
 func _on_destino_pressed(destino: DadosDestinoCaca) -> void:
 	if destino==null or destino.especie==null: return
 	var simulada: bool=_cenario_jogo().disponivel(_dados_sim(),destino.especie.nome)
-	if not simulada and preload("res://catalogo_hunts.gd").obter(destino.especie.nome).is_empty(): return
+	if not simulada: return   # ciclo 3: só existe a cena nova (as 451 hunts do snapshot são simuladas)
 	EstadoJogo.especie_caca=destino.especie
 	EstadoJogo.slug_caca=""   # 2b: viagem pela espécie (o slug é achado pelo nome); _selecionar_registro passa o slug
-	# Fase 2: hunt sobre a simulação (mapa real); a cena antiga fica para as hunts que a simulação ainda não tem
-	get_tree().change_scene_to_file("res://caca_sim.tscn" if simulada else "res://Caca.tscn")
+	get_tree().change_scene_to_file("res://caca_sim.tscn")
 static var _dados_sim_cache: RefCounted
 static func _dados_sim() -> RefCounted:
 	if _dados_sim_cache==null: _dados_sim_cache=preload("res://sim/dados_jogo.gd").carregar()
