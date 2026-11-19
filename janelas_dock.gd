@@ -10,6 +10,11 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["log"] = _criar(pai, "res://painel_log_capturas.gd", "PainelLogCapturas")
 	j["pokedex"] = _criar(pai, "res://painel_pokedex.gd", "PainelPokedex")
 	j["shinys"] = _criar(pai, "res://painel_todos_shinys.gd", "PainelTodosShinys")
+	j["inventario"] = _criar(pai, "res://painel_inventario.gd", "PainelInventario")
+	j["itens_uso"] = pai.get_node_or_null("PainelItensUso")
+	if j["itens_uso"] == null:
+		j["itens_uso"] = _criar(pai, "res://painel_itens_uso.gd", "PainelItensUso")
+	j["inventario"].usar_solicitado.connect(func() -> void: j["itens_uso"].abrir())
 	j["pokedex"].todos_shinys_solicitado.connect(func() -> void: j["shinys"].abrir())
 	j["streak"] = pai.get_node_or_null("PainelStreak")
 	if j["streak"] == null:
@@ -43,6 +48,8 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		j["analyzer"].abrir()
 	elif chave == "streak":
 		j["streak"].abrir()
+	elif chave == "inventory":
+		j["inventario"].abrir()
 	elif chave in ["daily", "quest"]:
 		j["diarias"].abrir()
 	elif chave == "pokedex":

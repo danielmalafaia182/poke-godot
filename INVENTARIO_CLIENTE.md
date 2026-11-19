@@ -48,7 +48,7 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `shop` | parcial | 277 | painel_loja.gd (loja do Mark); falta a loja de diamantes | Promoção encerrada · termina em {{left}} · Promoção de lançamento |
 | `modal` | parcial | 165 | confirmações de evolução, loja e Orre; faltam as outras | Volta pro Lv.1 · Fechar · Aceitar |
 | `hud.world` | parcial | 155 | cidade e hunt com NPCs por clique; faltam vários avisos e ações de NPC | Combate · Pesca · Level Up |
-| `window.inventory` | parcial | 140 | BAG no depot e painel_itens_uso.gd (Rare Candy, berries); faltam abas e uso dos outros itens | Eficiência ×{{rate}} · Expira em {{left}} · Captura garantida |
+| `window.inventory` | parcial | 140 | painel_inventario.gd (ciclo 2): abas por categoria, quantidade, preço de NPC, Usar para Rare Candy e berries; held, TMs, addons e conversões sem uso (lote 3 congelado) | Eficiência ×{{rate}} · Expira em {{left}} · Captura garantida |
 | `hud.config` | parcial | 67 | ⚙ na cidade: VIP, Streak, Diárias, Itens, Metas, Tutorial, tamanho da interface e tela cheia (ciclo 2); faltam som e zoom da hunt | Efeitos de ambiente · Sombras · Notificações de batalha |
 | `window.pokedex` | parcial | 49 | painel_pokedex.gd (ciclo 2): busca, capturado/não capturado, tipo, detalhe com abates, evolução e stats; falta o Bônus de Captura +25% XP (número de abates e XP são do servidor) | Todos os tipos · Voltar · Bônus disponível |
 | `window.pokeTooltip` | parcial | 26 | cartão do Pokémon na HUD; faltam campos (TMs, held item, golpes com cooldown) | Pokémon · Ativo · 🎭 Addon |

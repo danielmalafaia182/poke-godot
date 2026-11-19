@@ -28,7 +28,7 @@ STATUS = {
     "window.questsMenu": ("feito", "painel_diarias.gd (abas)"),
     "window.offline": ("feito", "painel_soneca.gd: Modo Soneca e coleta (A, G6)"),
     "window.allPokes": ("feito", "painel_todos_shinys.gd (ciclo 2): as 190 formas shiny do cliente por tier, busca e as já capturadas"),
-    "window.inventory": ("parcial", "BAG no depot e painel_itens_uso.gd (Rare Candy, berries); faltam abas e uso dos outros itens"),
+    "window.inventory": ("parcial", "painel_inventario.gd (ciclo 2): abas por categoria, quantidade, preço de NPC, Usar para Rare Candy e berries; held, TMs, addons e conversões sem uso (lote 3 congelado)"),
     "window.pokeTooltip": ("parcial", "cartão do Pokémon na HUD; faltam campos (TMs, held item, golpes com cooldown)"),
     "window.pokeball": ("parcial", "escolha da bola no painel Capture da hunt"),
     "window.pokedex": ("parcial", "painel_pokedex.gd (ciclo 2): busca, capturado/não capturado, tipo, detalhe com abates, evolução e stats; falta o Bônus de Captura +25% XP (número de abates e XP são do servidor)"),
