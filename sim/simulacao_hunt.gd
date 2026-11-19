@@ -984,7 +984,13 @@ func _turno_selvagens() -> void:
 				m["prox_ataque"] = tick + int(p.ataque_selvagem_ticks) + extra
 		else:
 			m["prox_ataque"] = -1
-			var vem := _na_visao(m["pos"]) or (bool(p.alvo_vem_ao_encontro) and int(m["slot"]) == int(heroi["alvo"]))
+			var vem := _na_visao(m["pos"])
+			if not vem and int(m["slot"]) == int(heroi["alvo"]):
+				# A (19/11, medir_alvo_fora.py): o alvo persegue dentro da borda real 13×13 (7,8% dos intervalos com
+				# |dy| 8–13, contra 1,5% dos outros); fora dela nunca (0 de 9.120). `alvo_vem_ao_encontro` (de qualquer
+				# distância) foi ajuste de curva do ciclo 1 e fica desligado.
+				var hh: Vector2i = heroi["pos"]
+				vem = bool(p.alvo_vem_ao_encontro) or (absi(m["pos"].x - hh.x) <= int(p.visao_meia_largura) and absi(m["pos"].y - hh.y) <= int(p.visao_meia_altura_alvo))
 			if vem and _espera_minima_ok(m, int(p.mob_step_ms)) 					and tick - int(heroi["ultimo_passo_tick"]) >= int(p.mob_espera_apos_heroi_ticks):
 				_passo_mob(m)
 	_pos_dano()
