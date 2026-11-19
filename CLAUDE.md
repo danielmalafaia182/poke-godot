@@ -1159,7 +1159,7 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     Inventário, avisos (level up, shiny, boosts), tutorial, tamanho da interface e tela cheia.
   - **Build Windows** `builds/ciclo2/` (`ferramentas/build/montar_build.sh`): exe (binário do Godot; sem templates) + pck +
     dados + snapshot; verificado com APPDATA isolado (jogo novo com Geodude, hunt, save). Save em
-    `%APPDATA%\Godotpp_userdata\PokeIdle\progresso_v1.json`.
+    `%APPDATA%\Godot\app_userdata\PokeIdle\progresso_v1.json`.
   - **Testes:** novos `test_shiny`, `test_garantia_pedra`, `test_metas` 14/14, `test_janelas_ciclo2` 26/26, `test_tutorial`
     10/10, `test_xp_regiao` 4/4; regressão verde (41 do Godot, scripts, P04 43/43); diferencial 1h 29/30, antiga 22/26.
 
