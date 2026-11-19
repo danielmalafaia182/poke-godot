@@ -167,6 +167,8 @@ func _validar(dados: Variant) -> String:
 		return "Ginásios inválidos."
 	if dados.has("visual") and (not dados["visual"] is Dictionary or (not (dados["visual"] as Dictionary).is_empty() and not (dados["visual"].get("looktype") is float or dados["visual"].get("looktype") is int)) or not dados["visual"].get("cores", {}) is Dictionary):
 		return "Visual do treinador inválido."
+	if dados.has("album") and (not dados["album"] is Dictionary or JSON.stringify(dados["album"]).length() > 200000):
+		return "Álbum inválido."
 	if dados.has("bosses") and (not dados["bosses"] is Dictionary or JSON.stringify(dados["bosses"]).length() > 200000):
 		return "Bosses inválidos."
 	if dados.has("itens_uso") and (not dados["itens_uso"] is Dictionary or JSON.stringify(dados["itens_uso"]).length() > 200000):
@@ -316,6 +318,7 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 	estado.itens_uso = (dados.get("itens_uso", {}) as Dictionary).duplicate(true)
 	estado.ginasios = (dados.get("ginasios", {}) as Dictionary).duplicate(true)
 	estado.bosses = (dados.get("bosses", {}) as Dictionary).duplicate(true)
+	estado.album = (dados.get("album", {}) as Dictionary).duplicate(true)
 	estado.visual = {}
 	if dados.get("visual") is Dictionary and not (dados["visual"] as Dictionary).is_empty():
 		var vs: Dictionary = dados["visual"]
@@ -399,7 +402,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"captura_medidor": estado.medidor_captura.duplicate(true), "garantia_pedras": estado.garantia_pedras.duplicate(true),
 		"log_capturas": estado.log_capturas.duplicate(true), "tempo_caca_s": estado.tempo_caca_s, "capturas_total": estado.capturas_total, "tutorial": estado.tutorial_passo, "ultima_hunt": estado.ultima_hunt_slug,
 		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
-		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true), "ginasios": estado.ginasios.duplicate(true), "bosses": estado.bosses.duplicate(true), "visual": estado.visual.duplicate(true), "hunt_ao_fechar": estado.hunt_ao_fechar,
+		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true), "ginasios": estado.ginasios.duplicate(true), "bosses": estado.bosses.duplicate(true), "album": estado.album.duplicate(true), "visual": estado.visual.duplicate(true), "hunt_ao_fechar": estado.hunt_ao_fechar,
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 

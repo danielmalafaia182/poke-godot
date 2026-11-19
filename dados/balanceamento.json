@@ -65,6 +65,10 @@
     "card_chance_shiny": {
       "valor": 0.1,
       "motivo": "C: Derrote shinies selvagens — eles podem dropar o Card da espécie; 10% por shiny abatido (o Card leva ao Altar dos bosses)"
+    },
+    "pack_chance_abate": {
+      "valor": 0.0005,
+      "motivo": "Poke Card Pack por abate (nenhuma tabela do snapshot dropa o pack): ~0,2 pacote por hora a 7 abates/min"
     }
   },
   "apresentacao": {
@@ -3600,6 +3604,24 @@
     "auto_max_lutas": {
       "valor": 50,
       "motivo": "teto da fila do Auto Boss"
+    }
+  },
+  "cards": {
+    "pesos_raridade": {
+      "valor": {
+        "common": 60,
+        "uncommon": 20,
+        "rare": 8,
+        "double_rare": 4,
+        "ultra_rare": 3,
+        "illustration_rare": 2.5,
+        "pikachu_rare": 1,
+        "special_illustration_rare": 1,
+        "classic_collection": 0.4,
+        "mega_hyper_rare": 0.05,
+        "futuristic_rare": 0.05
+      },
+      "motivo": "peso de cada raridade no sorteio do Poke Card Pack (o original não mostra): a comum é ~60% e as hiper-raras ~1 em 2000"
     }
   }
 }

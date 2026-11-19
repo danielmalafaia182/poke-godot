@@ -1,0 +1,3061 @@
+{
+ "_fonte": "snapshot game/pokecards.json (A), versão 1",
+ "cards": [
+  {
+   "id": 1,
+   "name": "Weedle",
+   "num": 1,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 2,
+   "name": "Kakuna",
+   "num": 2,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 3,
+   "name": "Beedrill ex",
+   "num": 3,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 4,
+   "name": "Carnivine",
+   "num": 4,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 5,
+   "name": "Chespin",
+   "num": 5,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 6,
+   "name": "Quilladin",
+   "num": 6,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 7,
+   "name": "Chesnaught",
+   "num": 7,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 8,
+   "name": "Vulpix",
+   "num": 8,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 9,
+   "name": "Ninetales",
+   "num": 9,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 10,
+   "name": "Ho-Oh",
+   "num": 10,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 11,
+   "name": "Fennekin",
+   "num": 11,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 12,
+   "name": "Braixen",
+   "num": 12,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 13,
+   "name": "Delphox",
+   "num": 13,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 14,
+   "name": "Litleo",
+   "num": 14,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 15,
+   "name": "Mega Pyroar ex",
+   "num": 15,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 16,
+   "name": "Remoraid",
+   "num": 16,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 17,
+   "name": "Octillery",
+   "num": 17,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 18,
+   "name": "Delibird",
+   "num": 18,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 19,
+   "name": "Keldeo",
+   "num": 19,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 20,
+   "name": "Froakie",
+   "num": 20,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 21,
+   "name": "Frogadier",
+   "num": 21,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 22,
+   "name": "Mega Greninja ex",
+   "num": 22,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 23,
+   "name": "Bergmite",
+   "num": 23,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 24,
+   "name": "Avalugg",
+   "num": 24,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 25,
+   "name": "Wimpod",
+   "num": 25,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 26,
+   "name": "Golisopod",
+   "num": 26,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 27,
+   "name": "Mareep",
+   "num": 27,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 28,
+   "name": "Flaaffy",
+   "num": 28,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 29,
+   "name": "Ampharos",
+   "num": 29,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 30,
+   "name": "Emolga",
+   "num": 30,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 31,
+   "name": "Deoxys",
+   "num": 31,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 32,
+   "name": "Deoxys",
+   "num": 32,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 33,
+   "name": "Deoxys",
+   "num": 33,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 34,
+   "name": "Deoxys",
+   "num": 34,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 35,
+   "name": "Mega Floette ex",
+   "num": 35,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 36,
+   "name": "Espurr",
+   "num": 36,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 37,
+   "name": "Meowstic",
+   "num": 37,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 38,
+   "name": "Phantump",
+   "num": 38,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 39,
+   "name": "Trevenant",
+   "num": 39,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 40,
+   "name": "Pumpkaboo",
+   "num": 40,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 41,
+   "name": "Gourgeist ex",
+   "num": 41,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 42,
+   "name": "Xerneas",
+   "num": 42,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 43,
+   "name": "Sudowoodo",
+   "num": 43,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 44,
+   "name": "Phanpy",
+   "num": 44,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 45,
+   "name": "Donphan",
+   "num": 45,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 46,
+   "name": "Baltoy",
+   "num": 46,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 47,
+   "name": "Claydol",
+   "num": 47,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 48,
+   "name": "Mega Gallade ex",
+   "num": 48,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 49,
+   "name": "Zubat",
+   "num": 49,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 50,
+   "name": "Golbat",
+   "num": 50,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 51,
+   "name": "Crobat",
+   "num": 51,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 52,
+   "name": "Qwilfish",
+   "num": 52,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 53,
+   "name": "Stunky",
+   "num": 53,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 54,
+   "name": "Skuntank",
+   "num": 54,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 55,
+   "name": "Krookodile ex",
+   "num": 55,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 56,
+   "name": "Trubbish",
+   "num": 56,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 57,
+   "name": "Garbodor",
+   "num": 57,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 58,
+   "name": "Skrelp",
+   "num": 58,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 59,
+   "name": "Beldum",
+   "num": 59,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 60,
+   "name": "Metang",
+   "num": 60,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 61,
+   "name": "Metagross",
+   "num": 61,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 62,
+   "name": "Ferroseed",
+   "num": 62,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 63,
+   "name": "Ferrothorn",
+   "num": 63,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 64,
+   "name": "Cobalion ex",
+   "num": 64,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 65,
+   "name": "Mega Dragalge ex",
+   "num": 65,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 66,
+   "name": "Goomy",
+   "num": 66,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 67,
+   "name": "Sliggoo",
+   "num": 67,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 68,
+   "name": "Goodra",
+   "num": 68,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 69,
+   "name": "Tauros",
+   "num": 69,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 70,
+   "name": "Patrat",
+   "num": 70,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 71,
+   "name": "Watchog",
+   "num": 71,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 72,
+   "name": "Minccino",
+   "num": 72,
+   "rarity": "common",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 73,
+   "name": "Cinccino ex",
+   "num": 73,
+   "rarity": "double_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 74,
+   "name": "Apólice de Adversidade",
+   "num": 74,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 75,
+   "name": "Floette Ange",
+   "num": 75,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 76,
+   "name": "Tranquilidade do AZ",
+   "num": 76,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 77,
+   "name": "Emma",
+   "num": 77,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 78,
+   "name": "Rede Grande de Arrasto",
+   "num": 78,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 79,
+   "name": "Philippe",
+   "num": 79,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 80,
+   "name": "Torre Prisma",
+   "num": 80,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 81,
+   "name": "Show da Roxie",
+   "num": 81,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 82,
+   "name": "Cartão Vermelho Especial",
+   "num": 82,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 83,
+   "name": "Tomo da Transformação",
+   "num": 83,
+   "rarity": "uncommon",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 84,
+   "name": "Energia Borbulhante",
+   "num": 84,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 85,
+   "name": "Energia Magnética",
+   "num": 85,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 86,
+   "name": "Energia Nitro",
+   "num": 86,
+   "rarity": "rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 87,
+   "name": "Chespin",
+   "num": 87,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 88,
+   "name": "Froakie",
+   "num": 88,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 89,
+   "name": "Frogadier",
+   "num": 89,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 90,
+   "name": "Ampharos",
+   "num": 90,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 91,
+   "name": "Xerneas",
+   "num": 91,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 92,
+   "name": "Claydol",
+   "num": 92,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 93,
+   "name": "Crobat",
+   "num": 93,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 94,
+   "name": "Metang",
+   "num": 94,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 95,
+   "name": "Sliggoo",
+   "num": 95,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 96,
+   "name": "Tauros",
+   "num": 96,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 97,
+   "name": "Watchog",
+   "num": 97,
+   "rarity": "illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 98,
+   "name": "Beedrill ex",
+   "num": 98,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 99,
+   "name": "Mega Pyroar ex",
+   "num": 99,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 100,
+   "name": "Mega Greninja ex",
+   "num": 100,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 101,
+   "name": "Mega Floette ex",
+   "num": 101,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 102,
+   "name": "Gourgeist ex",
+   "num": 102,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 103,
+   "name": "Cobalion ex",
+   "num": 103,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 104,
+   "name": "Mega Dragalge ex",
+   "num": 104,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 105,
+   "name": "Cinccino ex",
+   "num": 105,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 106,
+   "name": "Tranquilidade do AZ",
+   "num": 106,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 107,
+   "name": "Emma",
+   "num": 107,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 108,
+   "name": "Recuperação de Energia",
+   "num": 108,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 109,
+   "name": "Sorvetão Jumbo",
+   "num": 109,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 110,
+   "name": "Philippe",
+   "num": 110,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 111,
+   "name": "Torre Prisma",
+   "num": 111,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 112,
+   "name": "Show da Roxie",
+   "num": 112,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 113,
+   "name": "Cartão Vermelho Especial",
+   "num": 113,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 114,
+   "name": "Praia de Surfista",
+   "num": 114,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 115,
+   "name": "Sucateador de Ferramentas",
+   "num": 115,
+   "rarity": "ultra_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 116,
+   "name": "Mega Greninja ex",
+   "num": 116,
+   "rarity": "special_illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 117,
+   "name": "Mega Floette ex",
+   "num": 117,
+   "rarity": "special_illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 118,
+   "name": "Mega Dragalge ex",
+   "num": 118,
+   "rarity": "special_illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 119,
+   "name": "Cinccino ex",
+   "num": 119,
+   "rarity": "special_illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 120,
+   "name": "Tranquilidade do AZ",
+   "num": 120,
+   "rarity": "special_illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 121,
+   "name": "Show da Roxie",
+   "num": 121,
+   "rarity": "special_illustration_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 122,
+   "name": "Mega Greninja ex",
+   "num": 122,
+   "rarity": "mega_hyper_rare",
+   "set": "chaos-rising"
+  },
+  {
+   "id": 123,
+   "name": "Tropius",
+   "num": 1,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 124,
+   "name": "Grubbin",
+   "num": 2,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 125,
+   "name": "Fomantis",
+   "num": 3,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 126,
+   "name": "Lurantis ex",
+   "num": 4,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 127,
+   "name": "Poltchageist",
+   "num": 5,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 128,
+   "name": "Sinistcha",
+   "num": 6,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 129,
+   "name": "Heatran",
+   "num": 7,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 130,
+   "name": "Mega Delphox ex",
+   "num": 8,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 131,
+   "name": "Sizzlipede",
+   "num": 9,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 132,
+   "name": "Centiskorch",
+   "num": 10,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 133,
+   "name": "Charcadet",
+   "num": 11,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 134,
+   "name": "Armarouge",
+   "num": 12,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 135,
+   "name": "Goldeen",
+   "num": 13,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 136,
+   "name": "Seaking",
+   "num": 14,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 137,
+   "name": "Wailmer",
+   "num": 15,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 138,
+   "name": "Wailord ex",
+   "num": 16,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 139,
+   "name": "Relicanth",
+   "num": 17,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 140,
+   "name": "Popplio",
+   "num": 18,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 141,
+   "name": "Brionne",
+   "num": 19,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 142,
+   "name": "Primarina",
+   "num": 20,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 143,
+   "name": "Finizen",
+   "num": 21,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 144,
+   "name": "Palafin",
+   "num": 22,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 145,
+   "name": "Electrike",
+   "num": 23,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 146,
+   "name": "Manectric",
+   "num": 24,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 147,
+   "name": "Charjabug",
+   "num": 25,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 148,
+   "name": "Vikavolt",
+   "num": 26,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 149,
+   "name": "Mega Zeraora ex",
+   "num": 27,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 150,
+   "name": "Miraidon",
+   "num": 28,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 151,
+   "name": "Slowpoke",
+   "num": 29,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 152,
+   "name": "Slowbro",
+   "num": 30,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 153,
+   "name": "Mega Slowbro ex",
+   "num": 31,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 154,
+   "name": "Jynx",
+   "num": 32,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 155,
+   "name": "Shuppet",
+   "num": 33,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 156,
+   "name": "Banette",
+   "num": 34,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 157,
+   "name": "Spiritomb",
+   "num": 35,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 158,
+   "name": "Litwick",
+   "num": 36,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 159,
+   "name": "Lampent",
+   "num": 37,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 160,
+   "name": "Mega Chandelure ex",
+   "num": 38,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 161,
+   "name": "Dhelmise",
+   "num": 39,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 162,
+   "name": "Marshadow",
+   "num": 40,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 163,
+   "name": "Annihilape",
+   "num": 41,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 164,
+   "name": "Mankey",
+   "num": 42,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 165,
+   "name": "Primeape",
+   "num": 43,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 166,
+   "name": "Cranidos",
+   "num": 44,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 167,
+   "name": "Rampardos ex",
+   "num": 45,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 168,
+   "name": "Drilbur",
+   "num": 46,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 169,
+   "name": "Koraidon",
+   "num": 47,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 170,
+   "name": "Mega Darkrai ex",
+   "num": 48,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 171,
+   "name": "Vullaby",
+   "num": 49,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 172,
+   "name": "Mandibuzz",
+   "num": 50,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 173,
+   "name": "Inkay",
+   "num": 51,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 174,
+   "name": "Malamar",
+   "num": 52,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 175,
+   "name": "Nickit",
+   "num": 53,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 176,
+   "name": "Thievul",
+   "num": 54,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 177,
+   "name": "Morpeko ex",
+   "num": 55,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 178,
+   "name": "Zarude",
+   "num": 56,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 179,
+   "name": "Maschiff",
+   "num": 57,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 180,
+   "name": "Mabosstiff",
+   "num": 58,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 181,
+   "name": "Chi-Yu",
+   "num": 59,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 182,
+   "name": "Skarmory",
+   "num": 60,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 183,
+   "name": "Shieldon",
+   "num": 61,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 184,
+   "name": "Bastiodon",
+   "num": 62,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 185,
+   "name": "Bronzor",
+   "num": 63,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 186,
+   "name": "Bronzong",
+   "num": 64,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 187,
+   "name": "Mega Excadrill ex",
+   "num": 65,
+   "rarity": "double_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 188,
+   "name": "Pikipek",
+   "num": 66,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 189,
+   "name": "Trumbeak",
+   "num": 67,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 190,
+   "name": "Toucannon",
+   "num": 68,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 191,
+   "name": "Tipo Nulo",
+   "num": 69,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 192,
+   "name": "Silvally",
+   "num": 70,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 193,
+   "name": "Bombirdier",
+   "num": 71,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 194,
+   "name": "Fóssil Armadura Arcaico",
+   "num": 72,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 195,
+   "name": "Fóssil Crânio Arcaico",
+   "num": 73,
+   "rarity": "common",
+   "set": "pitch-black"
+  },
+  {
+   "id": 196,
+   "name": "Distintivo de Recomeço",
+   "num": 74,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 197,
+   "name": "Sino Sombrio",
+   "num": 75,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 198,
+   "name": "Pedreira de Fóssil",
+   "num": 76,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 199,
+   "name": "Batalha Decisiva do Gladio",
+   "num": 77,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 200,
+   "name": "Clarita",
+   "num": 78,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 201,
+   "name": "Jett",
+   "num": 79,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 202,
+   "name": "Vitalidade da Misty",
+   "num": 80,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 203,
+   "name": "Recruta do Clã Corrosão",
+   "num": 81,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 204,
+   "name": "Bombona",
+   "num": 82,
+   "rarity": "uncommon",
+   "set": "pitch-black"
+  },
+  {
+   "id": 205,
+   "name": "Energia Sombria",
+   "num": 83,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 206,
+   "name": "Energia Voltaica",
+   "num": 84,
+   "rarity": "rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 207,
+   "name": "Fomantis",
+   "num": 85,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 208,
+   "name": "Armarouge",
+   "num": 86,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 209,
+   "name": "Goldeen",
+   "num": 87,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 210,
+   "name": "Primarina",
+   "num": 88,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 211,
+   "name": "Manectric",
+   "num": 89,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 212,
+   "name": "Slowbro",
+   "num": 90,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 213,
+   "name": "Dhelmise",
+   "num": 91,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 214,
+   "name": "Thievul",
+   "num": 92,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 215,
+   "name": "Bastiodon",
+   "num": 93,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 216,
+   "name": "Toucannon",
+   "num": 94,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 217,
+   "name": "Silvally",
+   "num": 95,
+   "rarity": "illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 218,
+   "name": "Lurantis ex",
+   "num": 96,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 219,
+   "name": "Wailord ex",
+   "num": 97,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 220,
+   "name": "Mega Zeraora ex",
+   "num": 98,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 221,
+   "name": "Mega Chandelure ex",
+   "num": 99,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 222,
+   "name": "Rampardos ex",
+   "num": 100,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 223,
+   "name": "Mega Darkrai ex",
+   "num": 101,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 224,
+   "name": "Morpeko ex",
+   "num": 102,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 225,
+   "name": "Mega Excadrill ex",
+   "num": 103,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 226,
+   "name": "Bracelete Bravio",
+   "num": 104,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 227,
+   "name": "Martelo Esmagador",
+   "num": 105,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 228,
+   "name": "Sino Sombrio",
+   "num": 106,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 229,
+   "name": "Substituição de Energia",
+   "num": 107,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 230,
+   "name": "Batalha Decisiva do Gladio",
+   "num": 108,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 231,
+   "name": "Clarita",
+   "num": 109,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 232,
+   "name": "Defensor Férreo",
+   "num": 110,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 233,
+   "name": "Vitalidade da Misty",
+   "num": 111,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 234,
+   "name": "Recruta do Clã Corrosão",
+   "num": 112,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 235,
+   "name": "Bombona",
+   "num": 113,
+   "rarity": "ultra_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 236,
+   "name": "Mega Zeraora ex",
+   "num": 114,
+   "rarity": "special_illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 237,
+   "name": "Mega Chandelure ex",
+   "num": 115,
+   "rarity": "special_illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 238,
+   "name": "Mega Darkrai ex",
+   "num": 116,
+   "rarity": "special_illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 239,
+   "name": "Morpeko ex",
+   "num": 117,
+   "rarity": "special_illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 240,
+   "name": "Batalha Decisiva do Gladio",
+   "num": 118,
+   "rarity": "special_illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 241,
+   "name": "Clarita",
+   "num": 119,
+   "rarity": "special_illustration_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 242,
+   "name": "Mega Darkrai ex",
+   "num": 120,
+   "rarity": "mega_hyper_rare",
+   "set": "pitch-black"
+  },
+  {
+   "id": 243,
+   "name": "Exeggcute",
+   "num": 1,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 244,
+   "name": "Exeggutor de Alola",
+   "num": 2,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 245,
+   "name": "Volbeat",
+   "num": 3,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 246,
+   "name": "Illumise",
+   "num": 4,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 247,
+   "name": "Tropius",
+   "num": 5,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 248,
+   "name": "Cherubi",
+   "num": 6,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 249,
+   "name": "Cherrim",
+   "num": 7,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 250,
+   "name": "Vivillon",
+   "num": 8,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 251,
+   "name": "Vulpix",
+   "num": 9,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 252,
+   "name": "Ninetales",
+   "num": 10,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 253,
+   "name": "Moltres",
+   "num": 11,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 254,
+   "name": "Ho-Oh",
+   "num": 12,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 255,
+   "name": "Victini",
+   "num": 13,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 256,
+   "name": "Reshiram",
+   "num": 14,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 257,
+   "name": "Fuecoco ex",
+   "num": 15,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 258,
+   "name": "Slowpoke",
+   "num": 16,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 259,
+   "name": "Lapras",
+   "num": 17,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 260,
+   "name": "Articuno",
+   "num": 18,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 261,
+   "name": "Kyogre",
+   "num": 19,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 262,
+   "name": "Palkia",
+   "num": 20,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 263,
+   "name": "Greninja ex",
+   "num": 21,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 264,
+   "name": "Wishiwashi",
+   "num": 22,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 265,
+   "name": "Pikachu",
+   "num": 23,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 266,
+   "name": "Pikachu",
+   "num": 24,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 267,
+   "name": "Pikachu",
+   "num": 25,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 268,
+   "name": "Pikachu",
+   "num": 26,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 269,
+   "name": "Pikachu",
+   "num": 27,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 270,
+   "name": "Pikachu",
+   "num": 28,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 271,
+   "name": "Pikachu",
+   "num": 29,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 272,
+   "name": "Pikachu",
+   "num": 30,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 273,
+   "name": "Pikachu",
+   "num": 31,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 274,
+   "name": "Pikachu",
+   "num": 32,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 275,
+   "name": "Pikachu",
+   "num": 33,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 276,
+   "name": "Pikachu",
+   "num": 34,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 277,
+   "name": "Pikachu",
+   "num": 35,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 278,
+   "name": "Pikachu",
+   "num": 36,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 279,
+   "name": "Pikachu",
+   "num": 37,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 280,
+   "name": "Pikachu",
+   "num": 38,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 281,
+   "name": "Pikachu",
+   "num": 39,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 282,
+   "name": "Pikachu",
+   "num": 40,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 283,
+   "name": "Pikachu",
+   "num": 41,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 284,
+   "name": "Pikachu",
+   "num": 42,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 285,
+   "name": "Pikachu",
+   "num": 43,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 286,
+   "name": "Pikachu",
+   "num": 44,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 287,
+   "name": "Pikachu",
+   "num": 45,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 288,
+   "name": "Pikachu",
+   "num": 46,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 289,
+   "name": "Pikachu",
+   "num": 47,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 290,
+   "name": "Pikachu",
+   "num": 48,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 291,
+   "name": "Pikachu",
+   "num": 49,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 292,
+   "name": "Pikachu",
+   "num": 50,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 293,
+   "name": "Pikachu",
+   "num": 51,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 294,
+   "name": "Pikachu",
+   "num": 52,
+   "rarity": "pikachu_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 295,
+   "name": "Pikachu ex",
+   "num": 53,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 296,
+   "name": "Pikachu ex",
+   "num": 54,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 297,
+   "name": "Zapdos",
+   "num": 55,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 298,
+   "name": "Zekrom",
+   "num": 56,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 299,
+   "name": "Zeraora",
+   "num": 57,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 300,
+   "name": "Toxel",
+   "num": 58,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 301,
+   "name": "Toxtricity",
+   "num": 59,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 302,
+   "name": "Toxtricity",
+   "num": 60,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 303,
+   "name": "Morpeko",
+   "num": 61,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 304,
+   "name": "Miraidon",
+   "num": 62,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 305,
+   "name": "Mewtwo",
+   "num": 63,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 306,
+   "name": "Mewtwo ex",
+   "num": 64,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 307,
+   "name": "Mew",
+   "num": 65,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 308,
+   "name": "Mew ex",
+   "num": 66,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 309,
+   "name": "Marill",
+   "num": 67,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 310,
+   "name": "Azumarill",
+   "num": 68,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 311,
+   "name": "Espeon",
+   "num": 69,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 312,
+   "name": "Espeon ex",
+   "num": 70,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 313,
+   "name": "Sylveon ex",
+   "num": 71,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 314,
+   "name": "Unown",
+   "num": 72,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 315,
+   "name": "Drifloon",
+   "num": 73,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 316,
+   "name": "Cresselia",
+   "num": 74,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 317,
+   "name": "Chandelure",
+   "num": 75,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 318,
+   "name": "Xerneas",
+   "num": 76,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 319,
+   "name": "Comfey",
+   "num": 77,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 320,
+   "name": "Cosmog",
+   "num": 78,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 321,
+   "name": "Cosmoem",
+   "num": 79,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 322,
+   "name": "Lunala",
+   "num": 80,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 323,
+   "name": "Gimmighoul",
+   "num": 81,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 324,
+   "name": "Groudon",
+   "num": 82,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 325,
+   "name": "Lucario",
+   "num": 83,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 326,
+   "name": "Seismitoad",
+   "num": 84,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 327,
+   "name": "Lycanroc",
+   "num": 85,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 328,
+   "name": "Koraidon",
+   "num": 86,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 329,
+   "name": "Nidoran",
+   "num": 87,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 330,
+   "name": "Nidorina",
+   "num": 88,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 331,
+   "name": "Meowth de Alola",
+   "num": 89,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 332,
+   "name": "Gengar ex",
+   "num": 90,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 333,
+   "name": "Umbreon",
+   "num": 91,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 334,
+   "name": "Umbreon ex",
+   "num": 92,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 335,
+   "name": "Murkrow",
+   "num": 93,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 336,
+   "name": "Scraggy",
+   "num": 94,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 337,
+   "name": "Zorua",
+   "num": 95,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 338,
+   "name": "Zoroark",
+   "num": 96,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 339,
+   "name": "Deino",
+   "num": 97,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 340,
+   "name": "Zweilous",
+   "num": 98,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 341,
+   "name": "Hydreigon",
+   "num": 99,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 342,
+   "name": "Yveltal",
+   "num": 100,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 343,
+   "name": "Meowth de Galar",
+   "num": 101,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 344,
+   "name": "Jirachi ex",
+   "num": 102,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 345,
+   "name": "Dialga",
+   "num": 103,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 346,
+   "name": "Ferrothorn",
+   "num": 104,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 347,
+   "name": "Solgaleo",
+   "num": 105,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 348,
+   "name": "Zacian",
+   "num": 106,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 349,
+   "name": "Zamazenta",
+   "num": 107,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 350,
+   "name": "Gholdengo",
+   "num": 108,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 351,
+   "name": "Salamence ex",
+   "num": 109,
+   "rarity": "double_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 352,
+   "name": "Jangmo-o",
+   "num": 110,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 353,
+   "name": "Hakamo-o",
+   "num": 111,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 354,
+   "name": "Kommo-o",
+   "num": 112,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 355,
+   "name": "Meowth",
+   "num": 113,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 356,
+   "name": "Kangaskhan",
+   "num": 114,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 357,
+   "name": "Ditto",
+   "num": 115,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 358,
+   "name": "Eevee",
+   "num": 116,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 359,
+   "name": "Eevee",
+   "num": 117,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 360,
+   "name": "Eevee",
+   "num": 118,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 361,
+   "name": "Snorlax",
+   "num": 119,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 362,
+   "name": "Igglybuff",
+   "num": 120,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 363,
+   "name": "Lugia",
+   "num": 121,
+   "rarity": "rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 364,
+   "name": "Zorua de Hisui",
+   "num": 122,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 365,
+   "name": "Zoroark de Hisui",
+   "num": 123,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 366,
+   "name": "Minior",
+   "num": 124,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 367,
+   "name": "Maushold",
+   "num": 125,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 368,
+   "name": "Poké Tablet",
+   "num": 126,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 369,
+   "name": "Substituição",
+   "num": 127,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 370,
+   "name": "Ultra Bola",
+   "num": 128,
+   "rarity": "common",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 371,
+   "name": "Exeggutor de Alola",
+   "num": 129,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 372,
+   "name": "Moltres",
+   "num": 130,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 373,
+   "name": "Lapras",
+   "num": 131,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 374,
+   "name": "Articuno",
+   "num": 132,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 375,
+   "name": "Zapdos",
+   "num": 133,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 376,
+   "name": "Toxtricity",
+   "num": 134,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 377,
+   "name": "Morpeko",
+   "num": 135,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 378,
+   "name": "Drifloon",
+   "num": 136,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 379,
+   "name": "Chandelure",
+   "num": 137,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 380,
+   "name": "Lycanroc",
+   "num": 138,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 381,
+   "name": "Meowth de Alola",
+   "num": 139,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 382,
+   "name": "Scraggy",
+   "num": 140,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 383,
+   "name": "Meowth de Galar",
+   "num": 141,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 384,
+   "name": "Gholdengo",
+   "num": 142,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 385,
+   "name": "Kommo-o",
+   "num": 143,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 386,
+   "name": "Meowth",
+   "num": 144,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 387,
+   "name": "Zorua de Hisui",
+   "num": 145,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 388,
+   "name": "Maushold",
+   "num": 146,
+   "rarity": "illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 389,
+   "name": "Fuecoco ex",
+   "num": 147,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 390,
+   "name": "Greninja ex",
+   "num": 148,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 391,
+   "name": "Pikachu ex",
+   "num": 149,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 392,
+   "name": "Pikachu ex",
+   "num": 150,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 393,
+   "name": "Mewtwo ex",
+   "num": 151,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 394,
+   "name": "Mew ex",
+   "num": 152,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 395,
+   "name": "Sylveon ex",
+   "num": 153,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 396,
+   "name": "Gengar ex",
+   "num": 154,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 397,
+   "name": "Jirachi ex",
+   "num": 155,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 398,
+   "name": "Salamence ex",
+   "num": 156,
+   "rarity": "special_illustration_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 399,
+   "name": "Mewtwo ex",
+   "num": 157,
+   "rarity": "futuristic_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 400,
+   "name": "Mew ex",
+   "num": 158,
+   "rarity": "futuristic_rare",
+   "set": "30th-celebration"
+  },
+  {
+   "id": 401,
+   "name": "Charizard",
+   "num": 1,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 402,
+   "name": "Delcatty",
+   "num": 2,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 403,
+   "name": "Metagross",
+   "num": 3,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 404,
+   "name": "Genesect-EX",
+   "num": 4,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 405,
+   "name": "Misty",
+   "num": 5,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 406,
+   "name": "Tyranitar Sombrio",
+   "num": 6,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 407,
+   "name": "Sneasel",
+   "num": 7,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 408,
+   "name": "Pikachu e Zekrom-GX",
+   "num": 8,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 409,
+   "name": "Greninja TURBO",
+   "num": 9,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 410,
+   "name": "Uxie",
+   "num": 10,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 411,
+   "name": "Crobat",
+   "num": 11,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 412,
+   "name": "Raikou",
+   "num": 12,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 413,
+   "name": "Buzzwole-GX",
+   "num": 13,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 414,
+   "name": "Pikachu",
+   "num": 14,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 415,
+   "name": "Jigglypuff da Érica",
+   "num": 15,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 416,
+   "name": "Rayquaza-EX",
+   "num": 16,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 417,
+   "name": "Solgaleo-GX",
+   "num": 17,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 418,
+   "name": "Gengar",
+   "num": 18,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 419,
+   "name": "Darkrai & Cresselia LENDA",
+   "num": 19,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 420,
+   "name": "Darkrai & Cresselia LENDA",
+   "num": 20,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 421,
+   "name": "N",
+   "num": 21,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 422,
+   "name": "Palkia LV.X",
+   "num": 22,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 423,
+   "name": "M Gardevoir-EX",
+   "num": 23,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 424,
+   "name": "Celebi Luminescente",
+   "num": 24,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 425,
+   "name": "Scizor ex",
+   "num": 25,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 426,
+   "name": "Mew VMAX",
+   "num": 26,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 427,
+   "name": "Arceus V-ASTRO",
+   "num": 27,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 428,
+   "name": "Zacian V",
+   "num": 28,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 429,
+   "name": "Lugia",
+   "num": 29,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  },
+  {
+   "id": 430,
+   "name": "Magikarp",
+   "num": 30,
+   "rarity": "classic_collection",
+   "set": "30th-classic"
+  }
+ ],
+ "sets": [
+  {
+   "code": "SN54",
+   "from": 1,
+   "key": "chaos-rising",
+   "name": "Megaevolução — Caos Ascendente",
+   "printed": 86,
+   "release": "2026-05-22",
+   "short": "Caos Ascendente",
+   "to": 122,
+   "total": 122
+  },
+  {
+   "code": "KD5B",
+   "from": 123,
+   "key": "pitch-black",
+   "name": "Megaevolução — Escuridão Absoluta",
+   "printed": 84,
+   "release": "2026-07-17",
+   "short": "Escuridão Absoluta",
+   "to": 242,
+   "total": 120
+  },
+  {
+   "code": "2M6P",
+   "from": 243,
+   "key": "30th-celebration",
+   "name": "Celebração de 30 Anos",
+   "printed": 128,
+   "release": "2026-09-11",
+   "short": "30 Anos",
+   "to": 400,
+   "total": 158
+  },
+  {
+   "code": "2M6P",
+   "from": 401,
+   "key": "30th-classic",
+   "name": "Celebração de 30 Anos — Coleção Clássica",
+   "printed": 30,
+   "release": "2026-09-11",
+   "short": "Coleção Clássica",
+   "to": 430,
+   "total": 30
+  }
+ ]
+}

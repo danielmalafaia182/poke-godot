@@ -186,6 +186,27 @@ func boss_comando(cmd: Dictionary) -> Dictionary:
 		registrar_captura_especie(String(r["especie"]), true, "Altar")   # C: "Um ✨ … foi pro seu depósito!"
 	return r
 
+# Ciclo 3: álbum de Pokécards {"<cardId>": {qtd, primeiro}} (sim/servico_cards.gd). Vai no save.
+var album: Dictionary = {}
+var _servico_cards = null
+func servico_cards():
+	if _servico_cards == null:
+		_servico_cards = preload("res://sim/servico_cards.gd").new()
+	return _servico_cards
+
+func album_comando(cmd: Dictionary) -> Dictionary:
+	var e := _estado_bosses()   # o mesmo recorte da BAG (ids do servidor)
+	e["album"] = album
+	var msgs: Array = servico_cards().tratar(e, cmd)
+	album = e["album"]
+	_voltar_estado_bosses(e)
+	if String(msgs[0].get("type", "")) == "error":
+		return {"erro": String(msgs[0]["message"])}
+	var r: Dictionary = msgs[0].duplicate()
+	if msgs.size() > 1:
+		r.merge(msgs[1])
+	return r
+
 var _servico_ginasios = null
 func servico_ginasios():
 	if _servico_ginasios == null:

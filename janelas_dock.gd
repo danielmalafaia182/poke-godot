@@ -13,6 +13,7 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["inventario"] = _criar(pai, "res://painel_inventario.gd", "PainelInventario")
 	j["ginasios"] = _criar(pai, "res://painel_ginasios.gd", "PainelGinasios")
 	j["bosses"] = _criar(pai, "res://painel_bosses.gd", "PainelBosses")
+	j["album"] = _criar(pai, "res://painel_album.gd", "PainelAlbum")
 	j["bosses"].na_hunt = controlador_hunt != null   # C: Auto Boss só fora de hunt
 	j["itens_uso"] = pai.get_node_or_null("PainelItensUso")
 	if j["itens_uso"] == null:
@@ -59,6 +60,8 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		j["analyzer"].abrir()
 	elif chave == "streak":
 		j["streak"].abrir()
+	elif chave == "pokecards":
+		j["album"].abrir()
 	elif chave == "bosses":
 		j["bosses"].abrir()
 	elif chave == "gyms":

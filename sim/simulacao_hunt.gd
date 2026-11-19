@@ -803,6 +803,10 @@ func _abate(m: Dictionary) -> void:
 	_garantir_pedras(esp, lock, mult_loot, rolagens, loot)
 	if bool(m["shiny"]):
 		_card_shiny(esp, loot)
+	if float(p.get("pack_chance_abate", 0.0)) > 0.0 and dados.itens.has(6352) and rng.randf() < float(p.pack_chance_abate):
+		# classe 3 (balanceamento.json combate.pack_chance_abate): Poke Card Pack (A: item 6352) para o álbum
+		loot.append({"itemId": 6352, "name": String(dados.itens[6352]["nome"]), "qty": 1})
+		inventario[6352] = int(inventario.get(6352, 0)) + 1
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
