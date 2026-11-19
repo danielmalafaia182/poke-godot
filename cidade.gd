@@ -43,6 +43,8 @@ var painel_streak: Control
 var painel_diarias: Control
 var painel_itens: Control
 var painel_soneca: Control
+var painel_metas: Control
+var botao_meta: Button
 var rotulo_ouro: Label
 # 0 = cidade inteira. Mantém placas e ações disponíveis à distância, como
 # solicitado. Um raio positivo pode ser configurado posteriormente no Inspector.
@@ -309,7 +311,7 @@ func _perto_nurse() -> bool:
 	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_NURSE)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
 
 func _modal_aberto() -> bool:
-	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_diarias != null and painel_diarias.visible) or (painel_itens != null and painel_itens.visible) or (painel_soneca != null and painel_soneca.visible)
+	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_diarias != null and painel_diarias.visible) or (painel_itens != null and painel_itens.visible) or (painel_soneca != null and painel_soneca.visible) or (painel_metas != null and painel_metas.visible)
 
 func _clicar_nurse() -> void:
 	if not _perto_nurse() or personagem.andando or _modal_aberto():
@@ -430,6 +432,35 @@ func _criar_ouro_e_config() -> void:
 	var atualizar := func() -> void: rotulo_ouro.text = "💲 %d" % EstadoJogo.ouro
 	EstadoJogo.ouro_alterado.connect(atualizar)
 	atualizar.call()
+	# Ciclo 2: metas visíveis (sim/metas.gd). A próxima meta fica sempre à vista no canto; o clique abre o painel.
+	painel_metas = load("res://painel_metas.gd").new()
+	painel_metas.name = "PainelMetas"
+	get_node("Interface").add_child(painel_metas)
+	botao_meta = Button.new()
+	botao_meta.name = "MetaAtual"
+	botao_meta.flat = true
+	botao_meta.alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	botao_meta.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	botao_meta.add_theme_color_override("font_color", Color("9fe0a0"))
+	botao_meta.add_theme_color_override("font_outline_color", Color.BLACK)
+	botao_meta.add_theme_constant_override("outline_size", 4)
+	botao_meta.anchor_left = 1.0; botao_meta.anchor_right = 1.0; botao_meta.anchor_top = 1.0; botao_meta.anchor_bottom = 1.0
+	botao_meta.offset_left = -560; botao_meta.offset_right = -16; botao_meta.offset_top = -104; botao_meta.offset_bottom = -52
+	botao_meta.tooltip_text = "Metas: hunt recomendada, próxima meta, marcos e coleção"
+	botao_meta.pressed.connect(func() -> void: painel_metas.abrir())
+	get_node("Interface").add_child(botao_meta)
+	call_deferred("atualizar_meta")
+	var botao_metas := Button.new()
+	botao_metas.name = "Metas"
+	botao_metas.text = "Metas"
+	coluna.add_child(botao_metas)
+	botao_metas.pressed.connect(func() -> void:
+		painel_config.hide()
+		painel_metas.abrir())
+
+func atualizar_meta() -> void:
+	if botao_meta != null:
+		botao_meta.text = load("res://painel_metas.gd").linha_resumo(EstadoJogo.metas())
 
 func verificar_soneca() -> void:
 	## Ao abrir a cidade: fechado numa hunt sem soneca → recupera até 15 min de caça (B-relatado); soneca pendente →

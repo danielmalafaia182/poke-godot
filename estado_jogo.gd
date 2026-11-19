@@ -437,6 +437,26 @@ func dormir(sim, agora_unix: int) -> String:
 	solicitar_salvamento()
 	return "" if bool(msgs[0].get("ghost", false)) else "Sem hunt para a soneca."
 
+# Metas visíveis (ciclo 2, classe 3: sim/metas.gd e a seção "metas" de balanceamento.json): hunt recomendada, próxima
+# meta, marco de nível e coleção (espécies diferentes no time e na BOX).
+func metas() -> Dictionary:
+	var dados = PONTE_CIDADE.dados()
+	var lider_pk := obter_lider()
+	if lider_pk == null or lider_pk.especie == null:
+		return {}
+	var sid := PONTE_CIDADE.id_especie(String(lider_pk.especie.nome))
+	if sid < 0:
+		return {}
+	var lider := {"speciesId": sid, "xp": lider_pk.experiencia_total, "quality": lider_pk.qualidade,
+		"ivs": {"hp": lider_pk.iv_hp, "atk": lider_pk.iv_atk, "def": lider_pk.iv_def, "spAtk": lider_pk.iv_sp_atk, "spDef": lider_pk.iv_sp_def, "speed": lider_pk.iv_spd}}
+	var especies := {}
+	for pk in time_pokemon + pokemons_capturados:
+		if pk != null and pk.especie != null:
+			var id := PONTE_CIDADE.id_especie(String(pk.especie.nome))
+			if id >= 0:
+				especies[id] = true
+	return preload("res://sim/metas.gd").resumo(dados, dados.hunts.values(), experiencia_treinador_acumulada, lider, especies.keys())
+
 func _pokemon_por_id(id: String) -> DadosPokemon:
 	for pk in time_pokemon + pokemons_capturados:
 		if pk != null and pk.id_persistente == id:
