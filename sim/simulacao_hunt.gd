@@ -762,8 +762,12 @@ func _abate(m: Dictionary) -> void:
 	# pokeXp.parts, sempre 0 nas gravações); F: floor sobre a base, como streak e typeDay, e no Pokémon também.
 	var n_ins := int(cfg.get("insignias", 0))
 	var gym_xp := int(floor(float(base) * float(p.insignia_pct_xp) / 100.0 * n_ins + 1e-9)) if n_ins > 0 else 0
-	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp
-	var total_p := base + vip + boost_p + parcela_dia + gym_xp
+	# Multiplicador de XP por região (classe 3, proposta do ciclo 2, balanceamento.json `xp_regiao`; padrão 1 = desligado):
+	# não muda o XP da espécie (a base fica igual, classe 1); entra na parcela `event` (A: a chave existe e é 0 nas gravações).
+	var mult_reg := float((p.get("xp_regiao", {}) as Dictionary).get(String(cfg.get("area", "")), 1.0))
+	var evento := int(floor(float(base) * (mult_reg - 1.0) + 1e-9)) if mult_reg > 1.0 else 0
+	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + evento
+	var total_p := base + vip + boost_p + parcela_dia + gym_xp + evento
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
 	var debuff_p := 0
@@ -799,8 +803,8 @@ func _abate(m: Dictionary) -> void:
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
-		"xpParts": _com_debuff({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": 0, "gym": gym_xp, "typeDay": parcela_dia}, debuff),
-		"pokeXp": {"xpGained": total_p, "parts": _com_debuff({"base": base, "boost": boost_p, "vip": vip, "event": 0, "mentor": 0, "gym": gym_xp, "typeDay": parcela_dia}, debuff_p),
+		"xpParts": _com_debuff({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, debuff),
+		"pokeXp": {"xpGained": total_p, "parts": _com_debuff({"base": base, "boost": boost_p, "vip": vip, "event": evento, "mentor": 0, "gym": gym_xp, "typeDay": parcela_dia}, debuff_p),
 			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
 		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
 	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total_p,

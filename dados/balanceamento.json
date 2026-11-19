@@ -52,6 +52,15 @@
     "pedra_garantia_fator": {
       "valor": 3.0,
       "motivo": "decisão do usuário (ciclo 2): se uma pedra de evolução não cai em 3× os abates esperados para ela (soma das chances ≥ 3), cai no próximo; tira os 4–70 h de espera por sorte do Golem"
+    },
+    "xp_regiao": {
+      "valor": {
+        "kanto": 1.0,
+        "outland": 1.0,
+        "orre": 1.0,
+        "nightmare": 1.0
+      },
+      "motivo": "proposta do ciclo 2 (decisão pendente do usuário): multiplicador de XP por região, sem mudar o XP da espécie; 1 = como o original"
     }
   },
   "apresentacao": {

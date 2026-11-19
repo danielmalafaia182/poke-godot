@@ -99,6 +99,7 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"inicio_ms": agora_ms,
 		"hunt_key": "%s:%d" % [slug, agora_ms],
 		"nivel_selvagem": int(hunt.get("nivel", 1)),
+		"area": String(hunt.get("area", "")),
 		"inicio": hc.get("start", {"x": 0, "y": 0}),
 		"spawns": hc.get("spawns", []),
 		"entrada_nova": bool(jogo.get("penalizar", true)),
