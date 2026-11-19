@@ -1,0 +1,53 @@
+extends RefCounted
+## Liga os ícones do dock (menu_superior_original.gd, sinal janela_solicitada) às janelas do ciclo 2, na cidade e na
+## hunt: Perfil, Gerenciamento de Captura (Bolas usadas), Log de Capturas, Hunt Analyser (só na hunt), Streak/Talentos,
+## Diário/Quests e Pokédex. Cada janela é criada uma vez por cena, sob `pai`.
+
+static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, abrir_pokedex: Callable = Callable()) -> Dictionary:
+	var j := {}
+	j["perfil"] = _criar(pai, "res://painel_perfil.gd", "PainelPerfil")
+	j["bolas"] = _criar(pai, "res://painel_bolas_usadas.gd", "PainelBolasUsadas")
+	j["log"] = _criar(pai, "res://painel_log_capturas.gd", "PainelLogCapturas")
+	j["streak"] = pai.get_node_or_null("PainelStreak")
+	if j["streak"] == null:
+		j["streak"] = _criar(pai, "res://painel_streak.gd", "PainelStreak")
+	j["diarias"] = pai.get_node_or_null("PainelDiarias")
+	if j["diarias"] == null:
+		j["diarias"] = _criar(pai, "res://painel_diarias.gd", "PainelDiarias")
+	j["perfil"].log_capturas_solicitado.connect(func() -> void:
+		j["perfil"].hide()
+		j["log"].abrir())
+	if controlador_hunt != null:
+		j["analyzer"] = _criar(pai, "res://painel_analyzer.gd", "PainelAnalyzer")
+		j["analyzer"].controlador = controlador_hunt
+		j["analyzer"].log_capturas_solicitado.connect(func() -> void:
+			j["analyzer"].hide()
+			j["log"].abrir())
+	elif menu.botoes.has("analyzer"):
+		menu.botoes["analyzer"].disabled = true
+		menu.botoes["analyzer"].tooltip_text = "Hunt Analyser — abre dentro da hunt"
+	j["_pokedex"] = abrir_pokedex
+	menu.janela_solicitada.connect(_abrir.bind(j))
+	return j
+
+
+static func _abrir(chave: String, j: Dictionary) -> void:
+	if chave == "profile":
+		j["perfil"].abrir()
+	elif chave == "usedballs":
+		j["bolas"].abrir()
+	elif chave == "analyzer" and j.has("analyzer"):
+		j["analyzer"].abrir()
+	elif chave == "streak":
+		j["streak"].abrir()
+	elif chave in ["daily", "quest"]:
+		j["diarias"].abrir()
+	elif chave == "pokedex" and (j["_pokedex"] as Callable).is_valid():
+		(j["_pokedex"] as Callable).call()
+
+
+static func _criar(pai: Node, script: String, nome: String) -> Control:
+	var c: Control = load(script).new()
+	c.name = nome
+	pai.add_child(c)
+	return c

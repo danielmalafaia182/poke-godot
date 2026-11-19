@@ -128,6 +128,11 @@ var slug_caca: String = ""
 var medidor_captura: Dictionary = {}
 # Garantia de pedra de evolução (classe 3, balanceamento.json): itemId (str) → chance acumulada sem a pedra cair. Vai no save.
 var garantia_pedras: Dictionary = {}
+# Ciclo 2: Log de Capturas (C: window.captureLog, "últimas 100") e tempo em caça (C: Perfil "Tempo em caça"). Vão no save.
+var log_capturas: Array = []
+var tempo_caca_s: int = 0
+var capturas_total: int = 0
+var _tempo_caca_ms := 0
 # Fase 3: penalidade de entrada (boost shinylock). Relato do usuário (B-relatado): vale ao entrar numa hunt diferente
 # da última ou depois que a sessão expira (15 min com o jogo fechado; E: o jogo local não tem modo soneca). Voltar à
 # mesma hunt pela cidade não penaliza. `ultima_hunt_slug` vai no save; `sessao_expirada` é decidida ao carregar.
@@ -661,7 +666,7 @@ func extrair_jogo_hunt(nome_hunt: String) -> Dictionary:
 		membros.append(pk)
 		equipe.append({"id": pk.id_persistente, "nome": String(pk.especie.nome), "xp": pk.experiencia_total,
 			"ivs": {"hp": pk.iv_hp, "atk": pk.iv_atk, "def": pk.iv_def, "spAtk": pk.iv_sp_atk, "spDef": pk.iv_sp_def, "speed": pk.iv_spd},
-			"quality": pk.qualidade, "hp": pk.obter_vida_atual()})
+			"quality": pk.qualidade, "hp": pk.obter_vida_atual(), "shiny": pk.shiny})
 	var inventario: Array = []
 	for id in estoque_pocoes:
 		inventario.append({"itemId": int(id), "quantity": int(estoque_pocoes[id])})
@@ -675,7 +680,7 @@ func extrair_jogo_hunt(nome_hunt: String) -> Dictionary:
 		"pocao_id": auto_potion_item_id, "limite_pocao": auto_potion_threshold, "auto_catch_nomes": auto_catch_names,
 			"auto_catch_shiny": auto_catch_shiny, "bola_auto_catch_shiny": configuracao.bola_shiny_efetiva(), "medidor_captura": medidor_captura, "garantia_pedras": garantia_pedras, "vip": vip}}
 
-func registrar_captura_especie(nome: String) -> bool:
+func registrar_captura_especie(nome: String, shiny: bool = false, bola: String = "") -> bool:
 	## A: o capturado chega no nível 1; IVs e Quality pelo sorteio do próprio jogo (DadosPokemon), como no P04.
 	var especie = preload("res://especies_importadas.gd").obter_todas().get(nome)
 	if especie == null:
@@ -683,11 +688,35 @@ func registrar_captura_especie(nome: String) -> bool:
 	var novo := DadosPokemon.new()
 	novo.especie = especie
 	novo.nivel = 1
+	novo.shiny = shiny
 	novo.sortear_ivs()
 	novo.sortear_qualidade()
 	novo.normalizar_atributos()
 	novo.vida_atual = novo.obter_vida_maxima()
-	return registrar_captura(novo)
+	var primeira := true
+	for e in log_capturas:
+		if String(e.get("especie", "")) == nome and bool(e.get("shiny", false)) == shiny:
+			primeira = false
+			break
+	if primeira:
+		for pk in time_pokemon + pokemons_capturados:
+			if pk != null and pk.especie != null and String(pk.especie.nome) == nome and pk.shiny == shiny:
+				primeira = false
+				break
+	var ok := registrar_captura(novo)
+	if ok:
+		capturas_total += 1
+		log_capturas.push_front({"especie": nome, "shiny": shiny, "nivel": 1, "iv": novo.iv_hp + novo.iv_atk + novo.iv_def + novo.iv_sp_atk + novo.iv_sp_def + novo.iv_spd,
+			"qualidade": snappedf(novo.qualidade, 0.001), "bola": bola, "t": int(Time.get_unix_time_from_system()), "primeira": primeira})
+		if log_capturas.size() > 100:
+			log_capturas.resize(100)
+	return ok
+
+func somar_tempo_caca(ms: int) -> void:
+	_tempo_caca_ms += ms
+	if _tempo_caca_ms >= 1000:
+		tempo_caca_s += _tempo_caca_ms / 1000
+		_tempo_caca_ms %= 1000
 
 func recuperar_hunt_fechada(agora_unix: int) -> Dictionary:
 	## Jogo fechado numa hunt sem soneca (B-relatado): roda a caça do tempo fechado, até 15 min, e aplica o resultado

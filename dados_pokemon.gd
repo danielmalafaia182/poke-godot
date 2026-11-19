@@ -25,6 +25,7 @@ func obter_vida_atual() -> int:
 @export var iv_spd: int = 1
 
 @export var qualidade: float = 1.0
+@export var shiny: bool = false   # ciclo 2: capturado shiny (A: o field marca o selvagem)
 
 func sortear_ivs() -> void:
 	iv_hp = randi_range(1, 32)

@@ -8,6 +8,8 @@ signal time_solicitado
 signal auto_helper_solicitado
 signal pokepedia_solicitada
 signal cidade_solicitada
+signal janela_solicitada(chave: String)   # ciclo 2: janelas novas (perfil, bolas usadas, analyzer, streak, diárias…)
+const JANELAS := ["profile", "usedballs", "analyzer", "streak", "daily", "quest", "pokedex"]
 const ESTILO: Script = preload("res://estilo_hud_original.gd")
 var barra: PanelContainer
 var rolagem: ScrollContainer
@@ -62,6 +64,8 @@ func _ready() -> void:
 				botao.pressed.connect(func() -> void: time_solicitado.emit())
 			"pokepedia": botao.pressed.connect(func() -> void: pokepedia_solicitada.emit())
 			"home": botao.pressed.connect(func() -> void: cidade_solicitada.emit())
+			_ when chave in JANELAS:
+				botao.pressed.connect(func() -> void: janela_solicitada.emit(chave))
 			_:
 				botao.disabled = true
 				botao.mouse_default_cursor_shape = Control.CURSOR_HELP

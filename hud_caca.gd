@@ -23,6 +23,8 @@ var capturas_contadas: Dictionary={}
 var aviso_ofensivo: PanelContainer
 var texto_aviso_ofensivo: Label
 
+var janelas_dock: Dictionary = {}
+var avisos: Control
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -46,6 +48,22 @@ func _ready() -> void:
 	menu.cidade_solicitada.connect(controlador._on_botao_voltar_cidade_pressed)
 	menu.mapa_solicitado.connect(_abrir_mapa_mundi)
 	menu.botoes["map"].tooltip_text = "Mapa-Múndi — escolher outra hunt"
+	# Ciclo 2: ícones do dock com janela (Perfil, Bolas usadas, Log de Capturas, Hunt Analyser, Streak, Diário, Pokédex)
+	janelas_dock = load("res://janelas_dock.gd").instalar(self, menu, controlador, pokepedia.abrir)
+	avisos = load("res://avisos_hud.gd").new()
+	avisos.name = "AvisosHud"
+	add_child(avisos)
+	avisos.relogio_ms = func() -> int: return controlador.sim.agora_ms() if controlador.sim != null else 0
+	controlador.subiu_nivel.connect(func(nome: String, nivel: int, treinador: bool) -> void:
+		if treinador:
+			avisos.nivel_treinador(nivel)
+		else:
+			avisos.nivel_pokemon(nome, nivel))
+	controlador.shiny_apareceu.connect(avisos.shiny_apareceu)
+	controlador.capturado.connect(func(nome: String, shiny: bool) -> void:
+		if shiny:
+			avisos.shiny_capturado(String(EstadoJogo.nome_treinador), nome))
+	controlador.boosts_alterados.connect(avisos.definir_boosts)
 	# 2b: o mapa-múndi da hunt é criado na 1ª abertura (instanciá-lo custava ~0,5 s na entrada da hunt)
 	recompensas = load("res://cartoes_derrota.gd").new()
 	add_child(recompensas)

@@ -45,6 +45,7 @@ var painel_itens: Control
 var painel_soneca: Control
 var painel_metas: Control
 var botao_meta: Button
+var janelas_dock: Dictionary = {}
 var rotulo_ouro: Label
 # 0 = cidade inteira. Mantém placas e ações disponíveis à distância, como
 # solicitado. Um raio positivo pode ser configurado posteriormente no Inspector.
@@ -450,6 +451,8 @@ func _criar_ouro_e_config() -> void:
 	botao_meta.pressed.connect(func() -> void: painel_metas.abrir())
 	get_node("Interface").add_child(botao_meta)
 	call_deferred("atualizar_meta")
+	# Ciclo 2: ícones do dock que abrem as janelas novas (Perfil, Bolas usadas, Log de Capturas, Streak, Diário, Pokédex)
+	janelas_dock = load("res://janelas_dock.gd").instalar(get_node("Interface"), get_node("Interface/MenuSuperior"), null, _abrir_pokepedia)
 	var botao_metas := Button.new()
 	botao_metas.name = "Metas"
 	botao_metas.text = "Metas"

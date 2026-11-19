@@ -71,6 +71,8 @@ func _validar(dados: Variant) -> String:
 				return "XP total inválido."
 			if p.has("versao_atributos") and not _inteiro(p["versao_atributos"],0,1):
 				return "Versão de atributos inválida."
+			if p.has("shiny") and not p["shiny"] is bool:
+				return "Shiny inválido."
 			for campo in CAMPOS_IV:
 				if not _inteiro(p.get(campo), 1, 32):
 					return "IV inválido: " + campo
@@ -222,6 +224,7 @@ func _criar_pokemon(dados: Dictionary) -> DadosPokemon:
 	pokemon.versao_atributos = int(dados.get("versao_atributos",0))
 	pokemon.experiencia_percentual = float(dados.get("experiencia_percentual",0.0))
 	pokemon.qualidade = float(dados["qualidade"])
+	pokemon.shiny = dados.get("shiny", false) == true
 	for campo in CAMPOS_IV:
 		pokemon.set(campo, int(dados[campo]))
 	pokemon.normalizar_atributos()
@@ -274,6 +277,15 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 		# Lista explícita; nunca atribui propriedades arbitrárias vindas do arquivo.
 		if campo in ["auto_catch", "auto_catch_ball_id", "auto_catch_names", "bola_selecionada", "auto_potion", "auto_potion_threshold", "auto_potion_item_id", "auto_catch_shiny", "auto_catch_shiny_ball_id"]:
 			estado.set(campo, dados["configuracoes"][campo] if campo in ["auto_catch", "auto_potion", "auto_catch_names", "auto_catch_shiny"] else int(dados["configuracoes"][campo]))
+	estado.log_capturas = []
+	if dados.get("log_capturas") is Array:
+		for e in dados["log_capturas"]:
+			if e is Dictionary and e.get("especie") is String:
+				estado.log_capturas.append(e)
+				if estado.log_capturas.size() >= 100:
+					break
+	estado.tempo_caca_s = int(dados["tempo_caca_s"]) if dados.get("tempo_caca_s") is float or dados.get("tempo_caca_s") is int else 0
+	estado.capturas_total = int(dados["capturas_total"]) if dados.get("capturas_total") is float or dados.get("capturas_total") is int else 0
 	estado.garantia_pedras = {}
 	if dados.get("garantia_pedras") is Dictionary:
 		for k in dados["garantia_pedras"]:
@@ -342,6 +354,8 @@ func _serializar_pokemon(pokemon: DadosPokemon) -> Dictionary:
 	var dados: Dictionary = {"id": pokemon.id_persistente, "especie": pokemon.especie.nome if pokemon.especie != null else "", "nivel": pokemon.nivel, "qualidade": pokemon.qualidade, "vida_atual": pokemon.vida_atual, "experiencia_percentual": pokemon.experiencia_percentual, "experiencia_total": pokemon.experiencia_total, "versao_atributos": pokemon.versao_atributos}
 	for campo in CAMPOS_IV:
 		dados[campo] = pokemon.get(campo)
+	if pokemon.shiny:
+		dados["shiny"] = true   # opcional: saves antigos e Pokémon normais ficam iguais
 	return dados
 
 func _estoque_json(dados: Dictionary) -> Dictionary:
@@ -369,7 +383,8 @@ func construir_dados(estado: Node) -> Dictionary:
 		"bolas": _estoque_json(estado.estoque_bolas), "pocoes": _estoque_json(estado.estoque_pocoes), "depot": _estoque_json(estado.itens_depot),
 		"configuracoes": {"auto_catch": estado.auto_catch, "auto_catch_ball_id": estado.auto_catch_ball_id, "auto_catch_names": estado.auto_catch_names, "bola_selecionada": estado.bola_selecionada, "auto_potion": estado.auto_potion, "auto_potion_threshold": estado.auto_potion_threshold, "auto_potion_item_id": estado.auto_potion_item_id, "auto_catch_shiny": estado.auto_catch_shiny, "auto_catch_shiny_ball_id": estado.auto_catch_shiny_ball_id},
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
-		"captura_medidor": estado.medidor_captura.duplicate(true), "garantia_pedras": estado.garantia_pedras.duplicate(true), "ultima_hunt": estado.ultima_hunt_slug,
+		"captura_medidor": estado.medidor_captura.duplicate(true), "garantia_pedras": estado.garantia_pedras.duplicate(true),
+		"log_capturas": estado.log_capturas.duplicate(true), "tempo_caca_s": estado.tempo_caca_s, "capturas_total": estado.capturas_total, "ultima_hunt": estado.ultima_hunt_slug,
 		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
 		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true), "ginasios": estado.ginasios.duplicate(true), "hunt_ao_fechar": estado.hunt_ao_fechar,
 		"salvo_em_unix": int(Time.get_unix_time_from_system())

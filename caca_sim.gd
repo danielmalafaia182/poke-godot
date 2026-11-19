@@ -23,10 +23,18 @@ const LOOT: Script = preload("res://regras_loot.gd")
 const CARTOES: Script = preload("res://cartoes_derrota.gd")
 const CENA_CIDADE := "res://cidade.tscn"
 
+const PONTE_DADOS := preload("res://ponte_cidade.gd")
 signal hunt_encerrada(motivo: String)
 # interface que hud_caca.gd espera do controlador (a mesma da cena antiga)
 signal derrota_recompensada(evento: Dictionary)
 signal captura_resolvida(evento: Dictionary)
+signal capturado(nome: String, shiny: bool)
+signal subiu_nivel(nome: String, nivel: int, treinador: bool)   # ciclo 2: avisos da HUD
+signal boosts_alterados(lista: Array)
+signal shiny_apareceu(nome: String)
+var _shinies_vistos := {}
+var _boosts_msg: Array = []
+var _eventos_msg: Array = []
 signal aliado_alterado(pokemon: DadosPokemon)
 signal ofensiva_aliado_alterada(diagnostico: Dictionary)
 
@@ -157,6 +165,7 @@ func _process(_delta: float) -> void:
 				return
 		_proximo_tick_ms += passo
 		n += 1
+		EstadoJogo.somar_tempo_caca(int(sim.p.tick_ms))
 		_conferir_troca_por_ko()
 	perfil_sim_us += Time.get_ticks_usec() - _t0
 	perfil_sim_max_us = maxi(perfil_sim_max_us, Time.get_ticks_usec() - _t0)
@@ -169,12 +178,30 @@ func _tratar(msg: Dictionary) -> void:
 			apresentacao.nova_instancia(String(msg["huntKey"]))
 		"field":
 			_sincronizar_hp(msg.get("bossTeam", []))
+			for mb in msg.get("mobs", []):
+				if bool(mb.get("shiny", false)) and not bool(mb.get("dead", false)):
+					var chave := "%d:%d" % [int(mb["slot"]), int(mb.get("speciesId", 0))]
+					if not _shinies_vistos.has(chave):
+						_shinies_vistos[chave] = true
+						shiny_apareceu.emit(String(PONTE_DADOS.dados().especie(int(mb.get("speciesId", 0))).get("nome", "")))
+				elif _shinies_vistos.has("%d:%d" % [int(mb["slot"]), int(mb.get("speciesId", 0))]) and bool(mb.get("dead", false)):
+					_shinies_vistos.erase("%d:%d" % [int(mb["slot"]), int(mb.get("speciesId", 0))])
+		"boosts":
+			_boosts_msg = (msg.get("boosts", []) as Array).duplicate(true)
+			_emitir_boosts()
+		"events":
+			_eventos_msg = []
+			for ev in msg.get("events", []):
+				_eventos_msg.append({"key": String(ev.get("key", "")), "until": int(ev.get("until", 0)), "nome": String(ev.get("name", "")), "desc": String(ev.get("desc", ""))})
+			_emitir_boosts()
 		"field-kill":
 			registro["abates"] += 1
 			EstadoJogo.registrar_abates(1, int(msg.get("speciesId", -1)))
 			EstadoJogo.diaria_abate(int(msg.get("speciesId", -1)))   # tarefas e Daily Kill
 			EstadoJogo.registrar_recompensa_treinador(int(msg["xpGained"]))
 			registro["xp_treinador"] += int(msg["xpGained"])
+			if bool(msg.get("leveledUp", false)):
+				subiu_nivel.emit("", int(msg.get("level", 0)), true)
 			_receber_loot(msg.get("loot", []))
 			if apresentacao.mostrar_cartao(msg, Time.get_ticks_msec()):
 				registro["cartoes"] += 1
@@ -182,7 +209,10 @@ func _tratar(msg: Dictionary) -> void:
 		"poke-xp":
 			var pk = _membro_por_id(String(msg.get("id", "")))
 			if pk != null:
+				var nv0: int = pk.nivel
 				EstadoJogo.conceder_experiencia(pk, int(msg["xpGained"]))
+				if pk.nivel > nv0:
+					subiu_nivel.emit(String(pk.especie.nome) if pk.especie != null else "", pk.nivel, false)
 				registro["xp_pokemon"] += int(msg["xpGained"])
 		"auto-heal":
 			var pid := _id_pocao(String(msg.get("name", "")))
@@ -197,7 +227,7 @@ func _tratar(msg: Dictionary) -> void:
 			EstadoJogo.garantia_pedras = sim.garantia_pedras.duplicate(true)   # garantia de pedra (classe 3)
 			_sequencia_captura += 1
 			if bool(msg.get("success", false)):
-				_registrar_captura(String(msg.get("speciesName", "")))
+				_registrar_captura(String(msg.get("speciesName", "")), _shiny_em(int(msg.get("col", -1)), int(msg.get("row", -1))), String(msg.get("ballName", "")))
 				EstadoJogo.diaria_captura(preload("res://ponte_cidade.gd").id_especie(String(msg.get("speciesName", ""))))   # tarefas e Daily Catch
 			# hud_caca conta as capturas da instância pelo id (o contador "N wilds" do painel Capture)
 			captura_resolvida.emit({"sucesso": bool(msg.get("success", false)), "id": "%s#%d" % [String(sim.hunt_key), _sequencia_captura]})
@@ -205,6 +235,10 @@ func _tratar(msg: Dictionary) -> void:
 			_sair(String(msg.get("motivo", "saida")))
 		"error":
 			_avisar(String(msg.get("message", "")))
+
+
+func _emitir_boosts() -> void:
+	boosts_alterados.emit(_boosts_msg + _eventos_msg)
 
 
 func _membro_por_id(id: String):
@@ -239,11 +273,24 @@ func _receber_loot(loot: Array) -> void:
 		registro["loot"][int(it["itemId"])] = int(registro["loot"].get(int(it["itemId"]), 0)) + int(it["qty"])
 
 
-func _registrar_captura(nome: String) -> void:
+func _registrar_captura(nome: String, shiny: bool = false, bola: String = "") -> void:
 	## A: o Pokémon capturado chega como poke-delta de nível 1 (5/5 capturas da rhydon-1h); IVs e Quality pelo sorteio
-	## do próprio jogo (DadosPokemon), como nas capturas do P04.
-	if EstadoJogo.registrar_captura_especie(nome):
+	## do próprio jogo (DadosPokemon), como nas capturas do P04. Shiny: o do selvagem capturado (o field marca, A).
+	if EstadoJogo.registrar_captura_especie(nome, shiny, bola):
 		registro["capturas"] += 1
+		if shiny:
+			registro["shiny_capturados"] = int(registro.get("shiny_capturados", 0)) + 1
+		capturado.emit(nome, shiny)
+
+
+func _shiny_em(col: int, row: int) -> bool:
+	## catch-result traz a posição do selvagem (A), não o shiny: o estado da sim diz qual era.
+	if sim == null:
+		return false
+	for mb in sim.mobs:
+		if mb["pos"] == Vector2i(col, row) and bool(mb.get("shiny", false)):
+			return true
+	return false
 
 
 func _evento_cartao(msg: Dictionary) -> Dictionary:
