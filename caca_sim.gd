@@ -116,6 +116,9 @@ func _ready() -> void:
 	vista = Vista.new()
 	add_child(vista)
 	vista.nome_treinador = String(EstadoJogo.nome_treinador)
+	if not (EstadoJogo.visual as Dictionary).is_empty():   # ciclo 3: o visual escolhido na criação ou no Perfil
+		vista.looktype_treinador = int(EstadoJogo.visual.get("looktype", vista.looktype_treinador))
+		vista.cores_treinador = (EstadoJogo.visual.get("cores", vista.cores_treinador) as Dictionary).duplicate()
 	_ativo_visto = sim.ativo
 	tempos_carga["vista_ms"] = Time.get_ticks_msec() - t2
 	var t3 := Time.get_ticks_msec()

@@ -14,6 +14,7 @@ var modo: String = NovoJogo.MODO_PROJETO
 signal concluido(resultado: Dictionary)
 
 
+var seletor: VBoxContainer
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_STOP
@@ -53,6 +54,10 @@ func _montar() -> void:
 	nome.placeholder_text = "Nome do treinador (3 a 16 letras)"
 	nome.max_length = 16
 	corpo.add_child(nome)
+	# Ciclo 3 (C: createCharacter "ESCOLHA SEU TREINADOR", Menino/Menina): o visual do treinador
+	seletor = load("res://seletor_visual.gd").new()
+	seletor.name = "SeletorVisual"
+	corpo.add_child(seletor)
 	var linha := HBoxContainer.new()
 	linha.name = "Iniciais"
 	linha.add_theme_constant_override("separation", 8)
@@ -90,6 +95,8 @@ func escolher(id: int) -> void:
 	var r: Dictionary = get_node("/root/EstadoJogo").novo_jogo(id, n if n.length() >= 3 else "Treinador", 0, modo)
 	if r.has("erro"):
 		return
+	if seletor != null:
+		get_node("/root/EstadoJogo").visual = seletor.visual.duplicate(true)
 	for c in corpo.get_children():
 		corpo.remove_child(c)
 		c.queue_free()

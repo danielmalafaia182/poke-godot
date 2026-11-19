@@ -24,8 +24,12 @@ func iniciar(cenario_cidade: Node2D) -> void:
 	# Os pés ficam no centro da célula; a imagem se estende para cima.
 	imagem.offset = Vector2(0.0, -10.0)
 	add_child(imagem)
-	var manifesto: Dictionary = cenario.carregar_json("res://assets/interface/cidade/treinador.json")
-	for sentido in range(1, 5):
+	# Ciclo 3: o visual escolhido (EstadoJogo.visual) pelo renderizador de outfits do cliente (render/outfits.gd, C);
+	# sem visual no save, o traje base de antes (o 159 da textura da cidade).
+	if not (EstadoJogo.visual as Dictionary).is_empty():
+		_quadros_do_visual(EstadoJogo.visual)
+	var manifesto: Dictionary = {} if not quadros.is_empty() else cenario.carregar_json("res://assets/interface/cidade/treinador.json")
+	for sentido in (range(1, 5) if quadros.is_empty() else []):
 		for quadro in range(1, 4):
 			var chave: String = "/assets/outfits/male/159/%d_1_1_%d.png" % [quadro, sentido]
 			var frame: Dictionary = manifesto["assets"][chave]["frames"][0]
@@ -104,3 +108,31 @@ func atualizar(delta: float, entrada_habilitada: bool) -> void:
 		EstadoJogo.registrar_posicao_cidade(celula, direcao)
 	var quadro: int = int(tempo / 0.15) % 3 if houve_movimento else 0
 	imagem.texture = quadros[direcao * 3 + quadro]
+
+
+func _quadros_do_visual(v: Dictionary) -> void:
+	var O = preload("res://render/outfits.gd").padrao()
+	var o: Dictionary = O.obter(int(v.get("looktype", 159)), v.get("cores", {}))
+	if o.is_empty():
+		return
+	var lista: Array[AtlasTexture] = []
+	for sentido in range(1, 5):
+		for i in 3:
+			var q: Dictionary = O.quadro(o, sentido, i)
+			if q.is_empty():
+				return
+			var at := AtlasTexture.new()
+			at.atlas = q["tex"]
+			at.region = q["rect"]
+			lista.append(at)
+	quadros = lista
+	var r: Rect2 = lista[0].region
+	# o sprite cresce para cima e para a esquerda a partir do tile (âncora nos pés, como no cliente)
+	imagem.offset = Vector2(-(r.size.x - 32.0) * 0.5, -10.0 - (r.size.y - 32.0) * 0.5)
+
+
+func trocar_visual(v: Dictionary) -> void:
+	_quadros_do_visual(v)
+	if not quadros.is_empty():
+		imagem.texture = quadros[direcao * 3]
+

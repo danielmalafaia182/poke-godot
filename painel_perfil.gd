@@ -5,6 +5,7 @@ extends "res://janela_base.gd"
 
 const PONTE := preload("res://ponte_cidade.gd")
 signal log_capturas_solicitado
+signal visual_solicitado
 
 
 func _ready() -> void:
@@ -50,4 +51,5 @@ func montar() -> void:
 	var pd := pokedex()
 	linha(T.t("window.profile.rowPokedex"), T.t("window.profile.pokedexChip", {"count": pd[0], "total": pd[1]}))
 	botao(T.t("window.profile.captureLogBtn", {}, "Log de Capturas"), func() -> void: log_capturas_solicitado.emit(), "AbrirLog")
+	botao(T.t("window.profile.customizeOutfit", {}, "👕 Personalizar Outfit"), func() -> void: visual_solicitado.emit(), "PersonalizarOutfit")
 	rotulo(T.t("window.profile.footer", {"name": String(ej.nome_treinador)}), Color("8a7f6a"))

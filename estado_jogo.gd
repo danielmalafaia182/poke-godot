@@ -221,7 +221,9 @@ var garantia_pedras: Dictionary = {}
 var log_capturas: Array = []
 var tempo_caca_s: int = 0
 var capturas_total: int = 0
-var tutorial_passo: String = ""   # ciclo 2: passo do tutorial do Professor Carvalho ("" nunca começou, "fim" concluído)
+var tutorial_passo: String = ""
+# Ciclo 3: visual do treinador {looktype, genero, cores{head, body, legs, feet}} (createCharacter e Perfil, C). Vazio = o de antes.
+var visual: Dictionary = {}   # ciclo 2: passo do tutorial do Professor Carvalho ("" nunca começou, "fim" concluído)
 var _tempo_caca_ms := 0
 # Fase 3: penalidade de entrada (boost shinylock). Relato do usuário (B-relatado): vale ao entrar numa hunt diferente
 # da última ou depois que a sessão expira (15 min com o jogo fechado; E: o jogo local não tem modo soneca). Voltar à

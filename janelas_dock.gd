@@ -25,6 +25,14 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["diarias"] = pai.get_node_or_null("PainelDiarias")
 	if j["diarias"] == null:
 		j["diarias"] = _criar(pai, "res://painel_diarias.gd", "PainelDiarias")
+	j["visual"] = _criar(pai, "res://painel_visual.gd", "PainelVisual")
+	j["perfil"].visual_solicitado.connect(func() -> void:
+		j["perfil"].hide()
+		j["visual"].abrir())
+	j["visual"].salvo.connect(func(v: Dictionary) -> void:
+		var cena := pai.get_tree().current_scene
+		if cena != null and "personagem" in cena and cena.personagem != null and cena.personagem.has_method("trocar_visual"):
+			cena.personagem.trocar_visual(v))
 	j["perfil"].log_capturas_solicitado.connect(func() -> void:
 		j["perfil"].hide()
 		j["log"].abrir())
