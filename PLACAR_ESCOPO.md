@@ -1,4 +1,4 @@
-# Placar do escopo por classe — 19/11/2026
+# Placar do escopo por classe — 19/11/2026 (ciclo 2)
 
 Política em `ESTRATEGIA.md`. Escopo: do zero (treinador 1, Geodude 1) a todas as hunts, com XP, golpes e dano, combate,
 loot, Auto-Potion, Auto-Catch, Nurse Joy, depot, IV e Quality. O placar antigo (84 regras, uma conta só) foi
@@ -6,13 +6,13 @@ reclassificado: cada regra caiu numa classe e é contada pelo critério dela.
 
 | Classe | Critério | Placar |
 | --- | --- | --- |
-| **1 — exata** | Igual ao original (gravação, cliente ou Pokepedia) e conferida por teste ou ferramenta | **53/53** |
+| **1 — exata** | Igual ao original (gravação, cliente ou Pokepedia) e conferida por teste ou ferramenta | **56/56** |
 | **2 — equivalente no resultado** | As 5 métricas a ±10% do real ou dentro do ruído da amostra, em cada trecho (`ferramentas/validar_resultado.py`) | **157/160** em 32 trechos (`dados/relatorios/validar_resultado.md`) |
-| **3 — desenhada** | Decidida, documentada em uma linha, valor em `dados/balanceamento.json` | **22/22** decididas (17 com valor no JSON, 5 como regra no código) |
+| **3 — desenhada** | Decidida, documentada em uma linha, valor em `dados/balanceamento.json` | **26/26** decididas (21 com valor no JSON, 5 como regra no código); 1 proposta pendente (XP por região) |
 
 A classe 2 conta pelo resultado, não por regra: as regras dela (lista abaixo) estão prontas quando o validador passa.
 
-## Classe 1 — exata (53/53)
+## Classe 1 — exata (56/56)
 
 | Área | Regra | Situação | Evidência |
 | --- | --- | --- | --- |
@@ -57,6 +57,9 @@ A classe 2 conta pelo resultado, não por regra: as regras dela (lista abaixo) e
 | Auto-Potion | Cura até o valor da poção, limitada ao que falta | ✅ | A |
 | Auto-Catch | Uma bola por abate (a do Auto-Helper) | ✅ | A |
 | Auto-Catch | O capturado chega no nível 1 | ✅ | A |
+| Shiny | Só espécies com forma shiny (SHINY_BY_DEX) aparecem shiny; 1/260 por abate nelas; nenhum no lock | ✅ | A (42/10.914 e 0/3.323, livre) + C; `test_shiny` 7/7 |
+| Shiny | Auto-Catch Shiny com bola própria; desligado o normal, só shinies recebem bola | ✅ | C + A (M3); `test_shiny` |
+| Shiny | O capturado shiny fica shiny (sprite e cadáver shiny do cliente) | ✅ | A (field marca o selvagem) + C; `test_janelas_ciclo2` |
 | Auto-Catch | Filtro de nomes (vírgula; em branco = todos; vale para os dois modos) | ✅ | C; `test_auto_catch_filtro` 3/3 |
 | Nurse Joy | Cura o time inteiro, na hora, grátis, sem recarga; resposta `joy-healed` | ✅ | A (G4) |
 | Depot | Só itens (bolas ficam na BAG); move a pilha inteira; "guardar tudo" esvazia a BAG | ✅ | A (G4) |
@@ -122,7 +125,11 @@ Os valores com número estão em `dados/balanceamento.json`, cada um com uma lin
 | `start` numa ilha sem spawn | Começa na ilha que alcança mais spawns | `combate.inicio_ilha_com_spawns` |
 | Cadáver de espécie sem dado | O próprio sprite escurecido | `combate.cadaver_generico` |
 | Golpes de poder 600 (assinatura) | Fora da escolha | `combate.golpe_poder_maximo` |
-| Shiny na captura | Vazio enquanto a sim não sorteia shiny (backlog) | `combate.captura_shiny_base` |
+| Shiny na captura | shinyBase por tier A 0,4% … E 2% × catchRate da bola (0 em 31 tentativas gravadas; Master garante) | `combate.captura_shiny_base` |
+| Garantia de pedra | Se a pedra não cai em 3× os abates esperados, cai no próximo (decisão do usuário) | `combate.pedra_garantia_fator` |
+| Metas visíveis | Hunt recomendada pelo XP/min estimado, Power dos selvagens ≤ Power do líder, 4 s fora da luta por abate (rhydon-1h), marcos 150–500 a cada 25–50 | `metas.*` |
+| Auto-Catch Shiny | Ligado por padrão, com a melhor bola que tiver (decisão do usuário) | `configuracao_auto_helper.gd` |
+| XP por região | **Proposta, não aplicada**: multiplicador na parcela `event`, sem mudar o XP da espécie; padrão 1 | `combate.xp_regiao` |
 | Cartão de derrota | 4,5 s (shiny 7 s), até 30 por instância | `apresentacao.*` |
 | Limites do depot e da BOX | 200 pilhas, 3000 Pokémon | `cidade.capacidade_*` |
 | Inicial fora da BOX | Sempre no time | `cidade.starter_no_time` |
