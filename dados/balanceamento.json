@@ -48,6 +48,10 @@
     "captura_shiny_base_padrao": {
       "valor": 0.01,
       "motivo": "shiny de espécie sem tier na tabela do cliente: o mesmo do tier C"
+    },
+    "pedra_garantia_fator": {
+      "valor": 3.0,
+      "motivo": "decisão do usuário (ciclo 2): se uma pedra de evolução não cai em 3× os abates esperados para ela (soma das chances ≥ 3), cai no próximo; tira os 4–70 h de espera por sorte do Golem"
     }
   },
   "apresentacao": {

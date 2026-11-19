@@ -104,6 +104,7 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"entrada_nova": bool(jogo.get("penalizar", true)),
 		"ms_desde_saida": int(jogo.get("ms_desde_saida", 0)),
 		"medidor_captura": (jogo.get("medidor_captura", {}) as Dictionary).duplicate(true),
+		"garantia_pedras": (jogo.get("garantia_pedras", {}) as Dictionary).duplicate(true),
 		"bonus_captura": 0.0,
 		"vip": bool(jogo.get("vip", false)),   # E: opção do jogador (padrão desligado); ligada, +50% da XP base (A)
 		"ativo_inicial": int(jogo.get("lider", 0)),

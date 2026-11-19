@@ -194,6 +194,7 @@ func _tratar(msg: Dictionary) -> void:
 				registro["bolas"][bola] = int(registro["bolas"].get(bola, 0)) + 1
 			apresentacao.ao_resultado_captura(msg)
 			EstadoJogo.medidor_captura = sim.medidor.duplicate(true)   # medidor por espécie (vai no próximo save)
+			EstadoJogo.garantia_pedras = sim.garantia_pedras.duplicate(true)   # garantia de pedra (classe 3)
 			_sequencia_captura += 1
 			if bool(msg.get("success", false)):
 				_registrar_captura(String(msg.get("speciesName", "")))

@@ -137,6 +137,7 @@ const PARAMETROS := {
 	# Por tier a taxa variou (C 11/881, B 26/9.156, D 3/511, E 2/366): amostra pequena fora do B; fica a taxa única.
 	"shiny_chance": 42.0 / 10914.0,
 	"captura_shiny_base_padrao": 0.01,       # classe 3 (balanceamento.json): 0 capturas em 31 tentativas gravadas
+	"pedra_garantia_fator": 0.0,            # classe 3 (balanceamento.json): 0 = sem garantia de pedra
 	"hp_selvagem_por_stat": 35,             # A
 	"hp_selvagem_minimo": 120,              # A
 	"golpe_poder_maximo": 599,              # F: golpes de poder 600 (assinatura) nunca aparecem nas gravações

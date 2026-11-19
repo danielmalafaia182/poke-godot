@@ -41,6 +41,7 @@ var _saida: Array = []
 var _golpes_cache := {}
 var penalidade_ate_ms: int = 0   # fim do lock de entrada (boost shinylock), em ms do relógio da sim; 0 = sem lock
 var medidor := {}               # speciesId (str) -> {investido, tentativas, total, gasto}: medidor de captura (C)
+var garantia_pedras := {}       # itemId (str) -> chance acumulada sem a pedra cair (garantia, classe 3; vai no save)
 var troca_manual_liberada_tick: int = 0
 var _campo_mob := PackedInt32Array()
 var _campo_mob_caixa := Rect2i()
@@ -99,6 +100,7 @@ func _montar() -> void:
 		inventario[int(it["itemId"])] = int(it["quantity"])
 	balls = (cfg.get("balls", {}) as Dictionary).duplicate(true)
 	medidor = (cfg.get("medidor_captura", {}) as Dictionary).duplicate(true)
+	garantia_pedras = (cfg.get("garantia_pedras", {}) as Dictionary).duplicate(true)
 	if cfg.has("penalidade_ate_ms"):
 		penalidade_ate_ms = int(cfg["penalidade_ate_ms"])
 	elif cfg.get("entrada_nova", false):
@@ -793,6 +795,7 @@ func _abate(m: Dictionary) -> void:
 	var mult_loot := (1.0 + _pct_boost("loot") / 100.0) * (float(p.tipo_do_dia_loot) if tipo_dia else 1.0)
 	for _r in rolagens:
 		_rolar_loot(esp, lock, mult_loot, loot)
+	_garantir_pedras(esp, lock, mult_loot, rolagens, loot)
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
@@ -853,6 +856,36 @@ func _rolar_loot(esp: Dictionary, lock: bool, mult: float, loot: Array) -> void:
 				continue  # item sem id no catálogo (relatorio_importacao.loot_sem_item): sorteado, mas não entregue
 			loot.append({"itemId": int(e["itemId"]), "name": e["item"], "qty": qtd})
 			inventario[int(e["itemId"])] = int(inventario.get(int(e["itemId"]), 0)) + qtd
+
+
+func _garantir_pedras(esp: Dictionary, lock: bool, mult: float, rolagens: int, loot: Array) -> void:
+	## Classe 3 (decisão do usuário, ciclo 2; balanceamento.json `pedra_garantia_fator`): para cada pedra de evolução da
+	## tabela da espécie, soma a chance efetiva de cair neste abate; se a soma chega a `fator` (= fator × os abates
+	## esperados para uma pedra) sem a pedra cair, ela cai agora. Cair zera a conta. Fator 0 desliga. O contador vai no save.
+	var fator := float(p.get("pedra_garantia_fator", 0.0))
+	if fator <= 0.0:
+		return
+	var caiu := {}
+	for it in loot:
+		caiu[int(it["itemId"])] = true
+	for e in esp.get("loot", []):
+		if e.get("itemId") == null:
+			continue
+		var iid := int(e["itemId"])
+		if String(dados.itens.get(iid, {}).get("categoria", "")) != "stone":
+			continue
+		var chance := float(e.get("chanceBruta", 0.0)) * mult / 100000.0 * rolagens
+		if lock and String(p.penalidade_loot) == "chance":
+			chance *= float(p.penalidade_fator)
+		var k := str(iid)
+		if caiu.has(iid):
+			garantia_pedras[k] = 0.0
+			continue
+		garantia_pedras[k] = float(garantia_pedras.get(k, 0.0)) + chance
+		if float(garantia_pedras[k]) >= fator:
+			garantia_pedras[k] = 0.0
+			loot.append({"itemId": iid, "name": e["item"], "qty": int(e.get("min", 1)), "garantida": true})
+			inventario[iid] = int(inventario.get(iid, 0)) + int(e.get("min", 1))
 
 
 func _fim_abate(m: Dictionary, bola: bool) -> void:
