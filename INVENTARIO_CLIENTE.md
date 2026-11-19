@@ -2,7 +2,7 @@
 
 Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do cliente original (C: 4187 textos em pt-BR, chunk `3vooh2axx98am.js`). Cada linha é uma janela, uma parte da HUD ou um grupo de telas, com o número de textos (botões, títulos, avisos) e exemplos. Status no nosso jogo avaliado em 19/11.
 
-**76 grupos: 24 feitos, 14 parciais, 38 faltando** (492 / 1452 / 2243 textos). Dos que faltam, 23 dependem de outros jogadores ou de conta (ficam para a versão online).
+**76 grupos: 25 feitos, 13 parciais, 38 faltando** (500 / 1444 / 2243 textos). Dos que faltam, 23 dependem de outros jogadores ou de conta (ficam para a versão online).
 
 | Grupo | Status | Textos | No nosso jogo / o que falta | Exemplos |
 | --- | --- | --- | --- | --- |
@@ -55,7 +55,6 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `misc` | parcial | 18 | textos soltos | Inseto · Sombrio · Dragão |
 | `createCharacter` | parcial | 14 | painel_novo_jogo.gd: nome e inicial; faltam o visual e o gênero | ‹ Voltar (trocar conta) · ✓ Escolhido · CRIANDO… |
 | `window.pokeball` | parcial | 14 | escolha da bola no painel Capture da hunt | Pokébola · +{{count}}× {{name}} · Loja de Diamantes |
-| `window.allPokes` | parcial | 8 | painel_my_pokes.gd; faltam filtros e ordenação do original | Nenhum shiny encontrado. · Falha ao carregar. · Carregando… |
 | `window.gifts` | parcial | 6 | o Daily Gift entrega direto na BAG; falta o Gift Center | 🎁 Gift Center · Fechar · Resgatar |
 | `hud.shinyAnnounce` | parcial | 13 | avisos_hud.gd (ciclo 2): shiny que apareceu e shiny capturado; o anúncio global entre jogadores é online | SHINY · capturou um · ANÚNCIO GLOBAL · TIER {{tier}} |
 | `window.map` | feito | 51 | mapa_mundi.gd: 4 regiões, níveis, aviso de Orre (C) | — por nome — · Fechar · 🗺️ Editor de Marcadores |
@@ -72,6 +71,7 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `window.offline` | feito | 14 | painel_soneca.gd: Modo Soneca e coleta (A, G6) | Turbinar pra · (100% · {{cost}}💎) · (máx. 24h) |
 | `window.quests` | feito | 10 | painel_diarias.gd: 124 tarefas de NPC | Capturado · Resgatar · Resgatada |
 | `hud.party` | feito | 9 | painel do time na HUD da hunt | Evoluir · ⬆ Evoluir · Evoluir em {{dest}} |
+| `window.allPokes` | feito | 8 | painel_todos_shinys.gd (ciclo 2): as 190 formas shiny do cliente por tier, busca e as já capturadas | Nenhum shiny encontrado. · Falha ao carregar. · Carregando… |
 | `window.questsMenu` | feito | 8 | painel_diarias.gd (abas) | Daily Catch · Missões diárias de captura. · Daily Kill |
 | `hud.levelUp` | feito | 7 | avisos_hud.gd (ciclo 2): aviso de subida do treinador e do Pokémon | Seu Pokémon · Sua habilidade de Pesca subiu! · Nv. {{level}} |
 | `hud.combat` | feito | 6 | números de dano e placas (render/vista_hunt.gd) | Modo carta · EXP · Procurando Pokémon selvagem… |

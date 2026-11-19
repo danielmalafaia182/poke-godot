@@ -28,7 +28,7 @@ func _initialize() -> void:
 	var ej = get_root().get_node("EstadoJogo")
 	var g := DadosPokemon.new()
 	g.especie = ESPECIES.obter_especies()["Venusaur"]
-	g.experiencia_total = XP.xp_total_para_nivel(140)
+	g.experiencia_total = XP.xp_total_para_nivel(400)
 	g.iv_hp = 26; g.iv_atk = 5; g.iv_def = 4; g.iv_sp_atk = 18; g.iv_sp_def = 17; g.iv_spd = 28
 	g.qualidade = 0.9
 	g.id_persistente = Crypto.new().generate_random_bytes(16).hex_encode()
@@ -72,6 +72,13 @@ func _process(_d: float) -> bool:
 				checar(pd.find_child("P_3", true, false) != null and pd.find_child("P_1", true, false) == null, "Pokédex: filtro Capturado (o Venusaur fica, o Bulbasaur sai)")
 				(pd.find_child("P_3", true, false) as Button).pressed.emit()
 				checar(pd.find_child("Detalhe", true, false) != null, "Pokédex: detalhe da espécie")
+				(pd.find_child("TodosShinys", true, false) as Button).pressed.emit()
+				var ts: Control = current_scene.get_node("Interface/PainelTodosShinys")
+				var nts := 0
+				for tier in ts.lista():
+					nts += (ts.lista()[tier] as Array).size()
+				checar(ts.visible and nts == 190 and ts.find_child("S_246", true, false) != null, "Todos os Shinys: 190 do cliente por tier", str(nts))
+				ts.hide()
 				pd.hide()
 				var mapa: Node = load("res://mapa_mundi.tscn").instantiate()
 				current_scene.add_child(mapa)
@@ -106,6 +113,9 @@ func _process(_d: float) -> bool:
 				checar(false, "a hunt abriu")
 				return _fim()
 		3:
+			if not is_instance_valid(caca):
+				checar(false, "a hunt seguiu até a captura shiny (saiu antes: %s)" % str(current_scene.scene_file_path if current_scene else "?"))
+				return _fim()
 			if int(caca.registro.get("shiny_capturados", 0)) >= 1 or quadros > 2400:
 				var an: Control = caca.hud_caca.janelas_dock["analyzer"]
 				caca.hud_caca.menu.botoes["analyzer"].pressed.emit()

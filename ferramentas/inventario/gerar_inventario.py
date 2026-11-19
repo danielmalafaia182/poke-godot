@@ -27,7 +27,7 @@ STATUS = {
     "window.quests": ("feito", "painel_diarias.gd: 124 tarefas de NPC"),
     "window.questsMenu": ("feito", "painel_diarias.gd (abas)"),
     "window.offline": ("feito", "painel_soneca.gd: Modo Soneca e coleta (A, G6)"),
-    "window.allPokes": ("parcial", "painel_my_pokes.gd; faltam filtros e ordenação do original"),
+    "window.allPokes": ("feito", "painel_todos_shinys.gd (ciclo 2): as 190 formas shiny do cliente por tier, busca e as já capturadas"),
     "window.inventory": ("parcial", "BAG no depot e painel_itens_uso.gd (Rare Candy, berries); faltam abas e uso dos outros itens"),
     "window.pokeTooltip": ("parcial", "cartão do Pokémon na HUD; faltam campos (TMs, held item, golpes com cooldown)"),
     "window.pokeball": ("parcial", "escolha da bola no painel Capture da hunt"),

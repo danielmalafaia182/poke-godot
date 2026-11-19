@@ -9,6 +9,7 @@ var busca := ""
 var filtro := ""        # "", "cap", "nao"
 var tipo := ""
 var selecionado := -1
+signal todos_shinys_solicitado
 
 
 func _ready() -> void:
@@ -100,6 +101,7 @@ func montar() -> void:
 		tipo = "" if i == 0 else String(tl[i - 1])
 		atualizar())
 	barra.add_child(tipos)
+	botao("✨ " + T.t("window.allPokes.title", {}, "Todos os Shinys"), func() -> void: todos_shinys_solicitado.emit(), "TodosShinys", barra)
 	if selecionado >= 0:
 		_detalhe(lista_toda)
 	var grade := GridContainer.new()

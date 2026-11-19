@@ -9,6 +9,8 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["bolas"] = _criar(pai, "res://painel_bolas_usadas.gd", "PainelBolasUsadas")
 	j["log"] = _criar(pai, "res://painel_log_capturas.gd", "PainelLogCapturas")
 	j["pokedex"] = _criar(pai, "res://painel_pokedex.gd", "PainelPokedex")
+	j["shinys"] = _criar(pai, "res://painel_todos_shinys.gd", "PainelTodosShinys")
+	j["pokedex"].todos_shinys_solicitado.connect(func() -> void: j["shinys"].abrir())
 	j["streak"] = pai.get_node_or_null("PainelStreak")
 	if j["streak"] == null:
 		j["streak"] = _criar(pai, "res://painel_streak.gd", "PainelStreak")
