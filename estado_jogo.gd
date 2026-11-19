@@ -132,6 +132,7 @@ var garantia_pedras: Dictionary = {}
 var log_capturas: Array = []
 var tempo_caca_s: int = 0
 var capturas_total: int = 0
+var tutorial_passo: String = ""   # ciclo 2: passo do tutorial do Professor Carvalho ("" nunca começou, "fim" concluído)
 var _tempo_caca_ms := 0
 # Fase 3: penalidade de entrada (boost shinylock). Relato do usuário (B-relatado): vale ao entrar numa hunt diferente
 # da última ou depois que a sessão expira (15 min com o jogo fechado; E: o jogo local não tem modo soneca). Voltar à
@@ -646,6 +647,7 @@ func novo_jogo(especie_id: int, nome_treinador: String = "Treinador", semente: i
 	ouro = int(r["ouro"])
 	definir_perfil_treinador(String(r["treinador"]), 1)
 	ultima_hunt_slug = ""
+	tutorial_passo = "welcome"   # C: o tutorial começa logo depois da escolha do inicial
 	salvamento.jogo_novo = false
 	lider_alterado.emit()
 	ouro_alterado.emit()

@@ -46,6 +46,7 @@ var painel_soneca: Control
 var painel_metas: Control
 var botao_meta: Button
 var janelas_dock: Dictionary = {}
+var painel_tutorial: Control
 var rotulo_ouro: Label
 # 0 = cidade inteira. Mantém placas e ações disponíveis à distância, como
 # solicitado. Um raio positivo pode ser configurado posteriormente no Inspector.
@@ -453,6 +454,18 @@ func _criar_ouro_e_config() -> void:
 	call_deferred("atualizar_meta")
 	# Ciclo 2: ícones do dock que abrem as janelas novas (Perfil, Bolas usadas, Log de Capturas, Streak, Diário, Pokédex)
 	janelas_dock = load("res://janelas_dock.gd").instalar(get_node("Interface"), get_node("Interface/MenuSuperior"), null, _abrir_pokepedia)
+	# Ciclo 2: tutorial do Professor Carvalho (C) e o botão 🎓 Tutorial no ⚙ para refazer.
+	painel_tutorial = load("res://painel_tutorial.gd").new()
+	painel_tutorial.name = "PainelTutorial"
+	painel_tutorial.raiz = get_node("Interface")
+	get_node("Interface").add_child(painel_tutorial)
+	var botao_tutorial := Button.new()
+	botao_tutorial.name = "Tutorial"
+	botao_tutorial.text = "🎓 Tutorial"
+	coluna.add_child(botao_tutorial)
+	botao_tutorial.pressed.connect(func() -> void:
+		painel_config.hide()
+		painel_tutorial.reiniciar())
 	var botao_metas := Button.new()
 	botao_metas.name = "Metas"
 	botao_metas.text = "Metas"

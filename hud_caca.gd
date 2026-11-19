@@ -25,6 +25,7 @@ var texto_aviso_ofensivo: Label
 
 var janelas_dock: Dictionary = {}
 var avisos: Control
+var tutorial: Control
 func _ready() -> void:
 	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -64,6 +65,12 @@ func _ready() -> void:
 		if shiny:
 			avisos.shiny_capturado(String(EstadoJogo.nome_treinador), nome))
 	controlador.boosts_alterados.connect(avisos.definir_boosts)
+	tutorial = load("res://painel_tutorial.gd").new()
+	tutorial.name = "PainelTutorial"
+	tutorial.na_hunt = true
+	tutorial.raiz = self
+	add_child(tutorial)
+	controlador.derrota_recompensada.connect(func(_e) -> void: tutorial.ao_abate())
 	# 2b: o mapa-múndi da hunt é criado na 1ª abertura (instanciá-lo custava ~0,5 s na entrada da hunt)
 	recompensas = load("res://cartoes_derrota.gd").new()
 	add_child(recompensas)

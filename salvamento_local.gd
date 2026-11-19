@@ -286,6 +286,7 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 					break
 	estado.tempo_caca_s = int(dados["tempo_caca_s"]) if dados.get("tempo_caca_s") is float or dados.get("tempo_caca_s") is int else 0
 	estado.capturas_total = int(dados["capturas_total"]) if dados.get("capturas_total") is float or dados.get("capturas_total") is int else 0
+	estado.tutorial_passo = String(dados["tutorial"]) if dados.get("tutorial") is String else "fim"   # save antigo: jogador já sabe jogar
 	estado.garantia_pedras = {}
 	if dados.get("garantia_pedras") is Dictionary:
 		for k in dados["garantia_pedras"]:
@@ -384,7 +385,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"configuracoes": {"auto_catch": estado.auto_catch, "auto_catch_ball_id": estado.auto_catch_ball_id, "auto_catch_names": estado.auto_catch_names, "bola_selecionada": estado.bola_selecionada, "auto_potion": estado.auto_potion, "auto_potion_threshold": estado.auto_potion_threshold, "auto_potion_item_id": estado.auto_potion_item_id, "auto_catch_shiny": estado.auto_catch_shiny, "auto_catch_shiny_ball_id": estado.auto_catch_shiny_ball_id},
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
 		"captura_medidor": estado.medidor_captura.duplicate(true), "garantia_pedras": estado.garantia_pedras.duplicate(true),
-		"log_capturas": estado.log_capturas.duplicate(true), "tempo_caca_s": estado.tempo_caca_s, "capturas_total": estado.capturas_total, "ultima_hunt": estado.ultima_hunt_slug,
+		"log_capturas": estado.log_capturas.duplicate(true), "tempo_caca_s": estado.tempo_caca_s, "capturas_total": estado.capturas_total, "tutorial": estado.tutorial_passo, "ultima_hunt": estado.ultima_hunt_slug,
 		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
 		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true), "ginasios": estado.ginasios.duplicate(true), "hunt_ao_fechar": estado.hunt_ao_fechar,
 		"salvo_em_unix": int(Time.get_unix_time_from_system())

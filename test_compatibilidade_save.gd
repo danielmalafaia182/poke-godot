@@ -33,12 +33,12 @@ func executar() -> void:
 	# Ciclo 2: garantia de pedra, log de capturas, tempo em caça e capturas totais entram vazios; Auto-Catch Shiny ligado
 	# por padrão (decisão do usuário), bola 0 = a melhor que tiver.
 	checar((atual.get("garantia_pedras",{}) as Dictionary).is_empty() and (atual.get("log_capturas",[]) as Array).is_empty()
-		and int(atual.get("tempo_caca_s",0)) == 0 and int(atual.get("capturas_total",0)) == 0, "campos do ciclo 2 (garantia de pedra, log, tempo, capturas) entram vazios")
+		and int(atual.get("tempo_caca_s",0)) == 0 and int(atual.get("capturas_total",0)) == 0 and String(atual.get("tutorial","")) == "fim", "campos do ciclo 2 (garantia de pedra, log, tempo, capturas) entram vazios; tutorial dado como visto")
 	var cfg_atual: Dictionary = atual.get("configuracoes",{})
 	checar(bool(cfg_atual.get("auto_catch_shiny",false)) and int(cfg_atual.get("auto_catch_shiny_ball_id",-1)) == 0, "Auto-Catch Shiny entra ligado (ciclo 2)")
 	cfg_atual.erase("auto_catch_shiny")
 	cfg_atual.erase("auto_catch_shiny_ball_id")
-	for campo in ["captura_medidor","ultima_hunt","ouro","vip","streak","soneca","diarias","boosts","itens_uso","ginasios","hunt_ao_fechar","garantia_pedras","log_capturas","tempo_caca_s","capturas_total"]:
+	for campo in ["captura_medidor","ultima_hunt","ouro","vip","streak","soneca","diarias","boosts","itens_uso","ginasios","hunt_ao_fechar","garantia_pedras","log_capturas","tempo_caca_s","capturas_total","tutorial"]:
 		atual.erase(campo)
 	var esperado: Dictionary=anterior.duplicate(true)
 	for registro in esperado["team"]:
