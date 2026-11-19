@@ -51,7 +51,7 @@ func _process(_d: float) -> bool:
 		0:
 			if current_scene != null and current_scene.scene_file_path == "res://cidade.tscn" and quadros > 5:
 				var menu: Control = current_scene.get_node("Interface/MenuSuperior")
-				for par in [["profile", "PainelPerfil"], ["usedballs", "PainelBolasUsadas"], ["streak", "PainelStreak"], ["daily", "PainelDiarias"]]:
+				for par in [["profile", "PainelPerfil"], ["usedballs", "PainelBolasUsadas"], ["streak", "PainelStreak"], ["daily", "PainelDiarias"], ["pokedex", "PainelPokedex"]]:
 					var b: Button = menu.botoes[par[0]]
 					b.pressed.emit()
 					var p: Control = current_scene.get_node("Interface/" + par[1])
@@ -64,6 +64,15 @@ func _process(_d: float) -> bool:
 				(bolas.find_child("Aba_shiny", true, false) as Button).pressed.emit()
 				checar(bolas.find_child("L_112s", true, false) != null, "Bolas usadas: aba shiny mostra a variante shiny")
 				bolas.hide()
+				var pd: Control = current_scene.get_node("Interface/PainelPokedex")
+				pd.abrir()
+				var c0: Dictionary = pd.contagem()
+				checar(int(c0["total"]) > 300 and int(c0["capturados"]) >= 1 and pd.find_child("P_3", true, false) != null, "Pokédex: espécies das hunts, contagem de capturados", str(c0))
+				(pd.find_child("Filtro_cap", true, false) as Button).pressed.emit()
+				checar(pd.find_child("P_3", true, false) != null and pd.find_child("P_1", true, false) == null, "Pokédex: filtro Capturado (o Venusaur fica, o Bulbasaur sai)")
+				(pd.find_child("P_3", true, false) as Button).pressed.emit()
+				checar(pd.find_child("Detalhe", true, false) != null, "Pokédex: detalhe da espécie")
+				pd.hide()
 				var mapa: Node = load("res://mapa_mundi.tscn").instantiate()
 				current_scene.add_child(mapa)
 				etapa = 1

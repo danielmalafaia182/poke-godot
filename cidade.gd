@@ -375,6 +375,7 @@ func _criar_ouro_e_config() -> void:
 	painel_config.add_theme_stylebox_override("panel", preload("res://estilo_hud_original.gd").moldura())
 	painel_config.anchor_left = 1.0; painel_config.anchor_right = 1.0; painel_config.anchor_top = 1.0; painel_config.anchor_bottom = 1.0
 	painel_config.offset_left = -420; painel_config.offset_right = -16; painel_config.offset_top = -100; painel_config.offset_bottom = -56
+	painel_config.grow_vertical = Control.GROW_DIRECTION_BEGIN   # cresce para cima conforme entram opções
 	painel_config.hide()
 	get_node("Interface").add_child(painel_config)
 	var vip := CheckButton.new()
@@ -459,6 +460,31 @@ func _criar_ouro_e_config() -> void:
 	painel_tutorial.name = "PainelTutorial"
 	painel_tutorial.raiz = get_node("Interface")
 	get_node("Interface").add_child(painel_tutorial)
+	# Ciclo 2: tamanho da interface e tela cheia (C: hud.config), em user://config_tela.cfg (fora do save).
+	var CT := load("res://config_tela.gd")
+	var tela: Dictionary = CT.ler()
+	CT.aplicar(get_window(), tela)
+	var escala := OptionButton.new()
+	escala.name = "EscalaInterface"
+	escala.tooltip_text = "Tamanho da interface"
+	for e in CT.ESCALAS:
+		escala.add_item("Interface %d%%" % int(round(float(e) * 100.0)))
+		if absf(float(e) - float(tela["escala"])) < 0.01:
+			escala.select(escala.item_count - 1)
+	escala.item_selected.connect(func(i: int) -> void:
+		tela["escala"] = float(CT.ESCALAS[i])
+		CT.gravar(tela)
+		CT.aplicar(get_window(), tela))
+	coluna.add_child(escala)
+	var cheia := CheckButton.new()
+	cheia.name = "TelaCheia"
+	cheia.text = "Tela cheia"
+	cheia.button_pressed = bool(tela["tela_cheia"])
+	cheia.toggled.connect(func(lig: bool) -> void:
+		tela["tela_cheia"] = lig
+		CT.gravar(tela)
+		CT.aplicar(get_window(), tela))
+	coluna.add_child(cheia)
 	var botao_tutorial := Button.new()
 	botao_tutorial.name = "Tutorial"
 	botao_tutorial.text = "🎓 Tutorial"

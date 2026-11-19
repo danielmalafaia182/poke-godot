@@ -8,6 +8,7 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["perfil"] = _criar(pai, "res://painel_perfil.gd", "PainelPerfil")
 	j["bolas"] = _criar(pai, "res://painel_bolas_usadas.gd", "PainelBolasUsadas")
 	j["log"] = _criar(pai, "res://painel_log_capturas.gd", "PainelLogCapturas")
+	j["pokedex"] = _criar(pai, "res://painel_pokedex.gd", "PainelPokedex")
 	j["streak"] = pai.get_node_or_null("PainelStreak")
 	if j["streak"] == null:
 		j["streak"] = _criar(pai, "res://painel_streak.gd", "PainelStreak")
@@ -42,8 +43,8 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		j["streak"].abrir()
 	elif chave in ["daily", "quest"]:
 		j["diarias"].abrir()
-	elif chave == "pokedex" and (j["_pokedex"] as Callable).is_valid():
-		(j["_pokedex"] as Callable).call()
+	elif chave == "pokedex":
+		j["pokedex"].abrir()   # a Pokédex do original; a Pokepedia (calculadora de golpes) segue no ícone dela
 
 
 static func _criar(pai: Node, script: String, nome: String) -> Control:

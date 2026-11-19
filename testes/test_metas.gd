@@ -69,6 +69,14 @@ func _process(_d: float) -> bool:
 	bm.pressed.emit()
 	checar(pm.visible and pm.find_children("*", "Label", true, false).size() >= 6, "clique abre o painel de metas")
 	checar(current_scene.find_child("Metas", true, false) != null, "botão Metas no ⚙")
+	var esc := current_scene.find_child("EscalaInterface", true, false) as OptionButton
+	esc.select(2)
+	esc.item_selected.emit(2)
+	checar(absf(get_root().content_scale_factor - 1.25) < 0.01 and absf(float(load("res://config_tela.gd").ler()["escala"]) - 1.25) < 0.01, "⚙: tamanho da interface aplica e fica gravado (fora do save)")
+	var pc := current_scene.get_node("Interface/PainelConfig") as Control
+	pc.show()
+	checar(pc.grow_vertical == Control.GROW_DIRECTION_BEGIN, "⚙ cresce para cima a partir do canto (cabe com as opções novas)")
+	load("res://config_tela.gd").gravar({"escala": 1.0, "tela_cheia": false})
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(1 if falhas else 0)
 	return true
