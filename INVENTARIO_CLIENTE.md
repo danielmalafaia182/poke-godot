@@ -2,25 +2,19 @@
 
 Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do cliente original (C: 4187 textos em pt-BR, chunk `3vooh2axx98am.js`). Cada linha é uma janela, uma parte da HUD ou um grupo de telas, com o número de textos (botões, títulos, avisos) e exemplos. Status no nosso jogo avaliado em 19/11.
 
-**76 grupos: 25 feitos, 13 parciais, 38 faltando** (500 / 1444 / 2243 textos). Dos que faltam, 23 dependem de outros jogadores ou de conta (ficam para a versão online).
+**76 grupos: 30 feitos, 13 parciais, 33 faltando** (730 / 1440 / 2017 textos). Dos que faltam, 24 dependem de outros jogadores ou de conta (ficam para a versão online).
 
 | Grupo | Status | Textos | No nosso jogo / o que falta | Exemplos |
 | --- | --- | --- | --- | --- |
 | `window.breeding` | falta | 116 | breeding | Centro de Breeding · Par reprodutor · Selecione no box |
-| `window.bosses` | falta | 116 | catálogo na sim, sem luta nem tela | Abandonar · Sacrifique um · Capturando… |
 | `window.goldenStars` | falta | 116 | Golden Stars | Poke Slot Machine · Trocar bônus · Trocar Pokémon |
 | `window.seasonPass` | falta | 102 | passe de temporada | Acelerar · Comprado · Passe Premium · {{price}} |
 | `landing` | falta | 84 | página inicial do site (fora do jogo) | Direto no navegador · Também no celular · Sem download |
 | `window.professions` | falta | 83 | profissões (pesca, botânico, pesquisador…) | Profissões · Fechar · Em breve |
-| `window.pokeCardAlbum` | falta | 69 | álbum de Pokécards | Poke Card Album · Fechar · Voltar |
 | `window.talents` | falta | 27 | talentos | Talentos do Botânico · Berry que protege do tipo {{type}} · Berry que protege dos golpes tipo Neutro |
 | `window.ditto` | falta | 22 | cópia com Ditto | Espécies disponíveis · Limpar filtros · {{shown}}/{{total}} |
 | `window.craft` | falta | 19 | craft | 🌿 {{n}} Fresh Herbs · 🍂 {{n}} Wild Herbs · Painel de Crafts |
-| `window.gyms` | falta | 17 | insígnias existem na sim (sim/servico_ginasios.gd), sem tela nem luta | Ginásios · Ginásio · Recompensas do Ginásio |
 | `window.fishing` | falta | 15 | pesca | Fechar · ⏳ Aguarde {{seconds}}s · Nv {{min}}–{{max}} |
-| `window.outfit` | falta | 14 | escolha do visual do treinador | ✅ Outfit aplicada! · Aplicar · Adquirir |
-| `packs` | falta | 10 | pacotes de cartas | Como você quer pagar? · PIX · QR Code · cai na hora |
-| `hud.gymAnnounce` | falta | 6 | anúncio de ginásio | NOVO LÍDER DE GINÁSIO · derrotou · e assumiu a liderança do |
 | `window.fishingWave` | falta | 2 | onda de pesca | Pescando… · {{value}}s |
 | `window.pvp` | falta | 212 | PvP (online) | PvP — Batalhas · Jogadores Online · Histórico |
 | `window.guild` | falta | 204 | guilda, com Dailies da guild e parcela de XP `guild` (online) | Guild · Fechar · Carregando… |
@@ -42,6 +36,7 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `namelock` | falta | 11 | trava de nome (conta) | ‹ Sair (trocar conta) · Carregando… · Novo nome do treinador |
 | `hud.chatLinks` | falta | 10 | links no chat (online) | Pokébola · Energia · Cura |
 | `window.tradeHub` | falta | 10 | central de trocas (online) | Troca com Jogador · Nome do jogador · Digite o nome exato |
+| `hud.gymAnnounce` | falta | 6 | anúncio global de novo líder de ginásio (online) | NOVO LÍDER DE GINÁSIO · derrotou · e assumiu a liderança do |
 | `window.news` | falta | 4 | notícias (online) | Novidades · Para mais detalhes acesse · Novo Patch Note postado |
 | `hud.promo` | falta | 3 | promoções (online) | Fechar · Ver o Passe de Batalha |
 | `pokepedia` | parcial | 500 | painel_pokepedia.gd (catálogo do P04); faltam os guias da Pokepedia do original | Held Items · Slot {{slot}} · Como funcionam |
@@ -53,10 +48,12 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `window.pokedex` | parcial | 49 | painel_pokedex.gd (ciclo 2): busca, capturado/não capturado, tipo, detalhe com abates, evolução e stats; falta o Bônus de Captura +25% XP (número de abates e XP são do servidor) | Todos os tipos · Voltar · Bônus disponível |
 | `window.pokeTooltip` | parcial | 26 | cartão do Pokémon na HUD; faltam campos (TMs, held item, golpes com cooldown) | Pokémon · Ativo · 🎭 Addon |
 | `misc` | parcial | 18 | textos soltos | Inseto · Sombrio · Dragão |
-| `createCharacter` | parcial | 14 | painel_novo_jogo.gd: nome e inicial; faltam o visual e o gênero | ‹ Voltar (trocar conta) · ✓ Escolhido · CRIANDO… |
 | `window.pokeball` | parcial | 14 | escolha da bola no painel Capture da hunt | Pokébola · +{{count}}× {{name}} · Loja de Diamantes |
 | `window.gifts` | parcial | 6 | o Daily Gift entrega direto na BAG; falta o Gift Center | 🎁 Gift Center · Fechar · Resgatar |
 | `hud.shinyAnnounce` | parcial | 13 | avisos_hud.gd (ciclo 2): shiny que apareceu e shiny capturado; o anúncio global entre jogadores é online | SHINY · capturou um · ANÚNCIO GLOBAL · TIER {{tier}} |
+| `packs` | parcial | 10 | Poke Card Pack abre no álbum (ciclo 3); a loja de pacotes é de diamantes (online) | Como você quer pagar? · PIX · QR Code · cai na hora |
+| `window.bosses` | feito | 116 | painel_bosses.gd (ciclo 3): 87 bosses (A), entrada por token, Auto Boss, Altar com Shiny Card, histórico; HP, drops e custos classe 3 | Abandonar · Sacrifique um · Capturando… |
+| `window.pokeCardAlbum` | feito | 69 | painel_album.gd (ciclo 3): 430 cartas (A), abrir Poke Card Pack, filtros por set e posse; pesos e drop do pacote classe 3 | Poke Card Album · Fechar · Voltar |
 | `window.map` | feito | 51 | mapa_mundi.gd: 4 regiões, níveis, aviso de Orre (C) | — por nome — · Fechar · 🗺️ Editor de Marcadores |
 | `window.depot` | feito | 44 | painel_depot.gd + sim/servico_cidade.gd (regras A da G4) | Todas as categorias · 📦 Tudo guardado. · Todos os tipos |
 | `window.streak` | feito | 28 | painel_streak.gd + sim/servico_jogador.gd (A, G7) | Pontos disponíveis · Fechar · Bônus: {{from}}% → {{to}}% |
@@ -68,7 +65,9 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `window.captureLog` | feito | 20 | painel_log_capturas.gd (ciclo 2): últimas 100, abas normal/shiny, 1ª captura, limpar | 🗑 Limpar histórico · Confirmar? Apaga TUDO · Fechar |
 | `window.usedBalls` | feito | 17 | painel_bolas_usadas.gd (ciclo 2): tentativas desde a última captura, totais, ouro gasto, aba shiny, busca | Você já capturou · Fechar · Nome |
 | `window.dailyGift` | feito | 15 | painel_diarias.gd (28 prêmios gravados) | Calendário concluído · 🎁 Resgatar · Resgatar |
+| `createCharacter` | feito | 14 | painel_novo_jogo.gd: nome, inicial e (ciclo 3) visual — Menino/Menina, outfit, cores | ‹ Voltar (trocar conta) · ✓ Escolhido · CRIANDO… |
 | `window.offline` | feito | 14 | painel_soneca.gd: Modo Soneca e coleta (A, G6) | Turbinar pra · (100% · {{cost}}💎) · (máx. 24h) |
+| `window.outfit` | feito | 14 | seletor_visual.gd/painel_visual.gd (ciclo 3): outfit e 4 cores pelo renderizador do cliente, na cidade e na hunt | ✅ Outfit aplicada! · Aplicar · Adquirir |
 | `window.quests` | feito | 10 | painel_diarias.gd: 124 tarefas de NPC | Capturado · Resgatar · Resgatada |
 | `hud.party` | feito | 9 | painel do time na HUD da hunt | Evoluir · ⬆ Evoluir · Evoluir em {{dest}} |
 | `window.allPokes` | feito | 8 | painel_todos_shinys.gd (ciclo 2): as 190 formas shiny do cliente por tier, busca e as já capturadas | Nenhum shiny encontrado. · Falha ao carregar. · Carregando… |
@@ -81,6 +80,7 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `hud.slideNotice` | feito | 1 | avisos_hud.gd (ciclo 2): aviso deslizante, um por vez, com ✕ | Fechar |
 | `window.tutorial` | feito | 59 | painel_tutorial.gd (ciclo 2): passos e textos do cliente; Mercado (online), lançar bola (captura manual adiada) e Inventário ficam fora | CLIQUE PARA CONTINUAR · 👆 Agora <b>clique</b> em {{npcName}}! · o Depot |
 | `window.profile` | feito | 51 | painel_perfil.gd (ciclo 2): nível, XP, ouro, VIP, tempo em caça, capturas, abates, Pokédex; clã, PvP e rankings são online | Perfil · ← Voltar ao Perfil · Log de Capturas |
+| `window.gyms` | feito | 17 | painel_ginasios.gd (ciclo 3): 18 ginásios, luta automática time × time, insígnia de 48 h com +1% XP/drop, Campeão; times e luta classe 3; disputa de liderança e rateio são online | Ginásios · Ginásio · Recompensas do Ginásio |
 | `hud.captureBar` | feito | 14 | painel Capture da hunt (estoque de bolas, contador) | Comprar · 🎉 {{species}} capturado com {{ball}}! · 💨 {{species}} escapou! |
 
 A lista completa de textos por grupo (chave e texto) sai em `saida_testes/inventario_textos.md` (fora do git; gerado pelos dois comandos do cabeçalho do script).
