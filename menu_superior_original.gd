@@ -9,7 +9,7 @@ signal auto_helper_solicitado
 signal pokepedia_solicitada
 signal cidade_solicitada
 signal janela_solicitada(chave: String)   # ciclo 2: janelas novas (perfil, bolas usadas, analyzer, streak, diárias…)
-const JANELAS := ["profile", "usedballs", "analyzer", "streak", "daily", "quest", "pokedex", "inventory", "gyms"]
+const JANELAS := ["profile", "usedballs", "analyzer", "streak", "daily", "quest", "pokedex", "inventory", "gyms", "bosses"]
 const ESTILO: Script = preload("res://estilo_hud_original.gd")
 var barra: PanelContainer
 var rolagem: ScrollContainer

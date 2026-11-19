@@ -28,7 +28,7 @@ func executar() -> void:
 	# Fase 4, item 3: diárias e boosts entram vazios num save anterior.
 	checar((atual.get("diarias",{}) as Dictionary).is_empty() and (atual.get("boosts",[]) as Array).is_empty(), "campos do item 3 (diárias, boosts) entram vazios")
 	checar((atual.get("itens_uso",{}) as Dictionary).is_empty(), "campo do lote 3 (itens de uso) entra vazio")
-	checar((atual.get("ginasios",{}) as Dictionary).is_empty(), "campo do lote 4 (insígnias) entra vazio")
+	checar((atual.get("ginasios",{}) as Dictionary).is_empty() and (atual.get("bosses",{}) as Dictionary).is_empty(), "campos do lote 4 e do ciclo 3 (insígnias, bosses) entram vazios")
 	checar(String(atual.get("hunt_ao_fechar","")) == "", "campo hunt ao fechar entra vazio")
 	# Ciclo 2: garantia de pedra, log de capturas, tempo em caça e capturas totais entram vazios; Auto-Catch Shiny ligado
 	# por padrão (decisão do usuário), bola 0 = a melhor que tiver.
@@ -38,7 +38,7 @@ func executar() -> void:
 	checar(bool(cfg_atual.get("auto_catch_shiny",false)) and int(cfg_atual.get("auto_catch_shiny_ball_id",-1)) == 0, "Auto-Catch Shiny entra ligado (ciclo 2)")
 	cfg_atual.erase("auto_catch_shiny")
 	cfg_atual.erase("auto_catch_shiny_ball_id")
-	for campo in ["captura_medidor","ultima_hunt","ouro","vip","streak","soneca","diarias","boosts","itens_uso","ginasios","hunt_ao_fechar","garantia_pedras","log_capturas","tempo_caca_s","capturas_total","tutorial"]:
+	for campo in ["captura_medidor","ultima_hunt","ouro","vip","streak","soneca","diarias","boosts","itens_uso","ginasios","hunt_ao_fechar","garantia_pedras","log_capturas","tempo_caca_s","capturas_total","tutorial","bosses"]:
 		atual.erase(campo)
 	var esperado: Dictionary=anterior.duplicate(true)
 	for registro in esperado["team"]:

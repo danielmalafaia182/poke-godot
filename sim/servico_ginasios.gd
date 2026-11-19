@@ -175,16 +175,20 @@ func lutar(time: Array, g: Dictionary, semente: int) -> Dictionary:
 	var P: Dictionary = Regras.PARAMETROS.duplicate(true)
 	Balanceamento.aplicar(P, "combate")
 	var passo_a := int(P.ataque_aliado_ticks) * int(P.tick_ms)
-	var passo_b := int(p.cadencia_lider_ms)
+	var passo_b := int(g.get("cadencia_ms", p.cadencia_lider_ms))   # boss: sobrescreve (servico_bosses.gd)
 	var a: Array = []
 	for m in time:
 		var nv := Regras.nivel_por_xp(int(m["xp"])) if m.has("xp") else int(m.get("nivel", 1))
 		a.append(_lutador(m, nv, m["ivs"], float(m.get("quality", 1.0)), "a"))
 	var b: Array = []
-	var iv := int(p.iv_lider)
+	var iv := int(g.get("iv", p.iv_lider))
 	var ivs := {"hp": iv, "atk": iv, "def": iv, "spAtk": iv, "spDef": iv, "speed": iv}
 	for m in g["time"]:
-		b.append(_lutador(m, int(m["nivel"]), ivs, float(p.quality_lider), "b"))
+		var x := _lutador(m, int(m["nivel"]), ivs, float(g.get("quality", p.quality_lider)), "b")
+		x["hp"] = int(x["hp"]) * int(g.get("hp_mult", 1))
+		x["max"] = x["hp"]
+		b.append(x)
+	var fator_b := float(g.get("fator_dano", p.fator_dano_lider))
 	var ia := 0
 	var ib := 0
 	var t := 0
@@ -213,7 +217,7 @@ func lutar(time: Array, g: Dictionary, semente: int) -> Dictionary:
 			dano = Regras.dano(int(de["nivel"]), int(gol["poder"]), float(de["dano"]["spAtk" if esp else "atk"]), float(para["dano"]["spDef" if esp else "def"]),
 				bool(gol["stab"]), eff, false, 0.85 + 0.15 * rng.randf(), P)
 			if lado == "b":
-				dano = maxi(1, int(round(dano * float(p.fator_dano_lider))))
+				dano = maxi(1, int(round(dano * fator_b)))
 		para["hp"] = maxi(0, int(para["hp"]) - dano)
 		var ko := int(para["hp"]) == 0
 		log.append({"t": t, "lado": lado, "nome": de["nome"], "alvo": para["nome"], "golpe": nome_g, "dano": dano, "eff": eff, "hp": para["hp"], "max": para["max"], "ko": ko})

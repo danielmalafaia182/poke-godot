@@ -41,6 +41,7 @@ var _saida: Array = []
 var _golpes_cache := {}
 var penalidade_ate_ms: int = 0   # fim do lock de entrada (boost shinylock), em ms do relógio da sim; 0 = sem lock
 var medidor := {}               # speciesId (str) -> {investido, tentativas, total, gasto}: medidor de captura (C)
+var _cards := {}               # nome da espécie -> id do Shiny Card (cache)
 var garantia_pedras := {}       # itemId (str) -> chance acumulada sem a pedra cair (garantia, classe 3; vai no save)
 var troca_manual_liberada_tick: int = 0
 var _campo_mob := PackedInt32Array()
@@ -800,6 +801,8 @@ func _abate(m: Dictionary) -> void:
 	for _r in rolagens:
 		_rolar_loot(esp, lock, mult_loot, loot)
 	_garantir_pedras(esp, lock, mult_loot, rolagens, loot)
+	if bool(m["shiny"]):
+		_card_shiny(esp, loot)
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
@@ -860,6 +863,23 @@ func _rolar_loot(esp: Dictionary, lock: bool, mult: float, loot: Array) -> void:
 				continue  # item sem id no catálogo (relatorio_importacao.loot_sem_item): sorteado, mas não entregue
 			loot.append({"itemId": int(e["itemId"]), "name": e["item"], "qty": qtd})
 			inventario[int(e["itemId"])] = int(inventario.get(int(e["itemId"]), 0)) + qtd
+
+
+func _card_shiny(esp: Dictionary, loot: Array) -> void:
+	## C: "Derrote shinies selvagens — eles podem dropar o Card da espécie"; chance classe 3 (balanceamento.json
+	## bosses.card_chance_shiny). Só espécies que têm o "Shiny <Espécie> Card" no catálogo (A: 52 cards).
+	if _cards.is_empty():
+		_cards = {"_": -1}
+		for id in dados.itens:
+			var n := String(dados.itens[id].get("nome", ""))
+			if String(dados.itens[id].get("categoria", "")) == "card" and n.begins_with("Shiny ") and n.ends_with(" Card"):
+				_cards[n.trim_prefix("Shiny ").trim_suffix(" Card").to_lower()] = int(id)
+	var iid := int(_cards.get(String(esp.get("nome", "")).to_lower(), -1))
+	if iid < 0:
+		return
+	if rng.randf() < float(p.get("card_chance_shiny", 0.0)):
+		loot.append({"itemId": iid, "name": String(dados.itens[iid]["nome"]), "qty": 1})
+		inventario[iid] = int(inventario.get(iid, 0)) + 1
 
 
 func _garantir_pedras(esp: Dictionary, lock: bool, mult: float, rolagens: int, loot: Array) -> void:

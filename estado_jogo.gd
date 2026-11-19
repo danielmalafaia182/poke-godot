@@ -122,6 +122,70 @@ var ginasios: Dictionary = {}
 func insignias_ativas(agora_unix: int) -> int:
 	return SERVICO_GINASIOS.new(null).ativas({"ginasios": ginasios}, agora_unix)
 
+# Ciclo 3: bosses (sim/servico_bosses.gd): tokens e drops sem item no catálogo, recarga e histórico. Vai no save.
+var bosses: Dictionary = {}
+var _servico_bosses = null
+func servico_bosses():
+	if _servico_bosses == null:
+		_servico_bosses = preload("res://sim/servico_bosses.gd").new(PONTE_CIDADE.dados())
+	return _servico_bosses
+
+func _time_luta() -> Array:
+	## O time para lutas (ginásio, boss, altar): o líder primeiro, depois os outros na ordem do time.
+	var time: Array = []
+	var lider_pk := obter_lider()
+	var ordem: Array = [lider_pk] if lider_pk != null else []
+	for pk in time_pokemon:
+		if pk != null and pk != lider_pk:
+			ordem.append(pk)
+	for pk in ordem:
+		if pk == null or pk.especie == null:
+			continue
+		var sid := PONTE_CIDADE.id_especie(String(pk.especie.nome))
+		if sid >= 0:
+			time.append({"speciesId": sid, "xp": pk.experiencia_total, "ivs": PONTE_CIDADE._ivs(pk), "quality": pk.qualidade})
+	return time
+
+func _estado_bosses() -> Dictionary:
+	var itens := {}
+	for interno in inventario.estoque_materiais:
+		if int(inventario.estoque_materiais[interno]) > 0:
+			itens[str(preload("res://regras_loot.gd").id_original(int(interno)))] = int(inventario.estoque_materiais[interno])
+	return {"bosses": bosses, "itens": itens, "gold": ouro, "nivel": nivel_treinador}
+
+func _voltar_estado_bosses(e: Dictionary) -> void:
+	bosses = e["bosses"]
+	var LOOT := preload("res://regras_loot.gd")
+	for k in e["itens"]:
+		var interno: int = LOOT.id_interno(int(k))
+		var q := int(e["itens"][k])
+		if q > 0:
+			inventario.estoque_materiais[interno] = q
+		else:
+			inventario.estoque_materiais.erase(interno)
+	if int(e["gold"]) != ouro:
+		ouro = int(e["gold"])
+	solicitar_salvamento()
+
+func bosses_info(agora_unix: int) -> Dictionary:
+	return servico_bosses().tratar(_estado_bosses(), {"type": "bosses-get", "agora": agora_unix, "nivel": nivel_treinador})[0]
+
+func boss_comando(cmd: Dictionary) -> Dictionary:
+	## boss-desafiar / auto-boss / altar-desafiar com o time do save. Devolve o resultado ou {erro}.
+	cmd["time"] = _time_luta()
+	cmd["nivel"] = nivel_treinador
+	if not cmd.has("semente"):
+		cmd["semente"] = int(cmd.get("agora", 0))
+	var e := _estado_bosses()
+	var msgs: Array = servico_bosses().tratar(e, cmd)
+	_voltar_estado_bosses(e)
+	if String(msgs[0].get("type", "")) == "error":
+		return {"erro": String(msgs[0]["message"])}
+	var r: Dictionary = msgs[0]
+	if bool(r.get("capturado", false)):
+		registrar_captura_especie(String(r["especie"]), true, "Altar")   # C: "Um ✨ … foi pro seu depósito!"
+	return r
+
 var _servico_ginasios = null
 func servico_ginasios():
 	if _servico_ginasios == null:
@@ -137,18 +201,7 @@ func ginasios_info(agora_unix: int) -> Dictionary:
 
 func desafiar_ginasio(gym_id: String, agora_unix: int) -> Dictionary:
 	## Luta automática com o time na ordem (o líder primeiro). Devolve o gym-result ({venceu, log, …}) ou {erro}.
-	var time: Array = []
-	var lider_pk := obter_lider()
-	var ordem: Array = [lider_pk] if lider_pk != null else []
-	for pk in time_pokemon:
-		if pk != null and pk != lider_pk:
-			ordem.append(pk)
-	for pk in ordem:
-		if pk == null or pk.especie == null:
-			continue
-		var sid := PONTE_CIDADE.id_especie(String(pk.especie.nome))
-		if sid >= 0:
-			time.append({"speciesId": sid, "xp": pk.experiencia_total, "ivs": PONTE_CIDADE._ivs(pk), "quality": pk.qualidade})
+	var time := _time_luta()
 	var e := _estado_ginasios()
 	var msgs: Array = servico_ginasios().tratar(e, {"type": "ginasio-desafiar", "gymId": gym_id, "agora": agora_unix, "nivel": nivel_treinador,
 		"time": time, "semente": agora_unix})

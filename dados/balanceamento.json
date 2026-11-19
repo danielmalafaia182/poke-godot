@@ -61,6 +61,10 @@
         "nightmare": 1.0
       },
       "motivo": "decisão do usuário (ciclo 3): Orre ×10 (500 → 2000 em ~89 dias de calendário em vez de ~2,5 anos, campanha do ciclo 2); Nightmare sem multiplicador; parcela event, XP da espécie igual"
+    },
+    "card_chance_shiny": {
+      "valor": 0.1,
+      "motivo": "C: Derrote shinies selvagens — eles podem dropar o Card da espécie; 10% por shiny abatido (o Card leva ao Altar dos bosses)"
     }
   },
   "apresentacao": {
@@ -738,6 +742,2864 @@
     "luta_max_s": {
       "valor": 600,
       "motivo": "teto da luta (10 min de luta simulada); passou, perde"
+    }
+  },
+  "bosses": {
+    "lista": {
+      "valor": [
+        {
+          "key": "aerodactyl2",
+          "nome": "Ancient Aero",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 142,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "cruel",
+          "nome": "Giant Cruel",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "ghost",
+          "nome": "Lavender Town Ghost",
+          "categoria": "Especiais",
+          "nivel": 200,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": []
+        },
+        {
+          "key": "hisuian_electrode",
+          "nome": "Hisuian Electrode",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 101,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mecha_shiny_marowak",
+          "nome": "Mecha Shiny Marowak",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 105,
+          "shiny": true,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mecha_shiny_mime",
+          "nome": "Mecha Shiny Mime",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 94,
+          "shiny": true,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mega_alakazam",
+          "nome": "Mega Alakazam",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 65,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "megaVenusaurHP",
+          "nome": "Mega Venusaur",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 3,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "outfit_4_",
+          "nome": "Outfit 4",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "overqwil",
+          "nome": "Overqwil",
+          "categoria": "Especiais",
+          "nivel": 300,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "boss_mewtwo_main",
+          "nome": "Boss Mewtwo Main",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 150,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "clone_blastoise",
+          "nome": "Clone Blastoise",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 9,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "cyber_porygon",
+          "nome": "Cyber Porygon",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 137,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mecha_shiny_farfetch",
+          "nome": "Mecha Shiny Farfetch",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 94,
+          "shiny": true,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "megaManectricHP",
+          "nome": "Mega Manectric",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 310,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mega_tyranitar",
+          "nome": "Mega Tyranitar",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "outfit_5_",
+          "nome": "Outfit 5",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "outfit_66_",
+          "nome": "Outfit 66",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "raichu_halloween",
+          "nome": "Raichu Halloween",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 26,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "raticate",
+          "nome": "Raticate",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 20,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "theRedGyarados",
+          "nome": "The Red Gyarados",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 130,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "ursaluna",
+          "nome": "Ursaluna",
+          "categoria": "Especiais",
+          "nivel": 325,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_ariana",
+          "nome": "Ariana",
+          "categoria": "Mystery Dungeons",
+          "nivel": 350,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "charizardValentines",
+          "nome": "Charizard Valentines",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 6,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "clone_charizard",
+          "nome": "Clone Charizard",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 6,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_cyber_porygon",
+          "nome": "Cyber Porygon",
+          "categoria": "Mystery Dungeons",
+          "nivel": 350,
+          "speciesId": 137,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_dark_celebi",
+          "nome": "Dark Celebi",
+          "categoria": "Mystery Dungeons",
+          "nivel": 350,
+          "speciesId": 251,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "dragonSky",
+          "nome": "Dragon Sky",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_dream_boss",
+          "nome": "Dream Boss",
+          "categoria": "Mystery Dungeons",
+          "nivel": 350,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "fight-the-bite_meowth",
+          "nome": "Fight-the-bite Meowth",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 52,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "gengar_johto",
+          "nome": "Gengar Johto",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "hisuian_arcanine",
+          "nome": "Hisuian Arcanine",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 59,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "hisuian_typhlosion",
+          "nome": "Hisuian Typhlosion",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 157,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "kleavor",
+          "nome": "Kleavor",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mecha_shiny_raichu",
+          "nome": "Mecha Shiny Raichu",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 26,
+          "shiny": true,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mega_blastoise",
+          "nome": "Mega Blastoise",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 9,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "megaSteelixHP",
+          "nome": "Mega Steelix",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 208,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mew15th",
+          "nome": "Mew15th",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 151,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "slowbro",
+          "nome": "Slowbro",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 80,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "sneasler",
+          "nome": "Sneasler",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "steelix",
+          "nome": "Steelix",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 208,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_tyranitar",
+          "nome": "Tyranitar",
+          "categoria": "Mystery Dungeons",
+          "nivel": 350,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "venusaurHalloween",
+          "nome": "Venusaur Halloween",
+          "categoria": "Especiais",
+          "nivel": 350,
+          "speciesId": 3,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_dragonair",
+          "nome": "Dragonair",
+          "categoria": "Mystery Dungeons",
+          "nivel": 375,
+          "speciesId": 148,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "megaCharizardHP",
+          "nome": "Mega Charizard",
+          "categoria": "Especiais",
+          "nivel": 375,
+          "speciesId": 6,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "megaMachampHP",
+          "nome": "Mega Machamp",
+          "categoria": "Especiais",
+          "nivel": 375,
+          "speciesId": 68,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mewtwo15th",
+          "nome": "Mewtwo15th",
+          "categoria": "Especiais",
+          "nivel": 375,
+          "speciesId": 150,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "ancientTemple",
+          "nome": "Ancient Temple",
+          "categoria": "Especiais",
+          "nivel": 400,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "bowstoiseEaster",
+          "nome": "Bowstoise Easter",
+          "categoria": "Especiais",
+          "nivel": 400,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_celebi_dragon",
+          "nome": "Celebi Dragon",
+          "categoria": "Mystery Dungeons",
+          "nivel": 400,
+          "speciesId": 251,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "clone_venusaur",
+          "nome": "Clone Venusaur",
+          "categoria": "Especiais",
+          "nivel": 400,
+          "speciesId": 3,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "megaCharizardyHP",
+          "nome": "Mega Charizardy",
+          "categoria": "Especiais",
+          "nivel": 400,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "megaGengarHP",
+          "nome": "Mega Gengar",
+          "categoria": "Especiais",
+          "nivel": 400,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "noctu",
+          "nome": "Noctu",
+          "categoria": "Especiais",
+          "nivel": 400,
+          "speciesId": 94,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_noctu_boss",
+          "nome": "Noctu Boss",
+          "categoria": "Mystery Dungeons",
+          "nivel": 400,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "slowking",
+          "nome": "Slowking",
+          "categoria": "Especiais",
+          "nivel": 400,
+          "speciesId": 199,
+          "shiny": false,
+          "entrada": null,
+          "hp_mult": 6,
+          "recarga_s": 600,
+          "drops": [
+            {
+              "nome": "Boss Token",
+              "chance": 0.6,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Heart Scale",
+              "chance": 0.4,
+              "min": 1,
+              "max": 3
+            }
+          ]
+        },
+        {
+          "key": "mystery_celebi_wood_dragon",
+          "nome": "Celebi Wood Dragon",
+          "categoria": "Mystery Dungeons",
+          "nivel": 425,
+          "speciesId": 251,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_dorabelle",
+          "nome": "Dorabelle",
+          "categoria": "Mystery Dungeons",
+          "nivel": 425,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_iron_masked_marauder",
+          "nome": "Iron Masked Marauder",
+          "categoria": "Mystery Dungeons",
+          "nivel": 425,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_magcargo",
+          "nome": "Magcargo",
+          "categoria": "Mystery Dungeons",
+          "nivel": 425,
+          "speciesId": 219,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_mystery_mamoswine",
+          "nome": "Mystery Mamoswine",
+          "categoria": "Mystery Dungeons",
+          "nivel": 425,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_mystery_muchmoney",
+          "nome": "Mystery Muchmoney",
+          "categoria": "Mystery Dungeons",
+          "nivel": 425,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "beasts_raikou",
+          "nome": "Raikou",
+          "categoria": "Lendary Beasts",
+          "nivel": 425,
+          "speciesId": 243,
+          "shiny": false,
+          "entrada": [
+            "Terror Token",
+            1
+          ],
+          "hp_mult": 12,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Beast Orb",
+              "chance": 0.4,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_rocket_ambush",
+          "nome": "Rocket Ambush",
+          "categoria": "Mystery Dungeons",
+          "nivel": 425,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "beasts_shiny_raikou",
+          "nome": "Shiny Raikou",
+          "categoria": "Lendary Beasts",
+          "nivel": 425,
+          "speciesId": 243,
+          "shiny": true,
+          "entrada": [
+            "Terror Token",
+            1
+          ],
+          "hp_mult": 12,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Beast Orb",
+              "chance": 0.4,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_archer",
+          "nome": "Archer",
+          "categoria": "Mystery Dungeons",
+          "nivel": 450,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_celebi_dungeon",
+          "nome": "Celebi Dungeon",
+          "categoria": "Mystery Dungeons",
+          "nivel": 450,
+          "speciesId": 251,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_marauder",
+          "nome": "Marauder",
+          "categoria": "Mystery Dungeons",
+          "nivel": 450,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_mecha_marauder",
+          "nome": "Mecha Marauder",
+          "categoria": "Mystery Dungeons",
+          "nivel": 450,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "raids_metagross",
+          "nome": "Metagross",
+          "categoria": "Raids",
+          "nivel": 450,
+          "speciesId": 376,
+          "shiny": false,
+          "entrada": [
+            "Beast Orb",
+            2
+          ],
+          "hp_mult": 16,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Raid Coin",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Mega Stone",
+              "chance": 0.05,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "mystery_proton",
+          "nome": "Proton",
+          "categoria": "Mystery Dungeons",
+          "nivel": 450,
+          "speciesId": 149,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            1
+          ],
+          "hp_mult": 8,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Mystery Shard",
+              "chance": 0.5,
+              "min": 1,
+              "max": 3
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Dungeon Chest",
+              "chance": 0.2,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "beasts_entei",
+          "nome": "Entei",
+          "categoria": "Lendary Beasts",
+          "nivel": 475,
+          "speciesId": 244,
+          "shiny": false,
+          "entrada": [
+            "Terror Token",
+            1
+          ],
+          "hp_mult": 12,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Beast Orb",
+              "chance": 0.4,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "beasts_shiny_entei",
+          "nome": "Shiny Entei",
+          "categoria": "Lendary Beasts",
+          "nivel": 475,
+          "speciesId": 244,
+          "shiny": true,
+          "entrada": [
+            "Terror Token",
+            1
+          ],
+          "hp_mult": 12,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Beast Orb",
+              "chance": 0.4,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "beasts_shiny_suicune",
+          "nome": "Shiny Suicune",
+          "categoria": "Lendary Beasts",
+          "nivel": 500,
+          "speciesId": 245,
+          "shiny": true,
+          "entrada": [
+            "Terror Token",
+            1
+          ],
+          "hp_mult": 12,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Beast Orb",
+              "chance": 0.4,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "beasts_suicune",
+          "nome": "Suicune",
+          "categoria": "Lendary Beasts",
+          "nivel": 500,
+          "speciesId": 245,
+          "shiny": false,
+          "entrada": [
+            "Terror Token",
+            1
+          ],
+          "hp_mult": 12,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Beast Orb",
+              "chance": 0.4,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Rare Candy",
+              "chance": 0.3,
+              "min": 1,
+              "max": 2
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_gyakkyo",
+          "nome": "Gyakkyo",
+          "categoria": "Terror",
+          "nivel": 525,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_raito",
+          "nome": "Raito",
+          "categoria": "Terror",
+          "nivel": 550,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_riza",
+          "nome": "Riza",
+          "categoria": "Terror",
+          "nivel": 550,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_seishin_yurei",
+          "nome": "Seishin Yurei",
+          "categoria": "Terror",
+          "nivel": 550,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_yurei",
+          "nome": "Yurei",
+          "categoria": "Terror",
+          "nivel": 550,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_kame",
+          "nome": "Kame",
+          "categoria": "Terror",
+          "nivel": 575,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_unknown",
+          "nome": "Unknown",
+          "categoria": "Terror",
+          "nivel": 575,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_kairiki",
+          "nome": "Kairiki",
+          "categoria": "Terror",
+          "nivel": 600,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_ptera",
+          "nome": "Ptera",
+          "categoria": "Terror",
+          "nivel": 600,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_seishin",
+          "nome": "Seishin",
+          "categoria": "Terror",
+          "nivel": 600,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_gama",
+          "nome": "Gama",
+          "categoria": "Terror",
+          "nivel": 625,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        },
+        {
+          "key": "terror_kitsune",
+          "nome": "Kitsune",
+          "categoria": "Terror",
+          "nivel": 625,
+          "speciesId": 248,
+          "shiny": false,
+          "entrada": [
+            "Boss Token",
+            3
+          ],
+          "hp_mult": 10,
+          "recarga_s": 60,
+          "drops": [
+            {
+              "nome": "Terror Token",
+              "chance": 0.5,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Shiny Stone",
+              "chance": 0.08,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "Legendary Chest",
+              "chance": 0.15,
+              "min": 1,
+              "max": 1
+            }
+          ]
+        }
+      ],
+      "motivo": "87 bosses do snapshot (A: nome, categoria, nível, drops); espécie, entrada, HP e chances desenhados (ferramentas/balanceamento/gerar_bosses.py)"
+    },
+    "iv_boss": {
+      "valor": 25,
+      "motivo": "boss é mais forte que o selvagem médio"
+    },
+    "quality_boss": {
+      "valor": 1.3,
+      "motivo": "boss é mais forte que o selvagem médio"
+    },
+    "cadencia_boss_ms": {
+      "valor": 2000,
+      "motivo": "ritmo de um selvagem (A: ~2000 ms)"
+    },
+    "fator_dano_boss": {
+      "valor": 1.2,
+      "motivo": "o boss bate um pouco mais que um treinador (o selvagem tem ×1,8, A)"
+    },
+    "baus": {
+      "valor": {
+        "Dungeon Chest": {
+          "ouro": [
+            20000,
+            60000
+          ],
+          "pedras": 1
+        },
+        "Legendary Chest": {
+          "ouro": [
+            100000,
+            250000
+          ],
+          "pedras": 2,
+          "rare_candy": 2
+        }
+      },
+      "motivo": "o baú abre na hora: ouro e pedras de evolução sorteadas (o conteúdo do original não foi gravado)"
+    },
+    "altar_chance_captura": {
+      "valor": 0.03,
+      "motivo": "C: 'A captura é muito rara'; 3% por vitória no altar"
+    },
+    "altar_especies": {
+      "valor": [
+        "Raikou",
+        "Entei",
+        "Suicune"
+      ],
+      "motivo": "o shiny lendário do altar sai entre os três das Lendary Beasts do catálogo"
+    },
+    "altar_nivel": {
+      "valor": 500,
+      "motivo": "nível do shiny lendário do altar (o das Lendary Beasts do catálogo vai de 425 a 525)"
+    },
+    "auto_max_lutas": {
+      "valor": 50,
+      "motivo": "teto da fila do Auto Boss"
     }
   }
 }
