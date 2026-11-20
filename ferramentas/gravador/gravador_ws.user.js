@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name         Gravador WS — Poke Idle World
 // @namespace    poke-idle-godot
-// @version      1.3
+// @version      1.4
 // @description  Grava as mensagens do jogo e as respostas de /api/game/* (sem token, URL de conexão ou cabeçalhos).
-// @match        https://poke.idleworld.online/play*
+// @match        https://poke.idleworld.online/*
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -27,12 +27,16 @@
  *   - Os registros já exportados com mais de 3 dias são apagados do navegador.
  *   - Na 1ª exportação automática, o Chrome pode perguntar se o site pode baixar vários arquivos: permita.
  *   Ponha os arquivos em poke har/gravacoes/livre/ (ou aponte a pasta de downloads do navegador para lá).
+ * v1.4: a página de criar personagem (/create-character) não era gravada: o @match só cobria /play* (e o site troca de
+ *   página sem recarregar, então nem F5 resolvia) e o gancho REST só aceitava /api/game/*. Agora roda no site inteiro e
+ *   grava também /api/characters* (o pedido de criação, com o inicial, o gênero e o nome, e a resposta), sempre sem
+ *   campos de credencial (email, token, senha, segredo, chave de recuperação), nem no pedido nem na resposta.
  * Painel no canto inferior esquerdo: pausar, exportar novos, exportar sessão, tudo, limpar.
  */
 (function () {
   'use strict';
   const W = typeof unsafeWindow !== 'undefined' ? unsafeWindow : window;
-  const VERSAO = 4;
+  const VERSAO = 5;
   const INTERVALO_AUTO_MS = 2 * 60 * 60 * 1000;     // exportação automática a cada 2 h
   const GUARDAR_DIAS = 3;                            // registros já exportados ficam 3 dias no navegador
   const MEMORIA_MAX = 20 * 1024 * 1024;              // cópia em memória para o download ao fechar a aba (até ~20 MB)
@@ -48,7 +52,7 @@
 
   const DESCARTAR = new Set(['chat', 'dm', 'chat-delete', 'dm-inbox']);
   const SESSAO = new Date().toISOString().replace(/[:.]/g, '-');
-  const REST_OK = /^\/api\/game\//;          // só dados de jogo; nada de /api/auth
+  const REST_OK = /^\/api\/(game\/|characters(\/|$))/;   // dados de jogo e do personagem; nada de /api/auth nem /api/account
   const REST_NAO = /^\/api\/game\/(chat|dm|friends|messages|mail)/;
   let pausado = false, total = 0, porTipo = {};
   const fila = [];
@@ -117,7 +121,13 @@
   for (const k of ['CONNECTING', 'OPEN', 'CLOSING', 'CLOSED']) Embrulho[k] = Original[k];
   W.WebSocket = Embrulho;
 
-  // ---------- respostas REST de /api/game/* ----------
+  // ---------- respostas REST de /api/game/* e /api/characters* ----------
+  const CREDENCIAL = /token|auth|key|secret|senha|pass|email|recovery|cookie/i;
+  function limpar(v) {   // tira campos de credencial em qualquer profundidade
+    if (Array.isArray(v)) return v.map(limpar);
+    if (v && typeof v === 'object') { const o = {}; for (const k of Object.keys(v)) if (!CREDENCIAL.test(k)) o[k] = limpar(v[k]); return o; }
+    return v;
+  }
   const fetchOriginal = W.fetch;
   let restLigado = false;
   if (fetchOriginal) {
@@ -128,11 +138,17 @@
         const url = new URL(typeof entrada === 'string' ? entrada : entrada.url, location.href);
         if (url.origin === location.origin && REST_OK.test(url.pathname) && !REST_NAO.test(url.pathname)) {
           const metodo = ((opcoes && opcoes.method) || (entrada && entrada.method) || 'GET').toUpperCase();
+          let pedido = null;
+          if (metodo !== 'GET' && opcoes && typeof opcoes.body === 'string') {
+            try { pedido = limpar(JSON.parse(opcoes.body)); } catch { pedido = null; }
+          }
           p.then(r => r.clone().text().then(corpo => {
-            let dados; try { dados = JSON.parse(corpo); } catch { dados = corpo.slice(0, 200000); }
+            let dados; try { dados = limpar(JSON.parse(corpo)); } catch { dados = corpo.slice(0, 200000); }
             const consulta = {};
-            for (const [k, v] of url.searchParams) if (!/token|auth|key|secret|senha|pass/i.test(k)) consulta[k] = v;
-            registrar('rest', JSON.stringify({ type: '__rest', metodo, caminho: url.pathname, consulta, status: r.status, corpo: dados }));
+            for (const [k, v] of url.searchParams) if (!CREDENCIAL.test(k)) consulta[k] = v;
+            const reg = { type: '__rest', metodo, caminho: url.pathname, consulta, status: r.status, corpo: dados };
+            if (pedido !== null) reg.pedido = pedido;
+            registrar('rest', JSON.stringify(reg));
           })).catch(() => {});
         }
       } catch { /* nunca quebrar o jogo */ }
