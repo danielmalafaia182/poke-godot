@@ -8,7 +8,7 @@ var busca := ""
 
 
 func _ready() -> void:
-	tamanho = Vector2(620, 560)
+	tamanho = Vector2(980, 660)   # A: no vídeo o Gerenciamento de Captura ocupa ~980 × 660 px de 1880
 	aba = "normal"
 	super._ready()
 

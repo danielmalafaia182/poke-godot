@@ -18,7 +18,7 @@ func _initialize() -> void:
 		"criar_personagem", "criar_personagem_escolhido":
 			no = load("res://painel_novo_jogo.gd").new()
 			get_root().add_child(no)
-		"nurse", "depot", "mochila", "my_pokes", "perfil", "dock_clas", "mapa_outland", "mapa_orre", "mapa_nightmare":
+		"nurse", "depot", "mochila", "my_pokes", "perfil", "dock_clas", "mapa_outland", "mapa_orre", "mapa_nightmare", "bolas_usadas", "pokedex":
 			var ej = get_root().get_node("EstadoJogo")
 			ej.novo_jogo(1, "danpoke", 1)
 			ej.zoom_camera = 0.5   # A: o zoom do vídeo do original
@@ -87,6 +87,10 @@ func _process(_d: float) -> bool:
 		var mm = current_scene.find_child("MapaMundi", true, false)
 		if mm != null:
 			mm.selecionar_regiao(tela.trim_prefix("mapa_"))
+	if quadros == 10 and tela == "bolas_usadas":
+		current_scene.janelas_dock["bolas"].abrir()
+	if quadros == 10 and tela == "pokedex":
+		current_scene.janelas_dock["pokedex"].abrir()
 	if quadros == 10 and tela == "dock_clas":
 		current_scene.get_node("Interface/MenuSuperior").botoes["clans"].pressed.emit()
 	if quadros == 10 and tela == "perfil":

@@ -19,3 +19,5 @@ imagens são montadas por `ferramentas/visual/lado_a_lado.gd`.
 | 11_perfil | Perfil | 13_perfil_outfit/v2_00049 |
 | 12_dock_janela_original (só o nosso) | Item do dock que depende do servidor (Clãs) | — |
 | 13_mapa_nightmare (só o nosso) | Mapa da Nightmare com a imagem do original | — |
+| 14_bolas_usadas | Gerenciamento de Captura (moldura e abas do original) | 25_bolas_usadas/v2_00272 |
+| 15_pokedex | Pokédex (contagem e grade de cartões) | 14_pokedex/v2_00076 |
