@@ -1379,3 +1379,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Em 600 h VIP: Orre às 520 h; reservas em ~40 com o Golem em 527 (XP só do ativo).
   - Orre no acesso (530) não é jogável: só a electrike, a 2,1 M XP/h com ×10, contra 15 M na Outland.
   - Nightmare: ~8.600 h ativas ficando na Outland, ou ~2.700 h se Orre 580 for aguentável.
+- 20/11/2026 — **Build do ciclo 5** (`builds/ciclo5`, 627 MB): fases 1, 2 e 3 OK.
+  - A pasta de evidências (`referencia_visual/`, 280 MB de vídeos e quadros) entrava no `.pck` (188 MB, build de 722 MB).
+    Agora fica no `exclude_filter` e tem `.gdignore`.
+  - O verificador espera a gravação em thread antes de conferir a cópia do save na fase 3: na troca `.tmp` → principal,
+    o arquivo some por um instante (falha intermitente).
+  - Regressão: 51 testes do Godot verdes, os .sh e .py verdes, P04 20/20 e diferencial 1h 28/30 (igual).

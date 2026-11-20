@@ -119,6 +119,7 @@ func _process(_d: float) -> void:
 			if quadros == 20:
 				ok(not bool(ej.salvamento.jogo_novo) and ej.obter_lider() != null and String(ej.obter_lider().especie.nome) == "Bulbasaur", "importou: o progresso do projeto carregou")
 				ok(FileAccess.get_md5(ej.salvamento.caminho_save_projeto()) == String(info["md5"]), "o save do projeto ficou intacto (cópia, não move)")
+				ej.salvar_agora()   # espera a gravação em thread em andamento (na troca .tmp → principal o arquivo some por um instante)
 				ok(FileAccess.file_exists("user://progresso_v1.json"), "a cópia está na pasta do jogo")
 				_fim()
 
