@@ -1325,3 +1325,15 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Testes: `test_janelas_ciclo2` 26/26, `test_dock_menu` 6/6, `test_album` 8/8, `test_bosses` 12/12,
     `test_ginasios` 12/12, `test_tutorial` 22/22, `test_ciclo_cidade` 20/20.
   - Lado a lado: 14 (Gerenciamento de Captura) e 15 (Pokédex).
+- 20/11/2026 — **Rebuild final do ciclo 4** (`builds/ciclo4`, 628 MB). Verificação: fases 1, 2 e 3 OK.
+  - **Entrada na hunt no build** (user:// vazio, `ferramentas/build/medir_entrada_hunt.gd`), ciclo 3 → ciclo 4:
+
+    | Hunt | 1ª visita | Visitas seguintes |
+    | --- | --- | --- |
+    | rattata | 2,27 → 0,51 s | 0,89 → 0,34 s |
+    | geodude | 2,67 → 0,32 s | 0,87 → 0,33 s |
+    | rhydon | 2,87 → 0,32 s | 0,88 → 0,32 s |
+    | electabuzz | 1,96 → 0,28 s | 0,85 → 0,30 s |
+    | nightmare_steelix | 8,21 → 0,89 s | 1,23 → 0,48 s |
+
+    Critério de no máximo 1 s cumprido em todas, inclusive na 1ª visita sem o atlas pré-aquecido.
