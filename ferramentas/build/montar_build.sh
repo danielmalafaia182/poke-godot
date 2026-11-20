@@ -12,7 +12,7 @@
 # Uso: ferramentas/build/montar_build.sh [nome]
 set -euo pipefail
 RAIZ="$(cd "$(dirname "$0")/../.." && pwd)"
-NOME="${1:-ciclo3}"
+NOME="${1:-ciclo4}"
 GODOT="${GODOT:-/c/Users/dmala/Desktop/Godot/Godot_v4.7.2-stable_win64_console.exe}"
 B="$RAIZ/builds/$NOME"
 rm -rf "$B"

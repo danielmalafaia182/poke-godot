@@ -411,6 +411,7 @@ func _perguntar_orre(dados: Dictionary, texto: String) -> void:
 	confirmacao.dialog_text=texto
 	confirmacao.popup_centered()
 func _viajar(dados: Dictionary) -> void:
+	if not is_inside_tree(): return   # a cena que abriu o mapa já saiu (troca de cena em andamento)
 	if bool(dados.get("simulada",false)) and str(dados.get("slug",""))!="":
 		# hunt com mapa e hunt-config no snapshot: entra sempre pelo slug (nomes de Outland/Orre/Nightmare não são espécies);
 		# a espécie fica registrada quando o nome é uma (telas antigas a leem), mas a cena usa o slug.

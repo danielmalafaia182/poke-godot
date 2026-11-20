@@ -2,7 +2,8 @@ extends Node
 ## Verificação do build exportado (ciclo 3). O jogo carrega este script quando POKE_VERIFICAR aponta para ele (o template
 ## de release não roda --script); ele dirige o jogo de verdade (a tela de jogo novo e a de importar são as reais) e grava
 ## o resultado em VERIF_SAIDA/resultado_fase<N>.txt. APPDATA isolado (o save real nunca é tocado). VERIF_FASE:
-##   1  sem save: tela de jogo novo → Geodude → Começar → tutorial → mapa → hunt Rattata → caça → salva → fecha
+##   1  sem save: tela de jogo novo → Bulbasaur, gênero e nome → Começar → tutorial → mapa → hunt Geodude → caça → salva
+##      → fecha (ciclo 4: o começo do original; o Geodude saiu como inicial)
 ##   2  reabre: o save (na pasta própria, %APPDATA%/PokeIdle) carrega e continua; caça de novo, XP sobe, salva, fecha
 ##   3  outra APPDATA com só um save "do projeto" (Godot/app_userdata/PokeIdle): a tela de importar aparece; importar
 ##      carrega e o original fica intacto
@@ -50,15 +51,18 @@ func _process(_d: float) -> void:
 					ok(pn != null, "sem save, abre a tela de jogo novo (a real)")
 					_shot("01_jogo_novo")
 					if pn != null:
-						(pn.find_child("Inicial_74", true, false) as Button).pressed.emit()
+						pn.escolher_inicial(1)
+						pn.escolher_genero("male")
+						pn.nome.text = "Verificador"
+						pn._atualizar()
 					etapa = 1
 				elif fase == 2:
 					ok(cena.find_child("PainelNovoJogo", true, false) == null and not bool(ej.salvamento.jogo_novo), "reabriu: o save carregou (sem tela de jogo novo)")
-					ok(ej.obter_lider() != null and String(ej.obter_lider().especie.nome) == "Geodude", "continua com o Geodude no time")
+					ok(ej.obter_lider() != null and String(ej.obter_lider().especie.nome) == "Bulbasaur", "continua com o Bulbasaur no time")
 					info["xp"] = int(ej.experiencia_treinador_acumulada)
 					ok(int(info["xp"]) > 0, "XP do treinador do save: %d" % int(info["xp"]))
 					_shot("cidade_reaberta")
-					_viajar("Rattata")
+					_viajar("Geodude")
 					etapa = 10
 				else:
 					var pi := cena.find_child("PainelImportarSave", true, false)
@@ -72,21 +76,31 @@ func _process(_d: float) -> void:
 		1:
 			if quadros == 10:
 				var b := cena.find_child("Comecar", true, false) as Button
-				ok(b != null and ej.obter_lider() != null and String(ej.obter_lider().especie.nome) == "Geodude" and ej.obter_lider().nivel == 1, "escolheu o Geodude nível 1")
+				ok(b != null and not b.disabled, "Bulbasaur, gênero e nome escolhidos: Começar liberado")
 				if b != null:
+					info["cena_antes"] = cena.get_instance_id()
 					b.pressed.emit()
-			if quadros == 60:
+			# Começar recarrega a cidade depois de 0,4 s: espera a cidade nova (antes, o mapa era aberto na cena que ia sair)
+			if quadros <= 10 or cena.get_instance_id() == int(info.get("cena_antes", 0)):
+				if quadros > 900:
+					ok(false, "a cidade recarregou depois de Começar")
+					_fim()
+				return
+			if not info.has("nova_q"):
+				info["nova_q"] = quadros
+			if quadros - int(info["nova_q"]) == 50:
+				ok(ej.obter_lider() != null and String(ej.obter_lider().especie.nome) == "Bulbasaur" and ej.obter_lider().nivel == 1, "começou com o Bulbasaur nível 1")
 				var tut := get_tree().current_scene.find_child("PainelTutorial", true, false) as Control
 				ok(tut != null and tut.visible, "o tutorial do Professor Carvalho aparece")
 				_shot("02_tutorial")
-				_viajar("Rattata")
+				_viajar("Geodude")
 				etapa = 2
 				quadros = 0
 		2, 10:
 			if cena.scene_file_path == "res://caca_sim.tscn":
 				caca = cena
 				caca.velocidade = 10.0
-				ok(caca.sim != null and String(caca.sim.slug) == "rattata", "entrou na hunt Rattata (mapa do pacote jogo/)")
+				ok(caca.sim != null and String(caca.sim.slug) == "geodude", "entrou na hunt Geodude (mapa do pacote jogo/)")
 				etapa = 3 if etapa == 2 else 11
 				quadros = 0
 			elif quadros > 900:
@@ -103,7 +117,7 @@ func _process(_d: float) -> void:
 				_fim()
 		20:
 			if quadros == 20:
-				ok(not bool(ej.salvamento.jogo_novo) and ej.obter_lider() != null and String(ej.obter_lider().especie.nome) == "Geodude", "importou: o progresso do projeto carregou")
+				ok(not bool(ej.salvamento.jogo_novo) and ej.obter_lider() != null and String(ej.obter_lider().especie.nome) == "Bulbasaur", "importou: o progresso do projeto carregou")
 				ok(FileAccess.get_md5(ej.salvamento.caminho_save_projeto()) == String(info["md5"]), "o save do projeto ficou intacto (cópia, não move)")
 				ok(FileAccess.file_exists("user://progresso_v1.json"), "a cópia está na pasta do jogo")
 				_fim()

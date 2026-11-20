@@ -7,7 +7,7 @@ const NOME := "TelaCarregando"
 
 
 static func mostrar(arvore: SceneTree) -> void:
-	if arvore.root.get_node_or_null(NOME) != null:
+	if arvore == null or arvore.root.get_node_or_null(NOME) != null:
 		return
 	var camada := CanvasLayer.new()
 	camada.name = NOME
@@ -42,6 +42,8 @@ static func esconder(arvore: SceneTree) -> void:
 
 static func ir_para(arvore: SceneTree, cena: String) -> void:
 	## Mostra a tela, deixa desenhar um quadro com ela e só então troca de cena.
+	if arvore == null:
+		return
 	mostrar(arvore)
 	await arvore.process_frame
 	await arvore.process_frame
