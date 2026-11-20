@@ -72,7 +72,7 @@ func _process(_d: float) -> bool:
 				var ev: Array = caca.sim.cfg.get("eventos", [])
 				checar(ev.size() == 1 and String(ev[0]["key"]) == "type-of-day" and caca.sim.cfg.has("streak"),
 					"a hunt recebe o Tipo do Dia e o Streak (cfg)", str(ev))
-				checar(caca.get_node_or_null("Interface/BotaoSoneca") != null, "botão Zzz na HUD da hunt")
+				checar(caca.get_node_or_null("Interface/BotaoSoneca") == null and caca.has_method("soneca"), "Soneca só pela barra de menu (sem o Zzz flutuante)")
 				etapa = 3
 				quadros = 0
 			elif quadros > 300:

@@ -391,18 +391,8 @@ func _montar_hud() -> void:
 	hud_caca.name = "HudCaca"
 	hud_caca.controlador = self
 	hud.add_child(hud_caca)
-	# Modo Soneca (C: botão Zzz na hunt; o jogo fecha e a caçada segue 5 min "no servidor").
-	var zzz := Button.new()
-	zzz.name = "BotaoSoneca"
-	zzz.text = "💤 Zzz"
-	zzz.tooltip_text = "Modo Soneca: a hunt continua por 5 min e, ao voltar, você coleta 50% da taxa de XP pelo tempo fora (até 24 h)."
-	zzz.anchor_left = 1.0; zzz.anchor_right = 1.0; zzz.anchor_top = 1.0; zzz.anchor_bottom = 1.0
-	zzz.offset_left = -120; zzz.offset_right = -16; zzz.offset_top = -48; zzz.offset_bottom = -16
-	zzz.pressed.connect(func() -> void:
-		if soneca().is_empty():
-			EstadoJogo.salvar_agora()
-			get_tree().quit())
-	hud.add_child(zzz)
+	# Modo Soneca: só pelo ícone zᶻ da barra de menu (C; ciclo 5, pedido do usuário: o botão Zzz flutuante saiu do canto
+	# inferior direito, onde cobria o painel de captura). O ícone abre a janela do original e chama soneca().
 
 
 func soneca() -> String:
