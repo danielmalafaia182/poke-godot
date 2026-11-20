@@ -50,6 +50,17 @@ var _slug_carregado := ""
 var _slug_pendente := ""
 
 
+var _fx_captura = preload("res://render/efeito_captura.gd").new()
+
+
+func _remover_cadaver(tile: Vector2i) -> void:
+	## C (removeCorpseAtTile): a bola recolhe o cadáver daquela casa.
+	for k in _cadaveres.keys():
+		var p := String(k).split(",")
+		if p.size() >= 2 and int(p[0]) == tile.y and int(p[1]) == tile.x:
+			RenderingServer.canvas_item_set_visible(_cadaveres[k], false)
+
+
 static var _st := {}   # ciclo 4: espécies, shiny e cadáveres lidos uma vez por sessão (eram ~120 ms a cada entrada)
 
 
@@ -135,6 +146,16 @@ func receber(msg: Dictionary) -> void:
 		estado.receber_field(msg, agora)
 		_hits(msg.get("hits", []), msg)
 		_sincronizar_cadaveres(msg.get("corpses", []), msg.get("mobs", []))
+	elif tipo == "catch-result" and mapa != null and msg.get("row") != null and msg.get("col") != null:
+		# C: spawnCatchFx — do herói (posição desenhada agora) até a casa do selvagem
+		var ox := int(estado.init.get("minTx", 0))
+		var oy := int(estado.init.get("minTy", 0))
+		var para := Vector2i(ox + int(msg["col"]), oy + int(msg["row"]))
+		var de := para
+		if not ultimo_quadro.is_empty():
+			de = Vector2i(roundi(float(ox) + float(ultimo_quadro["hero"]["col"])), roundi(float(oy) + float(ultimo_quadro["hero"]["row"])))
+		_fx_captura.iniciar(mapa.rid_andar(), Vector2(de) * 32.0 + Vector2(16, 16), Vector2(para) * 32.0 + Vector2(16, 16),
+			Vector2i(int(msg["col"]), int(msg["row"])), int(msg.get("ballId", 1)), bool(msg.get("success", false)))
 
 
 func _carregar_mapa(slug: String, centro: Vector2 = Vector2.ZERO) -> void:
@@ -212,6 +233,7 @@ func _processar() -> void:
 	var _tc := Time.get_ticks_usec()
 	_placas_quadro(v, f, ox, oy, tela)
 	_danos_quadro(agora, tela)
+	_fx_captura.atualizar(get_process_delta_time() * 1000.0, _remover_cadaver)
 	perfil["placas_us"] += Time.get_ticks_usec() - _tc
 
 
@@ -501,6 +523,7 @@ func _danos_quadro(agora: float, _tela: Vector2) -> void:
 
 
 func _exit_tree() -> void:
+	_fx_captura.limpar()
 	for k in _ents.keys():
 		RenderingServer.free_rid(_ents[k]["sombra"])
 		RenderingServer.free_rid(_ents[k]["rid"])

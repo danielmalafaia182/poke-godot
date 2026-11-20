@@ -112,7 +112,7 @@ func _process(_d: float) -> bool:
 		if tela == "hunt_troca":
 			get_root().get_node("EstadoJogo").selecionar_lider(get_root().get_node("EstadoJogo").time_pokemon[2])
 		current_scene.velocidade = 1.0
-		quadros = 2400 - (6 if tela == "hunt_captura" else 50)   # captura: o painel dura 2,5 s depois do lançamento
+		quadros = 2400 - (int(OS.get_environment("PRINT_ATRASO")) if OS.get_environment("PRINT_ATRASO") != "" else (6 if tela == "hunt_captura" else 50))   # captura: o painel dura 2,5 s depois do lançamento
 	if tela.begins_with("hunt") and quadros < 2400:
 		return false
 	if quadros == 40 or (tela.begins_with("hunt") and quadros == 2400):
