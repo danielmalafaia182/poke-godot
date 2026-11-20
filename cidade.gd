@@ -554,16 +554,54 @@ func atualizar_meta() -> void:
 	if botao_meta != null:
 		botao_meta.text = load("res://painel_metas.gd").linha_resumo(EstadoJogo.metas())
 
+static var _aviso_fora_mostrado := false   # só na 1ª abertura da cidade na sessão (fechado_em_unix vem do save lido)
+
+
+static func _duracao_txt(seg: int) -> String:
+	var h := seg / 3600
+	var m := (seg % 3600) / 60
+	if h >= 24:
+		return "%d d %d h" % [h / 24, h % 24]
+	return "%d h %02d min" % [h, m] if h > 0 else "%d min" % maxi(1, m)
+
+
+static func texto_recuperacao(rec: Dictionary, fora: int, slug: String) -> String:
+	## Ciclo 5 (item 99): quanto tempo contou, quanto se perdeu e por quê. B-relatado: fechado numa hunt sem soneca, o
+	## servidor segue caçando por 15 min e encerra a sessão.
+	var nome: String = String(preload("res://ponte_cidade.gd").dados().hunts.get(slug, {}).get("nome", slug))
+	var contou := int(rec.get("segundos", 0))
+	var perdido := maxi(0, fora - contou)
+	var t := "Fechado há %s. Contaram %s de caça em %s (com o jogo fechado, a hunt segue por até 15 min e a sessão acaba)." % [
+		_duracao_txt(fora), _duracao_txt(contou), nome]
+	if perdido > 0:
+		t += " Os outros %s não renderam: para render mais, use o 💤 Modo Soneca antes de fechar (50%% da taxa de XP, até 24 h)." % _duracao_txt(perdido)
+	t += "\n\nResultado: %d abates, +%d XP do treinador, %d captura(s)." % [int(rec.get("kills", 0)), int(rec.get("xpTreinador", 0)), (rec.get("capturas", []) as Array).size()]
+	if int(rec.get("kills", 0)) == 0:
+		var hp: Dictionary = rec.get("hp", {})
+		var vivos := 0
+		for k in hp:
+			vivos += 1 if int(hp[k]) > 0 else 0
+		t += " Nenhum abate: " + ("o time estava desmaiado ao fechar (cure com a Nurse Joy)." if vivos == 0 and not hp.is_empty() else "o líder não derrotou nenhum selvagem nesse tempo (a hunt está acima do nível do time).")
+	return t
+
+
 func verificar_soneca() -> void:
 	## Ao abrir a cidade: fechado numa hunt sem soneca → recupera até 15 min de caça (B-relatado); soneca pendente →
 	## janela de coleta; voltou antes de 5 min → cancelada com a parte rodada (A, G6b).
+	var agora := int(Time.get_unix_time_from_system())
+	var fora := maxi(0, agora - int(EstadoJogo.fechado_em_unix)) if int(EstadoJogo.fechado_em_unix) > 0 else 0
 	if EstadoJogo.hunt_ao_fechar != "" and EstadoJogo.soneca.is_empty():
-		var rec: Dictionary = EstadoJogo.recuperar_hunt_fechada(int(Time.get_unix_time_from_system()))
+		var slug: String = EstadoJogo.hunt_ao_fechar
+		var rec: Dictionary = EstadoJogo.recuperar_hunt_fechada(agora)
 		if not rec.is_empty():
-			painel_soneca.abrir_texto("🌙 Enquanto o jogo esteve fechado", "Seu time seguiu caçando em %s por %d min: %d abates, +%d XP, %d captura(s). Depois de 15 min fechado, a sessão acaba." % [
-				String(rec["slug"]), int(rec["segundos"]) / 60, int(rec["kills"]), int(rec["xpTreinador"]), (rec["capturas"] as Array).size()])
+			painel_soneca.abrir_texto("🌙 Enquanto o jogo esteve fechado", texto_recuperacao(rec, fora, slug))
 		return
 	if EstadoJogo.soneca.is_empty():
+		# Ciclo 5: fechado fora de uma hunt (ou dentro da cidade) por mais de 15 min: diz por que não acumulou nada.
+		var primeira := not _aviso_fora_mostrado
+		_aviso_fora_mostrado = true
+		if fora >= 15 * 60 and primeira and not bool(EstadoJogo.salvamento.jogo_novo):
+			painel_soneca.abrir_texto("🌙 Bem-vindo de volta", "O jogo ficou fechado por %s, mas fora de uma hunt: nada foi acumulado. Para render com o jogo fechado, feche dentro de uma hunt (rende os primeiros 15 min) ou use o 💤 Modo Soneca na barra de menu (rende 50%% da taxa de XP por até 24 h)." % _duracao_txt(fora))
 		return
 	var r: Dictionary = EstadoJogo.relatorio_offline(int(Time.get_unix_time_from_system()))
 	if r.get("report") != null:

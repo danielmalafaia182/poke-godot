@@ -1,0 +1,6 @@
+Item 99 (reabrir depois de 3 h fechado numa hunt, sem soneca) — mensagem do nosso jogo (testes/test_reabrir.sh):
+
+hunt_ao_fechar= xp=736
+MENSAGEM: 🌙 Enquanto o jogo esteve fechado | Fechado há 3 h 00 min. Contaram 15 min de caça em Geodude (com o jogo fechado, a hunt segue por até 15 min e a sessão acaba). Os outros 2 h 45 min não renderam: para render mais, use o 💤 Modo Soneca antes de fechar (50% da taxa de XP, até 24 h).
+
+Resultado: 91 abates, +728 XP do treinador, 4 captura(s). | 
