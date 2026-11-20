@@ -18,6 +18,17 @@ func _initialize() -> void:
 		"criar_personagem", "criar_personagem_escolhido":
 			no = load("res://painel_novo_jogo.gd").new()
 			get_root().add_child(no)
+		"nurse", "depot":
+			var ej = get_root().get_node("EstadoJogo")
+			ej.novo_jogo(1, "danpoke", 1)
+			ej.tutorial_passo = "fim"
+			change_scene_to_file("res://cidade.tscn")
+		"cidade_colisao":
+			# a cidade com zoom 2, o treinador na frente do Pokémon Center e as casas bloqueadas em vermelho
+			var ej = get_root().get_node("EstadoJogo")
+			ej.novo_jogo(1, "danpoke", 1)
+			ej.tutorial_passo = "fim"
+			change_scene_to_file("res://cidade.tscn")
 		_ when tela.begins_with("tutorial"):
 			# tutorial = welcome; tutorial_<passo> = esse passo (party, depot, openMap…)
 			var ej = get_root().get_node("EstadoJogo")
@@ -33,6 +44,27 @@ func _process(_d: float) -> bool:
 		no.escolher_genero("male")
 		no.nome.text = "danpoke"
 		no._atualizar()
+	if quadros == 8 and tela == "cidade_colisao":
+		var c = current_scene
+		c.zoom_cidade = 1.6
+		c.personagem.celula = Vector2i(-3, -6)
+		c.personagem.position = Vector2(c.personagem.celula) * 32.0 + Vector2(16, 16)
+		var grade := Node2D.new()
+		grade.z_index = 100
+		grade.draw.connect(func() -> void:
+			for y in range(-16, 6):
+				for x in range(-20, 14):
+					var cel := Vector2i(x, y)
+					if not c.cenario.celula_transitavel(cel):
+						grade.draw_rect(Rect2(Vector2(cel) * 32.0, Vector2(32, 32)), Color(1, 0, 0, 0.28))
+					grade.draw_rect(Rect2(Vector2(cel) * 32.0, Vector2(32, 32)), Color(1, 1, 1, 0.12), false, 1.0)
+					if x % 2 == 0 and y % 2 == 0:
+						grade.draw_string(ThemeDB.fallback_font, Vector2(cel) * 32.0 + Vector2(2, 11), "%d,%d" % [x, y], HORIZONTAL_ALIGNMENT_LEFT, -1, 9, Color.WHITE))
+		c.cenario.add_child(grade)
+	if quadros == 10 and tela == "nurse":
+		current_scene.painel_nurse.abrir()
+	if quadros == 10 and tela == "depot":
+		current_scene.painel_depot.abrir_depot()
 	if quadros == 40:
 		get_root().get_texture().get_image().save_png(saida)
 		print("PRINT ", saida)

@@ -54,8 +54,9 @@ func executar() -> void:
 	checar(cidade._perto_nurse() and cidade._perto_depot(),"alcance padrão ilimitado na cidade")
 	checar(cidade.placa_nurse.visible and cidade.placa_depot.visible,"placas visíveis mesmo longe")
 	checar(cidade.botao_nurse.text=="Talk" and cidade.botao_depot.text=="Open Depot","ações separadas dos nomes")
-	var nurse: Sprite2D = cidade.cenario.find_child("ImagemNurseJoy",true,false)
-	checar(nurse.offset==Vector2(0,-20.48),"âncora da Nurse igual ao cliente original")
+	# Ciclo 4: a Nurse vem do city-npcs e o cenário a desenha com styleNpc (C), na célula (−3,−10).
+	var nurse: Dictionary = cidade.cenario.npc("nurse")
+	checar(not nurse.is_empty() and Vector2i(int(nurse["x"]),int(nurse["y"]))==Vector2i(-3,-10),"Nurse do city-npcs na célula do original")
 	cidade.alcance_interacao_cidade=96
 	checar(not cidade._perto_nurse() and not cidade._perto_depot(),"alcance limitado configurável")
 	cidade.alcance_interacao_cidade=0

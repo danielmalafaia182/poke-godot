@@ -143,7 +143,7 @@ func abrir_depot() -> void:
 	linha.add_theme_constant_override("separation", 5)
 	conteudo.add_child(linha)
 	abas.clear()
-	var nomes: Array[String] = ["🎒 Items", "⚔ Pokémon", "🥚 Breeding Box", "Família: Itens", "Família: Pokémon"]
+	var nomes: Array[String] = ["🎒 Items", "⚔ Pokémon", "🥚 Breeding Box", "👨‍👩‍👧 Família: Itens", "👨‍👩‍👧 Família: Pokémon"]
 	for i in range(nomes.size()):
 		var b: Button = botao(nomes[i], _mudar_aba.bind(i))
 		b.add_theme_font_size_override("font_size", 11)
@@ -155,7 +155,6 @@ func abrir_depot() -> void:
 		linha.add_child(b)
 		abas.append(b)
 	corpo = VBoxContainer.new()
-	corpo.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	corpo.add_theme_constant_override("separation", 8)
 	conteudo.add_child(corpo)
 	tamanho_base = Vector2(600, 784)
@@ -176,9 +175,11 @@ func _ajustar() -> void:
 		return
 	var fator: float = minf(1.0, minf((size.x - 24.0) / tamanho_base.x, (size.y - 24.0) / tamanho_base.y))
 	fator = maxf(0.1, fator)
-	janela.size = tamanho_base
+	janela.size = Vector2.ZERO
+	var tam := Vector2(tamanho_base.x, janela.get_combined_minimum_size().y)
+	janela.size = tam
 	janela.scale = Vector2.ONE * fator
-	janela.position = (size - tamanho_base * fator) * 0.5
+	janela.position = ((size - tam * fator) * 0.5).round()
 
 func fechar() -> void:
 	if animacao != null:
@@ -227,7 +228,7 @@ func _construir_corpo() -> void:
 	categoria = OptionButton.new()
 	categoria.fit_to_longest_item = false
 	categoria.clip_text = true
-	categoria.custom_minimum_size.x = 88
+	categoria.custom_minimum_size.x = 122
 	categoria.add_item("All categories" if aba == 0 else "All types")
 	if aba == 0:
 		for valor in ["Potions","Materials"]: categoria.add_item(valor)
@@ -285,7 +286,6 @@ func _construir_corpo() -> void:
 			grades.add_child(b)
 	ordem.item_selected.connect(func(_i: int) -> void: atualizar_listas())
 	var listas: HBoxContainer = HBoxContainer.new()
-	listas.size_flags_vertical = Control.SIZE_EXPAND_FILL
 	listas.add_theme_constant_override("separation", 10)
 	corpo.add_child(listas)
 	for titulo in (["BAG", "DEPOT"] if aba == 0 else ["TEAM", "BOX"]):
@@ -298,7 +298,6 @@ func _construir_corpo() -> void:
 		lado.add_child(HSeparator.new())
 		var painel: PanelContainer = PanelContainer.new()
 		painel.add_theme_stylebox_override("panel", estilo("09151d", "34414b", 6, 6))
-		painel.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		lado.add_child(painel)
 		var scroll: ScrollContainer = ScrollContainer.new()
 		scroll.horizontal_scroll_mode = ScrollContainer.SCROLL_MODE_DISABLED
@@ -310,19 +309,26 @@ func _construir_corpo() -> void:
 		colunas.append(lista)
 	var rodape: HBoxContainer = HBoxContainer.new()
 	corpo.add_child(rodape)
+	var chip := PanelContainer.new()   # A (v1_00131): "📦 1/200 SLOTS" numa pílula escura com borda dourada
+	chip.add_theme_stylebox_override("panel", estilo("1b2128", "6a5223", 7, 7))
+	rodape.add_child(chip)
 	contador = rotulo("", 12, DOURADO)
-	rodape.add_child(contador)
+	contador.add_theme_font_override("font", UI.TITULO)
+	chip.add_child(contador)
 	var espaco: Control = Control.new()
 	espaco.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	rodape.add_child(espaco)
 	guardar_todos = botao("Store all", _guardar_todos)
 	guardar_todos.visible = aba == 0
-	guardar_todos.add_theme_stylebox_override("normal", estilo("b99b52", "e8cd8d", 6, 8))
+	var sg := estilo("c9a85a", "6a5223", 8, 10)   # A (v1_00131): botão dourado grande
+	sg.content_margin_left = 24; sg.content_margin_right = 24
+	guardar_todos.add_theme_stylebox_override("normal", sg)
+	guardar_todos.add_theme_font_size_override("font_size", 14)
+	guardar_todos.custom_minimum_size.y = 40
 	guardar_todos.add_theme_color_override("font_color", Color("171818"))
 	rodape.add_child(guardar_todos)
 	mensagem = rotulo("", 12, Color("9fb0c8"))
 	mensagem.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-	mensagem.custom_minimum_size.y = 32
 	corpo.add_child(mensagem)
 	atualizar_listas()
 
@@ -391,7 +397,7 @@ func atualizar_listas() -> void:
 				var b: Button = _cartao(colunas[lado], item["nome"], str(item["quantidade"]) + "×", icone, lado == 0, _mover_item.bind(int(item["id"]), lado == 0))
 				b.tooltip_text = "Item vinculado: permanece na BAG." if item["vinculado"] else "Transferir a pilha inteira."
 				b.disabled = bool(item["vinculado"])
-		contador.text = "%d/%d SLOTS" % [EstadoJogo.itens_depot.size(), EstadoJogo.CAPACIDADE_DEPOT]
+		contador.text = "📦 %d/%d SLOTS" % [EstadoJogo.itens_depot.size(), EstadoJogo.CAPACIDADE_DEPOT]
 	else:
 		for lado in range(2):
 			var origem: Array = EstadoJogo.time_pokemon if lado == 0 else EstadoJogo.pokemons_capturados
@@ -417,6 +423,20 @@ func atualizar_listas() -> void:
 			var vazio: Label = rotulo("Nenhum resultado.", 12, Color("81909f"))
 			vazio.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 			coluna.add_child(vazio)
+	_ajustar_altura()
+
+
+func _ajustar_altura() -> void:
+	## A (vídeo, quadro v1_00131): a janela do Depot tem a altura do conteúdo — as listas crescem com as linhas (até
+	## 7 linhas visíveis, depois rolam), em vez de uma caixa fixa de 784 px.
+	var alto := 0.0
+	for coluna in colunas:
+		alto = maxf(alto, coluna.get_combined_minimum_size().y)
+	for coluna in colunas:
+		var sc := coluna.get_parent() as ScrollContainer
+		if sc != null:
+			sc.custom_minimum_size.y = clampf(alto, 54.0, 7.0 * 60.0)
+	_ajustar()
 
 func _cartao(lista: VBoxContainer, nome: String, info: String, icone: Texture2D, guardar: bool, acao: Callable, cor: Color = Color("a6b4c6")) -> Button:
 	var b: Button = botao("", acao)

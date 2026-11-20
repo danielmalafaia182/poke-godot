@@ -123,16 +123,7 @@ func _ready() -> void:
 	personagem.name = "Treinador"
 	cenario.adicionar_treinador(personagem)
 	personagem.iniciar(cenario)
-	# Novo: imagem original do NPC, na mesma camada com Y-sort do treinador.
-	var nurse: Sprite2D = Sprite2D.new()
-	nurse.name = "ImagemNurseJoy"
-	nurse.texture = preload("res://assets/interface/hud/nurse.png")
-	nurse.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	nurse.position = Vector2(CELULA_NURSE)*32.0+Vector2(16,16)
-	# styleNpc do cliente: anchor(.5, 1-11.52/altura). O -16 em X
-	# deslocava a Nurse para o lado. Conserva a célula original (-3,-10).
-	nurse.offset = Vector2(0,11.52-float(nurse.texture.get_height())*0.5)
-	cenario.adicionar_treinador(nurse)
+	# Ciclo 4: os NPCs (Nurse Joy, Depot, Mark, Mercado, Pescador) vêm do city-npcs e o cenário os desenha (C).
 	cenario.atualizar_cobertura(personagem.position, true)
 	var ajuda: Label = Label.new()
 	ajuda.text = "WASD: caminhar  |  Clique para interagir  |  Esc: fechar painel"
@@ -157,13 +148,20 @@ func _ready() -> void:
 	get_node("Interface").move_child(placa_loja,0)
 	_ajustar_cenario()
 
+## A (vídeo do original, 20/11): a cidade aparece na vista "0.5× ~50×26" do cliente (o Pokémon Center ocupa ~600 px numa
+## área de 1880 px = 37,6 px por casa); zoom_cidade multiplica.
+const VISTA_CIDADE_TILES := 50.0
+
 func _ajustar_cenario() -> void:
 	if cenario == null:
 		return
-	cenario.scale = Vector2.ONE * zoom_cidade
+	var zoom := size.x / (VISTA_CIDADE_TILES * 32.0) * zoom_cidade
+	cenario.scale = Vector2.ONE * zoom
+	if cenario.has_method("definir_vista"):
+		cenario.definir_vista((size / (32.0 * zoom)).ceil())
 	# Alteração: câmera segue o treinador sem mover os controles.
 	var centro: Vector2 = personagem.position if personagem != null else centro_cidade
-	cenario.position = size * 0.5 - centro * zoom_cidade
+	cenario.position = (size * 0.5 - centro * zoom).round()
 
 func _criar_menu() -> void:
 	# Alteração: substitui a faixa provisória pelo dock com ícones originais.

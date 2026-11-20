@@ -2,7 +2,7 @@ extends SceneTree
 ## Pacote de execução do build (ciclo 3): só o que o jogo lê em tempo de execução, tirado do snapshot.
 ##   jogo/game/maps/<slug>.json.zst   os mapas das hunts (zstd; Fontes.ler_json lê direto)
 ##   jogo/game/{collision,offsets,draworder}.json, jogo/game/corpses/, jogo/game/asset-packs/ (atlas, outfits)
-##   jogo/api/hunt-config/<slug>.json, jogo/assets/ (ícones)
+##   jogo/api/hunt-config/<slug>.json, jogo/api/city-npcs/cerulean.json, jogo/assets/ (ícones)
 ##   + as 2 páginas de cadáver que só o poke-local tem (mesmo caminho relativo)
 ## Fica de fora: o resto do snapshot (manifests da coleta, api/city-npcs, bossCatalog e creatures, que já estão
 ## processados em dados/), gravações e ferramentas.
@@ -44,6 +44,7 @@ func _init() -> void:
 	var slugs := {}
 	for h in (hunts if hunts is Array else (hunts as Dictionary).values()):
 		slugs[String(h["slug"])] = true
+	slugs["cerulean_novo"] = true   # ciclo 4: a cidade usa o mapa do servidor (cenario_cidade.gd)
 	var mapas := 0
 	var antes := 0
 	var depois := 0
@@ -68,6 +69,7 @@ func _init() -> void:
 		if FileAccess.file_exists(c):
 			_copiar(c, saida + "/api/hunt-config/" + slug + ".json")
 	_copiar_pasta(snap + "/assets", saida + "/assets")
+	_copiar(snap + "/api/city-npcs/cerulean.json", saida + "/api/city-npcs/cerulean.json")   # NPCs da cidade (A)
 	# páginas de cadáver que faltam no snapshot (A: corpses-g-00, corpses-h-00): as do poke-local, mesmo caminho
 	var cj = Fontes.ler_json(snap + "/game/corpses/corpses.json")
 	if cj is Dictionary:

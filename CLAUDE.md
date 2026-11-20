@@ -1183,3 +1183,24 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Lado a lado em `dados/relatorios/visual_ciclo4/` (01–04).
   - Testes: `test_tutorial` 22/22, `test_captura_manual` 8/8, `test_jogo_novo` 17/17, `test_caca_sim` 22/22.
   - Limites: o vídeo acaba no passo do mapa, então os passos da hunt não têm quadro de referência; o Mercado só se pula.
+- 20/11/2026 — **Ciclo 4, item 2 (cidade).**
+  - Cerulean passa a ser desenhada pelo `render/mapa_renderizador.gd` das hunts com o mapa do servidor `cerulean_novo`
+    (`cenario_cidade.gd`). Antes era um recorte antigo (4.615 casas no chão, contra 28.224) com um Sprite2D por peça e
+    sem animação. Agora vale a ordem do cliente, com telhados, sombras e **decorações animadas** (2.052 peças
+    animadas).
+  - NPCs pelo `/api/game/city-npcs` (A, igual em 20/11): Nurse, Depot, Mark, Mercado e Pescador, com os ícones e
+    looktypes do catálogo `c5` do cliente e `styleNpc` (C). Treinador e seguidores entram no andar do chão com o zIndex
+    de criatura.
+  - Vista da cidade em 50×26 casas: o "0.5×" do vídeo (A).
+  - Janela da Nurse Joy pelo CSS `.npc-dlg-*` (C). Depot com a altura do conteúdo (A: vídeo).
+  - Trilha do tutorial com um ponto a cada 2 casas (A).
+  - **Casa à direita da porta do Pokémon Center (−2,−4): não é erro.** A jardineira da casa (−1,−4) é desenhada com
+    64 px e cobre (−2,−4). O mapa põe ali a peça invisível 8274, que está em `blocking` no `collision.json` do
+    servidor (A, conferido em 20/11). O `walkable()` do cliente (C) bloqueia igual.
+  - Em Cerulean, 20 casas são bloqueadas só pela 8274, todas pontas de bancos e jardineiras. A colisão da cidade bate
+    casa a casa com a regra do cliente (`test_cidade_mapa` 5/5).
+  - O build leva o `cerulean_novo` e o city-npcs no pacote `jogo/`.
+  - Primeira carga do mapa: 7,6 s para montar o cache; depois 0,4–0,7 s.
+  - Testes: `test_cidade_mapa` 5/5, `test_ciclo_cidade` 20/20, P04 `test_depot_cidade_fiel` 25/25 (âncora da Nurse
+    agora pelo NPC) e `test_cidade_qualidade` 79/79.
+  - Lado a lado: 04–06; colisão na porta: 07.

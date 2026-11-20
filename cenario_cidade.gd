@@ -1,148 +1,189 @@
 extends "res://cenario_caca.gd"
+## Cerulean desenhada como o cliente original (ciclo 4, item 2). Antes a cidade desenhava um recorte antigo do mapa
+## (dados/mapas/cerulean_cidade.json: 4.615 casas no chão) com um Sprite2D por peça, sem animação. Agora:
+##   - mapa: o `cerulean_novo` do servidor (C: alias cerulean → cerulean_novo; 28.224 casas no chão, igual ao
+##     /game/maps/cerulean_novo.json de 20/11, A) desenhado pelo render/mapa_renderizador.gd das hunts: mesma ordem e
+##     posição do cliente, andares e telhados (computeFirstVisibleFloor), sombras e **decorações animadas** pelo relógio
+##     do original (tickAnimations, C);
+##   - colisão: walkable() do cliente (C): casa existente no andar groundZ, sem peça de /game/collision.json no chão nem
+##     nos itens, e dentro de `_meta.walk`. A casa à direita da porta do Pokémon Center (−2,−4) tem a peça invisível 8274,
+##     que está em `blocking` no collision.json do servidor (A, conferido em 20/11): o original também bloqueia;
+##   - NPCs: /api/game/city-npcs (A: nurse, market, pokedepot, shop, fishing) com os ícones e looktypes do catálogo do
+##     cliente (`c5`: /assets/npc/*.png; Pescador looktype 21019) e styleNpc/applyNpcs (C: âncora (0,5; 1 − 11,52/h),
+##     zIndex 1e7 + sx(x, floor(y + 1,5 − 0,64)) + 0,4, animação pelo `dur` de cada quadro, sombra);
+##   - entidades do jogo (treinador, seguidores): Node2D cujo canvas item vai para o andar do chão do renderizador, com o
+##     draw_index do zIndex de criatura (C) — ficam atrás das paredes e na frente do chão como no original.
+## API mantida para cidade.gd, treinador_cidade.gd e seguidor_cidade.gd: celula_transitavel, celulas_existentes,
+## adicionar_treinador, atualizar_cobertura, carregar_json, motivos_bloqueio, indice_tiles.
 
-# A colisão pertence somente ao piso do personagem. Telhados são visuais.
-const PECAS_INVISIVEIS: Array[int] = [7124, 1510, 8274, 46638, 46639, 46620, 46621, 1511, 1024]
+const Renderizador := preload("res://render/mapa_renderizador.gd")
+const Regras := preload("res://render/regras_desenho.gd")
+const Sombras := preload("res://render/sombras.gd")
+const Outfits := preload("res://render/outfits.gd")
+const Fontes := preload("res://sim/fontes.gd")
+const SLUG := "cerulean_novo"
+const NPCS := {   # C: catálogo `c5` do cliente (ícone; looktype quando é outfit)
+	"nurse": {"nome": "Nurse Joy", "icone": "nurse.png"},
+	"shop": {"nome": "Mark", "icone": "mark.png"},
+	"pokedepot": {"nome": "Depot", "icone": "depot.png"},
+	"market": {"nome": "Mercado", "icone": "market.png"},
+	"fishing": {"nome": "Pescador", "icone": "pescador.png", "looktype": 21019},
+}
+
 var piso_chao: int = 7
-var piso_minimo: int = 7
-var primeiro_piso_visivel: int = 7
-var pisos: Dictionary = {}
 var indice_tiles: Dictionary = {}
 var motivos_bloqueio: Dictionary = {}
-var deslocamentos: Dictionary = {}
-var elevacoes: Dictionary = {}
-var centro_mapa: Vector2i = Vector2i.ZERO
-var ultima_celula_visual: Vector2i = Vector2i(999999, 999999)
-var pecas_ocultadas: int = 0
-var recortes_ausentes: Dictionary = {}
+var walk: Array = []
+var mapa: Node2D
+var npcs: Array = []          # {kind, nome, x, y, rid, sombra, looktype, quadro, t}
+var _entidades: Array = []    # Node2D no andar do chão
+var _outfits = null
+var vista_tiles := Vector2(50, 26)
+
 
 func _ready() -> void:
-	var dados: Dictionary = carregar_json("res://dados/mapas/cerulean_cidade.json")
-	var manifesto: Dictionary = carregar_json("res://dados/mapas/map-items-06563563679b.json")
-	var colisao: Dictionary = carregar_json("res://dados/mapas/collision.json")
-	var offsets: Dictionary = carregar_json("res://dados/mapas/cidade_offsets.json")
-	if dados.is_empty() or manifesto.is_empty() or colisao.is_empty():
+	var dados: Dictionary = Fontes.ler_mapa(SLUG)
+	var colisao: Dictionary = Fontes.ler_colisao()
+	if dados.is_empty() or colisao.is_empty():
+		push_error("Cerulean: mapa ou colisão ausentes no snapshot/pacote")
 		return
-	deslocamentos = offsets.get("disp", {})
-	elevacoes = offsets.get("elev", {})
 	piso_chao = int(dados["_meta"]["groundZ"])
-	piso_minimo = piso_chao
-	var centro: Array = dados["_meta"].get("center", [0, 0])
-	centro_mapa = Vector2i(int(centro[0]), int(centro[1]))
+	for v in dados["_meta"].get("walk", []):
+		walk.append(int(v))
 	for id in colisao.get("blocking", []):
 		pecas_bloqueadoras[int(id)] = true
-	var por_piso: Dictionary = {}
 	for registro in dados["tiles"]:
-		var piso: int = int(registro[2])
-		piso_minimo = mini(piso_minimo, piso)
-		indice_tiles[Vector3i(int(registro[0]), int(registro[1]), piso)] = registro
-		if not por_piso.has(piso):
-			por_piso[piso] = []
-		por_piso[piso].append(registro)
-		if piso != piso_chao:
+		if int(registro[2]) != piso_chao:
 			continue
-		var celula: Vector2i = Vector2i(int(registro[0]), int(registro[1]))
+		var celula := Vector2i(int(registro[0]), int(registro[1]))
+		indice_tiles[Vector3i(celula.x, celula.y, piso_chao)] = registro
+		if walk.size() == 4 and (celula.x < walk[0] or celula.x > walk[2] or celula.y < walk[1] or celula.y > walk[3]):
+			continue
 		celulas_existentes[celula] = true
-		var bloqueadores: Array[int] = []
+		var bloq: Array[int] = []
 		if pecas_bloqueadoras.has(int(registro[3])):
-			bloqueadores.append(int(registro[3]))
+			bloq.append(int(registro[3]))
 		for objeto in registro[4]:
 			if pecas_bloqueadoras.has(int(objeto[0])):
-				bloqueadores.append(int(objeto[0]))
-		if not bloqueadores.is_empty():
+				bloq.append(int(objeto[0]))
+		if not bloq.is_empty():
 			celulas_bloqueadas[celula] = true
-			motivos_bloqueio[celula] = bloqueadores
-	var recortes: Dictionary = {}
-	for piso in range(piso_chao, piso_minimo - 1, -1):
-		var camada: Node2D = Node2D.new()
-		camada.name = "Piso_" + str(piso)
-		# Projeção do andar utilizada no cliente de referência.
-		camada.position = Vector2.ONE * float(piso - piso_chao) * TAMANHO_TILE
-		camada.z_index = (piso_chao - piso) * 2
-		camada.y_sort_enabled = true
-		add_child(camada)
-		pisos[piso] = camada
-		var registros: Array = por_piso.get(piso, [])
-		registros.sort_custom(func(a: Array, b: Array) -> bool:
-			return a[0] < b[0] if a[1] == b[1] else a[1] < b[1]
-		)
-		for registro in registros:
-			_desenhar_peca(int(registro[3]), registro, camada, manifesto, recortes, true, 0.0)
-			var elevacao: float = float(elevacoes.get(str(int(registro[3])), 0))
-			for objeto in registro[4]:
-				var id: int = int(objeto[0])
-				_desenhar_peca(id, registro, camada, manifesto, recortes, false, elevacao)
-				if not PECAS_INVISIVEIS.has(id):
-					elevacao = minf(32.0, elevacao + float(elevacoes.get(str(id), 0)))
-	primeiro_piso_visivel = piso_minimo
-	print("Cerulean: células=", celulas_existentes.size(), "; bloqueadas=", celulas_bloqueadas.size(), "; peças técnicas ocultadas=", pecas_ocultadas, "; recortes ausentes=", recortes_ausentes.keys())
+			motivos_bloqueio[celula] = bloq
+	mapa = Renderizador.new()
+	mapa.name = "Mapa"
+	add_child(mapa)
+	move_child(mapa, 0)
+	mapa.tiles_visiveis = vista_tiles
+	mapa.carregar(SLUG, Vector2(-1, 2))
+	_outfits = Outfits.padrao()
+	for n in Fontes.ler_json(Fontes.pasta_snapshot() + "/api/city-npcs/cerulean.json") if Fontes.ler_json(Fontes.pasta_snapshot() + "/api/city-npcs/cerulean.json") is Array else []:
+		_criar_npc(n)
+	print("Cerulean: células=", celulas_existentes.size(), "; bloqueadas=", celulas_bloqueadas.size(), "; carga ", mapa.tempos_carga.get("total_ms", 0), " ms (", mapa.origem_cache, ")")
 
-func _desenhar_peca(id: int, registro: Array, camada: Node2D, manifesto: Dictionary, recortes: Dictionary, chao: bool, elevacao: float) -> void:
-	if id == 0:
+
+func _criar_npc(n: Dictionary) -> void:
+	var kind := String(n.get("kind", ""))
+	if not NPCS.has(kind):
 		return
-	if PECAS_INVISIVEIS.has(id):
-		pecas_ocultadas += 1
-		return
-	var chave: String = str(id)
-	var peca: Dictionary = manifesto["assets"].get(chave, {})
-	if peca.is_empty():
-		recortes_ausentes[chave] = true
-		return
-	var px: int = maxi(1, int(peca.get("patternX", 1)))
-	var py: int = maxi(1, int(peca.get("patternY", 1)))
-	var anim: int = maxi(1, int(peca.get("animLen", 1)))
-	var indice: int = (posmod(centro_mapa.y + int(registro[1]), py) * px + posmod(centro_mapa.x + int(registro[0]), px)) * anim
-	if indice >= peca["frames"].size():
-		indice = 0
-	var cache: String = chave + ":" + str(indice)
-	if not recortes.has(cache):
-		var recorte: AtlasTexture = obter_recorte(manifesto, chave)
-		if recorte != null:
-			var quadro: Dictionary = peca["frames"][indice]
-			# Padrões podem estar em outra página do atlas.
-			for pagina in manifesto["categories"]["map-items"]["pages"]:
-				if int(pagina["index"]) == int(quadro["page"]):
-					var arquivo: String = "res://assets/cenarios/map-items/" + str(pagina["image"]).get_file()
-					if not texturas.has(arquivo):
-						texturas[arquivo] = load(arquivo) as Texture2D
-					recorte.atlas = texturas[arquivo]
-					break
-			recorte.region = Rect2(quadro["x"], quadro["y"], quadro["w"], quadro["h"])
-		recortes[cache] = recorte
-	var textura: AtlasTexture = recortes[cache]
-	if textura == null:
-		recortes_ausentes[chave] = true
-		return
-	var sprite: Sprite2D = criar_sprite(textura, peca, registro)
-	var deslocamento: Array = deslocamentos.get(chave, [0, 0])
-	var posicao_visual: Vector2 = sprite.position - Vector2(float(deslocamento[0]), float(deslocamento[1]) + elevacao)
-	# Ordena pelo pé da célula sem alterar o recorte ou a posição desenhada.
-	sprite.position = Vector2(float(registro[0]) * 32.0 + 16.0, float(registro[1]) * 32.0 + 16.0)
-	sprite.offset = (posicao_visual - sprite.position) / sprite.scale
-	sprite.z_index = -1 if chao or bool(peca.get("isGround", false)) else 0
-	camada.add_child(sprite)
+	var c: Dictionary = NPCS[kind]
+	var rid := RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(rid, mapa.rid_andar())
+	RenderingServer.canvas_item_set_default_texture_filter(rid, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
+	var rs := RenderingServer.canvas_item_create()
+	RenderingServer.canvas_item_set_parent(rs, mapa.rid_sombra())
+	RenderingServer.canvas_item_set_default_texture_filter(rs, RenderingServer.CANVAS_ITEM_TEXTURE_FILTER_NEAREST)
+	var e := {"kind": kind, "nome": String(c["nome"]), "x": int(n["x"]), "y": int(n["y"]), "rid": rid, "sombra": rs,
+		"looktype": int(c.get("looktype", 0)), "quadro": 0, "t": 0.0, "tex": null}
+	if int(e["looktype"]) > 0 and _outfits.obter(int(e["looktype"])).get("looktype", -1) != int(e["looktype"]):
+		e["looktype"] = 0    # sem o outfit no pacote: o ícone (styleNpc sem looktype, C)
+	if int(e["looktype"]) == 0:
+		e["tex"] = load("res://assets/original/npc/" + String(c["icone"])) as Texture2D
+	npcs.append(e)
+	RenderingServer.canvas_item_set_draw_index(rid, mapa.posto_entidade(1.0e7 + Regras.sx(int(e["x"]), floori(float(e["y"]) + 1.5 - 0.64)) + 0.4))
+	_desenhar_npc(e)
+
+
+func _desenhar_npc(e: Dictionary) -> void:
+	var tex: Texture2D
+	var reg := Rect2()
+	if int(e["looktype"]) > 0:
+		var q: Dictionary = _outfits.quadro(_outfits.obter(int(e["looktype"])), 3, int(e["quadro"]))
+		if q.is_empty():
+			return
+		tex = q["tex"]
+		reg = q["rect"]
+	else:
+		tex = e["tex"]
+		if tex == null:
+			return
+		reg = Rect2(Vector2.ZERO, tex.get_size())
+	var w := reg.size.x
+	var h := reg.size.y
+	var pes := Vector2(32.0 * int(e["x"]) + 16.0, 32.0 * int(e["y"]) + 16.0)
+	RenderingServer.canvas_item_clear(e["rid"])
+	RenderingServer.canvas_item_add_texture_rect_region(e["rid"], Rect2(pes.x - w * 0.5, pes.y - (h - Sombras.PES_CRIATURA), w, h), tex.get_rid(), reg)
+	RenderingServer.canvas_item_clear(e["sombra"])
+	var r := Sombras.retangulo(mapa.m_sombra_inv(), pes + Vector2(0, Sombras.PES_CRIATURA), w, h, 0.5)
+	RenderingServer.canvas_item_add_texture_rect_region(e["sombra"], r, tex.get_rid(), reg, mapa.cor_sombra)
+
+
+func npc(kind: String) -> Dictionary:
+	for e in npcs:
+		if String(e["kind"]) == kind:
+			return e
+	return {}
+
+
+func celula_transitavel(celula: Vector2i) -> bool:
+	return celulas_existentes.has(celula) and not celulas_bloqueadas.has(celula)
+
 
 func adicionar_treinador(treinador: Node2D) -> void:
-	pisos[piso_chao].add_child(treinador)
+	## O Node2D entra na árvore (processa, anima, recebe posição) e o canvas item dele passa para o andar do chão do
+	## renderizador, onde o draw_index do zIndex de criatura o põe entre as peças do mapa (C).
+	add_child(treinador)
+	if mapa != null:
+		RenderingServer.canvas_item_set_parent(treinador.get_canvas_item(), mapa.rid_andar())
+	_entidades.append(treinador)
 
-func atualizar_cobertura(posicao_local: Vector2, imediato: bool = false) -> void:
-	var celula: Vector2i = Vector2i(roundi((posicao_local.x - 16.0) / 32.0), roundi((posicao_local.y - 16.0) / 32.0))
-	if not imediato and celula == ultima_celula_visual:
-		return
-	ultima_celula_visual = celula
-	primeiro_piso_visivel = piso_minimo
-	for piso in range(piso_chao - 1, piso_minimo - 1, -1):
-		var distancia: int = piso_chao - piso
-		var registro: Array = indice_tiles.get(Vector3i(celula.x + distancia, celula.y + distancia, piso), [])
-		if not registro.is_empty() and int(registro[3]) != 0:
-			primeiro_piso_visivel = piso + 1
-			break
-	if imediato:
-		for piso in pisos:
-			pisos[piso].modulate.a = 1.0 if int(piso) >= primeiro_piso_visivel else 0.0
+
+func atualizar_cobertura(posicao_local: Vector2, _imediato: bool = false) -> void:
+	## O andar de cima some quando há chão sobre o herói (computeFirstVisibleFloor, C) e os chunks seguem a câmera.
+	if mapa != null:
+		mapa.definir_centro((posicao_local - Vector2(16, 16)) / 32.0)
+
+
+func definir_vista(tiles: Vector2) -> void:
+	vista_tiles = tiles
+	if mapa != null and mapa.tiles_visiveis != tiles:
+		mapa.tiles_visiveis = tiles
+		mapa.definir_centro(mapa.centro_tile)
+
 
 func _process(delta: float) -> void:
-	for piso in pisos:
-		var camada: Node2D = pisos[piso]
-		var alvo: float = 1.0 if int(piso) >= primeiro_piso_visivel else 0.0
-		camada.modulate.a = move_toward(camada.modulate.a, alvo, delta / 0.18)
-		camada.visible = camada.modulate.a > 0.001
+	if mapa == null:
+		return
+	_entidades = _entidades.filter(func(n): return is_instance_valid(n))
+	for n in _entidades:
+		var t: Vector2 = ((n as Node2D).position - Vector2(16, 16)) / 32.0
+		RenderingServer.canvas_item_set_draw_index(n.get_canvas_item(), mapa.posto_entidade(1.0e7 + Regras.sx(roundi(t.x), floori(t.y + 1.5 - 0.64)) + 0.4))
+	for e in npcs:   # tickNpcs (C): só os de looktype com mais de um quadro, pelo dur de cada quadro
+		if int(e["looktype"]) <= 0:
+			continue
+		var o: Dictionary = _outfits.obter(int(e["looktype"]))
+		var nq: int = _outfits.quadros(o, 3)
+		if nq <= 1:
+			continue
+		e["t"] = float(e["t"]) + delta * 1000.0
+		var dur := float(_outfits.quadro(o, 3, int(e["quadro"])).get("dur", 150))
+		if float(e["t"]) >= dur:
+			e["t"] = 0.0
+			e["quadro"] = (int(e["quadro"]) + 1) % nq
+			_desenhar_npc(e)
+
+
+func _exit_tree() -> void:
+	for e in npcs:
+		RenderingServer.free_rid(e["rid"])
+		RenderingServer.free_rid(e["sombra"])
+	npcs.clear()

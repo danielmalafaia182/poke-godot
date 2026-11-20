@@ -413,7 +413,7 @@ func _desenhar_trilha(npc: String) -> void:
 	t.draw.connect(func() -> void:
 		var pts: Array = t.get_meta("pontos")
 		var fase := Time.get_ticks_msec() / 1000.0
-		for k in range(1, pts.size()):
+		for k in range(pts.size() - 1, 0, -2):   # A (vídeo, v1_00123): um ponto a cada 2 casas, até o NPC
 			var c := Vector2(pts[k]) * 32.0 + Vector2(16, 16)
 			t.draw_circle(c + Vector2(0, 1), 5.5, Color(0, 0, 0, 0.6))
 			t.draw_circle(c, 6.5, Color(OURO, 0.25))
