@@ -92,7 +92,7 @@ const PARAMETROS := {
 	"pocao_limiar": 0.5,                    # A: HP ≤ 50% dispara no mesmo tick (91/91 cruzamentos; HP exato na cura ≤ 0,50
 	                                        # em 409 curas); o Auto-Helper da gravação de 1 h mostra "Heal when HP ≤ 50%"
 	"pocao_recarga_ms": 0,                  # A/F: nenhuma cura adiada observada; menor intervalo real 1988 ms
-	"troca_cooldown_ms": 5000,              # E: depois da troca automática por KO, 5 s sem troca manual
+	"troca_cooldown_ms": 5000,              # A (vídeo, ciclo 5): 5 s sem nova troca depois de qualquer troca (manual ou por KO)
 	"vip_fracao": 0.5,                      # A: parcela vip = 50% da base
 	# Penalidade de entrada = boost "shinylock" (C: texto do boost, "Por 1 minuto: nenhum Pokémon Shiny aparece e você
 	# recebe 70% menos EXP e drops"; o servidor manda {type: boosts, boosts: [{key: shinylock, until, pct: 0}]}).

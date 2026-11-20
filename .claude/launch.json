@@ -23,6 +23,18 @@
       ],
       "port": 8770,
       "url": "http://127.0.0.1:8770"
+    },
+    {
+      "name": "quadros-teste-ciclo4",
+      "runtimeExecutable": "python",
+      "runtimeArgs": [
+        "-u",
+        "ferramentas/visual/servidor_quadros.py",
+        "8771",
+        "teste_ciclo4"
+      ],
+      "port": 8771,
+      "url": "http://127.0.0.1:8771"
     }
   ]
 }

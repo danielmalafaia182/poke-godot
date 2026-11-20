@@ -1024,6 +1024,10 @@ func _troca_manual(i: int) -> void:
 	ativo = i
 	estatisticas["trocas_manuais"] += 1
 	_golpes_cache.clear()
+	# A (vídeo do usuário, referencia_visual/teste_ciclo4, cooldown.mp4): depois de uma troca manual o original bloqueia
+	# outra troca por 5 s (contagem 5→1 sobre os outros membros); C: mensagem poke-swap-cooldown {leftMs, totalMs}.
+	troca_manual_liberada_tick = tick + int(p.troca_cooldown_ms) / int(p.tick_ms)
+	_emitir({"type": "poke-swap-cooldown", "leftMs": int(p.troca_cooldown_ms), "totalMs": int(p.troca_cooldown_ms)})
 
 
 static func _com_debuff(partes: Dictionary, debuff: int) -> Dictionary:

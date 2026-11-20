@@ -4,7 +4,8 @@
 Serve os vídeos (com Range, para o <video> poder buscar) e uma página (/) que toca cada vídeo, desenha 1 quadro por
 segundo num canvas, descarta os repetidos (diferença média de pixels numa miniatura 96×54 abaixo do limite) e manda o
 PNG por POST /quadro, que grava em referencia_visual/quadros/brutos/<n do vídeo>_<segundo>.png.
-Uso: python -u ferramentas/visual/servidor_quadros.py [porta]   (abrir http://127.0.0.1:<porta>/)
+Uso: python -u ferramentas/visual/servidor_quadros.py [porta] [subpasta]   (abrir http://127.0.0.1:<porta>/)
+Com subpasta (ciclo 5: teste_ciclo4), lê referencia_visual/<subpasta>/*.mp4 e grava em referencia_visual/<subpasta>/quadros/.
 """
 import json
 import os
@@ -16,6 +17,9 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 RAIZ = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 REF = os.path.join(RAIZ, "referencia_visual")
 SAIDA = os.path.join(REF, "quadros", "brutos")
+if len(sys.argv) > 2:
+    REF = os.path.join(REF, sys.argv[2])
+    SAIDA = os.path.join(REF, "quadros")
 VIDEOS = sorted(f for f in os.listdir(REF) if f.lower().endswith(".mp4"))
 
 PAGINA = """<!doctype html><meta charset=utf-8><title>quadros</title>

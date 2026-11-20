@@ -157,6 +157,11 @@ func _atualizar_individuo(pokemon: DadosPokemon) -> void:
 		cartoes[pokemon].atualizar_valores()
 
 func _atualizar_lider() -> void:
+	var ordem: int = 0   # ciclo 5: a lista segue a ordem do time (o líder sobe para o topo)
+	for pokemon in EstadoJogo.time_pokemon:
+		if cartoes.has(pokemon):
+			lista.move_child(cartoes[pokemon], ordem)
+			ordem += 1
 	for cartao in cartoes.values():
 		cartao.atualizar_lider(cartao.pokemon == EstadoJogo.obter_lider())
 

@@ -29,6 +29,12 @@ func selecionar_lider(pokemon: DadosPokemon) -> bool:
 		return false
 	if obter_lider() == pokemon:
 		return true
+	# A (vídeo do usuário, ciclo 5): o novo líder sobe para o 1º lugar do time e o antigo vai para o lugar dele.
+	var i_novo := time_pokemon.find(pokemon)
+	var i_lider := time_pokemon.find(pokemon_lider)
+	if i_novo >= 0 and i_lider >= 0:
+		time_pokemon[i_novo] = pokemon_lider
+		time_pokemon[i_lider] = pokemon
 	pokemon_lider = pokemon
 	lider_alterado.emit()
 	alterado.emit()

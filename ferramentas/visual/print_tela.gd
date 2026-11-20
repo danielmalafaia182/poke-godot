@@ -24,10 +24,19 @@ func _initialize() -> void:
 			ej.zoom_camera = 0.5   # A: o zoom do vídeo do original
 			ej.tutorial_passo = "fim"
 			change_scene_to_file("res://cidade.tscn")
-		"hunt":
-			# a hunt do Geodude com o Bulbasaur nível 8, ~12 s de luta (dano com o nome do golpe, loot)
+		"hunt", "hunt_troca", "hunt_captura":
+			# a hunt do Geodude com o Bulbasaur (dano com o nome do golpe, loot). hunt_troca: time de 4 e troca de líder
+			# depois do 1º abate (cooldown); hunt_captura: logo depois de um lançamento de bola (painel de captura).
 			var ej = get_root().get_node("EstadoJogo")
 			ej.novo_jogo(1, "danpoke", 1)
+			if tela == "hunt_troca":
+				for nome in ["Charmander", "Squirtle", "Pikachu"]:
+					var pk = load("res://dados_pokemon.gd").new()
+					pk.especie = preload("res://especies_importadas.gd").obter_todas().values().filter(func(e): return e.nome == nome)[0]
+					ej.time_pokemon.append(pk)
+			if tela == "hunt_captura":
+				ej.auto_catch = true
+				ej.auto_catch_ball_id = 1
 			ej.zoom_camera = 0.5   # A: o zoom do vídeo do original
 			ej.tutorial_passo = "fim"
 			ej.especie_caca = null
@@ -97,14 +106,16 @@ func _process(_d: float) -> bool:
 		current_scene.janelas_dock["perfil"].abrir()
 	if quadros == 10 and tela == "depot":
 		current_scene.painel_depot.abrir_depot()
-	if tela == "hunt" and quadros == 30 and current_scene != null and "velocidade" in current_scene:
+	if tela.begins_with("hunt") and quadros == 30 and current_scene != null and "velocidade" in current_scene:
 		current_scene.velocidade = 4.0   # acelera até o 1º abate (o cartão fica na tela)
-	if tela == "hunt" and quadros > 30 and current_scene != null and "registro" in current_scene and int(current_scene.registro.get("abates", 0)) > 0 and current_scene.velocidade > 1.0:
+	if tela.begins_with("hunt") and quadros > 30 and current_scene != null and "registro" in current_scene and int(current_scene.registro.get("abates", 0)) > 0 and current_scene.velocidade > 1.0:
+		if tela == "hunt_troca":
+			get_root().get_node("EstadoJogo").selecionar_lider(get_root().get_node("EstadoJogo").time_pokemon[2])
 		current_scene.velocidade = 1.0
 		quadros = 2400 - 50
-	if tela == "hunt" and quadros < 2400:
+	if tela.begins_with("hunt") and quadros < 2400:
 		return false
-	if quadros == 40 or (tela == "hunt" and quadros == 2400):
+	if quadros == 40 or (tela.begins_with("hunt") and quadros == 2400):
 		get_root().get_texture().get_image().save_png(saida)
 		print("PRINT ", saida)
 		quit(0)
