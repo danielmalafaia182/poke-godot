@@ -93,10 +93,11 @@ func executar() -> void:
 	checar(painel.barra_hp.get_instance_id()==id_barra and painel.retrato_grande.get_instance_id()==id_retrato and painel.slots[0].get_instance_id()==id_slot,"HP/XP não reconstroem a ficha")
 	checar(painel.barra_hp.value==inicial.obter_vida_atual() and painel.barra_xp.value==inicial.experiencia_percentual,"barras leem o estado verdadeiro")
 	checar(inicial.experiencia_total==xp+20,"visual não concede XP extra")
-	var maximo: float = maxf(1,float(inicial.obter_atributos().values().max()))
+	# Ciclo 5 (E, decisão do usuário): a barra é o IV do atributo sobre 32; o número segue o atributo.
+	var ivs: Array = [inicial.iv_hp, inicial.iv_atk, inicial.iv_def, inicial.iv_sp_atk, inicial.iv_sp_def, inicial.iv_spd]
 	for i in range(6):
 		var valor: int = int(inicial.obter_atributos()[painel.CHAVES[i]])
-		checar(painel.valores_atributos[i].text==str(valor) and painel.barras_atributos[i].max_value==maximo,"atributo individual "+str(i))
+		checar(painel.valores_atributos[i].text==str(valor) and painel.barras_atributos[i].max_value==32.0 and int(painel.barras_atributos[i].value)==int(ivs[i]),"atributo individual "+str(i))
 	checar(ESTILO.cor_atributo(30.0/32.0)==Color("23cd5e") and ESTILO.cor_atributo(31.0/32.0)==Color("00c2b8"),"cores HP/Vel conforme exemplo original")
 	await clicar(painel.slots[1].get_global_rect().get_center())
 	checar(painel.selecionado==extra and estado.obter_lider()==inicial,"consultar outro slot preserva líder")

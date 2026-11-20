@@ -441,13 +441,18 @@ func _atualizar_ficha() -> void:
 	var proporcao: float = float(selecionado.obter_vida_atual())/maxi(1,selecionado.obter_vida_maxima())
 	barra_hp.add_theme_stylebox_override("fill",UI.capsula("critico" if proporcao<=0.2 else ("baixo" if proporcao<=0.5 else "hp"),15))
 	var atributos: Dictionary = selecionado.obter_atributos()
-	var maximo: float = maxf(1,float(atributos.values().max())) if not atributos.is_empty() else 1
+	# Ciclo 5 (E, decisão do usuário): a barra mostra o IV do atributo (IV/32; 15 de 32 ≈ 47%), não o atributo ÷ o maior
+	# (a regra do cliente, C, que no nível 1 deixava todas cheias). O número segue o atributo; a dica mostra o IV.
+	var ivs: Array = [selecionado.iv_hp, selecionado.iv_atk, selecionado.iv_def, selecionado.iv_sp_atk, selecionado.iv_sp_def, selecionado.iv_spd]
 	for indice in range(6):
 		var valor: int = int(atributos.get(CHAVES[indice],0))
-		barras_atributos[indice].max_value = maximo
-		barras_atributos[indice].value = valor
+		var iv: int = int(ivs[indice])
+		barras_atributos[indice].max_value = 32.0
+		barras_atributos[indice].value = iv
+		barras_atributos[indice].tooltip_text = "IV %d / 32" % iv
 		valores_atributos[indice].text = str(valor)
-		var fill: StyleBoxFlat = UI.caixa(ESTILO.cor_atributo(float(valor)/maximo),Color.TRANSPARENT,4,0)
+		valores_atributos[indice].tooltip_text = "IV %d / 32" % iv
+		var fill: StyleBoxFlat = UI.caixa(ESTILO.cor_atributo(float(iv)/32.0),Color.TRANSPARENT,4,0)
 		fill.set_border_width_all(0)
 		barras_atributos[indice].add_theme_stylebox_override("fill",fill)
 	# Ciclo 4 (C: team-evo-btn): a evolução vem das espécies do snapshot (evolui {nivel, para}), não da tabela do P04 (4
