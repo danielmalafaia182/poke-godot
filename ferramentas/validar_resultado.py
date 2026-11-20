@@ -88,6 +88,7 @@ def medir(caminho):
     var_ouro = 0.0
     especies = Counter()
     adj = nf = luta = 0
+    xp_online = 0
     ant_fainted = False
     for d, m, _ in ler_logs([caminho]):
         if d != "in":
@@ -108,7 +109,13 @@ def medir(caminho):
             abates += 1
             especies[m.get("speciesId")] += 1
             var_ouro += var_ouro_abate(m.get("speciesId"))
-            xp += int(m.get("xpGained", 0))
+            # Ciclo 5: parcelas que só existem online (raid: evento de raid, +20% da base; guild: guilda), A nas gravações
+            # da conta B; o offline não as tem (decisão: itens online seguem com o aviso). Ficam fora do XP comparado e
+            # são somadas à parte.
+            partes = m.get("xpParts") or {}
+            online = sum(int(partes.get(k, 0) or 0) for k in PARCELAS_ONLINE)
+            xp += int(m.get("xpGained", 0)) - online
+            xp_online += online
             for it in m.get("loot") or []:
                 ouro += preco_venda(it.get("itemId", 0)) * int(it.get("qty", 0))
         elif t == "field-none" and m.get("motivo") == "sem-reserva":
@@ -117,13 +124,70 @@ def medir(caminho):
             capturas += 1
     mins = max(1e-9, ((t1 or 0) - (t0 or 0)) / 60000.0)
     frac_luta = luta / nf if nf else 0.0
-    return {"min": round(mins, 2), "abates_min": abates / mins, "xp_h": xp / mins * 60, "mortes_h": mortes / mins * 60,
+    return {"min": round(mins, 2), "abates_min": abates / mins, "xp_h": xp / mins * 60, "xp_online_h": xp_online / mins * 60, "mortes_h": mortes / mins * 60,
             "ouro_h": ouro / mins * 60, "capturas_h": capturas / mins * 60, "adj": adj / nf if nf else 0.0,
             "luta": frac_luta, "sd_ouro_h": math.sqrt(var_ouro) / mins * 60, "especies": dict(especies), "golpes_abate": golpes / abates if abates else 0.0,
             "andando_s": (1 - frac_luta) * mins * 60 / abates if abates else 0.0}
 
 
+def _param_sim(nome, reserva):
+    import re
+    txt = open(os.path.join(RAIZ, "sim", "regras.gd"), encoding="utf-8").read()
+    r = re.search(r'"%s":\s*([0-9.]+)' % nome, txt)
+    return float(r.group(1)) if r else reserva
+
+
+def medidor_estacionario(slug, estado):
+    """Classe 3 (ciclo 5): espécie da hunt sem nada conhecido do medidor no começo do trecho (sem captura antes na sessão
+    nem used-balls) começa do investimento médio estacionário do modelo da sim (sim/regras.gd chance_captura) com a bola
+    do Auto-Catch, e não de zero: o jogador real chega com o medidor andando; zerar subestimava as capturas por trecho."""
+    ah = estado.get("autohelper") or {}
+    bola = str(ah.get("autoCatchBallId") or (estado.get("primeiroCatchResult") or {}).get("ballId") or "")
+    v = {"1": 5, "2": 20, "3": 50, "4": 130, "6": 400, "7": 400}.get(bola, 0)
+    if not v:
+        return {}
+    c, k = _param_sim("captura_c", 0.814), _param_sim("captura_k", 1.14)
+    esp = _especies()
+    hunts = _hunts()
+    r = {}
+    for sp in hunts.get(slug, {}).get("spawns", []):
+        sid = sp.get("pokeId")
+        P = float(esp.get(sid, {}).get("precoNpc", 0) or 0)
+        if P <= 0:
+            continue
+        # tentativa j (desde a última captura) num instante qualquer tem peso S(j-1); investido antes dela = v·(j-1)
+        s_, num, den, j = 1.0, 0.0, 0.0, 0
+        while s_ > 1e-6 and j < 200000:
+            num += s_ * v * j
+            den += s_
+            p = min(1.0, c * v / P * (1 + k * v * j / P))
+            s_ *= 1 - p
+            j += 1
+        r[str(sid)] = {"investido": round(num / den, 1), "tentativas": int(num / den / v), "total": 0, "gasto": 0}
+    return r
+
+
+_CACHE = {}
+
+
+def _especies():
+    if "esp" not in _CACHE:
+        d = json.load(open(os.path.join(RAIZ, "dados", "gerados", "especies.json"), encoding="utf-8"))
+        lista = d if isinstance(d, list) else list(d.values())
+        _CACHE["esp"] = {e.get("id"): e for e in lista if isinstance(e, dict)}
+    return _CACHE["esp"]
+
+
+def _hunts():
+    if "hunts" not in _CACHE:
+        d = json.load(open(os.path.join(RAIZ, "dados", "gerados", "hunts.json"), encoding="utf-8"))
+        _CACHE["hunts"] = d if isinstance(d, dict) else {x["slug"]: x for x in d}
+    return _CACHE["hunts"]
+
+
 PARAMS = ""
+PARCELAS_ONLINE = ("raid", "guild")
+REUSAR = False
 
 
 def rodar_sim(estado, segundos, semente, saida):
@@ -131,6 +195,8 @@ def rodar_sim(estado, segundos, semente, saida):
     bash = os.environ.get("BASH_GIT", "C:/Program Files/Git/bin/bash.exe" if os.name == "nt" else "bash")   # o de bin/ monta /c (o de usr/bin não)
     cmd = [bash, "testes/rodar.sh", "res://testes/rodar_sim.gd", "--estado", barra(estado), "--segundos", str(int(segundos)),
            "--semente", str(semente), "--saida", barra(saida)] + (["--params", PARAMS] if PARAMS else [])
+    if REUSAR and os.path.exists(saida):   # --reusar: a sim é determinística (mesmo estado, semente e código)
+        return saida
     env = dict(os.environ, TEMPO_MAX="1800")
     subprocess.run(cmd, cwd=RAIZ, capture_output=True, text=True, env=env, encoding="utf-8", errors="replace")
     return saida if os.path.exists(saida) else None
@@ -202,9 +268,11 @@ def main():
     ap.add_argument("--json")
     ap.add_argument("--pasta", default=os.path.join(RAIZ, "saida_testes", "validar_resultado"))
     ap.add_argument("--params", default="", help="parâmetros da sim para experimentar (chave=valor,...)")
+    ap.add_argument("--reusar", action="store_true", help="reaproveita as saídas da sim já gravadas na --pasta")
     a = ap.parse_args()
-    global PARAMS
+    global PARAMS, REUSAR
     PARAMS = a.params
+    REUSAR = a.reusar
     sys.stdout.reconfigure(encoding="utf-8")
     livre = os.path.join(RAIZ, "poke har", "gravacoes", "livre")
     entradas = a.entradas or ([x for x in sorted(glob.glob(os.path.join(RAIZ, "poke har", "gravacoes", "**", "*.jsonl"), recursive=True))
@@ -224,6 +292,23 @@ def main():
             r = subprocess.run([sys.executable, "-I", os.path.join(RAIZ, "ferramentas", "gravador", "extrair_estado_inicial.py"), x["arquivo"], x["slug"], est],
                                capture_output=True, text=True, encoding="utf-8", errors="replace")
             ok_est = r.returncode == 0 and "pokeDelta" in json.load(open(est, encoding="utf-8")) and "primeiroPokeXp" in json.load(open(est, encoding="utf-8"))
+            if ok_est:   # ciclo 5: medidor de captura do começo do trecho, reconstruído pelo segmentar.py (A)
+                med = next((m["medidor"] for m in x.get("_contexto_salvo", []) if m.get("type") == "__medidor"), None)
+                if med is None:
+                    with open(x["arquivo"], encoding="utf-8") as fa:
+                        for i, linha in enumerate(fa):
+                            if i > 12:
+                                break
+                            mm = json.loads(linha)["msg"]
+                            if mm.get("type") == "__medidor":
+                                med = mm["medidor"]
+                med = dict(med or {})
+                ej = json.load(open(est, encoding="utf-8"))
+                for sid, v in medidor_estacionario(x["slug"], ej).items():
+                    med.setdefault(sid, v)
+                if med:
+                    ej["medidor_captura"] = med
+                    json.dump(ej, open(est, "w", encoding="utf-8"), ensure_ascii=False)
             trabalhos.append({"gravacao": nome, "trecho": x, "estado": est if ok_est else None})
     jobs = []
     for w in trabalhos:
@@ -245,6 +330,7 @@ def main():
     tot_ok = tot = 0
     est_ok = 0
     por_grandeza = {k: [0, 0] for k, _ in GRANDEZAS}
+    xp_on_total = xp_total_real = 0.0
     for w in trabalhos:
         x = w["trecho"]
         real = medir(x["arquivo"])
@@ -276,8 +362,12 @@ def main():
         diag.append(f"| {w['gravacao']} | {x['slug']} | " + " | ".join(
             f"{real[k]:.2f} · {statistics.mean([s[k] for s in ss]):.2f}" if ss else f"{real[k]:.2f} · —" for k, _ in EXTRAS) + " |")
         saida.append({"gravacao": w["gravacao"], "slug": x["slug"], "lider": x["lider"], "real": real, "sim": ss})
+        xp_on_total += real.get("xp_online_h", 0.0) * real["min"] / 60.0
+        xp_total_real += (real["xp_h"] + real.get("xp_online_h", 0.0)) * real["min"] / 60.0
     resumo = ["", f"**{tot_ok}/{tot} grandezas dentro de ±10% ou do ruído da amostra** ({est_ok}/{tot} só com ±10%) em {sum(1 for w in trabalhos if sims.get(id(w)))} trechos "
-              f"({a.sementes} sementes cada). Por grandeza: " + ", ".join(f"{n} {por_grandeza[k][0]}/{por_grandeza[k][1]}" for k, n in GRANDEZAS) + "."]
+              f"({a.sementes} sementes cada). Por grandeza: " + ", ".join(f"{n} {por_grandeza[k][0]}/{por_grandeza[k][1]}" for k, n in GRANDEZAS) + ".",
+              f"XP/h compara o XP sem as parcelas que só existem online ({', '.join(PARCELAS_ONLINE)}; A, conta B): "
+              f"{100.0 * xp_on_total / max(1.0, xp_total_real):.1f}% do XP real dos trechos veio delas."]
     # teste de sinal: um desvio sistemático aparece como muitos trechos fora de ±10% no mesmo sentido
     sinal = []
     for k, nome in GRANDEZAS:

@@ -64,6 +64,8 @@ static func de_estado(caminho_estado: String, dados: RefCounted, semente: int, o
 	var balls: Dictionary = est.get("balls", {})
 	return {
 		"maxhp_por_slot": maxhp_slots,
+		# ciclo 5: medidor de captura no começo do trecho (A, reconstruído das tentativas anteriores da sessão)
+		"medidor_captura": (est.get("medidor_captura", {}) as Dictionary).duplicate(true),
 		# Auto-Helper gravado (A): limite e poção fixa da Auto-Potion
 		"parametros": ({"pocao_limiar": float(est["autohelper"].get("autoPotionThreshold", 50)) / 100.0}
 			if est.has("autohelper") and est["autohelper"].get("autoPotionThreshold") != null else {}),

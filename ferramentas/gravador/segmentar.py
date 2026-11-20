@@ -157,6 +157,9 @@ def linhas_dedup(fs):
                 yield o.get("sessao", "?"), o.get("dir", "in"), m
 
 
+PRECO_BOLA = {"1": 5, "2": 20, "3": 50, "4": 130, "5": 0, "6": 400, "7": 400}   # A: balls.catalog priceGold (sim/regras.gd)
+
+
 class _Sessao:
     """Estado de uma aba do jogo (o gravador grava as abas abertas juntas; cada uma tem a sua `sessao`)."""
 
@@ -173,6 +176,10 @@ class _Sessao:
         self.pokes = {}
         self.lider_id = None
         self.ultimo = {}
+        # Ciclo 5: medidor de captura por espécie ao longo da sessão (C/A: used-balls; investido = ouro das bolas desde a
+        # última captura), reconstruído pelos catch-result; vai no contexto de cada pedaço para a sim começar dele.
+        self.medidor = {}
+        self.casas_abate = {}   # (col, row) do último abate -> (speciesId, shiny)
 
     def contexto(self):
         c = [self.ultimo[k] for k in ("vip", "inventory", "balls", "autohelper") if k in self.ultimo]
@@ -181,7 +188,27 @@ class _Sessao:
             c.append({"type": "pokes", "list": [dict(p, leader=(p["id"] == self.lider_id)) for p in time]})
         if self.lider_id in self.pokes:
             c.append({"type": "poke-delta", "poke": dict(self.pokes[self.lider_id], team=True, leader=True)})
+        if self.medidor:
+            c.append({"type": "__medidor", "medidor": {k: dict(v) for k, v in self.medidor.items()}})
         return c
+
+    def medir_captura(self, t, m):
+        if t == "field-kill":
+            self.casas_abate[(m.get("col"), m.get("row"))] = (m.get("speciesId"), bool(m.get("shiny")))
+        elif t == "catch-result":
+            sp, shiny = self.casas_abate.pop((m.get("col"), m.get("row")), (None, False))
+            if sp is None:
+                return
+            k = str(sp) + ("s" if shiny else "")
+            med = self.medidor.setdefault(k, {"investido": 0.0, "tentativas": 0, "total": 0, "gasto": 0})
+            v = PRECO_BOLA.get(str(m.get("ballId")), 0)
+            med["investido"] += v
+            med["tentativas"] += 1
+            med["total"] += 1
+            med["gasto"] += v
+            if m.get("success"):
+                med["investido"] = 0.0
+                med["tentativas"] = 0
 
     def fechar_ped(self):
         ped = self.ped
@@ -215,6 +242,12 @@ class _Sessao:
 
     def msg(self, d, m):
         t = m.get("type")
+        if d == "rest" and str(m.get("caminho", "")).endswith("/api/game/used-balls") and isinstance(m.get("corpo"), dict):
+            # A: o medidor do servidor nesse instante (goldSpent = ouro desde a última captura, attempts idem)
+            for pk in m["corpo"].get("pokemons", []):
+                k = str(pk.get("speciesId")) + ("s" if pk.get("shiny") else "")
+                self.medidor[k] = {"investido": float(pk.get("goldSpent", 0)), "tentativas": int(pk.get("attempts", 0)),
+                                   "total": int(pk.get("total", 0)), "gasto": int(pk.get("goldSpent", 0))}
         if d == "in" and t in ("vip", "inventory", "balls", "autohelper"):
             if t == "autohelper" and self.ped is not None and "autohelper" in self.ultimo:
                 chaves = ("autoCatch", "autoCatchBallId", "autoCatchNames", "autoPotion", "autoPotionItemId", "autoPotionThreshold")
@@ -280,6 +313,8 @@ class _Sessao:
                 self.cidade["rest"][m.get("caminho", m.get("path", "?"))] += 1
             return
         ped = self.ped
+        if t in ("field-kill", "catch-result"):
+            self.medir_captura(t, m)
         if t == "field":
             atual = (m.get("heroName"), m.get("heroLooktype"))
             sn = m["serverNow"]
