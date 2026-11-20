@@ -1243,3 +1243,12 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
       passou a tentar a escolha a cada volta à cidade.
     - Daily Catch: só paga a espécie da lista do dia. A campanha capturava pouco; agora rende 9.589 XP em 20 h.
     - A campanha não contava captura de shiny quando a bola do shiny era a mesma do Auto-Catch (corrigido).
+- 20/11/2026 — **Ciclo 4, item 5 (shiny).**
+  - A chance segue a regra do cliente, min(1, shinyBase(tier) × catchRate). O catchRate é A; o shinyBase é classe 3:
+    A 0,4% … E 2%.
+  - `test_shiny_captura` 3/3: a tabela do balanceamento está na sim, e 40.000 Poké Balls num tier C deram 393 contra
+    400.
+  - Por bola, sem Master: de 0,4% (Poké, tier A) a 10% (Idle, tier E).
+  - Os 0 capturados da campanha são esperados: 32 shinies com Poké Ball dão 0,22–0,32 captura (P(0) 72–80%).
+  - A campanha do ciclo 3 também não contava shiny capturado com a mesma bola do Auto-Catch (corrigido).
+  - Tabela e contas: `dados/relatorios/shiny_captura_ciclo4.md`.
