@@ -31,6 +31,8 @@ static func _busca(chave: String):
 
 static func t(chave: String, vars: Dictionary = {}, reserva: String = "") -> String:
 	var v = _busca(chave)
+	if not v is String and vars.has("count"):   # C (i18next): plural pela chave _one/_other
+		v = _busca(chave + ("_one" if int(vars["count"]) == 1 else "_other"))
 	var s: String = v if v is String else (reserva if reserva != "" else chave)
 	for k in vars:
 		s = s.replace("{{%s}}" % k, str(vars[k]))

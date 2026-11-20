@@ -1,7 +1,8 @@
 extends PanelContainer
 ## Painel de captura da hunt (ciclo 4: igual ao original, C: componente `cap-panel` do cliente e o CSS `.cap-*`; textos
 ## hud.captureBar do pacote). Só desenha e manda o comando:
-##   - aparece só enquanto há selvagem capturável (lista `pending`, A: 20 s depois do abate) ou uma mensagem de resultado;
+##   - aparece enquanto há selvagem capturável (lista `pending`, A: 20 s depois do abate) ou uma mensagem de resultado
+##     (2,5 s depois de qualquer lançamento, inclusive do Auto-Catch);
 ##   - cabeçalho "Capturar" + "N selvagens" (o tamanho da lista pendente) + link da loja;
 ##   - fichas das bolas com estoque (a escolhida em destaque), linhas com sprite, nome, nível e "Lançar";
 ##   - lançar trava 4 s ("Aguarde Ns"); o resultado aparece 2,5 s ("Capturou… / … escapou").
@@ -10,6 +11,7 @@ extends PanelContainer
 const T := preload("res://textos.gd")
 const CINZEL: Font = preload("res://assets/interface/fiel/cinzel_bold.ttf")
 const BARLOW_B: Font = preload("res://assets/interface/fiel/barlow_bold.ttf")
+static var ITALICO: FontVariation = null
 const ICONES := {1: "pokeball", 2: "greatball", 3: "superball", 4: "ultraball", 5: "masterball", 6: "idleball", 7: "idleball_gold"}
 
 var controlador: Node
@@ -26,6 +28,10 @@ var _assinatura := ""
 
 func _ready() -> void:
 	name = "PainelCaptura"
+	if ITALICO == null:
+		ITALICO = FontVariation.new()
+		ITALICO.base_font = preload("res://assets/interface/fiel/barlow_regular.ttf")
+		ITALICO.variation_transform = Transform2D(Vector2(1, 0), Vector2(0.2, 1), Vector2.ZERO)
 	var s := StyleBoxFlat.new()   # C: linear-gradient(#101823f7, #090e15f7); border 2px #785a28; radius 10; padding 9
 	s.bg_color = Color("0d141df7")
 	s.border_color = Color("785a28")
@@ -55,8 +61,8 @@ func receber_pendentes(lista: Array) -> void:
 
 
 func receber_resultado(msg: Dictionary) -> void:
-	if msg.get("pendingId") == null and bool(msg.get("auto", true)):
-		return
+	# C (cap-panel): todo catch-result mostra a mensagem por 2,5 s, inclusive os do Auto-Catch (A: no original o painel
+	# aparece a cada lançamento automático, "Geodude escaped!" com "0 wilds"); o cooldown só nos manuais.
 	flash = T.t("hud.captureBar.flashCaptured", {"species": String(msg.get("speciesName", "")), "ball": String(msg.get("ballName", ""))}) if bool(msg.get("success", false)) \
 		else T.t("hud.captureBar.flashEscaped", {"species": String(msg.get("speciesName", ""))})
 	_flash_ate = Time.get_ticks_msec() + 2500
@@ -119,12 +125,34 @@ func desenhar() -> void:
 	cont.name = "Contagem"
 	cont.add_child(_texto(T.t("hud.captureBar.wildCount", {"count": pendentes.size()}), 11, Color("e8c98a"), BARLOW_B))
 	cab.add_child(cont)
+	var loja := LinkButton.new()   # C: .cap-shop-link (azul sublinhado)
+	loja.name = "Loja"
+	loja.text = T.t("hud.captureBar.shopLink")
+	loja.underline = LinkButton.UNDERLINE_MODE_ALWAYS
+	loja.add_theme_font_override("font", BARLOW_B)
+	loja.add_theme_font_size_override("font_size", 12)
+	loja.add_theme_color_override("font_color", Color("9fc0e8"))
+	loja.add_theme_color_override("font_hover_color", Color("c8e0ff"))
+	loja.tooltip_text = "A loja do Mark fica em Cerulean"
+	cab.add_child(loja)
 	if com_flash:
+		var caixa := PanelContainer.new()   # C: .cap-flash (caixa dourada translúcida)
+		var sf := StyleBoxFlat.new()
+		sf.bg_color = Color("c8aa6e24")
+		sf.border_color = Color("c8aa6e66")
+		sf.set_border_width_all(1)
+		sf.set_corner_radius_all(7)
+		sf.content_margin_left = 8
+		sf.content_margin_right = 8
+		sf.content_margin_top = 5
+		sf.content_margin_bottom = 5
+		caixa.add_theme_stylebox_override("panel", sf)
 		var f := _texto(flash, 12, Color("f5eecf"), BARLOW_B)
 		f.name = "Flash"
 		f.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		f.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
-		_col.add_child(f)
+		caixa.add_child(f)
+		_col.add_child(caixa)
 	if bolas.is_empty():
 		_col.add_child(_texto(T.t("hud.captureBar.noBalls"), 12.5, Color("c89bff"), BARLOW_B))
 	else:
@@ -138,8 +166,10 @@ func desenhar() -> void:
 			b.toggle_mode = true
 			b.button_pressed = id == bola_escolhida
 			b.icon = load("res://assets/interface/bolas/%s.png" % ICONES[id])
-			b.expand_icon = true
-			b.add_theme_constant_override("icon_max_width", 22)
+			b.expand_icon = false
+			b.add_theme_constant_override("icon_max_width", 22)   # C: .cap-chip-ico 22 px
+			b.add_theme_constant_override("h_separation", 4)
+			b.custom_minimum_size.y = 30
 			b.text = "∞" if bool(EstadoJogo.obter_dados_bola(id).get("infinita", false)) else str(EstadoJogo.obter_quantidade_bola(id))
 			b.tooltip_text = String(EstadoJogo.obter_dados_bola(id).get("nome", ""))
 			b.add_theme_font_override("font", BARLOW_B)
@@ -164,7 +194,9 @@ func desenhar() -> void:
 	lista.add_theme_constant_override("separation", 5)
 	_col.add_child(lista)
 	if pendentes.is_empty():
-		lista.add_child(_texto(T.t("hud.captureBar.noneWaiting"), 12, Color("8a93a0")))
+		var vazio := _texto(T.t("hud.captureBar.noneWaiting"), 12, Color("8a93a0"), ITALICO)   # C: .cap-none
+		vazio.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		lista.add_child(vazio)
 	for e in pendentes:
 		var linha := PanelContainer.new()
 		linha.name = "Pendente_%d" % int(e["id"])
