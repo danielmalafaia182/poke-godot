@@ -544,6 +544,34 @@ func _criar_ouro_e_config() -> void:
 	botao_metas.pressed.connect(func() -> void:
 		painel_config.hide()
 		painel_metas.abrir())
+	# Ciclo 5, item 98: Novo jogo com confirmação e backup automático do save atual.
+	var botao_novo := Button.new()
+	botao_novo.name = "NovoJogo"
+	botao_novo.text = "🆕 Novo jogo"
+	coluna.add_child(botao_novo)
+	var confirma := ConfirmationDialog.new()
+	confirma.name = "ConfirmarNovoJogo"
+	confirma.title = "Novo jogo"
+	confirma.dialog_text = "Começar um jogo novo do zero?
+
+O save atual (time, box, itens, ouro, nível) é copiado antes para a pasta de backups e o jogo reinicia na escolha do inicial.
+Para voltar ao jogo antigo, copie o backup de volta para progresso_v1.json."
+	confirma.ok_button_text = "Começar do zero"
+	confirma.cancel_button_text = "Cancelar"
+	confirma.dialog_autowrap = true
+	confirma.min_size = Vector2i(520, 0)
+	add_child(confirma)
+	botao_novo.pressed.connect(func() -> void:
+		painel_config.hide()
+		confirma.popup_centered())
+	confirma.confirmed.connect(func() -> void:
+		var r: Dictionary = EstadoJogo.salvamento.pedir_jogo_novo(OS.get_environment("POKE_NOVO_JOGO_SEM_REINICIAR") == "")
+		if r.has("erro"):
+			painel_soneca.abrir_texto("Novo jogo", String(r["erro"]))
+		else:
+			ultimo_backup = String(r.get("backup", "")))
+
+var ultimo_backup := ""
 
 func _abrir_novo_jogo() -> void:
 	var pn: Control = load("res://painel_novo_jogo.gd").new()

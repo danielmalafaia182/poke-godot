@@ -57,7 +57,7 @@ static func caminho_save_projeto() -> String:
 func save_do_projeto_disponivel() -> bool:
 	var antigo := caminho_save_projeto()
 	var meu := ProjectSettings.globalize_path(_persistencia.caminho)
-	return jogo_novo and FileAccess.file_exists(antigo) and antigo.to_lower() != meu.replace("\\", "/").to_lower()
+	return jogo_novo and not FileAccess.file_exists(MARCA_JOGO_NOVO) and FileAccess.file_exists(antigo) and antigo.to_lower() != meu.replace("\\", "/").to_lower()
 
 
 func importar_save_do_projeto() -> String:
@@ -196,6 +196,47 @@ func salvar_agora() -> bool:
 	var ok: bool = _aplicar(_persistencia.gravar(_persistencia.construir_dados(estado), _persistencia.ultimo_valido))
 	_contar(Time.get_ticks_usec() - _t0)
 	return ok
+
+const PASTA_BACKUPS := "user://backups"
+const MARCA_JOGO_NOVO := "user://jogo_novo_pedido"   # depois de "Novo jogo": não oferecer importar o save do projeto
+
+
+func pedir_jogo_novo(reiniciar: bool = true) -> Dictionary:
+	## Ciclo 5, item 98 ("Novo jogo" nas Configurações). Grava o estado atual, copia o save (e o .bak) para
+	## user://backups/progresso_<data>_<hora>.json, confere a cópia byte a byte e só então apaga o save. O jogo reinicia
+	## como numa instalação nova (escolha do inicial), sem nada do jogo anterior. {backup, bak} ou {erro} (nada apagado).
+	salvar_agora()
+	if _tarefa != -1:
+		_concluir_thread()
+	var origem: String = _persistencia.caminho
+	var r := {}
+	if FileAccess.file_exists(origem):
+		DirAccess.make_dir_recursive_absolute(PASTA_BACKUPS)
+		var carimbo := Time.get_datetime_string_from_system().replace(":", "-").replace("T", "_")
+		var destino := "%s/progresso_%s.json" % [PASTA_BACKUPS, carimbo]
+		var n := 1
+		while FileAccess.file_exists(destino):
+			n += 1
+			destino = "%s/progresso_%s_%d.json" % [PASTA_BACKUPS, carimbo, n]
+		if DirAccess.copy_absolute(origem, destino) != OK or FileAccess.get_file_as_bytes(origem) != FileAccess.get_file_as_bytes(destino):
+			return {"erro": "Não foi possível fazer o backup do save. Nada foi apagado."}
+		r["backup"] = destino
+		if FileAccess.file_exists(origem + ".bak"):
+			if DirAccess.copy_absolute(origem + ".bak", destino + ".bak") == OK:
+				r["bak"] = destino + ".bak"
+	_persistencia.bloqueado = true    # daqui até reiniciar, nada grava por cima
+	for f in [origem, origem + ".bak", origem + ".tmp"]:
+		if FileAccess.file_exists(f):
+			DirAccess.remove_absolute(f)
+	var m := FileAccess.open(MARCA_JOGO_NOVO, FileAccess.WRITE)
+	if m != null:
+		m.store_string(String(r.get("backup", "")))
+		m.close()
+	if reiniciar:
+		OS.set_restart_on_exit(true, OS.get_cmdline_args())
+		get_tree().quit()
+	return r
+
 
 func _exit_tree() -> void:
 	if _tarefa != -1:
