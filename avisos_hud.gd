@@ -55,8 +55,8 @@ func _ready() -> void:
 func _ajustar() -> void:
 	cartao.size = Vector2(minf(620.0, size.x - 40.0), 0)
 	cartao.position = Vector2((size.x - cartao.size.x) * 0.5, 120)
-	barra.position = Vector2((size.x - 600.0) * 0.5, 70)
-	barra.size = Vector2(600, 28)
+	barra.reset_size()
+	barra.position = Vector2(round((size.x - barra.size.x) * 0.5), 74)   # C: .bi-wrap top 74 px, centrado
 
 
 func avisar(t: String) -> void:
@@ -90,7 +90,16 @@ func _efeito(key: String, pct: int) -> String:
 	return T.sem_html(T.t("hud.boost.effect." + key, {"pct": pct}, key))
 
 
+# C (oh/bi-chip do cliente): ícone, classe (cor da borda) e rótulo de cada boost.
+const BOOST_ICONE := {"xp": "exp", "pokexp": "boost", "loot": "loot", "capture": "catch", "shinycharm": "shinysecretlure",
+	"borage": "shinysecretlure", "shinylock": "shinysecretlure", "discord": "boost", "stream": "icon_stream_bonus"}
+const BOOST_CLASSE := {"xp": Color("ffcf3a"), "pokexp": Color("6fd3ff"), "loot": Color("5bf08a"), "capture": Color("ff9d5c"),
+	"shinylock": Color("e05252"), "evento": Color("ffdf6b")}
+
+
 func _desenhar_boosts() -> void:
+	## C: .bi-wrap (centrado, 74 px do topo) com uma .bi-chip por boost/evento: fundo #080c14d9, borda pela classe, raio
+	## 10, ícone de 16 px e o tempo restante ("m:ss"; com horas, "Nh MMm"); o shinylock é .debuff (vermelho, ícone cinza).
 	for c in barra.get_children():
 		barra.remove_child(c)
 		c.queue_free()
@@ -99,25 +108,57 @@ func _desenhar_boosts() -> void:
 		var ate := int(b.get("until", 0))
 		if ate > 0 and agora > 0 and ate <= agora:
 			continue
-		var l := Label.new()
 		var key := String(b.get("key", ""))
+		var evento := bool(b.get("evento", false))
 		var resto := maxi(0, (ate - agora) / 1000) if ate > 0 and agora > 0 else -1
-		var nome := String(b.get("nome", ""))
-		if nome == "":
-			nome = {"shinylock": "🔒 Shiny lock", "xp": "⭐ XP +%d%%" % int(b.get("pct", 0)), "loot": "🎁 Loot +%d%%" % int(b.get("pct", 0)),
-				"pokexp": "⭐ Poké XP +%d%%" % int(b.get("pct", 0)), "capture": "🎯 Captura ×2"}.get(key, key)
 		var tempo := ""
 		if resto >= 3600:
-			tempo = "  %dh%02d" % [resto / 3600, (resto % 3600) / 60]
+			tempo = "%dh %02dm" % [resto / 3600, (resto % 3600) / 60]
 		elif resto >= 0:
-			tempo = "  %d:%02d" % [resto / 60, resto % 60]
-		l.text = nome + tempo
-		l.tooltip_text = String(b.get("desc", "")) if b.has("desc") else _efeito(key, int(b.get("pct", 0)))
-		l.mouse_filter = Control.MOUSE_FILTER_STOP
-		l.add_theme_color_override("font_color", Color("ff9a8a") if key == "shinylock" else Color("9fe0a0"))
-		l.add_theme_color_override("font_outline_color", Color.BLACK)
-		l.add_theme_constant_override("outline_size", 4)
-		barra.add_child(l)
+			tempo = "%d:%02d" % [resto / 60, resto % 60]
+		var chip := PanelContainer.new()
+		chip.name = "Boost_" + key
+		var cor: Color = BOOST_CLASSE.get("evento" if evento else key, Color("3a4f72"))
+		var sb := StyleBoxFlat.new()
+		sb.bg_color = Color("080c14d9")
+		sb.border_color = cor
+		sb.set_border_width_all(1)
+		sb.set_corner_radius_all(10)
+		sb.content_margin_left = 5; sb.content_margin_right = 8; sb.content_margin_top = 3; sb.content_margin_bottom = 3
+		sb.shadow_color = Color(cor, 0.3)
+		sb.shadow_size = 6
+		chip.add_theme_stylebox_override("panel", sb)
+		chip.mouse_filter = Control.MOUSE_FILTER_STOP
+		chip.tooltip_text = (String(b.get("nome", "")) + "
+" if b.has("nome") else "") + (String(b.get("desc", "")) if b.has("desc") else _efeito(key, int(b.get("pct", 0))))
+		var h := HBoxContainer.new()
+		h.add_theme_constant_override("separation", 4)
+		chip.add_child(h)
+		var ic := TextureRect.new()
+		ic.custom_minimum_size = Vector2(16, 16)
+		ic.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		ic.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		ic.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		var caminho := ""
+		if evento and String(b.get("tipo", "")) != "":
+			caminho = "res://assets/original/types/%s.png" % String(b["tipo"])
+		elif BOOST_ICONE.has(key):
+			caminho = "res://assets/original/topmenu/%s.png" % String(BOOST_ICONE[key])
+		if caminho != "" and ResourceLoader.exists(caminho):
+			ic.texture = load(caminho)
+		if key == "shinylock":
+			ic.modulate = Color(0.75, 0.75, 0.75)   # C: .debuff → ícone cinza
+		h.add_child(ic)
+		var l := Label.new()
+		l.name = "Tempo"
+		l.text = tempo if tempo != "" else String(b.get("nome", key))
+		l.add_theme_font_override("font", preload("res://assets/interface/fiel/barlow_bold.ttf"))
+		l.add_theme_font_size_override("font_size", 11)
+		l.add_theme_color_override("font_color", Color("ffb4b4") if key == "shinylock" else Color("cfe0f5"))
+		h.add_child(l)
+		barra.add_child(chip)
+	barra.reset_size()
+	barra.position = Vector2(round((size.x - barra.size.x) * 0.5), 74)
 
 
 func _process(d: float) -> void:

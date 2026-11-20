@@ -1271,3 +1271,17 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - O que é do servidor aparece como o original mostra para quem não tem: Sem Bless, Sem clã, 0, "Em breve" (E).
   - E: o fundo dos botões (`/assets/evolution/lol-btn-frame.png`) não foi baixado; no lugar, uma moldura dourada.
   - `test_janelas_ciclo2` 26/26. Lado a lado: 11.
+- 20/11/2026 — **Ciclo 4, item 8 (barra de menu e janelas).**
+  - Os 33 itens do dock estão na ordem do cliente (C), e a dica de cada um é o nome do original (`hud.world.menu.*`).
+  - Nenhum botão fica desligado (antes eram 18). Os sem janela própria abrem `janela_original.gd`, com a moldura do
+    `.pf-window` e o ícone do item:
+    - Soneca: dorme na hunt; na cidade, explica;
+    - Configurações: abre o ⚙ na cidade;
+    - Sair: pede confirmação, salva e fecha;
+    - Novidades: mostra uma nota;
+    - os recursos do servidor (ranking, clãs, guilda, troca, PvP, passe, VIP/amigos, correio, diamantes, indicação,
+      lives, PiP, profissões, breeding) dizem que são do jogo online (E).
+  - A HUD da hunt usava a escala da janela-base de 1152 px (dock, time e Auto-Helper 1,63× maiores que na cidade e no
+    original). Agora usa pixels da janela, como a cidade.
+  - Boosts e eventos em fichas `.bi-chip` (C), a 74 px do topo, com o ícone e a borda de cada classe.
+  - `test_dock_menu` 6/6. Lado a lado: 09 (hunt) e 12 (janela de item online).

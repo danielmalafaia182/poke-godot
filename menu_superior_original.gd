@@ -56,20 +56,16 @@ func _ready() -> void:
 		botao.add_theme_stylebox_override("disabled",ESTILO.plano(Color.TRANSPARENT,Color.TRANSPARENT))
 		botao.add_theme_color_override("icon_disabled_color",Color(1.0,1.0,1.0,1.0))
 		var chave: String = item["chave"]
-		botao.tooltip_text = item["nome"]
+		# Ciclo 4: a dica é o nome do original (hud.world.menu.*); todos os itens do dock abrem algo (C: a lista do cliente)
+		botao.tooltip_text = preload("res://textos.gd").t("hud.world.menu." + {"pokemon": "myPokes", "home": "home"}.get(chave, chave), {}, String(item["nome"]))
 		match chave:
 			"map": botao.pressed.connect(func() -> void: mapa_solicitado.emit())
 			"pokemon":
-				botao.tooltip_text = "Pokémon — abrir TEAM / My Pokes"
 				botao.pressed.connect(func() -> void: time_solicitado.emit())
 			"pokepedia": botao.pressed.connect(func() -> void: pokepedia_solicitada.emit())
 			"home": botao.pressed.connect(func() -> void: cidade_solicitada.emit())
-			_ when chave in JANELAS:
-				botao.pressed.connect(func() -> void: janela_solicitada.emit(chave))
 			_:
-				botao.disabled = true
-				botao.mouse_default_cursor_shape = Control.CURSOR_HELP
-				botao.tooltip_text += " — Ainda não implementado nesta versão"
+				botao.pressed.connect(func() -> void: janela_solicitada.emit(chave))
 		linha.add_child(botao)
 		botoes[chave] = botao
 	# Alteração: o Auto-Helper é separado à direita, como na referência.

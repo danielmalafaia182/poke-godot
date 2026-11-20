@@ -86,6 +86,9 @@ const INTERVALO_SAVE_HUNT_MS := 10000   # E (2b.6): na hunt, no máximo um save 
 
 func _ready() -> void:
 	var t0 := Time.get_ticks_msec()
+	# Ciclo 4: a HUD em pixels da janela, como na cidade (antes a hunt esticava a base de 1152 px: HUD 1,63× maior que o
+	# original e que a cidade).
+	preload("res://tela_jogo.gd").aplicar(get_window())
 	EstadoJogo.salvamento.intervalo_minimo_ms = INTERVALO_SAVE_HUNT_MS
 	dados = preload("res://ponte_cidade.gd").dados()   # ciclo 4: só leitura; a mesma carga da cidade (~85 ms a menos)
 	tempos_carga["dados_ms"] = Time.get_ticks_msec() - t0
@@ -207,7 +210,8 @@ func _tratar(msg: Dictionary) -> void:
 		"events":
 			_eventos_msg = []
 			for ev in msg.get("events", []):
-				_eventos_msg.append({"key": String(ev.get("key", "")), "until": int(ev.get("until", 0)), "nome": String(ev.get("name", "")), "desc": String(ev.get("desc", ""))})
+				_eventos_msg.append({"key": String(ev.get("key", "")), "until": int(ev.get("until", 0)), "nome": String(ev.get("name", "")), "desc": String(ev.get("desc", "")),
+					"tipo": String(ev.get("tipo", "")), "evento": true})
 			_emitir_boosts()
 		"field-kill":
 			registro["abates"] += 1

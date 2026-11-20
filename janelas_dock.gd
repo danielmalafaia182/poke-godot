@@ -48,6 +48,9 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 		menu.botoes["analyzer"].disabled = true
 		menu.botoes["analyzer"].tooltip_text = "Hunt Analyser — abre dentro da hunt"
 	j["_pokedex"] = abrir_pokedex
+	j["_menu"] = menu
+	j["_hunt"] = controlador_hunt
+	j["original"] = _criar(pai, "res://janela_original.gd", "JanelaOriginal")
 	menu.janela_solicitada.connect(_abrir.bind(j))
 	return j
 
@@ -73,6 +76,48 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		j["diarias"].abrir()
 	elif chave == "pokedex":
 		j["pokedex"].abrir()   # a Pokédex do original; a Pokepedia (calculadora de golpes) segue no ícone dela
+	else:
+		_abrir_original(chave, j)
+
+
+static func _abrir_original(chave: String, j: Dictionary) -> void:
+	## Ciclo 4: os itens do dock sem janela própria abrem a janela com a identidade do original. Offline: Soneca (na hunt),
+	## Configurações (na cidade), Sair e Novidades fazem algo; os recursos do servidor (ranking, clãs, guilda, troca, PvP,
+	## passe, VIP/amigos, correio, diamantes, indicação, lives, PiP, profissões, breeding) dizem que são do jogo online (E).
+	var T := preload("res://textos.gd")
+	var menu: Control = j["_menu"]
+	var tex: Texture2D = (menu.botoes[chave] as Button).icon if menu.botoes.has(chave) else null
+	var nome: String = T.t("hud.world.menu." + chave, {}, chave)
+	var w: Control = j["original"]
+	var ej: Node = w.get_node("/root/EstadoJogo")
+	var hunt: Node = j.get("_hunt")
+	match chave:
+		"sleep":
+			if hunt != null and hunt.has_method("soneca"):
+				w.abrir(chave, nome, tex, "A hunt continua por [b]5 min[/b] e, ao voltar, você coleta [b]50% da taxa de XP[/b] pelo tempo fora (até 24 h). O jogo fecha.",
+					"💤 Dormir agora", func() -> void:
+						if String(hunt.soneca()).is_empty():
+							ej.salvar_agora()
+							w.get_tree().quit())
+			else:
+				w.abrir(chave, nome, tex, "O Modo Soneca começa [b]dentro de uma hunt[/b]: a caçada segue por 5 min e, ao voltar, você coleta 50% da taxa de XP pelo tempo fora.")
+		"config":
+			var cena := w.get_tree().current_scene
+			if cena != null and "painel_config" in cena and cena.painel_config != null:
+				cena.painel_config.visible = not cena.painel_config.visible
+				return
+			w.abrir(chave, nome, tex, "As configurações (VIP, zoom, Streak, tutorial) ficam na cidade, no [b]⚙[/b] do canto inferior direito.")
+		"logout":
+			w.abrir(chave, nome, tex, "Salvar e fechar o jogo? O progresso fica no save e a hunt aberta continua até 15 min, como no original.",
+				T.t("hud.world.menu.logout", {}, "Sair"), func() -> void:
+					ej.salvar_agora()
+					w.get_tree().quit())
+		"home":
+			w.abrir(chave, nome, tex, "Você já está em Cerulean.")
+		"patchnotes":
+			w.abrir(chave, nome, tex, "Versão offline do Poke Idle World. As novidades do servidor original não chegam aqui; as desta versão ficam no registro do projeto.")
+		_:
+			w.abrir(chave, nome, tex, "[b]%s[/b] depende do servidor do jogo online (outros jogadores, loja ou eventos ao vivo) e não existe nesta versão offline." % nome)
 
 
 static func _criar(pai: Node, script: String, nome: String) -> Control:
