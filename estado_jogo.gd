@@ -731,11 +731,11 @@ func berries_ativas(agora_unix: int) -> Dictionary:
 # ---------------------------------------------------------------- jogo novo (como o original, C; sim/servico_novo_jogo.gd)
 func novo_jogo(especie_id: int, nome_treinador: String = "Treinador", semente: int = 0, modo: String = "") -> Dictionary:
 	## Troca o começo do P04 (Larvitar, inventário de teste) pelo do original: inicial no nível 1 e o kit de
-	## 100 Small Potions + 100 Poké Balls; ouro 0 (E). Modo "projeto" (padrão, E: Geodude) ou "original" (os três, C);
-	## vazio = o modo do próprio inicial (74 → projeto; 1/4/7 → original).
+	## 100 Small Potions + 100 Poké Balls; ouro 0. Só Bulbasaur, Charmander ou Squirtle (C; o Geodude saiu no ciclo 4);
+	## IV e Quality pelo sorteio do cliente semeado com "<nome>:<id>" (sim/servico_novo_jogo.gd).
 	var NJ := preload("res://sim/servico_novo_jogo.gd")
 	if modo == "":
-		modo = NJ.MODO_ORIGINAL if NJ.INICIAIS.has(especie_id) else NJ.MODO_PROJETO
+		modo = NJ.MODO_ORIGINAL
 	var r: Dictionary = NJ.criar(especie_id, semente if semente != 0 else int(Time.get_unix_time_from_system()), nome_treinador, modo)
 	if r.has("erro"):
 		return r

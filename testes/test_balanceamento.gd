@@ -50,7 +50,7 @@ func _init() -> void:
 	d["jogo_novo"]["ouro_inicial"]["valor"] = 123
 	d["apresentacao"]["cartoes_por_instancia"]["valor"] = 2
 	checar(Cidade.new(dados).p["capacidade_depot_pilhas"] == 7, "depot: 7 pilhas no JSON → 7 no serviço")
-	checar(int(NovoJogo.criar(74, 1)["ouro"]) == 123, "jogo novo: ouro inicial vem do JSON")
+	checar(int(NovoJogo.criar(1, 1)["ouro"]) == 123, "jogo novo: ouro inicial vem do JSON")
 	var ap = Apresentacao.new()
 	var n := 0
 	for i in 5:

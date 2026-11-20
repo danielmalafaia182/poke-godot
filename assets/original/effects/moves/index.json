@@ -1,0 +1,1036 @@
+{
+  "FIRE": {
+    "file": "fire.png",
+    "frameW": 100,
+    "frameH": 100,
+    "frames": 16,
+    "frameMs": 50,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "ELECTRIC": {
+    "file": "electric.png",
+    "frameW": 96,
+    "frameH": 118,
+    "frames": 10,
+    "frameMs": 80,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FIGHTING": {
+    "file": "fighting.png",
+    "frameW": 181,
+    "frameH": 185,
+    "frames": 10,
+    "frameMs": 80,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "GHOST": {
+    "file": "ghost.png",
+    "frameW": 192,
+    "frameH": 192,
+    "frames": 26,
+    "frameMs": 33,
+    "scale": 0.667,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "POISON": {
+    "file": "poison.png",
+    "frameW": 60,
+    "frameH": 40,
+    "frames": 25,
+    "frameMs": 33,
+    "scale": 1.4,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FLYING": {
+    "file": "flying.png",
+    "frameW": 61,
+    "frameH": 81,
+    "frames": 20,
+    "frameMs": 40,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "NORMAL": {
+    "file": "normal.png",
+    "frameW": 64,
+    "frameH": 54,
+    "frames": 10,
+    "frameMs": 80,
+    "scale": 1.4,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "BUG": {
+    "file": "bug.png",
+    "frameW": 80,
+    "frameH": 96,
+    "frames": 4,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "GRASS": {
+    "file": "grass.png",
+    "frameW": 73,
+    "frameH": 70,
+    "frames": 15,
+    "frameMs": 53,
+    "scale": 1.4,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "STEEL": {
+    "file": "steel.png",
+    "frameW": 63,
+    "frameH": 64,
+    "frames": 5,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "WATER": {
+    "file": "water.png",
+    "frameW": 243,
+    "frameH": 246,
+    "frames": 12,
+    "frameMs": 67,
+    "scale": 0.52,
+    "offset": [
+      -0.6,
+      -0.7
+    ]
+  },
+  "DRAGON": {
+    "file": "dragon.png",
+    "frameW": 94,
+    "frameH": 96,
+    "frames": 12,
+    "frameMs": 67,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "GROUND": {
+    "file": "ground.png",
+    "frameW": 64,
+    "frameH": 61,
+    "frames": 11,
+    "frameMs": 73,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "PSYCHIC": {
+    "file": "psychic.png",
+    "frameW": 88,
+    "frameH": 88,
+    "frames": 14,
+    "frameMs": 57,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "ROCK": {
+    "file": "rock.png",
+    "frameW": 173,
+    "frameH": 169,
+    "frames": 9,
+    "frameMs": 89,
+    "scale": 0.74,
+    "offset": [
+      -0.6,
+      -0.67
+    ]
+  },
+  "DARK": {
+    "file": "dark.png",
+    "frameW": 149,
+    "frameH": 64,
+    "frames": 9,
+    "frameMs": 89,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "ICE": {
+    "file": "ice.png",
+    "frameW": 63,
+    "frameH": 56,
+    "frames": 12,
+    "frameMs": 67,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FAIRY": {
+    "file": "fairy.png",
+    "frameW": 54,
+    "frameH": 50,
+    "frames": 11,
+    "frameMs": 73,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "UNTOLD_NIGHTMARE": {
+    "file": "untold_nightmare.png",
+    "frameW": 160,
+    "frameH": 160,
+    "frames": 10,
+    "frameMs": 100,
+    "scale": 1.4,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "PETAL_BLOOM": {
+    "file": "petal_bloom.png",
+    "frameW": 255,
+    "frameH": 256,
+    "frames": 29,
+    "frameMs": 34,
+    "scale": 1.125,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "PETAL_BLOOM_HIT": {
+    "file": "petal_bloom_hit.png",
+    "frameW": 30,
+    "frameH": 30,
+    "frames": 13,
+    "frameMs": 92,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "UNTOLD_NIGHTMARE_HIT": {
+    "file": "untold_nightmare_hit.png",
+    "frameW": 63,
+    "frameH": 41,
+    "frames": 8,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "TOXIC_DELUGE": {
+    "file": "toxic_deluge.png",
+    "frameW": 96,
+    "frameH": 96,
+    "frames": 17,
+    "frameMs": 59,
+    "scale": 2.33,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "TOXIC_DELUGE_HIT": {
+    "file": "toxic_deluge_hit.png",
+    "frameW": 102,
+    "frameH": 100,
+    "frames": 7,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "IGNITION_POINT": {
+    "file": "ignition_point.png",
+    "frameW": 288,
+    "frameH": 261,
+    "frames": 12,
+    "frameMs": 125,
+    "scale": 1.111,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "IGNITION_POINT_HIT": {
+    "file": "ignition_point_hit.png",
+    "frameW": 64,
+    "frameH": 64,
+    "frames": 78,
+    "frameMs": 33,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "MASSIVE_HURRICANE": {
+    "file": "massive_hurricane.png",
+    "frameW": 70,
+    "frameH": 105,
+    "frames": 40,
+    "frameMs": 50,
+    "scale": 1.05,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "MASSIVE_HURRICANE_2": {
+    "file": "massive_hurricane_2.png",
+    "frameW": 288,
+    "frameH": 288,
+    "frames": 16,
+    "frameMs": 125,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "CYCLONIC_TIDE": {
+    "file": "cyclonic_tide.png",
+    "frameW": 235,
+    "frameH": 220,
+    "frames": 12,
+    "frameMs": 167,
+    "scale": 0.84,
+    "offset": [
+      0.7,
+      1.05
+    ]
+  },
+  "CYCLONIC_TIDE_HIT": {
+    "file": "cyclonic_tide_hit.png",
+    "frameW": 128,
+    "frameH": 108,
+    "frames": 13,
+    "frameMs": 50,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "STATIC_OVERLOAD": {
+    "file": "static_overload.png",
+    "frameW": 317,
+    "frameH": 321,
+    "frames": 10,
+    "frameMs": 120,
+    "scale": 1.05,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "STATIC_OVERLOAD_HIT": {
+    "file": "static_overload_hit.png",
+    "frameW": 50,
+    "frameH": 64,
+    "frames": 8,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "MENTAL_SINGULARITY": {
+    "file": "mental_singularity.png",
+    "frameW": 199,
+    "frameH": 199,
+    "frames": 19,
+    "frameMs": 79,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "MENTAL_SINGULARITY_HIT": {
+    "file": "mental_singularity_hit.png",
+    "frameW": 55,
+    "frameH": 54,
+    "frames": 14,
+    "frameMs": 57,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "CROSSING_FISSURE": {
+    "file": "crossing_fissure.png",
+    "frameW": 223,
+    "frameH": 216,
+    "frames": 20,
+    "frameMs": 75,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ],
+    "under": true
+  },
+  "CROSSING_FISSURE_2": {
+    "file": "crossing_fissure_2.png",
+    "frameW": 288,
+    "frameH": 288,
+    "frames": 8,
+    "frameMs": 125,
+    "scale": 1.2,
+    "offset": [
+      0,
+      0
+    ],
+    "under": true
+  },
+  "CROSSING_FISSURE_HIT": {
+    "file": "crossing_fissure_hit.png",
+    "frameW": 25,
+    "frameH": 63,
+    "frames": 6,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "METEOR_FISTS": {
+    "file": "meteor_fists.png",
+    "frameW": 192,
+    "frameH": 192,
+    "frames": 20,
+    "frameMs": 50,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "METEOR_FISTS_HIT": {
+    "file": "meteor_fists_hit.png",
+    "frameW": 64,
+    "frameH": 96,
+    "frames": 8,
+    "frameMs": 70,
+    "scale": 1,
+    "offset": [
+      -0.1,
+      -0.7
+    ]
+  },
+  "METEOR_FISTS_HIT2": {
+    "file": "meteor_fists_hit2.png",
+    "frameW": 86,
+    "frameH": 74,
+    "frames": 18,
+    "frameMs": 70,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "ICE_TIME": {
+    "file": "ice_time.png",
+    "frameW": 361,
+    "frameH": 357,
+    "frames": 16,
+    "frameMs": 96,
+    "scale": 0.8,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "ICE_TIME_HIT": {
+    "file": "ice_time_hit.png",
+    "frameW": 127,
+    "frameH": 128,
+    "frames": 18,
+    "frameMs": 66,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "HIVE_CRUSH": {
+    "file": "hive_crush.png",
+    "frameW": 64,
+    "frameH": 64,
+    "frames": 16,
+    "frameMs": 75,
+    "scale": 2.4,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "HIVE_CRUSH_HIT": {
+    "file": "hive_crush_hit.png",
+    "frameW": 180,
+    "frameH": 180,
+    "frames": 7,
+    "frameMs": 100,
+    "scale": 0.711,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "CRUMBLING_RAIN": {
+    "file": "crumbling_rain.png",
+    "frameW": 223,
+    "frameH": 223,
+    "frames": 27,
+    "frameMs": 67,
+    "scale": 1.3,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "CRUMBLING_RAIN_HIT": {
+    "file": "crumbling_rain_hit.png",
+    "frameW": 132,
+    "frameH": 132,
+    "frames": 52,
+    "frameMs": 42,
+    "scale": 1.17,
+    "offset": [
+      -1.6,
+      -1.1
+    ]
+  },
+  "ENDLESS_HOLLOW": {
+    "file": "endless_hollow.png",
+    "frameW": 54,
+    "frameH": 64,
+    "frames": 18,
+    "frameMs": 60,
+    "scale": 1.6,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "ENDLESS_HOLLOW_HIT": {
+    "file": "endless_hollow_hit.png",
+    "frameW": 192,
+    "frameH": 138,
+    "frames": 31,
+    "frameMs": 50,
+    "scale": 0.867,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "ENDLESS_HOLLOW_2": {
+    "file": "endless_hollow_2.png",
+    "frameW": 128,
+    "frameH": 53,
+    "frames": 8,
+    "frameMs": 65,
+    "scale": 1.6,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "DRACONIC_SOUL": {
+    "file": "draconic_soul.png",
+    "frameW": 96,
+    "frameH": 143,
+    "frames": 16,
+    "frameMs": 90,
+    "scale": 0.98,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "DRACONIC_SOUL_HIT": {
+    "file": "draconic_soul_hit.png",
+    "frameW": 294,
+    "frameH": 296,
+    "frames": 20,
+    "frameMs": 55,
+    "scale": 0.432,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "OMEGA_CLAP": {
+    "file": "omega_clap.png",
+    "frameW": 252,
+    "frameH": 254,
+    "frames": 28,
+    "frameMs": 36,
+    "scale": 0.882,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "OMEGA_CLAP_HIT": {
+    "file": "omega_clap_hit.png",
+    "frameW": 221,
+    "frameH": 223,
+    "frames": 3,
+    "frameMs": 90,
+    "scale": 0.574,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "LOVELY_EXPULSION": {
+    "file": "lovely_expulsion.png",
+    "frameW": 256,
+    "frameH": 256,
+    "frames": 11,
+    "frameMs": 91,
+    "scale": 0.875,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "LOVELY_EXPULSION_HIT": {
+    "file": "lovely_expulsion_hit.png",
+    "frameW": 93,
+    "frameH": 96,
+    "frames": 12,
+    "frameMs": 100,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "STEEL_FLARE": {
+    "file": "steel_flare.png",
+    "frameW": 288,
+    "frameH": 288,
+    "frames": 30,
+    "frameMs": 43,
+    "scale": 0.778,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "STEEL_FLARE_HIT": {
+    "file": "steel_flare_hit.png",
+    "frameW": 96,
+    "frameH": 96,
+    "frames": 29,
+    "frameMs": 45,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "STEEL_FLARE_BASE": {
+    "file": "steel_flare_base.png",
+    "frameW": 40,
+    "frameH": 44,
+    "frames": 12,
+    "frameMs": 175,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "CYCLONIC_TIDE_HIT2": {
+    "file": "cyclonic_tide_hit2.png",
+    "frameW": 71,
+    "frameH": 68,
+    "frames": 9,
+    "frameMs": 100,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "SWITCH": {
+    "file": "switch.png",
+    "frameW": 54,
+    "frameH": 82,
+    "frames": 9,
+    "frameMs": 89,
+    "scale": 1.0,
+    "offset": [
+      0,
+      -0.7
+    ]
+  },
+  "FX_1390": {
+    "file": "fx_1390.png",
+    "frameW": 190,
+    "frameH": 101,
+    "frames": 5,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      -1.5
+    ]
+  },
+  "FX_4000": {
+    "file": "fx_4000_smooth.png",
+    "frameW": 96,
+    "frameH": 29,
+    "frames": 19,
+    "frameMs": 168,
+    "scale": 3,
+    "offset": [
+      0,
+      -1.5
+    ]
+  },
+  "FX_4373": {
+    "file": "fx_4373.png",
+    "frameW": 214,
+    "frameH": 209,
+    "frames": 16,
+    "frameMs": 105,
+    "scale": 0.53625,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FX_1391": {
+    "file": "fx_1391.png",
+    "frameW": 162,
+    "frameH": 213,
+    "frames": 7,
+    "frameMs": 90,
+    "scale": 0.9,
+    "offset": [
+      0,
+      -1.5
+    ]
+  },
+  "FX_3833": {
+    "file": "fx_3833.png",
+    "frameW": 210,
+    "frameH": 216,
+    "frames": 8,
+    "frameMs": 90,
+    "scale": 1,
+    "offset": [
+      0,
+      0.3
+    ]
+  },
+  "FX_4282": {
+    "file": "fx_4282.png",
+    "frameW": 92,
+    "frameH": 92,
+    "frames": 4,
+    "frameMs": 180,
+    "scale": 1.5,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FX_5467": {
+    "file": "fx_5467.png",
+    "frameW": 140,
+    "frameH": 268,
+    "frames": 11,
+    "frameMs": 146,
+    "scale": 0.7,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FX_5591": {
+    "file": "fx_5591.png",
+    "frameW": 46,
+    "frameH": 128,
+    "frames": 11,
+    "frameMs": 146,
+    "scale": 1,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FX_3805": {
+    "file": "fx_3805_orange.png",
+    "frameW": 48,
+    "frameH": 48,
+    "frames": 18,
+    "frameMs": 44,
+    "scale": 2,
+    "offset": [
+      0,
+      0
+    ]
+  },
+  "FX_4072": {
+    "file": "fx_4072.png",
+    "frameW": 51,
+    "frameH": 48,
+    "frames": 7,
+    "frameMs": 90,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_5553": {
+    "file": "fx_5553.png",
+    "frameW": 71,
+    "frameH": 68,
+    "frames": 9,
+    "frameMs": 89,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_3728": {
+    "file": "fx_3728.png",
+    "frameW": 96,
+    "frameH": 96,
+    "frames": 20,
+    "frameMs": 40,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_3802": {
+    "file": "fx_3802.png",
+    "frameW": 75,
+    "frameH": 113,
+    "frames": 4,
+    "frameMs": 90,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_4148": {
+    "file": "fx_4148.png",
+    "frameW": 110,
+    "frameH": 90,
+    "frames": 16,
+    "frameMs": 50,
+    "scale": 0.7,
+    "offset": [
+      0.0,
+      -1.0
+    ]
+  },
+  "FX_5499": {
+    "file": "fx_5499.png",
+    "frameW": 131,
+    "frameH": 130,
+    "frames": 14,
+    "frameMs": 57,
+    "scale": 1.055,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_5489": {
+    "file": "fx_5489.png",
+    "frameW": 190,
+    "frameH": 192,
+    "frames": 6,
+    "frameMs": 90,
+    "scale": 1.201,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_5501": {
+    "file": "fx_5501.png",
+    "frameW": 223,
+    "frameH": 224,
+    "frames": 15,
+    "frameMs": 53,
+    "scale": 0.72,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_4314": {
+    "file": "fx_4314.png",
+    "frameW": 224,
+    "frameH": 224,
+    "frames": 15,
+    "frameMs": 53,
+    "scale": 0.857,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_1778": {
+    "file": "fx_1778.png",
+    "frameW": 88,
+    "frameH": 63,
+    "frames": 8,
+    "frameMs": 90,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "FX_2397": {
+    "file": "fx_2397.png",
+    "frameW": 30,
+    "frameH": 27,
+    "frames": 9,
+    "frameMs": 89,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "PORTAL_OPEN": {
+    "file": "portal_open.png",
+    "frameW": 87,
+    "frameH": 94,
+    "frames": 15,
+    "frameMs": 53,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "PORTAL_CLOSE": {
+    "file": "portal_close.png",
+    "frameW": 69,
+    "frameH": 72,
+    "frames": 8,
+    "frameMs": 90,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "BALLOON_167": {
+    "file": "balloon_167.png",
+    "frameW": 22,
+    "frameH": 24,
+    "frames": 12,
+    "frameMs": 67,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "BALLOON_174": {
+    "file": "balloon_174.png",
+    "frameW": 22,
+    "frameH": 24,
+    "frames": 12,
+    "frameMs": 67,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "BALLOON_181": {
+    "file": "balloon_181.png",
+    "frameW": 22,
+    "frameH": 24,
+    "frames": 12,
+    "frameMs": 67,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  },
+  "BALLOON_184": {
+    "file": "balloon_184.png",
+    "frameW": 22,
+    "frameH": 24,
+    "frames": 12,
+    "frameMs": 67,
+    "scale": 1.0,
+    "offset": [
+      0.0,
+      0.0
+    ]
+  }
+}

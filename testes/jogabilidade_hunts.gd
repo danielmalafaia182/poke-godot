@@ -27,7 +27,7 @@ func _init() -> void:
 		if args.has(k) and i + 1 < a.size():
 			args[k] = type_convert(a[i + 1], typeof(args[k]))
 	dados = DadosJogo.carregar()
-	var ini: Dictionary = NovoJogo.criar(NovoJogo.INICIAL_PROJETO, 1, "J")["inicial"]
+	var ini: Dictionary = NovoJogo.criar(NovoJogo.INICIAL_CAMPANHA, 1, "J", "campanha")["inicial"]
 	var slugs: Array = dados.hunts.keys() if String(args["slugs"]) == "" else String(args["slugs"]).split(",")
 	slugs.sort()
 	var res: Array = []

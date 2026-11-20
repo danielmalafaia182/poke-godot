@@ -33,34 +33,40 @@ func _novo_jogo(ej) -> void:
 	checar(ej.salvamento.jogo_novo, "abriu sem save: jogo novo")
 	passo("0. Sem save: o começo herdado do P04 é %s Lv.%d, %d Small Potions, %d Poké Balls, %d Super Balls" % [
 		ej.pokemon_inicial.especie.nome, ej.pokemon_inicial.nivel, ej.obter_quantidade_pocao(200), ej.obter_quantidade_bola(1), ej.obter_quantidade_bola(3)])
-	# Inicial do projeto (E, 18/11): Geodude Lv.1 é o padrão; os três do original ficam como opção.
+	# Ciclo 4: o começo é o do original — só Bulbasaur, Charmander e Squirtle (o Geodude saiu); IV e Quality pelo sorteio do
+	# cliente semeado com "<nome>:<id>" (C, getParty), conferido contra o código original rodado no Node
+	# (ferramentas/novo_jogo/referencia_inicial.js; valores abaixo).
 	var NJ := preload("res://sim/servico_novo_jogo.gd")
-	checar(not NJ.criar(74, 7).has("erro") and NJ.criar(1, 7).has("erro") and NJ.criar(74, 7, "T", NJ.MODO_ORIGINAL).has("erro")
-		and not NJ.criar(1, 7, "T", NJ.MODO_ORIGINAL).has("erro"), "modo padrão = só o Geodude; modo original = só os três (E/C)")
+	checar(NJ.criar(74, 7).has("erro") and not NJ.criar(1, 7).has("erro") and not NJ.criar(4, 7).has("erro") and not NJ.criar(7, 7).has("erro"),
+		"só os três do original (C); o Geodude é recusado")
+	var REF: Dictionary = JSON.parse_string('{"Ash:1":{"growth":{"hp":8,"atk":5,"def":9,"spAtk":15,"spDef":7,"speed":21},"quality":1.234},"Teste:1":{"growth":{"hp":3,"atk":22,"def":30,"spAtk":25,"spDef":28,"speed":8},"quality":0.912},"Ash:4":{"growth":{"hp":5,"atk":19,"def":8,"spAtk":23,"spDef":10,"speed":6},"quality":0.958},"starter-7:7":{"growth":{"hp":12,"atk":32,"def":10,"spAtk":21,"spDef":26,"speed":26},"quality":1.45},"Ádamo:1":{"growth":{"hp":23,"atk":21,"def":8,"spAtk":26,"spDef":7,"speed":17},"quality":1.336},"danpoke:1":{"growth":{"hp":15,"atk":27,"def":4,"spAtk":14,"spDef":29,"speed":18},"quality":0.879}}')
+	var iguais := 0
+	var det := ""
+	for k in REF:
+		var partes: PackedStringArray = String(k).rsplit(":", true, 1)
+		var meu: Dictionary = NJ.ivs_quality_do_inicial(partes[0], int(partes[1]))
+		var ok_iv := true
+		for st in REF[k]["growth"]:
+			ok_iv = ok_iv and int(meu["ivs"][st]) == int(REF[k]["growth"][st])
+		if ok_iv and absf(float(meu["quality"]) - float(REF[k]["quality"])) < 1e-9:
+			iguais += 1
+		else:
+			det += " %s: %s/%s" % [k, str(meu), str(REF[k])]
+	checar(iguais == REF.size(), "IV e Quality do inicial iguais ao código do cliente (Node) em %d/%d sementes" % [iguais, REF.size()], det)
 	var painel: Control = load("res://painel_novo_jogo.gd").new()
 	get_root().add_child(painel)
-	var nomes_padrao := []
-	for c in painel.find_children("Inicial_*", "Button", true, false):
-		if not c.is_queued_for_deletion(): nomes_padrao.append(String(c.text))
-	painel.find_child("IniciaisOriginal", true, false).button_pressed = true
-	var nomes_orig := []
-	for c in painel.find_children("Inicial_*", "Button", true, false):
-		if not c.is_queued_for_deletion(): nomes_orig.append(String(c.text))
+	var nomes := []
+	for c in painel.find_children("Inicial_*", "", true, false):
+		nomes.append(String(c.name))
 	painel.queue_free()
-	checar(nomes_padrao == ["Geodude"] and nomes_orig == ["Bulbasaur", "Charmander", "Squirtle"],
-		"tela de jogo novo: Geodude por padrão; a caixa \"Iniciais do original\" mostra os três", "%s → %s" % [str(nomes_padrao), str(nomes_orig)])
-	var rg: Dictionary = ej.novo_jogo(74, "Brock", 7)
-	var geo: DadosPokemon = ej.pokemon_inicial
-	checar(not rg.has("erro") and geo.especie.nome == "Geodude" and geo.nivel == 1 and ej.time_pokemon.size() == 1
-		and ej.obter_quantidade_pocao(200) == 100 and ej.obter_quantidade_bola(1) == 100 and ej.ouro == 0
-		and String(rg["hunt_recomendada"]) == "rattata" and ej.salvar_agora(),
-		"jogo novo padrão: Geodude Lv.1 sozinho no time, mesmo kit, recomendada Rattata (A: geodude-10min), save válido",
-		"Q %.3f, IV %d" % [geo.qualidade, geo.obter_total_ivs()])
+	checar(nomes.size() == 3 and "Inicial_1" in nomes and "Inicial_4" in nomes and "Inicial_7" in nomes, "tela de jogo novo: os três cartões do original (sem Geodude)", str(nomes))
 	checar(ej.novo_jogo(25, "Ash", 7).has("erro"), "inicial fora dos três: recusa (C)")
 	var r: Dictionary = ej.novo_jogo(1, "Ash", 7)
 	bulba = ej.pokemon_inicial
-	checar(not r.has("erro") and bulba.especie.nome == "Bulbasaur" and bulba.nivel == 1 and ej.time_pokemon.size() == 1 and ej.obter_lider() == bulba,
-		"escolheu Bulbasaur: nível 1, sozinho no time e líder (C)", "Q %.3f, IV %d" % [bulba.qualidade, bulba.obter_total_ivs()])
+	var iq: Dictionary = NJ.ivs_quality_do_inicial("Ash", 1)
+	checar(not r.has("erro") and bulba.especie.nome == "Bulbasaur" and bulba.nivel == 1 and ej.time_pokemon.size() == 1 and ej.obter_lider() == bulba
+		and absf(bulba.qualidade - float(iq["quality"])) < 1e-9 and bulba.iv_atk == int(iq["ivs"]["atk"]) and bulba.iv_hp == int(iq["ivs"]["hp"]),
+		"escolheu Bulbasaur: nível 1, sozinho no time e líder, IV/Quality do sorteio do cliente para \"Ash:1\" (C)", "Q %.3f, IV %d" % [bulba.qualidade, bulba.obter_total_ivs()])
 	var outras := 0
 	for id in [201, 202, 203, 204]:
 		outras += ej.obter_quantidade_pocao(id)

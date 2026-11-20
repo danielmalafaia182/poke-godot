@@ -118,7 +118,7 @@ func _mapa(slug: String):
 
 
 func _novo_jogo() -> void:
-	var r: Dictionary = NovoJogo.criar(NovoJogo.INICIAL_PROJETO, int(args["semente"]), "Campanha")
+	var r: Dictionary = NovoJogo.criar(NovoJogo.INICIAL_CAMPANHA, int(args["semente"]), "Campanha", "campanha")
 	var ini: Dictionary = r["inicial"]
 	est = {"gold": int(r["ouro"]), "cidade": "cerulean", "vip": int(args["vip"]) == 1, "streak": {}, "boosts": [], "itens": {}, "bolas": {}, "depot": {"itens": {}},
 		"pokes": [{"id": "lider", "speciesId": int(ini["speciesId"]), "xp": int(ini["xp"]), "ivs": ini["ivs"],
