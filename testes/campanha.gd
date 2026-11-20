@@ -34,6 +34,18 @@ extends SceneTree
 ##   - Auto-Catch Shiny ligado com a melhor bola que tiver (decisão do ciclo 2).
 ##   - Metas visíveis (sim/metas.gd): a cada sessão registra a hunt recomendada, a próxima meta e os marcos.
 ##
+## Ciclo 5 (`--time 1`): time de até 6 (política E, como um jogador faria):
+##   - Capturas vão para a BOX como indivíduo novo de nível 1 (A: o capturado é um sorteio novo, IV 1..32 e Quality pelos
+##     pesos do cliente; sim/regras.gd sortear_ivs/sortear_qualidade). BOX com no máximo 40: vende ao Mark o excesso de
+##     menor Power (C: só BOX, nunca shiny).
+##   - Time: na cidade, os 6 de maior Power, preferindo um tipo principal novo a cada vaga (cobertura); o resto vai para a
+##     BOX. Evolui com pedra cada membro do time que puder.
+##   - Líder por hunt: para cada hunt candidata, o membro do time de maior Power × vantagem de tipo (efetividade média dos
+##     tipos dele contra as espécies da hunt ÷ a das espécies contra ele, sim/regras.gd); os outros vão de reserva (troca
+##     automática ao desmaiar, regra E do projeto). As candidatas saem do nível do carregador (o de maior nível).
+##   - Treino: 1 sessão em 4 o líder é o membro mais fraco do time, numa hunt do nível dele (o jogador sobe as reservas).
+##   - XP do Pokémon só para quem está em campo (A: poke-xp só do ativo).
+##
 ## Uso: testes/rodar.sh res://testes/campanha.gd [--horas N] [--nivel_alvo N] [--semente N] [--saida caminho.json]
 ##      [--completo 1] [--vip 1] [--horas_dia 16]   (padrão: 300 h simuladas ou treinador 2000)
 
@@ -57,7 +69,7 @@ var cidade
 var mapas := {}
 var hunts_lista: Array = []
 var args := {"horas": 300.0, "nivel_alvo": 2000, "semente": 1, "saida": "saida_testes/campanha.json", "sessao_min": 60, "sonda_min": 2,
-	"completo": 0, "vip": 0, "horas_dia": 16.0}
+	"completo": 0, "vip": 0, "horas_dia": 16.0, "time": 0}
 
 # estado do jogador (formato do sim/servico_cidade.gd)
 var est := {}
@@ -84,6 +96,11 @@ var nome_para_id := {}
 var extras := {"soneca_xp": 0, "soneca_pxp": 0, "sonecas": 0, "tarefas_xp": 0, "tarefas_ouro": 0, "tarefas": 0, "kill_xp": 0,
 	"kills_diarios": 0, "catch_xp": 0, "ginasios_vitorias": 0, "ginasios_derrotas": 0, "insignias_max": 0, "gift": 0, "streak_pontos": 0, "streak_ouro": 0, "shiny_vistos": 0, "shiny_capturados": 0}
 var marcos_vistos := {}
+var rng_box = preload("res://sim/rng.gd").new(9173)
+var n_capturados := 0
+var lider_sessao := ""   # id do Pokémon que lidera a sessão (modo time)
+var treino := false      # sessão de treino (líder = o membro mais fraco)
+var orre := {"inicio_h": -1.0, "min": 0.0, "xp": 0, "mortes": 0, "sessoes": 0, "por_hunt": {}}
 var metas_linha: Array = []
 
 
@@ -138,10 +155,143 @@ static func _soma_iv(ivs: Dictionary) -> int:
 
 
 func _lider() -> Dictionary:
-	return est["pokes"][0]
+	if not modo_time():
+		return est["pokes"][0]
+	var melhor: Dictionary = {}
+	for pk in _time():
+		if melhor.is_empty() or int(pk["xp"]) > int(melhor["xp"]):
+			melhor = pk
+	return melhor
+
+
+func modo_time() -> bool:
+	return int(args["time"]) == 1
+
+
+func _time() -> Array:
+	var t: Array = []
+	for pk in est["pokes"]:
+		if bool(pk.get("team", false)):
+			t.append(pk)
+	t.sort_custom(func(a, b): return int(a.get("slot", 0)) < int(b.get("slot", 0)))
+	return t
+
+
+func _poke_id(id: String) -> Dictionary:
+	for pk in est["pokes"]:
+		if String(pk["id"]) == id:
+			return pk
+	return {}
+
+
+func _nivel(pk: Dictionary) -> int:
+	return Regras.nivel_por_xp(int(pk["xp"]))
+
+
+func _tipos_esp(sid: int) -> Array:
+	return Regras.tipos_de(dados.especie(sid))
+
+
+func _vantagem(pk: Dictionary, slug: String) -> float:
+	## Efetividade média dos tipos do Pokémon contra as espécies da hunt ÷ a das espécies contra ele (amplificada, A/B).
+	var meus := _tipos_esp(int(pk["speciesId"]))
+	var at := 0.0
+	var de := 0.0
+	var n := 0
+	for x in dados.hunts[slug].get("spawns", []):
+		var ts := _tipos_esp(int(x.get("pokeId", 0)))
+		var a := 0.0
+		for t in meus:
+			if String(t) != "":
+				a = maxf(a, Regras.efetividade_amplificada(Regras.efetividade_bruta(String(t), String(ts[0]), String(ts[1]))))
+		var d := 0.0
+		for t in ts:
+			if String(t) != "":
+				d = maxf(d, Regras.efetividade_amplificada(Regras.efetividade_bruta(String(t), String(meus[0]), String(meus[1]))))
+		at += a
+		de += d
+		n += 1
+	if n == 0:
+		return 1.0
+	return (at / n) / maxf(0.2, de / n)
+
+
+func _melhor_membro(slug: String) -> Dictionary:
+	var melhor: Dictionary = {}
+	var mv := -1.0
+	for pk in _time():
+		var v := float(Metas.poder_lider(dados, pk)) * _vantagem(pk, slug)
+		if v > mv:
+			mv = v
+			melhor = pk
+	return melhor
+
+
+func _mais_fraco() -> Dictionary:
+	var r: Dictionary = {}
+	for pk in _time():
+		if r.is_empty() or int(pk["xp"]) < int(r["xp"]):
+			r = pk
+	return r
+
+
+func _ataca(pk: Dictionary) -> bool:
+	## Tem golpe de dano no nível atual (A/C: golpes por nível da espécie). Sem ele o Pokémon não abate nada nem sobe
+	## (XP só do ativo): Poliwag só ataca a partir do 5, Metapod nunca. Um jogador não o põe no time.
+	var nv := _nivel(pk)
+	for g in dados.especie(int(pk["speciesId"])).get("golpes", []):
+		if int(g.get("nivel", 999)) <= nv and String(g.get("categoria", "STATUS")) != "STATUS" and int(g.get("poder", 0)) > 0:
+			return true
+	return false
+
+
+func _montar_time() -> void:
+	## Os 6 de maior Power, preferindo um tipo principal novo a cada vaga; o resto na BOX; excesso da BOX vendido.
+	var todos: Array = (est["pokes"] as Array).filter(func(pk): return _ataca(pk) or bool(pk.get("starter", false)))
+	var pod := {}
+	for pk in todos:
+		pod[String(pk["id"])] = Metas.poder_lider(dados, pk)
+	todos.sort_custom(func(a, b): return int(pod[String(a["id"])]) > int(pod[String(b["id"])]))
+	var time: Array = []
+	var tipos := {}
+	for pk in todos:
+		if time.size() >= 6:
+			break
+		var t0 := String(_tipos_esp(int(pk["speciesId"]))[0])
+		if not tipos.has(t0):
+			time.append(pk)
+			tipos[t0] = true
+	var especies := {}
+	for pk in time:
+		especies[int(pk["speciesId"])] = true
+	for pk in todos:   # depois, uma espécie nova a cada vaga; só então repete
+		if time.size() >= 6:
+			break
+		if not pk in time and not especies.has(int(pk["speciesId"])):
+			time.append(pk)
+			especies[int(pk["speciesId"])] = true
+	for pk in todos:
+		if time.size() >= 6:
+			break
+		if not pk in time:
+			time.append(pk)
+	for pk in est["pokes"]:
+		pk["team"] = pk in time
+		pk["leader"] = false
+		pk["slot"] = time.find(pk) if pk in time else -1
+	todos = (est["pokes"] as Array).duplicate()
+	todos.sort_custom(func(a, b): return Metas.poder_lider(dados, a) > Metas.poder_lider(dados, b))
+	var box: Array = todos.filter(func(pk): return not pk in time and not bool(pk.get("shiny", false)) and not bool(pk.get("starter", false)))
+	if box.size() > 40:
+		var ids: Array = []
+		for pk in box.slice(40):
+			ids.append(String(pk["id"]))
+		cidade.tratar(est, {"type": "pokemon-sell", "pokeIds": ids})
 
 
 func _nivel_lider() -> int:
+	if modo_time() and treino and not _mais_fraco().is_empty():
+		return Regras.nivel_por_xp(int(_mais_fraco()["xp"]))
 	return Regras.nivel_por_xp(int(_lider()["xp"]))
 
 
@@ -158,9 +308,18 @@ func _jogo(slug: String, penalizar: bool) -> Dictionary:
 	var bolas := {}
 	for k in est["bolas"]:
 		bolas[int(k)] = int(est["bolas"][k])
-	return {"slug": slug, "hunt": String(dados.hunts[slug]["nome"]), "equipe": [{"id": "lider",
+	var equipe: Array = [{"id": String(l.get("id", "lider")),
 		"nome": String(dados.especie(int(l["speciesId"]))["nome"]), "xp": int(l["xp"]), "ivs": l["ivs"], "quality": float(l["quality"]),
-		"hp": int(l["hp"])}], "lider": 0, "treinador_xp": treinador_xp, "inventario": inv, "bolas": bolas,
+		"hp": int(l["hp"]), "shiny": bool(l.get("shiny", false))}]
+	if modo_time():
+		var lp: Dictionary = _poke_id(lider_sessao) if lider_sessao != "" else _lider()
+		if lp.is_empty():
+			lp = _lider()
+		equipe.clear()
+		for pk in [lp] + _time().filter(func(x): return x != lp):
+			equipe.append({"id": String(pk["id"]), "nome": String(dados.especie(int(pk["speciesId"]))["nome"]), "xp": int(pk["xp"]),
+				"ivs": pk["ivs"], "quality": float(pk["quality"]), "hp": int(pk.get("hp", -1)), "shiny": bool(pk.get("shiny", false))})
+	return {"slug": slug, "hunt": String(dados.hunts[slug]["nome"]), "equipe": equipe, "lider": 0, "treinador_xp": treinador_xp, "inventario": inv, "bolas": bolas,
 		"auto_catch": int(est["bolas"].get("1", 0)) > 0, "bola_auto_catch": 1, "auto_potion": true, "pocao_id": 0,
 		"medidor_captura": medidor, "vip": int(args["vip"]) == 1, "penalizar": penalizar,
 		"auto_catch_shiny": completo(), "bola_auto_catch_shiny": _bola_shiny()}
@@ -194,6 +353,8 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 		"travado_max_s": 0.0, "por_especie": {}, "capturas_especie": [], "pxp": 0, "shiny": 0, "shiny_cap": 0}
 	var xp0 := treinador_xp
 	var pxp0 := int(_lider()["xp"])
+	if modo_time() and not _poke_id(lider_sessao).is_empty():
+		pxp0 = int(_poke_id(lider_sessao)["xp"])
 	var parado := 0
 	var shiny_pos := {}   # casas de abates de shiny ainda sem catch-result
 	var ult_pos := Vector2i(-999, -999)
@@ -218,6 +379,11 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 					if bool(m.get("success", false)):
 						r["capturas"] += 1
 						r["capturas_especie"].append(int(nome_para_id.get(String(m.get("speciesName", "")), -1)))
+						if aplicar and modo_time() and int(nome_para_id.get(String(m.get("speciesName", "")), -1)) > 0:
+							n_capturados += 1
+							est["pokes"].append({"id": "c%d" % n_capturados, "speciesId": int(nome_para_id[String(m["speciesName"])]), "xp": 0,
+								"ivs": Regras.sortear_ivs(rng_box), "quality": Regras.sortear_qualidade(rng_box), "hp": -1,
+								"shiny": shiny_pos.has(Vector2i(int(m.get("col", -2)), int(m.get("row", -2)))), "team": false, "slot": -1})
 						# ciclo 4: o shiny é reconhecido pela casa do abate (antes, só se a bola do shiny fosse diferente da do
 						# Auto-Catch — com só Poké Balls, uma captura de shiny nunca era contada)
 						if shiny_pos.has(Vector2i(int(m.get("col", -2)), int(m.get("row", -2)))):
@@ -249,9 +415,19 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 	r["pxp"] = int(sim.equipe[0]["xp"]) - pxp0
 	if aplicar:
 		treinador_xp = int(sim.treinador["xp"])
-		var e: Dictionary = sim.equipe[0]
-		_lider()["xp"] = int(e["xp"])
-		_lider()["hp"] = int(e["hp"])
+		if modo_time():
+			if OS.get_environment("CAMPANHA_DEBUG") != "":
+				for e in sim.equipe:
+					print("DBG equipe ", e.get("id"), " sp=", e.get("speciesId"), " xp=", e.get("xp"), " hp=", e.get("hp"), " lider=", e.get("leader"))
+			for e in sim.equipe:
+				var pk := _poke_id(String(e.get("id", "")))
+				if not pk.is_empty():
+					pk["xp"] = int(e["xp"])
+					pk["hp"] = int(e["hp"])
+		else:
+			var e: Dictionary = sim.equipe[0]
+			_lider()["xp"] = int(e["xp"])
+			_lider()["hp"] = int(e["hp"])
 		for k in est["itens"].keys():
 			if int(k) >= 200 and int(k) <= 204:
 				est["itens"].erase(k)
@@ -296,11 +472,15 @@ func _cidade() -> Dictionary:
 		for m in cidade.tratar(est, {"type": "shop-sell", "items": venda}):
 			if String(m.get("type", "")) == "shop-sold":
 				out["ouro_venda"] = int(m["goldGained"])
-	var info: Dictionary = cidade.tratar(est, {"type": "evolve-info", "capturedId": "lider"})[0]
-	if bool(info.get("canEvolve", false)) and bool(info.get("hasStones", false)) and info.get("destId") != null:
-		for m in cidade.tratar(est, {"type": "evolve", "capturedId": "lider", "useStone": true, "destId": info["destId"]}):
-			if String(m.get("type", "")) == "evolved":
-				out["evoluiu"] = String(m["name"])
+	if modo_time():
+		_montar_time()
+	for pk in (_time() if modo_time() else [_lider()]):
+		var pid := String(pk.get("id", "lider"))
+		var info: Dictionary = cidade.tratar(est, {"type": "evolve-info", "capturedId": pid})[0]
+		if bool(info.get("canEvolve", false)) and bool(info.get("hasStones", false)) and info.get("destId") != null:
+			for m in cidade.tratar(est, {"type": "evolve", "capturedId": pid, "useStone": true, "destId": info["destId"]}):
+				if String(m.get("type", "")) == "evolved":
+					out["evoluiu"] += ("" if out["evoluiu"] == "" else ", ") + String(m["name"])
 	# poção: a menor que cura ≥ 35% do HP máximo, senão a maior
 	var max_hp: int = cidade.max_hp(_lider())
 	var escolha := 204
@@ -322,7 +502,7 @@ func _cidade() -> Dictionary:
 
 func _pedras_faltando() -> Array:
 	## itemIds das pedras que faltam quando o líder já tem o nível para evoluir (evolve-info, como a tela do jogo).
-	var info: Dictionary = cidade.tratar(est, {"type": "evolve-info", "capturedId": "lider"})[0]
+	var info: Dictionary = cidade.tratar(est, {"type": "evolve-info", "capturedId": String(_lider().get("id", "lider"))})[0]
 	var falta: Array = []
 	if bool(info.get("canEvolve", false)) and not bool(info.get("hasStones", false)):
 		for st in info.get("stones", []):
@@ -368,7 +548,19 @@ func _candidatas_pedra(pedras: Array) -> Array:
 
 func _candidatas() -> Array:
 	var lib := _liberadas()
-	var teto := _nivel_lider() + 20
+	var teto := _nivel_lider() + (2 if treino else 20)   # treino: hunts do nível do membro mais fraco
+	if treino:
+		# treino: as hunts até o nível do membro + 2 com a melhor vantagem de tipo para ele (e as de nível mais alto)
+		var fraco := _mais_fraco()
+		var tc: Array = []
+		for s in lib:
+			if int(dados.hunts[s]["nivel"]) <= teto:
+				tc.append([_vantagem(fraco, s), int(dados.hunts[s]["nivel"]), s])
+		tc.sort_custom(func(a, b): return a[0] > b[0] or (a[0] == b[0] and (a[1] > b[1] or (a[1] == b[1] and a[2] < b[2]))))
+		var r: Array = []
+		for x in tc.slice(0, 5):
+			r.append(x[2])
+		return r
 	var niveis := {}
 	for s in lib:
 		var nv := int(dados.hunts[s]["nivel"])
@@ -401,14 +593,18 @@ func _escolher() -> String:
 	var melhor_v := -1.0
 	var pedras := _pedras_faltando()
 	var cands := _candidatas()
-	for s in _candidatas_pedra(pedras) if not pedras.is_empty() else []:
+	for s in _candidatas_pedra(pedras) if not pedras.is_empty() and not treino else []:
 		if not s in cands:
 			cands.append(s)
 	# pontuação = XP/min ÷ melhor XP/min + (faltando pedra) pedras/min ÷ melhor pedras/min; desmaio na sonda derruba
 	var notas := []
 	var melhor_xp := 0.0001
 	var melhor_pedra := 0.0000001
+	var lider_de := {}
 	for s in cands:
+		if modo_time():
+			lider_sessao = String((_mais_fraco() if treino else _melhor_membro(s)).get("id", ""))
+			lider_de[s] = lider_sessao
 		var r := _rodar(s, float(args["sonda_min"]), false, false)
 		var mins := maxf(0.1, r["ticks"] / float(TICKS_MIN))
 		var xp := float(r["xp"]) / mins
@@ -424,6 +620,8 @@ func _escolher() -> String:
 		if v > melhor_v:
 			melhor_v = v
 			melhor = n[0]
+	if modo_time() and melhor != "":
+		lider_sessao = String(lider_de[melhor])
 	return melhor
 
 
@@ -508,6 +706,10 @@ func _ginasios() -> void:
 	est["nivel"] = _nivel_treinador()
 	var l: Dictionary = _lider()
 	var time := [{"speciesId": int(l["speciesId"]), "xp": int(l["xp"]), "ivs": l["ivs"], "quality": float(l["quality"])}]
+	if modo_time():
+		time.clear()
+		for pk in _time():
+			time.append({"speciesId": int(pk["speciesId"]), "xp": int(pk["xp"]), "ivs": pk["ivs"], "quality": float(pk["quality"])})
 	for g in gin.p.lista:
 		var gid := String(g["id"])
 		if _nivel_treinador() < int(g["nivel_treinador"]):
@@ -574,16 +776,34 @@ func _campanha() -> void:
 			_diarias_cidade()
 			_ginasios()
 		var c := _cidade()
+		treino = modo_time() and sessao % 4 == 3 and _time().size() > 1
 		var slug := _escolher()
 		if slug == "":
 			print("SEM HUNT liberada?!")
 			break
 		var nt0 := _nivel_treinador()
 		var nl0 := _nivel_lider()
+		var lider_txt := ""
+		if modo_time():
+			var lp := _poke_id(lider_sessao)
+			lider_txt = "%s %d" % [String(dados.especie(int(lp["speciesId"]))["nome"]), _nivel(lp)]
 		var r := _rodar(slug, float(args["sessao_min"]), slug != ultima_hunt, true)
 		ultima_hunt = slug
-		if r["morte"]:
+		if r["morte"] and not treino:
 			bloqueadas[slug] = nl0
+		if String(dados.hunts[slug]["area"]).to_lower() == "orre":
+			if float(orre["inicio_h"]) < 0.0:
+				orre["inicio_h"] = snappedf(minutos_jogados / 60.0, 0.01)
+			orre["min"] += r["ticks"] / float(TICKS_MIN)
+			orre["xp"] += int(r["xp"])
+			orre["mortes"] += 1 if r["morte"] else 0
+			orre["sessoes"] += 1
+			var oh: Dictionary = orre["por_hunt"].get(slug, {"min": 0.0, "xp": 0, "mortes": 0, "sessoes": 0, "nivel": int(dados.hunts[slug]["nivel"])})
+			oh["min"] += r["ticks"] / float(TICKS_MIN)
+			oh["xp"] += int(r["xp"])
+			oh["mortes"] += 1 if r["morte"] else 0
+			oh["sessoes"] += 1
+			orre["por_hunt"][slug] = oh
 		var mins: float = r["ticks"] / float(TICKS_MIN)
 		minutos_jogados += mins
 		var mt := {}
@@ -615,6 +835,14 @@ func _campanha() -> void:
 		var linha := {"sessao": sessao, "h": snappedf(minutos_jogados / 60.0, 0.01), "slug": slug, "nivel_hunt": int(dados.hunts[slug]["nivel"]),
 			"treinador": "%d→%d" % [nt0, _nivel_treinador()], "lider": "%s %d→%d" % [esp, nl0, _nivel_lider()], "abates": int(r["abates"]),
 			"morte": r["morte"], "ouro": int(est["gold"]), "evoluiu": c["evoluiu"], "pedras_bag": _pedras_bag(), "venda": c["ouro_venda"], "travado_s": r["travado_max_s"]}
+		if modo_time():
+			linha["lider_sessao"] = lider_txt
+			linha["treino"] = treino
+			var tt: Array = []
+			for pk in _time():
+				tt.append("%s %d" % [String(dados.especie(int(pk["speciesId"]))["nome"]), _nivel(pk)])
+			linha["time"] = tt
+			linha["box"] = (est["pokes"] as Array).size() - _time().size()
 		if completo():
 			linha["dias"] = snappedf(float(agora_s - int(Time.get_unix_time_from_datetime_string("2026-11-19T03:00:00"))) / 86400.0, 0.01)
 			linha["metas"] = mt
@@ -647,7 +875,7 @@ func _relatorio() -> void:
 	var saida := {"args": args, "minutos_jogados": minutos_jogados, "treinador_final": _nivel_treinador(), "lider_final": _nivel_lider(),
 		"especie_final": String(dados.especie(int(_lider()["speciesId"]))["nome"]), "ouro_final": int(est["gold"]),
 		"por_hunt": lista, "linha_tempo": linha_tempo, "pedras_obtidas": pedras_obtidas, "problemas": problemas, "segundos_reais": (Time.get_ticks_msec() - t0) / 1000.0,
-		"extras": extras, "marcos": marcos_vistos, "colecao": colecao.size()}
+		"extras": extras, "marcos": marcos_vistos, "colecao": colecao.size(), "orre": orre}
 	var f := FileAccess.open(String(args["saida"]), FileAccess.WRITE)
 	f.store_string(JSON.stringify(saida, "  "))
 	f.close()
