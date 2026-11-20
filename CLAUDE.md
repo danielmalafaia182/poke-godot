@@ -1303,3 +1303,9 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     - sim (regras 43/43, determinismo, caminho, alvo, grade 7/7, protocolo), ponte 11/11, save em thread 15/15,
       compatibilidade 24/24, segmentar 10/10, processar gravação 25/25, gravador 9/9;
     - P04 20/20; validador da classe 2 159/160 (igual).
+- 20/11/2026 — Assets do original baixados com a autorização do usuário: `/assets/evolution/lol-btn-frame.png` (o fundo
+  dos botões do Perfil, agora igual ao CSS) e `/assets/maps/{outland,orre,nightmare}.png` (as imagens das regiões no
+  mapa-múndi, em `assets/interface/mapa/regioes/`). Antes eram uma moldura dourada e um fundo liso (E).
+  - Os 3 marcadores da Nightmare em y = −158 (A) ficam numa margem acima da imagem, que desce junto com eles.
+  - `test_mapa_hunts` 4/4, `test_acesso_hunts` 13/13, P04 `test_mapa_fiel` 28/28 e `test_mapa_entre_hunts` 8/8,
+    `test_janelas_ciclo2` 26/26. Lado a lado: 11 (refeito) e 13.

@@ -18,3 +18,4 @@ imagens são montadas por `ferramentas/visual/lado_a_lado.gd`.
 | 10_my_pokes | Equipe (My Pokes) | 11_time_my_pokes/v2_00028 |
 | 11_perfil | Perfil | 13_perfil_outfit/v2_00049 |
 | 12_dock_janela_original (só o nosso) | Item do dock que depende do servidor (Clãs) | — |
+| 13_mapa_nightmare (só o nosso) | Mapa da Nightmare com a imagem do original | — |

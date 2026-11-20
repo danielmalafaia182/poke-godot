@@ -6,7 +6,7 @@ extends Control
 ## (referencia_visual/quadros/13_perfil_outfit).
 ## Offline, o que é do servidor aparece como o original mostra para quem não tem: Diamantes 0, Pesca —, Bless "Sem Bless",
 ## Clã "Sem clã", Pontos de PokéLog 0, Rank e rankings de perfil "Em breve" (E). O resto vem do EstadoJogo.
-## E: o fundo dos botões no original é /assets/evolution/lol-btn-frame.png (não baixado); aqui, uma moldura dourada.
+## Os botões usam a moldura do original, /assets/evolution/lol-btn-frame.png (A, baixada em 20/11).
 
 const T := preload("res://textos.gd")
 const PONTE := preload("res://ponte_cidade.gd")
@@ -16,6 +16,7 @@ const BARLOW_B: Font = preload("res://assets/interface/fiel/barlow_bold.ttf")
 const CINZEL: Font = preload("res://assets/interface/fiel/cinzel_bold.ttf")
 const POKEBOLA: Texture2D = preload("res://assets/original/profile/pokeball.png")
 const ICONE_LOG: Texture2D = preload("res://assets/original/profile/capturelog.png")
+const MOLDURA_BOTAO: Texture2D = preload("res://assets/original/evolution/lol-btn-frame.png")
 const LARGURA := 440.0
 const REF := 1880.0
 
@@ -351,14 +352,14 @@ func _botao_moldura(t: String, icone: Texture2D, nome: String, acao: Callable) -
 	b.add_theme_color_override("font_color", Color("ead9c0"))
 	b.add_theme_color_override("font_hover_color", Color("fff3dc"))
 	for estado in ["normal", "hover", "pressed"]:
-		var s := StyleBoxFlat.new()
-		s.bg_color = Color("1a1f26") if estado == "normal" else Color("242b35")
-		s.border_color = Color("b8985a")
-		s.set_border_width_all(2)
-		s.set_corner_radius_all(3)
-		s.content_margin_top = 12; s.content_margin_bottom = 12; s.content_margin_left = 8; s.content_margin_right = 8
-		s.shadow_color = Color(0, 0, 0, 0.5)
-		s.shadow_size = 3
+		# C: background url(/assets/evolution/lol-btn-frame.png) 50%/100% 100% (a moldura esticada no botão inteiro);
+		# hover brightness 1,15, active 0,95
+		var s := StyleBoxTexture.new()
+		s.texture = MOLDURA_BOTAO
+		s.axis_stretch_horizontal = StyleBoxTexture.AXIS_STRETCH_MODE_STRETCH
+		s.axis_stretch_vertical = StyleBoxTexture.AXIS_STRETCH_MODE_STRETCH
+		s.modulate_color = {"normal": Color.WHITE, "hover": Color(1.15, 1.15, 1.15), "pressed": Color(0.95, 0.95, 0.95)}[estado]
+		s.content_margin_top = 13; s.content_margin_bottom = 13; s.content_margin_left = 10; s.content_margin_right = 10
 		b.add_theme_stylebox_override(estado, s)
 	b.pressed.connect(acao)
 	return b

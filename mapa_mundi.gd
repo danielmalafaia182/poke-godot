@@ -270,26 +270,35 @@ func _registros_outras_regioes() -> Array:
 			"pixel":h["pixel"],"type1":String(tipos[0]) if tipos.size()>0 else "","type2":String(tipos[1]) if tipos.size()>1 else "","area":area})
 	return r
 func _textura_regiao(regiao: String) -> Texture2D:
-	## Kanto: a imagem do original. As outras: o snapshot não tem /assets/maps/<área>.png (o coletor não baixava; agora
-	## baixa) → fundo liso do tamanho dos marcadores (E) até a próxima coleta (res://assets/interface/mapa/regioes/<área>.png).
+	## Kanto: a imagem do original. Outland, Orre e Nightmare: /assets/maps/<área>.png do original (A, baixadas em 20/11
+	## para res://assets/interface/mapa/regioes/); sem a imagem, um fundo liso do tamanho dos marcadores (E).
+	## O map-markers do servidor (A, igual em 20/11) põe 3 hunts da Nightmare em y = −158, acima da imagem: a região
+	## ganha uma margem em cima/à esquerda e imagem e marcadores descem juntos, para eles caberem sem sair do lugar em
+	## relação ao desenho (E).
 	if regiao=="kanto": return preload("res://assets/interface/mapa/hunts.png")
 	if _texturas_regiao.has(regiao): return _texturas_regiao[regiao]
+	var mn: Vector2=Vector2.ZERO
+	var mx: Vector2=Vector2(400,300)
+	for reg in catalogo:
+		if String(reg.get("area","kanto"))==regiao:
+			var px: Vector2=Vector2(float(reg["pixel"][0]),float(reg["pixel"][1]))
+			mn=mn.min(px)
+			mx=mx.max(px+Vector2(80,90))
+	var desl: Vector2=(-mn+Vector2(80,90)) if mn!=Vector2.ZERO else Vector2.ZERO
+	deslocamento_regiao[regiao]=desl
 	var caminho: String="res://assets/interface/mapa/regioes/%s.png" % regiao
-	var t: Texture2D=load(caminho) if ResourceLoader.exists(caminho) else null
-	if t==null:
-		# Ciclo 4: o map-markers do servidor (A, igual em 20/11) põe 3 hunts da Nightmare em y = −158 (acima da imagem da
-		# região). Sem a imagem real, o fundo gerado cobre todos os marcadores: a origem da região desloca para os de
-		# coordenada negativa caberem (E; as posições relativas ficam as do servidor).
-		var mn: Vector2=Vector2.ZERO
-		for reg in catalogo:
-			if String(reg.get("area","kanto"))==regiao: mn=mn.min(Vector2(float(reg["pixel"][0]),float(reg["pixel"][1])))
-		var desl: Vector2=(-mn+Vector2(80,90)) if mn!=Vector2.ZERO else Vector2.ZERO
-		deslocamento_regiao[regiao]=desl
-		var lim: Vector2=Vector2(400,300)
-		for reg in catalogo:
-			if String(reg.get("area","kanto"))==regiao: lim=lim.max(Vector2(float(reg["pixel"][0]),float(reg["pixel"][1]))+desl+Vector2(80,90))
-		var img: Image=Image.create(int(lim.x),int(lim.y),false,Image.FORMAT_RGB8)
+	var real: Texture2D=load(caminho) if ResourceLoader.exists(caminho) else null
+	var t: Texture2D=real
+	if real==null or desl!=Vector2.ZERO:
+		var lim: Vector2=mx+desl
+		if real!=null:
+			lim=lim.max(real.get_size()+desl)
+		var img: Image=Image.create(int(lim.x),int(lim.y),false,Image.FORMAT_RGBA8)
 		img.fill({"outland":Color("2a2418"),"orre":Color("3a2a16"),"nightmare":Color("1a1024")}.get(regiao,Color("101820")))
+		if real!=null:
+			var ri: Image=real.get_image()
+			ri.convert(Image.FORMAT_RGBA8)
+			img.blend_rect(ri,Rect2i(Vector2i.ZERO,ri.get_size()),Vector2i(desl))
 		t=ImageTexture.create_from_image(img)
 	_texturas_regiao[regiao]=t
 	return t
