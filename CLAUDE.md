@@ -1337,3 +1337,45 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     | nightmare_steelix | 8,21 → 0,89 s | 1,23 → 0,48 s |
 
     Critério de no máximo 1 s cumprido em todas, inclusive na 1ª visita sem o atlas pré-aquecido.
+- 20/11/2026 — **Ciclo 5, item 1 (teste do build do ciclo 4 pelo usuário).** Lado a lado e índice em
+  `dados/relatorios/teste_ciclo4/LEIA.md`. Os dois vídeos da pasta de evidências são do jogo original.
+  - My Pokes: a barra de cada atributo é o IV / 32; o número segue sendo o stat (E).
+  - Painel de captura (canto inferior direito): aparece a cada lançamento, inclusive no Auto-Catch (C), com o link
+    "Loja" e o aviso de 2,5 s.
+  - Pokédex: grade de 7 colunas montada uma vez. Abre em ~200 ms na 1ª vez e em 13 ms depois; os sprites ficam dentro
+    do cartão.
+  - Animação da Pokébola na hunt: `render/efeito_captura.gd`, porte de spawnCatchFx/tickCatchFx (C).
+  - Botão Zzz flutuante removido: a Soneca fica só no dock.
+  - Casa (−2,−4), à direita da porta do Pokémon Center, liberada: E, `balanceamento.json` cidade.casas_liberadas (o
+    original bloqueia com a peça 8274).
+  - Troca de líder pelo time: o novo líder sobe para o 1º lugar e o antigo vai para a casa dele (A, vídeo). Depois da
+    troca, 5 s de recarga com `poke-swap-cooldown` (C/A).
+  - Fontes: renderização LCD, hinting normal e as medidas do CSS (.phud).
+  - 98: Novo jogo em ⚙, com confirmação. O save atual é copiado para `user://backups/progresso_<data>.json` e conferido
+    byte a byte; só então é apagado, e o jogo reinicia como instalação nova.
+  - 99: ao reabrir, a mensagem diz quanto tempo o jogo ficou fechado, os 15 min que contaram, o que se perdeu e por quê,
+    e o resultado. Com 0 abates, diz o motivo; fechado fora de uma hunt, avisa que nada acumulou. O "0 de exp" não se
+    reproduziu: a recuperação rende quando o horário é coerente.
+  - Testes: `test_troca_time` 4/4, `test_reabrir.sh` 4/4, `test_novo_jogo_config.sh` 12/12; `test_team_fiel`,
+    `test_janelas_ciclo2`, `test_ciclo_lote2` e `test_cidade_mapa` atualizados às regras novas.
+- 20/11/2026 — Decisões do ciclo 4 aplicadas.
+  - Gerenciamento de Captura com uma coluna por bola, como o original (A: used-balls `balls` {ballId: tentativas}). O
+    medidor ganhou o campo opcional `bolas`; saves antigos carregam e a diferença aparece na dica do total.
+  - Zoom padrão 1 (25×13) já era o padrão.
+  - Itens online seguem com o aviso; build de ~630 MB mantido.
+- 20/11/2026 — **Ciclo 5, item 2 (validador na gravação livre de 18–20/11, duas contas):** 225/235 grandezas em 47
+  trechos (`dados/relatorios/validar_resultado_livre_2026-11-20.md`). Cobertura: Kanto (hunts de nível 1, 30 e 100) e
+  Outland (150), líderes do nível 4 ao 278; nada de Orre nem de Nightmare. A Rocket de Cerulean é evento e fica sem
+  estado.
+  - XP/h é comparado sem as parcelas que só existem online (`raid`, +20% da base; `guild`; A, conta B). Com elas o
+    Gyarados saía 14% abaixo; sem elas, 47/47.
+  - O medidor de captura do começo de cada trecho é reconstruído: o `segmentar.py` segue os catch-result e o
+    used-balls da sessão (A); a espécie sem nada conhecido começa do investimento médio estacionário do modelo (classe 3).
+  - Tentativa a tentativa, com o medidor conhecido, o modelo de captura espera 230 capturas e o real deu 239. Mesmo
+    assim, o teste de sinal por trecho segue com a sim abaixo (20 × 5), sem causa achada.
+  - Ouro: os 8 trechos fora são loot raro (dois Strange Pheromone de 1 M; Lizard Tail 0,518 × 0,476 da tabela).
+- 20/11/2026 — **Ciclo 5, item 3 (campanha com time, `testes/campanha.gd --time 1`):**
+  `dados/relatorios/campanha_ciclo5_time_2026-11-20.md`.
+  - Em 600 h VIP: Orre às 520 h; reservas em ~40 com o Golem em 527 (XP só do ativo).
+  - Orre no acesso (530) não é jogável: só a electrike, a 2,1 M XP/h com ×10, contra 15 M na Outland.
+  - Nightmare: ~8.600 h ativas ficando na Outland, ou ~2.700 h se Orre 580 for aguentável.
