@@ -11,6 +11,7 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["pokedex"] = _criar(pai, "res://painel_pokedex.gd", "PainelPokedex")
 	j["shinys"] = _criar(pai, "res://painel_todos_shinys.gd", "PainelTodosShinys")
 	j["inventario"] = _criar(pai, "res://painel_inventario.gd", "PainelInventario")
+	j["inventario"].controlador = controlador_hunt
 	j["ginasios"] = _criar(pai, "res://painel_ginasios.gd", "PainelGinasios")
 	j["bosses"] = _criar(pai, "res://painel_bosses.gd", "PainelBosses")
 	j["album"] = _criar(pai, "res://painel_album.gd", "PainelAlbum")

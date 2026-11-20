@@ -1,7 +1,7 @@
 extends SceneTree
 ## Print de uma tela do nosso jogo (ciclo 4), em janela 1880×954 (a área útil do navegador nos vídeos do original), com
 ## APPDATA isolado (rodar com APPDATA de teste). Uso: godot --path . --script res://ferramentas/visual/print_tela.gd --
-## <tela> <saida.png>. Telas: criar_personagem, criar_personagem_escolhido, tutorial, tutorial_depot.
+## <tela> <saida.png>. Telas: criar_personagem, criar_personagem_escolhido, tutorial, tutorial_<passo>.
 var tela := ""
 var saida := ""
 var quadros := 0
@@ -18,10 +18,11 @@ func _initialize() -> void:
 		"criar_personagem", "criar_personagem_escolhido":
 			no = load("res://painel_novo_jogo.gd").new()
 			get_root().add_child(no)
-		"tutorial", "tutorial_depot":
+		_ when tela.begins_with("tutorial"):
+			# tutorial = welcome; tutorial_<passo> = esse passo (party, depot, openMap…)
 			var ej = get_root().get_node("EstadoJogo")
 			ej.novo_jogo(1, "danpoke", 1)
-			ej.tutorial_passo = "welcome" if tela == "tutorial" else "depot"
+			ej.tutorial_passo = "welcome" if tela == "tutorial" else tela.trim_prefix("tutorial_")
 			change_scene_to_file("res://cidade.tscn")
 
 

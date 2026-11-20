@@ -346,9 +346,16 @@ func passo(intencoes: Array = []) -> Array:
 			return _saida
 		if String(it.get("type", "")) == "switch":
 			_troca_manual(int(it.get("teamIndex", -1)))
+		if String(it.get("type", "")) == "catch":
+			_captura_manual(int(it.get("pendingId", -1)), int(it.get("ballId", 0)))
+		if String(it.get("type", "")) == "use-heal":
+			_cura_manual(int(it.get("itemId", 0)))
+		if String(it.get("type", "")) == "pending-get":
+			_emitir(msg_pendentes())
 	tick += 1
 	_respawns()
 	_expirar_cadaveres()
+	_expirar_pendentes()
 	if not desmaiado:
 		_turno_heroi()
 	_turno_selvagens()
@@ -919,8 +926,83 @@ func _garantir_pedras(esp: Dictionary, lock: bool, mult: float, rolagens: int, l
 func _fim_abate(m: Dictionary, bola: bool) -> void:
 	if bola:
 		_emitir(_msg_balls())
+	else:
+		# A (fase3 M1/M2: 121/121 e 65/65 abates sem Auto-Catch viraram pendentes; com o Auto-Catch, C6: 2 em 84): o
+		# selvagem que o Auto-Catch não tentou fica capturável por 20,0 s (A: vida medida 19,7–20,7 s) na lista `pending`
+		# ({id, pokeId, name, level, shiny, at, row, col}); o jogador pode lançar uma bola (C: comando catch {pendingId,
+		# ballId}, painel de captura).
+		_proximo_pendente += 1
+		pendentes.append({"id": _proximo_pendente, "pokeId": int(m["species_id"]), "name": String(m["especie"].get("nome", "")),
+			"level": int(cfg.get("nivel_selvagem", 1)), "shiny": bool(m["shiny"]), "at": agora_ms(), "row": m["pos"].y, "col": m["pos"].x})
+		_emitir(msg_pendentes())
 	# re-alvo imediato (A: o alvo novo aparece no mesmo field da morte)
 	heroi["alvo"] = _escolher_alvo()
+
+
+var pendentes: Array = []
+var _proximo_pendente := 0
+
+
+func msg_pendentes() -> Dictionary:
+	var l: Array = []
+	for e in pendentes:
+		var x: Dictionary = e.duplicate()
+		if bool(x["shiny"]):   # C: a barra mostra a chance do shiny pelo shinyBase do tier
+			x["shinyBase"] = float(p.captura_shiny_base.get(String(dados.shiny.get(int(x["pokeId"]), {}).get("tier", "")), p.get("captura_shiny_base_padrao", 0.0)))
+		l.append(x)
+	return {"type": "pending", "list": l}
+
+
+func _expirar_pendentes() -> void:
+	var antes := pendentes.size()
+	pendentes = pendentes.filter(func(e): return agora_ms() - int(e["at"]) < int(p.get("pendente_vida_ms", 20000)))
+	if pendentes.size() != antes:
+		_emitir(msg_pendentes())
+
+
+func _captura_manual(pid: int, bola: int) -> void:
+	## C (painel de captura): catch {pendingId, ballId}; uma bola por selvagem pendente; 4 s entre lançamentos (o cliente
+	## trava 4 s; catch-result leva cooldownMs). Mesma chance do Auto-Catch (medidor por espécie; shiny pelo tier).
+	if agora_ms() < _captura_manual_livre_ms:
+		_emitir({"type": "catch-cooldown", "leftMs": _captura_manual_livre_ms - agora_ms()})
+		return
+	var alvo: Dictionary = {}
+	for e in pendentes:
+		if int(e["id"]) == pid:
+			alvo = e
+	if alvo.is_empty():
+		_emitir({"type": "error", "message": "Esse Pokémon não está mais capturável."})
+		return
+	if int(balls.get("counts", {}).get(str(bola), 0)) <= 0:
+		_emitir({"type": "error", "message": "Sem essa Pokébola."})
+		return
+	pendentes.erase(alvo)
+	var m := {"especie": dados.especie(int(alvo["pokeId"])), "species_id": int(alvo["pokeId"]), "shiny": bool(alvo["shiny"]),
+		"pos": Vector2i(int(alvo["col"]), int(alvo["row"]))}
+	_lancar_bola(m, str(bola), pid)
+	_captura_manual_livre_ms = agora_ms() + int(p.get("captura_manual_recarga_ms", 4000))
+	_emitir(_msg_balls())
+	_emitir(msg_pendentes())
+
+
+var _captura_manual_livre_ms := 0
+
+
+func _cura_manual(pid: int) -> void:
+	## C (tutorial "Use uma potion": duplo clique numa Small Potion cura o líder agora; comando use-heal): a poção cura até
+	## o valor dela, limitada ao que falta (A, igual ao Auto-Potion).
+	var poke := _poke_ativo()
+	var falta := int(poke["max_hp"]) - int(poke["hp"])
+	if int(inventario.get(pid, 0)) <= 0 or falta <= 0 or int(poke["hp"]) <= 0:
+		_emitir({"type": "error", "message": "Não dá para usar essa poção agora."})
+		return
+	var item: Dictionary = dados.itens.get(pid, {})
+	var cura := mini(int(item.get("cura", 0)), falta)
+	poke["hp"] = int(poke["hp"]) + cura
+	inventario[pid] = int(inventario[pid]) - 1
+	estatisticas["curas"] += 1
+	_emitir({"type": "auto-heal", "kind": "potion", "name": item.get("nome", ""), "heal": cura, "manual": true})
+	_emitir(_msg_inventario())
 
 
 func _troca_manual(i: int) -> void:
@@ -976,6 +1058,13 @@ func _tentar_captura(m: Dictionary) -> bool:
 	var counts: Dictionary = balls.get("counts", {})
 	if sel == "" or int(counts.get(sel, 0)) <= 0:
 		return false
+	_lancar_bola(m, sel, -1)
+	return true
+
+
+func _lancar_bola(m: Dictionary, sel: String, pending_id: int) -> void:
+	## Lança a bola `sel` no selvagem `m` (Auto-Catch ou manual): gasta a bola, sorteia pela chance e emite catch-result.
+	var counts: Dictionary = balls.get("counts", {})
 	counts[sel] = int(counts[sel]) - 1
 	# Medidor de investimento por espécie (C; forma F, ver PARAMETROS): soma esta bola, sorteia, zera ao capturar.
 	var sid := str(m["species_id"]) + ("s" if bool(m["shiny"]) else "")   # C: a tela separa a variante shiny
@@ -998,9 +1087,12 @@ func _tentar_captura(m: Dictionary) -> bool:
 	for b in balls.get("catalog", []):
 		if str(b.get("id", "")) == sel:
 			nome_bola = b.get("name", "")
-	_emitir({"type": "catch-result", "auto": true, "success": sucesso, "speciesName": m["especie"].get("nome", ""),
-		"ballName": nome_bola, "ballId": int(sel), "row": m["pos"].y, "col": m["pos"].x})
-	return true
+	var cr := {"type": "catch-result", "auto": pending_id < 0, "success": sucesso, "speciesName": m["especie"].get("nome", ""),
+		"ballName": nome_bola, "ballId": int(sel), "row": m["pos"].y, "col": m["pos"].x}
+	if pending_id >= 0:   # C: o cliente tira o pendente pelo pendingId e trava os lançamentos por cooldownMs
+		cr["pendingId"] = pending_id
+		cr["cooldownMs"] = int(p.get("captura_manual_recarga_ms", 4000))
+	_emitir(cr)
 
 
 func _msg_inventario() -> Dictionary:

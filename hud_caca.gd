@@ -24,6 +24,7 @@ var aviso_ofensivo: PanelContainer
 var texto_aviso_ofensivo: Label
 
 var janelas_dock: Dictionary = {}
+var painel_captura: PanelContainer
 var avisos: Control
 var tutorial: Control
 func _ready() -> void:
@@ -72,14 +73,22 @@ func _ready() -> void:
 	tutorial.raiz = self
 	add_child(tutorial)
 	controlador.derrota_recompensada.connect(func(_e) -> void: tutorial.ao_abate())
+	if controlador.has_signal("bola_lancada"):
+		controlador.bola_lancada.connect(func() -> void: tutorial.ao_evento("ball-thrown"))
 	# 2b: o mapa-múndi da hunt é criado na 1ª abertura (instanciá-lo custava ~0,5 s na entrada da hunt)
 	recompensas = load("res://cartoes_derrota.gd").new()
 	add_child(recompensas)
 	controlador.derrota_recompensada.connect(recompensas.apresentar)
 	controlador.captura_resolvida.connect(_captura_resolvida)
+	# Ciclo 4: o painel de captura do original (painel_captura.gd: pendentes, lançar, fichas das bolas). O de antes fica
+	# montado fora da árvore só para os contadores internos (capturados_hunt, estoque).
+	painel_captura = load("res://painel_captura.gd").new()
+	painel_captura.controlador = controlador
+	add_child(painel_captura)
+	if controlador.has_signal("pendentes_alterados"):
+		controlador.pendentes_alterados.connect(painel_captura.receber_pendentes)
+		controlador.resultado_captura.connect(painel_captura.receber_resultado)
 	captura=PanelContainer.new()
-	captura.add_theme_stylebox_override("panel",UI.caixa(Color("0c1420f5"),Color("997530"),10,10))
-	add_child(captura)
 	var coluna: VBoxContainer=VBoxContainer.new()
 	coluna.add_theme_constant_override("separation",8)
 	captura.add_child(coluna)
@@ -182,6 +191,8 @@ func _ajustar() -> void:
 	recompensas.position = Vector2(maxf(12,size.x-352),132)
 	captura.position = Vector2(maxf(12,size.x-274),maxf(150,size.y-250))
 	captura.size = Vector2(262,0)
+	if painel_captura != null:   # C: right/bottom 8 px, scale .88, origem no canto
+		painel_captura.scale = Vector2(0.88, 0.88) * (size.x / 1880.0)   # medidas do CSS em px de 1880 de largura
 
 func _atualizar_aviso_ofensivo(diagnostico: Dictionary) -> void:
 	aviso_ofensivo.visible=str(diagnostico.get("estado","")) in ["bloqueado","aguardando_alvo"]

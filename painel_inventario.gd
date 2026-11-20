@@ -8,6 +8,9 @@ const LOOT: Script = preload("res://regras_loot.gd")
 const PONTE := preload("res://ponte_cidade.gd")
 const CATS := [["ball", "catBall"], ["heal", "catHeal"], ["loot", "catLoot"], ["stone", "catStone"], ["berry", "catBerry"], ["held", "catHeld"], ["outros", "catItem"]]
 signal usar_solicitado
+signal pocao_usada
+signal aberto
+var controlador: Node = null   # na hunt: caca_sim (a poção vai para a sim pelo use-heal)
 
 
 func _ready() -> void:
@@ -45,6 +48,26 @@ func itens() -> Dictionary:
 	return r
 
 
+func abrir() -> void:
+	super.abrir()
+	aberto.emit()
+
+
+func usar_pocao(pid: int) -> String:
+	## C (tutorial "Use uma potion": duplo clique numa Small Potion cura o líder na hora, até o valor da poção). Na hunt a
+	## cura passa pela sim (use-heal); na cidade, direto no líder.
+	var ej: Node = get_node("/root/EstadoJogo")
+	var motivo := ""
+	if controlador != null and controlador.has_method("usar_pocao"):
+		controlador.usar_pocao(pid)
+	else:
+		motivo = ej.usar_pocao_no_lider(pid)
+	if motivo == "":
+		pocao_usada.emit()
+	atualizar()
+	return motivo
+
+
 func montar() -> void:
 	titulo.text = T.t("window.inventory.title", {}, "Inventário")
 	var tudo := itens()
@@ -75,6 +98,13 @@ func montar() -> void:
 		if int(e["preco"]) > 0:
 			rotulo("$" + n(int(e["preco"]) * int(e["qtd"])), Color("9fe0a0"), 0, h)
 			total += int(e["preco"]) * int(e["qtd"])
+		if aba == "heal":
+			var pid := int(e["id"])
+			h.mouse_filter = Control.MOUSE_FILTER_STOP
+			h.gui_input.connect(func(ev: InputEvent) -> void:   # C: duplo clique na poção usa
+				if ev is InputEventMouseButton and ev.double_click and ev.button_index == MOUSE_BUTTON_LEFT:
+					usar_pocao(pid))
+			botao(T.t("window.inventory.use", {}, "Usar"), func() -> void: usar_pocao(pid), "Usar_%d" % pid, h)
 		if aba == "berry" or (aba == "outros" and String(e["nome"]).to_lower().find("rare candy") >= 0):
 			botao("Usar", func() -> void:
 				hide()

@@ -29,6 +29,10 @@ signal hunt_encerrada(motivo: String)
 signal derrota_recompensada(evento: Dictionary)
 signal captura_resolvida(evento: Dictionary)
 signal capturado(nome: String, shiny: bool)
+signal pendentes_alterados(lista: Array)   # ciclo 4: selvagens capturáveis (lista pending da sim)
+signal resultado_captura(msg: Dictionary)
+signal bola_lancada
+signal pocao_usada
 signal subiu_nivel(nome: String, nivel: int, treinador: bool)   # ciclo 2: avisos da HUD
 signal boosts_alterados(lista: Array)
 signal shiny_apareceu(nome: String)
@@ -189,6 +193,8 @@ func _tratar(msg: Dictionary) -> void:
 						shiny_apareceu.emit(String(PONTE_DADOS.dados().especie(int(mb.get("speciesId", 0))).get("nome", "")))
 				elif _shinies_vistos.has("%d:%d" % [int(mb["slot"]), int(mb.get("speciesId", 0))]) and bool(mb.get("dead", false)):
 					_shinies_vistos.erase("%d:%d" % [int(mb["slot"]), int(mb.get("speciesId", 0))])
+		"pending":
+			pendentes_alterados.emit(msg.get("list", []))
 		"boosts":
 			_boosts_msg = (msg.get("boosts", []) as Array).duplicate(true)
 			_emitir_boosts()
@@ -226,6 +232,7 @@ func _tratar(msg: Dictionary) -> void:
 			if EstadoJogo.consumir_bola(bola):
 				registro["bolas"][bola] = int(registro["bolas"].get(bola, 0)) + 1
 			apresentacao.ao_resultado_captura(msg)
+			resultado_captura.emit(msg)
 			EstadoJogo.medidor_captura = sim.medidor.duplicate(true)   # medidor por espécie (vai no próximo save)
 			EstadoJogo.garantia_pedras = sim.garantia_pedras.duplicate(true)   # garantia de pedra (classe 3)
 			_sequencia_captura += 1
@@ -312,6 +319,22 @@ func trocar(indice: int) -> void:
 	if sim != null and not _encerrada:
 		for m in sim.passo([{"type": "switch", "teamIndex": indice}]):
 			_tratar(m["msg"])
+
+
+func lancar_bola(pending_id: int, ball_id: int) -> void:
+	## Ciclo 4 (C: catch {pendingId, ballId}): lançamento manual pelo painel de captura.
+	if sim != null and not _encerrada:
+		for m in sim.passo([{"type": "catch", "pendingId": pending_id, "ballId": ball_id}]):
+			_tratar(m["msg"])
+		bola_lancada.emit()
+
+
+func usar_pocao(item_id: int) -> void:
+	## Ciclo 4 (C: tutorial "Use uma potion", comando use-heal): cura o ativo com a poção da mochila.
+	if sim != null and not _encerrada:
+		for m in sim.passo([{"type": "use-heal", "itemId": item_id}]):
+			_tratar(m["msg"])
+		pocao_usada.emit()
 
 
 func voltar_cidade() -> void:

@@ -1167,4 +1167,19 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     `%APPDATA%\Godot\app_userdata\PokeIdle\progresso_v1.json`.
   - **Testes:** novos `test_shiny`, `test_garantia_pedra`, `test_metas` 14/14, `test_janelas_ciclo2` 26/26, `test_tutorial`
     10/10, `test_xp_regiao` 4/4; regressão verde (41 do Godot, scripts, P04 43/43); diferencial 1h 29/30, antiga 22/26.
-
+- 20/11/2026 — **Ciclo 4, item 1 (começo de jogo como o original).**
+  - Inicial: só Bulbasaur, Charmander e Squirtle (o Geodude saiu do jogo; fica só nas ferramentas de campanha).
+  - IV e Quality do inicial: porte exato do sorteio do cliente semeado com "<nome>:<id>" (C). O servidor usar a mesma
+    semente é F.
+  - Tela de criar personagem pelo CSS e pelo vídeo.
+  - Gravador v1.4: a tela de criação é `/create-character`, fora do `@match /play*`, e o site troca de página sem
+    recarregar.
+  - Tutorial com os 17 passos do cliente (`painel_tutorial.gd`), no estilo `.tutg-*` do CSS: véu, holofote no alvo,
+    mão, anel e pontos até o NPC, balão e Oak. Os passos de ação fecham sozinhos: Nurse, Depot e Mark ao abrir a janela,
+    mapa, entrada na hunt, 1º abate, bola lançada, mochila aberta e poção usada.
+  - Captura manual na sim (A/C): o abate sem Auto-Catch fica 20 s em `pending`; o comando `catch {pendingId, ballId}`
+    tem 4 s de recarga. O painel de captura (`painel_captura.gd`) segue o `cap-panel` do original.
+  - Poção manual: `use-heal` na hunt, e na cidade direto no líder; botão "Usar" e duplo clique na mochila.
+  - Lado a lado em `dados/relatorios/visual_ciclo4/` (01–04).
+  - Testes: `test_tutorial` 22/22, `test_captura_manual` 8/8, `test_jogo_novo` 17/17, `test_caca_sim` 22/22.
+  - Limites: o vídeo acaba no passo do mapa, então os passos da hunt não têm quadro de referência; o Mercado só se pula.

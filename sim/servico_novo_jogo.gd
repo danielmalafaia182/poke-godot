@@ -17,8 +17,7 @@ extends RefCounted
 ##   - Primeira cidade: Cerulean (C/A).
 ##   - Primeira hunt recomendada (C, tutorial `cy`): Bulbasaur → Geodude ("Rock/Ground — your grass attacks deal ×4"),
 ##     Charmander → Paras ("Bug/Grass — your fire attacks deal ×4"), Squirtle → Geodude (água ×4). As três são nível 1.
-##   - Tutorial (C): welcome, party, menu, walk, nurse, depot, shop, market, openMap, firstHunt, hunting, throwBall, …,
-##     replay, done; "Skip tutorial" (painel_tutorial.gd).
+##   - Tutorial (C): os 17 passos do cliente, de welcome a done, com "Pular tutorial" (painel_tutorial.gd).
 ## As ferramentas de teste (campanha, jogabilidade) seguem com a linha do Geodude como política delas (INICIAL_CAMPANHA);
 ## o jogo não oferece mais o Geodude.
 
@@ -36,7 +35,7 @@ const KIT := {"pocoes": {200: 100}, "bolas": {1: 100}}    # C
 const OURO_INICIAL := 0
 const CIDADE_INICIAL := "cerulean"                          # C/A
 const PASSOS_TUTORIAL := ["welcome", "party", "menu", "walk", "nurse", "depot", "shop", "market", "openMap", "firstHunt",
-	"hunting", "throwBall", "captureMgmt", "openInv", "replay", "done"]   # C (ordem do cliente; os do fim, aproximada)
+	"hunting", "throwBall", "openInv", "usePotion", "captureMgmt", "replay", "done"]   # C: os 17 passos do cliente (cC), na ordem
 const QUALIDADE_PESOS := [[0.8, 0.9, 5.0], [0.9, 1.0, 5.0], [1.0, 1.1, 34.03846], [1.1, 1.2, 20.0], [1.2, 1.3, 10.0],
 	[1.3, 1.4, 10.0], [1.4, 1.5, 10.0], [1.5, 1.6, 5.0], [1.7, 1.8, 0.67308], [1.8, 1.8, 0.28846]]   # C: rollQuality
 

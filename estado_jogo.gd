@@ -208,6 +208,21 @@ func album_comando(cmd: Dictionary) -> Dictionary:
 	return r
 
 var _servico_ginasios = null
+func usar_pocao_no_lider(pid: int) -> String:
+	## Ciclo 4 (C: tutorial "Use uma potion"): na cidade, a poção cura o líder até o valor dela, limitada ao que falta (A).
+	var pk := obter_lider()
+	if pk == null or obter_quantidade_pocao(pid) <= 0:
+		return "Sem essa poção."
+	var falta := pk.obter_vida_maxima() - pk.obter_vida_atual()
+	if falta <= 0:
+		return "O líder já está com o HP cheio."
+	var cura := mini(int(PONTE_CIDADE.dados().itens.get(pid, {}).get("cura", 0)), falta)
+	if not consumir_pocao(pid):
+		return "Sem essa poção."
+	registrar_vida_pokemon(pk, pk.obter_vida_atual() + cura)
+	solicitar_salvamento()
+	return ""
+
 func servico_ginasios():
 	if _servico_ginasios == null:
 		_servico_ginasios = SERVICO_GINASIOS.new(PONTE_CIDADE.dados())
