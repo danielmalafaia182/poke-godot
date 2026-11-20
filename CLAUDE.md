@@ -1285,3 +1285,21 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     original). Agora usa pixels da janela, como a cidade.
   - Boosts e eventos em fichas `.bi-chip` (C), a 74 px do topo, com o ícone e a borda de cada classe.
   - `test_dock_menu` 6/6. Lado a lado: 09 (hunt) e 12 (janela de item online).
+- 20/11/2026 — **Build do ciclo 4** (`builds/ciclo4`, 621 MB: exe 105, pck 94, `jogo/` 420 com os caches de mapa,
+  `dados/` 3,3).
+  - Verificação com APPDATA isolado: fases 1, 2 e 3 OK.
+    - Fase 1: jogo novo com Bulbasaur, gênero e nome → tutorial → hunt Geodude → caça → salva.
+    - Fase 2: reabre e continua (XP 12 → 60).
+    - Fase 3: importa o save do projeto sem mexer nele.
+  - Achado e corrigido no caminho: o verificador abria o mapa antes de a cidade recarregar depois de "Começar", e o exe
+    caía (segfault). O jogo agora ignora a viagem pedida por um mapa fora da árvore.
+  - **Entrada na hunt no build**, ciclo 3 → ciclo 4 (`ferramentas/build/medir_entrada_hunt.gd`):
+    - 1ª visita: rattata 2,27 → 0,91 s; geodude 2,67 → 0,60; rhydon 2,87 → 0,55; electabuzz 1,96 → 0,50;
+      nightmare_steelix 8,21 → 1,26 (sem o atlas pronto; com o pré-aquecimento da cidade, ele já existe quando a hunt
+      é liberada);
+    - visitas seguintes: 0,85–1,23 → 0,28–0,46 s.
+  - Regressão:
+    - os testes do ciclo (tutorial, captura manual, mochila, cidade, mapa, contorno, shiny, dock, diárias…) verdes;
+    - sim (regras 43/43, determinismo, caminho, alvo, grade 7/7, protocolo), ponte 11/11, save em thread 15/15,
+      compatibilidade 24/24, segmentar 10/10, processar gravação 25/25, gravador 9/9;
+    - P04 20/20; validador da classe 2 159/160 (igual).
