@@ -45,7 +45,7 @@ func _ready() -> void:
 	conteudo.add_child(linha)
 	var emblema: TextureRect = TextureRect.new()
 	emblema.texture = preload("res://assets/interface/hud/logo.png")
-	emblema.custom_minimum_size = Vector2(27,27)
+	emblema.custom_minimum_size = Vector2(34,34)   # C: .phud-emblem 34 px
 	emblema.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	emblema.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	linha.add_child(emblema)
@@ -54,14 +54,14 @@ func _ready() -> void:
 	treinador.add_theme_constant_override("separation",0)
 	linha.add_child(treinador)
 	cabecalho = Label.new()
-	cabecalho.text = EstadoJogo.nome_treinador.to_upper()
+	cabecalho.text = EstadoJogo.nome_treinador   # C: .phud-tname mostra o nome como digitado (o Cinzel faz o versalete)
 	cabecalho.add_theme_font_override("font",TITULO)
-	cabecalho.add_theme_font_size_override("font_size",11)
+	cabecalho.add_theme_font_size_override("font_size",15)   # C: .phud-tname Cinzel 700 15 px
 	cabecalho.add_theme_color_override("font_color",Color("ddc082"))
 	cabecalho.clip_text = true
 	treinador.add_child(cabecalho)
 	localizacao = Label.new()
-	localizacao.add_theme_font_size_override("font_size",9)
+	localizacao.add_theme_font_size_override("font_size",11)   # C: .phud-tloc 11 px #8a93a0
 	localizacao.add_theme_color_override("font_color",Color("8a93a0"))
 	treinador.add_child(localizacao)
 	barra_xp_treinador=ProgressBar.new()
@@ -145,7 +145,7 @@ func atualizar() -> void:
 	size = get_combined_minimum_size()
 
 func _atualizar_perfil() -> void:
-	cabecalho.text = EstadoJogo.nome_treinador.to_upper()
+	cabecalho.text = EstadoJogo.nome_treinador   # C: .phud-tname mostra o nome como digitado (o Cinzel faz o versalete)
 	localizacao.text = "Level %d · %s" % [EstadoJogo.nivel_treinador,nome_local]
 	var progresso: Dictionary=EstadoJogo.perfil.obter_progresso()
 	barra_xp_treinador.value=float(progresso["percentual"])

@@ -71,12 +71,12 @@ func configurar(individuo: DadosPokemon, textura: Texture2D) -> void:
 	var nomes: HBoxContainer = HBoxContainer.new()
 	nomes.add_theme_constant_override("separation",4)
 	dados.add_child(nomes)
-	nome = UI.texto(pokemon.especie.nome,9,Color("f0e6d2"),true)
+	nome = UI.texto(pokemon.especie.nome,12,Color("f0e6d2"),true)   # C: .phud-name Cinzel 700 12 px
 	nome.add_theme_font_override("font",UI.TITULO)
 	nome.clip_text = true
 	nome.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	nomes.add_child(nome)
-	nivel = UI.texto("",8,Color("7fe6dd"),true)
+	nivel = UI.texto("",10,Color("7fe6dd"),true)   # C: .phud-lv 700 10 px
 	nomes.add_child(nivel)
 	# Evolução manual: disponibilidade validada pela regra de cidade e nível.
 	evoluir = Button.new()
@@ -95,16 +95,17 @@ func configurar(individuo: DadosPokemon, textura: Texture2D) -> void:
 	evoluir.add_theme_stylebox_override("normal",bloqueado)
 	evoluir.pressed.connect(func() -> void: load("res://painel_evolucao.gd").abrir_para(get_tree(), pokemon))
 	call_deferred("atualizar_valores")
-	barra_hp = BARRAS.criar(pokemon,false,7)
+	barra_hp = BARRAS.criar(pokemon,false,9)   # C: .sbar 9 px
 	dados.add_child(barra_hp)
-	barra_xp = BARRAS.criar(pokemon,true,5)
+	barra_xp = BARRAS.criar(pokemon,true,7)   # C: .sbar-exp 7 px
 	dados.add_child(barra_xp)
 	for barra in [barra_hp,barra_xp]:
 		barra.add_theme_stylebox_override("background",UI.capsula("fundo",int(barra.custom_minimum_size.y)))
 		var texto: Label = barra.get_child(0) as Label
 		texto.add_theme_font_override("font",UI.FORTE)
-		texto.add_theme_font_size_override("font_size",6)
-		texto.add_theme_constant_override("outline_size",1)
+		texto.add_theme_font_size_override("font_size",8)   # C: .sbar-txt Barlow 700 8 px, contorno preto de 1 px
+		texto.add_theme_constant_override("outline_size",3)
+		texto.add_theme_color_override("font_outline_color",Color(0,0,0,0.95))
 	_ignorar_filhos(self)
 	# O botão indisponível conserva seu tooltip, sem propagar clique de liderança.
 	evoluir.mouse_filter = Control.MOUSE_FILTER_STOP
