@@ -1252,3 +1252,11 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Os 0 capturados da campanha são esperados: 32 shinies com Poké Ball dão 0,22–0,32 captura (P(0) 72–80%).
   - A campanha do ciclo 3 também não contava shiny capturado com a mesma bola do Auto-Catch (corrigido).
   - Tabela e contas: `dados/relatorios/shiny_captura_ciclo4.md`.
+- 20/11/2026 — **Ciclo 4, item 6 (My Pokes / Equipe).** A janela já seguia o `.team-*` do cliente: 6 casas com
+  pokébola, ficha com retrato, nome, Nível, Poder, tipos, selo de Quality e o tipo ao fundo, botões Ativo e Box, barras
+  de HP/EXP e atributos coloridos pela razão sobre o maior (C).
+  - O botão de evoluir só existia para 4 espécies (tabela do P04). Agora vem do `evolui` das espécies do snapshot:
+    "⬆ Evoluir p/ X · Nv.N 🔒" ou "· só em Cerulean 🔒" (C).
+  - Os textos passam a vir do pacote `window.team.*`.
+  - P04 `test_team_fiel` 98/98, `test_evolucao_pokemon` 15/15.
+  - Lado a lado: 10.

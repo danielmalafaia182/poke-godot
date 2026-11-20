@@ -1,4 +1,5 @@
 extends Control
+const T := preload("res://textos.gd")
 
 # TEAM: medidas e composição .team-window, .team-pit e .team-bars do cliente.
 # Slots consultam a ficha; apenas Invocar solicita a alteração de líder.
@@ -148,7 +149,7 @@ func _criar_cabecalho(estrutura: VBoxContainer) -> void:
 	icone.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icone.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	linha.add_child(icone)
-	var titulo: Label = UI.texto("Team",18,Color("f0e6d2"),true)
+	var titulo: Label = UI.texto(T.t("window.team.title"),18,Color("f0e6d2"),true)
 	titulo.add_theme_font_override("font",UI.TITULO)
 	titulo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 	linha.add_child(titulo)
@@ -159,7 +160,7 @@ func _criar_cabecalho(estrutura: VBoxContainer) -> void:
 	fechar.flat = true
 	fechar.icon = UI.icone_svg('<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"><path d="M3 3l12 12M15 3L3 15" fill="none" stroke="#9aa6b3" stroke-width="1.5" stroke-linecap="round"/></svg>')
 	fechar.custom_minimum_size = Vector2(23,24)
-	fechar.tooltip_text = "Close"
+	fechar.tooltip_text = T.t("window.team.close")
 	fechar.pressed.connect(hide)
 	linha.add_child(fechar)
 
@@ -415,8 +416,8 @@ func _atualizar_ficha() -> void:
 		retrato_grande.texture = quadros_ficha[int(tempo_animacao/0.15)%quadros_ficha.size()]
 		_posicionar_retrato()
 	nome_pokemon.text = selecionado.especie.nome
-	nivel_pokemon.text = "Level %d ·" % selecionado.nivel
-	power_pokemon.text = "⚡ %d Power" % selecionado.obter_power()
+	nivel_pokemon.text = T.t("window.team.level",{"level":selecionado.nivel}) + " ·"
+	power_pokemon.text = "⚡ " + T.t("window.team.power",{"power":selecionado.obter_power()})
 	var base: Dictionary = referencias.get(selecionado.especie.nome,{})
 	for indice in range(2):
 		var chave: String = str(base.get("type%d" % (indice+1),""))
@@ -449,11 +450,40 @@ func _atualizar_ficha() -> void:
 		var fill: StyleBoxFlat = UI.caixa(ESTILO.cor_atributo(float(valor)/maximo),Color.TRANSPARENT,4,0)
 		fill.set_border_width_all(0)
 		barras_atributos[indice].add_theme_stylebox_override("fill",fill)
-	var evolucao: Dictionary = EVOLUCOES.get(selecionado.especie.nome,{})
+	# Ciclo 4 (C: team-evo-btn): a evolução vem das espécies do snapshot (evolui {nivel, para}), não da tabela do P04 (4
+	# linhas). "⬆ Evoluir para X" e, travado, " · Nv N 🔒" (nível) ou " · só na cidade 🔒"; aberto na cidade com o nível.
+	var evolucao: Dictionary = _evolucao_de(String(selecionado.especie.nome))
 	evoluir.visible = not evolucao.is_empty()
-	evoluir.text = "↑ Evolve to %s · Lv.%d" % [evolucao.get("nome",""),int(evolucao.get("nivel",1))]
-	evoluir.tooltip_text=EstadoJogo.validar_evolucao(selecionado)
-	evoluir.disabled=not evoluir.tooltip_text.is_empty()
+	var motivo: String = EstadoJogo.validar_evolucao(selecionado)
+	var na_cidade: bool = get_tree().current_scene != null and get_tree().current_scene.scene_file_path == "res://cidade.tscn"
+	var nivel_ok: bool = int(selecionado.nivel) >= int(evolucao.get("nivel",1))
+	evoluir.text = "⬆ " + T.t("window.team.evoBtn",{"name":evolucao.get("nome","")},"Evoluir para %s" % evolucao.get("nome",""))
+	if not nivel_ok:
+		evoluir.text += " · " + T.t("window.team.evoBtnSuffixLevel",{"need":int(evolucao.get("nivel",1))},"Nv %d" % int(evolucao.get("nivel",1))) + " 🔒"
+	elif not na_cidade:
+		evoluir.text += " · " + T.t("window.team.evoBtnSuffixCity",{},"só na cidade") + " 🔒"
+	evoluir.tooltip_text=motivo
+	evoluir.disabled=not motivo.is_empty() or not nivel_ok or not na_cidade
+
+static var _evo_por_nome: Dictionary = {}
+
+
+static func _evolucao_de(nome: String) -> Dictionary:
+	## {nome, nivel} da primeira evolução da espécie (dados/gerados/especies.json, campo evolui), ou {}.
+	if _evo_por_nome.is_empty():
+		var d = preload("res://ponte_cidade.gd").dados()
+		for e in d.especies.values():
+			var ev = e.get("evolui")
+			if ev is Dictionary:
+				_evo_por_nome[String(e.get("nome",""))] = {"nome": String(d.especie(int(ev["para"])).get("nome","")), "nivel": int(ev.get("nivel",1))}
+			else:
+				_evo_por_nome[String(e.get("nome",""))] = {}
+	return _evo_por_nome.get(nome, {})
+
+
+func _texto_teste() -> String:
+	return invocar.text if invocar != null else ""
+
 
 func _posicionar_retrato() -> void:
 	if retrato_grande.texture==null:
@@ -505,8 +535,8 @@ func _atualizar_acao_invocar() -> void:
 	var sem_hp: bool=exigir_lider_saudavel and selecionado.obter_vida_atual()<=0
 	var restante: float=float(provedor_cooldown.call()) if provedor_cooldown.is_valid() else 0.0
 	invocar.disabled=ativo or not permitir_troca_lider or sem_hp or restante>0
-	if ativo:invocar.text="⚔ Active — the Pokémon that hunts"
-	elif sem_hp:invocar.text="No HP — heal this Pokémon first"
-	elif not permitir_troca_lider:invocar.text="Return to the city to change leader"
-	elif restante>0:invocar.text="Switch available in %d s" % ceili(restante)
-	else:invocar.text="⚔ Summon — use in hunt"
+	if ativo:invocar.text="⚔ "+T.t("window.team.activeTag")
+	elif sem_hp:invocar.text="Sem HP — cure este Pokémon antes"
+	elif not permitir_troca_lider:invocar.text="Volte à cidade para trocar o líder"
+	elif restante>0:invocar.text="Troca liberada em %d s" % ceili(restante)
+	else:invocar.text="⚔ "+T.t("window.team.summonBtn")
