@@ -51,6 +51,8 @@ func _process(_d: float) -> void:
 			ej.especie_caca = null
 			ej.slug_caca = atual
 			t0 = Time.get_ticks_msec()
+			if ej.has_method("preparar_atlas_agora"):   # ciclo 4: o clique no mapa já começa o atlas da hunt
+				ej.preparar_atlas_agora(atual)
 			if ResourceLoader.exists("res://tela_carregando.gd"):   # ciclo 4: o caminho do mapa-múndi (com a tela)
 				load("res://tela_carregando.gd").ir_para(get_tree(), "res://caca_sim.tscn")
 			else:

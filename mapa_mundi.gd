@@ -426,6 +426,7 @@ func _viajar(dados: Dictionary) -> void:
 		# a espécie fica registrada quando o nome é uma (telas antigas a leem), mas a cena usa o slug.
 		EstadoJogo.especie_caca=preload("res://especies_importadas.gd").obter_especies().get(str(dados["name"]))
 		EstadoJogo.slug_caca=str(dados["slug"])
+		EstadoJogo.preparar_atlas_agora(str(dados["slug"]))   # ciclo 4: o atlas começa a montar já no clique
 		preload("res://tela_carregando.gd").ir_para(get_tree(), "res://caca_sim.tscn")
 		return
 	for destino in destinos:

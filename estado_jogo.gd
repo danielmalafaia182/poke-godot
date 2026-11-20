@@ -994,9 +994,40 @@ func _pre_laco(dd) -> void:
 			pre_atlas_montados += 1
 
 
-func esperar_atlas(slug: String) -> void:
-	## Chamado ao entrar numa hunt: pausa a fila e, se o atlas dessa hunt está sendo montado agora, espera terminar.
+func preparar_atlas_agora(slug: String) -> void:
+	## Ciclo 4: no clique da hunt no mapa, o atlas dela (se ainda não existe) começa a ser montado numa thread própria
+	## enquanto a tela de carregamento troca de cena; o pré-aquecimento pausa para não disputar a CPU. A hunt espera só o
+	## que faltar (esperar_atlas).
+	var dd = preload("res://render/dados_desenho.gd").carregar()
+	if preload("res://render/atlas_mapa.gd").valido(slug, dd):
+		return
 	pausar_pre_atlas()
+	_pre_mutex.lock()
+	var ja := _pre_atual == slug
+	_pre_mutex.unlock()
+	if ja:
+		return   # o pré-aquecimento já está montando esta: esperar_atlas espera por ela
+	if _agora_thread != null:
+		_agora_thread.wait_to_finish()
+	_agora_slug = slug
+	_agora_thread = Thread.new()
+	_agora_thread.start(func():
+		var c: Dictionary = preload("res://render/cache_mapa.gd").ler(slug, dd)
+		if not c.is_empty():
+			preload("res://render/atlas_mapa.gd").montar(slug, dd, c), Thread.PRIORITY_HIGH)
+
+
+var _agora_thread: Thread = null
+var _agora_slug := ""
+
+
+func esperar_atlas(slug: String) -> void:
+	## Chamado ao entrar numa hunt: espera o atlas dela se está sendo montado (pelo clique ou pelo pré-aquecimento) e
+	## pausa o pré-aquecimento (o resto volta na cidade).
+	pausar_pre_atlas()
+	if _agora_thread != null and _agora_slug == slug:
+		_agora_thread.wait_to_finish()
+		_agora_thread = null
 	_pre_mutex.lock()
 	var ocupada := _pre_atual == slug
 	_pre_mutex.unlock()
@@ -1013,3 +1044,6 @@ func _exit_tree() -> void:
 	pausar_pre_atlas()
 	if _pre_thread != null:
 		_pre_thread.wait_to_finish()
+	if _agora_thread != null:
+		_agora_thread.wait_to_finish()
+	preload("res://render/atlas_mapa.gd").esperar_gravacoes()   # o arquivo do atlas termina de gravar antes de sair

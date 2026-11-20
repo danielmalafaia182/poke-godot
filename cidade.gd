@@ -151,10 +151,11 @@ func _ready() -> void:
 
 func _pre_aquecer_hunts() -> void:
 	## Ciclo 4: o atlas das hunts liberadas é montado em segundo plano enquanto se está na cidade (as mais perto do
-	## nível do treinador primeiro), para a entrada na hunt caber em 1 s.
+	## nível do treinador primeiro; também as que liberam nos próximos 100 níveis), para a entrada na hunt caber em 1 s.
 	var hunts: Array = preload("res://ponte_cidade.gd").dados().hunts.values()
 	var nivel := int(EstadoJogo.nivel_treinador)
-	var lib: Array = preload("res://sim/regras_acesso.gd").hunts_liberadas(hunts, nivel)
+	# as liberadas e as que liberam nos próximos 100 níveis (ficam prontas antes de o treinador chegar lá)
+	var lib: Array = preload("res://sim/regras_acesso.gd").hunts_liberadas(hunts, nivel + 100)
 	var por_slug := {}
 	for h in hunts:
 		por_slug[String(h["slug"])] = int(h.get("nivel", 0))

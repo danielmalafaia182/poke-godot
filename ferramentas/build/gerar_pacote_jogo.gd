@@ -79,6 +79,7 @@ func _init() -> void:
 			montados += 1
 		_copiar(CacheMapa.caminho(slug), saida + "/cache/mapas/" + slug + ".bin")
 		CacheMapa.mapa_hunt(slug, dd)   # grade da sim (monta e grava se faltar)
+		load("res://render/atlas_mapa.gd").gravar_quadros(slug, dd, CacheMapa.ler(slug, dd), saida + "/cache/mapas/" + slug + ".quadros.bin")
 		_copiar(CacheMapa.caminho_grade(slug), saida + "/cache/mapas/" + slug + ".grade.bin")
 		caches += 1
 	print("caches de mapa: %d (%d montados agora)" % [caches, montados])
