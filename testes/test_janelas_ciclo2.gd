@@ -69,7 +69,7 @@ func _process(_d: float) -> bool:
 				var c0: Dictionary = pd.contagem()
 				checar(int(c0["total"]) > 300 and int(c0["capturados"]) >= 1 and pd.find_child("P_3", true, false) != null, "Pokédex: espécies das hunts, contagem de capturados", str(c0))
 				(pd.find_child("Filtro_cap", true, false) as Button).pressed.emit()
-				checar(pd.find_child("P_3", true, false) != null and pd.find_child("P_1", true, false) == null, "Pokédex: filtro Capturado (o Venusaur fica, o Bulbasaur sai)")
+				checar((pd.find_child("P_3", true, false) as Control).visible and not (pd.find_child("P_1", true, false) as Control).visible, "Pokédex: filtro Capturado (o Venusaur fica, o Bulbasaur sai)")
 				(pd.find_child("P_3", true, false) as Button).pressed.emit()
 				checar(pd.find_child("Detalhe", true, false) != null, "Pokédex: detalhe da espécie")
 				(pd.find_child("TodosShinys", true, false) as Button).pressed.emit()
