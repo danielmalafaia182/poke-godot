@@ -1079,6 +1079,9 @@ func _lancar_bola(m: Dictionary, sel: String, pending_id: int) -> void:
 	med["tentativas"] = int(med.get("tentativas", 0)) + 1
 	med["total"] = int(med.get("total", 0)) + 1
 	med["gasto"] = int(med.get("gasto", 0)) + int(p.captura_preco_bola.get(sel, 0))
+	var por_bola: Dictionary = med.get("bolas", {})   # A (used-balls `balls`): tentativas por bola, nunca zera
+	por_bola[sel] = int(por_bola.get(sel, 0)) + 1
+	med["bolas"] = por_bola
 	if bool(m["shiny"]):   # C: shiny não usa o medidor (chance fixa por tier × força da bola)
 		chance = Regras.chance_captura_shiny(int(sel), String(dados.shiny.get(int(m["species_id"]), {}).get("tier", "")), p)
 	var sucesso: bool = rng.randf() < chance

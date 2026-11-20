@@ -48,6 +48,7 @@ func _init() -> void:
 	var bolas := 0
 	var caps := 0
 	var esp_sim := 0.0
+	var coluna_ok := true
 	for s in range(1, 21):
 		var cfg := CenarioJogo.configurar(jogo, dados, s, 0)
 		var sim = Simulacao.new(cfg, dados, mapa)
@@ -63,6 +64,13 @@ func _init() -> void:
 					if bool(m["success"]):
 						caps += 1
 						inv = 0.0
+		for k in sim.medidor:   # ciclo 5: tentativas por bola (A: used-balls `balls`) somam o total
+			var mk: Dictionary = sim.medidor[k]
+			var soma := 0
+			for bb in mk.get("bolas", {}):
+				soma += int(mk["bolas"][bb])
+			coluna_ok = coluna_ok and soma == int(mk["total"])
+	checar(coluna_ok, "medidor: as tentativas por bola somam o total de cada espécie")
 	var sd := sqrt(esp_sim)
 	print("SIM: %d Poké Balls jogadas em 20 × 10 min, %d capturas, esperado %.1f" % [bolas, caps, esp_sim])
 	checar(bolas > 20 * 30, "as bolas são de fato jogadas (1 por abate)", "%d" % bolas)

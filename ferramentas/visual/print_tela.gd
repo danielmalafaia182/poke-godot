@@ -97,6 +97,16 @@ func _process(_d: float) -> bool:
 		if mm != null:
 			mm.selecionar_regiao(tela.trim_prefix("mapa_"))
 	if quadros == 10 and tela == "bolas_usadas":
+		# exemplo com os números do used-balls da C8 (A) e uma espécie com várias bolas
+		get_root().get_node("EstadoJogo").medidor_captura = {
+			"1": {"investido": 0.0, "tentativas": 12, "total": 97, "gasto": 600, "bolas": {"3": 97}},
+			"1s": {"investido": 0.0, "tentativas": 6, "total": 6, "gasto": 0, "bolas": {"6": 6}},
+			"19s": {"investido": 0.0, "tentativas": 1, "total": 1, "gasto": 50, "bolas": {"3": 1}},
+			"4": {"investido": 0.0, "tentativas": 4, "total": 1061, "gasto": 200, "bolas": {"2": 491, "3": 570}},
+			"19": {"investido": 0.0, "tentativas": 1, "total": 130, "gasto": 50, "bolas": {"3": 130}},
+			"21": {"investido": 0.0, "tentativas": 0, "total": 85, "gasto": 0, "bolas": {"3": 85}},
+			"74": {"investido": 0.0, "tentativas": 4, "total": 327, "gasto": 2100, "bolas": {"1": 61, "2": 60, "3": 59, "4": 69, "6": 75, "5": 3}},
+			"52": {"investido": 0.0, "tentativas": 9, "total": 87, "gasto": 450, "bolas": {"3": 87}}}
 		current_scene.janelas_dock["bolas"].abrir()
 	if quadros == 10 and tela == "pokedex":
 		current_scene.janelas_dock["pokedex"].abrir()

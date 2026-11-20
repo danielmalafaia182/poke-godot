@@ -39,7 +39,7 @@ func _initialize() -> void:
 	ej.definir_perfil_treinador("Teste", 120)
 	ej.definir_auto_potion(true)
 	ej.inventario.estoque_pocoes[203] = 500
-	ej.medidor_captura = {"112": {"investido": 100.0, "tentativas": 3, "total": 9, "gasto": 450}, "112s": {"investido": 0.0, "tentativas": 1, "total": 1, "gasto": 400}}
+	ej.medidor_captura = {"112": {"investido": 100.0, "tentativas": 3, "total": 9, "gasto": 450, "bolas": {"3": 6, "4": 2}}, "112s": {"investido": 0.0, "tentativas": 1, "total": 1, "gasto": 400}}
 	checar(T.t("window.huntAnalyzer.title") == "Hunt Analyzer" and T.t("hud.levelUp.level", {"level": 7}) == "Nv. 7", "pacote de textos do original carregado, com {{variáveis}}")
 	change_scene_to_file("res://cidade.tscn")
 
@@ -60,9 +60,13 @@ func _process(_d: float) -> bool:
 				checar(menu.botoes["analyzer"].disabled, "cidade: Hunt Analyser só na hunt (ícone desligado)")
 				var bolas: Control = current_scene.get_node("Interface/PainelBolasUsadas")
 				bolas.abrir()
-				checar(bolas.find_child("L_112", true, false) != null and bolas.find_child("L_112s", true, false) == null, "Bolas usadas: Rhydon na aba normal, shiny só na aba shiny")
+				checar(bolas.find_child("L_112", true, false) != null and bolas.find_child("L_112s", true, false) != null, "Bolas usadas: a 1ª aba intercala o Rhydon normal e o shiny (A: vídeo)")
+				var l112: Node = bolas.find_child("L_112", true, false)
+				checar(l112 != null and (l112.find_child("B_3", true, false) as Label).text == "6" and (l112.find_child("B_4", true, false) as Label).text == "2" and (l112.find_child("B_1", true, false) as Label).text == "" and bolas.find_child("Bola_5", true, false) == null, "Bolas usadas: uma coluna por bola (Super 6, Ultra 2, Poké vazia; 5 visíveis)")
+				(bolas.find_child("MostrarTodas", true, false) as CheckBox).button_pressed = true
+				checar(bolas.find_child("Bola_5", true, false) != null and bolas.find_child("Bola_7", true, false) != null, "Bolas usadas: Mostrar todas as Poké Bolas inclui Golden Idle e Master")
 				(bolas.find_child("Aba_shiny", true, false) as Button).pressed.emit()
-				checar(bolas.find_child("L_112s", true, false) != null, "Bolas usadas: aba shiny mostra a variante shiny")
+				checar(bolas.find_child("L_112s", true, false) != null and bolas.find_child("L_112", true, false) == null, "Bolas usadas: aba shiny mostra só a variante shiny")
 				bolas.hide()
 				var pd: Control = current_scene.get_node("Interface/PainelPokedex")
 				pd.abrir()

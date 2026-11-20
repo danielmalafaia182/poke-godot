@@ -139,6 +139,12 @@ func _validar(dados: Variant) -> String:
 			var v: Variant = med[k]
 			if not k is String or k.length() > 12 or not v is Dictionary or not _numero(v.get("investido", 0.0), 0.0, 1e15) 					or not _inteiro(v.get("tentativas", 0), 0, 2147483647) or not _inteiro(v.get("total", 0), 0, 2147483647) 					or not _inteiro(v.get("gasto", 0), 0, 9007199254740991):
 				return "Medidor de captura inválido."
+			var pb: Variant = v.get("bolas", {})   # ciclo 5 (opcional): tentativas por bola
+			if not pb is Dictionary or pb.size() > 16:
+				return "Medidor de captura inválido."
+			for b in pb:
+				if not b is String or not b.is_valid_int() or b.length() > 3 or not _inteiro(pb[b], 0, 2147483647):
+					return "Medidor de captura inválido."
 	if dados.has("ultima_hunt") and (not dados["ultima_hunt"] is String or dados["ultima_hunt"].length() > 64):
 		return "Última hunt inválida."
 	# Fase 4 (opcionais): ouro do treinador e a opção VIP.
@@ -305,6 +311,11 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 		var v: Dictionary = dados["captura_medidor"][k]
 		estado.medidor_captura[String(k)] = {"investido": float(v.get("investido", 0.0)), "tentativas": int(v.get("tentativas", 0)),
 			"total": int(v.get("total", 0)), "gasto": int(v.get("gasto", 0))}
+		if v.get("bolas", {}) is Dictionary and not (v.get("bolas", {}) as Dictionary).is_empty():
+			var pb := {}
+			for b in v["bolas"]:
+				pb[String(b)] = int(v["bolas"][b])
+			estado.medidor_captura[String(k)]["bolas"] = pb
 	estado.ultima_hunt_slug = String(dados.get("ultima_hunt", ""))
 	estado.ouro = int(dados.get("ouro", 0))
 	estado.vip = bool(dados.get("vip", false))
