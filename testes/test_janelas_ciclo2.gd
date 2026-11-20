@@ -83,7 +83,7 @@ func _process(_d: float) -> bool:
 				var inv: Control = current_scene.get_node("Interface/PainelInventario")
 				inv.abrir()
 				var ti: Dictionary = inv.itens()
-				checar(not (ti["ball"] as Array).is_empty() and not (ti["heal"] as Array).is_empty() and inv.find_child("Aba_stone", true, false) != null, "Inventário: abas por categoria com bolas e poções", str((ti["heal"] as Array).size()))
+				checar(not (ti["ball"] as Array).is_empty() and not (ti["heal"] as Array).is_empty() and inv.find_child("Aba_item", true, false) != null and inv.find_child("I_200", true, false) != null, "Inventário: 4 abas do original, bolas e poções na grade", str((ti["heal"] as Array).size()))
 				inv.hide()
 				var mapa: Node = load("res://mapa_mundi.tscn").instantiate()
 				current_scene.add_child(mapa)

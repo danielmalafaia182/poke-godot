@@ -18,7 +18,7 @@ func _initialize() -> void:
 		"criar_personagem", "criar_personagem_escolhido":
 			no = load("res://painel_novo_jogo.gd").new()
 			get_root().add_child(no)
-		"nurse", "depot":
+		"nurse", "depot", "mochila":
 			var ej = get_root().get_node("EstadoJogo")
 			ej.novo_jogo(1, "danpoke", 1)
 			ej.tutorial_passo = "fim"
@@ -63,6 +63,10 @@ func _process(_d: float) -> bool:
 		c.cenario.add_child(grade)
 	if quadros == 10 and tela == "nurse":
 		current_scene.painel_nurse.abrir()
+	if quadros == 10 and tela == "mochila":
+		var ej = get_root().get_node("EstadoJogo")
+		ej.receber_loot([{"itemId": 5303, "quantidade": 12}, {"itemId": 2, "quantidade": 3}]) if ej.has_method("receber_loot") else null
+		current_scene.janelas_dock["inventario"].abrir()
 	if quadros == 10 and tela == "depot":
 		current_scene.painel_depot.abrir_depot()
 	if quadros == 40:

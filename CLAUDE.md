@@ -1204,3 +1204,14 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Testes: `test_cidade_mapa` 5/5, `test_ciclo_cidade` 20/20, P04 `test_depot_cidade_fiel` 25/25 (âncora da Nurse
     agora pelo NPC) e `test_cidade_qualidade` 79/79.
   - Lado a lado: 04–06; colisão na porta: 07.
+- 20/11/2026 — **Ciclo 4, item 3 (mochila).** `painel_inventario.gd` refeito pelo `.inv-bag` do cliente (C) e pelo vídeo
+  (A):
+  - mochila desenhada com `bag_top/mid/bottom.webp` em 354 px;
+  - 4 abas com os ícones `tab_*.png` (Tudo, Pokémon, Pokébolas, Itens) e status "N/6 Pokémon · M itens";
+  - busca, categoria e ordem (versão atual, vista no vídeo);
+  - grade de 6×38 px com no mínimo 30 casas: a equipe primeiro, com Nv, ⚔ e ★; depois bolas e itens, com "9999+";
+  - dica `.inv-tip` ao passar o mouse e a mensagem `.inv-flash` sobre o status;
+  - duplo clique: a poção cura o líder e o Pokémon da equipe vai para o Box. Clique numa berry ou Rare Candy abre a
+    janela de uso.
+  - Testes: `test_mochila` 10/10, `test_janelas_ciclo2` 26/26, `test_tutorial` 22/22, `test_ciclo_itens` 6/6.
+  - Lado a lado: 08.

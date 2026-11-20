@@ -76,7 +76,7 @@ func _process(_d: float) -> bool:
 		5:
 			checar(String(ej.tutorial_passo) == "usePotion", "abrir a mochila fecha openInv", String(ej.tutorial_passo))
 			var inv = current_scene.janelas_dock["inventario"]
-			inv.aba = "heal"
+			inv.aba = "all"
 			inv.atualizar()
 			etapa = 6
 		6:
