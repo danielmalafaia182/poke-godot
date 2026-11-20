@@ -69,6 +69,13 @@ func _ready() -> void:
 		if not bloq.is_empty():
 			celulas_bloqueadas[celula] = true
 			motivos_bloqueio[celula] = bloq
+	# Ciclo 5 (E, decisão do usuário; classe 3 em balanceamento.json cidade.casas_liberadas): casas que o original bloqueia
+	# e o projeto libera (hoje só a da direita da porta do Pokémon Center).
+	for c in preload("res://sim/balanceamento.gd").valor("cidade", "casas_liberadas", []):
+		var cel := Vector2i(int(c[0]), int(c[1]))
+		if celulas_existentes.has(cel):
+			celulas_bloqueadas.erase(cel)
+			motivos_bloqueio.erase(cel)
 	mapa = Renderizador.new()
 	mapa.name = "Mapa"
 	add_child(mapa)

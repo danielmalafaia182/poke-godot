@@ -39,9 +39,9 @@ func _verificar(cen) -> void:
 				livres += 1
 			if a != cen.celula_transitavel(cel):
 				dif += 1
-	checar(dif == 0 and livres > 6000, "colisão da cidade = walkable() do cliente, casa a casa", "%d diferentes, %d livres" % [dif, livres])
-	checar(not cen.celula_transitavel(Vector2i(-2, -4)) and cen.motivos_bloqueio.get(Vector2i(-2, -4), []) == [8274],
-		"(−2,−4) bloqueada pela peça invisível 8274, como no original")
+	checar(dif == 1 and livres > 6000, "colisão da cidade = walkable() do cliente, casa a casa, salvo a casa liberada", "%d diferentes, %d livres" % [dif, livres])
+	checar(cen.celula_transitavel(Vector2i(-2, -4)) and not m.passavel(-4 - m.min_ty, -2 - m.min_tx),
+		"(−2,−4): bloqueada no original (peça 8274), liberada por decisão do usuário (balanceamento.json)")
 	checar(cen.celula_transitavel(Vector2i(-3, -5)) and cen.celula_transitavel(Vector2i(-2, -5)) and cen.celula_transitavel(Vector2i(-3, -4)),
 		"porta do Pokémon Center livre: (−3,−5), (−2,−5) e (−3,−4)")
 	checar(cen.npcs.size() == 5 and not cen.npc("nurse").is_empty() and not cen.npc("pokedepot").is_empty(), "5 NPCs do city-npcs desenhados", str(cen.npcs.size()))

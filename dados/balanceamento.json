@@ -101,6 +101,15 @@
     "qtd_max_por_compra": {
       "valor": 100000,
       "motivo": "limite de sanidade por operação de compra"
+    },
+    "casas_liberadas": {
+      "valor": [
+        [
+          -2,
+          -4
+        ]
+      ],
+      "motivo": "decisão do usuário (ciclo 5): a casa à direita da porta do Pokémon Center fica transitável; no original ela é bloqueada pela peça invisível 8274 (A, collision.json)"
     }
   },
   "diarias": {
