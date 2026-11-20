@@ -136,6 +136,13 @@ func _init() -> void:
 	checar(int(tipo(r, "daily-kill-claimed")["payout"]["xp"]) == int(dk["options"][2]["xp"]) and int(k["itens"].get("13115", 0)) == 6 and int(k["itens"].get("21287", 0)) == 2,
 		"coletar: XP da missão + itens (C: payout)")
 	checar(bool(sv.tratar({"nivel": 10}, {"type": "daily-kill-get", "agora": D13})[0]["locked"]), "abaixo do nível 25: travado (A: minLevel 25)")
+	# ciclo 4 (defeito corrigido): o dia começa travado (nível 10) e o treinador passa do 25 no mesmo dia → as opções
+	# aparecem (antes ficavam vazias até o dia seguinte)
+	var sobe := {"nivel": 10}
+	sv.tratar(sobe, {"type": "daily-kill-get", "agora": D13})
+	sobe["nivel"] = 30
+	var dks: Dictionary = sv.tratar(sobe, {"type": "daily-kill-get", "agora": D13 + 3600})[0]
+	checar(not bool(dks["locked"]) and (dks["options"] as Array).size() == 3, "destravou no meio do dia: 3 opções na hora", str((dks["options"] as Array).size()))
 	var novo_dia: Dictionary = sv.tratar(k, {"type": "daily-kill-get", "agora": D13 + 86400})[0]
 	checar(int(novo_dia["pickedIdx"]) == -1 and not bool(novo_dia["claimed"]) and String(novo_dia["dayKey"]) == "2026-11-14", "virada às 03:00 UTC: missão nova (A: resetAt)")
 

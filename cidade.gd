@@ -147,15 +147,30 @@ func _ready() -> void:
 	get_node("Interface").move_child(placa_depot,0)
 	get_node("Interface").move_child(placa_loja,0)
 	_ajustar_cenario()
+	call_deferred("_pre_aquecer_hunts")
 
-## A (vídeo do original, 20/11): a cidade aparece na vista "0.5× ~50×26" do cliente (o Pokémon Center ocupa ~600 px numa
-## área de 1880 px = 37,6 px por casa); zoom_cidade multiplica.
-const VISTA_CIDADE_TILES := 50.0
+func _pre_aquecer_hunts() -> void:
+	## Ciclo 4: o atlas das hunts liberadas é montado em segundo plano enquanto se está na cidade (as mais perto do
+	## nível do treinador primeiro), para a entrada na hunt caber em 1 s.
+	var hunts: Array = preload("res://ponte_cidade.gd").dados().hunts.values()
+	var nivel := int(EstadoJogo.nivel_treinador)
+	var lib: Array = preload("res://sim/regras_acesso.gd").hunts_liberadas(hunts, nivel)
+	var por_slug := {}
+	for h in hunts:
+		por_slug[String(h["slug"])] = int(h.get("nivel", 0))
+	lib.sort_custom(func(a, b): return absi(int(por_slug[a]) - nivel) < absi(int(por_slug[b]) - nivel))
+	EstadoJogo.pre_aquecer_atlas(lib)
+	preload("res://render/vista_hunt.gd").pre_carregar()   # espécies e cadáveres da vista da hunt, prontos de antemão
+
+## C: a vista do cliente é 25×13 casas em zoom 1 (25/zoom de largura); o zoom é a opção do jogador (EstadoJogo.zoom_camera,
+## padrão 1). A: no vídeo do original o usuário joga em 0.5× (~50×26: o Pokémon Center ocupa ~600 px de 1880).
+## zoom_cidade multiplica (ferramentas de print).
+const VISTA_CIDADE_TILES := 25.0
 
 func _ajustar_cenario() -> void:
 	if cenario == null:
 		return
-	var zoom := size.x / (VISTA_CIDADE_TILES * 32.0) * zoom_cidade
+	var zoom := size.x / (VISTA_CIDADE_TILES / EstadoJogo.zoom_camera * 32.0) * zoom_cidade
 	cenario.scale = Vector2.ONE * zoom
 	if cenario.has_method("definir_vista"):
 		cenario.definir_vista((size / (32.0 * zoom)).ceil())
@@ -388,6 +403,28 @@ func _criar_ouro_e_config() -> void:
 	var coluna := VBoxContainer.new()
 	painel_config.add_child(coluna)
 	coluna.add_child(vip)
+	# Ciclo 4: zoom da câmera (C: as opções do cliente; padrão 25×13)
+	var linha_zoom := HBoxContainer.new()
+	linha_zoom.name = "Zoom"
+	coluna.add_child(linha_zoom)
+	var rz := Label.new()
+	rz.text = "Zoom:"
+	linha_zoom.add_child(rz)
+	for par in [[1.0, "25×13"], [0.75, "0.75× (~33×17)"], [0.5, "0.5× (~50×26)"]]:
+		var bz := Button.new()
+		bz.name = "Zoom_%s" % str(par[0]).replace(".", "_")
+		bz.text = String(par[1])
+		bz.toggle_mode = true
+		bz.button_pressed = is_equal_approx(EstadoJogo.zoom_camera, float(par[0]))
+		var zv: float = par[0]
+		bz.pressed.connect(func() -> void:
+			EstadoJogo.zoom_camera = zv
+			for irmao in linha_zoom.get_children():
+				if irmao is Button:
+					irmao.button_pressed = irmao == bz
+			EstadoJogo.solicitar_salvamento()
+			_ajustar_cenario())
+		linha_zoom.add_child(bz)
 	var botao_streak := Button.new()
 	botao_streak.name = "StreakPoints"
 	botao_streak.text = "Streak Points"

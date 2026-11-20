@@ -188,7 +188,10 @@ func _ajustar() -> void:
 		painel_golpes.size = Vector2(maxf(200,minf(360,size.x-590)),130)
 	# Adaptação local: reserva espaço para captura em janelas de 648px.
 	recompensas.maximo_cartoes = 1
-	recompensas.position = Vector2(maxf(12,size.x-352),132)
+	# Ciclo 4: o cartão mede em px da tela de 1880 do original (kc-card 340 px), como os painéis novos.
+	var f_kc: float = maxf(0.5, size.x / 1880.0)
+	recompensas.scale = Vector2(f_kc, f_kc)
+	recompensas.position = Vector2(maxf(12, size.x - (340 + 12) * f_kc), 170.0)   # abaixo do botão Auto-Helper
 	captura.position = Vector2(maxf(12,size.x-274),maxf(150,size.y-250))
 	captura.size = Vector2(262,0)
 	if painel_captura != null:   # C: right/bottom 8 px, scale .88, origem no canto

@@ -146,6 +146,8 @@ func _validar(dados: Variant) -> String:
 		return "Ouro inválido."
 	if dados.has("vip") and not dados["vip"] is bool:
 		return "VIP inválido."
+	if dados.has("zoom") and not (dados["zoom"] is float or dados["zoom"] is int):   # ciclo 4 (opcional)
+		return "Zoom inválido."
 	# Fase 4, lote 2 (opcionais): Streak Points e soneca pendente.
 	if dados.has("streak"):
 		var st: Variant = dados["streak"]
@@ -306,6 +308,7 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 	estado.ultima_hunt_slug = String(dados.get("ultima_hunt", ""))
 	estado.ouro = int(dados.get("ouro", 0))
 	estado.vip = bool(dados.get("vip", false))
+	estado.zoom_camera = float(dados.get("zoom", 1.0))
 	var st: Dictionary = dados.get("streak", {})
 	var gastos := {}
 	for t in st.get("spent", {}):
@@ -401,7 +404,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"cidade": {"mapa": "cerulean", "definida": estado.posicao_cidade_definida, "x": estado.celula_cidade_salva.x, "y": estado.celula_cidade_salva.y, "direcao": estado.direcao_cidade_salva},
 		"captura_medidor": estado.medidor_captura.duplicate(true), "garantia_pedras": estado.garantia_pedras.duplicate(true),
 		"log_capturas": estado.log_capturas.duplicate(true), "tempo_caca_s": estado.tempo_caca_s, "capturas_total": estado.capturas_total, "tutorial": estado.tutorial_passo, "ultima_hunt": estado.ultima_hunt_slug,
-		"ouro": estado.ouro, "vip": estado.vip, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
+		"ouro": estado.ouro, "vip": estado.vip, "zoom": estado.zoom_camera, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
 		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true), "ginasios": estado.ginasios.duplicate(true), "bosses": estado.bosses.duplicate(true), "album": estado.album.duplicate(true), "visual": estado.visual.duplicate(true), "hunt_ao_fechar": estado.hunt_ao_fechar,
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}

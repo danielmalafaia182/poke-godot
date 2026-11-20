@@ -18,21 +18,33 @@ func _initialize() -> void:
 		"criar_personagem", "criar_personagem_escolhido":
 			no = load("res://painel_novo_jogo.gd").new()
 			get_root().add_child(no)
-		"nurse", "depot", "mochila":
+		"nurse", "depot", "mochila", "my_pokes", "perfil":
 			var ej = get_root().get_node("EstadoJogo")
 			ej.novo_jogo(1, "danpoke", 1)
+			ej.zoom_camera = 0.5   # A: o zoom do vídeo do original
 			ej.tutorial_passo = "fim"
 			change_scene_to_file("res://cidade.tscn")
+		"hunt":
+			# a hunt do Geodude com o Bulbasaur nível 8, ~12 s de luta (dano com o nome do golpe, loot)
+			var ej = get_root().get_node("EstadoJogo")
+			ej.novo_jogo(1, "danpoke", 1)
+			ej.zoom_camera = 0.5   # A: o zoom do vídeo do original
+			ej.tutorial_passo = "fim"
+			ej.especie_caca = null
+			ej.slug_caca = "geodude"
+			change_scene_to_file("res://caca_sim.tscn")
 		"cidade_colisao":
 			# a cidade com zoom 2, o treinador na frente do Pokémon Center e as casas bloqueadas em vermelho
 			var ej = get_root().get_node("EstadoJogo")
 			ej.novo_jogo(1, "danpoke", 1)
+			ej.zoom_camera = 0.5   # A: o zoom do vídeo do original
 			ej.tutorial_passo = "fim"
 			change_scene_to_file("res://cidade.tscn")
 		_ when tela.begins_with("tutorial"):
 			# tutorial = welcome; tutorial_<passo> = esse passo (party, depot, openMap…)
 			var ej = get_root().get_node("EstadoJogo")
 			ej.novo_jogo(1, "danpoke", 1)
+			ej.zoom_camera = 0.5   # A: o zoom do vídeo do original
 			ej.tutorial_passo = "welcome" if tela == "tutorial" else tela.trim_prefix("tutorial_")
 			change_scene_to_file("res://cidade.tscn")
 
@@ -67,9 +79,20 @@ func _process(_d: float) -> bool:
 		var ej = get_root().get_node("EstadoJogo")
 		ej.receber_loot([{"itemId": 5303, "quantidade": 12}, {"itemId": 2, "quantidade": 3}]) if ej.has_method("receber_loot") else null
 		current_scene.janelas_dock["inventario"].abrir()
+	if quadros == 10 and tela == "my_pokes":
+		current_scene._abrir_my_pokes()
+	if quadros == 10 and tela == "perfil":
+		current_scene.janelas_dock["perfil"].abrir()
 	if quadros == 10 and tela == "depot":
 		current_scene.painel_depot.abrir_depot()
-	if quadros == 40:
+	if tela == "hunt" and quadros == 30 and current_scene != null and "velocidade" in current_scene:
+		current_scene.velocidade = 4.0   # acelera até o 1º abate (o cartão fica na tela)
+	if tela == "hunt" and quadros > 30 and current_scene != null and "registro" in current_scene and int(current_scene.registro.get("abates", 0)) > 0 and current_scene.velocidade > 1.0:
+		current_scene.velocidade = 1.0
+		quadros = 2400 - 50
+	if tela == "hunt" and quadros < 2400:
+		return false
+	if quadros == 40 or (tela == "hunt" and quadros == 2400):
 		get_root().get_texture().get_image().save_png(saida)
 		print("PRINT ", saida)
 		quit(0)

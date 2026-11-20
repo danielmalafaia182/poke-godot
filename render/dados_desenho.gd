@@ -14,8 +14,15 @@ var _texturas: Dictionary = {}       # índice -> ImageTexture
 var regras: RefCounted
 
 
+static var _unico: RefCounted = null
+
+
 static func carregar() -> RefCounted:
+	## Ciclo 4: um só por sessão (o manifest custa ~200 ms para ler; a cidade e cada hunt usam o mesmo).
+	if _unico != null and String(_unico.pasta_game) == Fontes.pasta_snapshot() + "/game":
+		return _unico
 	var d = load("res://render/dados_desenho.gd").new()
+	_unico = d
 	d.pasta_game = Fontes.pasta_snapshot() + "/game"
 	var v: Dictionary = Fontes.ler_json(d.pasta_game + "/asset-packs/version.json")
 	d.versao = String(v["version"])

@@ -80,13 +80,14 @@ var perfil_sim_us := 0      # tempo da simulação + mensagens + save (por quadr
 var perfil_sim_max_us := 0
 
 
+var _primeiro_quadro := false
 const INTERVALO_SAVE_HUNT_MS := 10000   # E (2b.6): na hunt, no máximo um save a cada 10 s; ao sair, save imediato
 
 
 func _ready() -> void:
 	var t0 := Time.get_ticks_msec()
 	EstadoJogo.salvamento.intervalo_minimo_ms = INTERVALO_SAVE_HUNT_MS
-	dados = DadosJogo.carregar()
+	dados = preload("res://ponte_cidade.gd").dados()   # ciclo 4: só leitura; a mesma carga da cidade (~85 ms a menos)
 	tempos_carga["dados_ms"] = Time.get_ticks_msec() - t0
 	var especie = EstadoJogo.especie_caca
 	var slug_pedido := String(EstadoJogo.slug_caca)
@@ -113,10 +114,12 @@ func _ready() -> void:
 	EstadoJogo.hunt_ao_fechar = String(cfg["slug"])   # se o jogo fechar aqui, a caça continua até 15 min (B-relatado)
 	EstadoJogo.sessao_expirada = false
 	var t1 := Time.get_ticks_msec()
-	var mapa = MapaHunt.carregar(cfg["slug"], Fontes.ler_mapa(cfg["slug"]), Fontes.ler_colisao())
+	# ciclo 4: a grade da sim vem do cache (mesma chave do cache de desenho), sem reler o JSON do mapa
+	var mapa = preload("res://render/cache_mapa.gd").mapa_hunt(String(cfg["slug"]), preload("res://render/dados_desenho.gd").carregar())
 	sim = Simulacao.new(cfg, dados, mapa)
 	tempos_carga["sim_ms"] = Time.get_ticks_msec() - t1
 	var t2 := Time.get_ticks_msec()
+	EstadoJogo.esperar_atlas(String(cfg["slug"]))   # ciclo 4: se o atlas desta hunt está sendo montado em segundo plano
 	vista = Vista.new()
 	add_child(vista)
 	vista.nome_treinador = String(EstadoJogo.nome_treinador)
@@ -150,6 +153,9 @@ var tipos_no_quadro: Array = []   # diagnóstico (varredura): mensagens tratadas
 
 
 func _process(_delta: float) -> void:
+	if not _primeiro_quadro:
+		_primeiro_quadro = true
+		preload("res://tela_carregando.gd").esconder(get_tree())   # ciclo 4: a tela de carregamento sai no 1º quadro
 	if sim == null or _encerrada:
 		return
 	var _t0 := Time.get_ticks_usec()

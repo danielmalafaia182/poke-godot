@@ -1186,8 +1186,22 @@ func _passo_mob(m: Dictionary) -> void:
 			_campo_alvo = _campo_tempo(h, _campo_alvo_caixa, _custos(int(p.mob_step_ms)), {})
 		campo = _campo_alvo
 		caixa = _campo_alvo_caixa
-	var melhor := _plano(m, h, func(): return _escolher_passo(atual, h, campo, caixa,
-		_custos(int(p.mob_step_ms)), pode, p.desempate_mob), pode)
+	var custos := _custos(int(p.mob_step_ms))
+	var calcular := func(): return _escolher_passo(atual, h, campo, caixa, custos, pode, p.desempate_mob)
+	if bool(p.mob_contorna_bloqueio) and _cheb(atual, h) <= int(p.mob_contorna_raio):
+		# A (ciclo 4, ferramentas/fase4/medir_contorno.py: rhydon-1h, M1–M3, S1, C1): com as casas que aproximam ocupadas
+		# por outros selvagens, o original contorna (4 passos laterais em 8 intervalos bloqueados, acima da taxa normal
+		# de passo) em vez de esperar o vizinho morrer. Perto do herói o caminho é refeito a cada passo com os outros
+		# selvagens como obstáculo: assim que vaga uma casa ao redor do herói, ele vai até ela. Sem casa livre ao redor,
+		# volta ao campo comum (chega o mais perto que puder e espera).
+		calcular = func():
+			var bloq := {}
+			for o in mobs:
+				if not o["dead"] and int(o["slot"]) != slot:
+					bloq[o["pos"]] = true
+			var t: Vector2i = _escolher_passo(atual, h, _campo_tempo(h, caixa, custos, bloq), caixa, custos, pode, p.desempate_mob)
+			return t if t != atual else _escolher_passo(atual, h, campo, caixa, custos, pode, p.desempate_mob)
+	var melhor := _plano(m, h, calcular, pode)
 	if melhor == atual:
 		return
 	var dd: Vector2i = melhor - atual

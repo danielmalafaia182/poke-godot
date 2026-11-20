@@ -27,6 +27,7 @@ var botoes_tipos: Dictionary={}
 var botoes_regioes: Array[Button]=[]
 var tipo_selecionado: String=""
 var catalogo: Array[Dictionary]=[]
+var deslocamento_regiao: Dictionary={}   # área -> deslocamento da origem (só nas regiões de fundo gerado)
 var _primeira_abertura: bool=true
 var _iniciando_visao: bool=false
 var _arrastando_janela: bool=false
@@ -276,9 +277,17 @@ func _textura_regiao(regiao: String) -> Texture2D:
 	var caminho: String="res://assets/interface/mapa/regioes/%s.png" % regiao
 	var t: Texture2D=load(caminho) if ResourceLoader.exists(caminho) else null
 	if t==null:
+		# Ciclo 4: o map-markers do servidor (A, igual em 20/11) põe 3 hunts da Nightmare em y = −158 (acima da imagem da
+		# região). Sem a imagem real, o fundo gerado cobre todos os marcadores: a origem da região desloca para os de
+		# coordenada negativa caberem (E; as posições relativas ficam as do servidor).
+		var mn: Vector2=Vector2.ZERO
+		for reg in catalogo:
+			if String(reg.get("area","kanto"))==regiao: mn=mn.min(Vector2(float(reg["pixel"][0]),float(reg["pixel"][1])))
+		var desl: Vector2=(-mn+Vector2(80,90)) if mn!=Vector2.ZERO else Vector2.ZERO
+		deslocamento_regiao[regiao]=desl
 		var lim: Vector2=Vector2(400,300)
 		for reg in catalogo:
-			if String(reg.get("area","kanto"))==regiao: lim=lim.max(Vector2(float(reg["pixel"][0]),float(reg["pixel"][1]))+Vector2(80,90))
+			if String(reg.get("area","kanto"))==regiao: lim=lim.max(Vector2(float(reg["pixel"][0]),float(reg["pixel"][1]))+desl+Vector2(80,90))
 		var img: Image=Image.create(int(lim.x),int(lim.y),false,Image.FORMAT_RGB8)
 		img.fill({"outland":Color("2a2418"),"orre":Color("3a2a16"),"nightmare":Color("1a1024")}.get(regiao,Color("101820")))
 		t=ImageTexture.create_from_image(img)
@@ -361,7 +370,7 @@ func _reposicionar_um(marcador: Button) -> void:
 	if dados.is_empty(): return
 	var escala: float=clampf(navegacao.zoom/0.6,0.4,1.25)*(1.14 if marcador.sobre else 1.0)
 	marcador.scale=Vector2.ONE*escala/navegacao.zoom
-	var pixel: Vector2=Vector2(float(dados["pixel"][0]),float(dados["pixel"][1]))
+	var pixel: Vector2=Vector2(float(dados["pixel"][0]),float(dados["pixel"][1]))+deslocamento_regiao.get(String(dados.get("area","kanto")),Vector2.ZERO)
 	marcador.position=pixel-marcador.size*marcador.scale*0.5
 	var tela: Vector2=imagem_mapa.position+pixel*navegacao.zoom
 	marcador.visible=bool(marcador.get_meta("atende_filtro",true)) and Rect2(Vector2.ZERO,navegacao.size).grow(100).has_point(tela)
@@ -407,7 +416,7 @@ func _viajar(dados: Dictionary) -> void:
 		# a espécie fica registrada quando o nome é uma (telas antigas a leem), mas a cena usa o slug.
 		EstadoJogo.especie_caca=preload("res://especies_importadas.gd").obter_especies().get(str(dados["name"]))
 		EstadoJogo.slug_caca=str(dados["slug"])
-		get_tree().change_scene_to_file("res://caca_sim.tscn")
+		preload("res://tela_carregando.gd").ir_para(get_tree(), "res://caca_sim.tscn")
 		return
 	for destino in destinos:
 		if destino!=null and destino.especie!=null and destino.especie.nome==dados["name"]:
@@ -422,14 +431,14 @@ func _viajar(dados: Dictionary) -> void:
 		# 2b: hunt sem espécie correspondente no jogo, mas com mapa e hunt-config: entra pelo slug
 		EstadoJogo.especie_caca=null
 		EstadoJogo.slug_caca=str(dados["slug"])
-		get_tree().change_scene_to_file("res://caca_sim.tscn")
+		preload("res://tela_carregando.gd").ir_para(get_tree(), "res://caca_sim.tscn")
 func _on_destino_pressed(destino: DadosDestinoCaca) -> void:
 	if destino==null or destino.especie==null: return
 	var simulada: bool=_cenario_jogo().disponivel(_dados_sim(),destino.especie.nome)
 	if not simulada: return   # ciclo 3: só existe a cena nova (as 451 hunts do snapshot são simuladas)
 	EstadoJogo.especie_caca=destino.especie
 	EstadoJogo.slug_caca=""   # 2b: viagem pela espécie (o slug é achado pelo nome); _selecionar_registro passa o slug
-	get_tree().change_scene_to_file("res://caca_sim.tscn")
+	preload("res://tela_carregando.gd").ir_para(get_tree(), "res://caca_sim.tscn")
 static var _dados_sim_cache: RefCounted
 static func _dados_sim() -> RefCounted:
 	if _dados_sim_cache==null: _dados_sim_cache=preload("res://sim/dados_jogo.gd").carregar()

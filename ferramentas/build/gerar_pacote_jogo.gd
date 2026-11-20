@@ -3,6 +3,7 @@ extends SceneTree
 ##   jogo/game/maps/<slug>.json.zst   os mapas das hunts (zstd; Fontes.ler_json lê direto)
 ##   jogo/game/{collision,offsets,draworder}.json, jogo/game/corpses/, jogo/game/asset-packs/ (atlas, outfits)
 ##   jogo/api/hunt-config/<slug>.json, jogo/api/city-npcs/cerulean.json, jogo/assets/ (ícones)
+##   jogo/cache/mapas/<slug>.bin   o cache de desenho de cada mapa (ciclo 4)
 ##   + as 2 páginas de cadáver que só o poke-local tem (mesmo caminho relativo)
 ## Fica de fora: o resto do snapshot (manifests da coleta, api/city-npcs, bossCatalog e creatures, que já estão
 ## processados em dados/), gravações e ferramentas.
@@ -62,6 +63,25 @@ func _init() -> void:
 		mapas += 1
 	for n in ["collision.json", "offsets.json", "draworder.json"]:
 		_copiar(snap + "/game/" + n, saida + "/game/" + n)
+	# Ciclo 4 (entrada na hunt ≤ 1 s): o cache de desenho de cada mapa vai pronto (montar custa 1–8 s por mapa). A chave
+	# usa o MD5 do JSON descomprimido, então o cache montado aqui vale para o .json.zst do pacote. O atlas por mapa
+	# (~3,8 MB cada) não vai: o jogo o monta em segundo plano na cidade (EstadoJogo.pre_aquecer_atlas).
+	var CacheMapa := load("res://render/cache_mapa.gd")
+	var dd = load("res://render/dados_desenho.gd").carregar()
+	DirAccess.make_dir_recursive_absolute(saida + "/cache/mapas")
+	var caches := 0
+	var montados := 0
+	for slug in slugs:
+		if not FileAccess.file_exists(snap + "/game/maps/" + slug + ".json"):
+			continue
+		if CacheMapa.ler(slug, dd).is_empty():
+			CacheMapa.montar(slug, dd, Fontes.ler_mapa(slug))
+			montados += 1
+		_copiar(CacheMapa.caminho(slug), saida + "/cache/mapas/" + slug + ".bin")
+		CacheMapa.mapa_hunt(slug, dd)   # grade da sim (monta e grava se faltar)
+		_copiar(CacheMapa.caminho_grade(slug), saida + "/cache/mapas/" + slug + ".grade.bin")
+		caches += 1
+	print("caches de mapa: %d (%d montados agora)" % [caches, montados])
 	_copiar_pasta(snap + "/game/corpses", saida + "/game/corpses")
 	_copiar_pasta(snap + "/game/asset-packs", saida + "/game/asset-packs")
 	for slug in slugs:

@@ -24,6 +24,18 @@ static func _chave(slug: String, dados: RefCounted) -> String:
 	return "%d|%s" % [VERSAO, CacheMapa.chave(slug, dados)]
 
 
+static func valido(slug: String, dados: RefCounted) -> bool:
+	## Só o cabeçalho (versão e chave), sem ler a imagem: para a fila de pré-aquecimento (EstadoJogo.pre_aquecer_atlas).
+	var c := caminho(slug)
+	if not FileAccess.file_exists(c):
+		return false
+	var f := FileAccess.open_compressed(c, FileAccess.READ, FileAccess.COMPRESSION_ZSTD)
+	if f == null:
+		return false
+	var d = f.get_var()
+	return d is Dictionary and int(d.get("versao", -1)) == VERSAO and String(d.get("chave", "")) == _chave(slug, dados)
+
+
 static func ler(slug: String, dados: RefCounted) -> Dictionary:
 	var c := caminho(slug)
 	if not FileAccess.file_exists(c):

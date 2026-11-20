@@ -195,6 +195,7 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 	var xp0 := treinador_xp
 	var pxp0 := int(_lider()["xp"])
 	var parado := 0
+	var shiny_pos := {}   # casas de abates de shiny ainda sem catch-result
 	var ult_pos := Vector2i(-999, -999)
 	var n := int(minutos * TICKS_MIN)
 	for t in n:
@@ -207,6 +208,7 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 					r["por_especie"][ke] = int(r["por_especie"].get(ke, 0)) + 1
 					if bool(m.get("shiny", false)):
 						r["shiny"] += 1
+						shiny_pos[Vector2i(int(m.get("col", -1)), int(m.get("row", -1)))] = true
 					for it in m.get("loot", []):
 						var k := str(int(it.get("itemId", 0)))
 						r["loot"][k] = int(r["loot"].get(k, 0)) + int(it.get("qty", 0))
@@ -216,8 +218,12 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 					if bool(m.get("success", false)):
 						r["capturas"] += 1
 						r["capturas_especie"].append(int(nome_para_id.get(String(m.get("speciesName", "")), -1)))
-						if int(m.get("ballId", 0)) == int(cfg.get("bola_auto_catch_shiny", -1)) and int(cfg.get("bola_auto_catch_shiny", -1)) != int(cfg.get("bola_auto_catch", -2)):
+						# ciclo 4: o shiny é reconhecido pela casa do abate (antes, só se a bola do shiny fosse diferente da do
+						# Auto-Catch — com só Poké Balls, uma captura de shiny nunca era contada)
+						if shiny_pos.has(Vector2i(int(m.get("col", -2)), int(m.get("row", -2)))):
 							r["shiny_cap"] += 1
+					if m.has("col"):
+						shiny_pos.erase(Vector2i(int(m.get("col", -2)), int(m.get("row", -2))))
 				"auto-heal":
 					r["pocoes"] += 1
 				"field-none":
@@ -442,6 +448,14 @@ func _dia_novo() -> void:
 			extras["gift"] += 1
 		if String(m.get("type", "")) == "boosts":
 			est["boosts"] = (m["boosts"] as Array).duplicate(true)
+	_escolher_kill()
+
+
+func _escolher_kill() -> void:
+	## A opção de mais XP cuja espécie está numa hunt liberada que o líder aguenta. Ciclo 4: tentada a cada volta à
+	## cidade, não só na virada do dia (antes, com o treinador abaixo do nível 25 na virada, o dia ficava sem Daily Kill
+	## mesmo passando do 25 depois — por isso a campanha de 20 h tinha kills_diarios 0).
+	est["nivel"] = _nivel_treinador()
 	var mk: Dictionary = diarias.tratar(est, {"type": "daily-kill-get", "agora": agora_s})[0]
 	if bool(mk.get("locked", true)) or int(mk.get("pickedIdx", -1)) >= 0:
 		return
@@ -465,6 +479,7 @@ func _dia_novo() -> void:
 func _diarias_cidade() -> void:
 	## Antes da venda: tarefas completas, Daily Kill completa, Streak.
 	est["nivel"] = _nivel_treinador()
+	_escolher_kill()
 	var mt: Dictionary = diarias.tratar(est, {"type": "tasks-get", "agora": agora_s})[0]
 	for t in mt["tasks"]:
 		if bool(t["complete"]) and not bool(t["claimed"]):

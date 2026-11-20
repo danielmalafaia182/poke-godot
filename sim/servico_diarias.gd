@@ -436,7 +436,9 @@ func _captura(estado: Dictionary, agora: int, especie: int) -> Array:
 
 func _kill_gerar(estado: Dictionary, agora: int) -> void:
 	var k: Dictionary = estado["diarias"]["kill"]
-	if k.has("opcoes"):
+	# Ciclo 4 (defeito): as opções do dia eram geradas uma vez; se o treinador ainda estava abaixo do nível 25 nessa hora,
+	# ficavam vazias até o dia seguinte, mesmo depois de destravar. Vazias e sem escolha → geradas de novo agora.
+	if k.has("opcoes") and not ((k["opcoes"] as Array).is_empty() and int(k.get("pickedIdx", -1)) < 0):
 		return
 	var tier := _tier_do_nivel(int(estado.get("nivel", 1)))
 	k["tierKey"] = String(tier.get("key", ""))

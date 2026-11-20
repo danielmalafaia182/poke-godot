@@ -50,12 +50,34 @@ var _slug_carregado := ""
 var _slug_pendente := ""
 
 
+static var _st := {}   # ciclo 4: espécies, shiny e cadáveres lidos uma vez por sessão (eram ~120 ms a cada entrada)
+
+
+static func pre_carregar() -> void:
+	## Chamado da cidade: deixa espécies, shiny e cadáveres prontos para a 1ª hunt da sessão.
+	if _st.has("snap") and String(_st["snap"]) == Fontes.pasta_snapshot():
+		return
+	var v = load("res://render/vista_hunt.gd").new()
+	v._ready()
+	for c in v.get_children():
+		c.free()
+	v.free()
+
+
 func _ready() -> void:
 	outfits = Outfits.padrao()
 	hud = CanvasLayer.new()
 	hud.layer = 5
 	add_child(hud)
 	_fonte = load(FONTE) if ResourceLoader.exists(FONTE) else ThemeDB.fallback_font
+	if _st.has("snap") and String(_st["snap"]) == Fontes.pasta_snapshot():
+		nomes_especie = _st["nomes"]
+		looktype_especie = _st["look"]
+		looktype_shiny = _st["shiny"]
+		_corpses_assets = _st["c_assets"]
+		_corpses_paginas = _st["c_pags"]
+		paginas_cadaver_faltando = _st["c_falta"]
+		return
 	for e in _ler_especies():
 		nomes_especie[int(e["id"])] = String(e["nome"])
 		looktype_especie[int(e["id"])] = int(e.get("looktype", 0))
@@ -65,6 +87,8 @@ func _ready() -> void:
 			if sh[k].get("looktype") != null:
 				looktype_shiny[int(k)] = int(sh[k]["looktype"])
 	_carregar_cadaveres()
+	_st = {"snap": Fontes.pasta_snapshot(), "nomes": nomes_especie, "look": looktype_especie, "shiny": looktype_shiny,
+		"c_assets": _corpses_assets, "c_pags": _corpses_paginas, "c_falta": paginas_cadaver_faltando}
 
 
 static func _ler_especies() -> Array:
@@ -129,6 +153,11 @@ func _carregar_mapa(slug: String, centro: Vector2 = Vector2.ZERO) -> void:
 	_slug_carregado = slug
 
 
+func zoom_camera() -> float:
+	var ej := get_node_or_null("/root/EstadoJogo")
+	return float(ej.zoom_camera) if ej != null else 1.0
+
+
 static func _agora() -> float:
 	return Time.get_unix_time_from_system() * 1000.0
 
@@ -150,7 +179,7 @@ func _processar() -> void:
 	var _ta := Time.get_ticks_usec()
 	var agora := _agora()
 	var tela := get_viewport_rect().size
-	escala = tela.x / (TILES_LARGURA * 32.0)
+	escala = tela.x / (TILES_LARGURA / zoom_camera() * 32.0)   # ciclo 4: zoom do jogador (C: 25/zoom casas de largura)
 	mapa.tiles_visiveis = tela / (32.0 * escala)
 	var v: Dictionary = estado.quadro(agora)
 	perfil["quadro_us"] += Time.get_ticks_usec() - _ta
@@ -399,17 +428,51 @@ func _mostrar_dano(h: Dictionary) -> void:
 	if alvo.is_empty():
 		return
 	var pos := tile_para_tela(ox + float(alvo["col"]), oy + float(alvo["row"])) - Vector2(0, 46.0 * _px_logico())
-	var r := Label.new()
-	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	r.add_theme_font_override("font", _fonte)
-	r.add_theme_font_size_override("font_size", roundi(15.0 * _px_logico()))
-	r.add_theme_color_override("font_outline_color", Color.BLACK)
-	r.add_theme_constant_override("outline_size", roundi(6.0 * _px_logico()))
+	# C: .dmg-float (Barlow 900, 15 px, contorno preto) com o nome do golpe em .dmg-move por cima (9 px, 700,
+	# espaçamento 0,04 em, opacidade 0,9); cores das classes: to-hero #ff6b6b, super #ffcf5a 17 px, weak #cdd5df 13 px,
+	# crit #ffb020 25 px com ⚡.
+	var px := _px_logico()
 	var para_heroi := int(h["slot"]) < 0
 	var eff := float(h.get("eff", 1))
-	# F: as cores das classes CSS (to-hero, super, weak) não estão no snapshot; vermelho no herói, amarelo super, cinza fraco
-	r.add_theme_color_override("font_color", Color(1, 0.35, 0.3) if para_heroi else (Color(1, 0.85, 0.2) if eff > 1.0 else (Color(0.8, 0.8, 0.8) if eff > 0.0 and eff < 1.0 else Color.WHITE)))
-	r.text = ("-" if para_heroi else "") + str(int(h["amount"]))
+	var crit := bool(h.get("crit", false))
+	var cor := Color.WHITE
+	var tam := 15.0
+	if crit:
+		cor = Color("ffb020"); tam = 25.0
+	elif para_heroi:
+		cor = Color("ff6b6b")
+	elif eff > 1.0:
+		cor = Color("ffcf5a"); tam = 17.0
+	elif eff > 0.0 and eff < 1.0:
+		cor = Color("cdd5df"); tam = 13.0
+	var r := VBoxContainer.new()
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	r.add_theme_constant_override("separation", roundi(1.0 * px))
+	var golpe := String(h.get("move", ""))
+	if golpe != "":
+		var lm := Label.new()
+		lm.name = "Golpe"
+		lm.text = golpe
+		var fv := FontVariation.new()
+		fv.base_font = _fonte
+		fv.spacing_glyph = maxi(0, roundi(9.0 * 0.04 * px))
+		lm.add_theme_font_override("font", fv)
+		lm.add_theme_font_size_override("font_size", roundi(9.0 * px))
+		lm.add_theme_color_override("font_color", Color(cor, 0.9))
+		lm.add_theme_color_override("font_outline_color", Color.BLACK)
+		lm.add_theme_constant_override("outline_size", roundi(4.0 * px))
+		lm.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		r.add_child(lm)
+	var la := Label.new()
+	la.name = "Dano"
+	la.add_theme_font_override("font", _fonte)
+	la.add_theme_font_size_override("font_size", roundi(tam * px))
+	la.add_theme_color_override("font_outline_color", Color.BLACK)
+	la.add_theme_constant_override("outline_size", roundi(6.0 * px))
+	la.add_theme_color_override("font_color", cor)
+	la.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	la.text = ("⚡" if crit else "") + ("-" if para_heroi else "") + str(int(h["amount"]))
+	r.add_child(la)
 	hud.add_child(r)
 	r.reset_size()
 	_danos.append({"no": r, "t": 0.0, "x": pos.x - r.size.x / 2.0, "y": pos.y - r.size.y})
@@ -429,7 +492,7 @@ func _danos_quadro(agora: float, _tela: Vector2) -> void:
 		var d: Dictionary = _danos[i]
 		d["t"] = float(d["t"]) + dt
 		var a := minf(1.0, float(d["t"]) / DANO_MS)
-		var no: Label = d["no"]
+		var no: Control = d["no"]
 		no.position = Vector2(float(d["x"]), float(d["y"]) - 60.0 * _px_logico() * a)
 		no.modulate.a = a / 0.16 if a < 0.16 else 1.0 - (a - 0.16) / 0.84
 		if a >= 1.0:

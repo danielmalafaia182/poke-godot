@@ -27,9 +27,28 @@ static func pasta_abs() -> String:
 const CHUNK := 8
 
 
+static var _md5s: Dictionary = {}
+
+
 static func _md5(caminho: String) -> String:
-	caminho = Fontes.arquivo(caminho)
-	return FileAccess.get_md5(caminho) if FileAccess.file_exists(caminho) else "-"
+	## MD5 do conteúdo (ciclo 4: do JSON descomprimido quando só existe o `.zst` do pacote), para o cache montado no
+	## projeto valer no jogo exportado. Guardado por sessão (os arquivos não mudam com o jogo aberto).
+	if _md5s.has(caminho):
+		return _md5s[caminho]
+	var arq := Fontes.arquivo(caminho)
+	var r := "-"
+	if arq.ends_with(".zst"):
+		var f := FileAccess.open_compressed(arq, FileAccess.READ, FileAccess.COMPRESSION_ZSTD)
+		if f != null:
+			var ctx := HashingContext.new()
+			ctx.start(HashingContext.HASH_MD5)
+			while f.get_position() < f.get_length():
+				ctx.update(f.get_buffer(1 << 20))
+			r = ctx.finish().hex_encode()
+	elif FileAccess.file_exists(arq):
+		r = FileAccess.get_md5(arq)
+	_md5s[caminho] = r
+	return r
 
 
 static func chave(slug: String, dados: RefCounted) -> String:
@@ -42,8 +61,21 @@ static func caminho(slug: String) -> String:
 	return pasta_abs() + "/" + slug + ".bin"
 
 
+static func caminho_pronto(slug: String) -> String:
+	## Ciclo 4: o build leva o cache de cada mapa pronto em jogo/cache/mapas (montar custa 1–8 s por mapa).
+	return Fontes.pasta_snapshot() + "/cache/mapas/" + slug + ".bin"
+
+
 static func ler(slug: String, dados: RefCounted) -> Dictionary:
-	var c := caminho(slug)
+	## O do user:// (montado nesta máquina) e, se não houver ou estiver velho, o pronto do pacote.
+	for c in [caminho(slug), caminho_pronto(slug)]:
+		var d := _ler_arquivo(c, slug, dados)
+		if not d.is_empty():
+			return d
+	return {}
+
+
+static func _ler_arquivo(c: String, slug: String, dados: RefCounted) -> Dictionary:
 	if not FileAccess.file_exists(c):
 		return {}
 	var f := FileAccess.open_compressed(c, FileAccess.READ, FileAccess.COMPRESSION_ZSTD)
@@ -127,3 +159,53 @@ static func obter(slug: String, dados: RefCounted) -> Dictionary:
 	d = montar(slug, dados, Fontes.ler_mapa(slug))
 	d["origem"] = "montado"
 	return d
+
+
+# --- Ciclo 4: grade transitável da sim (sim/mapa_hunt.gd) em cache, para não ler e derivar o JSON do mapa a cada entrada
+# na hunt (até ~300 ms nos mapas grandes). Mesma chave do cache de desenho; o build leva o pronto em jogo/cache/mapas.
+const VERSAO_GRADE := 1
+
+
+static func caminho_grade(slug: String) -> String:
+	return pasta_abs() + "/" + slug + ".grade.bin"
+
+
+static func mapa_hunt(slug: String, dados: RefCounted) -> RefCounted:
+	var MapaHunt = load("res://sim/mapa_hunt.gd")
+	var ch := chave(slug, dados)
+	for c in [caminho_grade(slug), Fontes.pasta_snapshot() + "/cache/mapas/" + slug + ".grade.bin"]:
+		if not FileAccess.file_exists(c):
+			continue
+		var f := FileAccess.open_compressed(c, FileAccess.READ, FileAccess.COMPRESSION_ZSTD)
+		if f == null:
+			continue
+		var d = f.get_var()
+		if d is Dictionary and int(d.get("versao", -1)) == VERSAO_GRADE and String(d.get("chave", "")) == ch:
+			var m: RefCounted = MapaHunt.new()
+			for k in ["slug", "ground_z", "min_tx", "min_ty", "rows", "cols", "walk", "centro", "transitaveis"]:
+				m.set(k, d[k])
+			var g: Array = []
+			var bits: PackedByteArray = d["bits"]
+			for r in int(d["rows"]):
+				var linha: Array = []
+				linha.resize(int(d["cols"]))
+				for col in int(d["cols"]):
+					linha[col] = bits[r * int(d["cols"]) + col] == 1
+				g.append(linha)
+			m.grade = g
+			return m
+	var m: RefCounted = MapaHunt.carregar(slug, Fontes.ler_mapa(slug), Fontes.ler_colisao())
+	var bits := PackedByteArray()
+	bits.resize(m.rows * m.cols)
+	for r in m.rows:
+		for col in m.cols:
+			bits[r * m.cols + col] = 1 if m.grade[r][col] else 0
+	var d := {"versao": VERSAO_GRADE, "chave": ch, "bits": bits}
+	for k in ["slug", "ground_z", "min_tx", "min_ty", "rows", "cols", "walk", "centro", "transitaveis"]:
+		d[k] = m.get(k)
+	DirAccess.make_dir_recursive_absolute(pasta_abs())
+	var f := FileAccess.open_compressed(caminho_grade(slug), FileAccess.WRITE, FileAccess.COMPRESSION_ZSTD)
+	if f != null:
+		f.store_var(d)
+		f.close()
+	return m

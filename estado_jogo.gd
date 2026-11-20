@@ -96,6 +96,17 @@ var vip: bool = false:
 		if vip != valor:
 			vip = valor
 			vip_alterado.emit()
+# Ciclo 4: zoom da câmera (C: opções do cliente 25×13 = 1, "0.75×" ~33×17 e "0.5×" ~50×26; padrão cameraZoom ?? 1).
+# A: o vídeo e todas as gravações do usuário usam 0.5× (view 27×15). Vale para a cidade e a hunt; vai no save ("zoom").
+signal zoom_alterado
+const ZOOMS := [1.0, 0.75, 0.5]
+var zoom_camera: float = 1.0:
+	set(valor):
+		if not valor in ZOOMS:
+			valor = 1.0
+		if zoom_camera != valor:
+			zoom_camera = valor
+			zoom_alterado.emit()
 const PONTE_CIDADE := preload("res://ponte_cidade.gd")
 # Fase 4, lote 2: Streak Points e Modo Soneca (regras em sim/servico_jogador.gd; vão no save).
 const SERVICO_JOGADOR := preload("res://sim/servico_jogador.gd")
@@ -928,3 +939,77 @@ func vender_pokemon(lista: Array[DadosPokemon]) -> Dictionary:
 	for m in msgs:
 		if m.get("type") == "pokemon-sold": return m
 	return {"erro": PONTE_CIDADE.primeiro_erro(msgs)}
+
+
+# --- Ciclo 4, item 4: atlas dos mapas em segundo plano (entrada na hunt ≤ 1 s) ------------------------------------------
+# O build leva o cache de desenho de cada mapa pronto (jogo/cache/mapas), mas não o atlas por mapa (~3,8 MB cada; montar
+# custa 0,2–1 s). Enquanto o jogador está na cidade, uma thread de baixa prioridade monta o atlas das hunts liberadas que
+# ainda não o têm (a recomendada primeiro). Ao entrar numa hunt, `esperar_atlas(slug)` só espera se é exatamente essa que
+# está sendo montada; as outras seguem depois.
+var _pre_thread: Thread = null
+var _pre_fila: Array = []
+var _pre_mutex := Mutex.new()
+var _pre_atual := ""
+var _pre_parar := false
+var pre_atlas_montados := 0
+
+
+func pre_aquecer_atlas(slugs: Array) -> void:
+	var dd = preload("res://render/dados_desenho.gd").carregar()   # na thread principal: o manifest é compartilhado
+	_pre_mutex.lock()
+	_pre_fila = slugs.duplicate()
+	_pre_parar = false
+	_pre_mutex.unlock()
+	if _pre_thread != null and _pre_thread.is_alive():
+		return
+	if _pre_thread != null:
+		_pre_thread.wait_to_finish()
+	_pre_thread = Thread.new()
+	_pre_thread.start(_pre_laco.bind(dd), Thread.PRIORITY_LOW)
+
+
+func pausar_pre_atlas() -> void:
+	_pre_mutex.lock()
+	_pre_parar = true
+	_pre_mutex.unlock()
+
+
+func _pre_laco(dd) -> void:
+	var CacheMapa = load("res://render/cache_mapa.gd")
+	var AtlasMapa = load("res://render/atlas_mapa.gd")
+	while true:
+		_pre_mutex.lock()
+		if _pre_parar or _pre_fila.is_empty():
+			_pre_atual = ""
+			_pre_mutex.unlock()
+			return
+		var slug: String = _pre_fila.pop_front()
+		_pre_atual = slug
+		_pre_mutex.unlock()
+		if AtlasMapa.valido(slug, dd):
+			continue
+		var c: Dictionary = CacheMapa.ler(slug, dd)
+		if not c.is_empty():
+			AtlasMapa.montar(slug, dd, c)
+			pre_atlas_montados += 1
+
+
+func esperar_atlas(slug: String) -> void:
+	## Chamado ao entrar numa hunt: pausa a fila e, se o atlas dessa hunt está sendo montado agora, espera terminar.
+	pausar_pre_atlas()
+	_pre_mutex.lock()
+	var ocupada := _pre_atual == slug
+	_pre_mutex.unlock()
+	if ocupada and _pre_thread != null:
+		_pre_thread.wait_to_finish()
+		_pre_thread = null
+
+
+func pre_atlas_ocioso() -> bool:
+	return _pre_thread == null or not _pre_thread.is_alive()
+
+
+func _exit_tree() -> void:
+	pausar_pre_atlas()
+	if _pre_thread != null:
+		_pre_thread.wait_to_finish()

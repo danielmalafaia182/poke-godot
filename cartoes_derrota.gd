@@ -99,7 +99,8 @@ func _linha_xp(nome: String, total: int, partes: Dictionary, pokemon: bool) -> P
 		estilo.content_margin_top=0
 		estilo.content_margin_bottom=0
 		chip.add_theme_stylebox_override("panel",estilo)
-		var texto: String="Base %d" % int(partes[chave]) if chave=="base" else ("💎 " if chave=="vip" else "")+"%s +%d" % [str(chave).to_upper(),int(partes[chave])]
+		var v: int=int(partes[chave])
+		var texto: String="Base %d" % v if chave=="base" else ("💎 " if chave=="vip" else "")+"%s %s%d" % [str(chave).to_upper(),"+" if v>=0 else "−",absi(v)]
 		chip.add_child(_rotulo(texto,10,cor))
 		chips.add_child(chip)
 	return linha
@@ -161,10 +162,17 @@ func _reconstruir() -> void:
 			itens.add_theme_constant_override("h_separation",5)
 			itens.add_theme_constant_override("v_separation",5)
 			loot.add_child(itens)
+			# C (kill card do cliente): especial (pedra/held…), depois raro, depois comum; dentro, maior quantidade
+			# primeiro; até 6 itens e "+N" no resto.
 			var loot_ordenado: Array=evento["loot"].duplicate(true)
-			loot_ordenado.sort_custom(func(a: Dictionary,b: Dictionary) -> bool: return int(a["itemId"])<int(b["itemId"]))
-			for item in loot_ordenado:
+			loot_ordenado.sort_custom(func(a: Dictionary,b: Dictionary) -> bool:
+				var ra: int=_classe_loot(int(a["itemId"]))
+				var rb: int=_classe_loot(int(b["itemId"]))
+				return ra<rb if ra!=rb else int(a["qty"])>int(b["qty"]))
+			for item in loot_ordenado.slice(0,6):
 				itens.add_child(_chip_loot(item))
+			if loot_ordenado.size()>6:
+				itens.add_child(_rotulo("+%d" % (loot_ordenado.size()-6),11,Color("cfe0f5")))
 		# Um clique expande; o seguinte descarta. Nunca concede recompensa.
 		painel.gui_input.connect(func(event: InputEvent) -> void:
 			if event is InputEventMouseButton and event.pressed and event.button_index==MOUSE_BUTTON_LEFT:
@@ -173,6 +181,13 @@ func _reconstruir() -> void:
 		)
 		painel.modulate.a=0
 		painel.create_tween().tween_property(painel,"modulate:a",1.0,0.26)
+
+func _classe_loot(item_id: int) -> int:
+	## 0 especial (categorias de pedra/held/berry: C, cW), 1 raro (rare do items.json), 2 comum.
+	var LOOT=preload("res://regras_loot.gd")
+	var g: Dictionary=preload("res://ponte_cidade.gd").dados().itens.get(LOOT.id_original(item_id),{})
+	if str(g.get("categoria","")) in ["stone","held","berry"]: return 0
+	return 1 if bool(LOOT.obter(item_id).get("raro",g.get("raro",false))) else 2
 
 func _chip_loot(item: Dictionary) -> PanelContainer:
 	var dados: Dictionary=preload("res://regras_loot.gd").obter(int(item["itemId"]))

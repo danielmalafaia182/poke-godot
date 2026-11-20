@@ -1215,3 +1215,31 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     janela de uso.
   - Testes: `test_mochila` 10/10, `test_janelas_ciclo2` 26/26, `test_tutorial` 22/22, `test_ciclo_itens` 6/6.
   - Lado a lado: 08.
+- 20/11/2026 — **Ciclo 4, item 4 (mapa, hunts e combate).**
+  - **Mapa:** as 451 hunts têm marcador e levam a uma hunt simulada (`test_mapa_hunts` 4/4). O `map-markers` do servidor
+    (A, igual em 20/11) põe 3 hunts da Nightmare (togetic, togekiss, tyranitar; nível 3000) em y = −158, fora da
+    imagem. A região de fundo gerado desloca a origem para elas caberem (E).
+  - **Entrada na hunt** (`ferramentas/build/medir_entrada_hunt.gd`, pelo POKE_VERIFICAR):
+    - build do ciclo 3: 1ª visita 2,0–8,2 s (montar o cache do mapa); depois 0,85–1,23 s;
+    - agora no projeto: 0,39–0,57 s com o atlas pronto, ~1 s na 1ª da sessão.
+    - O que mudou:
+      - o cache de desenho e a grade da sim de cada mapa vão prontos no build (`jogo/cache/mapas`, chave pelo JSON
+        descomprimido);
+      - o atlas é montado em segundo plano na cidade para as hunts liberadas (`EstadoJogo.pre_aquecer_atlas`);
+      - manifest, dados do jogo, espécies e cadáveres ficam em memória por sessão;
+      - "Carregando mundo…" (A, vídeo) entre o clique e o 1º quadro (`tela_carregando.gd`).
+  - **Dano:** nome do golpe acima do número (`.dmg-move`), com as cores e tamanhos de `.dmg-float` (C).
+  - **Zoom:** opção do cliente nas Configurações (25×13, 0.75×, 0.5×), padrão 1 (C: `cameraZoom ?? 1`). Vale para a
+    cidade e a hunt e vai no save (campo opcional `zoom`). O vídeo usa 0.5×.
+  - **Selvagem bloqueado contorna** (A: `ferramentas/fase4/medir_contorno.py`; nas gravações, com as casas que
+    aproximam ocupadas, o original dá passo lateral em vez de esperar):
+    - até 4 casas do herói, o caminho conta os outros selvagens como obstáculo (`mob_contorna_bloqueio`);
+    - `test_sim_contorno` 3/3; validador da classe 2 159/160 (igual).
+  - **Loot na tela:** cartão de abate no tamanho do `.kc-card` (340 px), com o loot ordenado (especial, raro, comum;
+    até 6 e "+N"); a pílula do debuff saía "+-6".
+  - **Campanha de 20 h** (`kills_diarios`, `kill_xp`, `catch_xp` em 0):
+    - Daily Kill — **defeito do jogo, corrigido**: as opções do dia eram geradas travadas (treinador < 25 na virada)
+      e ficavam vazias o dia inteiro. Agora são geradas ao destravar (`test_sim_diarias` 42/42). A campanha também
+      passou a tentar a escolha a cada volta à cidade.
+    - Daily Catch: só paga a espécie da lista do dia. A campanha capturava pouco; agora rende 9.589 XP em 20 h.
+    - A campanha não contava captura de shiny quando a bola do shiny era a mesma do Auto-Catch (corrigido).
