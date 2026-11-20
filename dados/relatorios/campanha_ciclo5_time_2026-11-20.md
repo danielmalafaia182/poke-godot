@@ -63,3 +63,37 @@ Soneca, diárias e tarefas somaram 36% do XP do treinador nesta rodada. Os dias 
    ativo, Rare Candy congelado com o lote 3). O aviso de Orre no original fala em TMs AoE e de elemento, também do lote 3.
 
 Proposta no bloco de decisões do ciclo.
+
+## Ajuste aplicado: piso de XP em Orre (decisão do usuário, 20/11)
+
+Classe 3, `balanceamento.json` combate.xp_regiao_piso. Em Orre, o multiplicador de cada hunt é
+max(×10, 40.524 ÷ XP base médio das espécies da hunt). O piso é 3 × 13.508, o XP base da melhor hunt da Outland: no nível
+de acesso o time abate ~3× mais devagar. Multiplicadores: 510 ×596, 520 ×163, 530 ×73,9, 540 ×41,9, 550 ×26,9,
+560 ×18,7; de 580 em diante fica o ×10. A base da espécie não muda (classe 1); a diferença entra na parcela `event`.
+
+Medido na sim (`testes/medir_orre.gd`: Golem da campanha com as reservas de nível ~40, VIP, 2 sementes × 60 min):
+
+| Hunt | Nível | XP/h | Abates/min | Mortes em 2 h |
+| --- | --- | --- | --- | --- |
+| taillow (Orre) | 530 | 15,6 M | 6,37 | 0 |
+| electrike (Orre) | 530 | 14,5 M | 5,92 | 0 |
+| poochyena (Orre) | 530 | 9,5 M | 3,88 | 0 |
+| riolu (Orre) | 530 | 6,2 M | 2,53 | 0 |
+| aron, meditite, ralts, wingull, numel (Orre) | 530 | — | — | 2 em 2 (o time cai em 0,4–3,6 min) |
+| ancient_pinsir (Outland) | 150 | 16,4 M | 13,45 | 0 |
+| enraged_typhlosion (Outland) | 150 | 15,0 M | 12,34 | 0 |
+| furious_scyther (Outland) | 150 | 12,1 M | 9,93 | 0 |
+
+Com o Golem no 580, Orre 580 (×10): swellow 53,7 M e manectric 48,4 M XP/h sem morte; mawile 54,0 M e metang 47,5 M com
+mortes; as outras 14 derrubam o time.
+
+**Leitura:**
+
+- Orre no nível de acesso passa a valer a pena em 2 das 14 hunts de 530 (taillow e electrike, no nível da melhor Outland),
+  e em mais 2 que se sustentam rendendo menos. Antes, rendia 1/7 da Outland.
+- O tempo até a Nightmare quase não muda, porque a Outland já rendia isso. O ganho grande continua no 580 (~50 M/h):
+  - do treinador 532 ao 580: ~50 h;
+  - do 580 ao 2000: ~2.600 h ativas, ou ~1.700 h com soneca, diárias e tarefas (36% do XP);
+  - no total, do zero: ~3.200 h ativas com esta política de time.
+- A dificuldade de Orre segue aberta: as hunts que derrubam o time só ficam jogáveis com reservas fortes, o que hoje não
+  acontece (XP só do ativo).

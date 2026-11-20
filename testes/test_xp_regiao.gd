@@ -52,5 +52,32 @@ func _init() -> void:
 	checar(p2.size() == p1.size() and p2.all(func(x): return int(x["event"]) == int(x["base"])), "×2 na região: event = base, base igual", "%d abates" % p2.size())
 	var p3 := rodar(dados, mapa, {"nightmare": 5.0})
 	checar(p3.all(func(x): return int(x["event"]) == 0), "multiplicador de outra região não vale aqui")
+	# Ciclo 5: piso de XP de Orre (balanceamento.json combate.xp_regiao_piso): mult = max(×10, piso ÷ base média da hunt)
+	var piso = B.valor("combate", "xp_regiao_piso", {})
+	checar(piso is Dictionary and float(piso.get("orre", 0)) == 40524.0, "balanceamento.json: piso de Orre 40.524 (3 × melhor base da Outland)")
+	var ms := {}
+	for slug in ["electrike", "seedot", "kirlia", "manectric", "larvitar", "enraged_typhlosion"]:
+		var cfgx := CenarioJogo.configurar({"slug": slug, "hunt": slug, "equipe": [{"id": "g", "nome": "Golem", "xp": Regras.xp_total_para_nivel(600),
+			"ivs": {"hp": 32, "atk": 32, "def": 32, "spAtk": 32, "spDef": 32, "speed": 32}, "quality": 1.5, "hp": -1}],
+			"auto_potion": true, "penalizar": false, "inventario": [{"itemId": 204, "quantity": 999}]}, dados, 3, 0)
+		var simx = Simulacao.new(cfgx, dados, MapaHunt.carregar(slug, Fontes.ler_mapa(slug), Fontes.ler_colisao()))
+		ms[slug] = simx.multiplicador_regiao()
+		if slug == "electrike":
+			simx.iniciar()
+			var kp: Dictionary = {}
+			for t in 3000:
+				for reg in simx.passo():
+					var m: Dictionary = reg.get("msg", reg)
+					if kp.is_empty() and String(m.get("type", "")) == "field-kill":
+						kp = m["xpParts"]
+				if not kp.is_empty():
+					break
+			checar(not kp.is_empty() and int(kp["base"]) == 548 and int(kp["base"]) + int(kp["event"]) >= 40523 and int(kp["base"]) + int(kp["event"]) <= 40524,
+				"Orre 530 (electrike): base 548 + event ≈ 40.524 por abate", str(kp))
+	print("multiplicadores: ", ms)
+	checar(absf(float(ms["electrike"]) - 40524.0 / 548.0) < 0.01 and absf(float(ms["kirlia"]) - 40524.0 / 2168.0) < 0.01, "Orre 530 e 560: piso ÷ base (×73,9 e ×18,7)")
+	checar(float(ms["seedot"]) > 500.0, "Orre 510 (base 68): ×596")
+	checar(float(ms["manectric"]) == 10.0, "Orre 580 (base 19.508): fica o ×10")
+	checar(float(ms["larvitar"]) == 1.0 and float(ms["enraged_typhlosion"]) == 1.0, "Kanto e Outland sem piso")
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(1 if falhas else 0)

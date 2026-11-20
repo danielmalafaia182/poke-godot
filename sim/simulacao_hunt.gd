@@ -772,7 +772,7 @@ func _abate(m: Dictionary) -> void:
 	var gym_xp := int(floor(float(base) * float(p.insignia_pct_xp) / 100.0 * n_ins + 1e-9)) if n_ins > 0 else 0
 	# Multiplicador de XP por região (classe 3, proposta do ciclo 2, balanceamento.json `xp_regiao`; padrão 1 = desligado):
 	# não muda o XP da espécie (a base fica igual, classe 1); entra na parcela `event` (A: a chave existe e é 0 nas gravações).
-	var mult_reg := float((p.get("xp_regiao", {}) as Dictionary).get(String(cfg.get("area", "")), 1.0))
+	var mult_reg := multiplicador_regiao()
 	var evento := int(floor(float(base) * (mult_reg - 1.0) + 1e-9)) if mult_reg > 1.0 else 0
 	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + evento
 	var total_p := base + vip + boost_p + parcela_dia + gym_xp + evento
@@ -828,6 +828,31 @@ func _abate(m: Dictionary) -> void:
 		_emitir({"type": "poke-delta", "poke": _poke_delta(poke)})
 	_emitir(_msg_inventario())
 	_fim_abate(m, bola)
+
+
+var _mult_regiao := -1.0
+
+
+func multiplicador_regiao() -> float:
+	## xp_regiao da área da hunt; com xp_regiao_piso (classe 3, ciclo 5), no mínimo piso ÷ XP base médio das espécies dos
+	## spawns da hunt (o mesmo para todos os abates da hunt; a base da espécie não muda, classe 1).
+	if _mult_regiao >= 0.0:
+		return _mult_regiao
+	var area := String(cfg.get("area", ""))
+	var m := float((p.get("xp_regiao", {}) as Dictionary).get(area, 1.0))
+	var piso := float((p.get("xp_regiao_piso", {}) as Dictionary).get(area, 0.0))
+	if piso > 0.0:
+		var soma := 0.0
+		var n := 0
+		for s in cfg.get("spawns", []):
+			var e: Dictionary = dados.especie(int(s.get("pokeId", 0)))
+			if not e.is_empty():
+				soma += float(e.get("xpAbate", 0))
+				n += 1
+		if n > 0 and soma > 0.0:
+			m = maxf(m, piso / (soma / n))
+	_mult_regiao = m
+	return m
 
 
 func _berry_pct(poke: Dictionary, efeito: String) -> float:

@@ -132,6 +132,8 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
   dependem da lógica interna da cena antiga. O mapa-múndi decide qual abrir (simulada se houver mapa e hunt-config no snapshot).
 - VIP: opção nas Configurações (⚙ na cidade), **desligada por padrão**; ligada, +50% da XP base como no original
   (parcela `vip`). Ouro inicial 0. Revenda ao NPC nunca acima do preço de compra (evita ouro infinito com poções).
+- **Piso de XP em Orre** (20/11): o multiplicador de cada hunt de Orre é max(×10, 40.524 ÷ XP base médio da hunt), classe 3
+  em `balanceamento.json` combate.xp_regiao_piso. Orre 510–579 rende ao menos a XP/h da melhor Outland; 580+ fica no ×10.
 - Outfits: desde 09/11 o snapshot tem os 846 do índice (545 categorias); o substituto (200) só entra se faltar algum.
 
 Resumo da calibração da fase 3 (cada regra, fonte, evidência, o que ficou aberto): `CALIBRACAO_FASE3.md`.
@@ -1385,3 +1387,12 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - O verificador espera a gravação em thread antes de conferir a cópia do save na fase 3: na troca `.tmp` → principal,
     o arquivo some por um instante (falha intermitente).
   - Regressão: 51 testes do Godot verdes, os .sh e .py verdes, P04 20/20 e diferencial 1h 28/30 (igual).
+- 20/11/2026 — **Piso de XP em Orre** (decisão do usuário).
+  - Regra: em Orre, o multiplicador de cada hunt é max(×10, 40.524 ÷ XP base médio das espécies da hunt)
+    (`Simulacao.multiplicador_regiao`; `balanceamento.json` combate.xp_regiao_piso). Exemplos: 530 ×73,9, 560 ×18,7;
+    de 580 em diante fica o ×10.
+  - Medido com VIP (`testes/medir_orre.gd`): taillow e electrike (530) a 15,6 e 14,5 M XP/h, contra 15,0–16,4 M da melhor
+    Outland. 5 das 14 hunts de 530 ainda derrubam o time.
+  - Orre 580 com o Golem no 580: swellow e manectric a ~50 M XP/h, sem morte.
+  - Nightmare ~3.200 h ativas desde o zero.
+  - Testes: `test_xp_regiao` 10/10, `test_balanceamento` 8/8, regras 43/43, determinismo, cena 22/22.

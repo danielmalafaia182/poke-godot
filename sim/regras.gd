@@ -139,6 +139,7 @@ const PARAMETROS := {
 	"captura_shiny_base_padrao": 0.01,       # classe 3 (balanceamento.json): 0 capturas em 31 tentativas gravadas
 	"pedra_garantia_fator": 0.0,            # classe 3 (balanceamento.json): 0 = sem garantia de pedra
 	"xp_regiao": {},                        # classe 3 (balanceamento.json): multiplicador de XP por região; vazio/1 = sem efeito
+	"xp_regiao_piso": {},                   # classe 3 (balanceamento.json, ciclo 5): XP por abate mínimo da região (base × mult ≥ piso); vazio = sem piso
 	"card_chance_shiny": 0.0,               # classe 3 (balanceamento.json combate): Shiny Card ao abater um shiny
 	"pack_chance_abate": 0.0,               # classe 3 (balanceamento.json combate): Poke Card Pack por abate
 	"pendente_vida_ms": 20000,              # A: selvagem capturável por 20,0 s depois do abate (fase3 M1/M2)
