@@ -1260,3 +1260,14 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Os textos passam a vir do pacote `window.team.*`.
   - P04 `test_team_fiel` 98/98, `test_evolucao_pokemon` 15/15.
   - Lado a lado: 10.
+- 20/11/2026 — **Ciclo 4, item 7 (Perfil).** `painel_perfil.gd` refeito pelo `.pf-*` do cliente (C) e pelo vídeo (A).
+  - Antes, os valores quebravam na vertical.
+  - Agora:
+    - janela de 440 px com a cabeça hexagonal, as joias e o título em Cinzel dourado;
+    - avatar de 132 px com o outfit do treinador;
+    - nome, VIP, nível e a barra de XP dourada ("atual / próximo XP");
+    - fichas de Rank, Pokédex, ouro e diamantes, e os botões Personalizar Outfit e Log de Capturas;
+    - seções Informações Gerais, Progressão, Rankings de Perfil e Duelo/PvP, com as linhas alternadas.
+  - O que é do servidor aparece como o original mostra para quem não tem: Sem Bless, Sem clã, 0, "Em breve" (E).
+  - E: o fundo dos botões (`/assets/evolution/lol-btn-frame.png`) não foi baixado; no lugar, uma moldura dourada.
+  - `test_janelas_ciclo2` 26/26. Lado a lado: 11.
