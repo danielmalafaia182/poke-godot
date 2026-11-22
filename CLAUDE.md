@@ -1432,3 +1432,10 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - No próprio nível ficam jogáveis 26 hunts; 13 não ficam nem no 1100.
   - Aparece como dica no marcador do mapa, sem bloquear a entrada.
   - Tabela: `dados/relatorios/orre_nivel_recomendado_2026-11-22.md`. Teste: `test_mapa_hunts` 5/5.
+- 22/11/2026 — **Ciclo 7**:
+  - Piso de Orre como base efetiva antes dos bônus.
+  - Nível recomendado de Orre como dica (F).
+  - Crafting do Botânico e Golden Stars (`test_golden_stars` 9/9, `test_profissoes` 14/14).
+  - `INVENTARIO_CLIENTE.md` revisto: offline falta só pesca e Ditto, mais os parciais de polimento.
+  - Build `builds/ciclo7` (628 MB): 3 fases OK.
+  - Regressão: 55 testes do Godot verdes, os .sh e .py verdes, P04 sem falha, diferencial 1h 28/30 (igual).
