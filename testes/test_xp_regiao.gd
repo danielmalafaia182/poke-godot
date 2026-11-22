@@ -54,30 +54,33 @@ func _init() -> void:
 	checar(p3.all(func(x): return int(x["event"]) == 0), "multiplicador de outra região não vale aqui")
 	# Ciclo 5: piso de XP de Orre (balanceamento.json combate.xp_regiao_piso): mult = max(×10, piso ÷ base média da hunt)
 	var piso = B.valor("combate", "xp_regiao_piso", {})
-	checar(piso is Dictionary and float(piso.get("orre", 0)) == 16500.0, "balanceamento.json: piso de Orre 16.500 (1,22 × melhor base da Outland, ciclo 6)")
+	checar(piso is Dictionary and float(piso.get("orre", 0)) == 16500.0, "balanceamento.json: piso de Orre 16.500 (ciclo 6)")
+	# Ciclo 7: o piso vira a base efetiva da espécie (max(base, piso ÷ ×10)) antes dos bônus; o ×10 vale sobre a soma.
 	var ms := {}
-	for slug in ["electrike", "seedot", "kirlia", "manectric", "larvitar", "enraged_typhlosion"]:
-		var cfgx := CenarioJogo.configurar({"slug": slug, "hunt": slug, "equipe": [{"id": "g", "nome": "Golem", "xp": Regras.xp_total_para_nivel(600),
-			"ivs": {"hp": 32, "atk": 32, "def": 32, "spAtk": 32, "spDef": 32, "speed": 32}, "quality": 1.5, "hp": -1}],
-			"auto_potion": true, "penalizar": false, "inventario": [{"itemId": 204, "quantity": 999}]}, dados, 3, 0)
-		var simx = Simulacao.new(cfgx, dados, MapaHunt.carregar(slug, Fontes.ler_mapa(slug), Fontes.ler_colisao()))
-		ms[slug] = simx.multiplicador_regiao()
-		if slug == "electrike":
+	for vip in [false, true]:
+		var partes := {}
+		for slug in ["electrike", "kirlia", "enraged_typhlosion"]:
+			var cfgx := CenarioJogo.configurar({"slug": slug, "hunt": slug, "equipe": [{"id": "g", "nome": "Golem", "xp": Regras.xp_total_para_nivel(600),
+				"ivs": {"hp": 32, "atk": 32, "def": 32, "spAtk": 32, "spDef": 32, "speed": 32}, "quality": 1.5, "hp": -1}], "vip": vip,
+				"auto_potion": true, "penalizar": false, "inventario": [{"itemId": 204, "quantity": 999}]}, dados, 3, 0)
+			var simx = Simulacao.new(cfgx, dados, MapaHunt.carregar(slug, Fontes.ler_mapa(slug), Fontes.ler_colisao()))
+			ms[slug] = simx.multiplicador_regiao()
 			simx.iniciar()
-			var kp: Dictionary = {}
 			for t in 3000:
 				for reg in simx.passo():
 					var m: Dictionary = reg.get("msg", reg)
-					if kp.is_empty() and String(m.get("type", "")) == "field-kill":
-						kp = m["xpParts"]
-				if not kp.is_empty():
+					if not partes.has(slug) and String(m.get("type", "")) == "field-kill":
+						partes[slug] = [m["xpParts"], int(m["xpGained"])]
+				if partes.has(slug):
 					break
-			checar(not kp.is_empty() and int(kp["base"]) == 548 and int(kp["base"]) + int(kp["event"]) >= 16499 and int(kp["base"]) + int(kp["event"]) <= 16500,
-				"Orre 530 (electrike): base 548 + event ≈ 16.500 por abate", str(kp))
-	print("multiplicadores: ", ms)
-	checar(absf(float(ms["electrike"]) - 16500.0 / 548.0) < 0.01 and float(ms["kirlia"]) == 10.0, "Orre 530: piso ÷ base (×30,1); 560 (base 2.168): piso ÷ base = ×7,6 < ×10, fica o ×10")
-	checar(float(ms["seedot"]) > 200.0, "Orre 510 (base 68): ×243")
-	checar(float(ms["manectric"]) == 10.0, "Orre 580 (base 19.508): fica o ×10")
-	checar(float(ms["larvitar"]) == 1.0 and float(ms["enraged_typhlosion"]) == 1.0, "Kanto e Outland sem piso")
+		var e: Dictionary = partes.get("electrike", [{}, 0])[0]
+		var esperado := 24750 if vip else 16500
+		checar(int(e.get("base", 0)) == 548 and int(partes["electrike"][1]) == esperado, "Orre 530 (electrike%s): base exibida 548, XP = %d (base efetiva 1.650%s × 10)" % [" VIP" if vip else "", esperado, " + VIP 825" if vip else ""], str(partes["electrike"]))
+		var k: Dictionary = partes.get("kirlia", [{}, 0])[0]
+		var esp_k := (2168 + (1084 if vip else 0)) * 10
+		checar(int(partes["kirlia"][1]) == esp_k, "Orre 560 (kirlia, base 2.168 > 1.650): o piso não age; XP = %d" % esp_k, str(partes["kirlia"]))
+		var o: Dictionary = partes.get("enraged_typhlosion", [{}, 0])[0]
+		checar(int(o.get("event", -1)) == 0 and int(partes["enraged_typhlosion"][1]) == 13508 + (6754 if vip else 0), "Outland sem piso nem multiplicador%s" % (" (VIP)" if vip else ""))
+	checar(float(ms["electrike"]) == 10.0 and float(ms["kirlia"]) == 10.0 and float(ms["enraged_typhlosion"]) == 1.0, "multiplicador da região: Orre ×10, Outland ×1 (o piso não mexe nele)")
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(1 if falhas else 0)

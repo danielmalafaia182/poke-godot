@@ -843,7 +843,17 @@ func _abate(m: Dictionary) -> void:
 	if corpo >= 0:
 		cadaveres.append({"row": m["pos"].y, "col": m["pos"].x, "corpse": corpo, "expira": tick + int(p.cadaver_ms) / int(p.tick_ms)})
 	# XP (A): base = experience da espécie; vip = 50% da base em parcela separada.
-	var base := int(esp.get("xpAbate", 0))
+	# Ciclo 7 (decisão do usuário): o piso da região (classe 3, balanceamento.json combate.xp_regiao_piso) substitui o XP base
+	# da espécie ANTES de todos os bônus: base_efetiva = max(base da espécie, piso ÷ multiplicador da região); VIP, streak,
+	# boosts, Tipo do Dia, insígnias, held e mentor saem da base efetiva, e o multiplicador da região vale sobre a soma
+	# (assim os bônus multiplicam o mesmo valor em todas as regiões). Na mensagem, `base` continua o XP da espécie (A) e a
+	# diferença vai para `event`. Sem piso e com multiplicador 1 a saída é a de sempre.
+	var base_esp := int(esp.get("xpAbate", 0))
+	var mult_reg := multiplicador_regiao()
+	var base := base_esp
+	var piso_reg := float((p.get("xp_regiao_piso", {}) as Dictionary).get(String(cfg.get("area", "")), 0.0))
+	if piso_reg > 0.0:
+		base = maxi(base_esp, int(ceil(piso_reg / mult_reg - 1e-9)))
 	var vip := Regras.js_round(float(base) * float(p.vip_fracao)) if cfg.get("vip", false) else 0
 	# Fase 4, lote 2 (F: cada parcela é um % da base): streak (só treinador), boost xp / pokexp, tipo do dia.
 	# A (G7): streak = floor(base × 0,1% × pontos) — Blastoise base 3848 com 1 ponto → 3 (round daria 4)
@@ -860,13 +870,13 @@ func _abate(m: Dictionary) -> void:
 	var gym_xp := int(floor(float(base) * float(p.insignia_pct_xp) / 100.0 * n_ins + 1e-9)) if n_ins > 0 else 0
 	# Multiplicador de XP por região (classe 3, proposta do ciclo 2, balanceamento.json `xp_regiao`; padrão 1 = desligado):
 	# não muda o XP da espécie (a base fica igual, classe 1); entra na parcela `event` (A: a chave existe e é 0 nas gravações).
-	var mult_reg := multiplicador_regiao()
-	var evento := int(floor(float(base) * (mult_reg - 1.0) + 1e-9)) if mult_reg > 1.0 else 0
 	# Lote 3 (C: X-Experience "+N% de experiência ao derrotar um selvagem — para você e para o Pokémon"; a parcela do
 	# cartão de abate é `held`, C: hud.killCard.parts.held). F: floor sobre a base, como as outras parcelas.
 	var fx_abate := _held_fx(_poke_ativo())
 	var held_xp := int(floor(float(base) * float(fx_abate.get("EXPERIENCE", 0.0)) / 100.0 + 1e-9))
-	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + evento + held_xp
+	var soma_t := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + held_xp
+	var total := int(floor(float(soma_t) * mult_reg + 1e-9))
+	var evento := total - (base_esp + vip + streak_xp + boost_t + parcela_dia + gym_xp + held_xp)
 	# Profissões (ciclo 6; A, conta B nas gravações livres): parcela `mentor` do Pokémon = 0,5% da base por nível de
 	# diferença acima de 200 (treinador − Pokémon), até o teto do rank (cfg.mentor, sim/servico_profissoes.gd). F: round.
 	var mentor_xp := 0
@@ -875,7 +885,9 @@ func _abate(m: Dictionary) -> void:
 		var gap := int(treinador["nivel"]) - int(_poke_ativo()["nivel"]) - int(mt.get("gap", 200))
 		if gap > 0:
 			mentor_xp = Regras.js_round(float(base) * minf(float(mt["teto"]), float(gap) * float(mt.get("pct_nivel", 0.5))) / 100.0)
-	var total_p := base + vip + boost_p + parcela_dia + gym_xp + evento + held_xp + mentor_xp
+	var soma_p := base + vip + boost_p + parcela_dia + gym_xp + held_xp + mentor_xp
+	var total_p := int(floor(float(soma_p) * mult_reg + 1e-9))
+	var evento_p := total_p - (base_esp + vip + boost_p + parcela_dia + gym_xp + held_xp + mentor_xp)
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
 	var debuff_p := 0
@@ -919,8 +931,8 @@ func _abate(m: Dictionary) -> void:
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
-		"xpParts": _com_debuff(_com_held({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff),
-		"pokeXp": {"xpGained": total_p, "parts": _com_debuff(_com_held({"base": base, "boost": boost_p, "vip": vip, "event": evento, "mentor": mentor_xp, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff_p),
+		"xpParts": _com_debuff(_com_held({"base": base_esp, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff),
+		"pokeXp": {"xpGained": total_p, "parts": _com_debuff(_com_held({"base": base_esp, "boost": boost_p, "vip": vip, "event": evento_p, "mentor": mentor_xp, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff_p),
 			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
 		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
 	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total_p,
@@ -936,25 +948,12 @@ var _mult_regiao := -1.0
 
 
 func multiplicador_regiao() -> float:
-	## xp_regiao da área da hunt; com xp_regiao_piso (classe 3, ciclo 5), no mínimo piso ÷ XP base médio das espécies dos
-	## spawns da hunt (o mesmo para todos os abates da hunt; a base da espécie não muda, classe 1).
+	## xp_regiao da área da hunt (classe 3). Ciclo 7: o piso deixou de mudar o multiplicador; ele vira a base efetiva da
+	## espécie (ver _abate).
 	if _mult_regiao >= 0.0:
 		return _mult_regiao
-	var area := String(cfg.get("area", ""))
-	var m := float((p.get("xp_regiao", {}) as Dictionary).get(area, 1.0))
-	var piso := float((p.get("xp_regiao_piso", {}) as Dictionary).get(area, 0.0))
-	if piso > 0.0:
-		var soma := 0.0
-		var n := 0
-		for s in cfg.get("spawns", []):
-			var e: Dictionary = dados.especie(int(s.get("pokeId", 0)))
-			if not e.is_empty():
-				soma += float(e.get("xpAbate", 0))
-				n += 1
-		if n > 0 and soma > 0.0:
-			m = maxf(m, piso / (soma / n))
-	_mult_regiao = m
-	return m
+	_mult_regiao = float((p.get("xp_regiao", {}) as Dictionary).get(String(cfg.get("area", "")), 1.0))
+	return _mult_regiao
 
 
 func _berry_pct(poke: Dictionary, efeito: String) -> float:

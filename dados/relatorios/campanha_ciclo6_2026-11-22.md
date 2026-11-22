@@ -68,3 +68,18 @@ Mesma medição (time do fim da campanha, carregador no 527, VIP):
 - **Sem VIP, Orre 530 empata com a Outland** (electrike 10,07 × 16.500 contra 12,32 × 13.508 ≈ 10 M XP/h nos dois).
 - **Com VIP, Orre fica em ~2/3:** o VIP soma 50% da base da espécie (A), e a base de Orre é 548 contra 13.508.
 - De 560 em diante o piso não age (16.500 ÷ 2.168 = ×7,6 < ×10); 580+ segue no ×10.
+
+## Ciclo 7: o piso vira a base efetiva (decisão do usuário)
+
+O piso passou a substituir o XP base da espécie antes dos bônus: base efetiva = max(base, 16.500 ÷ ×10). Os bônus (VIP,
+streak, boosts, Tipo do Dia, insígnias, held, mentor) saem da base efetiva e o ×10 da região vale sobre a soma.
+
+| Hunt | Sem VIP: XP/h | Com VIP: XP/h |
+| --- | --- | --- |
+| electrike (Orre 530) | 9,97 M | 14,95 M |
+| taillow (Orre 530) | 8,23 M | 12,34 M |
+| torchic (Orre 520) | 11,83 M | 17,75 M |
+| enraged_typhlosion (Outland) | 9,99 M | 14,98 M |
+| ancient_pinsir (Outland) | 11,00 M | 16,50 M |
+
+Orre 530 (electrike) empata com a melhor Outland (enraged_typhlosion) nos dois casos.
