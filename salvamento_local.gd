@@ -181,6 +181,8 @@ func _validar(dados: Variant) -> String:
 		return "Bosses inválidos."
 	if dados.has("itens_uso") and (not dados["itens_uso"] is Dictionary or JSON.stringify(dados["itens_uso"]).length() > 200000):
 		return "Itens de uso inválidos."
+	if dados.has("breeding") and (not dados["breeding"] is Dictionary or JSON.stringify(dados["breeding"]).length() > 50000):
+		return "Breeding inválido."
 	if dados.has("profissao") and (not dados["profissao"] is Dictionary or JSON.stringify(dados["profissao"]).length() > 20000):
 		return "Profissão inválida."
 	if dados.has("boosts"):
@@ -333,6 +335,7 @@ func _restaurar(estado: Node, dados: Dictionary) -> void:
 	estado.diarias = (dados.get("diarias", {}) as Dictionary).duplicate(true)
 	estado.itens_uso = (dados.get("itens_uso", {}) as Dictionary).duplicate(true)
 	estado.profissao = (dados.get("profissao", {}) as Dictionary).duplicate(true)
+	estado.breeding = (dados.get("breeding", {}) as Dictionary).duplicate(true)
 	estado.ginasios = (dados.get("ginasios", {}) as Dictionary).duplicate(true)
 	estado.bosses = (dados.get("bosses", {}) as Dictionary).duplicate(true)
 	estado.album = (dados.get("album", {}) as Dictionary).duplicate(true)
@@ -419,7 +422,7 @@ func construir_dados(estado: Node) -> Dictionary:
 		"captura_medidor": estado.medidor_captura.duplicate(true), "garantia_pedras": estado.garantia_pedras.duplicate(true),
 		"log_capturas": estado.log_capturas.duplicate(true), "tempo_caca_s": estado.tempo_caca_s, "capturas_total": estado.capturas_total, "tutorial": estado.tutorial_passo, "ultima_hunt": estado.ultima_hunt_slug,
 		"ouro": estado.ouro, "vip": estado.vip, "zoom": estado.zoom_camera, "streak": estado.streak.duplicate(true), "soneca": estado.soneca.duplicate(true),
-		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true), "profissao": estado.profissao.duplicate(true), "ginasios": estado.ginasios.duplicate(true), "bosses": estado.bosses.duplicate(true), "album": estado.album.duplicate(true), "visual": estado.visual.duplicate(true), "hunt_ao_fechar": estado.hunt_ao_fechar,
+		"diarias": estado.diarias.duplicate(true), "boosts": estado.boosts.duplicate(true), "itens_uso": estado.itens_uso.duplicate(true), "profissao": estado.profissao.duplicate(true), "breeding": estado.breeding.duplicate(true), "ginasios": estado.ginasios.duplicate(true), "bosses": estado.bosses.duplicate(true), "album": estado.album.duplicate(true), "visual": estado.visual.duplicate(true), "hunt_ao_fechar": estado.hunt_ao_fechar,
 		"salvo_em_unix": int(Time.get_unix_time_from_system())
 	}
 

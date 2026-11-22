@@ -223,6 +223,7 @@ func _tratar(msg: Dictionary) -> void:
 			EstadoJogo.registrar_abates(1, int(msg.get("speciesId", -1)))
 			EstadoJogo.diaria_abate(int(msg.get("speciesId", -1)))   # tarefas e Daily Kill
 			EstadoJogo.prof_registrar(int(msg.get("speciesId", -1)), 0, 0)   # ciclo 6: abates por tipagem (rank da profissão)
+			EstadoJogo.breeding_abates(1)   # ciclo 6: os ovos chocam com derrotas nas hunts (C)
 			EstadoJogo.registrar_recompensa_treinador(int(msg["xpGained"]))
 			registro["xp_treinador"] += int(msg["xpGained"])
 			if bool(msg.get("leveledUp", false)):

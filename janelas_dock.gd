@@ -80,6 +80,23 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		_abrir_original(chave, j)
 
 
+static func _abrir_breeding(w: Control, nome: String, tex: Texture2D, aviso: String = "") -> void:
+	## Ciclo 6: Centro de Breeding (sim/servico_breeding.gd). Uma ação: cruzar o melhor par da box.
+	var ej: Node = w.get_node("/root/EstadoJogo")
+	var T := preload("res://textos.gd")
+	var ovos: Array = ej.breeding.get("ovos", [])
+	var txt := "%s\n\n%s\n%s\n\n" % [T.t("window.breeding.subtitle"), T.t("window.breeding.consumeHint"), T.t("window.breeding.incHint")]
+	txt += "Incubadora: %d/%d\n" % [ovos.size(), int(ej.servico_breeding().p.slots)]
+	for o in ovos:
+		txt += "• %s · Quality %.3f%s · faltam %d derrotas\n" % [String(preload("res://ponte_cidade.gd").dados().especie(int(o["speciesId"])).get("nome", "?")),
+			float(o["quality"]), " ✨" if bool(o["shiny"]) else "", int(o["faltam"])]
+	if aviso != "":
+		txt += "\n[b]%s[/b]" % aviso
+	w.abrir("breeding", nome, tex, txt, T.t("window.breeding.createEgg"), func() -> void:
+		var r: Dictionary = ej.breed_melhor_par()
+		_abrir_breeding(w, nome, tex, String(r["erro"]) if r.has("erro") else T.t("window.breeding.eggAdded")))
+
+
 static func _abrir_profissoes(w: Control, nome: String, tex: Texture2D) -> void:
 	## Ciclo 6: profissões (sim/servico_profissoes.gd; regras do cliente, números classe 3). Uma ação por vez: escolher,
 	## subir de rank, criar berry (Botânico), entregar pictures (Prestígio) ou trocar de carreira (o rank fica salvo, C).
@@ -163,6 +180,8 @@ static func _abrir_original(chave: String, j: Dictionary) -> void:
 					w.get_tree().quit())
 		"professions":
 			_abrir_profissoes(w, nome, tex)
+		"breeding":
+			_abrir_breeding(w, nome, tex)
 		"home":
 			w.abrir(chave, nome, tex, "Você já está em Cerulean.")
 		"patchnotes":

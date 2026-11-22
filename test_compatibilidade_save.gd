@@ -38,7 +38,7 @@ func executar() -> void:
 	checar(bool(cfg_atual.get("auto_catch_shiny",false)) and int(cfg_atual.get("auto_catch_shiny_ball_id",-1)) == 0, "Auto-Catch Shiny entra ligado (ciclo 2)")
 	cfg_atual.erase("auto_catch_shiny")
 	cfg_atual.erase("auto_catch_shiny_ball_id")
-	for campo in ["captura_medidor","ultima_hunt","ouro","vip","zoom","streak","soneca","diarias","boosts","itens_uso","ginasios","hunt_ao_fechar","garantia_pedras","log_capturas","tempo_caca_s","capturas_total","tutorial","bosses","visual","album"]:
+	for campo in ["captura_medidor","ultima_hunt","ouro","vip","zoom","streak","soneca","diarias","boosts","itens_uso","ginasios","hunt_ao_fechar","garantia_pedras","log_capturas","tempo_caca_s","capturas_total","tutorial","bosses","visual","album","profissao","breeding"]:
 		atual.erase(campo)
 	var esperado: Dictionary=anterior.duplicate(true)
 	for registro in esperado["team"]:

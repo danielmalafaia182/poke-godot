@@ -127,6 +127,9 @@ static var _servico_itens = null
 var itens_uso: Dictionary = {}
 # Ciclo 6: profissões (sim/servico_profissoes.gd): carreira atual, rank de cada uma, progresso, ervas e pictures.
 var profissao: Dictionary = {}
+# Ciclo 6: breeding (sim/servico_breeding.gd): ovos na incubadora.
+var breeding: Dictionary = {}
+static var _servico_breed = null
 static var _servico_prof = null
 # Fase 4, lote 4: insígnias de ginásio (sim/servico_ginasios.gd): {insignias: {"<gymId>": until_ms}}. Sem luta de ginásio
 # offline ainda (o servidor manda líderes e times): o campo existe para a hunt já aplicar o bônus (C).
@@ -785,6 +788,71 @@ func prof(cmd: Dictionary) -> Dictionary:
 		PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
 	solicitar_salvamento()
 	return msgs[-1] if msgs.size() > 1 and String(msgs[-1].get("type", "")) == "professions" else msgs[0]
+
+func servico_breeding():
+	if _servico_breed == null:
+		_servico_breed = preload("res://sim/servico_breeding.gd").new(PONTE_CIDADE.dados())
+	return _servico_breed
+
+func breed_melhor_par() -> Dictionary:
+	## Ciclo 6: cruza o melhor par da box (mesma espécie, maior soma de Quality, sem shiny no caminho livre); com Strange
+	## Pheromone usa o caminho cheio. Remove os pais da box (C: são consumidos).
+	var e: Dictionary = PONTE_CIDADE.estado_de(self, cidade_atual())
+	e["breeding"] = breeding
+	var por_esp := {}
+	for pk in e["pokes"]:
+		if bool(pk.get("team", false)) or String(PONTE_CIDADE.dados().especie(int(pk["speciesId"])).get("nome", "")) == "Ditto":
+			continue
+		por_esp[int(pk["speciesId"])] = (por_esp.get(int(pk["speciesId"]), []) as Array) + [pk]
+	var par: Array = []
+	var melhor := -1.0
+	for sid in por_esp:
+		var l: Array = por_esp[sid]
+		if l.size() < 2:
+			continue
+		l.sort_custom(func(x, y): return float(x["quality"]) > float(y["quality"]))
+		if float(l[0]["quality"]) + float(l[1]["quality"]) > melhor:
+			melhor = float(l[0]["quality"]) + float(l[1]["quality"])
+			par = [l[0], l[1]]
+	if par.is_empty():
+		return {"erro": "Precisa de 2 Pokémon da mesma espécie na box."}
+	var fer := int(e.get("itens", {}).get("44417", 0)) > 0
+	var msgs: Array = servico_breeding().tratar(e, {"type": "breed", "paiA": String(par[0]["id"]), "paiB": String(par[1]["id"]),
+		"caminho": "feromonio" if fer else "livre", "semente": int(Time.get_ticks_usec() % 2147483647)})
+	var erro := PONTE_CIDADE.primeiro_erro(msgs)
+	if not erro.is_empty():
+		return {"erro": erro}
+	breeding = e["breeding"]
+	for id in msgs[0]["consumidos"]:
+		var pk := _pokemon_por_id(String(id))
+		if pk != null:
+			pokemons_capturados.erase(pk)
+	PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
+	solicitar_salvamento()
+	return msgs[0]
+
+func breeding_abates(n: int) -> void:
+	## C: os ovos chocam com derrotas nas hunts; o filho entra na box no nível 1.
+	if (breeding.get("ovos", []) as Array).is_empty():
+		return
+	var e := {"breeding": breeding}
+	for f in servico_breeding().chocar(e, n):
+		var esp = preload("res://especies_importadas.gd").obter_todas().get(String(PONTE_CIDADE.dados().especie(int(f["speciesId"])).get("nome", "")))
+		if esp == null:
+			continue
+		var novo := DadosPokemon.new()
+		novo.especie = esp
+		novo.nivel = 1
+		novo.shiny = bool(f["shiny"])
+		var mapa_iv := {"hp": "iv_hp", "atk": "iv_atk", "def": "iv_def", "spAtk": "iv_sp_atk", "spDef": "iv_sp_def", "speed": "iv_spd"}
+		for k in mapa_iv:
+			novo.set(mapa_iv[k], int(f["ivs"][k]))
+		novo.qualidade = float(f["quality"])
+		novo.id_persistente = Crypto.new().generate_random_bytes(16).hex_encode()
+		novo.normalizar_atributos()
+		novo.vida_atual = novo.obter_vida_maxima()
+		pokemons_capturados.append(novo)
+	breeding = e["breeding"]
 
 func prof_registrar(especie_id: int, ervas: int, fotos: int) -> void:
 	var e := {"profissao": profissao}
