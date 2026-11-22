@@ -250,6 +250,8 @@ Teste de calibração disponível: 680 hits do Geodude níveis 1–4 (`gravacoes
 
 ### Em aberto (não invente; deixe parametrizado e marcado)
 
+**Orre (F, não validado):** a dificuldade de Orre depende do dano dos selvagens de nível alto na sim; não há gravação de
+Orre. O nível recomendado por hunt (`dados/gerados/orre_nivel_recomendado.json`, `testes/nivel_orre.gd`) é só dica no mapa.
 Seleção de golpe: o critério exato de "maior dano esperado" (A em S1–S4, ver Fatos; não houve caso perto do empate fora do empate exato), e o desempate por cooldown (só o Solar Beam × Petal Dance),
 IA de movimento dos selvagens (desvio conhecido, seção abaixo), medidor de captura (raridade; c e k são F; shinyBase por tier desconhecido), penalidade de entrada (o S3 e a expiração de sessão, B-relatada), parcela extra de XP
 vista na conta B (×1,554 em vez de ×1,5; a conta B tem uma parcela `guild`, 24 em 548 no Rhyhorn, A, e o Pokémon dela recebe `mentor`), efeitos de status,
@@ -1425,3 +1427,8 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Medido com o time e os itens do fim da campanha: electrike 10,1 M XP/h, torchic 11,9 M.
   - Sem VIP, empata com a melhor Outland; com VIP fica em ~2/3, porque o VIP soma 50% da base, que em Orre é pequena.
   - Teste: `test_xp_regiao` 10/10.
+- 22/11/2026 — **Ciclo 7, nível recomendado de Orre** (F, não validado): para cada uma das 72 hunts de Orre, o menor nível do
+  líder em que o time da campanha do ciclo 6 passa 1 h sem morrer.
+  - No próprio nível ficam jogáveis 26 hunts; 13 não ficam nem no 1100.
+  - Aparece como dica no marcador do mapa, sem bloquear a entrada.
+  - Tabela: `dados/relatorios/orre_nivel_recomendado_2026-11-22.md`. Teste: `test_mapa_hunts` 5/5.

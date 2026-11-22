@@ -317,6 +317,13 @@ func _marcar_regioes() -> void:
 		var rg: String=String(b.get_meta("regiao","kanto"))
 		b.modulate=Color(1,1,1,1) if nivel>=int(ACESSO.DESBLOQUEIO_AREA[rg]) else Color(0.5,0.5,0.5,1)   # C: classe "locked"
 		b.self_modulate=Color(1.2,1.12,0.85) if rg==regiao_atual else Color(1,1,1)
+static var _rec_cache: Dictionary = {}
+static func _nivel_recomendado() -> Dictionary:
+	## Ciclo 7: nível recomendado das hunts de Orre (dados/gerados/orre_nivel_recomendado.json, testes/nivel_orre.gd).
+	if _rec_cache.is_empty():
+		var d = preload("res://sim/fontes.gd").ler_json(preload("res://sim/fontes.gd").pasta_dados() + "/gerados/orre_nivel_recomendado.json")
+		_rec_cache = d.get("hunts", {}) if d is Dictionary else {"_": {}}
+	return _rec_cache
 func _criar_marcadores() -> void:
 	var dados: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://dados/referencias/mapa_kanto.json"))
 	var atlas_dados: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://assets/interface/mapa/fiel/marker-atlas.json"))
@@ -336,6 +343,12 @@ func _criar_marcadores() -> void:
 		var marcador: Button=MARCADOR.new()
 		imagem_mapa.add_child(marcador)
 		marcador.configurar(registro,icone,100000 if acesso_hunts_sem_limite else EstadoJogo.nivel_treinador)
+		var rec: Dictionary = _nivel_recomendado().get(str(registro.get("slug","")), {})
+		if not rec.is_empty():
+			# Ciclo 7 (F, não validado: não há gravação de Orre): dica, sem bloquear
+			marcador.tooltip_text += ("
+Nível recomendado: treinador %d e líder %d (estimado pela simulação)" % [int(rec["nivel_treinador"]), int(rec["nivel_lider"])]) if int(rec["nivel_lider"]) > 0 else "
+Nível recomendado: acima de 1100 (estimado pela simulação)"
 		marcador.visual_alterado.connect(_reposicionar_um.bind(marcador))
 		marcador.pressed.connect(_selecionar_registro.bind(registro))
 		marcadores[marcador]=registro

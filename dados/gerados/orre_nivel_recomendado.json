@@ -1,0 +1,365 @@
+{
+ "_fonte": "F (não validado: não há gravação de Orre): testes/nivel_orre.gd, time da campanha do ciclo 6 (helds e TMs), 1 h sem morrer, VIP; nível do líder por busca binária (passo 10) entre o nível da hunt e 1100",
+ "hunts": {
+  "absol": {
+   "nivel_hunt": 600,
+   "nivel_lider": 600,
+   "nivel_treinador": 605
+  },
+  "aggron": {
+   "nivel_hunt": 600,
+   "nivel_lider": 748,
+   "nivel_treinador": 753
+  },
+  "altaria": {
+   "nivel_hunt": 580,
+   "nivel_lider": 580,
+   "nivel_treinador": 585
+  },
+  "aron": {
+   "nivel_hunt": 530,
+   "nivel_lider": 547,
+   "nivel_treinador": 552
+  },
+  "bagon": {
+   "nivel_hunt": 540,
+   "nivel_lider": 540,
+   "nivel_treinador": 545
+  },
+  "baltoy": {
+   "nivel_hunt": 530,
+   "nivel_lider": 663,
+   "nivel_treinador": 668
+  },
+  "banette": {
+   "nivel_hunt": 580,
+   "nivel_lider": 580,
+   "nivel_treinador": 585
+  },
+  "beldum": {
+   "nivel_hunt": 520,
+   "nivel_lider": 520,
+   "nivel_treinador": 525
+  },
+  "blaziken": {
+   "nivel_hunt": 580,
+   "nivel_lider": 783,
+   "nivel_treinador": 788
+  },
+  "cacturne": {
+   "nivel_hunt": 600,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "camerupt": {
+   "nivel_hunt": 580,
+   "nivel_lider": 929,
+   "nivel_treinador": 934
+  },
+  "claydol": {
+   "nivel_hunt": 580,
+   "nivel_lider": 905,
+   "nivel_treinador": 910
+  },
+  "combusken": {
+   "nivel_hunt": 540,
+   "nivel_lider": 540,
+   "nivel_treinador": 545
+  },
+  "corphish": {
+   "nivel_hunt": 530,
+   "nivel_lider": 965,
+   "nivel_treinador": 970
+  },
+  "crawdaunt": {
+   "nivel_hunt": 580,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "dusclops": {
+   "nivel_hunt": 600,
+   "nivel_lider": 600,
+   "nivel_treinador": 605
+  },
+  "duskull": {
+   "nivel_hunt": 540,
+   "nivel_lider": 540,
+   "nivel_treinador": 545
+  },
+  "electrike": {
+   "nivel_hunt": 530,
+   "nivel_lider": 530,
+   "nivel_treinador": 535
+  },
+  "exploud": {
+   "nivel_hunt": 600,
+   "nivel_lider": 646,
+   "nivel_treinador": 651
+  },
+  "flygon": {
+   "nivel_hunt": 600,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "gardevoir": {
+   "nivel_hunt": 600,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "glalie": {
+   "nivel_hunt": 580,
+   "nivel_lider": 880,
+   "nivel_treinador": 885
+  },
+  "grovyle": {
+   "nivel_hunt": 540,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "grumpig": {
+   "nivel_hunt": 580,
+   "nivel_lider": 628,
+   "nivel_treinador": 633
+  },
+  "kirlia": {
+   "nivel_hunt": 560,
+   "nivel_lider": 762,
+   "nivel_treinador": 767
+  },
+  "lairon": {
+   "nivel_hunt": 560,
+   "nivel_lider": 610,
+   "nivel_treinador": 615
+  },
+  "lombre": {
+   "nivel_hunt": 550,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "lotad": {
+   "nivel_hunt": 520,
+   "nivel_lider": 909,
+   "nivel_treinador": 914
+  },
+  "loudred": {
+   "nivel_hunt": 550,
+   "nivel_lider": 550,
+   "nivel_treinador": 555
+  },
+  "lucario": {
+   "nivel_hunt": 580,
+   "nivel_lider": 970,
+   "nivel_treinador": 975
+  },
+  "ludicolo": {
+   "nivel_hunt": 600,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "makuhita": {
+   "nivel_hunt": 540,
+   "nivel_lider": 610,
+   "nivel_treinador": 615
+  },
+  "manectric": {
+   "nivel_hunt": 580,
+   "nivel_lider": 580,
+   "nivel_treinador": 585
+  },
+  "marshtomp": {
+   "nivel_hunt": 540,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "mawile": {
+   "nivel_hunt": 580,
+   "nivel_lider": 580,
+   "nivel_treinador": 585
+  },
+  "medicham": {
+   "nivel_hunt": 580,
+   "nivel_lider": 710,
+   "nivel_treinador": 715
+  },
+  "meditite": {
+   "nivel_hunt": 530,
+   "nivel_lider": 574,
+   "nivel_treinador": 579
+  },
+  "metang": {
+   "nivel_hunt": 580,
+   "nivel_lider": 588,
+   "nivel_treinador": 593
+  },
+  "mightyena": {
+   "nivel_hunt": 600,
+   "nivel_lider": 600,
+   "nivel_treinador": 605
+  },
+  "mudkip": {
+   "nivel_hunt": 520,
+   "nivel_lider": 991,
+   "nivel_treinador": 996
+  },
+  "numel": {
+   "nivel_hunt": 530,
+   "nivel_lider": 689,
+   "nivel_treinador": 694
+  },
+  "nuzleaf": {
+   "nivel_hunt": 530,
+   "nivel_lider": 627,
+   "nivel_treinador": 632
+  },
+  "pelipper": {
+   "nivel_hunt": 580,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "poochyena": {
+   "nivel_hunt": 530,
+   "nivel_lider": 530,
+   "nivel_treinador": 535
+  },
+  "ralts": {
+   "nivel_hunt": 530,
+   "nivel_lider": 636,
+   "nivel_treinador": 641
+  },
+  "riolu": {
+   "nivel_hunt": 530,
+   "nivel_lider": 530,
+   "nivel_treinador": 535
+  },
+  "sableye": {
+   "nivel_hunt": 560,
+   "nivel_lider": 560,
+   "nivel_treinador": 565
+  },
+  "sceptile": {
+   "nivel_hunt": 580,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "sealeo": {
+   "nivel_hunt": 560,
+   "nivel_lider": 905,
+   "nivel_treinador": 910
+  },
+  "seedot": {
+   "nivel_hunt": 510,
+   "nivel_lider": 510,
+   "nivel_treinador": 515
+  },
+  "seviper": {
+   "nivel_hunt": 600,
+   "nivel_lider": 600,
+   "nivel_treinador": 605
+  },
+  "shelgon": {
+   "nivel_hunt": 560,
+   "nivel_lider": 948,
+   "nivel_treinador": 953
+  },
+  "shiftry": {
+   "nivel_hunt": 580,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "slakoth": {
+   "nivel_hunt": 540,
+   "nivel_lider": 540,
+   "nivel_treinador": 545
+  },
+  "snorunt": {
+   "nivel_hunt": 530,
+   "nivel_lider": 680,
+   "nivel_treinador": 685
+  },
+  "spheal": {
+   "nivel_hunt": 530,
+   "nivel_lider": 743,
+   "nivel_treinador": 748
+  },
+  "spoink": {
+   "nivel_hunt": 520,
+   "nivel_lider": 520,
+   "nivel_treinador": 525
+  },
+  "swablu": {
+   "nivel_hunt": 540,
+   "nivel_lider": 540,
+   "nivel_treinador": 545
+  },
+  "swampert": {
+   "nivel_hunt": 580,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "swellow": {
+   "nivel_hunt": 580,
+   "nivel_lider": 580,
+   "nivel_treinador": 585
+  },
+  "taillow": {
+   "nivel_hunt": 530,
+   "nivel_lider": 530,
+   "nivel_treinador": 535
+  },
+  "torchic": {
+   "nivel_hunt": 520,
+   "nivel_lider": 520,
+   "nivel_treinador": 525
+  },
+  "torkoal": {
+   "nivel_hunt": 600,
+   "nivel_lider": 600,
+   "nivel_treinador": 605
+  },
+  "trapinch": {
+   "nivel_hunt": 520,
+   "nivel_lider": 728,
+   "nivel_treinador": 733
+  },
+  "treecko": {
+   "nivel_hunt": 520,
+   "nivel_lider": 1036,
+   "nivel_treinador": 1041
+  },
+  "tropius": {
+   "nivel_hunt": 600,
+   "nivel_lider": -1,
+   "nivel_treinador": -1
+  },
+  "vibrava": {
+   "nivel_hunt": 550,
+   "nivel_lider": 798,
+   "nivel_treinador": 803
+  },
+  "vigoroth": {
+   "nivel_hunt": 560,
+   "nivel_lider": 678,
+   "nivel_treinador": 683
+  },
+  "walrein": {
+   "nivel_hunt": 600,
+   "nivel_lider": 1037,
+   "nivel_treinador": 1042
+  },
+  "whismur": {
+   "nivel_hunt": 520,
+   "nivel_lider": 520,
+   "nivel_treinador": 525
+  },
+  "wingull": {
+   "nivel_hunt": 530,
+   "nivel_lider": 672,
+   "nivel_treinador": 677
+  },
+  "zangoose": {
+   "nivel_hunt": 600,
+   "nivel_lider": 685,
+   "nivel_treinador": 690
+  }
+ }
+}

@@ -65,6 +65,16 @@ func _process(_d: float) -> bool:
 		if not bool(v["ok"]):
 			errados.append(slug + ":bloqueada")
 	checar(errados.is_empty(), "com nível 5000 nenhuma hunt fica bloqueada", str(errados.slice(0, 10)))
+	# Ciclo 7: nível recomendado de Orre como dica no marcador (F; não bloqueia)
+	var dicas := 0
+	var orre := 0
+	for m in mapa.marcadores:
+		var reg: Dictionary = mapa.marcadores[m]
+		if String(reg.get("area", "")) == "orre":
+			orre += 1
+			if String((m as Button).tooltip_text).contains("Nível recomendado"):
+				dicas += 1
+	checar(orre > 0 and dicas == orre, "Orre: todo marcador tem o nível recomendado na dica", "%d de %d" % [dicas, orre])
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(1 if falhas else 0)
 	return true
