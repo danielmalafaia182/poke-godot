@@ -1,19 +1,19 @@
 # Inventário do cliente original (backlog do ciclo 2)
 
-Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do cliente original (C: 4187 textos em pt-BR, chunk `3vooh2axx98am.js`). Cada linha é uma janela, uma parte da HUD ou um grupo de telas, com o número de textos (botões, títulos, avisos) e exemplos. Status no nosso jogo avaliado em 19/11.
+Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do cliente original (C: 4187 textos em pt-BR, chunk `3vooh2axx98am.js`). Cada linha é uma janela, uma parte da HUD ou um grupo de telas, com o número de textos (botões, títulos, avisos) e exemplos. Status no nosso jogo avaliado em 19/11; revisto no ciclo 7 (22/11).
 
-**76 grupos: 30 feitos, 13 parciais, 33 faltando** (730 / 1440 / 2017 textos). Dos que faltam, 24 dependem de outros jogadores ou de conta (ficam para a versão online).
+**76 grupos: 30 feitos, 18 parciais, 28 faltando** (730 / 1801 / 1656 textos). Dos que faltam, 24 dependem de outros jogadores ou de conta (ficam para a versão online).
 
 | Grupo | Status | Textos | No nosso jogo / o que falta | Exemplos |
 | --- | --- | --- | --- | --- |
-| `window.breeding` | falta | 116 | breeding | Centro de Breeding · Par reprodutor · Selecione no box |
-| `window.goldenStars` | falta | 116 | Golden Stars | Poke Slot Machine · Trocar bônus · Trocar Pokémon |
+| `window.breeding` | parcial | 116 | sim/servico_breeding.gd (ciclo 6): ovo, herança de IV/Quality, shiny, choca com abates; o Centro de Breeding do dock cruza o melhor par da box. Falta escolher os pais na tela, comprar slot e chocar na hora (💎) | Centro de Breeding · Par reprodutor · Selecione no box |
+| `window.goldenStars` | parcial | 116 | sim/servico_golden_stars.gd (ciclo 7): rolagem a cada 12 h, 9 candidatos, estrela de 6 h, slots 2–3, 8 bônus na hunt; janela pelo ⚙ (rolar e sortear). Faltam escolha direta, trocar bônus/Pokémon e o desbloqueio de 24 h na tela | Poke Slot Machine · Trocar bônus · Trocar Pokémon |
 | `window.seasonPass` | falta | 102 | passe de temporada | Acelerar · Comprado · Passe Premium · {{price}} |
 | `landing` | falta | 84 | página inicial do site (fora do jogo) | Direto no navegador · Também no celular · Sem download |
-| `window.professions` | falta | 83 | profissões (pesca, botânico, pesquisador…) | Profissões · Fechar · Em breve |
-| `window.talents` | falta | 27 | talentos | Talentos do Botânico · Berry que protege do tipo {{type}} · Berry que protege dos golpes tipo Neutro |
+| `window.professions` | parcial | 83 | sim/servico_profissoes.gd (ciclo 6): Botânico e Prestígio, ranks E–S, captura +3%/rank, mentor (A), ervas e fotos; janela no dock com uma ação por vez. Falta a pesca e a tela completa | Profissões · Fechar · Em breve |
+| `window.talents` | parcial | 27 | árvore do Botânico como liberação por rank (ciclo 7, classe 3); falta a tela de talentos | Talentos do Botânico · Berry que protege do tipo {{type}} · Berry que protege dos golpes tipo Neutro |
 | `window.ditto` | falta | 22 | cópia com Ditto | Espécies disponíveis · Limpar filtros · {{shown}}/{{total}} |
-| `window.craft` | falta | 19 | craft | 🌿 {{n}} Fresh Herbs · 🍂 {{n}} Wild Herbs · Painel de Crafts |
+| `window.craft` | parcial | 19 | fila de crafting do Botânico (ciclo 7): receita, unidades uma a uma, coletar; na janela de Profissões (Craftar, Coletar). Falta o painel próprio | 🌿 {{n}} Fresh Herbs · 🍂 {{n}} Wild Herbs · Painel de Crafts |
 | `window.fishing` | falta | 15 | pesca | Fechar · ⏳ Aguarde {{seconds}}s · Nv {{min}}–{{max}} |
 | `window.fishingWave` | falta | 2 | onda de pesca | Pescando… · {{value}}s |
 | `window.pvp` | falta | 212 | PvP (online) | PvP — Batalhas · Jogadores Online · Histórico |
@@ -43,7 +43,7 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `shop` | parcial | 277 | painel_loja.gd (loja do Mark); falta a loja de diamantes | Promoção encerrada · termina em {{left}} · Promoção de lançamento |
 | `modal` | parcial | 165 | confirmações de evolução, loja e Orre; faltam as outras | Volta pro Lv.1 · Fechar · Aceitar |
 | `hud.world` | parcial | 155 | cidade e hunt com NPCs por clique; faltam vários avisos e ações de NPC | Combate · Pesca · Level Up |
-| `window.inventory` | parcial | 140 | painel_inventario.gd (ciclo 2): abas por categoria, quantidade, preço de NPC, Usar para Rare Candy e berries; held, TMs, addons e conversões sem uso (lote 3 congelado) | Eficiência ×{{rate}} · Expira em {{left}} · Captura garantida |
+| `window.inventory` | parcial | 140 | painel_inventario.gd (ciclo 2) e ⚙ → Usar itens: Rare Candy, berries, TMs (TM Researcher), held items (Held Machine, equipar) — ciclo 6 | Eficiência ×{{rate}} · Expira em {{left}} · Captura garantida |
 | `hud.config` | parcial | 67 | ⚙ na cidade: VIP, Streak, Diárias, Itens, Metas, Tutorial, tamanho da interface e tela cheia (ciclo 2); faltam som e zoom da hunt | Efeitos de ambiente · Sombras · Notificações de batalha |
 | `window.pokedex` | parcial | 49 | painel_pokedex.gd (ciclo 2): busca, capturado/não capturado, tipo, detalhe com abates, evolução e stats; falta o Bônus de Captura +25% XP (número de abates e XP são do servidor) | Todos os tipos · Voltar · Bônus disponível |
 | `window.pokeTooltip` | parcial | 26 | cartão do Pokémon na HUD; faltam campos (TMs, held item, golpes com cooldown) | Pokémon · Ativo · 🎭 Addon |
@@ -84,3 +84,23 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `hud.captureBar` | feito | 14 | painel Capture da hunt (estoque de bolas, contador) | Comprar · 🎉 {{species}} capturado com {{ball}}! · 💨 {{species}} escapou! |
 
 A lista completa de textos por grupo (chave e texto) sai em `saida_testes/inventario_textos.md` (fora do git; gerado pelos dois comandos do cabeçalho do script).
+
+
+## Depois do ciclo 7: o que falta offline (para o ciclo 8 e a versão 1.0)
+
+Dos grupos que faltam, os que dependem de outros jogadores, de conta ou de loja de diamantes ficam para a versão online:
+PvP, guilda, mercado, clãs, troca e central de trocas, rankings, chat, links do chat, amigos (window.vip), lives,
+indicação, Discord, loja de diamantes, passe de temporada, regras/termos, conta, login, e-mail, senha, trava de nome,
+anúncio global de ginásio, notícias, promoções e a página inicial do site.
+
+**Ainda faltam offline (sem servidor):**
+
+| Grupo | O que falta |
+| --- | --- |
+| `window.fishing`, `window.fishingWave` | pesca (habilidade por nível, faixas, onda); os números são do servidor (classe 3) |
+| `window.ditto` | cópia com Ditto |
+
+**Parciais que o ciclo 8 pode fechar (polimento):** telas próprias de breeding (escolher os pais), Golden Stars (escolha
+direta, trocar bônus/Pokémon), profissões (tela completa), talentos e crafting (painéis próprios); cartão do Pokémon com
+TMs e held (`window.pokeTooltip`); guias da Pokepedia; avisos e ações de NPC que faltam (`hud.world`, `modal`); Gift
+Center (`window.gifts`); escolha de bola (`window.pokeball`).
