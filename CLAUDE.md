@@ -1396,3 +1396,26 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - Orre 580 com o Golem no 580: swellow e manectric a ~50 M XP/h, sem morte.
   - Nightmare ~3.200 h ativas desde o zero.
   - Testes: `test_xp_regiao` 10/10, `test_balanceamento` 8/8, regras 43/43, determinismo, cena 22/22.
+- 22/11/2026 — **Ciclo 6.**
+  - **Capturas por trecho** (`ferramentas/fase4/capturas_trechos.py`, `dados/relatorios/capturas_trechos_2026-11-22.md`):
+    - a sim joga as mesmas bolas do real (1,00 por abate elegível, no mesmo tick);
+    - o viés é da chance de uma espécie: Larvitar 116 capturas × 95,6 esperadas, z 2,1; Pupitar e Rattata batem;
+    - modelo mantido.
+  - **Lote 3 descongelado:** TMs e held items pelas regras do cliente (C; `dados/gerados/lote3.json` gerado por
+    `ferramentas/importador/extrair_lote3.py`).
+    - Serviço: TM Researcher, canLearnTm, Held Machine, equipar e destruir.
+    - Simulação: efeitos dos helds, TM elemental (300, 10 s, 2+ alvos) e AoE TM (respingo, classe 3 1,0).
+    - Peças de TM a 2% nos bosses. Held e TMs ficam em `itens_uso`.
+    - Teste: `test_lote3` 21/21.
+  - **Profissões** (`sim/servico_profissoes.gd`):
+    - Botânico e Prestígio, ranks E–S, captura +3% por rank (C);
+    - mentor medido (A): 0,5% da base por nível acima de 200 de diferença, teto 60%.
+    - Teste: `test_profissoes` 12/12.
+  - **Breeding** (`sim/servico_breeding.gd`): regras do cliente, números classe 3. Teste: `test_breeding` 9/9.
+  - Crafting e Golden Stars: não começados.
+  - **Campanha** com revezamento do líder, bosses, itens e profissão (`dados/relatorios/campanha_ciclo6_2026-11-22.md`):
+    - Orre às 502 h; reservas 86–106 com o Golem 595.
+    - Time + itens quase igualam os abates/min de Orre aos da Outland, mas sem o piso Orre 530 rende 3,5 M XP/h contra 15 M.
+    - Proposta: reduzir o piso para ~16.500.
+  - **Build** `builds/ciclo6` (627 MB): 3 fases OK.
+  - **Regressão:** verde (diferencial 28/30, igual a antes).

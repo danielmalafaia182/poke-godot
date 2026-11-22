@@ -45,6 +45,17 @@ extends SceneTree
 ##     automática ao desmaiar, regra E do projeto). As candidatas saem do nível do carregador (o de maior nível).
 ##   - Treino: 1 sessão em 4 o líder é o membro mais fraco do time, numa hunt do nível dele (o jogador sobe as reservas).
 ##   - XP do Pokémon só para quem está em campo (A: poke-xp só do ativo).
+## Ciclo 6 (`--time 1`, decisão do usuário: revezar como um jogador, sem XP dividido):
+##   - Revezamento na sessão: a cada `--rodizio_min` (10) min, lidera o membro com menos XP entre os que aguentam a hunt
+##     (Power × vantagem de tipo ≥ Power da hunt, sim/metas.gd); a troca é o comando `switch` (5 s de espera, A/C).
+##   - Bosses (sim/servico_bosses.gd): uma vez por dia, Auto Boss de até 50 lutas no boss Especial (sem entrada) mais
+##     alto que o time vence; o boss que derrota o time fica de fora até o carregador subir 20 níveis.
+##   - Itens (sim/servico_itens.gd, lote 3): Rare Candy no membro mais fraco (≤ nível 100, até 10); Held Machine (premium
+##     com 50 Devoted Tokens, básica com 20 se o carregador não tem held), equipa o held novo se o tier for maior que o
+##     do carregador (senão no membro sem held); com 10 peças, disco elemental do tipo do carregador e AoE TM, ensinados ao
+##     carregador (estágio final) ou ao próximo membro que possa aprender. Berries: sem fonte fixa offline, fora.
+##   - Profissão (sim/servico_profissoes.gd): Botânico desde o começo; cria berries com as ervas (10 + 5000 de ouro, só
+##     se sobrar o dobro do custo) e sobe de rank assim que os requisitos fecham; o bônus de captura e o mentor (A) valem.
 ##
 ## Uso: testes/rodar.sh res://testes/campanha.gd [--horas N] [--nivel_alvo N] [--semente N] [--saida caminho.json]
 ##      [--completo 1] [--vip 1] [--horas_dia 16]   (padrão: 300 h simuladas ou treinador 2000)
@@ -69,7 +80,7 @@ var cidade
 var mapas := {}
 var hunts_lista: Array = []
 var args := {"horas": 300.0, "nivel_alvo": 2000, "semente": 1, "saida": "saida_testes/campanha.json", "sessao_min": 60, "sonda_min": 2,
-	"completo": 0, "vip": 0, "horas_dia": 16.0, "time": 0}
+	"completo": 0, "vip": 0, "horas_dia": 16.0, "time": 0, "rodizio_min": 10}
 
 # estado do jogador (formato do sim/servico_cidade.gd)
 var est := {}
@@ -97,6 +108,10 @@ var extras := {"soneca_xp": 0, "soneca_pxp": 0, "sonecas": 0, "tarefas_xp": 0, "
 	"kills_diarios": 0, "catch_xp": 0, "ginasios_vitorias": 0, "ginasios_derrotas": 0, "insignias_max": 0, "gift": 0, "streak_pontos": 0, "streak_ouro": 0, "shiny_vistos": 0, "shiny_capturados": 0}
 var marcos_vistos := {}
 var rng_box = preload("res://sim/rng.gd").new(9173)
+var itens_srv
+var bosses_srv
+var prof_srv
+var boss_bloq := {}   # key -> nível do carregador quando o boss venceu
 var n_capturados := 0
 var lider_sessao := ""   # id do Pokémon que lidera a sessão (modo time)
 var treino := false      # sessão de treino (líder = o membro mais fraco)
@@ -117,6 +132,9 @@ func _init() -> void:
 	jogador = ServicoJogador.new()
 	diarias = ServicoDiarias.new(dados)
 	gin = Ginasios.new(dados)
+	itens_srv = preload("res://sim/servico_itens.gd").new(dados)
+	bosses_srv = preload("res://sim/servico_bosses.gd").new(dados)
+	prof_srv = preload("res://sim/servico_profissoes.gd").new(dados)
 	agora_s = int(Time.get_unix_time_from_datetime_string("2026-11-19T03:00:00"))
 	for id in dados.especies:
 		nome_para_id[String(dados.especies[id]["nome"])] = int(id)
@@ -227,6 +245,102 @@ func _melhor_membro(slug: String) -> Dictionary:
 	return melhor
 
 
+func _viaveis(slug: String) -> Array:
+	## ids dos membros que aguentam a hunt: Power × vantagem de tipo ≥ Power da hunt (sim/metas.gd).
+	var ph := float(Metas.poder_hunt(dados, slug))
+	var r: Array = []
+	for pk in _time():
+		if _ataca(pk) and float(Metas.poder_lider(dados, pk)) * _vantagem(pk, slug) >= ph:
+			r.append(String(pk["id"]))
+	return r
+
+
+func _usar_itens() -> void:
+	## Ciclo 6: Rare Candy, Held Machine e held, TMs (comandos do sim/servico_itens.gd sobre o mesmo `est`).
+	est["nivel"] = _nivel_treinador()
+	if not est.has("itens_uso"):
+		est["itens_uso"] = {}
+	var candy := str(int(itens_srv.p.candy_id))
+	while int(est["itens"].get(candy, 0)) > 0:
+		var alvo: Dictionary = {}
+		for pk in _time():
+			if _nivel(pk) <= 100 and int(est["itens_uso"].get("candy", {}).get(String(pk["id"]), 0)) < 10 and (alvo.is_empty() or int(pk["xp"]) < int(alvo["xp"])):
+				alvo = pk
+		if alvo.is_empty():
+			break
+		if String(itens_srv.tratar(est, {"type": "use-candy", "pokeId": String(alvo["id"])})[0]["type"]) != "candy-used":
+			break
+		extras["candies"] = int(extras.get("candies", 0)) + 1
+	var l3: Dictionary = dados.lote3
+	var tok := str(int(l3.get("held_token_id", 13115)))
+	var car := _lider()
+	var h_car := int(est["itens_uso"].get("held", {}).get(String(car["id"]), 0))
+	while int(est["itens"].get(tok, 0)) >= 50 or (int(est["itens"].get(tok, 0)) >= 20 and h_car == 0):
+		var of := "premium" if int(est["itens"].get(tok, 0)) >= 50 else "basic"
+		semente_seq += 1
+		var r: Array = itens_srv.tratar(est, {"type": "held-trade", "oferta": of, "semente": int(args["semente"]) * 7 + semente_seq})
+		if String(r[0]["type"]) != "held-traded":
+			break
+		extras["helds_sorteados"] = int(extras.get("helds_sorteados", 0)) + 1
+		var novo := int(r[0]["itemId"])
+		var tier_car := int(l3["helds"].get(str(h_car), {}).get("tier", 0))
+		var destino := String(car["id"]) if int(r[0]["tier"]) > tier_car else ""
+		if destino == "":
+			for pk in _time():
+				if int(est["itens_uso"].get("held", {}).get(String(pk["id"]), 0)) == 0:
+					destino = String(pk["id"])
+					break
+		if destino != "":
+			itens_srv.tratar(est, {"type": "held-equip", "pokeId": destino, "itemId": novo})
+			if destino == String(car["id"]):
+				h_car = novo
+	for par in [["tm_peca_id", ""], ["tm_peca_aoe_id", "AOE"]]:
+		while int(est["itens"].get(str(int(l3.get(par[0], 0))), 0)) >= int(l3.get("tm_pecas_por_disco", 10)):
+			var quem: Dictionary = {}
+			var tipo := String(par[1])
+			for pk in [car] + _time():
+				var t0 := String(Regras.tipos_de(dados.especie(int(pk["speciesId"])))[0])
+				var tp := tipo if tipo != "" else t0
+				var ja: Dictionary = est["itens_uso"].get("tms", {}).get(String(pk["id"]), {})
+				if (tipo == "AOE" and bool(ja.get("aoe", false))) or (tipo == "" and String(ja.get("elemental", "")) != ""):
+					continue
+				if itens_srv.pode_aprender(pk, itens_srv.disco_do_tipo(tp)) == "":
+					quem = pk
+					tipo = tp
+					break
+			if quem.is_empty():
+				break
+			itens_srv.tratar(est, {"type": "tm-trade", "tipo": tipo})
+			var r2: Array = itens_srv.tratar(est, {"type": "tm-learn", "pokeId": String(quem["id"]), "itemId": itens_srv.disco_do_tipo(tipo)})
+			if String(r2[0]["type"]) == "tm-learned":
+				extras["tms"] = int(extras.get("tms", 0)) + 1
+			tipo = String(par[1])
+
+
+func _bosses_dia() -> void:
+	## Ciclo 6: Auto Boss de até 50 lutas no boss Especial (sem entrada) mais alto que o time vence.
+	est["nivel"] = _nivel_treinador()
+	var time: Array = []
+	for pk in _time():
+		time.append({"speciesId": int(pk["speciesId"]), "xp": int(pk["xp"]), "ivs": pk["ivs"], "quality": float(pk["quality"])})
+	var cands: Array = []
+	for b in bosses_srv.p.lista:
+		if b.get("entrada") == null and int(b["nivel"]) <= _nivel_treinador() and _nivel_lider() >= int(boss_bloq.get(String(b["key"]), -1000)) + 20:
+			cands.append(b)
+	cands.sort_custom(func(a, b): return int(a["nivel"]) > int(b["nivel"]))
+	for b in cands.slice(0, 3):
+		var r: Array = bosses_srv.tratar(est, {"type": "auto-boss", "key": String(b["key"]), "lutas": 50, "time": time, "agora": agora_s, "nivel": _nivel_treinador(), "semente": agora_s + semente_seq})
+		var m: Dictionary = r[0]
+		var vit := 0
+		for l in m.get("lutas", []):
+			vit += 1 if bool(l["venceu"]) else 0
+		extras["boss_vitorias"] = int(extras.get("boss_vitorias", 0)) + vit
+		if vit == 0:
+			boss_bloq[String(b["key"])] = _nivel_lider()
+			continue
+		break
+
+
 func _mais_fraco() -> Dictionary:
 	var r: Dictionary = {}
 	for pk in _time():
@@ -322,7 +436,9 @@ func _jogo(slug: String, penalizar: bool) -> Dictionary:
 	return {"slug": slug, "hunt": String(dados.hunts[slug]["nome"]), "equipe": equipe, "lider": 0, "treinador_xp": treinador_xp, "inventario": inv, "bolas": bolas,
 		"auto_catch": int(est["bolas"].get("1", 0)) > 0, "bola_auto_catch": 1, "auto_potion": true, "pocao_id": 0,
 		"medidor_captura": medidor, "vip": int(args["vip"]) == 1, "penalizar": penalizar,
-		"auto_catch_shiny": completo(), "bola_auto_catch_shiny": _bola_shiny()}
+		"auto_catch_shiny": completo(), "bola_auto_catch_shiny": _bola_shiny(),
+		"helds": (est.get("itens_uso", {}).get("held", {}) as Dictionary).duplicate(),
+		"tms": (est.get("itens_uso", {}).get("tms", {}) as Dictionary).duplicate(true)}.merged(prof_srv.para_sim(est) if modo_time() and completo() else {})
 
 
 func completo() -> bool:
@@ -359,8 +475,22 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 	var shiny_pos := {}   # casas de abates de shiny ainda sem catch-result
 	var ult_pos := Vector2i(-999, -999)
 	var n := int(minutos * TICKS_MIN)
+	var rod := int(args["rodizio_min"]) * TICKS_MIN
+	var viaveis: Array = _viaveis(slug) if modo_time() and not treino and aplicar else []
 	for t in n:
-		for reg in sim.passo():
+		var intents: Array = []
+		if viaveis.size() > 1 and t > 0 and t % rod == 0:
+			# ciclo 6: o membro viável com menos XP (na sim, o XP atual) passa a liderar
+			var melhor := -1
+			var menor := -1
+			for i in sim.equipe.size():
+				if String(sim.equipe[i].get("id", "")) in viaveis and int(sim.equipe[i]["hp"]) > 0 and (menor < 0 or int(sim.equipe[i]["xp"]) < menor):
+					menor = int(sim.equipe[i]["xp"])
+					melhor = i
+			if melhor >= 0 and melhor != sim.ativo:
+				intents.append({"type": "switch", "teamIndex": melhor})
+				extras["trocas_rodizio"] = int(extras.get("trocas_rodizio", 0)) + 1
+		for reg in sim.passo(intents):
 			var m: Dictionary = reg.get("msg", reg)
 			match String(m.get("type", "")):
 				"field-kill":
@@ -412,6 +542,8 @@ func _rodar(slug: String, minutos: float, penalizar: bool, aplicar: bool, sem_bo
 		if sim.encerrada:
 			break
 	r["xp"] = int(sim.treinador["xp"]) - xp0
+	if aplicar and modo_time() and completo():
+		prof_srv.registrar_hunt(est, r["por_especie"], int(sim.estatisticas.get("ervas", 0)), int(sim.estatisticas.get("fotos", 0)))
 	r["pxp"] = int(sim.equipe[0]["xp"]) - pxp0
 	if aplicar:
 		treinador_xp = int(sim.treinador["xp"])
@@ -474,6 +606,15 @@ func _cidade() -> Dictionary:
 				out["ouro_venda"] = int(m["goldGained"])
 	if modo_time():
 		_montar_time()
+		if completo():
+			_usar_itens()
+			if prof_srv.rank(est) == "":
+				prof_srv.tratar(est, {"type": "prof-escolher", "prof": "botanist"})
+			while int(est["profissao"].get("ervas", 0)) >= int(prof_srv.p.craft_ervas) and int(est["gold"]) >= 2 * int(prof_srv.p.craft_ouro):
+				prof_srv.tratar(est, {"type": "prof-craft", "tipo": "ROCK"})
+			var rk: Array = prof_srv.tratar(est, {"type": "prof-subir", "especies": colecao.size()})
+			if String(rk[0]["type"]) == "prof-rank":
+				marcos_vistos["prof_" + String(rk[0]["rank"])] = snappedf(minutos_jogados / 60.0, 0.01)
 	for pk in (_time() if modo_time() else [_lider()]):
 		var pid := String(pk.get("id", "lider"))
 		var info: Dictionary = cidade.tratar(est, {"type": "evolve-info", "capturedId": pid})[0]
@@ -647,6 +788,8 @@ func _dia_novo() -> void:
 		if String(m.get("type", "")) == "boosts":
 			est["boosts"] = (m["boosts"] as Array).duplicate(true)
 	_escolher_kill()
+	if modo_time():
+		_bosses_dia()
 
 
 func _escolher_kill() -> void:
@@ -875,7 +1018,10 @@ func _relatorio() -> void:
 	var saida := {"args": args, "minutos_jogados": minutos_jogados, "treinador_final": _nivel_treinador(), "lider_final": _nivel_lider(),
 		"especie_final": String(dados.especie(int(_lider()["speciesId"]))["nome"]), "ouro_final": int(est["gold"]),
 		"por_hunt": lista, "linha_tempo": linha_tempo, "pedras_obtidas": pedras_obtidas, "problemas": problemas, "segundos_reais": (Time.get_ticks_msec() - t0) / 1000.0,
-		"extras": extras, "marcos": marcos_vistos, "colecao": colecao.size(), "orre": orre}
+		"extras": extras, "marcos": marcos_vistos, "colecao": colecao.size(), "orre": orre,
+		"time_final": _time().map(func(pk): return {"id": String(pk["id"]), "nome": String(dados.especie(int(pk["speciesId"]))["nome"]), "xp": int(pk["xp"]),
+			"nivel": _nivel(pk), "ivs": pk["ivs"], "quality": float(pk["quality"])}),
+		"itens_uso": est.get("itens_uso", {})}
 	var f := FileAccess.open(String(args["saida"]), FileAccess.WRITE)
 	f.store_string(JSON.stringify(saida, "  "))
 	f.close()
