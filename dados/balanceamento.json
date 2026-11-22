@@ -64,9 +64,9 @@
     },
     "xp_regiao_piso": {
       "valor": {
-        "orre": 40524
+        "orre": 16500
       },
-      "motivo": "decisão do usuário (ciclo 5): em Orre o multiplicador de cada hunt é max(×10, piso ÷ XP base médio das espécies da hunt). Piso = 3 × 13.508 (o XP base da melhor hunt da Outland): no nível de acesso o time abate ~3× mais devagar em Orre (campanha do ciclo 5: 4,2 × 12,4 abates/min), então Orre 510–579 passa a render ao menos a XP/h da Outland; de 580 em diante (base 19.508 × 10) nada muda"
+      "motivo": "decisão do usuário (ciclo 6): em Orre o multiplicador de cada hunt é max(×10, piso ÷ XP base médio das espécies da hunt). Piso = 1,22 × 13.508 (o XP base da melhor hunt da Outland): com o time e os itens do jogo (TMs), Orre 530 abate 10,1/min contra 12,3 na Outland (campanha do ciclo 6), então Orre 510–579 rende o mesmo que a melhor Outland. Antes (ciclo 5) era 40.524 (3×), com o abate 3× mais lento sem itens; de 580 em diante (base 19.508 × 10) nada muda"
     },
     "card_chance_shiny": {
       "valor": 0.1,

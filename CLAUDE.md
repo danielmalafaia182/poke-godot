@@ -132,8 +132,9 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
   dependem da lógica interna da cena antiga. O mapa-múndi decide qual abrir (simulada se houver mapa e hunt-config no snapshot).
 - VIP: opção nas Configurações (⚙ na cidade), **desligada por padrão**; ligada, +50% da XP base como no original
   (parcela `vip`). Ouro inicial 0. Revenda ao NPC nunca acima do preço de compra (evita ouro infinito com poções).
-- **Piso de XP em Orre** (20/11): o multiplicador de cada hunt de Orre é max(×10, 40.524 ÷ XP base médio da hunt), classe 3
-  em `balanceamento.json` combate.xp_regiao_piso. Orre 510–579 rende ao menos a XP/h da melhor Outland; 580+ fica no ×10.
+- **Piso de XP em Orre** (20/11; reduzido em 22/11): o multiplicador de cada hunt de Orre é max(×10, 16.500 ÷ XP base médio da
+  hunt), classe 3 em `balanceamento.json` combate.xp_regiao_piso (era 40.524 no ciclo 5). Com time e TMs, Orre 510–579 rende o
+  mesmo que a melhor Outland; 580+ fica no ×10.
 - Outfits: desde 09/11 o snapshot tem os 846 do índice (545 categorias); o substituto (200) só entra se faltar algum.
 
 Resumo da calibração da fase 3 (cada regra, fonte, evidência, o que ficou aberto): `CALIBRACAO_FASE3.md`.
@@ -1419,3 +1420,7 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     - Proposta: reduzir o piso para ~16.500.
   - **Build** `builds/ciclo6` (627 MB): 3 fases OK.
   - **Regressão:** verde (diferencial 28/30, igual a antes).
+- 22/11/2026 — **Piso de Orre reduzido para 16.500** (decisão do usuário; era 40.524).
+  - Medido com o time e os itens do fim da campanha: electrike 10,1 M XP/h, torchic 11,9 M.
+  - Sem VIP, empata com a melhor Outland; com VIP fica em ~2/3, porque o VIP soma 50% da base, que em Orre é pequena.
+  - Teste: `test_xp_regiao` 10/10.

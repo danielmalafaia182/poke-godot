@@ -52,3 +52,19 @@ carregador no 527; em cada hunt lidera o membro de maior Power × vantagem de ti
   50–60%.
 - **Dificuldade:** 6 das 12 hunts de 530 ainda derrubam o time em minutos, mesmo com itens. O que falta é um time de reservas
   forte; as reservas chegaram a ~100 com o revezamento e o mentor.
+
+## Piso reduzido para 16.500 (decisão do usuário, 22/11)
+
+Mesma medição (time do fim da campanha, carregador no 527, VIP):
+
+| Hunt | Multiplicador | XP/h | Abates/min |
+| --- | --- | --- | --- |
+| torchic (520) | ×66,5 | 11,9 M | 11,95 |
+| electrike (530) | ×30,1 | 10,1 M | 10,07 |
+| taillow (530) | ×30,1 | 8,4 M | 8,31 |
+| poochyena (530) | ×30,1 | 7,9 M | 7,83 |
+| Outland: enraged_typhlosion · ancient_pinsir | ×1 | 15,0 M · 16,5 M | 12,3 · 13,6 |
+
+- **Sem VIP, Orre 530 empata com a Outland** (electrike 10,07 × 16.500 contra 12,32 × 13.508 ≈ 10 M XP/h nos dois).
+- **Com VIP, Orre fica em ~2/3:** o VIP soma 50% da base da espécie (A), e a base de Orre é 548 contra 13.508.
+- De 560 em diante o piso não age (16.500 ÷ 2.168 = ×7,6 < ×10); 580+ segue no ×10.

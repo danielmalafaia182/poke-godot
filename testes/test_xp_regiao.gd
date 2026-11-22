@@ -54,7 +54,7 @@ func _init() -> void:
 	checar(p3.all(func(x): return int(x["event"]) == 0), "multiplicador de outra região não vale aqui")
 	# Ciclo 5: piso de XP de Orre (balanceamento.json combate.xp_regiao_piso): mult = max(×10, piso ÷ base média da hunt)
 	var piso = B.valor("combate", "xp_regiao_piso", {})
-	checar(piso is Dictionary and float(piso.get("orre", 0)) == 40524.0, "balanceamento.json: piso de Orre 40.524 (3 × melhor base da Outland)")
+	checar(piso is Dictionary and float(piso.get("orre", 0)) == 16500.0, "balanceamento.json: piso de Orre 16.500 (1,22 × melhor base da Outland, ciclo 6)")
 	var ms := {}
 	for slug in ["electrike", "seedot", "kirlia", "manectric", "larvitar", "enraged_typhlosion"]:
 		var cfgx := CenarioJogo.configurar({"slug": slug, "hunt": slug, "equipe": [{"id": "g", "nome": "Golem", "xp": Regras.xp_total_para_nivel(600),
@@ -72,11 +72,11 @@ func _init() -> void:
 						kp = m["xpParts"]
 				if not kp.is_empty():
 					break
-			checar(not kp.is_empty() and int(kp["base"]) == 548 and int(kp["base"]) + int(kp["event"]) >= 40523 and int(kp["base"]) + int(kp["event"]) <= 40524,
-				"Orre 530 (electrike): base 548 + event ≈ 40.524 por abate", str(kp))
+			checar(not kp.is_empty() and int(kp["base"]) == 548 and int(kp["base"]) + int(kp["event"]) >= 16499 and int(kp["base"]) + int(kp["event"]) <= 16500,
+				"Orre 530 (electrike): base 548 + event ≈ 16.500 por abate", str(kp))
 	print("multiplicadores: ", ms)
-	checar(absf(float(ms["electrike"]) - 40524.0 / 548.0) < 0.01 and absf(float(ms["kirlia"]) - 40524.0 / 2168.0) < 0.01, "Orre 530 e 560: piso ÷ base (×73,9 e ×18,7)")
-	checar(float(ms["seedot"]) > 500.0, "Orre 510 (base 68): ×596")
+	checar(absf(float(ms["electrike"]) - 16500.0 / 548.0) < 0.01 and float(ms["kirlia"]) == 10.0, "Orre 530: piso ÷ base (×30,1); 560 (base 2.168): piso ÷ base = ×7,6 < ×10, fica o ×10")
+	checar(float(ms["seedot"]) > 200.0, "Orre 510 (base 68): ×243")
 	checar(float(ms["manectric"]) == 10.0, "Orre 580 (base 19.508): fica o ×10")
 	checar(float(ms["larvitar"]) == 1.0 and float(ms["enraged_typhlosion"]) == 1.0, "Kanto e Outland sem piso")
 	print("RESULTADO: %d/%d" % [total - falhas, total])
