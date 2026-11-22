@@ -496,7 +496,17 @@ func _sortear_shiny(especie_id: int) -> bool:
 	if penalidade_ativa():
 		return false
 	var mult := 1.0 + float(p.streak_pct_por_ponto) * float(cfg.get("streak", {}).get("shiny", 0))
+	mult *= 1.0 + _estrela(especie_id, "shiny") / 100.0   # Golden Stars (C): "+N% de chance de aparecer shiny"
 	return r < float(p.shiny_chance) * mult
+
+
+func _estrela(especie_id: int, bonus: String) -> float:
+	## Golden Stars (ciclo 7; A/C, sim/servico_golden_stars.gd): pct do bônus ativo contra a espécie; 0 sem estrela.
+	var t := 0.0
+	for st in cfg.get("estrelas", []):
+		if int(st["speciesId"]) == especie_id and String(st["bonus"]) == bonus:
+			t += float(st["pct"])
+	return t
 
 
 func _expirar_cadaveres() -> void:
@@ -795,8 +805,12 @@ func _ataque_aliado(m: Dictionary) -> void:
 	var d := float(m["stats_dano"]["spDef"] if especial else m["stats_dano"]["def"])
 	var v := Regras.dano(int(poke["nivel"]), int(g["poder"]), a, d, g["stab"], float(g["eff"]), false, _aleatorio(), p)
 	var fx := _held_fx(poke)
-	if fx.has("CRITICAL") and rng.randf() < float(fx["CRITICAL"]) / 100.0:
-		v = Regras.js_round(float(v) * 1.5)   # C: "Um crítico causa 50% a mais de dano"
+	var sid_alvo := int(m["species_id"])
+	var crit := float(fx.get("CRITICAL", 0.0)) + _estrela(sid_alvo, "critChance")
+	if crit > 0.0 and rng.randf() < crit / 100.0:
+		v = Regras.js_round(float(v) * (1.5 + _estrela(sid_alvo, "critDamage") / 100.0))   # C: crítico +50%; estrela critDamage soma
+	if _estrela(sid_alvo, "damage") > 0.0:
+		v = Regras.js_round(float(v) * (1.0 + _estrela(sid_alvo, "damage") / 100.0))   # C: "causa N% a mais de dano em X"
 	hits.append({"slot": m["slot"], "amount": v, "eff": g["eff"], "move": g["nome"], "type": g["tipo"]})
 	estatisticas["hits_aliado"] += 1
 	m["hp"] = maxi(0, int(m["hp"]) - v)
@@ -874,9 +888,10 @@ func _abate(m: Dictionary) -> void:
 	# cartão de abate é `held`, C: hud.killCard.parts.held). F: floor sobre a base, como as outras parcelas.
 	var fx_abate := _held_fx(_poke_ativo())
 	var held_xp := int(floor(float(base) * float(fx_abate.get("EXPERIENCE", 0.0)) / 100.0 + 1e-9))
-	var soma_t := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + held_xp
+	var star_xp := int(floor(float(base) * _estrela(int(m["species_id"]), "exp") / 100.0 + 1e-9))   # C: parcela `star` ("Slot Bônus")
+	var soma_t := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + held_xp + star_xp
 	var total := int(floor(float(soma_t) * mult_reg + 1e-9))
-	var evento := total - (base_esp + vip + streak_xp + boost_t + parcela_dia + gym_xp + held_xp)
+	var evento := total - (base_esp + vip + streak_xp + boost_t + parcela_dia + gym_xp + held_xp + star_xp)
 	# Profissões (ciclo 6; A, conta B nas gravações livres): parcela `mentor` do Pokémon = 0,5% da base por nível de
 	# diferença acima de 200 (treinador − Pokémon), até o teto do rank (cfg.mentor, sim/servico_profissoes.gd). F: round.
 	var mentor_xp := 0
@@ -885,9 +900,9 @@ func _abate(m: Dictionary) -> void:
 		var gap := int(treinador["nivel"]) - int(_poke_ativo()["nivel"]) - int(mt.get("gap", 200))
 		if gap > 0:
 			mentor_xp = Regras.js_round(float(base) * minf(float(mt["teto"]), float(gap) * float(mt.get("pct_nivel", 0.5))) / 100.0)
-	var soma_p := base + vip + boost_p + parcela_dia + gym_xp + held_xp + mentor_xp
+	var soma_p := base + vip + boost_p + parcela_dia + gym_xp + held_xp + mentor_xp + star_xp
 	var total_p := int(floor(float(soma_p) * mult_reg + 1e-9))
-	var evento_p := total_p - (base_esp + vip + boost_p + parcela_dia + gym_xp + held_xp + mentor_xp)
+	var evento_p := total_p - (base_esp + vip + boost_p + parcela_dia + gym_xp + held_xp + mentor_xp + star_xp)
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
 	var debuff_p := 0
@@ -917,6 +932,8 @@ func _abate(m: Dictionary) -> void:
 		if rng.randf() < extra - floor(extra):
 			rolagens += 1
 	var mult_loot := (1.0 + _pct_boost("loot") / 100.0) * (float(p.tipo_do_dia_loot) if tipo_dia else 1.0)
+	if _estrela(int(m["species_id"]), "loot") > 0.0:
+		mult_loot *= 1.0 + _estrela(int(m["species_id"]), "loot") / 100.0   # C: "N% a mais de chance de dropar"
 	if fx_abate.has("LUCKY"):
 		mult_loot *= 1.0 + float(fx_abate["LUCKY"]) / 100.0   # C: X-Lucky "+N% de chance de drop"
 	for _r in rolagens:
@@ -931,8 +948,8 @@ func _abate(m: Dictionary) -> void:
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
-		"xpParts": _com_debuff(_com_held({"base": base_esp, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff),
-		"pokeXp": {"xpGained": total_p, "parts": _com_debuff(_com_held({"base": base_esp, "boost": boost_p, "vip": vip, "event": evento_p, "mentor": mentor_xp, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff_p),
+		"xpParts": _com_debuff(_com_held({"base": base_esp, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, held_xp, star_xp), debuff),
+		"pokeXp": {"xpGained": total_p, "parts": _com_debuff(_com_held({"base": base_esp, "boost": boost_p, "vip": vip, "event": evento_p, "mentor": mentor_xp, "gym": gym_xp, "typeDay": parcela_dia}, held_xp, star_xp), debuff_p),
 			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
 		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
 	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total_p,
@@ -1057,8 +1074,11 @@ func _profissao_abate(m: Dictionary) -> void:
 	match String(pr.get("atual", "")):
 		"botanist":
 			if rng.randf() < float(pr.get("erva_chance", 0.0)):
-				estatisticas["ervas"] = int(estatisticas.get("ervas", 0)) + 1
-				_emitir({"type": "profession-herb", "qty": 1, "row": m["pos"].y, "col": m["pos"].x})
+				# ciclo 7 (classe 3): fora de Kanto, parte das ervas é Wild Herbs (C: 🍂 Wild Herbs, receitas neutra e de cura)
+				var wild: bool = String(cfg.get("area", "kanto")).to_lower() != "kanto" and rng.randf() < float(pr.get("erva_wild", 0.0))
+				var ch := "ervas_wild" if wild else "ervas"
+				estatisticas[ch] = int(estatisticas.get(ch, 0)) + 1
+				_emitir({"type": "profession-herb", "qty": 1, "kind": "wild" if wild else "fresh", "row": m["pos"].y, "col": m["pos"].x})
 		"prestige":
 			if bool(m["shiny"]):
 				var ok: bool = rng.randf() < float(pr.get("foto_chance", 0.0))
@@ -1177,9 +1197,11 @@ func _troca_manual(i: int) -> void:
 	_emitir({"type": "poke-swap-cooldown", "leftMs": int(p.troca_cooldown_ms), "totalMs": int(p.troca_cooldown_ms)})
 
 
-static func _com_held(partes: Dictionary, held: int) -> Dictionary:
+static func _com_held(partes: Dictionary, held: int, star: int = 0) -> Dictionary:
 	if held > 0:
 		partes["held"] = held
+	if star > 0:
+		partes["star"] = star
 	return partes
 
 
@@ -1227,7 +1249,7 @@ func _lancar_bola(m: Dictionary, sel: String, pending_id: int) -> void:
 	var sid := str(m["species_id"]) + ("s" if bool(m["shiny"]) else "")   # C: a tela separa a variante shiny
 	var med: Dictionary = medidor.get(sid, {"investido": 0.0, "tentativas": 0, "total": 0, "gasto": 0})
 	var chance := Regras.chance_captura(int(sel), float(med.get("investido", 0.0)),
-		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)) + float(cfg.get("bonus_captura_prof", 0.0)) + (float(p.boost_captura_bonus) if _pct_boost("capture") > 0.0 or _boost_ativo("capture") else 0.0), p)
+		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)) + float(cfg.get("bonus_captura_prof", 0.0)) + _estrela(int(m["species_id"]), "catch") / 100.0 + (float(p.boost_captura_bonus) if _pct_boost("capture") > 0.0 or _boost_ativo("capture") else 0.0), p)
 	med["investido"] = float(med.get("investido", 0.0)) + Regras.valor_bola(int(sel), p)
 	med["tentativas"] = int(med.get("tentativas", 0)) + 1
 	med["total"] = int(med.get("total", 0)) + 1
@@ -1385,6 +1407,8 @@ func _ataque_selvagem(m: Dictionary) -> void:
 	var a := float(m["stats_dano"]["spAtk"] if especial else m["stats_dano"]["atk"])
 	var d := float(poke["stats_dano"]["spDef"] if especial else poke["stats_dano"]["def"])
 	var v := Regras.dano(int(m["nivel"]), int(g["poder"]), a, d, g["stab"], float(g["eff"]), true, _aleatorio(), p)
+	if _estrela(int(m["species_id"]), "defense") > 0.0:
+		v = maxi(int(p.piso_selvagem), Regras.js_round(float(v) * (1.0 - _estrela(int(m["species_id"]), "defense") / 100.0)))   # C: "recebe N% a menos de dano de X"
 	var fxh := _held_fx(poke)
 	if fxh.has("BLOCK") and rng.randf() < float(fxh["BLOCK"]) / 100.0:
 		v = maxi(int(p.piso_selvagem), Regras.js_round(float(v) * 0.1))   # C: "Um bloqueio absorve 90% do dano"

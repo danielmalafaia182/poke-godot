@@ -50,9 +50,16 @@ func _init() -> void:
 	for t in Regras.TABELA_TIPOS:
 		est["profissao"]["abates_tipo"][String(t)] = 60
 	est["profissao"]["ervas"] = 50
-	for i in 5:
-		s.tratar(est, {"type": "prof-craft", "tipo": "ROCK"})
-	checar(int(est["profissao"]["berries_craftadas"]) == 2 and int(est["gold"]) == 0, "craft: 10 ervas + 5000 de ouro por berry (2 até acabar o ouro)", str(est["profissao"]["berries_craftadas"]))
+	var arv: Array = s.arvore(est)
+	checar(arv.size() == 4 and String(s.tratar(est, {"type": "craft-start", "efeito": "heal", "n": 1, "agora": 0})[0]["type"]) == "error",
+		"árvore no rank E: 4 berries de tipo; a de cura ainda travada (C: lockedHint)", str(arv.map(func(b): return b["efeito"])))
+	var ef := String(arv[0]["efeito"])
+	var st: Array = s.tratar(est, {"type": "craft-start", "efeito": ef, "n": 2, "agora": 1000})
+	checar(String(st[0]["type"]) == "craft-started" and int(est["profissao"]["ervas"]) == 30 and int(est["gold"]) == 0, "craftar 2: 20 ervas e 10.000 de ouro, na fila")
+	var c1: Array = s.tratar(est, {"type": "craft-collect", "agora": 1000 + 650})
+	var c2: Array = s.tratar(est, {"type": "craft-collect", "agora": 1000 + 1300})
+	checar((c1[0]["itens"] as Array).size() == 1 and int(c1[0]["itens"][0]["qty"]) == 1 and int(c2[0]["itens"][0]["qty"]) == 1 and int(est["profissao"]["berries_craftadas"]) == 2
+		and (est["profissao"]["fila"] as Array).is_empty(), "as unidades ficam prontas uma a uma (10 min cada) e a coleta não para o resto (C)")
 	est["profissao"]["berries_craftadas"] = 5
 	var r: Array = s.tratar(est, {"type": "prof-subir", "especies": 5})
 	checar(String(r[0]["type"]) == "prof-rank" and s.rank(est) == "D" and absf(s.bonus_captura(est) - 0.06) < 1e-9, "requisitos completos: rank D, captura +6%")

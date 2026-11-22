@@ -129,6 +129,9 @@ var itens_uso: Dictionary = {}
 var profissao: Dictionary = {}
 # Ciclo 6: breeding (sim/servico_breeding.gd): ovos na incubadora.
 var breeding: Dictionary = {}
+# Ciclo 7: Golden Stars (sim/servico_golden_stars.gd).
+var estrelas: Dictionary = {}
+static var _servico_gs = null
 static var _servico_breed = null
 static var _servico_prof = null
 # Fase 4, lote 4: insígnias de ginásio (sim/servico_ginasios.gd): {insignias: {"<gymId>": until_ms}}. Sem luta de ginásio
@@ -777,17 +780,42 @@ func prof(cmd: Dictionary) -> Dictionary:
 	var e: Dictionary = PONTE_CIDADE.estado_de(self, cidade_atual())
 	e["profissao"] = profissao
 	cmd["especies"] = especies_capturadas()
+	cmd["agora"] = int(cmd.get("agora", Time.get_unix_time_from_system()))
 	var msgs: Array = servico_profissoes().tratar(e, cmd)
 	var erro := PONTE_CIDADE.primeiro_erro(msgs)
 	if not erro.is_empty():
 		return {"erro": erro}
 	profissao = e["profissao"]
-	if String(cmd.get("type", "")) == "prof-craft":
+	if String(cmd.get("type", "")) in ["prof-craft", "craft-start", "craft-collect"]:
 		ouro = int(e["gold"])
 		ouro_alterado.emit()
 		PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
 	solicitar_salvamento()
 	return msgs[-1] if msgs.size() > 1 and String(msgs[-1].get("type", "")) == "professions" else msgs[0]
+
+func servico_golden_stars():
+	if _servico_gs == null:
+		_servico_gs = preload("res://sim/servico_golden_stars.gd").new(PONTE_CIDADE.dados())
+	return _servico_gs
+
+func estrela(cmd: Dictionary) -> Dictionary:
+	## gs-get / gs-roll / gs-pick / gs-unlock (sim/servico_golden_stars.gd).
+	var e: Dictionary = PONTE_CIDADE.estado_de(self, cidade_atual())
+	e["estrelas"] = estrelas
+	e["vip"] = vip
+	e["nivel"] = nivel_treinador
+	cmd["nivel"] = nivel_treinador
+	var msgs: Array = servico_golden_stars().tratar(e, cmd)
+	var erro := PONTE_CIDADE.primeiro_erro(msgs)
+	if not erro.is_empty():
+		return {"erro": erro}
+	estrelas = e["estrelas"]
+	if int(e["gold"]) != ouro:
+		ouro = int(e["gold"])
+		ouro_alterado.emit()
+	PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
+	solicitar_salvamento()
+	return msgs[-1]
 
 func servico_breeding():
 	if _servico_breed == null:
@@ -854,9 +882,9 @@ func breeding_abates(n: int) -> void:
 		pokemons_capturados.append(novo)
 	breeding = e["breeding"]
 
-func prof_registrar(especie_id: int, ervas: int, fotos: int) -> void:
+func prof_registrar(especie_id: int, ervas: int, fotos: int, ervas_wild: int = 0) -> void:
 	var e := {"profissao": profissao}
-	servico_profissoes().registrar_hunt(e, {especie_id: 1} if especie_id > 0 else {}, ervas, fotos)
+	servico_profissoes().registrar_hunt(e, {especie_id: 1} if especie_id > 0 else {}, ervas, fotos, ervas_wild)
 	profissao = e["profissao"]
 
 func berries_ativas(agora_unix: int) -> Dictionary:
@@ -934,7 +962,7 @@ func extrair_jogo_hunt(nome_hunt: String) -> Dictionary:
 		"nomes_bolas": nomes_bolas, "auto_catch": auto_catch, "bola_auto_catch": auto_catch_ball_id, "auto_potion": auto_potion,
 		"pocao_id": auto_potion_item_id, "limite_pocao": auto_potion_threshold, "auto_catch_nomes": auto_catch_names,
 			"auto_catch_shiny": auto_catch_shiny, "bola_auto_catch_shiny": configuracao.bola_shiny_efetiva(), "medidor_captura": medidor_captura, "garantia_pedras": garantia_pedras, "vip": vip,
-			"helds": (itens_uso.get("held", {}) as Dictionary).duplicate(), "tms": (itens_uso.get("tms", {}) as Dictionary).duplicate(true)}.merged(servico_profissoes().para_sim({"profissao": profissao.duplicate(true)}))}
+			"helds": (itens_uso.get("held", {}) as Dictionary).duplicate(), "tms": (itens_uso.get("tms", {}) as Dictionary).duplicate(true)}.merged(servico_profissoes().para_sim({"profissao": profissao.duplicate(true)})).merged({"estrelas": servico_golden_stars().para_sim({"estrelas": estrelas.duplicate(true)}, int(Time.get_unix_time_from_system()))})}
 
 func registrar_captura_especie(nome: String, shiny: bool = false, bola: String = "") -> bool:
 	## A: o capturado chega no nível 1; IVs e Quality pelo sorteio do próprio jogo (DadosPokemon), como no P04.

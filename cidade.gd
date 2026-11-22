@@ -544,6 +544,14 @@ func _criar_ouro_e_config() -> void:
 	botao_metas.pressed.connect(func() -> void:
 		painel_config.hide()
 		painel_metas.abrir())
+	# Ciclo 7: Poke Slot Machine (Golden Stars). O dock do original não tem o ícone; fica no ⚙.
+	var botao_gs := Button.new()
+	botao_gs.name = "GoldenStars"
+	botao_gs.text = "🎰 Poke Slot Machine"
+	coluna.add_child(botao_gs)
+	botao_gs.pressed.connect(func() -> void:
+		painel_config.hide()
+		load("res://janelas_dock.gd")._abrir_estrelas(janelas_dock["original"], "Poke Slot Machine", null))
 	# Ciclo 5, item 98: Novo jogo com confirmação e backup automático do save atual.
 	var botao_novo := Button.new()
 	botao_novo.name = "NovoJogo"

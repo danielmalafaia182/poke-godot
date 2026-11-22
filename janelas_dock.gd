@@ -80,6 +80,47 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		_abrir_original(chave, j)
 
 
+static func _abrir_estrelas(w: Control, nome: String, tex: Texture2D, aviso: String = "") -> void:
+	## Ciclo 7: Poke Slot Machine / Golden Stars (sim/servico_golden_stars.gd). Ação: rolar (grátis a cada 12 h) ou, com
+	## candidatos, sortear a estrela para o 1º slot liberado e livre.
+	var ej: Node = w.get_node("/root/EstadoJogo")
+	var T := preload("res://textos.gd")
+	var agora := int(Time.get_unix_time_from_system())
+	var r: Dictionary = ej.estrela({"type": "gs-get", "agora": agora})
+	var d = preload("res://ponte_cidade.gd").dados()
+	var txt := ""
+	for i in 3:
+		var st: Dictionary = r["slots"][i]
+		if not bool(r["liberados"][i]):
+			txt += "Slot %d: travado (10.000.000 de ouro, VIP ou 5 cartas por 24 h)\n" % (i + 1)
+		elif st.is_empty() or int(st["expiresAt"]) <= agora:
+			txt += "Slot %d: livre\n" % (i + 1)
+		else:
+			txt += "Slot %d: [b]%s[/b] — %s (%d min)\n" % [i + 1, String(d.especie(int(st["speciesId"])).get("nome", "?")),
+				T.t("window.goldenStars.bonusDesc." + String(st["bonusType"]), {"pct": int(st["pct"]), "name": String(d.especie(int(st["speciesId"])).get("nome", "?"))}),
+				(int(st["expiresAt"]) - agora) / 60]
+	var cand: Array = r["candidatos"]
+	if not cand.is_empty():
+		txt += "\nCandidatos: " + ", ".join(cand.map(func(x): return String(d.especie(int(x)).get("nome", "?"))))
+	txt += "\nPróxima rolagem grátis: " + ("agora" if agora >= int(r["freeRollAt"]) else "em %d min" % ((int(r["freeRollAt"]) - agora) / 60))
+	if aviso != "":
+		txt += "\n\n[b]%s[/b]" % aviso
+	if cand.is_empty():
+		w.abrir("goldenStars", nome, tex, txt, "🎰 " + T.t("window.goldenStars.action.roll"), func() -> void:
+			var x: Dictionary = ej.estrela({"type": "gs-roll", "agora": int(Time.get_unix_time_from_system()), "semente": int(Time.get_ticks_usec() % 2147483647)})
+			_abrir_estrelas(w, nome, tex, String(x.get("erro", ""))))
+	else:
+		var slot := -1
+		for i in 3:
+			var st: Dictionary = r["slots"][i]
+			if bool(r["liberados"][i]) and (st.is_empty() or int(st["expiresAt"]) <= agora):
+				slot = i
+				break
+		w.abrir("goldenStars", nome, tex, txt, "⭐ " + T.t("window.goldenStars.action.pick"), func() -> void:
+			var x: Dictionary = ej.estrela({"type": "gs-pick", "slot": maxi(0, slot), "idx": -1, "agora": int(Time.get_unix_time_from_system()), "semente": int(Time.get_ticks_usec() % 2147483647)})
+			_abrir_estrelas(w, nome, tex, String(x.get("erro", ""))))
+
+
 static func _abrir_breeding(w: Control, nome: String, tex: Texture2D, aviso: String = "") -> void:
 	## Ciclo 6: Centro de Breeding (sim/servico_breeding.gd). Uma ação: cruzar o melhor par da box.
 	var ej: Node = w.get_node("/root/EstadoJogo")
@@ -127,10 +168,20 @@ static func _abrir_profissoes(w: Control, nome: String, tex: Texture2D) -> void:
 			cb = func() -> void:
 				ej.prof({"type": "prof-subir"})
 				_abrir_profissoes(w, nome, tex)
-		elif atual == "botanist" and int(r["ervas"]) >= 10:
-			acao = "🫐 Criar berry (10 ervas + 5000 de ouro)"
+		elif atual == "botanist" and not (ej.profissao.get("fila", []) as Array).is_empty():
+			txt += "\n%s: %d ordem(ns) na fila" % [T.t("window.craft.title"), (ej.profissao["fila"] as Array).size()]
+			acao = "🧺 " + T.t("window.craft.collect")
 			cb = func() -> void:
-				ej.prof({"type": "prof-craft", "tipo": "ROCK"})
+				ej.prof({"type": "craft-collect"})
+				_abrir_profissoes(w, nome, tex)
+		elif atual == "botanist" and int(r["ervas"]) >= 10:
+			var lib: Array = ej.servico_profissoes().arvore({"profissao": ej.profissao})
+			var ef := String(lib[0]["efeito"]) if not lib.is_empty() else "ROCK"
+			var n := mini(int(r["ervas"]) / 10, maxi(1, int(ej.ouro) / 5000))
+			txt += "\nÁrvore: %s" % ", ".join(lib.map(func(b): return String(b["efeito"])))
+			acao = "🫐 %s (%s, 10 min por unidade)" % [T.t("window.craft.start", {"n": n}), ef]
+			cb = func() -> void:
+				ej.prof({"type": "craft-start", "efeito": ef, "n": n})
 				_abrir_profissoes(w, nome, tex)
 		elif atual == "prestige" and int(r["pictures"]) > 0:
 			acao = "📸 Entregar pictures"
@@ -182,6 +233,8 @@ static func _abrir_original(chave: String, j: Dictionary) -> void:
 			_abrir_profissoes(w, nome, tex)
 		"breeding":
 			_abrir_breeding(w, nome, tex)
+		"goldenStars":
+			_abrir_estrelas(w, nome, tex)
 		"home":
 			w.abrir(chave, nome, tex, "Você já está em Cerulean.")
 		"patchnotes":

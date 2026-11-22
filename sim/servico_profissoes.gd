@@ -13,7 +13,13 @@ extends RefCounted
 ## receita das berries, bônus das berries por rank. Trocar é grátis offline (E: não há diamantes).
 ##
 ## Estado: profissao {atual, ranks {prof: "E"…}, abates_tipo {TIPO: n}, berries_craftadas, pictures_entregues}.
-## Comandos: prof-get, prof-escolher {prof}, prof-subir, prof-craft {tipo} (Botânico: ervas → berry do tipo).
+## Comandos: prof-get, prof-escolher {prof}, prof-subir, prof-entregar, prof-craft {tipo} (criação direta, usada pela
+## campanha de teste).
+## Crafting (ciclo 7; C, window.craft.*: "Escolha uma berry, confira a receita e ponha pra craftar. As unidades ficam
+## prontas uma a uma — pode coletar as prontas sem parar o resto"; "Destrave o fruto desta berry na árvore de talentos";
+## 🌿 Fresh Herbs e 🍂 Wild Herbs; berries de tipo, neutra (golpes de boss) e de cura):
+##   craft-arvore → berries liberadas pelo rank; craft-start {efeito, n, agora}; craft-collect {agora}.
+##   Classe 3: liberação por rank, receita (ervas e ouro por unidade), tempo por unidade, fração de Wild Herbs fora de Kanto.
 
 const Regras := preload("res://sim/regras.gd")
 const Balanceamento := preload("res://sim/balanceamento.gd")
@@ -34,6 +40,12 @@ var p := {
 	"foto_chance_shiny": 0.4,
 	"craft_ervas": 10,
 	"craft_ouro": 5000,
+	"craft_wild": 5,
+	"craft_s_unidade": 600,
+	"craft_tipos_rank": {"E": 4, "D": 8, "C": 12, "B": 19, "A": 19, "S": 19},
+	"craft_neutra_rank": "A",
+	"craft_cura_rank": "S",
+	"erva_wild_fora_kanto": 0.25,
 	"berry_bonus_rank": {"E": 0.0, "D": 5.0, "C": 10.0, "B": 15.0, "A": 20.0, "S": 25.0},
 }
 var dados
@@ -54,7 +66,7 @@ func _est(estado: Dictionary) -> Dictionary:
 	if not estado.has("profissao"):
 		estado["profissao"] = {}
 	var e: Dictionary = estado["profissao"]
-	for k in [["atual", ""], ["ranks", {}], ["abates_tipo", {}], ["berries_craftadas", 0], ["pictures", 0], ["pictures_entregues", 0], ["ervas", 0]]:
+	for k in [["atual", ""], ["ranks", {}], ["abates_tipo", {}], ["berries_craftadas", 0], ["pictures", 0], ["pictures_entregues", 0], ["ervas", 0], ["ervas_wild", 0], ["fila", []]]:
 		if not e.has(k[0]):
 			e[k[0]] = k[1] if not k[1] is Dictionary else {}
 	return e
@@ -80,7 +92,7 @@ func para_sim(estado: Dictionary) -> Dictionary:
 	## cfg da simulação: bonus_captura (soma), mentor {gap, pct_nivel, teto}, profissao {atual, erva_chance, foto_chance}.
 	var e := _est(estado)
 	return {"bonus_captura_prof": bonus_captura(estado), "mentor": {"gap": int(p.mentor_gap), "pct_nivel": float(p.mentor_pct_nivel), "teto": mentor_teto(estado)},
-		"profissao": {"atual": String(e["atual"]), "erva_chance": float(p.erva_chance_abate), "foto_chance": float(p.foto_chance_shiny)}}
+		"profissao": {"atual": String(e["atual"]), "erva_chance": float(p.erva_chance_abate), "foto_chance": float(p.foto_chance_shiny), "erva_wild": float(p.erva_wild_fora_kanto)}}
 
 
 func _requisitos(estado: Dictionary, prox: String, especies: int) -> Array:
@@ -137,6 +149,13 @@ func tratar(estado: Dictionary, cmd: Dictionary) -> Array:
 			estado["itens"][str(berry)] = int(estado["itens"].get(str(berry), 0)) + 1
 			e["berries_craftadas"] = int(e["berries_craftadas"]) + 1
 			return [{"type": "prof-craft", "itemId": berry, "name": String(dados.itens[berry]["nome"])}, _msg(estado, int(cmd.get("especies", 0)))]
+		"craft-arvore":
+			return [{"type": "craft-arvore", "liberadas": arvore(estado)}]
+		"craft-start":
+			var ef := String(cmd.get("efeito", ""))
+			return _craft_start(estado, e, "heal" if ef.to_lower() == "heal" else ef.to_upper(), maxi(1, int(cmd.get("n", 1))), int(cmd.get("agora", 0)))
+		"craft-collect":
+			return [_craft_collect(estado, e, int(cmd.get("agora", 0))), _msg(estado, int(cmd.get("especies", 0)))]
 		"prof-entregar":
 			# Prestígio: entrega as pictures guardadas (contam para o rank)
 			var n := int(e["pictures"])
@@ -146,7 +165,66 @@ func tratar(estado: Dictionary, cmd: Dictionary) -> Array:
 	return [_erro("comando desconhecido: " + String(cmd.get("type", "")))]
 
 
-func registrar_hunt(estado: Dictionary, abates_por_especie: Dictionary, ervas: int, fotos: int) -> void:
+func arvore(estado: Dictionary) -> Array:
+	## Berries liberadas na árvore de talentos pelo rank do Botânico: [{efeito, itemId}] (tipos em ordem alfabética).
+	var e := _est(estado)
+	var r := String(e["ranks"].get("botanist", ""))
+	if r == "":
+		return []
+	_berry_do_tipo("ROCK")
+	var tipos: Array = _berries_por_tipo.keys().filter(func(t): return t != "heal" and t != "NEUTRAL")
+	tipos.sort()
+	var lib: Array = []
+	for t in tipos.slice(0, int(p.craft_tipos_rank.get(r, 0))):
+		lib.append({"efeito": t, "itemId": int(_berries_por_tipo[t])})
+	if RANKS.find(r) >= RANKS.find(String(p.craft_neutra_rank)) and _berries_por_tipo.has("NEUTRAL"):
+		lib.append({"efeito": "NEUTRAL", "itemId": int(_berries_por_tipo["NEUTRAL"])})
+	if RANKS.find(r) >= RANKS.find(String(p.craft_cura_rank)) and _berries_por_tipo.has("heal"):
+		lib.append({"efeito": "heal", "itemId": int(_berries_por_tipo["heal"])})
+	return lib
+
+
+func _craft_start(estado: Dictionary, e: Dictionary, efeito: String, n: int, agora: int) -> Array:
+	if String(e["atual"]) != "botanist":
+		return [_erro("Só o Botânico cria berries.")]
+	var alvo: Dictionary = {}
+	for b in arvore(estado):
+		if String(b["efeito"]) == efeito:
+			alvo = b
+	if alvo.is_empty():
+		return [_erro("Destrave o fruto desta berry na árvore de talentos pra liberar a receita.")]   # C: lockedHint
+	var wild := efeito == "NEUTRAL" or efeito == "heal"
+	var chave := "ervas_wild" if wild else "ervas"
+	var ervas := int(p.craft_wild if wild else p.craft_ervas) * n
+	var ouro := int(p.craft_ouro) * n
+	if int(e[chave]) < ervas or int(estado.get("gold", 0)) < ouro:
+		return [_erro("Recursos insuficientes: %d %s e %d de ouro." % [ervas, "Wild Herbs" if wild else "Fresh Herbs", ouro])]
+	e[chave] = int(e[chave]) - ervas
+	estado["gold"] = int(estado["gold"]) - ouro
+	var ordem := {"itemId": int(alvo["itemId"]), "efeito": efeito, "n": n, "inicio": agora, "coletadas": 0, "s": int(p.craft_s_unidade)}
+	e["fila"].append(ordem)
+	return [{"type": "craft-started", "ordem": ordem.duplicate(), "totalS": n * int(p.craft_s_unidade)}]
+
+
+func _craft_collect(estado: Dictionary, e: Dictionary, agora: int) -> Dictionary:
+	## C: as unidades ficam prontas uma a uma (a fila anda em sequência); coleta as prontas sem parar o resto.
+	var coletadas: Array = []
+	var livre := 0
+	for o in e["fila"]:
+		var ini := maxi(int(o["inicio"]), livre)
+		var prontas := clampi((agora - ini) / int(o["s"]), 0, int(o["n"]))
+		var k := prontas - int(o["coletadas"])
+		if k > 0:
+			estado["itens"][str(int(o["itemId"]))] = int(estado["itens"].get(str(int(o["itemId"])), 0)) + k
+			o["coletadas"] = prontas
+			e["berries_craftadas"] = int(e["berries_craftadas"]) + k
+			coletadas.append({"itemId": int(o["itemId"]), "qty": k})
+		livre = ini + int(o["n"]) * int(o["s"])
+	e["fila"] = (e["fila"] as Array).filter(func(o): return int(o["coletadas"]) < int(o["n"]))
+	return {"type": "craft-collected", "itens": coletadas}
+
+
+func registrar_hunt(estado: Dictionary, abates_por_especie: Dictionary, ervas: int, fotos: int, ervas_wild: int = 0) -> void:
 	## Depois de uma hunt: abates por tipagem (requisito de rank), ervas colhidas (Botânico), fotos (Prestígio).
 	var e := _est(estado)
 	for sid in abates_por_especie:
@@ -154,6 +232,7 @@ func registrar_hunt(estado: Dictionary, abates_por_especie: Dictionary, ervas: i
 			if String(t) != "":
 				e["abates_tipo"][String(t)] = int(e["abates_tipo"].get(String(t), 0)) + int(abates_por_especie[sid])
 	e["ervas"] = int(e["ervas"]) + ervas
+	e["ervas_wild"] = int(e["ervas_wild"]) + ervas_wild
 	e["pictures"] = int(e["pictures"]) + fotos
 
 

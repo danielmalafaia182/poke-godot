@@ -214,7 +214,10 @@ func _tratar(msg: Dictionary) -> void:
 					"tipo": String(ev.get("tipo", "")), "evento": true})
 			_emitir_boosts()
 		"profession-herb":
-			EstadoJogo.prof_registrar(-1, int(msg.get("qty", 1)), 0)
+			if String(msg.get("kind", "fresh")) == "wild":
+				EstadoJogo.prof_registrar(-1, 0, 0, int(msg.get("qty", 1)))
+			else:
+				EstadoJogo.prof_registrar(-1, int(msg.get("qty", 1)), 0)
 		"profession-photo":
 			if bool(msg.get("ok", false)):
 				EstadoJogo.prof_registrar(-1, 0, 1)
