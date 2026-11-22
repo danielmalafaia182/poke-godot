@@ -14,6 +14,18 @@ extends RefCounted
 ##                                 effect lasts 30 minutes"; "already active ({{min}} min)"; "Identical berries do not
 ##                                 stack". Efeito e % saem da descrição do items.json (A).
 ##   berries-ativas {agora}        → {pokeId: [{efeito, pct, until}]} para a simulação (cfg.berries).
+## Ciclo 6 (lote 3 descongelado; tabelas do cliente em dados/gerados/lote3.json, C):
+##   tm-trade {tipo}               TM Researcher: 10× TM Disk Piece (AoE: 10× AoE TM Disk Piece) → 1 disco à escolha
+##                                 (C: "trocando 10 peças por 1 disco").
+##   tm-learn {pokeId, itemId}     canLearnTm (C): não Ditto; estágio final ou espécie isenta (TM_STAGE_EXEMPT); disco do
+##                                 tipo do Pokémon ou AoE. Slots por classe: outro elemental substitui o elemental; o AoE
+##                                 convive (C). O disco é consumido.
+##   held-trade {oferta, semente}  Held Machine (C: HELD_MACHINE_OFFERS basic 20 tokens tiers 1–2, premium 50 tiers 2–3;
+##                                 sorteia 1 held entre as famílias ativas × tiers, todos com a mesma chance).
+##   held-equip {pokeId, itemId}   C: só no time; 1 held por slot (todas as famílias são do slot X); trocar DESTRÓI o
+##                                 anterior.
+##   para-sim                      → {helds {pokeId: itemId}, tms {pokeId: {elemental, aoe}}} (cfg da simulação).
+## itens_uso ganha: held {pokeId: itemId}, tms {pokeId: {elemental: TIPO, aoe: bool}}.
 
 const Regras := preload("res://sim/regras.gd")
 
@@ -77,7 +89,7 @@ func efeito_berry(item_id: int) -> Dictionary:
 func tratar(estado: Dictionary, cmd: Dictionary) -> Array:
 	if not estado.has("itens_uso"):
 		estado["itens_uso"] = {}
-	for k in ["candy", "berries"]:
+	for k in ["candy", "berries", "held", "tms"]:
 		if not estado["itens_uso"].has(k):
 			estado["itens_uso"][k] = {}
 	match String(cmd.get("type", "")):
@@ -87,6 +99,17 @@ func tratar(estado: Dictionary, cmd: Dictionary) -> Array:
 			return _berry(estado, int(cmd.get("itemId", -1)), String(cmd.get("pokeId", "")), int(cmd.get("agora", 0)))
 		"berries-ativas":
 			return [{"type": "berries-ativas", "berries": berries_ativas(estado, int(cmd.get("agora", 0)))}]
+		"tm-trade":
+			return _tm_trade(estado, String(cmd.get("tipo", "")))
+		"tm-learn":
+			return _tm_learn(estado, String(cmd.get("pokeId", "")), int(cmd.get("itemId", -1)))
+		"held-trade":
+			return _held_trade(estado, String(cmd.get("oferta", "basic")), int(cmd.get("semente", 1)))
+		"held-equip":
+			return _held_equip(estado, String(cmd.get("pokeId", "")), int(cmd.get("itemId", -1)))
+		"para-sim":
+			return [{"type": "para-sim", "helds": (estado["itens_uso"]["held"] as Dictionary).duplicate(),
+				"tms": (estado["itens_uso"]["tms"] as Dictionary).duplicate(true)}]
 	return [_erro("comando desconhecido: " + String(cmd.get("type", "")))]
 
 
@@ -168,3 +191,115 @@ func berries_ativas(estado: Dictionary, agora: int) -> Dictionary:
 		if not l.is_empty():
 			r[String(id)] = l
 	return r
+
+
+# ------------------------------------------------------------------ TMs e held items (ciclo 6, C: dados/gerados/lote3.json)
+
+func _l3() -> Dictionary:
+	return dados.lote3
+
+
+func disco_do_tipo(tipo: String) -> int:
+	for k in _l3().get("tm_tipo_item", {}):
+		if String(_l3()["tm_tipo_item"][k]) == tipo.to_upper():
+			return int(k)
+	return -1
+
+
+func pode_aprender(pk: Dictionary, item_id: int) -> String:
+	## "" = pode; senão o motivo (canLearnTm, C).
+	var tipo := String(_l3().get("tm_tipo_item", {}).get(str(item_id), ""))
+	if tipo == "":
+		return "Isso não é um TM Disk."
+	var sid := int(pk.get("speciesId", 0))
+	var esp: Dictionary = dados.especie(sid)
+	if String(esp.get("nome", "")) == "Ditto":
+		return "Ditto não pode aprender TMs."   # C: tmBlockedLearner
+	var final_: bool = esp.get("evolui") == null   # C: finalStage (sem evolução seguinte)
+	if not final_ and not float(sid) in (_l3().get("tm_estagio_isento", []) as Array).map(func(x): return float(x)):
+		return "Só Pokémon de estágio final aprendem TMs."
+	if tipo != "AOE" and not tipo in Regras.tipos_de(esp):
+		return "O disco precisa ser do tipo do Pokémon."
+	return ""
+
+
+func _tm_trade(estado: Dictionary, tipo: String) -> Array:
+	var item := disco_do_tipo(tipo)
+	if item < 0:
+		return [_erro("Disco desconhecido: " + tipo)]
+	var peca := int(_l3().get("tm_peca_aoe_id" if tipo.to_upper() == "AOE" else "tm_peca_id", 0))
+	var n := int(_l3().get("tm_pecas_por_disco", 10))
+	if int(estado.get("itens", {}).get(str(peca), 0)) < n:
+		return [_erro("Você precisa de %d× %s" % [n, String(dados.itens.get(peca, {}).get("nome", "peça"))])]
+	estado["itens"][str(peca)] = int(estado["itens"][str(peca)]) - n
+	if int(estado["itens"][str(peca)]) <= 0:
+		estado["itens"].erase(str(peca))
+	estado["itens"][str(item)] = int(estado["itens"].get(str(item), 0)) + 1
+	return [{"type": "tm-traded", "itemId": item, "name": String(dados.itens.get(item, {}).get("nome", "")), "pieces": n}, _msg_inventario(estado)]
+
+
+func _tm_learn(estado: Dictionary, id: String, item_id: int) -> Array:
+	var pk := _poke(estado, id)
+	if pk.is_empty():
+		return [_erro("Pokémon não encontrado.")]
+	var motivo := pode_aprender(pk, item_id)
+	if motivo != "":
+		return [_erro(motivo)]
+	if not _gastar(estado, item_id):
+		return [_erro("Sem esse disco na mochila.")]
+	var tipo := String(_l3()["tm_tipo_item"][str(item_id)])
+	var t: Dictionary = estado["itens_uso"]["tms"].get(id, {})
+	var antes := String(t.get("elemental", ""))
+	if tipo == "AOE":
+		t["aoe"] = true
+	else:
+		t["elemental"] = tipo   # C: outro elemental substitui o atual; o AoE fica
+	estado["itens_uso"]["tms"][id] = t
+	return [{"type": "tm-learned", "pokeId": id, "itemId": item_id, "tm": tipo, "replaced": antes if antes != tipo and tipo != "AOE" else ""}, _msg_inventario(estado)]
+
+
+func pool_maquina(oferta: String) -> Array:
+	var o: Dictionary = _l3().get("held_maquina", {}).get(oferta, {})
+	var ativos: Array = _l3().get("held_ativos", [])
+	var r: Array = []
+	for k in _l3().get("helds", {}):
+		var h: Dictionary = _l3()["helds"][k]
+		if String(h["family"]) in ativos and float(h["tier"]) in (o.get("tiers", []) as Array).map(func(x): return float(x)):
+			r.append(int(k))
+	r.sort()
+	return r
+
+
+func _held_trade(estado: Dictionary, oferta: String, semente: int) -> Array:
+	var o: Dictionary = _l3().get("held_maquina", {}).get(oferta, {})
+	if o.is_empty():
+		return [_erro("Oferta desconhecida.")]
+	var tok := str(int(_l3().get("held_token_id", 13115)))
+	var custo := int(o["cost"])
+	if int(estado.get("itens", {}).get(tok, 0)) < custo:
+		return [_erro("Você precisa de %d× Devoted Token" % custo)]
+	var pool := pool_maquina(oferta)
+	var rng = preload("res://sim/rng.gd").new(semente)
+	var item: int = pool[int(rng.randf() * pool.size()) % pool.size()]   # C: todos com a mesma chance
+	estado["itens"][tok] = int(estado["itens"][tok]) - custo
+	if int(estado["itens"][tok]) <= 0:
+		estado["itens"].erase(tok)
+	estado["itens"][str(item)] = int(estado["itens"].get(str(item), 0)) + 1
+	var h: Dictionary = _l3()["helds"][str(item)]
+	return [{"type": "held-traded", "itemId": item, "name": String(dados.itens.get(item, {}).get("nome", "")), "tier": int(h["tier"]),
+		"family": String(h["family"]), "cost": custo}, _msg_inventario(estado)]
+
+
+func _held_equip(estado: Dictionary, id: String, item_id: int) -> Array:
+	var pk := _poke(estado, id)
+	if pk.is_empty():
+		return [_erro("Pokémon não encontrado.")]
+	if not bool(pk.get("team", false)):
+		return [_erro("Só dá pra equipar em um Pokémon do seu time.")]   # C: helds.how1
+	if not _l3().get("helds", {}).has(str(item_id)):
+		return [_erro("Isso não é um held item.")]
+	if not _gastar(estado, item_id):
+		return [_erro("Sem esse held na mochila.")]
+	var antes := int(estado["itens_uso"]["held"].get(id, 0))
+	estado["itens_uso"]["held"][id] = item_id   # C: trocar DESTRÓI o anterior (não volta para a mochila)
+	return [{"type": "held-equipped", "pokeId": id, "itemId": item_id, "destroyed": antes}, _msg_inventario(estado)]

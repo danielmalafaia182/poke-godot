@@ -31,6 +31,9 @@ CHANCE = {  # chance por luta vencida, quantidade min–max
     "Rare Candy": [0.3, 1, 2], "Heart Scale": [0.4, 1, 3], "Shiny Stone": [0.08, 1, 1], "Mystery Shard": [0.5, 1, 3],
     "Dungeon Chest": [0.2, 1, 1], "Legendary Chest": [0.15, 1, 1], "Mega Stone": [0.05, 1, 1],
 }
+# Ciclo 6 (lote 3): peças de TM. C: no catálogo de bosses do cliente, Ancient Aero dá TM Disk Piece e Cruel dá AoE TM
+# Disk Piece, as duas com chance 0,02 (os outros bosses não estão no cliente). Classe 3: as duas em todo boss, 2%.
+PECAS_TM = [{"nome": "TM Disk Piece", "chance": 0.02, "min": 1, "max": 1}, {"nome": "AoE TM Disk Piece", "chance": 0.02, "min": 1, "max": 1}]
 PADRAO_ESPECIE = {"Especiais": "Gengar", "Mystery Dungeons": "Dragonite", "Terror": "Tyranitar", "Lendary Beasts": "Raikou", "Raids": "Metagross"}
 
 
@@ -55,11 +58,11 @@ def main():
         c = CATEGORIA[b["category"]]
         lista.append({"key": b["key"], "nome": b["name"], "categoria": b["category"], "nivel": int(b["level"]), "speciesId": sid,
                       "shiny": "shiny" in alvo, "entrada": c["entrada"], "hp_mult": c["hp_mult"], "recarga_s": c["recarga_s"],
-                      "drops": [{"nome": n, "chance": CHANCE.get(n, [0.2, 1, 1])[0], "min": CHANCE.get(n, [0.2, 1, 1])[1], "max": CHANCE.get(n, [0.2, 1, 1])[2]} for n in b["drops"]]})
+                      "drops": [{"nome": n, "chance": CHANCE.get(n, [0.2, 1, 1])[0], "min": CHANCE.get(n, [0.2, 1, 1])[1], "max": CHANCE.get(n, [0.2, 1, 1])[2]} for n in b["drops"]] + PECAS_TM})
     p = os.path.join(RAIZ, "dados/balanceamento.json")
     bal = json.load(open(p, encoding="utf-8"))
     bal["bosses"] = {
-        "lista": {"valor": lista, "motivo": "87 bosses do snapshot (A: nome, categoria, nível, drops); espécie, entrada, HP e chances desenhados (ferramentas/balanceamento/gerar_bosses.py)"},
+        "lista": {"valor": lista, "motivo": "87 bosses do snapshot (A: nome, categoria, nível, drops); espécie, entrada, HP e chances desenhados (ferramentas/balanceamento/gerar_bosses.py); ciclo 6: TM Disk Piece e AoE TM Disk Piece a 2% em todo boss (C: 2% nos dois bosses do catálogo do cliente)"},
         "iv_boss": {"valor": 25, "motivo": "boss é mais forte que o selvagem médio"},
         "quality_boss": {"valor": 1.3, "motivo": "boss é mais forte que o selvagem médio"},
         "cadencia_boss_ms": {"valor": 2000, "motivo": "ritmo de um selvagem (A: ~2000 ms)"},

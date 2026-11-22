@@ -255,6 +255,73 @@ func _recalcular_stats(poke: Dictionary) -> void:
 	poke["stats_dano"] = Regras.calcular_stats_dano(poke["especie"]["base"], poke["ivs"], int(poke["nivel"]), float(poke["quality"]), String(p.stats_dano_aliado))
 	poke["max_hp"] = Regras.hp_combate_aliado(int(poke["stats"]["hp"]))
 	poke["power"] = Regras.power(poke["stats"], float(poke["quality"]))
+	# Lote 3 (C: HELD_ITEMS do cliente; textos "+N% de força", "+N% de defesa", "+N% de vida"; BOOST = força e defesa):
+	# o held vale nos stats de combate do Pokémon que o segura (F: sobre os stats do dano e o HP de combate).
+	var fx := _held_fx(poke)
+	if not fx.is_empty():
+		var at := float(fx.get("ATTACK", 0.0)) + float(fx.get("BOOST", 0.0))
+		var df := float(fx.get("DEFENSE", 0.0)) + float(fx.get("BOOST", 0.0))
+		var sd: Dictionary = (poke["stats_dano"] as Dictionary).duplicate()
+		for k in ["atk", "spAtk"]:
+			sd[k] = float(sd[k]) * (1.0 + at / 100.0)
+		for k in ["def", "spDef"]:
+			sd[k] = float(sd[k]) * (1.0 + df / 100.0)
+		poke["stats_dano"] = sd
+		if fx.has("VITALITY"):
+			poke["max_hp"] = Regras.js_round(float(poke["max_hp"]) * (1.0 + float(fx["VITALITY"]) / 100.0))
+
+
+func _held_fx(poke: Dictionary) -> Dictionary:
+	## {família: valor} do held do Pokémon (cfg.helds {pokeId: itemId}); vazio sem held.
+	var item := int(cfg.get("helds", {}).get(String(poke.get("id", "")), 0))
+	if item <= 0:
+		return {}
+	var h: Dictionary = dados.lote3.get("helds", {}).get(str(item), {})
+	if h.is_empty() or not String(h["family"]) in dados.lote3.get("held_ativos", []):
+		return {}
+	return {String(h["family"]): float(h["value"])}
+
+
+func _tm_de(poke: Dictionary) -> Dictionary:
+	return cfg.get("tms", {}).get(String(poke.get("id", "")), {})
+
+
+func _eff_contra(tipo: String, esp_def: Dictionary) -> float:
+	var ts := Regras.tipos_de(esp_def)
+	return Regras.efetividade_amplificada(Regras.efetividade_bruta(tipo, String(ts[0]), String(ts[1])))
+
+
+func _turno_tm() -> void:
+	## Lote 3 (C: TM_MOVES e pokepedia.tms): o golpe do TM elemental entra por cima do ataque normal, sozinho, quando a
+	## recarga (10 s) fica pronta e há pelo menos `minTargets` selvagens vivos no quadro de `aoeBox` casas centrado no
+	## líder; acerta todos. F: quadro de 6 = |dx| ≤ 3 e |dy| ≤ 3; STAB e efetividade como num golpe comum.
+	var poke := _poke_ativo()
+	var tipo := String(_tm_de(poke).get("elemental", ""))
+	if tipo == "" or tick < int(poke.get("tm_prox", 0)):
+		return
+	var g: Dictionary = dados.lote3.get("tm_golpes", {}).get(tipo, {})
+	if g.is_empty():
+		return
+	var meia := int(g.get("aoeBox", 6)) / 2
+	var h: Vector2i = heroi["pos"]
+	var alvos: Array = []
+	for m in mobs:
+		if not m["dead"] and _alvo_valido(m) and absi(m["pos"].x - h.x) <= meia and absi(m["pos"].y - h.y) <= meia:
+			alvos.append(m)
+	if alvos.size() < int(g.get("minTargets", 2)):
+		return
+	poke["tm_prox"] = tick + int(float(g.get("cooldownMs", 10000)) / float(p.tick_ms))
+	var especial := String(g.get("category", "")) == "SPECIAL"
+	var stab := tipo in Regras.tipos_de(poke["especie"])
+	for m in alvos:
+		var a := float(poke["stats_dano"]["spAtk"] if especial else poke["stats_dano"]["atk"])
+		var d := float(m["stats_dano"]["spDef"] if especial else m["stats_dano"]["def"])
+		var eff := _eff_contra(tipo, m["especie"])
+		var v := Regras.dano(int(poke["nivel"]), int(g.get("power", 300)), a, d, stab, eff, false, _aleatorio(), p)
+		hits.append({"slot": m["slot"], "amount": v, "eff": eff, "move": String(g.get("name", "")), "type": tipo})
+		m["hp"] = maxi(0, int(m["hp"]) - v)
+		if int(m["hp"]) <= 0:
+			_abate(m)
 
 
 func agora_ms() -> int:
@@ -358,6 +425,8 @@ func passo(intencoes: Array = []) -> Array:
 	_expirar_pendentes()
 	if not desmaiado:
 		_turno_heroi()
+		if not cfg.get("tms", {}).is_empty():
+			_turno_tm()
 	_turno_selvagens()
 	if tick % int(p.ticks_por_field) == 0:
 		_emitir(_montar_field())
@@ -725,11 +794,30 @@ func _ataque_aliado(m: Dictionary) -> void:
 	var a := float(poke["stats_dano"]["spAtk"] if especial else poke["stats_dano"]["atk"])
 	var d := float(m["stats_dano"]["spDef"] if especial else m["stats_dano"]["def"])
 	var v := Regras.dano(int(poke["nivel"]), int(g["poder"]), a, d, g["stab"], float(g["eff"]), false, _aleatorio(), p)
+	var fx := _held_fx(poke)
+	if fx.has("CRITICAL") and rng.randf() < float(fx["CRITICAL"]) / 100.0:
+		v = Regras.js_round(float(v) * 1.5)   # C: "Um crítico causa 50% a mais de dano"
 	hits.append({"slot": m["slot"], "amount": v, "eff": g["eff"], "move": g["nome"], "type": g["tipo"]})
 	estatisticas["hits_aliado"] += 1
 	m["hp"] = maxi(0, int(m["hp"]) - v)
 	if int(m["hp"]) <= 0:
 		_abate(m)
+	if bool(_tm_de(poke).get("aoe", false)):
+		# Lote 3 (C: "TODOS os golpes normais do Pokémon passam a espirrar em cada selvagem do quadro de 12×12 em volta
+		# do líder"): o mesmo golpe acerta os outros selvagens vivos do quadro, cada um com a sua defesa e efetividade.
+		# F: quadro de 12 = |dx| ≤ 6 e |dy| ≤ 6; classe 3: fração do dano (tm_aoe_splash_fator).
+		var h: Vector2i = heroi["pos"]
+		for m2 in mobs.duplicate():
+			if m2 == m or m2["dead"] or not _alvo_valido(m2) or absi(m2["pos"].x - h.x) > 6 or absi(m2["pos"].y - h.y) > 6:
+				continue
+			var d2 := float(m2["stats_dano"]["spDef"] if especial else m2["stats_dano"]["def"])
+			var eff2 := _eff_contra(String(g["tipo"]), m2["especie"])
+			var v2 := Regras.dano(int(poke["nivel"]), int(g["poder"]), a, d2, g["stab"], eff2, false, _aleatorio(), p)
+			v2 = maxi(int(p.piso_aliado), Regras.js_round(float(v2) * float(p.tm_aoe_splash_fator)))
+			hits.append({"slot": m2["slot"], "amount": v2, "eff": eff2, "move": g["nome"], "type": g["tipo"]})
+			m2["hp"] = maxi(0, int(m2["hp"]) - v2)
+			if int(m2["hp"]) <= 0:
+				_abate(m2)
 
 
 # ======================================================================== abate, XP, loot, captura
@@ -774,8 +862,12 @@ func _abate(m: Dictionary) -> void:
 	# não muda o XP da espécie (a base fica igual, classe 1); entra na parcela `event` (A: a chave existe e é 0 nas gravações).
 	var mult_reg := multiplicador_regiao()
 	var evento := int(floor(float(base) * (mult_reg - 1.0) + 1e-9)) if mult_reg > 1.0 else 0
-	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + evento
-	var total_p := base + vip + boost_p + parcela_dia + gym_xp + evento
+	# Lote 3 (C: X-Experience "+N% de experiência ao derrotar um selvagem — para você e para o Pokémon"; a parcela do
+	# cartão de abate é `held`, C: hud.killCard.parts.held). F: floor sobre a base, como as outras parcelas.
+	var fx_abate := _held_fx(_poke_ativo())
+	var held_xp := int(floor(float(base) * float(fx_abate.get("EXPERIENCE", 0.0)) / 100.0 + 1e-9))
+	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + evento + held_xp
+	var total_p := base + vip + boost_p + parcela_dia + gym_xp + evento + held_xp
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
 	var debuff_p := 0
@@ -805,6 +897,8 @@ func _abate(m: Dictionary) -> void:
 		if rng.randf() < extra - floor(extra):
 			rolagens += 1
 	var mult_loot := (1.0 + _pct_boost("loot") / 100.0) * (float(p.tipo_do_dia_loot) if tipo_dia else 1.0)
+	if fx_abate.has("LUCKY"):
+		mult_loot *= 1.0 + float(fx_abate["LUCKY"]) / 100.0   # C: X-Lucky "+N% de chance de drop"
 	for _r in rolagens:
 		_rolar_loot(esp, lock, mult_loot, loot)
 	_garantir_pedras(esp, lock, mult_loot, rolagens, loot)
@@ -817,8 +911,8 @@ func _abate(m: Dictionary) -> void:
 	_emitir({"type": "field-kill", "xpGained": total, "totalXp": treinador["xp"], "level": treinador["nivel"],
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
-		"xpParts": _com_debuff({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, debuff),
-		"pokeXp": {"xpGained": total_p, "parts": _com_debuff({"base": base, "boost": boost_p, "vip": vip, "event": evento, "mentor": 0, "gym": gym_xp, "typeDay": parcela_dia}, debuff_p),
+		"xpParts": _com_debuff(_com_held({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff),
+		"pokeXp": {"xpGained": total_p, "parts": _com_debuff(_com_held({"base": base, "boost": boost_p, "vip": vip, "event": evento, "mentor": 0, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff_p),
 			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
 		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
 	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total_p,
@@ -1055,6 +1149,12 @@ func _troca_manual(i: int) -> void:
 	_emitir({"type": "poke-swap-cooldown", "leftMs": int(p.troca_cooldown_ms), "totalMs": int(p.troca_cooldown_ms)})
 
 
+static func _com_held(partes: Dictionary, held: int) -> Dictionary:
+	if held > 0:
+		partes["held"] = held
+	return partes
+
+
 static func _com_debuff(partes: Dictionary, debuff: int) -> Dictionary:
 	## A: a chave "debuff" só aparece nos abates penalizados (nos outros 601 da rhydon-1h ela não existe).
 	if debuff != 0:
@@ -1257,6 +1357,9 @@ func _ataque_selvagem(m: Dictionary) -> void:
 	var a := float(m["stats_dano"]["spAtk"] if especial else m["stats_dano"]["atk"])
 	var d := float(poke["stats_dano"]["spDef"] if especial else poke["stats_dano"]["def"])
 	var v := Regras.dano(int(m["nivel"]), int(g["poder"]), a, d, g["stab"], float(g["eff"]), true, _aleatorio(), p)
+	var fxh := _held_fx(poke)
+	if fxh.has("BLOCK") and rng.randf() < float(fxh["BLOCK"]) / 100.0:
+		v = maxi(int(p.piso_selvagem), Regras.js_round(float(v) * 0.1))   # C: "Um bloqueio absorve 90% do dano"
 	var red := _berry_pct(poke, String(g["tipo"]))
 	if red > 0.0:
 		# Lote 3 (A: texto do items.json "Reduz … o dano sofrido de golpes do tipo X (N% de redução)"); F: round e piso 1

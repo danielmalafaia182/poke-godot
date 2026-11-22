@@ -1,0 +1,645 @@
+{
+ "_fonte": "C: chunks 0wl3dp5-44hi8.js (HELD_*) e 0fllz2m_ktm3s.js (TM_*) do cliente original; textos pokepedia.tms.how4",
+ "held_ativos": [
+  "ATTACK",
+  "DEFENSE",
+  "VITALITY",
+  "EXPERIENCE",
+  "LUCKY",
+  "CRITICAL",
+  "BLOCK",
+  "BOOST"
+ ],
+ "held_maquina": {
+  "basic": {
+   "cost": 20,
+   "tiers": [
+    1,
+    2
+   ]
+  },
+  "premium": {
+   "cost": 50,
+   "tiers": [
+    2,
+    3
+   ]
+  }
+ },
+ "held_nome": {
+  "ATTACK": "X-Attack",
+  "BLOCK": "X-Block",
+  "BOOST": "X-Boost",
+  "CRITICAL": "X-Critical",
+  "DEFENSE": "X-Defense",
+  "EXPERIENCE": "X-Experience",
+  "LUCKY": "X-Lucky",
+  "VITALITY": "X-Vitality"
+ },
+ "held_slot": {
+  "ATTACK": "X",
+  "BLOCK": "X",
+  "BOOST": "X",
+  "CRITICAL": "X",
+  "DEFENSE": "X",
+  "EXPERIENCE": "X",
+  "LUCKY": "X",
+  "VITALITY": "X"
+ },
+ "held_token_id": 13115,
+ "helds": {
+  "13117": {
+   "family": "DEFENSE",
+   "tier": 1,
+   "value": 2
+  },
+  "13118": {
+   "family": "ATTACK",
+   "tier": 1,
+   "value": 2
+  },
+  "13119": {
+   "family": "EXPERIENCE",
+   "tier": 1,
+   "value": 2.5
+  },
+  "13128": {
+   "family": "BOOST",
+   "tier": 1,
+   "value": 1
+  },
+  "13129": {
+   "family": "LUCKY",
+   "tier": 1,
+   "value": 2.5
+  },
+  "13136": {
+   "family": "VITALITY",
+   "tier": 1,
+   "value": 1.25
+  },
+  "13139": {
+   "family": "CRITICAL",
+   "tier": 1,
+   "value": 2
+  },
+  "13142": {
+   "family": "DEFENSE",
+   "tier": 2,
+   "value": 3
+  },
+  "13143": {
+   "family": "ATTACK",
+   "tier": 2,
+   "value": 3
+  },
+  "13144": {
+   "family": "EXPERIENCE",
+   "tier": 2,
+   "value": 3.75
+  },
+  "13153": {
+   "family": "BOOST",
+   "tier": 2,
+   "value": 1.5
+  },
+  "13154": {
+   "family": "LUCKY",
+   "tier": 2,
+   "value": 5
+  },
+  "13161": {
+   "family": "VITALITY",
+   "tier": 2,
+   "value": 2
+  },
+  "13164": {
+   "family": "CRITICAL",
+   "tier": 2,
+   "value": 2.5
+  },
+  "13167": {
+   "family": "DEFENSE",
+   "tier": 3,
+   "value": 4
+  },
+  "13168": {
+   "family": "ATTACK",
+   "tier": 3,
+   "value": 4
+  },
+  "13169": {
+   "family": "EXPERIENCE",
+   "tier": 3,
+   "value": 5
+  },
+  "13178": {
+   "family": "BOOST",
+   "tier": 3,
+   "value": 2
+  },
+  "13179": {
+   "family": "LUCKY",
+   "tier": 3,
+   "value": 8.75
+  },
+  "13186": {
+   "family": "VITALITY",
+   "tier": 3,
+   "value": 3
+  },
+  "13189": {
+   "family": "CRITICAL",
+   "tier": 3,
+   "value": 3
+  },
+  "13192": {
+   "family": "DEFENSE",
+   "tier": 4,
+   "value": 5
+  },
+  "13193": {
+   "family": "ATTACK",
+   "tier": 4,
+   "value": 5
+  },
+  "13194": {
+   "family": "EXPERIENCE",
+   "tier": 4,
+   "value": 6.25
+  },
+  "13203": {
+   "family": "BOOST",
+   "tier": 4,
+   "value": 2.5
+  },
+  "13204": {
+   "family": "LUCKY",
+   "tier": 4,
+   "value": 12.5
+  },
+  "13211": {
+   "family": "VITALITY",
+   "tier": 4,
+   "value": 3.75
+  },
+  "13214": {
+   "family": "CRITICAL",
+   "tier": 4,
+   "value": 3.5
+  },
+  "13217": {
+   "family": "DEFENSE",
+   "tier": 5,
+   "value": 6
+  },
+  "13218": {
+   "family": "ATTACK",
+   "tier": 5,
+   "value": 6
+  },
+  "13219": {
+   "family": "EXPERIENCE",
+   "tier": 5,
+   "value": 7.5
+  },
+  "13228": {
+   "family": "BOOST",
+   "tier": 5,
+   "value": 3
+  },
+  "13229": {
+   "family": "LUCKY",
+   "tier": 5,
+   "value": 16.25
+  },
+  "13236": {
+   "family": "VITALITY",
+   "tier": 5,
+   "value": 4.75
+  },
+  "13239": {
+   "family": "CRITICAL",
+   "tier": 5,
+   "value": 4
+  },
+  "13242": {
+   "family": "DEFENSE",
+   "tier": 6,
+   "value": 7
+  },
+  "13243": {
+   "family": "ATTACK",
+   "tier": 6,
+   "value": 7
+  },
+  "13244": {
+   "family": "EXPERIENCE",
+   "tier": 6,
+   "value": 8.75
+  },
+  "13253": {
+   "family": "BOOST",
+   "tier": 6,
+   "value": 3.5
+  },
+  "13254": {
+   "family": "LUCKY",
+   "tier": 6,
+   "value": 20
+  },
+  "13261": {
+   "family": "VITALITY",
+   "tier": 6,
+   "value": 5.5
+  },
+  "13264": {
+   "family": "CRITICAL",
+   "tier": 6,
+   "value": 5
+  },
+  "13267": {
+   "family": "DEFENSE",
+   "tier": 7,
+   "value": 8
+  },
+  "13268": {
+   "family": "ATTACK",
+   "tier": 7,
+   "value": 8
+  },
+  "13269": {
+   "family": "EXPERIENCE",
+   "tier": 7,
+   "value": 10
+  },
+  "13278": {
+   "family": "BOOST",
+   "tier": 7,
+   "value": 4
+  },
+  "13279": {
+   "family": "LUCKY",
+   "tier": 7,
+   "value": 25
+  },
+  "13286": {
+   "family": "VITALITY",
+   "tier": 7,
+   "value": 6.25
+  },
+  "13289": {
+   "family": "CRITICAL",
+   "tier": 7,
+   "value": 6
+  },
+  "16832": {
+   "family": "BLOCK",
+   "tier": 1,
+   "value": 1.5
+  },
+  "16833": {
+   "family": "BLOCK",
+   "tier": 2,
+   "value": 2
+  },
+  "16834": {
+   "family": "BLOCK",
+   "tier": 3,
+   "value": 2.5
+  },
+  "16835": {
+   "family": "BLOCK",
+   "tier": 4,
+   "value": 3
+  },
+  "16836": {
+   "family": "BLOCK",
+   "tier": 5,
+   "value": 3.5
+  },
+  "16837": {
+   "family": "BLOCK",
+   "tier": 6,
+   "value": 4.5
+  },
+  "16838": {
+   "family": "BLOCK",
+   "tier": 7,
+   "value": 5.5
+  },
+  "27756": {
+   "family": "DEFENSE",
+   "tier": 8,
+   "value": 9
+  },
+  "27757": {
+   "family": "ATTACK",
+   "tier": 8,
+   "value": 9
+  },
+  "27778": {
+   "family": "CRITICAL",
+   "tier": 8,
+   "value": 6.75
+  },
+  "30148": {
+   "family": "BLOCK",
+   "tier": 8,
+   "value": 6.25
+  },
+  "90201": {
+   "family": "BOOST",
+   "tier": 8,
+   "value": 4.5
+  },
+  "90203": {
+   "family": "EXPERIENCE",
+   "tier": 8,
+   "value": 11.25
+  },
+  "90205": {
+   "family": "LUCKY",
+   "tier": 8,
+   "value": 30
+  },
+  "90208": {
+   "family": "VITALITY",
+   "tier": 8,
+   "value": 7
+  }
+ },
+ "tm_estagio_isento": [
+  112,
+  114,
+  123,
+  125,
+  126,
+  200,
+  356,
+  372,
+  375
+ ],
+ "tm_golpes": {
+  "BUG": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 1200,
+   "effect": "hive_crush",
+   "effectHit": "hive_crush_hit",
+   "effectHitDelayMs": 1200,
+   "minTargets": 2,
+   "name": "Hive Crush",
+   "power": 300,
+   "type": "BUG"
+  },
+  "DARK": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 2000.0,
+   "effect": "endless_hollow",
+   "effect2": "endless_hollow_2",
+   "effect2DelayMs": 1080,
+   "effectHit": "endless_hollow_hit",
+   "effectHitDelayMs": 1600,
+   "minTargets": 2,
+   "name": "Endless Hollow",
+   "power": 300,
+   "type": "DARK"
+  },
+  "DRAGON": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 1460,
+   "effect": "draconic_soul",
+   "effectHit": "draconic_soul_hit",
+   "effectHitDelayMs": 800,
+   "hitStaggerFirst": 1,
+   "hitStaggerMs": 150,
+   "minTargets": 2,
+   "name": "Draconic Soul",
+   "power": 300,
+   "type": "DRAGON"
+  },
+  "ELECTRIC": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "effect": "static_overload",
+   "effectHit": "static_overload_hit",
+   "effectHitDelayMs": 500,
+   "minTargets": 2,
+   "name": "Static Overload",
+   "power": 300,
+   "type": "ELECTRIC"
+  },
+  "FAIRY": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 1400,
+   "effect": "lovely_expulsion",
+   "effectHit": "lovely_expulsion_hit",
+   "effectHitDelayMs": 1000.0,
+   "minTargets": 2,
+   "name": "Lovely Expulsion",
+   "power": 300,
+   "type": "FAIRY"
+  },
+  "FIGHTING": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "effect": "meteor_fists",
+   "effectHit": "meteor_fists_hit",
+   "effectHit2": "meteor_fists_hit2",
+   "effectHitDelayMs": 1200,
+   "minTargets": 2,
+   "name": "Meteor Fists",
+   "power": 300,
+   "type": "FIGHTING"
+  },
+  "FIRE": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "effect": "ignition_point",
+   "effectHit": "ignition_point_hit",
+   "minTargets": 2,
+   "name": "Ignition Point",
+   "power": 300,
+   "type": "FIRE"
+  },
+  "FLYING": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "effect": "massive_hurricane",
+   "effect2": "massive_hurricane_2",
+   "minTargets": 2,
+   "name": "Massive Hurricane",
+   "power": 300,
+   "type": "FLYING"
+  },
+  "GHOST": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "effect": "untold_nightmare",
+   "effectHit": "untold_nightmare_hit",
+   "minTargets": 2,
+   "name": "Untold Nightmare",
+   "power": 300,
+   "type": "GHOST"
+  },
+  "GRASS": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "effect": "petal_bloom",
+   "effectHit": "petal_bloom_hit",
+   "minTargets": 2,
+   "name": "Petal Bloom",
+   "power": 300,
+   "type": "GRASS"
+  },
+  "GROUND": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "effect": "crossing_fissure",
+   "effect2": "crossing_fissure_2",
+   "effect2DelayMs": 200,
+   "effectHit": "crossing_fissure_hit",
+   "effectHitDelayMs": 300,
+   "minTargets": 2,
+   "name": "Crossing Fissure",
+   "power": 300,
+   "type": "GROUND"
+  },
+  "ICE": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 1000.0,
+   "effect": "ice_time",
+   "effectHit": "ice_time_hit",
+   "effectHitDelayMs": 600,
+   "minTargets": 2,
+   "name": "Ice Time",
+   "power": 300,
+   "type": "ICE"
+  },
+  "NORMAL": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 700,
+   "effect": "omega_clap",
+   "effectHit": "omega_clap_hit",
+   "effectHitDelayMs": 600,
+   "minTargets": 2,
+   "name": "Omega Clap",
+   "power": 300,
+   "type": "NORMAL"
+  },
+  "POISON": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "effect": "toxic_deluge",
+   "effectHit": "toxic_deluge_hit",
+   "effectHitDelayMs": 500,
+   "minTargets": 2,
+   "name": "Toxic Deluge",
+   "power": 300,
+   "type": "POISON"
+  },
+  "PSYCHIC": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "effect": "mental_singularity",
+   "effectHit": "mental_singularity_hit",
+   "effectHitDelayMs": 1000.0,
+   "minTargets": 2,
+   "name": "Mental Singularity",
+   "power": 300,
+   "type": "PSYCHIC"
+  },
+  "ROCK": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 1390,
+   "effect": "crumbling_rain",
+   "effectHit": "crumbling_rain_hit",
+   "effectHitDelayMs": 1050,
+   "hitStaggerFirst": 2,
+   "hitStaggerMs": 500,
+   "minTargets": 2,
+   "name": "Crumbling Rain",
+   "power": 300,
+   "shakeDelayMs": 600,
+   "shakeMs": 420,
+   "type": "ROCK"
+  },
+  "STEEL": {
+   "aoeBox": 6,
+   "category": "PHYSICAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 1000.0,
+   "effect": "steel_flare_base",
+   "effect2": "steel_flare",
+   "effect2DelayMs": 0,
+   "effectHit": "steel_flare_hit",
+   "effectHitDelayMs": 800,
+   "minTargets": 2,
+   "name": "Steel Flare",
+   "power": 300,
+   "type": "STEEL"
+  },
+  "WATER": {
+   "aoeBox": 6,
+   "category": "SPECIAL",
+   "cooldownMs": 10000.0,
+   "dmgDelayMs": 300,
+   "effect": "cyclonic_tide",
+   "effectHit": "cyclonic_tide_hit",
+   "effectHit2": "cyclonic_tide_hit2",
+   "effectHit2DelayMs": 1000.0,
+   "effectHitDelayMs": 0,
+   "minTargets": 2,
+   "name": "Cyclonic Tide",
+   "power": 300,
+   "type": "WATER"
+  }
+ },
+ "tm_peca_aoe_id": 40530,
+ "tm_peca_id": 59194,
+ "tm_pecas_por_disco": 10,
+ "tm_tipo_item": {
+  "40575": "AOE",
+  "59200": "NORMAL",
+  "59201": "FIRE",
+  "59202": "WATER",
+  "59203": "GRASS",
+  "59204": "ELECTRIC",
+  "59205": "ICE",
+  "59206": "FIGHTING",
+  "59207": "POISON",
+  "59208": "GROUND",
+  "59209": "FLYING",
+  "59210": "PSYCHIC",
+  "59211": "BUG",
+  "59212": "ROCK",
+  "59213": "GHOST",
+  "59214": "DRAGON",
+  "59215": "DARK",
+  "59216": "STEEL",
+  "59247": "FAIRY"
+ }
+}

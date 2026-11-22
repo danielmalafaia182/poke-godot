@@ -54,6 +54,27 @@ func _process(_d: float) -> bool:
 	(painel.find_child("Poke_" + lider.id_persistente, true, false) as Button).pressed.emit()
 	var at: Dictionary = ej.berries_ativas(int(Time.get_unix_time_from_system()))
 	checar(at.has(lider.id_persistente) and String(at[lider.id_persistente][0]["efeito"]) == "ROCK", "berry de Pedra ativa no líder")
+	# ciclo 6 (lote 3): TM Researcher, TM no líder, Held Machine e held equipado, pela janela
+	ej.inventario.estoque_materiais[LOOT.id_interno(59194)] = 12
+	ej.inventario.estoque_materiais[LOOT.id_interno(13115)] = 20
+	painel.atualizar()
+	(painel.find_child("TM_GRASS", true, false) as Button).pressed.emit()
+	checar(int(ej.inventario.estoque_materiais.get(LOOT.id_interno(59203), 0)) == 1 and int(ej.inventario.estoque_materiais.get(LOOT.id_interno(59194), 0)) == 2,
+		"TM Researcher na janela: 10 peças → Grass-Type TM Disk")
+	(painel.find_child("Item_59203", true, false) as Button).pressed.emit()
+	(painel.find_child("Poke_" + lider.id_persistente, true, false) as Button).pressed.emit()
+	checar(painel.aviso.contains("estágio final") or painel.aviso.contains("tipo") or painel.aviso.contains("aprendeu"), "ensinar o TM: a regra do cliente responde", painel.aviso)
+	(painel.find_child("Held_basic", true, false) as Button).pressed.emit()
+	var held := -1
+	for id in preload("res://ponte_cidade.gd").dados().lote3["helds"]:
+		if int(ej.inventario.estoque_materiais.get(LOOT.id_interno(int(id)), 0)) > 0:
+			held = int(id)
+	checar(held > 0 and int(ej.inventario.estoque_materiais.get(LOOT.id_interno(13115), 0)) == 0, "Held Machine básica: 20 tokens → 1 held", str(held))
+	(painel.find_child("Item_%d" % held, true, false) as Button).pressed.emit()
+	(painel.find_child("Poke_" + lider.id_persistente, true, false) as Button).pressed.emit()
+	checar(int(ej.itens_uso.get("held", {}).get(lider.id_persistente, 0)) == held, "held equipado no líder")
+	var jogo: Dictionary = ej.extrair_jogo_hunt("Rhydon")["jogo"]
+	checar(int(jogo["helds"].get(lider.id_persistente, 0)) == held, "a hunt recebe o held do líder (cfg.helds)")
 	checar(ej.salvar_agora(), "save gravado")
 	var sl = load("res://salvamento_local.gd").new()
 	var d: Dictionary = sl.decodificar(FileAccess.get_file_as_string("user://progresso_v1.json")).get("dados", {})
@@ -61,6 +82,7 @@ func _process(_d: float) -> bool:
 	sl._restaurar(ej, d)
 	checar(ej.berries_ativas(int(Time.get_unix_time_from_system())).has(lider.id_persistente) and int(ej.itens_uso["candy"].get(lider.id_persistente, 0)) == 1,
 		"recarga: candies usados e berry ativa preservados")
+	checar(int(ej.itens_uso.get("held", {}).get(lider.id_persistente, 0)) > 0, "recarga: held equipado preservado")
 	print("RESULTADO: %d/%d" % [total - falhas, total])
 	quit(1 if falhas else 0)
 	return true

@@ -75,6 +75,10 @@
     "pack_chance_abate": {
       "valor": 0.0005,
       "motivo": "Poke Card Pack por abate (nenhuma tabela do snapshot dropa o pack): ~0,2 pacote por hora a 7 abates/min"
+    },
+    "tm_aoe_splash_fator": {
+      "valor": 1.0,
+      "motivo": "ciclo 6: fração do dano do golpe normal que espirra nos selvagens do quadro de 12×12 com o AoE TM; o texto do cliente ('passam a espirrar em cada selvagem') não fala em redução"
     }
   },
   "apresentacao": {
@@ -794,6 +798,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -825,6 +841,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -838,7 +866,20 @@
           "entrada": null,
           "hp_mult": 6,
           "recarga_s": 600,
-          "drops": []
+          "drops": [
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            }
+          ]
         },
         {
           "key": "hisuian_electrode",
@@ -868,6 +909,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -899,6 +952,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -930,6 +995,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -961,6 +1038,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -992,6 +1081,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1023,6 +1124,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1054,6 +1167,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1085,6 +1210,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1116,6 +1253,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1147,6 +1296,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1178,6 +1339,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1209,6 +1382,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1240,6 +1425,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1271,6 +1468,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1302,6 +1511,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1333,6 +1554,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1364,6 +1597,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1395,6 +1640,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1426,6 +1683,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1460,6 +1729,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1491,6 +1772,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1522,6 +1815,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1554,6 +1859,18 @@
             {
               "nome": "Dungeon Chest",
               "chance": 0.2,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -1590,6 +1907,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1621,6 +1950,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1655,6 +1996,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1686,6 +2039,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1717,6 +2082,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1748,6 +2125,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1779,6 +2168,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1810,6 +2211,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1841,6 +2254,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1872,6 +2297,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1903,6 +2340,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1934,6 +2383,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1965,6 +2426,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -1996,6 +2469,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2027,6 +2512,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2061,6 +2558,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2092,6 +2601,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2126,6 +2647,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2157,6 +2690,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2188,6 +2733,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2219,6 +2776,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2250,6 +2819,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2281,6 +2862,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2315,6 +2908,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2346,6 +2951,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2377,6 +2994,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2408,6 +3037,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2439,6 +3080,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2473,6 +3126,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2504,6 +3169,18 @@
               "chance": 0.4,
               "min": 1,
               "max": 3
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2536,6 +3213,18 @@
             {
               "nome": "Dungeon Chest",
               "chance": 0.2,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -2572,6 +3261,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2604,6 +3305,18 @@
             {
               "nome": "Dungeon Chest",
               "chance": 0.2,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -2640,6 +3353,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2672,6 +3397,18 @@
             {
               "nome": "Dungeon Chest",
               "chance": 0.2,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -2708,6 +3445,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2740,6 +3489,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -2776,6 +3537,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2808,6 +3581,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -2844,6 +3629,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2876,6 +3673,18 @@
             {
               "nome": "Dungeon Chest",
               "chance": 0.2,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -2912,6 +3721,18 @@
               "chance": 0.2,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -2944,6 +3765,18 @@
             {
               "nome": "Dungeon Chest",
               "chance": 0.2,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -2980,6 +3813,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3012,6 +3857,18 @@
             {
               "nome": "Dungeon Chest",
               "chance": 0.2,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3048,6 +3905,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3080,6 +3949,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3116,6 +3997,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3148,6 +4041,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3184,6 +4089,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3216,6 +4133,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3252,6 +4181,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3284,6 +4225,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3320,6 +4273,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3352,6 +4317,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3388,6 +4365,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3420,6 +4409,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3456,6 +4457,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3488,6 +4501,18 @@
             {
               "nome": "Legendary Chest",
               "chance": 0.15,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
               "min": 1,
               "max": 1
             }
@@ -3524,6 +4549,18 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         },
@@ -3558,11 +4595,23 @@
               "chance": 0.15,
               "min": 1,
               "max": 1
+            },
+            {
+              "nome": "TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
+            },
+            {
+              "nome": "AoE TM Disk Piece",
+              "chance": 0.02,
+              "min": 1,
+              "max": 1
             }
           ]
         }
       ],
-      "motivo": "87 bosses do snapshot (A: nome, categoria, nível, drops); espécie, entrada, HP e chances desenhados (ferramentas/balanceamento/gerar_bosses.py)"
+      "motivo": "87 bosses do snapshot (A: nome, categoria, nível, drops); espécie, entrada, HP e chances desenhados (ferramentas/balanceamento/gerar_bosses.py); ciclo 6: TM Disk Piece e AoE TM Disk Piece a 2% em todo boss (C: 2% nos dois bosses do catálogo do cliente)"
     },
     "iv_boss": {
       "valor": 25,

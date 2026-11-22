@@ -139,6 +139,7 @@ const PARAMETROS := {
 	"captura_shiny_base_padrao": 0.01,       # classe 3 (balanceamento.json): 0 capturas em 31 tentativas gravadas
 	"pedra_garantia_fator": 0.0,            # classe 3 (balanceamento.json): 0 = sem garantia de pedra
 	"xp_regiao": {},                        # classe 3 (balanceamento.json): multiplicador de XP por região; vazio/1 = sem efeito
+	"tm_aoe_splash_fator": 1.0,             # classe 3 (balanceamento.json, ciclo 6): fração do dano do golpe que espirra com o AoE TM
 	"xp_regiao_piso": {},                   # classe 3 (balanceamento.json, ciclo 5): XP por abate mínimo da região (base × mult ≥ piso); vazio = sem piso
 	"card_chance_shiny": 0.0,               # classe 3 (balanceamento.json combate): Shiny Card ao abater um shiny
 	"pack_chance_abate": 0.0,               # classe 3 (balanceamento.json combate): Poke Card Pack por abate
