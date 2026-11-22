@@ -867,7 +867,15 @@ func _abate(m: Dictionary) -> void:
 	var fx_abate := _held_fx(_poke_ativo())
 	var held_xp := int(floor(float(base) * float(fx_abate.get("EXPERIENCE", 0.0)) / 100.0 + 1e-9))
 	var total := base + vip + streak_xp + boost_t + parcela_dia + gym_xp + evento + held_xp
-	var total_p := base + vip + boost_p + parcela_dia + gym_xp + evento + held_xp
+	# Profissões (ciclo 6; A, conta B nas gravações livres): parcela `mentor` do Pokémon = 0,5% da base por nível de
+	# diferença acima de 200 (treinador − Pokémon), até o teto do rank (cfg.mentor, sim/servico_profissoes.gd). F: round.
+	var mentor_xp := 0
+	var mt: Dictionary = cfg.get("mentor", {})
+	if float(mt.get("teto", 0.0)) > 0.0:
+		var gap := int(treinador["nivel"]) - int(_poke_ativo()["nivel"]) - int(mt.get("gap", 200))
+		if gap > 0:
+			mentor_xp = Regras.js_round(float(base) * minf(float(mt["teto"]), float(gap) * float(mt.get("pct_nivel", 0.5))) / 100.0)
+	var total_p := base + vip + boost_p + parcela_dia + gym_xp + evento + held_xp + mentor_xp
 	# Penalidade de entrada (boost shinylock; A/C/F, ver PARAMETROS): XP = floor(total × 0,3) enquanto o lock durar.
 	var debuff := 0
 	var debuff_p := 0
@@ -912,7 +920,7 @@ func _abate(m: Dictionary) -> void:
 		"leveledUp": int(treinador["nivel"]) != nivel_t_antes, "loot": loot, "speciesId": m["species_id"],
 		"looktype": int(esp.get("looktype", 0)), "speciesName": esp.get("nome", ""), "shiny": m["shiny"],
 		"xpParts": _com_debuff(_com_held({"base": base, "streak": streak_xp, "boost": boost_t, "vip": vip, "event": evento, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff),
-		"pokeXp": {"xpGained": total_p, "parts": _com_debuff(_com_held({"base": base, "boost": boost_p, "vip": vip, "event": evento, "mentor": 0, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff_p),
+		"pokeXp": {"xpGained": total_p, "parts": _com_debuff(_com_held({"base": base, "boost": boost_p, "vip": vip, "event": evento, "mentor": mentor_xp, "gym": gym_xp, "typeDay": parcela_dia}, held_xp), debuff_p),
 			"speciesId": int(poke["speciesId"]), "level": poke["nivel"]},
 		"row": m["pos"].y, "col": m["pos"].x, "slot": m["slot"]})
 	_emitir({"type": "poke-xp", "id": poke.get("id", ""), "speciesId": int(poke["speciesId"]), "xpGained": total_p,
@@ -1042,7 +1050,28 @@ func _garantir_pedras(esp: Dictionary, lock: bool, mult: float, rolagens: int, l
 			inventario[iid] = int(inventario.get(iid, 0)) + int(e.get("min", 1))
 
 
+func _profissao_abate(m: Dictionary) -> void:
+	## Ciclo 6 (C: "arbustos brotam pelo chão da hunt — passe perto para colher Fresh Herbs"; "sempre que um Pokémon Shiny
+	## aparecer, você tira uma fotografia automaticamente"). E: a colheita vira uma chance por abate; F: a foto no abate do
+	## shiny. Formato da foto A (c5): profession-photo {ok, msg, slot, row, col, speciesId, itemName, pictures}.
+	var pr: Dictionary = cfg.get("profissao", {})
+	match String(pr.get("atual", "")):
+		"botanist":
+			if rng.randf() < float(pr.get("erva_chance", 0.0)):
+				estatisticas["ervas"] = int(estatisticas.get("ervas", 0)) + 1
+				_emitir({"type": "profession-herb", "qty": 1, "row": m["pos"].y, "col": m["pos"].x})
+		"prestige":
+			if bool(m["shiny"]):
+				var ok: bool = rng.randf() < float(pr.get("foto_chance", 0.0))
+				if ok:
+					estatisticas["fotos"] = int(estatisticas.get("fotos", 0)) + 1
+				_emitir({"type": "profession-photo", "ok": ok, "msg": "📸" if ok else "", "slot": m["slot"], "row": m["pos"].y, "col": m["pos"].x,
+					"speciesId": m["species_id"], "itemName": "Rare Pokémon Picture", "pictures": int(estatisticas.get("fotos", 0))})
+
+
 func _fim_abate(m: Dictionary, bola: bool) -> void:
+	if not cfg.get("profissao", {}).is_empty():
+		_profissao_abate(m)
 	if bola:
 		_emitir(_msg_balls())
 	else:
@@ -1199,7 +1228,7 @@ func _lancar_bola(m: Dictionary, sel: String, pending_id: int) -> void:
 	var sid := str(m["species_id"]) + ("s" if bool(m["shiny"]) else "")   # C: a tela separa a variante shiny
 	var med: Dictionary = medidor.get(sid, {"investido": 0.0, "tentativas": 0, "total": 0, "gasto": 0})
 	var chance := Regras.chance_captura(int(sel), float(med.get("investido", 0.0)),
-		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)) + (float(p.boost_captura_bonus) if _pct_boost("capture") > 0.0 or _boost_ativo("capture") else 0.0), p)
+		float(m["especie"].get("precoNpc", 0)), float(cfg.get("bonus_captura", 0.0)) + float(cfg.get("bonus_captura_prof", 0.0)) + (float(p.boost_captura_bonus) if _pct_boost("capture") > 0.0 or _boost_ativo("capture") else 0.0), p)
 	med["investido"] = float(med.get("investido", 0.0)) + Regras.valor_bola(int(sel), p)
 	med["tentativas"] = int(med.get("tentativas", 0)) + 1
 	med["total"] = int(med.get("total", 0)) + 1

@@ -107,7 +107,10 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"medidor_captura": (jogo.get("medidor_captura", {}) as Dictionary).duplicate(true),
 		"garantia_pedras": (jogo.get("garantia_pedras", {}) as Dictionary).duplicate(true),
 		"bonus_captura": 0.0,
-		"helds": (jogo.get("helds", {}) as Dictionary).duplicate(),        # ciclo 6 (lote 3): {pokeId: itemId do held}
+		"helds": (jogo.get("helds", {}) as Dictionary).duplicate(),
+		"mentor": (jogo.get("mentor", {}) as Dictionary).duplicate(),       # ciclo 6: profissões (sim/servico_profissoes.gd para_sim)
+		"profissao": (jogo.get("profissao", {}) as Dictionary).duplicate(),
+		"bonus_captura_prof": float(jogo.get("bonus_captura_prof", 0.0)),        # ciclo 6 (lote 3): {pokeId: itemId do held}
 		"tms": (jogo.get("tms", {}) as Dictionary).duplicate(true),         # ciclo 6: {pokeId: {elemental, aoe}}
 		"vip": bool(jogo.get("vip", false)),   # E: opção do jogador (padrão desligado); ligada, +50% da XP base (A)
 		"ativo_inicial": int(jogo.get("lider", 0)),

@@ -80,6 +80,55 @@ static func _abrir(chave: String, j: Dictionary) -> void:
 		_abrir_original(chave, j)
 
 
+static func _abrir_profissoes(w: Control, nome: String, tex: Texture2D) -> void:
+	## Ciclo 6: profissões (sim/servico_profissoes.gd; regras do cliente, números classe 3). Uma ação por vez: escolher,
+	## subir de rank, criar berry (Botânico), entregar pictures (Prestígio) ou trocar de carreira (o rank fica salvo, C).
+	var ej: Node = w.get_node("/root/EstadoJogo")
+	var T := preload("res://textos.gd")
+	var r: Dictionary = ej.prof({"type": "prof-get"})
+	var atual := String(r.get("atual", ""))
+	var txt := ""
+	var acao := ""
+	var cb := Callable()
+	if atual == "":
+		txt = "[b]%s[/b]: %s\n\n[b]%s[/b]: %s\n\n%s" % [T.t("window.professions.name.botanist"), T.t("window.professions.desc.botanist"),
+			T.t("window.professions.name.prestige"), T.t("window.professions.desc.prestige"), "Cientista e Pesquisador: em breve."]
+		acao = "🌿 Ser %s" % T.t("window.professions.name.botanist")
+		cb = func() -> void:
+			ej.prof({"type": "prof-escolher", "prof": "botanist"})
+			_abrir_profissoes(w, nome, tex)
+	else:
+		txt = "[b]%s[/b] · rank [b]%s[/b] — bônus de captura +%d%%, teto do Bônus de Treinador %d%%\n" % [T.t("window.professions.name." + atual),
+			String(r["rank"]), int(round(float(r["bonusCaptura"]) * 100.0)), int(r["mentorTeto"])]
+		txt += ("Fresh Herbs: %d\n" % int(r["ervas"])) if atual == "botanist" else ("Rare Pokémon Picture: %d\n" % int(r["pictures"]))
+		var pronto := String(r["proximo"]) != ""
+		for q in r.get("requisitos", []):
+			pronto = pronto and int(q["tem"]) >= int(q["precisa"])
+			txt += "• %s: %d / %d\n" % [{"abates_tipo": "tipagens com %d abates" % int(q.get("por_tipo", 0)), "especies": "espécies capturadas", "berries": "berries criadas", "pictures": "pictures entregues"}[String(q["chave"])], int(q["tem"]), int(q["precisa"])]
+		if pronto:
+			acao = T.t("window.professions.rankUpBtn")
+			cb = func() -> void:
+				ej.prof({"type": "prof-subir"})
+				_abrir_profissoes(w, nome, tex)
+		elif atual == "botanist" and int(r["ervas"]) >= 10:
+			acao = "🫐 Criar berry (10 ervas + 5000 de ouro)"
+			cb = func() -> void:
+				ej.prof({"type": "prof-craft", "tipo": "ROCK"})
+				_abrir_profissoes(w, nome, tex)
+		elif atual == "prestige" and int(r["pictures"]) > 0:
+			acao = "📸 Entregar pictures"
+			cb = func() -> void:
+				ej.prof({"type": "prof-entregar"})
+				_abrir_profissoes(w, nome, tex)
+		else:
+			var outra := "prestige" if atual == "botanist" else "botanist"
+			acao = "Trocar para %s (o rank fica salvo)" % T.t("window.professions.name." + outra)
+			cb = func() -> void:
+				ej.prof({"type": "prof-escolher", "prof": outra})
+				_abrir_profissoes(w, nome, tex)
+	w.abrir("professions", nome, tex, txt, acao, cb)
+
+
 static func _abrir_original(chave: String, j: Dictionary) -> void:
 	## Ciclo 4: os itens do dock sem janela própria abrem a janela com a identidade do original. Offline: Soneca (na hunt),
 	## Configurações (na cidade), Sair e Novidades fazem algo; os recursos do servidor (ranking, clãs, guilda, troca, PvP,
@@ -112,6 +161,8 @@ static func _abrir_original(chave: String, j: Dictionary) -> void:
 				T.t("hud.world.menu.logout", {}, "Sair"), func() -> void:
 					ej.salvar_agora()
 					w.get_tree().quit())
+		"professions":
+			_abrir_profissoes(w, nome, tex)
 		"home":
 			w.abrir(chave, nome, tex, "Você já está em Cerulean.")
 		"patchnotes":

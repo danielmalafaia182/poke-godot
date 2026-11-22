@@ -213,10 +213,16 @@ func _tratar(msg: Dictionary) -> void:
 				_eventos_msg.append({"key": String(ev.get("key", "")), "until": int(ev.get("until", 0)), "nome": String(ev.get("name", "")), "desc": String(ev.get("desc", "")),
 					"tipo": String(ev.get("tipo", "")), "evento": true})
 			_emitir_boosts()
+		"profession-herb":
+			EstadoJogo.prof_registrar(-1, int(msg.get("qty", 1)), 0)
+		"profession-photo":
+			if bool(msg.get("ok", false)):
+				EstadoJogo.prof_registrar(-1, 0, 1)
 		"field-kill":
 			registro["abates"] += 1
 			EstadoJogo.registrar_abates(1, int(msg.get("speciesId", -1)))
 			EstadoJogo.diaria_abate(int(msg.get("speciesId", -1)))   # tarefas e Daily Kill
+			EstadoJogo.prof_registrar(int(msg.get("speciesId", -1)), 0, 0)   # ciclo 6: abates por tipagem (rank da profissão)
 			EstadoJogo.registrar_recompensa_treinador(int(msg["xpGained"]))
 			registro["xp_treinador"] += int(msg["xpGained"])
 			if bool(msg.get("leveledUp", false)):

@@ -125,6 +125,9 @@ signal diarias_alteradas
 const SERVICO_ITENS := preload("res://sim/servico_itens.gd")
 static var _servico_itens = null
 var itens_uso: Dictionary = {}
+# Ciclo 6: profissões (sim/servico_profissoes.gd): carreira atual, rank de cada uma, progresso, ervas e pictures.
+var profissao: Dictionary = {}
+static var _servico_prof = null
 # Fase 4, lote 4: insígnias de ginásio (sim/servico_ginasios.gd): {insignias: {"<gymId>": until_ms}}. Sem luta de ginásio
 # offline ainda (o servidor manda líderes e times): o campo existe para a hunt já aplicar o bônus (C).
 const SERVICO_GINASIOS := preload("res://sim/servico_ginasios.gd")
@@ -751,6 +754,43 @@ func usar_item(cmd: Dictionary) -> Dictionary:
 	solicitar_salvamento()
 	return r
 
+func servico_profissoes():
+	if _servico_prof == null:
+		_servico_prof = preload("res://sim/servico_profissoes.gd").new(PONTE_CIDADE.dados())
+	return _servico_prof
+
+func especies_capturadas() -> int:
+	var vistas := {}
+	for pk in time_pokemon + pokemons_capturados:
+		if pk != null and pk.especie != null:
+			vistas[String(pk.especie.nome)] = true
+	for e in log_capturas:
+		vistas[String(e.get("especie", ""))] = true
+	vistas.erase("")
+	return vistas.size()
+
+func prof(cmd: Dictionary) -> Dictionary:
+	## prof-get / prof-escolher {prof} / prof-subir / prof-craft {tipo} / prof-entregar (sim/servico_profissoes.gd).
+	var e: Dictionary = PONTE_CIDADE.estado_de(self, cidade_atual())
+	e["profissao"] = profissao
+	cmd["especies"] = especies_capturadas()
+	var msgs: Array = servico_profissoes().tratar(e, cmd)
+	var erro := PONTE_CIDADE.primeiro_erro(msgs)
+	if not erro.is_empty():
+		return {"erro": erro}
+	profissao = e["profissao"]
+	if String(cmd.get("type", "")) == "prof-craft":
+		ouro = int(e["gold"])
+		ouro_alterado.emit()
+		PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
+	solicitar_salvamento()
+	return msgs[-1] if msgs.size() > 1 and String(msgs[-1].get("type", "")) == "professions" else msgs[0]
+
+func prof_registrar(especie_id: int, ervas: int, fotos: int) -> void:
+	var e := {"profissao": profissao}
+	servico_profissoes().registrar_hunt(e, {especie_id: 1} if especie_id > 0 else {}, ervas, fotos)
+	profissao = e["profissao"]
+
 func berries_ativas(agora_unix: int) -> Dictionary:
 	return servico_itens().berries_ativas({"itens_uso": itens_uso}, agora_unix)
 
@@ -826,7 +866,7 @@ func extrair_jogo_hunt(nome_hunt: String) -> Dictionary:
 		"nomes_bolas": nomes_bolas, "auto_catch": auto_catch, "bola_auto_catch": auto_catch_ball_id, "auto_potion": auto_potion,
 		"pocao_id": auto_potion_item_id, "limite_pocao": auto_potion_threshold, "auto_catch_nomes": auto_catch_names,
 			"auto_catch_shiny": auto_catch_shiny, "bola_auto_catch_shiny": configuracao.bola_shiny_efetiva(), "medidor_captura": medidor_captura, "garantia_pedras": garantia_pedras, "vip": vip,
-			"helds": (itens_uso.get("held", {}) as Dictionary).duplicate(), "tms": (itens_uso.get("tms", {}) as Dictionary).duplicate(true)}}
+			"helds": (itens_uso.get("held", {}) as Dictionary).duplicate(), "tms": (itens_uso.get("tms", {}) as Dictionary).duplicate(true)}.merged(servico_profissoes().para_sim({"profissao": profissao.duplicate(true)}))}
 
 func registrar_captura_especie(nome: String, shiny: bool = false, bola: String = "") -> bool:
 	## A: o capturado chega no nível 1; IVs e Quality pelo sorteio do próprio jogo (DadosPokemon), como no P04.
