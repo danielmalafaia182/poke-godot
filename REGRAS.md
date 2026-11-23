@@ -7,10 +7,10 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 | Status | Parâmetros e regras |
 | --- | --- |
 | desenhada por nós | 116 |
-| comprovada contra o original | 111 |
+| comprovada contra o original | 109 |
 | replicada do cliente sem confirmação no servidor | 48 |
 | em aberto | 16 |
-| **total** | **291** (204 parâmetros editáveis no Game Master + 87 regras de fórmula) |
+| **total** | **289** (202 parâmetros editáveis no Game Master + 87 regras de fórmula) |
 
 ## Ditto
 
@@ -203,8 +203,6 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 | `stab` — B | `1.5` | B | replicada do cliente sem confirmação no servidor | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → stab` |
 | `stats_dano_aliado` — stats do aliado no dano: os exibidos, arredondados (F forte: 15/15 indivíduos) | `"inteiro"` | F | em aberto | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → stats_dano_aliado` |
 | `stats_dano_selvagem` — "inteiro" volta ao modelo antigo Stats na fórmula de dano (F, forte). Selvagem sem arredondar: na rhydon-1h o Solar Beam é explicado por uma SpD inteira em 2/15 | `"continuo"` | F | em aberto | rhydon-1h |  | `dados/regras/<perfil>/RegrasCombate.tres → stats_dano_selvagem` |
-| `tick_ms` — A: todos os logs | `200` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → tick_ms` |
-| `ticks_por_field` — A: field a cada 400 ms | `2` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → ticks_por_field` |
 | `tm_aoe_splash_fator` — ciclo 6: fração do dano do golpe normal que espirra nos selvagens do quadro de 12×12 com o AoE TM; o texto do cliente ('passam a espirrar em cada selvagem') não | `1.0` | E | desenhada por nós | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → tm_aoe_splash_fator` |
 | `troca_cooldown_ms` — depois da troca automática por desmaio, 5 s sem troca manual: evita trocar no meio do golpe | `5000.0` | E | desenhada por nós | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → troca_cooldown_ms` |
 | O mesmo golpe por indivíduo; maior dano esperado com os stats dele | (regra no código) | A | comprovada contra o original | A, 100+ indivíduos | | código da sim |
@@ -447,6 +445,19 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 | `streak_abates_por_ponto` — Streak Points (C, guia): 1 ponto a cada 1000 abates; o n-ésimo ponto custa 25.000 × n de ouro; trilhas exp/loot/shiny. | `1000` | C | replicada do cliente sem confirmação no servidor | comentário em `sim/servico_jogador.gd` |  | `dados/regras/<perfil>/RegrasJogador.tres → streak_abates_por_ponto` |
 | `streak_custo_base` — o n-ésimo ponto custa 25.000 × n (C/A G7) | `25000` | A | comprovada contra o original | G7 |  | `dados/regras/<perfil>/RegrasJogador.tres → streak_custo_base` |
 | `streak_trilhas` — trilhas EXP, Loot e Shiny (C) | `["exp", "loot", "shiny"]` | C | replicada do cliente sem confirmação no servidor | comentário em `sim/servico_jogador.gd` |  | `dados/regras/<perfil>/RegrasJogador.tres → streak_trilhas` |
+
+## Constantes fixas (fora do Game Master)
+
+| Constante | Onde | Por que não muda |
+| --- | --- | --- |
+| `tick_ms` | `sim/regras.gd` | protocolo do servidor: tick de 200 ms (A); o cliente interpola por ele e o `seq` conta ticks |
+| `ticks_por_field` | `sim/regras.gd` | protocolo: um `field` a cada 2 ticks (A); muda o que o cliente recebe |
+| Tabela de tipos (efetividade bruta) | `sim/regras.gd TABELA_TIPOS` | B/C: a tabela dos jogos; muda a identidade do jogo |
+| Atributos (hp, atk, def, spAtk, spDef, speed) | `sim/regras.gd CHAVES_STATS` | C: o formato do Pokémon no protocolo |
+| Faixas e pesos do rollQuality | `sim/regras.gd FAIXAS_QUALIDADE` | C: porte exato do cliente; é classe 1 |
+| Curva de XP por nível (50/3 × (L³ − 6L² + 17L − 12)) | `sim/regras.gd xp_total_para_nivel` | A/B: classe 1, conferida em 19 níveis |
+| Fórmula de stat e de Power | `sim/regras.gd calcular_stats/power` | B/C: classe 1 |
+| Chance de loot em 1/100.000 | `sim/simulacao_hunt.gd _rolar_loot` | A: formato do creatures.json |
 
 ## Em aberto e o que fecharia cada ponto
 

@@ -71,6 +71,21 @@ ORIGINAL = {
 }
 
 
+# Constantes que o jogo nunca deve mudar: ficam fora dos Resources (não aparecem no Game Master), com o motivo.
+FIXOS = {
+    ("sim", "tick_ms"): "protocolo do servidor: tick de 200 ms (A); o cliente interpola por ele e o `seq` conta ticks",
+    ("sim", "ticks_por_field"): "protocolo: um `field` a cada 2 ticks (A); muda o que o cliente recebe",
+}
+FIXOS_CODIGO = [
+    ("Tabela de tipos (efetividade bruta)", "sim/regras.gd TABELA_TIPOS", "B/C: a tabela dos jogos; muda a identidade do jogo"),
+    ("Atributos (hp, atk, def, spAtk, spDef, speed)", "sim/regras.gd CHAVES_STATS", "C: o formato do Pokémon no protocolo"),
+    ("Faixas e pesos do rollQuality", "sim/regras.gd FAIXAS_QUALIDADE", "C: porte exato do cliente; é classe 1"),
+    ("Curva de XP por nível (50/3 × (L³ − 6L² + 17L − 12))", "sim/regras.gd xp_total_para_nivel", "A/B: classe 1, conferida em 19 níveis"),
+    ("Fórmula de stat e de Power", "sim/regras.gd calcular_stats/power", "B/C: classe 1"),
+    ("Chance de loot em 1/100.000", "sim/simulacao_hunt.gd _rolar_loot", "A: formato do creatures.json"),
+]
+
+
 def comentarios(arquivo):
     """{chave: comentário}: o da própria linha (`"chave": valor,  # …`) ou o bloco de comentário logo acima da chave."""
     r = {}
@@ -176,6 +191,12 @@ def main():
     valores = json.load(open(sys.argv[1] if len(sys.argv) > 1 else os.path.join(RAIZ, "saida_testes", "regras_valores.json"), encoding="utf-8"))
     bal_path = os.path.join(RAIZ, "dados", "balanceamento.json")
     bal = json.load(open(bal_path, encoding="utf-8")) if os.path.exists(bal_path) else {}
+    # sem o balanceamento.json (migrado para os Resources), os motivos vêm do catálogo anterior
+    anterior = {}
+    cat_path = os.path.join(RAIZ, "dados", "regras", "catalogo.json")
+    if not bal and os.path.exists(cat_path):
+        for e in json.load(open(cat_path, encoding="utf-8")).get("parametros", []):
+            anterior[(e["fonte"], e["chave"])] = e
     entradas = []
     for fonte, chaves in valores.items():
         arquivo, rec_fixo = FONTES[fonte]
@@ -184,6 +205,8 @@ def main():
             com.update({k: v for k, v in comentarios("sim/regras.gd").items()})
         sec_bal = bal.get("combate" if fonte == "sim" else fonte, {})
         for k, v in sorted(chaves.items()):
+            if (fonte, k) in FIXOS:
+                continue
             rec = rec_fixo or recurso_sim(k)
             motivo = sec_bal.get(k, {}).get("motivo", "") if isinstance(sec_bal.get(k), dict) else ""
             texto = motivo or com.get(k, "")
@@ -191,6 +214,8 @@ def main():
             origem = "E" if no_bal and not re.search(r"\b[AC]:", motivo or "") else origem_de(texto, "E")
             if (fonte, k) in ANOTA and not texto:
                 origem, texto = ANOTA[(fonte, k)]
+            if (fonte, k) in anterior:
+                origem, texto = anterior[(fonte, k)]["origem"], anterior[(fonte, k)]["descricao"]
             entradas.append({
                 "id": "%s.%s" % (rec, k), "recurso": rec, "sistema": SISTEMA[rec], "fonte": fonte, "chave": k, "literal": v["literal"],
                 "tipo": v["tipo"], "descricao": texto, "origem": origem, "status": STATUS[origem],
@@ -272,6 +297,11 @@ def escrever_md(cat):
                                                                        esc(e["evidencia"]), esc(e["original_jogo"]), e["controle"]))
             else:
                 L.append("| %s | (regra no código) | %s | %s | %s | | código da sim |" % (esc(e["regra"]), e["origem"], e["status"], esc(e["evidencia"])))
+    L += ["", "## Constantes fixas (fora do Game Master)", "", "| Constante | Onde | Por que não muda |", "| --- | --- | --- |"]
+    for (f, k), motivo in FIXOS.items():
+        L.append("| `%s` | `%s` | %s |" % (k, FONTES[f][0], motivo))
+    for nome, onde, motivo in FIXOS_CODIGO:
+        L.append("| %s | `%s` | %s |" % (nome, onde, motivo))
     L += ["", "## Em aberto e o que fecharia cada ponto", ""]
     fechar = {"movimento": "gravação de luta média (MV1–MV3) ou mais trechos da gravação livre no validador",
               "combate e dano": "gravação de nível 1–4 com captura (G11 estendida) para separar o piso de ataque dos stats do nível 2",

@@ -1,39 +1,23 @@
 extends RefCounted
-## Valores de classe 3 (ESTRATEGIA.md) em dados/balanceamento.json: decididos pelo design, com uma linha de motivo cada.
-## Cada módulo da sim aplica a sua seção sobre os PARAMETROS dele (o código guarda só o valor de reserva, para a sim rodar
-## sem o arquivo). Lido uma vez por processo; `recarregar()` para testes.
+## Valores de classe 3 e todos os parâmetros editáveis do jogo. Desde o Game Master (perfis de regras) eles vêm dos
+## Resources de dados/regras/ (sim/regras_jogo.gd): cada seção ("combate", "cidade", "diarias"…) é a união dos Resources
+## dela. Os módulos da sim aplicam a sua seção sobre os PARAMETROS deles (o código guarda o valor de reserva, para a sim
+## rodar sem os arquivos). `recarregar()` relê os .tres (testes, painel F12, editor).
 
-const Fontes := preload("res://sim/fontes.gd")
-
-static var _dados: Dictionary = {}
-static var _lido := false
-
-
-static func dados() -> Dictionary:
-	if not _lido:
-		_lido = true
-		var d = Fontes.ler_json(Fontes.pasta_dados() + "/balanceamento.json")
-		_dados = d if d is Dictionary else {}
-	return _dados
+const RegrasJogo := preload("res://sim/regras_jogo.gd")
 
 
 static func recarregar() -> void:
-	_lido = false
+	RegrasJogo.recarregar()
 
 
 static func secao(nome: String) -> Dictionary:
-	## {chave: valor} da seção (sem os motivos).
-	var r := {}
-	var s = dados().get(nome, {})
-	if s is Dictionary:
-		for k in s:
-			var e = s[k]
-			r[k] = e.get("valor") if e is Dictionary and e.has("valor") else e
-	return r
+	## {chave: valor} da seção.
+	return RegrasJogo.secao(nome)
 
 
 static func aplicar(p: Dictionary, nome: String) -> Dictionary:
-	## Sobrepõe a seção sobre `p` (só as chaves que existem na seção) e devolve `p`.
+	## Sobrepõe a seção sobre `p` e devolve `p`.
 	var s := secao(nome)
 	for k in s:
 		p[k] = s[k]

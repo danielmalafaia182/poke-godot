@@ -1,0 +1,6 @@
+[gd_resource type="Resource" script_class="RegrasPesca" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://dados/regras/scripts/regras_pesca.gd" id="1"]
+
+[resource]
+script = ExtResource("1")

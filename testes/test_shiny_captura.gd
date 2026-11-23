@@ -1,7 +1,7 @@
 extends SceneTree
 ## Captura de shiny (ciclo 4, item 5). Regra (C, barra de captura do cliente): chance = min(1, shinyBase(tier) × catchRate
 ## da bola), sem o medidor de investimento; catchRate (A: balls.catalog) Poké 1, Great 2, Super 3, Ultra 4, Idle 5,
-## Master 255; shinyBase por tier é classe 3 (dados/balanceamento.json: o servidor não mostra o valor).
+## Master 255; shinyBase por tier é classe 3 (RegrasCaptura em dados/regras/: o servidor não mostra o valor).
 ## Confere: a sim usa a tabela do balanceamento; a chance por bola é tier × bola; sorteando 40.000 lançamentos de Poké
 ## Ball num shiny do tier C na própria sim, a taxa observada fica dentro de 3 desvios de 1%. Imprime a tabela por bola.
 ## Rodar: testes/rodar.sh res://testes/test_shiny_captura.gd
@@ -32,7 +32,7 @@ func _init() -> void:
 		"auto_catch": false, "auto_potion": false, "penalizar": false, "bolas": {1: 50000}, "inventario": []}
 	var sim = Simulacao.new(CenarioJogo.configurar(jogo, dados, 11, 0), dados, mapa)
 	sim.iniciar()
-	var bal: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://dados/balanceamento.json"))["combate"]["captura_shiny_base"]["valor"]
+	var bal: Dictionary = preload("res://sim/regras_jogo.gd").valores("RegrasCaptura")["captura_shiny_base"]
 	checar(sim.p.captura_shiny_base == bal, "a sim usa o shinyBase por tier do balanceamento (classe 3)", str(sim.p.captura_shiny_base))
 	var bolas := [[1, "Poké"], [2, "Great"], [3, "Super"], [4, "Ultra"], [6, "Idle"], [5, "Master"]]
 	var linha: String = "tier | " + " | ".join(bolas.map(func(b): return String(b[1])))

@@ -110,6 +110,10 @@ func _ready() -> void:
 	cfg["eventos"] = EstadoJogo.eventos_do_dia(agora / 1000)
 	cfg["boosts"] = EstadoJogo.boosts_ativos(agora)
 	cfg["berries"] = EstadoJogo.berries_ativas(agora / 1000)   # lote 3: berries do time (30 min, C)
+	if bool(EstadoJogo.get_meta("gm_forcar_shiny", false)):   # Game Master (F12): forçar shiny
+		cfg["parametros"]["shiny_chance"] = 1.0
+	if float(EstadoJogo.get_meta("gm_velocidade", 0.0)) > 0.0:
+		velocidade = float(EstadoJogo.get_meta("gm_velocidade"))
 	cfg["insignias"] = EstadoJogo.insignias_ativas(agora / 1000)   # lote 4: +1% XP e de rolagem extra por insígnia (C)
 	# Penalidade de entrada (B-relatado): hunt diferente da última ou sessão expirada; a mesma hunt de novo não.
 	cfg["entrada_nova"] = CenarioJogo.penalizar_entrada(EstadoJogo.sessao_expirada, EstadoJogo.ultima_hunt_slug, String(cfg["slug"]))

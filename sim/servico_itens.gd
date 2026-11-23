@@ -48,6 +48,7 @@ var dados   # sim/dados_jogo.gd
 
 func _init(dados_jogo, parametros: Dictionary = {}) -> void:
 	dados = dados_jogo
+	preload("res://sim/balanceamento.gd").aplicar(p, "itens")   # Game Master: RegrasItens
 	for k in parametros:
 		p[k] = parametros[k]
 

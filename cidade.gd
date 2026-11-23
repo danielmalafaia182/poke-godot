@@ -564,6 +564,15 @@ func _criar_ouro_e_config() -> void:
 	botao_metas.pressed.connect(func() -> void:
 		painel_config.hide()
 		painel_metas.abrir())
+	# Game Master: painel F12 (sempre em build de desenvolvimento; no jogo exportado, ligado aqui)
+	var gm := CheckButton.new()
+	gm.name = "PainelGMOpcao"
+	gm.text = "Painel do Game Master (F12)"
+	gm.button_pressed = preload("res://painel_gm.gd").habilitado()
+	gm.toggled.connect(func(v: bool) -> void:
+		preload("res://painel_gm.gd").definir_habilitado(v)
+		EstadoJogo.ligar_painel_gm(v or OS.is_debug_build()))
+	coluna.add_child(gm)
 	# Ciclo 7: Poke Slot Machine (Golden Stars). O dock do original não tem o ícone; fica no ⚙.
 	var botao_gs := Button.new()
 	botao_gs.name = "GoldenStars"

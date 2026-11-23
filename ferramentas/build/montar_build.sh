@@ -20,7 +20,7 @@ mkdir -p "$B/dados"
 "$GODOT" --headless --path "$RAIZ" --export-release "Windows Desktop" "$(cygpath -m "$B/PokeIdle.exe")" > "$B.export.log" 2>&1 || { tail -20 "$B.export.log"; exit 1; }
 "$GODOT" --headless --path "$RAIZ" --script res://ferramentas/build/gerar_pacote_jogo.gd -- "$(cygpath -m "$B/jogo")" 2>&1 | grep PACOTE
 cp -r "$RAIZ/dados/gerados" "$RAIZ/dados/pacotes" "$B/dados/"
-cp "$RAIZ/dados/balanceamento.json" "$RAIZ/dados/corpos_por_especie.json" "$B/dados/"
+cp "$RAIZ/dados/corpos_por_especie.json" "$B/dados/"   # as regras (dados/regras/*.tres) vão no pck; user://regras/ sobrescreve
 echo "tamanho: $(du -sh "$B" | cut -f1)  ($(du -sh "$B"/* | tr '\n' ' '))"
 ISO="$(mktemp -d)"; SHOTS="$(mktemp -d)"
 V="$(cygpath -m "$RAIZ/ferramentas/build/verificar_build.gd")"

@@ -8,7 +8,7 @@ Leia este arquivo inteiro antes de qualquer mudança. Ele é o ponto de entrada 
 > - **Classe 2, equivalente no resultado:** movimento, dano nos extremos, chegada de selvagens. Pronto quando abates/min,
 >   XP/h, ouro/h, mortes/h e capturas/h ficam a ±10% do real por trecho (`ferramentas/validar_resultado.py`).
 > - **Classe 3, desenhada:** sem dado ou original incoerente. Decidir pelo design, documentar em uma linha e pôr o valor
->   em `dados/balanceamento.json`, nunca fixo no código.
+>   em `dados/regras/` (Resources do Game Master; `REGRAS.md`), nunca fixo no código.
 > - Gravações livres (`poke har/gravacoes/livre/`) só conferem; se contradisserem uma decisão, corrigir.
 > - Perguntar só decisões de produto, em bloco no fim do ciclo. Conteúdo (sprites, nomes, sons) em pacotes trocáveis.
 >
@@ -53,14 +53,14 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/gravador/atualizar_corpos.py` | Mantém `dados/corpos_por_especie.json` (espécie → cadáver, A) somando as observações de qualquer gravação nova (cada arquivo entra uma vez, por sha256) |
 | `testes/diag_ilhas.gd` | Ilha da grade do `start` e de cada spawn do hunt-config, por hunt |
 | `render/atlas_mapa.gd` | Atlas por mapa (só os quadros usados, numa textura) em `cache/mapas/<slug>.atlas.bin`; pré-geração junto com o cache (`ferramentas/render/gerar_cache_mapas.gd`) |
-| `sim/metas.gd`, `painel_metas.gd` | Ciclo 2: metas visíveis (hunt recomendada pelo XP/min estimado, próxima meta, marcos de nível e coleção); classe 3 em `balanceamento.json` "metas" |
+| `sim/metas.gd`, `painel_metas.gd` | Ciclo 2: metas visíveis (hunt recomendada pelo XP/min estimado, próxima meta, marcos de nível e coleção); classe 3 em `dados/regras/` (RegrasInterface) |
 | `textos.gd`, `dados/pacotes/textos_pt.json` | Pacote de textos do cliente original (trocável), gerado por `ferramentas/inventario/gerar_pacote_textos.py` |
 | `janela_base.gd`, `janelas_dock.gd` | Janelas do ciclo 2 nos ícones do dock: Perfil, Bolas usadas, Log de Capturas, Hunt Analyzer, Pokédex, Todos os Shinys, Inventário, Streak, Diário |
 | `avisos_hud.gd`, `painel_tutorial.gd` | Avisos da hunt (level up, shiny, barra de boosts) e o tutorial do Professor Carvalho |
 | `ferramentas/build/montar_build.sh` | Monta `builds/<nome>/` (exe do template oficial + pck + `jogo/` + `dados/` mínimos) e verifica em 3 fases com APPDATA isolado (`verificar_build.gd`) |
 | `ferramentas/build/gerar_pacote_jogo.gd` | Pacote de execução `jogo/`: mapas `.json.zst`, atlas, outfits, cadáveres, hunt-config, ícones (sem o snapshot bruto) |
-| `sim/servico_ginasios.gd`, `painel_ginasios.gd` | Ciclo 3: 18 ginásios, luta automática, insígnias; times em `balanceamento.json` "ginasios" (`ferramentas/balanceamento/gerar_ginasios.py`) |
-| `sim/servico_bosses.gd`, `painel_bosses.gd` | Ciclo 3: 87 bosses, token, Auto Boss, Altar; `balanceamento.json` "bosses" (`gerar_bosses.py`) |
+| `sim/servico_ginasios.gd`, `painel_ginasios.gd` | Ciclo 3: 18 ginásios, luta automática, insígnias; times em RegrasGinasios (`dados/regras/`) |
+| `sim/servico_bosses.gd`, `painel_bosses.gd` | Ciclo 3: 87 bosses, token, Auto Boss, Altar; lista em RegrasBosses (`dados/regras/`) |
 | `sim/servico_cards.gd`, `painel_album.gd` | Ciclo 3: álbum de Pokécards (430, `dados/gerados/pokecards.json`) |
 | `seletor_visual.gd`, `painel_visual.gd` | Ciclo 3: visual do treinador (criação e Perfil), desenhado pelo `render/outfits.gd` |
 | `dados/gerados/` | especies (647), golpes (407), itens (670), hunts (451), cidades (3), regras, relatório |
@@ -68,6 +68,10 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `ferramentas/fase3/conferir_fase3.py`, `s3_individuos.py` | Conferem as gravações da fase 3 (`poke har/gravacoes/fase3/<ID>.jsonl`) contra `PLANO_GRAVACOES_FASE3.md`: configuração, golpes do líder por indivíduo, capturas × modelo do medidor (partindo do used-balls do início), lock de entrada |
 | `ferramentas/gravador/rest.py` | Lê as linhas `dir: "rest"` do gravador v1.1 (respostas de `/api/game/*`); medidor de captura do used-balls e a diferença entre duas respostas |
 | `dados/correcoes.json` | Correções sobre o publicado (IV até 32) |
+| `REGRAS.md`, `dados/regras/catalogo.json` | Mapa de todas as regras e parâmetros (valor, origem A–F, status, evidência, controle), gerado por `ferramentas/regras/exportar_valores.gd` + `catalogo.py` |
+| `dados/regras/` | Game Master: 22 Resources de regras (`scripts/regras_*.gd`, gerados por `ferramentas/regras/gerar_recursos.py`; padrão do script = valor atual), perfil `original/` (vazio = padrão), `AlteracoesTabelas` por cima das tabelas importadas. Leitura em `sim/regras_jogo.gd` (user://regras/<perfil>/ → res://dados/regras/<perfil>/ → original); `sim/balanceamento.gd` delega a ele |
+| `addons/game_master/` | Plugin do editor: dock "Game Master" (perfis, Parâmetros com busca/sistema/restaurar, Tabelas Espécies/Itens/Hunts) |
+| `painel_gm.gd` | Painel F12 no jogo (build de desenvolvimento ou ⚙ → "Painel do Game Master (F12)") |
 | `sim/servico_cidade.gd`, `ponte_cidade.gd` | Fase 4, lote 1: serviços da cidade (evolução, loja do Mark, Nurse Joy, depot) puros na `sim/`; a ponte monta o estado do save, manda o comando e aplica as mensagens no `EstadoJogo`. Regras e fontes em `CALIBRACAO_FASE4.md` |
 | `sim/servico_jogador.gd` | Fase 4, lote 2: sessão, Modo Soneca (amostra de 5 min pela própria sim, coleta de 50%), Streak Points e Tipo do Dia; parcelas `streak`/`boost`/`typeDay` e efeitos de loot na `simulacao_hunt.gd`. Regras em `CALIBRACAO_FASE4.md` |
 | `painel_soneca.gd`, `painel_streak.gd` | Coleta da soneca ao abrir a cidade e janela de Streak Points (⚙ → Streak Points); botão 💤 Zzz na HUD da hunt |
@@ -135,7 +139,7 @@ O snapshot é grande (582 MB): não copie para dentro do projeto nem para o git.
 - **Piso de XP em Orre** (20/11; 16.500 desde 22/11; construção do ciclo 7): o piso substitui o XP base da espécie antes
   dos bônus (base efetiva = max(base, 16.500 ÷ ×10)); VIP, streak, boosts, Tipo do Dia, insígnias, held e mentor saem dela e o
   ×10 da região vale sobre a soma. A mensagem mostra o `base` original e a diferença em `event`. Orre 530 empata com a melhor
-  Outland com e sem VIP. Classe 3 em `balanceamento.json` combate.xp_regiao_piso.
+  Outland com e sem VIP. Classe 3 em RegrasXP.xp_regiao_piso.
 - Outfits: desde 09/11 o snapshot tem os 846 do índice (545 categorias); o substituto (200) só entra se faltar algum.
 
 Resumo da calibração da fase 3 (cada regra, fonte, evidência, o que ficou aberto): `CALIBRACAO_FASE3.md`.
@@ -1452,3 +1456,16 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     - regressão verde (58 testes do Godot).
   - p99 em foco (medição do usuário, 3 rodadas): 5/5, medianas de 7,45 a 10,73 ms, 159–175 quadros/s.
   - Tag local `v1.0` (sem push).
+- 23/11/2026 — **Mapa de regras e Game Master.**
+  - Parte 1: `REGRAS.md` (202 parâmetros + 87 regras de fórmula; comprovada 111, replicada 48, desenhada 116, em aberto 16).
+  - Parte 2: `dados/balanceamento.json` saiu; os valores vivem em 22 Resources (`dados/regras/`), lidos por
+    `sim/regras_jogo.gd` com perfis (o `original` nunca se edita; user:// sobrepõe no build). Alterações de tabela
+    (espécies, loot, hunts, itens) em `AlteracoesTabelas`. Plugin do editor `addons/game_master` e painel F12 no jogo
+    (VIP, níveis, ouro, itens, velocidade, shiny forçado, pular esperas, perfil, recarregar .tres).
+  - Saída da sim idêntica byte a byte lendo dos Resources (3 cenários de `testes/regras_referencia.gd` + campanha de 4 h).
+  - Testes: `test_regras_gm` 29/29 (um por Resource, restaurar, tabelas, sobreposição por user://), `test_game_master_dock`
+    7/7, `test_game_master_editor.sh` 2/2, `test_painel_gm` 11/11. `test_balanceamento` saiu (substituído).
+  - Regressão: 59 testes do Godot verdes, os .sh e .py verdes, P04 20/20, diferencial 1h 28/30 (igual). Corrigidos no
+    caminho: `test_shiny_captura` lia o JSON removido; `test_ciclo_cidade` contava as Super Balls de antes da hunt (o
+    Auto-Catch pode gastar algumas; falha intermitente).
+  - Obsoletos: `ferramentas/balanceamento/gerar_bosses.py` e `gerar_ginasios.py` (escreviam no JSON removido).

@@ -28,7 +28,31 @@ static func carregar() -> RefCounted:
 		if sh is Dictionary:
 			for k in sh:
 				d.shiny[int(k)] = sh[k]
+	aplicar_alteracoes(d, preload("res://sim/regras_jogo.gd").alteracoes())
 	return d
+
+
+static func aplicar_alteracoes(d, alt) -> void:
+	## Game Master: AlteracoesTabelas do perfil por cima das tabelas importadas (sem alteração, nada muda).
+	if alt == null:
+		return
+	for a in alt.especies:
+		var e: Dictionary = d.especies.get(int(a.get("id", -1)), {})
+		if not e.is_empty():
+			e[String(a["campo"])] = a["valor"]
+	for a in alt.loot:
+		var e: Dictionary = d.especies.get(int(a.get("especie", -1)), {})
+		for l in e.get("loot", []):
+			if l.get("itemId") != null and int(l["itemId"]) == int(a.get("itemId", -2)):
+				l[String(a["campo"])] = a["valor"]
+	for a in alt.hunts:
+		var h: Dictionary = d.hunts.get(String(a.get("id", "")), {})
+		if not h.is_empty():
+			h[String(a["campo"])] = a["valor"]
+	for a in alt.itens:
+		var it: Dictionary = d.itens.get(int(a.get("id", -1)), {})
+		if not it.is_empty():
+			it[String(a["campo"])] = a["valor"]
 
 
 func especie(id: int) -> Dictionary:

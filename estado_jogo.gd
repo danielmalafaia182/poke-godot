@@ -334,6 +334,9 @@ func _notification(what: int) -> void:
 
 func _ready() -> void:
 	configuracao.inventario = inventario
+	# Game Master: painel F12 (build de desenvolvimento ou opção nas Configurações)
+	if preload("res://painel_gm.gd").habilitado():
+		ligar_painel_gm(true)
 	# Verificação do build (ciclo 3; ferramentas/build/verificar_build.gd): o template de release não roda --script, então
 	# POKE_VERIFICAR aponta um script (Node) do disco que dirige o jogo de verdade. Sem a variável, nada acontece.
 	var verif := OS.get_environment("POKE_VERIFICAR")
@@ -795,6 +798,15 @@ func prof(cmd: Dictionary) -> Dictionary:
 		PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
 	solicitar_salvamento()
 	return msgs[-1] if msgs.size() > 1 and String(msgs[-1].get("type", "")) == "professions" else msgs[0]
+
+func ligar_painel_gm(v: bool) -> void:
+	var p := get_node_or_null("PainelGM")
+	if v and p == null:
+		p = preload("res://painel_gm.gd").new()
+		p.name = "PainelGM"
+		add_child(p)
+	elif not v and p != null:
+		p.queue_free()
 
 func servico_ditto():
 	return preload("res://sim/servico_ditto.gd").new(PONTE_CIDADE.dados())

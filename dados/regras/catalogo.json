@@ -2948,36 +2948,6 @@
    "controle": "dados/regras/<perfil>/RegrasEventos.tres → streak_pct_por_ponto"
   },
   {
-   "id": "RegrasCombate.tick_ms",
-   "recurso": "RegrasCombate",
-   "sistema": "combate e dano",
-   "fonte": "sim",
-   "chave": "tick_ms",
-   "literal": "200",
-   "tipo": "int",
-   "descricao": "A: todos os logs",
-   "origem": "A",
-   "status": "comprovada contra o original",
-   "evidencia": "comentário em `sim/regras.gd`",
-   "original_jogo": "",
-   "controle": "dados/regras/<perfil>/RegrasCombate.tres → tick_ms"
-  },
-  {
-   "id": "RegrasCombate.ticks_por_field",
-   "recurso": "RegrasCombate",
-   "sistema": "combate e dano",
-   "fonte": "sim",
-   "chave": "ticks_por_field",
-   "literal": "2",
-   "tipo": "int",
-   "descricao": "A: field a cada 400 ms",
-   "origem": "A",
-   "status": "comprovada contra o original",
-   "evidencia": "comentário em `sim/regras.gd`",
-   "original_jogo": "",
-   "controle": "dados/regras/<perfil>/RegrasCombate.tres → ticks_por_field"
-  },
-  {
    "id": "RegrasEventos.tipo_do_dia_loot",
    "recurso": "RegrasEventos",
    "sistema": "Streak, boosts e Tipo do Dia",

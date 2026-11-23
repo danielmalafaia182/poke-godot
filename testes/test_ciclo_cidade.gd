@@ -135,9 +135,10 @@ func _ciclo_na_cidade(ej) -> void:
 		"loot vendido ao Mark pelo npcPrice (C)", "+%d de ouro" % esperado)
 	# 2. comprar bolas e poções
 	var n_bolas := mini(20, ej.ouro / 2 / 50)
+	var bolas_antes: int = ej.obter_quantidade_bola(3)   # a hunt pode ter gasto Super Balls no Auto-Catch
 	var erro_b: String = ej.comprar_bola(3, maxi(1, n_bolas))
 	var erro_p: String = ej.comprar_item(200, 5)
-	checar(erro_b.is_empty() and ej.obter_quantidade_bola(3) == int(antes["bolas3"]) + maxi(1, n_bolas), "comprou Super Balls (50 cada)", erro_b)
+	checar(erro_b.is_empty() and ej.obter_quantidade_bola(3) == bolas_antes + maxi(1, n_bolas), "comprou Super Balls (50 cada)", erro_b)
 	checar(erro_p.is_empty() and ej.obter_quantidade_pocao(200) >= int(antes["small"]) + 5, "comprou 5 Small Potions (5 cada)", erro_p)
 	checar(ej.ouro == esperado - maxi(1, n_bolas) * 50 - 25, "ouro descontado", str(ej.ouro))
 	# 3. curar
