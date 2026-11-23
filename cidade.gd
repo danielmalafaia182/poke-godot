@@ -36,6 +36,9 @@ var botao_depot: Button
 const CELULA_DEPOT: Vector2i = Vector2i(-8, -14)
 # Fase 4: Mark (loja), posição do city-npcs de Cerulean (npc_shop_22_8, A).
 const CELULA_LOJA: Vector2i = Vector2i(22, 8)
+const CELULA_PESCA: Vector2i = Vector2i(7, -10)   # A: city-npcs "fishing" em (7, −10)
+var placa_pesca: PlacaInteracao
+var painel_pesca: Control
 var painel_loja: Control
 var placa_loja: PlacaInteracao
 var painel_config: PanelContainer
@@ -116,6 +119,14 @@ func _ready() -> void:
 	get_node("Interface").add_child(placa_loja)
 	placa_loja.configurar("Mark","Open Shop")
 	placa_loja.botao.pressed.connect(_clicar_loja)
+	# Ciclo 8: Pescador (C: hud.world.npcAction.fish)
+	placa_pesca = PlacaInteracao.new()
+	get_node("Interface").add_child(placa_pesca)
+	placa_pesca.configurar("Pescador", "🎣 Pescar")
+	placa_pesca.botao.pressed.connect(_clicar_pesca)
+	painel_pesca = load("res://painel_pesca.gd").new()
+	painel_pesca.name = "PainelPesca"
+	get_node("Interface").add_child(painel_pesca)
 	_criar_ouro_e_config()
 	resized.connect(_ajustar_cenario)
 	# Novo: personagem animado independente do controlador de caça.
@@ -273,6 +284,8 @@ func _process(delta: float) -> void:
 	placa_depot.visible = pode_mostrar
 	placa_loja.posicionar(cenario.to_global(Vector2(CELULA_LOJA)*32.0+Vector2(16,16)))
 	placa_loja.visible = pode_mostrar
+	placa_pesca.posicionar(cenario.to_global(Vector2(CELULA_PESCA)*32.0+Vector2(16,16)))
+	placa_pesca.visible = pode_mostrar
 	resultado_cura.position = Vector2(size.x*0.5-220,size.y*0.5-100)
 	resultado_cura.size = Vector2(440,36)
 
@@ -327,7 +340,7 @@ func _perto_nurse() -> bool:
 	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_NURSE)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
 
 func _modal_aberto() -> bool:
-	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_diarias != null and painel_diarias.visible) or (painel_itens != null and painel_itens.visible) or (painel_soneca != null and painel_soneca.visible) or (painel_metas != null and painel_metas.visible)
+	return mapa_mundi.visible or painel_auto_helper.janela.visible or painel_my_pokes.visible or painel_depot.visible or painel_nurse.visible or painel_time.perfil.visible or painel_pokepedia.visible or painel_loja.visible or _evolucao_aberta() or (painel_streak != null and painel_streak.visible) or (painel_diarias != null and painel_diarias.visible) or (painel_itens != null and painel_itens.visible) or (painel_soneca != null and painel_soneca.visible) or (painel_metas != null and painel_metas.visible) or (painel_pesca != null and painel_pesca.visible)
 
 func _clicar_nurse() -> void:
 	if not _perto_nurse() or personagem.andando or _modal_aberto():
@@ -360,6 +373,13 @@ func _evolucao_aberta() -> bool:
 
 func _perto_loja() -> bool:
 	return personagem != null and (alcance_interacao_cidade<=0 or personagem.position.distance_to(Vector2(CELULA_LOJA)*32.0+Vector2(16,16)) <= alcance_interacao_cidade)
+
+func _clicar_pesca() -> void:
+	if personagem == null or personagem.andando or _modal_aberto():
+		return
+	if alcance_interacao_cidade > 0 and personagem.position.distance_to(Vector2(CELULA_PESCA)*32.0+Vector2(16,16)) > alcance_interacao_cidade:
+		return
+	painel_pesca.abrir()
 
 func _clicar_loja() -> void:
 	if not _perto_loja() or personagem.andando or _modal_aberto():

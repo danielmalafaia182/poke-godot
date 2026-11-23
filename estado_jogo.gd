@@ -131,6 +131,9 @@ var profissao: Dictionary = {}
 var breeding: Dictionary = {}
 # Ciclo 7: Golden Stars (sim/servico_golden_stars.gd).
 var estrelas: Dictionary = {}
+# Ciclo 8: pesca (sim/servico_pesca.gd).
+var pesca: Dictionary = {}
+static var _servico_pesca = null
 static var _servico_gs = null
 static var _servico_breed = null
 static var _servico_prof = null
@@ -792,6 +795,33 @@ func prof(cmd: Dictionary) -> Dictionary:
 		PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
 	solicitar_salvamento()
 	return msgs[-1] if msgs.size() > 1 and String(msgs[-1].get("type", "")) == "professions" else msgs[0]
+
+func servico_pesca():
+	if _servico_pesca == null:
+		_servico_pesca = preload("res://sim/servico_pesca.gd").new(PONTE_CIDADE.dados())
+	return _servico_pesca
+
+func pesca_cmd(cmd: Dictionary) -> Dictionary:
+	var e := {"pesca": pesca, "itens": {}}
+	cmd["agora_ms"] = int(Time.get_unix_time_from_system() * 1000.0)
+	var r: Array = servico_pesca().tratar(e, cmd)
+	pesca = e["pesca"]
+	return r[0]
+
+func pescar(faixa: int) -> Dictionary:
+	## Ciclo 8: uma pesca na faixa; o loot entra na BAG e o XP no treinador (C/A; números classe 3, sim/servico_pesca.gd).
+	var e: Dictionary = PONTE_CIDADE.estado_de(self, cidade_atual())
+	e["pesca"] = pesca
+	var r: Array = servico_pesca().tratar(e, {"type": "pescar", "faixa": faixa, "agora_ms": int(Time.get_unix_time_from_system() * 1000.0),
+		"semente": int(Time.get_ticks_usec() % 2147483647)})
+	var erro := PONTE_CIDADE.primeiro_erro(r)
+	if not erro.is_empty():
+		return {"erro": erro}
+	pesca = e["pesca"]
+	PONTE_CIDADE.aplicar(self, [servico_itens()._msg_inventario(e)])
+	registrar_recompensa_treinador(int(r[0]["xp"]))
+	solicitar_salvamento()
+	return r[0]
 
 func servico_golden_stars():
 	if _servico_gs == null:
