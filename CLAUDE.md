@@ -1439,3 +1439,15 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
   - `INVENTARIO_CLIENTE.md` revisto: offline falta só pesca e Ditto, mais os parciais de polimento.
   - Build `builds/ciclo7` (628 MB): 3 fases OK.
   - Regressão: 55 testes do Godot verdes, os .sh e .py verdes, P04 sem falha, diferencial 1h 28/30 (igual).
+- 23/11/2026 — **Ciclo 8 (versão 1.0 offline).**
+  - Pesca (`sim/servico_pesca.gd`, `painel_pesca.gd`; A: 12 peixes no nível 4; faixas classe 3), teste 10/10.
+  - Ditto (`sim/servico_ditto.gd`; C; fonte offline no treinador 100, classe 3), teste 7/7.
+  - Telas completas de breeding, Poke Slot Machine e profissões (`test_telas_ciclo8` 8/8).
+  - Cartão do Pokémon com TM, held e Ditto.
+  - Inventário: offline não falta nenhum grupo inteiro (38 feitos, 13 parciais, 25 faltando, 24 deles online).
+  - Bateria final (`dados/relatorios/v1.0_bateria_final_2026-11-23.md`):
+    - as 451 hunts sem erro;
+    - campanha de 700 h com Orre às 504 h;
+    - build `builds/v1.0` com 3 fases OK;
+    - regressão verde (58 testes do Godot).
+  - p99 em foco: não medido (exige a janela em foco e o PC parado).
