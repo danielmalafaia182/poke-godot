@@ -916,8 +916,14 @@ func breed_melhor_par() -> Dictionary:
 	if par.is_empty():
 		return {"erro": "Precisa de 2 Pokémon da mesma espécie na box."}
 	var fer := int(e.get("itens", {}).get("44417", 0)) > 0
-	var msgs: Array = servico_breeding().tratar(e, {"type": "breed", "paiA": String(par[0]["id"]), "paiB": String(par[1]["id"]),
-		"caminho": "feromonio" if fer else "livre", "semente": int(Time.get_ticks_usec() % 2147483647)})
+	return breed(String(par[0]["id"]), String(par[1]["id"]), "feromonio" if fer else "livre", false)
+
+func breed(pai_a: String, pai_b: String, caminho: String, dobro: bool) -> Dictionary:
+	## Ciclo 8: cruza o par escolhido (sim/servico_breeding.gd); os pais saem da box (C: são consumidos).
+	var e: Dictionary = PONTE_CIDADE.estado_de(self, cidade_atual())
+	e["breeding"] = breeding
+	var msgs: Array = servico_breeding().tratar(e, {"type": "breed", "paiA": pai_a, "paiB": pai_b, "caminho": caminho, "dobro": dobro,
+		"semente": int(Time.get_ticks_usec() % 2147483647)})
 	var erro := PONTE_CIDADE.primeiro_erro(msgs)
 	if not erro.is_empty():
 		return {"erro": erro}

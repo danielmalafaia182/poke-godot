@@ -26,6 +26,8 @@ var p := {
 	"temp_cartas": 5,            # A
 	"temp_s": 86400,             # A: 24 h
 	"roll_pago_ouro": 100000,
+	"escolha_direta_ouro": 50000,   # C: "Escolha direta" (pick-species); custo classe 3
+	"reroll_bonus_ouro": 50000,     # C: "Trocar bônus" (reroll-bonus); custo classe 3
 	"raridade": [["comum", 10, 60], ["rara", 13, 30], ["épica", 16, 10]],   # [nome, pct, peso] — A viu 10 e 13
 }
 var dados
@@ -91,7 +93,12 @@ func tratar(estado: Dictionary, cmd: Dictionary) -> Array:
 				return [_erro("Role primeiro.")]
 			var rng = Rng.new(int(cmd.get("semente", agora)) * 31 + i)
 			var idx := int(cmd.get("idx", -1))
-			if idx < 0 or idx >= c.size():
+			if idx >= 0 and idx < c.size():
+				# C: "Escolha direta" — paga para escolher a espécie (classe 3: escolha_direta_ouro)
+				if int(estado.get("gold", 0)) < int(p.escolha_direta_ouro):
+					return [_erro("A escolha direta custa %d de ouro." % int(p.escolha_direta_ouro))]
+				estado["gold"] = int(estado["gold"]) - int(p.escolha_direta_ouro)
+			else:
 				idx = int(rng.randf() * c.size()) % c.size()   # C: "Escolheu (sorteio)"
 			var bonus: String = BONUS[int(rng.randf() * BONUS.size()) % BONUS.size()]
 			var o := rng.randf() * 100.0
@@ -106,6 +113,25 @@ func tratar(estado: Dictionary, cmd: Dictionary) -> Array:
 			e["slots"][i] = estrela
 			e["candidatos"] = []
 			return [{"type": "gs-picked", "slot": i, "star": estrela.duplicate()}, _msg(estado, agora)]
+		"gs-reroll-bonus":
+			# C: "Trocar bônus" — mesma espécie, bônus e raridade sorteados de novo; a duração não muda
+			var i := int(cmd.get("slot", 0))
+			var st: Dictionary = e["slots"][clampi(i, 0, 2)]
+			if st.is_empty() or int(st["expiresAt"]) <= agora:
+				return [_erro("Nenhuma estrela ativa neste slot.")]
+			if int(estado.get("gold", 0)) < int(p.reroll_bonus_ouro):
+				return [_erro("Trocar o bônus custa %d de ouro." % int(p.reroll_bonus_ouro))]
+			estado["gold"] = int(estado["gold"]) - int(p.reroll_bonus_ouro)
+			var rng = Rng.new(int(cmd.get("semente", agora)) * 17 + i)
+			st["bonusType"] = BONUS[int(rng.randf() * BONUS.size()) % BONUS.size()]
+			var o := rng.randf() * 100.0
+			for r in p.raridade:
+				if o < float(r[2]):
+					st["pct"] = int(r[1])
+					st["rarity"] = String(r[0])
+					break
+				o -= float(r[2])
+			return [{"type": "gs-rerolled", "slot": i, "star": st.duplicate()}, _msg(estado, agora)]
 		"gs-unlock":
 			var i := int(cmd.get("slot", 1))
 			if i < 1 or i > 2:

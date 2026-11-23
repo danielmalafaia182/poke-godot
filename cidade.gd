@@ -571,7 +571,7 @@ func _criar_ouro_e_config() -> void:
 	coluna.add_child(botao_gs)
 	botao_gs.pressed.connect(func() -> void:
 		painel_config.hide()
-		load("res://janelas_dock.gd")._abrir_estrelas(janelas_dock["original"], "Poke Slot Machine", null))
+		janelas_dock["estrelas"].abrir())
 	# Ciclo 5, item 98: Novo jogo com confirmação e backup automático do save atual.
 	var botao_novo := Button.new()
 	botao_novo.name = "NovoJogo"

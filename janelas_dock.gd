@@ -15,6 +15,9 @@ static func instalar(pai: Node, menu: Control, controlador_hunt: Node = null, ab
 	j["ginasios"] = _criar(pai, "res://painel_ginasios.gd", "PainelGinasios")
 	j["bosses"] = _criar(pai, "res://painel_bosses.gd", "PainelBosses")
 	j["album"] = _criar(pai, "res://painel_album.gd", "PainelAlbum")
+	j["profissoes"] = _criar(pai, "res://painel_profissoes.gd", "PainelProfissoes")   # ciclo 8: telas completas
+	j["breeding"] = _criar(pai, "res://painel_breeding.gd", "PainelBreeding")
+	j["estrelas"] = _criar(pai, "res://painel_golden_stars.gd", "PainelGoldenStars")
 	j["bosses"].na_hunt = controlador_hunt != null   # C: Auto Boss só fora de hunt
 	j["itens_uso"] = pai.get_node_or_null("PainelItensUso")
 	if j["itens_uso"] == null:
@@ -230,9 +233,9 @@ static func _abrir_original(chave: String, j: Dictionary) -> void:
 					ej.salvar_agora()
 					w.get_tree().quit())
 		"professions":
-			_abrir_profissoes(w, nome, tex)
+			j["profissoes"].abrir()   # ciclo 8: janela completa (a de uma ação, _abrir_profissoes, fica de reserva)
 		"breeding":
-			_abrir_breeding(w, nome, tex)
+			j["breeding"].abrir()
 		"goldenStars":
 			_abrir_estrelas(w, nome, tex)
 		"home":

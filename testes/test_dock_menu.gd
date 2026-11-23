@@ -29,7 +29,7 @@ func _visiveis(raiz: Node) -> Array:
 	for c in raiz.get_children():
 		if c is Control and (c as Control).visible and String(c.name) in ["PainelPerfil", "PainelBolasUsadas", "PainelPokedex",
 				"PainelInventario", "PainelGinasios", "PainelBosses", "PainelAlbum", "PainelStreak", "PainelDiarias", "JanelaOriginal",
-				"MyPokes", "PokepediaLocal", "MapaMundi", "PainelConfig"]:
+				"MyPokes", "PokepediaLocal", "MapaMundi", "PainelConfig", "PainelProfissoes", "PainelBreeding"]:
 			r.append(String(c.name))
 	return r
 
@@ -37,7 +37,7 @@ func _visiveis(raiz: Node) -> Array:
 func _fechar(raiz: Node) -> void:
 	for c in raiz.get_children():
 		if c is Control and String(c.name) in ["PainelPerfil", "PainelBolasUsadas", "PainelPokedex", "PainelInventario", "PainelGinasios",
-				"PainelBosses", "PainelAlbum", "PainelStreak", "PainelDiarias", "JanelaOriginal", "MyPokes", "PokepediaLocal", "PainelConfig"]:
+				"PainelBosses", "PainelAlbum", "PainelStreak", "PainelDiarias", "JanelaOriginal", "MyPokes", "PokepediaLocal", "PainelConfig", "PainelProfissoes", "PainelBreeding"]:
 			(c as Control).hide()
 
 
