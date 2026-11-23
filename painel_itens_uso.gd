@@ -100,6 +100,7 @@ func atualizar() -> void:
 	x.text = "×"
 	x.pressed.connect(hide)
 	cab.add_child(x)
+	_ditto()
 	_trocas()
 	var lista := _usaveis()
 	if lista.is_empty():
@@ -157,6 +158,44 @@ func atualizar() -> void:
 
 func _qtd(id: int) -> int:
 	return int(_ej().inventario.estoque_materiais.get(LOOT.id_interno(id), 0))
+
+
+func _ditto() -> void:
+	## Ciclo 8 (C, window.ditto): receber o Ditto (classe 3: no treinador 100) e transformar o Ditto líder por 12 h.
+	var ej := _ej()
+	if not bool(ej.itens_uso.get("ditto_recebido", false)):
+		var b := Button.new()
+		b.name = "DittoReceber"
+		b.text = "🧬 Receber o Ditto (treinador nível 100)"
+		b.disabled = int(ej.nivel_treinador) < 100
+		b.pressed.connect(func() -> void:
+			var r: Dictionary = ej.ditto_receber()
+			aviso = String(r["erro"]) if r.has("erro") else "🧬 Um Ditto chegou à box! Ponha-o como líder para transformar."
+			atualizar())
+		corpo.add_child(b)
+		return
+	var lider = ej.obter_lider()
+	if lider == null or String(lider.especie.nome) != "Ditto":
+		return
+	_rotulo(T_.t("window.ditto.chooseNormal") + " " + T_.t("window.ditto.hintNormal"), Color("9fc0e8"))
+	var linha := HBoxContainer.new()
+	corpo.add_child(linha)
+	var campo := LineEdit.new()
+	campo.name = "DittoEspecie"
+	campo.placeholder_text = T_.t("window.ditto.searchPlaceholder")
+	campo.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+	linha.add_child(campo)
+	var bt := Button.new()
+	bt.name = "DittoTransformar"
+	bt.text = "🧬 Transformar"
+	bt.pressed.connect(func() -> void:
+		var r: Dictionary = ej.ditto_transformar(campo.text.strip_edges())
+		aviso = T_.t("window.ditto.transformError", {"message": String(r["erro"])}) if r.has("erro") else T_.t("window.ditto.transformedNormal", {"name": String(r["name"])})
+		atualizar())
+	linha.add_child(bt)
+
+
+const T_ := preload("res://textos.gd")
 
 
 func _trocas() -> void:

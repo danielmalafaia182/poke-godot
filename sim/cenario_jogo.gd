@@ -111,7 +111,8 @@ static func configurar(jogo: Dictionary, dados: RefCounted, semente: int, agora_
 		"mentor": (jogo.get("mentor", {}) as Dictionary).duplicate(),       # ciclo 6: profissões (sim/servico_profissoes.gd para_sim)
 		"profissao": (jogo.get("profissao", {}) as Dictionary).duplicate(),
 		"bonus_captura_prof": float(jogo.get("bonus_captura_prof", 0.0)),
-		"estrelas": (jogo.get("estrelas", []) as Array).duplicate(true),   # ciclo 7: Golden Stars ativas [{speciesId, bonus, pct}]        # ciclo 6 (lote 3): {pokeId: itemId do held}
+		"estrelas": (jogo.get("estrelas", []) as Array).duplicate(true),
+		"ditto": (jogo.get("ditto", {}) as Dictionary).duplicate(),   # ciclo 8: {pokeId: espécie copiada}   # ciclo 7: Golden Stars ativas [{speciesId, bonus, pct}]        # ciclo 6 (lote 3): {pokeId: itemId do held}
 		"tms": (jogo.get("tms", {}) as Dictionary).duplicate(true),         # ciclo 6: {pokeId: {elemental, aoe}}
 		"vip": bool(jogo.get("vip", false)),   # E: opção do jogador (padrão desligado); ligada, +50% da XP base (A)
 		"ativo_inicial": int(jogo.get("lider", 0)),

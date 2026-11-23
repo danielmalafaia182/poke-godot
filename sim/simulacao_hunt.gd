@@ -239,10 +239,15 @@ func _ajustar_inicio(c: Vector2i, spawns_cel: Array) -> Vector2i:
 
 func _criar_poke(e: Dictionary) -> Dictionary:
 	var esp: Dictionary = dados.especie(int(e["speciesId"]))
+	# Ciclo 8 (C, window.ditto): Ditto transformado luta como a espécie copiada, com −25% de HP, Atk, Def, SpA e SpD
+	var copia := int(cfg.get("ditto", {}).get(String(e.get("id", "")), 0))
+	if copia > 0 and not dados.especie(copia).is_empty():
+		esp = dados.especie(copia)
 	var xp := int(e.get("xp", Regras.xp_total_para_nivel(int(e.get("nivel", 1)))))
 	var nivel := Regras.nivel_por_xp(xp) if e.has("xp") else int(e.get("nivel", 1))
 	var poke := e.duplicate(true)
 	poke["especie"] = esp
+	poke["ditto"] = copia > 0
 	poke["xp"] = xp
 	poke["nivel"] = nivel
 	_recalcular_stats(poke)
@@ -255,6 +260,12 @@ func _recalcular_stats(poke: Dictionary) -> void:
 	poke["stats_dano"] = Regras.calcular_stats_dano(poke["especie"]["base"], poke["ivs"], int(poke["nivel"]), float(poke["quality"]), String(p.stats_dano_aliado))
 	poke["max_hp"] = Regras.hp_combate_aliado(int(poke["stats"]["hp"]))
 	poke["power"] = Regras.power(poke["stats"], float(poke["quality"]))
+	if bool(poke.get("ditto", false)):
+		var dd: Dictionary = (poke["stats_dano"] as Dictionary).duplicate()
+		for k in ["atk", "spAtk", "def", "spDef"]:
+			dd[k] = float(dd[k]) * 0.75
+		poke["stats_dano"] = dd
+		poke["max_hp"] = maxi(1, Regras.js_round(float(poke["max_hp"]) * 0.75))
 	# Lote 3 (C: HELD_ITEMS do cliente; textos "+N% de força", "+N% de defesa", "+N% de vida"; BOOST = força e defesa):
 	# o held vale nos stats de combate do Pokémon que o segura (F: sobre os stats do dano e o HP de combate).
 	var fx := _held_fx(poke)

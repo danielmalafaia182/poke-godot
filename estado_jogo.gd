@@ -796,6 +796,47 @@ func prof(cmd: Dictionary) -> Dictionary:
 	solicitar_salvamento()
 	return msgs[-1] if msgs.size() > 1 and String(msgs[-1].get("type", "")) == "professions" else msgs[0]
 
+func servico_ditto():
+	return preload("res://sim/servico_ditto.gd").new(PONTE_CIDADE.dados())
+
+func ditto_receber() -> Dictionary:
+	## Ciclo 8 (classe 3): um Ditto com os stats fixos do original ao chegar no treinador 100.
+	var e := {"itens_uso": itens_uso}
+	var r: Array = servico_ditto().tratar(e, {"type": "ditto-receber", "nivel": nivel_treinador})
+	if String(r[0]["type"]) == "error":
+		return {"erro": String(r[0]["message"])}
+	itens_uso = e["itens_uso"]
+	var esp = preload("res://especies_importadas.gd").obter_todas().get("Ditto")
+	if esp == null:
+		return {"erro": "Ditto sem recurso."}
+	var novo := DadosPokemon.new()
+	novo.especie = esp
+	novo.nivel = 1
+	var f: Dictionary = r[0]["poke"]
+	var mapa_iv := {"hp": "iv_hp", "atk": "iv_atk", "def": "iv_def", "spAtk": "iv_sp_atk", "spDef": "iv_sp_def", "speed": "iv_spd"}
+	for k in mapa_iv:
+		novo.set(mapa_iv[k], int(f["ivs"][k]))
+	novo.qualidade = float(f["quality"])
+	novo.id_persistente = Crypto.new().generate_random_bytes(16).hex_encode()
+	novo.normalizar_atributos()
+	novo.vida_atual = novo.obter_vida_maxima()
+	pokemons_capturados.append(novo)
+	solicitar_salvamento()
+	return {"ok": true, "id": novo.id_persistente}
+
+func ditto_transformar(nome_especie: String) -> Dictionary:
+	var lider := obter_lider()
+	var sid := int(PONTE_CIDADE.id_especie(nome_especie))
+	var e := {"itens_uso": itens_uso}
+	var r: Array = servico_ditto().tratar(e, {"type": "ditto-transformar", "pokeId": lider.id_persistente if lider != null else "",
+		"pokeSpecies": int(PONTE_CIDADE.id_especie(lider.especie.nome)) if lider != null else 0, "lider": lider != null,
+		"speciesId": sid, "agora": int(Time.get_unix_time_from_system())})
+	if String(r[0]["type"]) == "error":
+		return {"erro": String(r[0]["message"])}
+	itens_uso = e["itens_uso"]
+	solicitar_salvamento()
+	return r[0]
+
 func servico_pesca():
 	if _servico_pesca == null:
 		_servico_pesca = preload("res://sim/servico_pesca.gd").new(PONTE_CIDADE.dados())
@@ -992,7 +1033,8 @@ func extrair_jogo_hunt(nome_hunt: String) -> Dictionary:
 		"nomes_bolas": nomes_bolas, "auto_catch": auto_catch, "bola_auto_catch": auto_catch_ball_id, "auto_potion": auto_potion,
 		"pocao_id": auto_potion_item_id, "limite_pocao": auto_potion_threshold, "auto_catch_nomes": auto_catch_names,
 			"auto_catch_shiny": auto_catch_shiny, "bola_auto_catch_shiny": configuracao.bola_shiny_efetiva(), "medidor_captura": medidor_captura, "garantia_pedras": garantia_pedras, "vip": vip,
-			"helds": (itens_uso.get("held", {}) as Dictionary).duplicate(), "tms": (itens_uso.get("tms", {}) as Dictionary).duplicate(true)}.merged(servico_profissoes().para_sim({"profissao": profissao.duplicate(true)})).merged({"estrelas": servico_golden_stars().para_sim({"estrelas": estrelas.duplicate(true)}, int(Time.get_unix_time_from_system()))})}
+			"helds": (itens_uso.get("held", {}) as Dictionary).duplicate(), "tms": (itens_uso.get("tms", {}) as Dictionary).duplicate(true)}.merged(servico_profissoes().para_sim({"profissao": profissao.duplicate(true)})).merged({"estrelas": servico_golden_stars().para_sim({"estrelas": estrelas.duplicate(true)}, int(Time.get_unix_time_from_system())),
+			"ditto": servico_ditto().para_sim({"itens_uso": itens_uso}, int(Time.get_unix_time_from_system()))})}
 
 func registrar_captura_especie(nome: String, shiny: bool = false, bola: String = "") -> bool:
 	## A: o capturado chega no nível 1; IVs e Quality pelo sorteio do próprio jogo (DadosPokemon), como no P04.
