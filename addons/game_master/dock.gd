@@ -219,6 +219,15 @@ func _aplicar() -> void:
 		return
 	var e := RJ.gravar_valor(String(sel["recurso"]), String(sel["chave"]), v, "", false)
 	_avisar(e if e != "" else "%s = %s no perfil %s" % [sel["chave"], campo_valor.text, RJ.perfil()])
+	if e != "":
+		# a recusa (ex.: perfil original ativo) não pode passar despercebida numa linha do topo
+		var dlg := AcceptDialog.new()
+		dlg.title = "Game Master"
+		dlg.dialog_text = e + ("\n\nEscreva um nome no campo ao lado de Perfil, clique em \"Novo perfil\" e aplique de novo." if RJ.perfil() == "original" else "")
+		add_child(dlg)
+		dlg.confirmed.connect(dlg.queue_free)
+		dlg.canceled.connect(dlg.queue_free)
+		dlg.popup_centered()
 	_preencher()
 
 
@@ -266,7 +275,7 @@ func _linha(pai: TreeItem, campo: String, atual, orig, chave: Dictionary, tabela
 	if str(atual) != str(orig):
 		it.set_custom_color(1, Color("f0c040"))
 	it.set_metadata(0, {"tabela": tabela, "chave": chave, "tipo": typeof(orig)})
-	it.add_button(2, get_theme_icon("Reload", "EditorIcons") if has_theme_icon("Reload", "EditorIcons") else null, 0, false, "Restaurar original")
+	it.add_button(2, _icone_restaurar(), 0, false, "Restaurar original")
 
 
 func _preencher_tab() -> void:
@@ -338,3 +347,17 @@ func _restaurar_tab(item: TreeItem, _col: int, _id: int, _botao_mouse: int) -> v
 	RJ.restaurar_alteracao(String(m["tabela"]), m["chave"], "", false)
 	_avisar("Restaurado.")
 	_preencher_tab()
+
+
+var _icone_reserva: Texture2D
+
+
+func _icone_restaurar() -> Texture2D:
+	## Ícone "Reload" do editor; fora dele (testes), um quadrado simples para o botão não ficar sem textura.
+	if has_theme_icon("Reload", "EditorIcons"):
+		return get_theme_icon("Reload", "EditorIcons")
+	if _icone_reserva == null:
+		var img := Image.create(12, 12, false, Image.FORMAT_RGBA8)
+		img.fill(Color(0.8, 0.8, 0.8))
+		_icone_reserva = ImageTexture.create_from_image(img)
+	return _icone_reserva
