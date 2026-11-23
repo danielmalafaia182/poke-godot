@@ -535,6 +535,26 @@ func _mostrar_dica(e: Dictionary, c: Control) -> void:
 			t += "[color=#9aa6b3]%s[/color]\n" % tipos
 		t += "[color=#9aa6b3]%s · IV %d · Power %d[/color]\n" % [T.t("window.inventory.lvShort", {"level": int(p.nivel)}), int(p.obter_total_ivs()), int(p.obter_power())]
 		t += "[color=#cfe0f5]%s[/color]" % T.t("window.inventory.chipActive" if bool(e["lider"]) else "window.inventory.chipTeam")
+		# Ciclo 8 (C: window.pokeTooltip chipTm/chipTmAoe/heldTier, window.inventory.heldFx): TMs, held e Ditto transformado
+		var ej: Node = get_node("/root/EstadoJogo")
+		var l3: Dictionary = preload("res://ponte_cidade.gd").dados().lote3
+		var tm: Dictionary = ej.itens_uso.get("tms", {}).get(p.id_persistente, {})
+		if String(tm.get("elemental", "")) != "":
+			t += "
+[color=#9fc0e8]💿 %s - [b]%s[/b][/color]" % [T.t("window.pokeTooltip.chipTm"), String(tm["elemental"])]
+		if bool(tm.get("aoe", false)):
+			t += "
+[color=#9fc0e8]💿 %s[/color]" % T.t("window.pokeTooltip.chipTmAoe")
+		var held := int(ej.itens_uso.get("held", {}).get(p.id_persistente, 0))
+		if held > 0 and l3.get("helds", {}).has(str(held)):
+			var h: Dictionary = l3["helds"][str(held)]
+			t += "
+[color=#e8c98a]🎽 %s · %s · %s[/color]" % [String(l3.get("held_nome", {}).get(String(h["family"]), h["family"])), T.t("window.pokeTooltip.heldTier", {"tier": int(h["tier"])}),
+				T.t("window.inventory.heldFx." + String(h["family"]), {"value": str(h["value"])})]
+		var dt: Dictionary = ej.itens_uso.get("ditto", {}).get(p.id_persistente, {})
+		if not dt.is_empty() and int(dt["ate"]) > int(Time.get_unix_time_from_system()):
+			t += "
+[color=#c88cff]🧬 %s[/color]" % String(preload("res://ponte_cidade.gd").dados().especie(int(dt["speciesId"])).get("nome", ""))
 	else:
 		t = "[b][color=#f0e6d2]%s[/color][/b]%s\n" % [String(e["nome"]), (" [color=#9aa6b3]×%s[/color]" % _milhar(int(e["qtd"]))) if int(e["qtd"]) > 1 else ""]
 		var cats := {"ball": "catBall", "heal": "catHeal", "loot": "catLoot", "stone": "catStone", "berry": "catBerry", "held": "catHeld", "outros": "catItem"}
