@@ -1450,4 +1450,5 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     - campanha de 700 h com Orre às 504 h;
     - build `builds/v1.0` com 3 fases OK;
     - regressão verde (58 testes do Godot).
-  - p99 em foco: não medido (exige a janela em foco e o PC parado).
+  - p99 em foco (medição do usuário, 3 rodadas): 5/5, medianas de 7,45 a 10,73 ms, 159–175 quadros/s.
+  - Tag local `v1.0` (sem push).
