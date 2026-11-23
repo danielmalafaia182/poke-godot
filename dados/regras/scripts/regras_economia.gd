@@ -20,16 +20,17 @@ extends Resource
 ## confirmação no servidor) · evidência: comentário em `sim/servico_cidade.gd`
 @export var evolucao_cidade: String = "cerulean"
 
-## C: "Species from Lv.40+ hunts require 4 stones total"; até 39: 1 de cada · origem C (replicada do cliente sem
-## confirmação no servidor) · evidência: comentário em `sim/servico_cidade.gd`
+## A: G3 Geodude (hunt < 40) 1 pedra, livre 19/11 Graveler (40+) 4; C: "Species from Lv.40+ hunts require 4 stones
+## total"; até 39: 1 de cada · origem A (comprovada contra o original) · evidência: G3
 @export_range(0, 400, 1, "or_greater")  var evolucao_nivel_alto: int = 40
 
 ## C: sem pedra "goes back to Lv.1" · origem C (replicada do cliente sem confirmação no servidor) · evidência:
 ## comentário em `sim/servico_cidade.gd`
 @export_range(0, 10, 1, "or_greater")  var evolucao_nivel_reset: int = 1
 
-## C: "4 stones total — split equally across combos" · origem C (replicada do cliente sem confirmação no servidor)
-## · evidência: comentário em `sim/servico_cidade.gd`
+## A: Graveler → Golem (hunt 40+) = 4 Rock Stones (livre 19/11); C: "4 stones total — split equally across combos"
+## (a divisão entre tipos não foi vista) · origem A (comprovada contra o original) · evidência: comentário em
+## `sim/servico_cidade.gd`
 @export_range(0, 40, 1, "or_greater")  var evolucao_pedras_total_alto: int = 4
 
 @export_group("Venda")
@@ -127,9 +128,12 @@ extends Resource
 
 ## F: receita = pedra do tipo principal da espécie de origem + pedra de cada tipo que a evolução GANHA. Bate com
 ## os dois exemplos do guia (C): Ivysaur → Venusaur = 4× Leaf (nenhum tipo novo); Charmeleon → Charizard = 2× Fire
-## + 2× Feather (ganha Flying). A receita real vem do servidor (o cliente só mostra), por isso é hipótese. Tipo →
+## + 2× Feather (ganha Flying). A receita real vem do servidor (o cliente só mostra), por isso é hipótese. A: só o
+## tipo PRINCIPAL da origem (G3: Geodude Rocha/Terra pediu 1 Rock Stone, não Rock + Earth) e 4 de um tipo só sem
+## tipo novo (livre 19/11: Graveler → Golem). Falta o tipo ganho: abrir a janela de evolução (GET /api/game/evolve
+## traz a receita sem evoluir) do Magikarp (prevê Water + Feather) e do Pupitar (2 Rock + 2 Darkness). Tipo →
 ## pedra (F, nomes das pedras do items.json; Ghost → Darkness e Normal/Fairy → Heart por falta de pedra própria).
-## · origem F (em aberto) · evidência: items.json
+## · origem F (em aberto) · evidência: G3, items.json
 @export var pedra_por_tipo: Dictionary = {
 "BUG": "Cocoon Stone",
 "DARK": "Darkness Stone",

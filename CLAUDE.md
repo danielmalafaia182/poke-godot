@@ -83,6 +83,8 @@ Esta pasta é a raiz do projeto Godot (conteúdo de `PROJETO_ATUAL`, checkpoint 
 | `sim/servico_novo_jogo.gd`, `painel_novo_jogo.gd` | Jogo novo como o original: Bulbasaur/Charmander/Squirtle no nível 1, 100 Small Potions e 100 Poké Balls, primeira hunt recomendada; a tela só abre quando o jogo começa de verdade sem save |
 | `ferramentas/fase4/comparar_nivel_baixo.py` | Item 2: real × sim por minuto (abates, desmaios, HP, dano dado/recebido, níveis) para time de nível baixo |
 | `ferramentas/fase4/ajustar_dano.py` | Item 1: confere variantes da fórmula de dano contra todos os golpes gravados → `dados/relatorios/ajuste_dano.md` |
+| `ferramentas/fase4/arredondamento_dano.py` | round × floor e a forma do aleatório pela verossimilhança da distribuição dos valores (o envelope não separa); `--livre` separa a gravação livre por sessão |
+| `ferramentas/fase4/medir_alvo_ilhas.py` | targetSlot quando só sobram selvagens inalcançáveis (grade do field-init por sessão) — o caso que `alvo_so_alcancavel` decide |
 | `painel_loja.gd`, `painel_evolucao.gd` | Telas novas (só desenham e mandam comandos): loja do Mark (comprar, vender itens, vender Pokémon) e janela de evolução (com pedras mantém o nível; sem pedras volta ao Lv.1) |
 | `ferramentas/gravador/medir_alvo.py` | Escolha de alvo do herói nas gravações: mais próximo em linha reta × menor tempo de caminho, por hunt |
 | `dados/testes/field_init_<slug>.json` | Grades reais enviadas pelo servidor em 7 hunts (geodude, rhyhorn, rhydon, kangaskhan, typhlosion, blastoise, rattata): gabarito da colisão |
@@ -156,7 +158,7 @@ Proposta da fase 4 (não implementada): `PLANO_FASE4.md`.
 | HP de combate do aliado = max(24, 12 × stat de HP) | Venusaur 120→1440, 121→1452; Geodude 2→24, 3→36 |
 | HP do selvagem = max(120, 35 × stat de HP) | todos os maxHp de Rhyhorn, Rhydon, Kangaskhan, Blastoise; Geodude nível 1 no piso |
 | Stat = round(L/100 × (base + 2·IV) × Quality^exp); exp 0,95 HP/vel, 0,8 demais; Power = round(Σstats × Quality) | (B)+(C), paridade testada antes |
-| Fator aleatório 0,85–1,00 por golpe | máx/mín ≤ 1,17 dentro do mesmo indivíduo (72 indivíduos) |
+| Fator aleatório 0,85–1,00 por golpe, **contínuo** (não 16 inteiros 85..100) | máx/mín ≤ 1,17 dentro do mesmo indivíduo (72 indivíduos); 16 inteiros perdem por ~9.800 (3.479 golpes, fases 3/4) e ~89.500 (38.417, livre) de log-verossimilhança (`arredondamento_dano.py`) |
 | Efetividade amplificada: ×1,5→1,75; ×2→2,5; ×4→5,5; resistência ÷1,5 (×½ → 0,333); ×0 e ×1 iguais | (B) + `eff` nos hits |
 | Golpe do líder: sempre o mesmo por indivíduo selvagem; a efetividade e a razão A/D do indivíduo mudam a escolha; empate exato (poder, tipo, categoria e cooldown iguais) → o primeiro da lista | fase3 S1–S4: 324 hits; Stone Edge 58/58 no Rhydon e Earthquake 59/59 no Golem (empate), Hammer Arm 32/32, Double-Edge 39/39, Gyarados com Aqua Tail em 3 e Hydro Pump em 12 Rhyhorn (15/15 coerentes com os stats possíveis) |
 | **Piso de dano: 2 para o aliado, 1 para o selvagem — inclusive com eff 0 ou resistido** | Gastly×Rattata (eff 0: 2 e 1); Rattata→Geodude resistido: 1 em 880 hits |
@@ -1469,3 +1471,16 @@ com dados isolados (no Windows, um projeto/`user://` de teste separado; nunca o 
     caminho: `test_shiny_captura` lia o JSON removido; `test_ciclo_cidade` contava as Super Balls de antes da hunt (o
     Auto-Catch pode gastar algumas; falha intermitente).
   - Obsoletos: `ferramentas/balanceamento/gerar_bosses.py` e `gerar_ginasios.py` (escreviam no JSON removido).
+- 23/11/2026 — Três pontos em aberto do REGRAS.md conferidos contra as gravações existentes (nenhum fecha só com elas).
+  - **Pedras de evolução** (A, gravação livre de 19/11, não analisada antes): Graveler → Golem no nível 94 gastou 4 Rock
+    Stones, como a regra "hunt 40+ = 4 no total"; com o G3 (Geodude, 1 Rock Stone), as duas quantidades passam de C para A.
+    O G3 já descartava "uma pedra por tipo da origem". Falta o tipo ganho: abrir a janela de evolução (GET
+    /api/game/evolve traz a receita sem evoluir) do Magikarp (sim: Water + Feather) e do Pupitar (2 Rock + 2 Darkness).
+  - **Alvo só entre alcançáveis** (`medir_alvo_ilhas.py`): o caso que o parâmetro decide (só sobram inalcançáveis vivos)
+    não aparece em 193.466 fields. Uma 1ª contagem dizia o contrário por misturar as duas contas da gravação livre.
+    Fecha com 15–20 min em togepi, horsea ou goldeen (spawn isolado; `testes/diag_ilhas.gd` lista 31 hunts).
+  - **round × floor** (`arredondamento_dano.py`, `dados/relatorios/arredondamento_dano_2026-11-23.md`): empate em 41.896
+    golpes com o aliado no nível ≥ 20; o efeito é de no máximo 1 ponto. Fecha com aliado nível 5–15 na rattata ou
+    geodude (~30 min). Achado (A): o fator aleatório é contínuo.
+  - `catalogo.py`: o comentário do código passa a valer sobre a descrição anterior quando a estende; "fecha com" por
+    parâmetro nesses três. Saída da sim inalterada (só comentários).

@@ -215,7 +215,11 @@ def main():
             if (fonte, k) in ANOTA and not texto:
                 origem, texto = ANOTA[(fonte, k)]
             if (fonte, k) in anterior:
-                origem, texto = anterior[(fonte, k)]["origem"], anterior[(fonte, k)]["descricao"]
+                ant = anterior[(fonte, k)]
+                # o texto anterior guarda os motivos do balanceamento.json removido; se o comentário do código é o mesmo
+                # texto estendido (contém o começo do anterior), o comentário vale (registro novo de evidência no código)
+                if not (texto and ant["descricao"][:25] in texto and len(texto) > len(ant["descricao"])):
+                    origem, texto = ant["origem"], ant["descricao"]
             entradas.append({
                 "id": "%s.%s" % (rec, k), "recurso": rec, "sistema": SISTEMA[rec], "fonte": fonte, "chave": k, "literal": v["literal"],
                 "tipo": v["tipo"], "descricao": texto, "origem": origem, "status": STATUS[origem],
@@ -303,6 +307,15 @@ def escrever_md(cat):
     for nome, onde, motivo in FIXOS_CODIGO:
         L.append("| %s | `%s` | %s |" % (nome, onde, motivo))
     L += ["", "## Em aberto e o que fecharia cada ponto", ""]
+    # o que fecha cada parâmetro quando já se sabe (23/11: as gravações existentes conferidas antes)
+    FECHAR_PARAM = {
+        "pedra_por_tipo": "abrir, com o gravador ligado, a janela de evolução (GET /api/game/evolve traz a receita sem evoluir) do "
+                          "Magikarp (a sim prevê Water + Feather) e do Pupitar (2 Rock + 2 Darkness): falta só o tipo ganho",
+        "alvo_so_alcancavel": "15–20 min numa hunt com spawn isolado (togepi, horsea ou goldeen) com um Pokémon forte; "
+                              "medir_alvo_ilhas.py lê o targetSlot quando só sobram inalcançáveis (nenhuma gravação tem o caso)",
+        "arredondamento_dano": "aliado nível 5–15 na hunt rattata ou geodude por ~30 min (dano 5–20); arredondamento_dano.py "
+                               "(41.896 golpes de nível ≥ 20 dão empate)",
+    }
     fechar = {"movimento": "gravação de luta média (MV1–MV3) ou mais trechos da gravação livre no validador",
               "combate e dano": "gravação de nível 1–4 com captura (G11 estendida) para separar o piso de ataque dos stats do nível 2",
               "captura e shiny": "gravações de captura de outras espécies EPIC (viés do Larvitar) e o shinyBase por tier",
@@ -311,7 +324,7 @@ def escrever_md(cat):
         if e["status"] == "em aberto":
             sis = e["sistema"]
             L.append("- **%s** (%s): %s — fecha com: %s" % (e.get("chave", e.get("regra", ""))[:80], sis, esc((e.get("descricao") or e.get("evidencia", ""))[:140]),
-                                                         fechar.get(sis, "gravação do original que mostre esse valor")))
+                                                         FECHAR_PARAM.get(e.get("chave", ""), fechar.get(sis, "gravação do original que mostre esse valor"))))
     L += ["- **Orre** (hipótese F): a dificuldade depende do dano dos selvagens de nível alto na sim — fecha com gravação de Orre.",
           "- **Viés do Larvitar** na captura (z 2,1) — fecha com gravações de captura de outras espécies EPIC.", ""]
     open(os.path.join(RAIZ, "REGRAS.md"), "w", encoding="utf-8", newline="\n").write("\n".join(L))

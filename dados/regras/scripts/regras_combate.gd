@@ -10,8 +10,8 @@ extends Resource
 ## A · origem A (comprovada contra o original) · evidência: comentário em `sim/regras.gd`
 @export_range(0.0, 1.0, 0.0001)  var aleatorio_max: float = 1.0
 
-## A: máx/mín ≤ 1,17 por indivíduo · origem A (comprovada contra o original) · evidência: comentário em
-## `sim/regras.gd`
+## A: máx/mín ≤ 1,17 por indivíduo; aleatório contínuo (16 inteiros 85..100 perdem por ~89 mil de logL em 38 mil
+## golpes, arredondamento_dano.py) · origem A (comprovada contra o original) · evidência: arredondamento_dano.py
 @export_range(0.0, 1.0, 0.0001)  var aleatorio_min: float = 0.85
 
 @export_group("Ataque")
@@ -28,8 +28,9 @@ extends Resource
 @export_range(0, 100, 1, "or_greater")  var ataque_selvagem_ticks: int = 10
 
 @export_group("Cadaver")
-## espécie sem cadáver conhecido usa o próprio sprite escurecido: o jogador vê onde o selvagem caiu · origem E
-## (desenhada por nós) · evidência: comentário em `sim/regras.gd`
+## E: espécie sem cadáver conhecido (dados/corpos_por_especie.json) deixa corpse 0 = genérico (a vista desenha o
+## sprite da própria espécie escurecido). Todos os cadáveres do atlas são Pokémon reconhecíveis: não há um neutro
+## para usar. · origem E (desenhada por nós) · evidência: dados/corpos_por_especie.json
 @export var cadaver_generico: bool = true
 
 ## A aproximado: corpos somem em ~19–20 s · unidade: milissegundos · origem A (comprovada contra o original) ·
@@ -82,7 +83,9 @@ extends Resource
 @export var stats_dano_selvagem: String = "continuo"
 
 @export_group("Geral")
-## F: round (Math.round) ou floor; sem evidência · origem F (em aberto) · evidência: comentário em `sim/regras.gd`
+## F: round (Math.round) ou floor; sem evidência — empate em 41.896 golpes (arredondamento_dano.py, 23/11): no
+## nível ≥ 20 meio ponto não aparece; fecha com aliado nível 5–15 na rattata · origem F (em aberto) · evidência:
+## arredondamento_dano.py
 @export var arredondamento_dano: String = "round"
 
 ## F: fórmula candidata · unidade: segundos · origem F (em aberto) · evidência: comentário em `sim/regras.gd`

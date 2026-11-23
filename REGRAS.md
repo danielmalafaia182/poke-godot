@@ -7,8 +7,8 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 | Status | Parâmetros e regras |
 | --- | --- |
 | desenhada por nós | 116 |
-| comprovada contra o original | 109 |
-| replicada do cliente sem confirmação no servidor | 48 |
+| comprovada contra o original | 111 |
+| replicada do cliente sem confirmação no servidor | 46 |
 | em aberto | 16 |
 | **total** | **289** (202 parâmetros editáveis no Game Master + 87 regras de fórmula) |
 
@@ -181,12 +181,12 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 | Regra | Valor atual | Origem | Status | Evidência | Valor original (se diferente) | Controle |
 | --- | --- | --- | --- | --- | --- | --- |
 | `aleatorio_max` — A | `1.0` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → aleatorio_max` |
-| `aleatorio_min` — A: máx/mín ≤ 1,17 por indivíduo | `0.85` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → aleatorio_min` |
-| `arredondamento_dano` — F: round (Math.round) ou floor; sem evidência | `"round"` | F | em aberto | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → arredondamento_dano` |
+| `aleatorio_min` — A: máx/mín ≤ 1,17 por indivíduo; aleatório contínuo (16 inteiros 85..100 perdem por ~89 mil de logL em 38 mil golpes, arredondamento_dano.py) | `0.85` | A | comprovada contra o original | arredondamento_dano.py |  | `dados/regras/<perfil>/RegrasCombate.tres → aleatorio_min` |
+| `arredondamento_dano` — F: round (Math.round) ou floor; sem evidência — empate em 41.896 golpes (arredondamento_dano.py, 23/11): no nível ≥ 20 meio ponto não aparece; fecha com aliado  | `"round"` | F | em aberto | arredondamento_dano.py |  | `dados/regras/<perfil>/RegrasCombate.tres → arredondamento_dano` |
 | `ataque_aliado_ticks` — A: 1600 ms, grade fixa (as variações de 1200/2000 vêm de field não recebido) | `8` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → ataque_aliado_ticks` |
 | `ataque_selvagem_extra_prob` — F: às vezes +1 tick (média medida ~2050 ms no Kangaskhan) | `0.25` | F | em aberto | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → ataque_selvagem_extra_prob` |
 | `ataque_selvagem_ticks` — A: ~2000 ms por selvagem | `10` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → ataque_selvagem_ticks` |
-| `cadaver_generico` — espécie sem cadáver conhecido usa o próprio sprite escurecido: o jogador vê onde o selvagem caiu | `true` | E | desenhada por nós | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → cadaver_generico` |
+| `cadaver_generico` — E: espécie sem cadáver conhecido (dados/corpos_por_especie.json) deixa corpse 0 = genérico (a vista desenha o sprite da própria espécie escurecido). Todos os ca | `true` | E | desenhada por nós | dados/corpos_por_especie.json |  | `dados/regras/<perfil>/RegrasCombate.tres → cadaver_generico` |
 | `cadaver_ms` — A aproximado: corpos somem em ~19–20 s | `20000` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → cadaver_ms` |
 | `fator_selvagem` — F: fórmula candidata | `1.8` | F | em aberto | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasCombate.tres → fator_selvagem` |
 | `formula_dano` — Fase 4, item 1 (F, `ferramentas/fase4/ajustar_dano.py`, tabela em dados/relatorios/ajuste_dano.md): variante da fórmula. "atual" = a de sempre, com o divisor ≥  | `"sem_piso_divisor"` | F | em aberto | /ajustar_dano.py, dados/relatorios/ajuste_dano.md |  | `dados/regras/<perfil>/RegrasCombate.tres → formula_dano` |
@@ -328,11 +328,11 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 | `capacidade_depot_pilhas` — o original não mostrou teto (89 pilhas sem aviso); 200 é folgado e evita lista infinita | `200.0` | E | desenhada por nós | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → capacidade_depot_pilhas` |
 | `casas_liberadas` — decisão do usuário (ciclo 5): a casa à direita da porta do Pokémon Center fica transitável; no original ela é bloqueada pela peça invisível 8274 (A, collision.j | `[[-2.0, -4.0]]` | E | desenhada por nós | collision.json | a casa (−2,−4) bloqueada pela peça 8274 (A/C) | `dados/regras/<perfil>/RegrasEconomia.tres → casas_liberadas` |
 | `evolucao_cidade` — C: "Only works in Cerulean — the button is locked during a hunt" Evolução | `"cerulean"` | C | replicada do cliente sem confirmação no servidor | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → evolucao_cidade` |
-| `evolucao_nivel_alto` — C: "Species from Lv.40+ hunts require 4 stones total"; até 39: 1 de cada | `40` | C | replicada do cliente sem confirmação no servidor | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → evolucao_nivel_alto` |
+| `evolucao_nivel_alto` — A: G3 Geodude (hunt < 40) 1 pedra, livre 19/11 Graveler (40+) 4; C: "Species from Lv.40+ hunts require 4 stones total"; até 39: 1 de cada | `40` | A | comprovada contra o original | G3 |  | `dados/regras/<perfil>/RegrasEconomia.tres → evolucao_nivel_alto` |
 | `evolucao_nivel_reset` — C: sem pedra "goes back to Lv.1" | `1` | C | replicada do cliente sem confirmação no servidor | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → evolucao_nivel_reset` |
-| `evolucao_pedras_total_alto` — C: "4 stones total — split equally across combos" | `4` | C | replicada do cliente sem confirmação no servidor | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → evolucao_pedras_total_alto` |
+| `evolucao_pedras_total_alto` — A: Graveler → Golem (hunt 40+) = 4 Rock Stones (livre 19/11); C: "4 stones total — split equally across combos" (a divisão entre tipos não foi vista) | `4` | A | comprovada contra o original | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → evolucao_pedras_total_alto` |
 | `limite_time` — C: "Your team only carries 6 — the rest rest here" Depot | `6` | C | replicada do cliente sem confirmação no servidor | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → limite_time` |
-| `pedra_por_tipo` — F: receita = pedra do tipo principal da espécie de origem + pedra de cada tipo que a evolução GANHA. Bate com os dois exemplos do guia (C): Ivysaur → Venusaur = | `{ "BUG": "Cocoon Stone", "DARK": "Darkness Stone", "DRAGO…` | F | em aberto | items.json |  | `dados/regras/<perfil>/RegrasEconomia.tres → pedra_por_tipo` |
+| `pedra_por_tipo` — F: receita = pedra do tipo principal da espécie de origem + pedra de cada tipo que a evolução GANHA. Bate com os dois exemplos do guia (C): Ivysaur → Venusaur = | `{ "BUG": "Cocoon Stone", "DARK": "Darkness Stone", "DRAGO…` | F | em aberto | G3, items.json |  | `dados/regras/<perfil>/RegrasEconomia.tres → pedra_por_tipo` |
 | `qtd_max_por_compra` — limite de sanidade por operação de compra | `100000.0` | E | desenhada por nós | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → qtd_max_por_compra` |
 | `ramos_eevee` — C: "Eevee is a special case (its own stone system)"; os ramos (cada pedra leva a um Pokémon) seguem o canon (B/F). O caminho sem pedra vai para o destino do cre | `{ "134": "Water Stone", "135": "Thunder Stone", "136": "F…` | C | replicada do cliente sem confirmação no servidor | creatures.json |  | `dados/regras/<perfil>/RegrasEconomia.tres → ramos_eevee` |
 | `starter_no_time` — o inicial não vai para a BOX: o jogador nunca fica sem o Pokémon do começo | `true` | E | desenhada por nós | comentário em `sim/servico_cidade.gd` |  | `dados/regras/<perfil>/RegrasEconomia.tres → starter_no_time` |
@@ -362,7 +362,7 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 | Regra | Valor atual | Origem | Status | Evidência | Valor original (se diferente) | Controle |
 | --- | --- | --- | --- | --- | --- | --- |
 | `alvo_criterio` — A (18/11, medir_alvo.py: 2295/2400 trocas × 2067 com Chebyshev): alvo = menor tempo de caminho até encostar. "chebyshev" volta à regra anterior (linha reta). Em | `"caminho"` | A | comprovada contra o original | medir_alvo.py |  | `dados/regras/<perfil>/RegrasMovimento.tres → alvo_criterio` |
-| `alvo_so_alcancavel` — F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do herói). Sem isso, o herói fica preso num selvage | `true` | F | em aberto | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasMovimento.tres → alvo_so_alcancavel` |
+| `alvo_so_alcancavel` — F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do herói). Sem isso, o herói fica preso num selvage | `true` | F | em aberto | medir_alvo_ilhas.py |  | `dados/regras/<perfil>/RegrasMovimento.tres → alvo_so_alcancavel` |
 | `alvo_troca_se_bloqueado` — sem caminho até o alvo e com selvagem encostado, ataca o encostado: senão o herói apanha parado | `true` | E | desenhada por nós | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasMovimento.tres → alvo_troca_se_bloqueado` |
 | `alvo_vem_ao_encontro` — Revertido no ciclo 2: o alvo NÃO vem de fora da borda real (A: 0 de 9.120 intervalos fora de 13×13). Fica só para experimento. O que vale (A) é o alvo perseguir | `false` | A | comprovada contra o original | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasMovimento.tres → alvo_vem_ao_encontro` |
 | `caminho_margem` — F: folga da caixa de busca em volta do herói/alvo (tiles) | `6` | F | em aberto | comentário em `sim/regras.gd` |  | `dados/regras/<perfil>/RegrasMovimento.tres → caminho_margem` |
@@ -461,9 +461,9 @@ Origem: A observado no original · B Pokepedia · C cliente · D teste · E deci
 
 ## Em aberto e o que fecharia cada ponto
 
-- **pedra_por_tipo** (loja, Nurse Joy, depot e evolução): F: receita = pedra do tipo principal da espécie de origem + pedra de cada tipo que a evolução GANHA. Bate com os dois exemplos do guia (C):  — fecha com: gravação do original que mostre esse valor
-- **alvo_so_alcancavel** (movimento): F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do herói). Sem isso, o herói fi — fecha com: gravação de luta média (MV1–MV3) ou mais trechos da gravação livre no validador
-- **arredondamento_dano** (combate e dano): F: round (Math.round) ou floor; sem evidência — fecha com: gravação de nível 1–4 com captura (G11 estendida) para separar o piso de ataque dos stats do nível 2
+- **pedra_por_tipo** (loja, Nurse Joy, depot e evolução): F: receita = pedra do tipo principal da espécie de origem + pedra de cada tipo que a evolução GANHA. Bate com os dois exemplos do guia (C):  — fecha com: abrir, com o gravador ligado, a janela de evolução (GET /api/game/evolve traz a receita sem evoluir) do Magikarp (a sim prevê Water + Feather) e do Pupitar (2 Rock + 2 Darkness): falta só o tipo ganho
+- **alvo_so_alcancavel** (movimento): F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do herói). Sem isso, o herói fi — fecha com: 15–20 min numa hunt com spawn isolado (togepi, horsea ou goldeen) com um Pokémon forte; medir_alvo_ilhas.py lê o targetSlot quando só sobram inalcançáveis (nenhuma gravação tem o caso)
+- **arredondamento_dano** (combate e dano): F: round (Math.round) ou floor; sem evidência — empate em 41.896 golpes (arredondamento_dano.py, 23/11): no nível ≥ 20 meio ponto não aparec — fecha com: aliado nível 5–15 na hunt rattata ou geodude por ~30 min (dano 5–20); arredondamento_dano.py (41.896 golpes de nível ≥ 20 dão empate)
 - **ataque_selvagem_extra_prob** (combate e dano): F: às vezes +1 tick (média medida ~2050 ms no Kangaskhan) — fecha com: gravação de nível 1–4 com captura (G11 estendida) para separar o piso de ataque dos stats do nível 2
 - **caminho_margem** (movimento): F: folga da caixa de busca em volta do herói/alvo (tiles) — fecha com: gravação de luta média (MV1–MV3) ou mais trechos da gravação livre no validador
 - **captura_k** (captura e shiny): peso do investimento desde a última captura no medidor (forma F; c e k por máxima verossimilhança) — fecha com: gravações de captura de outras espécies EPIC (viés do Larvitar) e o shinyBase por tier

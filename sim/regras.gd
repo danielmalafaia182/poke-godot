@@ -33,6 +33,8 @@ const PARAMETROS := {
 	"inicio_ilha_com_spawns": true,
 	# F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do
 	# herói). Sem isso, o herói fica preso num selvagem de outra ilha e a busca no mapa inteiro roda a cada passo.
+	# Com alvo_criterio "caminho" só decide quando os vivos alcançáveis acabam; nenhuma gravação tem esse caso
+	# (medir_alvo_ilhas.py, 193.466 fields). Fecha com uma hunt de spawn isolado: togepi, horsea ou goldeen.
 	"alvo_so_alcancavel": true,
 	# A (18/11, medir_alvo.py: 2295/2400 trocas × 2067 com Chebyshev): alvo = menor tempo de caminho até encostar.
 	# "chebyshev" volta à regra anterior (linha reta). Em labirinto (nightmare_elekid) a linha reta mandava o herói a um
@@ -66,11 +68,11 @@ const PARAMETROS := {
 	"cadaver_ms": 20000,                    # A aproximado: corpos somem em ~19–20 s
 	"fator_selvagem": 1.8,                  # F: fórmula candidata
 	"stab": 1.5,                            # B
-	"aleatorio_min": 0.85,                  # A: máx/mín ≤ 1,17 por indivíduo
+	"aleatorio_min": 0.85,                  # A: máx/mín ≤ 1,17 por indivíduo; aleatório contínuo (16 inteiros 85..100 perdem por ~89 mil de logL em 38 mil golpes, arredondamento_dano.py)
 	"aleatorio_max": 1.0,                   # A
 	"piso_aliado": 2,                       # A: Gastly × Rattata
 	"piso_selvagem": 1,                     # A: 880 hits do Rattata no Geodude
-	"arredondamento_dano": "round",         # F: round (Math.round) ou floor; sem evidência
+	"arredondamento_dano": "round",         # F: round (Math.round) ou floor; sem evidência — empate em 41.896 golpes (arredondamento_dano.py, 23/11): no nível ≥ 20 meio ponto não aparece; fecha com aliado nível 5–15 na rattata
 	# Fase 4, item 1 (F, `ferramentas/fase4/ajustar_dano.py`, tabela em dados/relatorios/ajuste_dano.md): variante da
 	# fórmula. "atual" = a de sempre, com o divisor ≥ 1; "sem_piso_divisor" = igual, sem o max(1, D) (stats contínuos do
 	# selvagem no nível 1–4 ficam em 0,3–1,0); "classica" = (K + 2) × mods; "mais2_fim" = K × mods + 2.

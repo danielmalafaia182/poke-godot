@@ -14,8 +14,10 @@ extends Resource
 @export var alvo_criterio: String = "caminho"
 
 ## F: o alvo é o selvagem vivo mais próximo entre os alcançáveis (algum tile livre a Chebyshev ≤ 1 dele na ilha do
-## herói). Sem isso, o herói fica preso num selvagem de outra ilha e a busca no mapa inteiro roda a cada passo. ·
-## unidade: segundos · origem F (em aberto) · evidência: comentário em `sim/regras.gd`
+## herói). Sem isso, o herói fica preso num selvagem de outra ilha e a busca no mapa inteiro roda a cada passo.
+## Com alvo_criterio "caminho" só decide quando os vivos alcançáveis acabam; nenhuma gravação tem esse caso
+## (medir_alvo_ilhas.py, 193.466 fields). Fecha com uma hunt de spawn isolado: togepi, horsea ou goldeen. ·
+## unidade: segundos · origem F (em aberto) · evidência: medir_alvo_ilhas.py
 @export var alvo_so_alcancavel: bool = true
 
 ## sem caminho até o alvo e com selvagem encostado, ataca o encostado: senão o herói apanha parado · unidade:
