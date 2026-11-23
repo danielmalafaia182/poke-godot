@@ -1,21 +1,21 @@
 # Inventário do cliente original (backlog do ciclo 2)
 
-Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do cliente original (C: 4187 textos em pt-BR, chunk `3vooh2axx98am.js`). Cada linha é uma janela, uma parte da HUD ou um grupo de telas, com o número de textos (botões, títulos, avisos) e exemplos. Status no nosso jogo avaliado em 19/11; revisto no ciclo 7 (22/11).
+Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do cliente original (C: 4187 textos em pt-BR, chunk `3vooh2axx98am.js`). Cada linha é uma janela, uma parte da HUD ou um grupo de telas, com o número de textos (botões, títulos, avisos) e exemplos. Status no nosso jogo avaliado em 19/11; revisto nos ciclos 7 e 8 (22/11).
 
-**76 grupos: 30 feitos, 18 parciais, 28 faltando** (730 / 1801 / 1656 textos). Dos que faltam, 24 dependem de outros jogadores ou de conta (ficam para a versão online).
+**76 grupos: 38 feitos, 13 parciais, 25 faltando** (1154 / 1416 / 1617 textos). Dos que faltam, 24 dependem de outros jogadores ou de conta (ficam para a versão online).
 
 | Grupo | Status | Textos | No nosso jogo / o que falta | Exemplos |
 | --- | --- | --- | --- | --- |
-| `window.breeding` | parcial | 116 | sim/servico_breeding.gd (ciclo 6): ovo, herança de IV/Quality, shiny, choca com abates; o Centro de Breeding do dock cruza o melhor par da box. Falta escolher os pais na tela, comprar slot e chocar na hora (💎) | Centro de Breeding · Par reprodutor · Selecione no box |
-| `window.goldenStars` | parcial | 116 | sim/servico_golden_stars.gd (ciclo 7): rolagem a cada 12 h, 9 candidatos, estrela de 6 h, slots 2–3, 8 bônus na hunt; janela pelo ⚙ (rolar e sortear). Faltam escolha direta, trocar bônus/Pokémon e o desbloqueio de 24 h na tela | Poke Slot Machine · Trocar bônus · Trocar Pokémon |
+| `window.breeding` | feito | 116 | painel_breeding.gd (ciclo 8): escolher os pais, caminho, dobro de pedras, incubadora (C; números classe 3). Comprar slot e chocar na hora são de diamantes (online) | Centro de Breeding · Par reprodutor · Selecione no box |
+| `window.goldenStars` | feito | 116 | painel_golden_stars.gd (ciclo 8): slots, desbloqueios, Roll, escolha direta, sorteio, trocar bônus (A/C; custos classe 3) | Poke Slot Machine · Trocar bônus · Trocar Pokémon |
 | `window.seasonPass` | falta | 102 | passe de temporada | Acelerar · Comprado · Passe Premium · {{price}} |
 | `landing` | falta | 84 | página inicial do site (fora do jogo) | Direto no navegador · Também no celular · Sem download |
-| `window.professions` | parcial | 83 | sim/servico_profissoes.gd (ciclo 6): Botânico e Prestígio, ranks E–S, captura +3%/rank, mentor (A), ervas e fotos; janela no dock com uma ação por vez. Falta a pesca e a tela completa | Profissões · Fechar · Em breve |
-| `window.talents` | parcial | 27 | árvore do Botânico como liberação por rank (ciclo 7, classe 3); falta a tela de talentos | Talentos do Botânico · Berry que protege do tipo {{type}} · Berry que protege dos golpes tipo Neutro |
-| `window.ditto` | falta | 22 | cópia com Ditto | Espécies disponíveis · Limpar filtros · {{shown}}/{{total}} |
-| `window.craft` | parcial | 19 | fila de crafting do Botânico (ciclo 7): receita, unidades uma a uma, coletar; na janela de Profissões (Craftar, Coletar). Falta o painel próprio | 🌿 {{n}} Fresh Herbs · 🍂 {{n}} Wild Herbs · Painel de Crafts |
-| `window.fishing` | falta | 15 | pesca | Fechar · ⏳ Aguarde {{seconds}}s · Nv {{min}}–{{max}} |
-| `window.fishingWave` | falta | 2 | onda de pesca | Pescando… · {{value}}s |
+| `window.professions` | feito | 83 | painel_profissoes.gd (ciclo 8): abas das carreiras, rank, requisitos, bônus, troca, crafting e pictures | Profissões · Fechar · Em breve |
+| `window.talents` | feito | 27 | árvore do Botânico na janela de Profissões (liberação por rank, classe 3) | Talentos do Botânico · Berry que protege do tipo {{type}} · Berry que protege dos golpes tipo Neutro |
+| `window.ditto` | feito | 22 | sim/servico_ditto.gd (ciclo 8): transformação de 12 h, −25%, restrições do cliente; fonte offline no treinador 100 (classe 3). O Shiny Ditto é da loja de diamantes (online) | Espécies disponíveis · Limpar filtros · {{shown}}/{{total}} |
+| `window.craft` | feito | 19 | crafting na janela de Profissões: Craftar N, fila, Coletar (C; números classe 3) | 🌿 {{n}} Fresh Herbs · 🍂 {{n}} Wild Herbs · Painel de Crafts |
+| `window.fishing` | feito | 15 | painel_pesca.gd + sim/servico_pesca.gd (ciclo 8): Pescador na cidade, faixas, skill, progresso, recarga (C; A: 12 peixes no nível 4; faixas classe 3) | Fechar · ⏳ Aguarde {{seconds}}s · Nv {{min}}–{{max}} |
+| `window.fishingWave` | parcial | 2 | a onda de pesca é abstrata (E): espera e recarga, sem luta na água | Pescando… · {{value}}s |
 | `window.pvp` | falta | 212 | PvP (online) | PvP — Batalhas · Jogadores Online · Histórico |
 | `window.guild` | falta | 204 | guilda, com Dailies da guild e parcela de XP `guild` (online) | Guild · Fechar · Carregando… |
 | `window.market` | falta | 202 | mercado entre jogadores (online) | Adicionar · Nenhum jogador ignorado. · Ignorar jogador (bloqueia ofertas dele) |
@@ -46,7 +46,7 @@ Gerado por `ferramentas/inventario/gerar_inventario.py` a partir dos textos do c
 | `window.inventory` | parcial | 140 | painel_inventario.gd (ciclo 2) e ⚙ → Usar itens: Rare Candy, berries, TMs (TM Researcher), held items (Held Machine, equipar) — ciclo 6 | Eficiência ×{{rate}} · Expira em {{left}} · Captura garantida |
 | `hud.config` | parcial | 67 | ⚙ na cidade: VIP, Streak, Diárias, Itens, Metas, Tutorial, tamanho da interface e tela cheia (ciclo 2); faltam som e zoom da hunt | Efeitos de ambiente · Sombras · Notificações de batalha |
 | `window.pokedex` | parcial | 49 | painel_pokedex.gd (ciclo 2): busca, capturado/não capturado, tipo, detalhe com abates, evolução e stats; falta o Bônus de Captura +25% XP (número de abates e XP são do servidor) | Todos os tipos · Voltar · Bônus disponível |
-| `window.pokeTooltip` | parcial | 26 | cartão do Pokémon na HUD; faltam campos (TMs, held item, golpes com cooldown) | Pokémon · Ativo · 🎭 Addon |
+| `window.pokeTooltip` | feito | 26 | cartão do Pokémon com TMs, held e Ditto (ciclo 8) | Pokémon · Ativo · 🎭 Addon |
 | `misc` | parcial | 18 | textos soltos | Inseto · Sombrio · Dragão |
 | `window.pokeball` | parcial | 14 | escolha da bola no painel Capture da hunt | Pokébola · +{{count}}× {{name}} · Loja de Diamantes |
 | `window.gifts` | parcial | 6 | o Daily Gift entrega direto na BAG; falta o Gift Center | 🎁 Gift Center · Fechar · Resgatar |
@@ -104,3 +104,10 @@ anúncio global de ginásio, notícias, promoções e a página inicial do site.
 direta, trocar bônus/Pokémon), profissões (tela completa), talentos e crafting (painéis próprios); cartão do Pokémon com
 TMs e held (`window.pokeTooltip`); guias da Pokepedia; avisos e ações de NPC que faltam (`hud.world`, `modal`); Gift
 Center (`window.gifts`); escolha de bola (`window.pokeball`).
+
+## Depois do ciclo 8 (versão 1.0 offline)
+
+Pesca e Ditto feitos; breeding, Golden Stars, profissões, talentos, crafting e o cartão do Pokémon passam a feitos. **Offline
+não falta nenhum grupo inteiro.** Os parciais que ficam são detalhes ou dependem do servidor: guias da Pokepedia, loja de
+diamantes (`shop`), avisos e ações de NPC (`hud.world`, `modal`), Gift Center (o prêmio vai direto para a BAG, E), escolha
+de bola com itens de diamante (`window.pokeball`), a onda de pesca abstrata, os anúncios globais e os pacotes da loja.
