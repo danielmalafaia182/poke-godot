@@ -124,8 +124,8 @@ func _ready() -> void:
 	var ativ := Button.new()
 	ativ.text = "Ativar perfil"
 	ativ.pressed.connect(func() -> void:
-		RJ.definir_perfil(perfil_op.get_item_text(perfil_op.selected), true)
-		_avisar(recarregar_regras()))
+		var erro := RJ.definir_perfil(perfil_op.get_item_text(perfil_op.selected), true)
+		_avisar(erro if erro != "" else recarregar_regras()))
 	hp.add_child(ativ)
 	var rec := Button.new()
 	rec.name = "Recarregar"
@@ -195,6 +195,8 @@ func _nivel_pokes(n: int, so_lider: bool) -> void:
 
 
 func dar_item(texto: String, qtd: int) -> String:
+	if qtd < 1 or qtd > 100000:
+		return "A quantidade deve ficar entre 1 e 100000."
 	var ej := _ej()
 	var d = preload("res://ponte_cidade.gd").dados()
 	var id := int(texto) if texto.is_valid_int() else -1
@@ -228,13 +230,15 @@ func pular_esperas() -> String:
 		ej.pesca["prox_ms"] = 0
 	if ej.bosses is Dictionary and ej.bosses.has("recarga"):
 		ej.bosses["recarga"] = {}
+	ej.solicitar_salvamento()
 	return "Esperas zeradas"
 
 
 func recarregar_regras() -> String:
-	RJ.recarregar()
-	var ej := _ej()
-	for v in ["_servico_itens", "_servico_prof", "_servico_breed", "_servico_gs", "_servico_pesca"]:
-		if v in ej:
-			ej.set(v, null)
-	return "Regras recarregadas (perfil %s). Valem já nos serviços da cidade e a partir da próxima hunt." % RJ.perfil()
+	_ej().recarregar_regras()
+	# Carrega agora para que um override recusado apareça no painel, antes da próxima hunt.
+	for rec in RJ.recursos():
+		RJ.valores(rec)
+	preload("res://ponte_cidade.gd").dados()
+	var avisos := RJ.avisos()
+	return "\n".join(avisos) if not avisos.is_empty() else "Regras recarregadas (perfil %s). Valem já nos serviços da cidade e a partir da próxima hunt." % RJ.perfil()

@@ -40,8 +40,8 @@ func _ready() -> void:
 	perfil_op.name = "Perfil"
 	topo.add_child(perfil_op)
 	var ativar := _botao("Ativar", func() -> void:
-		RJ.definir_perfil(perfil_op.get_item_text(perfil_op.selected), false)
-		_avisar("Perfil ativo: " + RJ.perfil())
+		var erro := RJ.definir_perfil(perfil_op.get_item_text(perfil_op.selected), false)
+		_avisar(erro if erro != "" else "Perfil ativo: " + RJ.perfil())
 		_preencher())
 	ativar.name = "Ativar"
 	topo.add_child(ativar)
@@ -52,7 +52,7 @@ func _ready() -> void:
 	var novo := _botao("Novo perfil", func() -> void:
 		var e := RJ.criar_perfil(novo_nome.text.strip_edges(), RJ.perfil(), false)
 		if e == "":
-			RJ.definir_perfil(novo_nome.text.strip_edges(), false)
+			e = RJ.definir_perfil(novo_nome.text.strip_edges(), false)
 		_avisar(e if e != "" else "Perfil criado e ativo: " + RJ.perfil())
 		_perfis()
 		_preencher())
@@ -147,15 +147,15 @@ func _aba_parametros() -> Control:
 	v.add_child(h3)
 	var r1 := _botao("Restaurar original", func() -> void:
 		if not sel.is_empty():
-			RJ.restaurar(String(sel["recurso"]), String(sel["chave"]), "", false)
-			_avisar("%s restaurado." % sel["chave"])
+			var erro := RJ.restaurar(String(sel["recurso"]), String(sel["chave"]), "", false)
+			_avisar(erro if erro != "" else "%s restaurado." % sel["chave"])
 			_preencher())
 	r1.name = "RestaurarCampo"
 	h3.add_child(r1)
 	var r2 := _botao("Restaurar grupo", func() -> void:
 		if not sel.is_empty():
-			RJ.restaurar(String(sel["recurso"]), "", "", false)
-			_avisar("%s inteiro restaurado ao original." % sel["recurso"])
+			var erro := RJ.restaurar(String(sel["recurso"]), "", "", false)
+			_avisar(erro if erro != "" else "%s inteiro restaurado ao original." % sel["recurso"])
 			_preencher())
 	r2.name = "RestaurarGrupo"
 	h3.add_child(r2)
@@ -207,16 +207,17 @@ func _selecionar() -> void:
 		return
 	sel = it.get_metadata(0)
 	desc.text = "%s — %s\nOrigem %s · %s · evidência: %s" % [sel["chave"], sel["descricao"], sel["origem"], sel["status"], sel["evidencia"]]
-	campo_valor.text = var_to_str(RJ.valores(String(sel["recurso"])).get(String(sel["chave"])))
+	campo_valor.text = JSON.stringify(RJ.valores(String(sel["recurso"])).get(String(sel["chave"])))
 
 
 func _aplicar() -> void:
 	if sel.is_empty():
 		return
-	var v = str_to_var(campo_valor.text)
-	if v == null and campo_valor.text.strip_edges() != "null":
-		_avisar("Valor inválido (use a sintaxe do Godot: 0.5, 10, true, \"texto\", {\"a\": 1}, [1, 2]).")
+	var json := JSON.new()
+	if json.parse(campo_valor.text) != OK:
+		_avisar("Valor inválido (use JSON: 0.5, 10, true, \"texto\", {\"a\": 1}, [1, 2]).")
 		return
+	var v = json.data
 	var e := RJ.gravar_valor(String(sel["recurso"]), String(sel["chave"]), v, "", false)
 	_avisar(e if e != "" else "%s = %s no perfil %s" % [sel["chave"], campo_valor.text, RJ.perfil()])
 	if e != "":
@@ -336,7 +337,11 @@ func _editar_tab() -> void:
 	var it := arvore_tab.get_edited()
 	var m: Dictionary = it.get_metadata(0)
 	var t := it.get_text(1)
-	var v = t if int(m["tipo"]) == TYPE_STRING else (float(t) if int(m["tipo"]) == TYPE_FLOAT else int(t))
+	if int(m["tipo"]) != TYPE_STRING and not t.is_valid_float():
+		_avisar("Valor inválido: informe um número.")
+		_preencher_tab()
+		return
+	var v = t if int(m["tipo"]) == TYPE_STRING else float(t)
 	var e := RJ.gravar_alteracao(String(m["tabela"]), m["chave"], v, "", false)
 	_avisar(e if e != "" else "Alteração gravada no perfil %s." % RJ.perfil())
 	_preencher_tab()
@@ -344,8 +349,8 @@ func _editar_tab() -> void:
 
 func _restaurar_tab(item: TreeItem, _col: int, _id: int, _botao_mouse: int) -> void:
 	var m: Dictionary = item.get_metadata(0)
-	RJ.restaurar_alteracao(String(m["tabela"]), m["chave"], "", false)
-	_avisar("Restaurado.")
+	var erro := RJ.restaurar_alteracao(String(m["tabela"]), m["chave"], "", false)
+	_avisar(erro if erro != "" else "Restaurado.")
 	_preencher_tab()
 
 

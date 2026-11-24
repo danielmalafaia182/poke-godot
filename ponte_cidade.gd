@@ -16,6 +16,12 @@ static var _servico = null
 var ultimas_mensagens: Array = []
 
 
+static func invalidar_regras() -> void:
+	## Instâncias já em uma hunt conservam seu snapshot; a próxima carga usa o perfil novo.
+	_dados = null
+	_servico = null
+
+
 static func dados():
 	if _dados == null:
 		_dados = DadosJogo.carregar()

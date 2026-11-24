@@ -332,6 +332,26 @@ func _notification(what: int) -> void:
 	elif what == NOTIFICATION_APPLICATION_FOCUS_IN:
 		definir_modo_fundo(false)
 
+signal regras_recarregadas
+
+
+func recarregar_regras() -> void:
+	## Ponto único de composição: o GM não conhece os caches privados dos serviços.
+	preload("res://sim/regras_jogo.gd").recarregar()
+	PONTE_CIDADE.invalidar_regras()
+	_servico_jogador = null
+	_servico_diarias = null
+	_servico_itens = null
+	_servico_prof = null
+	_servico_breed = null
+	_servico_gs = null
+	_servico_pesca = null
+	_servico_bosses = null
+	_servico_cards = null
+	_servico_ginasios = null
+	regras_recarregadas.emit()
+
+
 func _ready() -> void:
 	configuracao.inventario = inventario
 	# Game Master: painel F12 (build de desenvolvimento ou opção nas Configurações)

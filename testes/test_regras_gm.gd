@@ -41,7 +41,7 @@ func _comportamentos() -> Dictionary:
 		"RegrasLoot": ["pack_chance_abate", 1.0, func(): return _sim_orre()],
 		"RegrasSessao": ["penalidade_fator", 1.0, func(): return _sim_orre()],
 		"RegrasEventos": ["streak_pct_por_ponto", 0.5, func(): return _sim_orre()],
-		"RegrasVIP": ["vip_fracao", 2.0, func(): return _sim_orre()],
+		"RegrasVIP": ["vip_fracao", 0.9, func(): return _sim_orre()],
 		"RegrasEconomia": ["qtd_max_por_compra", 1.0, func():
 			var s = load("res://sim/servico_cidade.gd").new(d)
 			var e := {"gold": 100000, "itens": {}, "bolas": {}, "cidade": "cerulean", "pokes": []}

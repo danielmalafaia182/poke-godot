@@ -75,6 +75,7 @@ func _ready() -> void:
 	navegacao.visao_alterada.connect(_reposicionar_marcadores)
 	_criar_marcadores()
 	EstadoJogo.perfil_alterado.connect(_atualizar_perfil)
+	EstadoJogo.regras_recarregadas.connect(_recarregar_catalogo)
 	aviso=UI.texto("",12,Color("e8c98a"),true)
 	aviso.horizontal_alignment=HORIZONTAL_ALIGNMENT_CENTER
 	aviso.autowrap_mode=TextServer.AUTOWRAP_WORD_SMART
@@ -330,6 +331,10 @@ func _criar_marcadores() -> void:
 	var textura: Texture2D=preload("res://assets/interface/mapa/fiel/marker-atlas-72c2c2858beb.png")
 	for registro in dados["hunts"]:
 		registro["area"]="kanto"
+		var slug: String = _cenario_jogo().slug_da_hunt(_dados_sim(), str(registro["name"]))
+		if _dados_sim().hunts.has(slug):
+			registro["slug"] = slug
+			registro["level"] = int(_dados_sim().hunts[slug]["nivel"])
 	var todos: Array=dados["hunts"]+_registros_outras_regioes()
 	for registro in todos:
 		# Fase 2: a hunt existe se a simulação tem o mapa real e o hunt-config (snapshot); senão vale o catálogo antigo
@@ -463,10 +468,18 @@ func _on_destino_pressed(destino: DadosDestinoCaca) -> void:
 	EstadoJogo.especie_caca=destino.especie
 	EstadoJogo.slug_caca=""   # 2b: viagem pela espécie (o slug é achado pelo nome); _selecionar_registro passa o slug
 	preload("res://tela_carregando.gd").ir_para(get_tree(), "res://caca_sim.tscn")
-static var _dados_sim_cache: RefCounted
 static func _dados_sim() -> RefCounted:
-	if _dados_sim_cache==null: _dados_sim_cache=preload("res://sim/dados_jogo.gd").carregar()
-	return _dados_sim_cache
+	return preload("res://ponte_cidade.gd").dados()
+
+
+func _recarregar_catalogo() -> void:
+	for marcador in marcadores:
+		marcador.get_parent().remove_child(marcador)
+		marcador.queue_free()
+	marcadores.clear()
+	catalogo.clear()
+	_criar_marcadores()
+	_aplicar_filtros()
 static func _cenario_jogo() -> Script:
 	return preload("res://sim/cenario_jogo.gd")
 func _on_busca_text_changed(_texto: String) -> void: _aplicar_filtros()

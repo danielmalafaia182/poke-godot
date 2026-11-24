@@ -10,7 +10,7 @@ var lote3: Dictionary = {}     # helds e TMs do cliente (C; dados/gerados/lote3.
 var shiny: Dictionary = {}      # speciesId -> {looktype, tier, icone, cadaver} (C: SHINY_BY_DEX; só estas têm forma shiny)
 
 
-static func carregar() -> RefCounted:
+static func carregar(aplicar_perfil: bool = true) -> RefCounted:
 	var d: RefCounted = load("res://sim/dados_jogo.gd").new()
 	var base := Fontes.pasta_dados() + "/gerados/"
 	for e in Fontes.ler_json(base + "especies.json"):
@@ -28,13 +28,18 @@ static func carregar() -> RefCounted:
 		if sh is Dictionary:
 			for k in sh:
 				d.shiny[int(k)] = sh[k]
-	aplicar_alteracoes(d, preload("res://sim/regras_jogo.gd").alteracoes())
+	if aplicar_perfil:
+		aplicar_alteracoes(d, preload("res://sim/regras_jogo.gd").alteracoes())
 	return d
 
 
 static func aplicar_alteracoes(d, alt) -> void:
 	## Game Master: AlteracoesTabelas do perfil por cima das tabelas importadas (sem alteração, nada muda).
 	if alt == null:
+		return
+	var erro := validar_alteracoes(d, alt)
+	if erro != "":
+		preload("res://sim/regras_jogo.gd").registrar_aviso("AlteracoesTabelas", erro)
 		return
 	for a in alt.especies:
 		var e: Dictionary = d.especies.get(int(a.get("id", -1)), {})
@@ -53,6 +58,39 @@ static func aplicar_alteracoes(d, alt) -> void:
 		var it: Dictionary = d.itens.get(int(a.get("id", -1)), {})
 		if not it.is_empty():
 			it[String(a["campo"])] = a["valor"]
+
+
+static func validar_alteracoes(d, alt) -> String:
+	## Valida o lote inteiro antes de tocar nas tabelas. Não aceita mudanças sem efeito.
+	var candidatos := {}
+	for tabela in ["especies", "loot", "hunts", "itens"]:
+		for a in alt.get(tabela):
+			var chave: Dictionary = a.duplicate()
+			chave.erase("valor")
+			var erro := preload("res://sim/validacao_regras.gd").alteracao(tabela, chave, a.get("valor"))
+			if erro != "":
+				return erro
+			var linha: Dictionary = {}
+			var id := "%s/%s" % [tabela, str(a.get("id", ""))]
+			if tabela == "loot":
+				id = "loot/%s/%s" % [str(a.especie), str(a.itemId)]
+				for item in d.especies.get(int(a.especie), {}).get("loot", []):
+					if item.get("itemId") != null and int(item.itemId) == int(a.itemId):
+						linha = item
+			elif tabela == "hunts":
+				linha = d.hunts.get(String(a.id), {})
+			else:
+				linha = d.get(tabela).get(int(a.id), {})
+			if linha.is_empty() or not linha.has(a.campo):
+				return "Registro ou campo inexistente: %s.%s." % [id, a.campo]
+			if not candidatos.has(id):
+				candidatos[id] = linha.duplicate(true)
+			candidatos[id][a.campo] = a.valor
+	for id in candidatos:
+		var linha: Dictionary = candidatos[id]
+		if String(id).begins_with("loot/") and int(linha.get("min", 0)) > int(linha.get("max", 0)):
+			return "O mínimo de loot não pode superar o máximo: " + id
+	return ""
 
 
 func especie(id: int) -> Dictionary:
