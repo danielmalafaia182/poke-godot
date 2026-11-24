@@ -12,6 +12,12 @@ extends SceneTree
 const Fontes := preload("res://sim/fontes.gd")
 var copiados := 0
 var bytes := 0
+var falhas := 0
+
+
+func _falhar(mensagem: String) -> void:
+	falhas += 1
+	printerr("FALHA pacote: " + mensagem)
 
 
 func _copiar(de: String, para: String) -> void:
@@ -19,11 +25,14 @@ func _copiar(de: String, para: String) -> void:
 	if DirAccess.copy_absolute(de, para) == OK:
 		copiados += 1
 		bytes += FileAccess.get_file_as_bytes(para).size() if para.get_extension() != "webp" else 0
+	else:
+		_falhar("não foi possível copiar " + de)
 
 
 func _copiar_pasta(de: String, para: String) -> void:
 	var d := DirAccess.open(de)
 	if d == null:
+		_falhar("pasta obrigatória ausente: " + de)
 		return
 	for f in d.get_files():
 		_copiar(de + "/" + f, para + "/" + f)
@@ -53,9 +62,13 @@ func _init() -> void:
 	for slug in slugs:
 		var c: String = snap + "/game/maps/" + slug + ".json"
 		if not FileAccess.file_exists(c):
+			_falhar("mapa obrigatório ausente: " + slug)
 			continue
 		var texto := FileAccess.get_file_as_string(c)
 		var f := FileAccess.open_compressed(saida + "/game/maps/" + slug + ".json.zst", FileAccess.WRITE, FileAccess.COMPRESSION_ZSTD)
+		if f == null:
+			_falhar("não foi possível gravar mapa: " + slug)
+			continue
 		f.store_string(texto)
 		f.close()
 		antes += texto.length()
@@ -98,4 +111,4 @@ func _init() -> void:
 			if not FileAccess.file_exists(snap + String(pg)) and FileAccess.file_exists(raiz + "/poke-local/public" + String(pg)):
 				_copiar(raiz + "/poke-local/public" + String(pg), saida + String(pg))
 	print("PACOTE %s: %d mapas (%.1f MB → %.1f MB), %d arquivos copiados, %.0f s" % [saida, mapas, antes / 1e6, depois / 1e6, copiados, (Time.get_ticks_msec() - t0) / 1000.0])
-	quit(0)
+	quit(0 if falhas == 0 else 1)

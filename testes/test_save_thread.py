@@ -16,18 +16,26 @@ import subprocess
 import sys
 import tempfile
 import time
+from pathlib import Path
 
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GODOT = os.environ.get("GODOT", r"C:\Users\dmala\Desktop\Godot\Godot_v4.7.2-stable_win64_console.exe")
+sys.path.insert(0, str(Path(RAIZ) / 'ferramentas/qualidade'))
+from verificar import find_godot, isolated_env, assess, ERROR
+GODOT = str(find_godot())
+_rodada = 0
 
 
 def godot(appdata, modo, timeout=None, matar_em=None):
-    env = dict(os.environ, APPDATA=appdata)
+    global _rodada
+    _rodada += 1
+    env = isolated_env(Path(appdata))
+    log = Path(appdata) / ('%02d_%s.log' % (_rodada, modo))
     cmd = [GODOT, "--headless", "--path", RAIZ, "--script", "res://testes/save_thread_etapa.gd", "--", "--modo", modo]
     p = subprocess.Popen(cmd, cwd=RAIZ, env=env, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True,
                          encoding="utf-8", errors="replace")
     if matar_em is None:
         out, _ = p.communicate(timeout=timeout)
+        log.write_text(out, encoding='utf-8')
         return p.returncode, out
     linhas = []
     inicio = time.time()
@@ -45,7 +53,9 @@ def godot(appdata, modo, timeout=None, matar_em=None):
     p.kill()
     p.wait()
     t.join(timeout=5)
-    return p.returncode, "\n".join(linhas)
+    out = "\n".join(linhas)
+    log.write_text(out, encoding='utf-8')
+    return p.returncode, out
 
 
 def main():
@@ -62,7 +72,7 @@ def main():
     for l in out.splitlines():
         if l.startswith(("OK", "FALHA", "RESULTADO", "SCRIPT ERROR")):
             print("[antigo]", l)
-    if rc != 0 or "RESULTADO" not in out:
+    if not assess(out, rc)['passed']:
         falhas += 1
     random.seed(20261109)
     ok_kill = 0
@@ -85,14 +95,14 @@ def main():
         xp = int(xp)
         minimo = salvos[-1] if salvos else 0
         maximo = iniciados[-1] if iniciados else xp
-        ok = bloq == "false" and minimo <= xp <= maximo
+        ok = rc == 0 and not ERROR.search(out) and not ERROR.search(out2) and bloq == "false" and minimo <= xp <= maximo
         ok_kill += ok
         falhas += 0 if ok else 1
         print("%s morte %2d aos %.2f s: últ. confirmada %s, últ. iniciada %s, carregada %d, arquivos %s%s" % (
             "OK   " if ok else "FALHA", i, matar, minimo, maximo, xp, sobras, (" aviso=" + aviso) if aviso else ""))
     print("mortes com gravação em andamento: %d de %d" % (no_meio, a.vezes))
     print("RESULTADO: %s (%d/%d mortes sem perda)" % ("OK" if falhas == 0 else "FALHA", ok_kill, a.vezes))
-    shutil.rmtree(base, ignore_errors=True)
+    print('Logs e saves isolados para diagnóstico: ' + base)
     return 1 if falhas else 0
 
 

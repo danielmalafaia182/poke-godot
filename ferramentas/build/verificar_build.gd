@@ -31,7 +31,7 @@ func _ready() -> void:
 
 
 func _shot(nome: String) -> void:
-	if saida != "":
+	if saida != "" and DisplayServer.get_name() != "headless":
 		get_viewport().get_texture().get_image().save_png(saida + "/fase%d_%s.png" % [fase, nome])
 
 
@@ -47,6 +47,7 @@ func _process(_d: float) -> void:
 				var u := ProjectSettings.globalize_path("user://").replace("\\", "/")
 				ok(u.to_lower().ends_with("/pokeidle/") and not u.contains("app_userdata"), "save na pasta própria do jogo: " + u)
 				if fase == 1:
+					_verificar_gm(cena, ej)
 					var pn := cena.find_child("PainelNovoJogo", true, false)
 					ok(pn != null, "sem save, abre a tela de jogo novo (a real)")
 					_shot("01_jogo_novo")
@@ -124,6 +125,38 @@ func _process(_d: float) -> void:
 				_fim()
 
 
+func _verificar_gm(cena: Node, ej: Node) -> void:
+	var regras: Script = load("res://sim/regras_jogo.gd")
+	ok(regras.perfil() == "original", "build inicia no perfil original, sem seleção local do editor")
+	var opcao := cena.find_child("PainelGMOpcao", true, false) as CheckButton
+	ok(opcao != null, "opção do Game Master disponível no release")
+	if opcao != null:
+		opcao.button_pressed = true
+	var gm := ej.get_node_or_null("PainelGM")
+	ok(gm != null, "Game Master ativado pelas Configurações no release")
+	if gm != null:
+		var tecla := InputEventKey.new()
+		tecla.keycode = KEY_F12
+		tecla.pressed = true
+		gm._input(tecla)
+		ok(gm.painel.visible, "F12 abre o Game Master no release")
+		gm._input(tecla)
+	ok(regras.criar_perfil("verificacao_build") == "", "cria perfil em user:// no release")
+	ok(regras.gravar_valor("RegrasCombate", "stab", 2.0, "verificacao_build") == "", "grava regra em user:// no release")
+	ok(regras.recurso("RegrasCombate", "verificacao_build").stab == 2.0, "override é relido no release")
+	ok(regras.restaurar("RegrasCombate", "", "verificacao_build") == "" and regras.recurso("RegrasCombate", "verificacao_build").stab == 1.5, "restaurar original funciona no release")
+	for perfil in regras.perfis():
+		for recurso in regras.recursos():
+			var atual: Resource = regras.recurso(recurso, perfil)
+			var caminho := "res://dados/regras/%s/%s.tres" % [perfil, recurso]
+			if ResourceLoader.exists(caminho):
+				var esperado: Resource = ResourceLoader.load(caminho)
+				ok(regras.valores_de(atual) == regras.valores_de(esperado), "perfil empacotado preservado: %s/%s" % [perfil, recurso])
+	ok(regras.avisos().is_empty(), "perfis empacotados e locais carregam sem erros")
+	ok(not FileAccess.file_exists("res://dados/regras/perfil.txt"), "seleção pessoal de perfil não é exportada")
+	ok(not ResourceLoader.exists("res://testes/test_regras_gm.gd"), "testes não fazem parte do pacote distribuído")
+
+
 func _viajar(nome: String) -> void:
 	var mapa: Node = load("res://mapa_mundi.tscn").instantiate()
 	get_tree().current_scene.add_child(mapa)
@@ -141,4 +174,4 @@ func _fim() -> void:
 	f.store_string("\n".join(PackedStringArray(linhas)) + "\n")
 	f.close()
 	set_process(false)
-	get_tree().quit(0)
+	get_tree().quit(1 if falhas else 0)

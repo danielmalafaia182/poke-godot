@@ -14,6 +14,16 @@
 # Capturas HAR podem conter cookies e tokens da conta
 *.har
 
+# Dados privados de execução: nunca versionar gravações, sessões ou saves reais.
+/gravacoes/
+/saves/
+*.jsonl
+progresso_v*.json*
+.env
+.env.*
+!.env.example
+/dados/regras/perfil.txt
+
 # Python
 __pycache__/
 *.pyc
