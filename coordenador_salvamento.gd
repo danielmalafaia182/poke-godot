@@ -205,33 +205,43 @@ func pedir_jogo_novo(reiniciar: bool = true) -> Dictionary:
 	## Ciclo 5, item 98 ("Novo jogo" nas Configurações). Grava o estado atual, copia o save (e o .bak) para
 	## user://backups/progresso_<data>_<hora>.json, confere a cópia byte a byte e só então apaga o save. O jogo reinicia
 	## como numa instalação nova (escolha do inicial), sem nada do jogo anterior. {backup, bak} ou {erro} (nada apagado).
-	salvar_agora()
-	if _tarefa != -1:
-		_concluir_thread()
+	if not _persistencia_pronta or _persistencia.bloqueado or not salvar_agora():
+		return {"erro": "Não foi possível salvar o progresso atual. Novo jogo cancelado; nada foi apagado."}
 	var origem: String = _persistencia.caminho
 	var r := {}
+	var copias := {}
 	if FileAccess.file_exists(origem):
-		DirAccess.make_dir_recursive_absolute(PASTA_BACKUPS)
+		if DirAccess.make_dir_recursive_absolute(PASTA_BACKUPS) != OK:
+			return {"erro": "Não foi possível criar a pasta de backups. Nada foi apagado."}
 		var carimbo := Time.get_datetime_string_from_system().replace(":", "-").replace("T", "_")
 		var destino := "%s/progresso_%s.json" % [PASTA_BACKUPS, carimbo]
 		var n := 1
 		while FileAccess.file_exists(destino):
 			n += 1
 			destino = "%s/progresso_%s_%d.json" % [PASTA_BACKUPS, carimbo, n]
-		if DirAccess.copy_absolute(origem, destino) != OK or FileAccess.get_file_as_bytes(origem) != FileAccess.get_file_as_bytes(destino):
-			return {"erro": "Não foi possível fazer o backup do save. Nada foi apagado."}
-		r["backup"] = destino
-		if FileAccess.file_exists(origem + ".bak"):
-			if DirAccess.copy_absolute(origem + ".bak", destino + ".bak") == OK:
-				r["bak"] = destino + ".bak"
+		for sufixo in ["", ".bak", ".tmp"]:
+			var fonte: String = origem + sufixo
+			if not FileAccess.file_exists(fonte):
+				continue
+			var copia: String = destino + sufixo
+			if DirAccess.copy_absolute(fonte, copia) != OK or FileAccess.get_file_as_bytes(fonte) != FileAccess.get_file_as_bytes(copia):
+				return {"erro": "Não foi possível conferir todos os backups. Nada foi apagado."}
+			copias[fonte] = copia
+			r["backup" if sufixo == "" else sufixo.trim_prefix(".")] = copia
+	# A marca precisa estar no disco antes de remover qualquer candidato a save.
+	var arquivo := preload("res://infra/arquivo_atomico.gd")
+	if arquivo.texto(MARCA_JOGO_NOVO, String(r.get("backup", ""))) != OK:
+		return {"erro": "Não foi possível preparar o novo jogo. Nada foi apagado."}
 	_persistencia.bloqueado = true    # daqui até reiniciar, nada grava por cima
-	for f in [origem, origem + ".bak", origem + ".tmp"]:
-		if FileAccess.file_exists(f):
-			DirAccess.remove_absolute(f)
-	var m := FileAccess.open(MARCA_JOGO_NOVO, FileAccess.WRITE)
-	if m != null:
-		m.store_string(String(r.get("backup", "")))
-		m.close()
+	for f in copias:
+		if DirAccess.remove_absolute(f) != OK:
+			var recuperado := true
+			for fonte in copias:
+				if not FileAccess.file_exists(fonte):
+					recuperado = DirAccess.copy_absolute(copias[fonte], fonte) == OK and recuperado
+			DirAccess.remove_absolute(MARCA_JOGO_NOVO)
+			_persistencia.bloqueado = not recuperado
+			return {"erro": "Novo jogo cancelado: não foi possível remover o save. Backups preservados em " + PASTA_BACKUPS, "backup": r.get("backup", "")}
 	if reiniciar:
 		OS.set_restart_on_exit(true, OS.get_cmdline_args())
 		get_tree().quit()

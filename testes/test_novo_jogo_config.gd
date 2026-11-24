@@ -45,7 +45,8 @@ func _process(_d: float) -> void:
 			var d: ConfirmationDialog = cena.find_child("ConfirmarNovoJogo", true, false)
 			chk(d != null and d.visible, "pede confirmação antes")
 			chk(FileAccess.file_exists("user://progresso_v1.json"), "sem confirmar, nada apagado")
-			get_viewport().get_texture().get_image().save_png(saida + "/98_confirmacao.png")
+			if DisplayServer.get_name() != "headless":
+				get_viewport().get_texture().get_image().save_png(saida + "/98_confirmacao.png")
 			d.confirmed.emit()
 			d.hide()
 		elif q == 50:
