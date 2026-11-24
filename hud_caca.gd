@@ -81,7 +81,8 @@ func _ready() -> void:
 	controlador.derrota_recompensada.connect(recompensas.apresentar)
 	controlador.captura_resolvida.connect(_captura_resolvida)
 	# Ciclo 4: o painel de captura do original (painel_captura.gd: pendentes, lançar, fichas das bolas). O de antes fica
-	# montado fora da árvore só para os contadores internos (capturados_hunt, estoque).
+	# oculto só para a compatibilidade dos contadores internos (capturados_hunt, estoque).
+	# Mesmo oculto, pertence ao HUD e deve ser liberado junto com a cena.
 	painel_captura = load("res://painel_captura.gd").new()
 	painel_captura.controlador = controlador
 	add_child(painel_captura)
@@ -89,6 +90,8 @@ func _ready() -> void:
 		controlador.pendentes_alterados.connect(painel_captura.receber_pendentes)
 		controlador.resultado_captura.connect(painel_captura.receber_resultado)
 	captura=PanelContainer.new()
+	captura.hide()
+	add_child(captura)
 	var coluna: VBoxContainer=VBoxContainer.new()
 	coluna.add_theme_constant_override("separation",8)
 	captura.add_child(coluna)
