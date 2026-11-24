@@ -212,7 +212,7 @@
    "tipo": "float",
    "descricao": "ritmo de um selvagem (A: ~2000 ms)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_bosses.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasBosses.tres → cadencia_boss_ms"
@@ -272,7 +272,7 @@
    "tipo": "Array",
    "descricao": "87 bosses do snapshot (A: nome, categoria, nível, drops); espécie, entrada, HP e chances desenhados (ferramentas/balanceamento/gerar_bosses.py); ciclo 6: TM Disk Piece e AoE TM Disk Piece a 2% em todo boss (C: 2% nos dois bosses do catálogo do cliente)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "ferramentas/balanceamento/gerar_bosses.py",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasBosses.tres → lista"
@@ -452,7 +452,7 @@
    "tipo": "Array",
    "descricao": "A: mensagem balls.catalog (gravações): priceGold, buyable, catchRate HP depois de evoluir: mantém a fração da vida (E; o original não foi gravado). Loja",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_cidade.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasEconomia.tres → bolas_catalogo"
@@ -527,7 +527,7 @@
    "tipo": "int",
    "descricao": "A: G3 Geodude (hunt < 40) 1 pedra, livre 19/11 Graveler (40+) 4; C: \"Species from Lv.40+ hunts require 4 stones total\"; até 39: 1 de cada",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "G3",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasEconomia.tres → evolucao_nivel_alto"
@@ -557,7 +557,7 @@
    "tipo": "int",
    "descricao": "A: Graveler → Golem (hunt 40+) = 4 Rock Stones (livre 19/11); C: \"4 stones total — split equally across combos\" (a divisão entre tipos não foi vista)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_cidade.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasEconomia.tres → evolucao_pedras_total_alto"
@@ -616,8 +616,8 @@
    "literal": "{\n\"134\": \"Water Stone\",\n\"135\": \"Thunder Stone\",\n\"136\": \"Fire Stone\",\n\"196\": \"Enigma Stone\",\n\"197\": \"Darkness Stone\",\n\"470\": \"Leaf Stone\",\n\"471\": \"Ice Stone\",\n\"700\": \"Heart Stone\"\n}",
    "tipo": "Dictionary",
    "descricao": "C: \"Eevee is a special case (its own stone system)\"; os ramos (cada pedra leva a um Pokémon) seguem o canon (B/F). O caminho sem pedra vai para o destino do creatures.json (Vaporeon, A/C).",
-   "origem": "C",
-   "status": "replicada do cliente sem confirmação no servidor",
+   "origem": "F",
+   "status": "em aberto",
    "evidencia": "creatures.json",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasEconomia.tres → ramos_eevee"
@@ -677,7 +677,7 @@
    "tipo": "String",
    "descricao": "A (G1): Pokémon vendido pelo sellValue da espécie (valorVenda), sem depender de nível, Quality ou IV: 2 Blastoise Lv.1 (Q 1,014 / IV 124 e Q 1,273 / IV 61) → 18000 cada; o sellValue que o servidor manda é o da espécie em 399/399 Pokémon da lista (níveis 1 a 425).",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "G1",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasEconomia.tres → venda_pokemon"
@@ -707,7 +707,7 @@
    "tipo": "float",
    "descricao": "teto do multiplicador do Daily Catch (A: maior valor gravado)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_diarias.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasDiarias.tres → catch_mult_max"
@@ -722,7 +722,7 @@
    "tipo": "float",
    "descricao": "Daily Catch: multiplicador de XP sorteado em [1,5; 18], múltiplo de 0,5 (A: os 4 valores gravados cabem)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_diarias.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasDiarias.tres → catch_mult_min"
@@ -737,7 +737,7 @@
    "tipo": "int",
    "descricao": "Daily Catch (A, G5): 2 capturas premiadas por dia; faixas por nível do treinador; capturar espécie da tabela preenche o próximo slot (C: \"capture um Pokémon da tabela\"). XP = floor(xpAbate × 8/3 × m): A, os 4 casos gravados dão m múltiplo de 0,5 — Larvitar (548) 10 e 14 (G5), Arbok (968) 1,5 e 18 (G9). A regra \"m pelo slot\" (F de 13/11) caiu (Arbok slot 1 = 1,5, slot 2 = 18). F/E: m sorteado (semente = dia e slot) entre os múltiplos de 0,5 de 1,5 a 18 (a faixa observada); limitado a [xpMin, xpMax] da faixa.",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "G5, G9",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasDiarias.tres → catch_total"
@@ -752,7 +752,7 @@
    "tipo": "int",
    "descricao": "A: resetAt = 03:00 UTC (meia-noite de Brasília), igual ao Tipo do Dia",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_diarias.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasDiarias.tres → dia_virada_utc_s"
@@ -857,7 +857,7 @@
    "tipo": "float",
    "descricao": "Daily Kill: XP = qtd × xpAbate × 8/3 (A: 3/3)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_diarias.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasDiarias.tres → kill_xp_fator"
@@ -917,7 +917,7 @@
    "tipo": "float",
    "descricao": "o líder ataca no ritmo de um selvagem (A: ~2000 ms); o jogador no do aliado (A: 1600 ms)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_ginasios.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGinasios.tres → cadencia_lider_ms"
@@ -947,7 +947,7 @@
    "tipo": "Dictionary",
    "descricao": "ginásios vistos no gym-global (A)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_ginasios.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGinasios.tres → ginasios_conhecidos"
@@ -1082,7 +1082,7 @@
    "tipo": "int",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_golden_stars.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGoldenStars.tres → candidatos"
@@ -1097,7 +1097,7 @@
    "tipo": "int",
    "descricao": "A: 6 h",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_golden_stars.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGoldenStars.tres → duracao_s"
@@ -1127,7 +1127,7 @@
    "tipo": "int",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_golden_stars.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGoldenStars.tres → perm_ouro"
@@ -1172,7 +1172,7 @@
    "tipo": "int",
    "descricao": "A: 12 h",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_golden_stars.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGoldenStars.tres → roll_gratis_s"
@@ -1202,7 +1202,7 @@
    "tipo": "int",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_golden_stars.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGoldenStars.tres → temp_cartas"
@@ -1217,7 +1217,7 @@
    "tipo": "int",
    "descricao": "A: 24 h",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_golden_stars.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasGoldenStars.tres → temp_s"
@@ -1247,7 +1247,7 @@
    "tipo": "int",
    "descricao": "A: items.json \"Rare Candy\"",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "items.json",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasItens.tres → candy_id"
@@ -1292,7 +1292,7 @@
    "tipo": "Dictionary",
    "descricao": "Nome do tipo na descrição (A, português) → tipo do jogo, comparado só pelas letras a–z (\"Aço\" → \"ao\", \"Água\" → \"gua\"). \"Neutro\" = golpes neutros dos bosses (C, talentos do Botânico: \"Berry that protects from Neutral-type moves\").",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_itens.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasItens.tres → tipos_berry"
@@ -1322,7 +1322,7 @@
    "tipo": "int",
    "descricao": "Tipo do Dia (A: evento type-of-day, +20% XP e loot no tipo; termina às 03:00 UTC = meia-noite de Brasília). E: offline, rotação fixa ancorada nos cinco dias observados (A: 09/11/2026 Dragão, 10/11 Inseto, 13/11 Sombrio, 15/11 Veneno, 18/11 Fantasma — G11); as outras posições são E.",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "G11",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasJogador.tres → dia_virada_utc_s"
@@ -1352,7 +1352,7 @@
    "tipo": "Dictionary",
    "descricao": "nomes dos tipos do Tipo do Dia (A: formato gravado)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_jogador.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasJogador.tres → nomes_tipos"
@@ -1502,7 +1502,7 @@
    "tipo": "int",
    "descricao": "o n-ésimo ponto custa 25.000 × n (C/A G7)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "G7",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasJogador.tres → streak_custo_base"
@@ -1592,7 +1592,7 @@
    "tipo": "float",
    "descricao": "IV médio do sorteio 1..32 (A: uniforme) para estimar o selvagem típico",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/metas.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasInterface.tres → metas_iv_selvagem"
@@ -1682,7 +1682,7 @@
    "tipo": "int",
    "descricao": "A: skill 4 → 12",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_pesca.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasPesca.tres → peixes_por_nivel"
@@ -1907,7 +1907,7 @@
    "tipo": "int",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_profissoes.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasProfissoes.tres → mentor_gap"
@@ -1922,7 +1922,7 @@
    "tipo": "float",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/servico_profissoes.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasProfissoes.tres → mentor_pct_nivel"
@@ -1997,7 +1997,7 @@
    "tipo": "float",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → aleatorio_max"
@@ -2012,7 +2012,7 @@
    "tipo": "float",
    "descricao": "A: máx/mín ≤ 1,17 por indivíduo; aleatório contínuo (16 inteiros 85..100 perdem por ~89 mil de logL em 38 mil golpes, arredondamento_dano.py)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "arredondamento_dano.py",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → aleatorio_min"
@@ -2027,7 +2027,7 @@
    "tipo": "String",
    "descricao": "A (18/11, medir_alvo.py: 2295/2400 trocas × 2067 com Chebyshev): alvo = menor tempo de caminho até encostar. \"chebyshev\" volta à regra anterior (linha reta). Em labirinto (nightmare_elekid) a linha reta mandava o herói a um selvagem a > 60 s de caminho e ele não abatia nada em 60 s (13/20 sementes).",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "medir_alvo.py",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → alvo_criterio"
@@ -2072,7 +2072,7 @@
    "tipo": "bool",
    "descricao": "Revertido no ciclo 2: o alvo NÃO vem de fora da borda real (A: 0 de 9.120 intervalos fora de 13×13). Fica só para experimento. O que vale (A) é o alvo perseguir dentro da borda real: `visao_meia_altura_alvo` 13.",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → alvo_vem_ao_encontro"
@@ -2102,7 +2102,7 @@
    "tipo": "int",
    "descricao": "A: 1600 ms, grade fixa (as variações de 1200/2000 vêm de field não recebido)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → ataque_aliado_ticks"
@@ -2132,7 +2132,7 @@
    "tipo": "int",
    "descricao": "A: ~2000 ms por selvagem",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → ataque_selvagem_ticks"
@@ -2146,8 +2146,8 @@
    "literal": "1.0",
    "tipo": "float",
    "descricao": "C: dobra a chance (multiplica a chance por arremesso) Boosts (C: \"XP Boost +50% trainer XP\", \"Pokémon XP Boost +50%\", \"Loot Boost +40% loot chance\", \"Capture Boost: doubles the catch chance\"); o pct vem no próprio boost ({key, until, pct}, A). F: parcela = % da XP base.",
-   "origem": "C",
-   "status": "replicada do cliente sem confirmação no servidor",
+   "origem": "F",
+   "status": "em aberto",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → boost_captura_bonus"
@@ -2177,7 +2177,7 @@
    "tipo": "int",
    "descricao": "A aproximado: corpos somem em ~19–20 s",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → cadaver_ms"
@@ -2205,10 +2205,10 @@
    "chave": "captura_c",
    "literal": "0.814",
    "tipo": "float",
-   "descricao": "Captura com medidor de investimento (C: tutorial \"quanto mais bolas você investe numa espécie, maior a chance\"; tela Gerenciamento de Captura, /api/game/used-balls: por espécie preço de NPC, ouro gasto, tentativas totais e desde a última captura, que zera ao capturar; Master Ball garante; shiny não usa o medidor). Forma (F, máxima verossimilhança em 10/11/2026 sobre as sequências A de Rattata 1, Spearow 10, Vulpix 20 ×2, Rhydon 80 (Super Ball) e Geodude 1 (C5: Poké, Great, Super, Ultra e Idle); o trecho antes da 1ª captura de cada gravação fica de fora porque o medidor inicial não foi gravado; tentativas em shiny ficam de fora (não usam o medidor): chance = min(1, c · v / precoNpc · (1 + k · investido_antes / precoNpc) · (1 + bônus)) v = ouro pago pela bola desta tentativa (priceGold); investido_antes = ouro das bolas desde a última captura, SEM a atual. Sem fator de nível (o C1 derrubou: Spearow 10 capturou 28/52) nem de raridade (ganho nulo). Valor da bola = OURO (A, C5, Geodude 1, preço 300; esperado pelo ouro × pela eficiência, mesmo c/k): Poké 0,9 × 4,0 (observado 0/47), Great 5,1 × 9,8 (6/60), Super 12,9 × 13,7 (10/59), Ultra 33,1 × 20,3 (37/69), Idle 73,0 × 26,2 (73/73). logL −190,6 (ouro) contra −294,5 (eficiência); com o valor de cada bola livre o ajuste dá Great 23, Ultra 143 (ouro: 20 e 130). As 5 falhas de Idle Ball em todas as gravações (S2, C5, M3) foram em shiny. Medidor que zera ao trocar de bola: logL −191,0 contra −190,6 (indistinguível; fica o que soma tudo, como a tela used-balls, que guarda o total por espécie).",
-   "origem": "C",
-   "status": "replicada do cliente sem confirmação no servidor",
-   "evidencia": "C5, C1, S2, M3",
+   "descricao": "F: coeficiente da fórmula candidata de captura, ajustado às sequências observadas (A); não é fórmula revelada pelo servidor.",
+   "origem": "F",
+   "status": "em aberto",
+   "evidencia": "sim/regras.gd: bloco da fórmula de captura; CALIBRACAO_FASE3.md; CALIBRACAO_FASE4.md",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → captura_c"
   },
@@ -2222,7 +2222,7 @@
    "tipo": "Dictionary",
    "descricao": "A: balls.catalog.catchRate",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → captura_eficiencia"
@@ -2250,10 +2250,10 @@
    "chave": "captura_k",
    "literal": "1.14",
    "tipo": "float",
-   "descricao": "peso do investimento desde a última captura no medidor (forma F; c e k por máxima verossimilhança)",
+   "descricao": "F: coeficiente da fórmula candidata de captura, ajustado às sequências observadas (A); não é fórmula revelada pelo servidor.",
    "origem": "F",
    "status": "em aberto",
-   "evidencia": "comentário em `sim/regras.gd`",
+   "evidencia": "sim/regras.gd: bloco da fórmula de captura; CALIBRACAO_FASE3.md; CALIBRACAO_FASE4.md",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → captura_k"
   },
@@ -2282,7 +2282,7 @@
    "tipo": "Dictionary",
    "descricao": "A: balls.catalog.priceGold",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → captura_preco_bola"
@@ -2327,7 +2327,7 @@
    "tipo": "String",
    "descricao": "A (C5): \"ouro\" = priceGold; \"eficiencia\" = catchRate × 50/3 (refutado)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "C5",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → captura_valor_bola"
@@ -2357,7 +2357,7 @@
    "tipo": "float",
    "descricao": "chance de shiny (nome antigo; ver shiny_chance)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → chance_shiny"
@@ -2387,7 +2387,7 @@
    "tipo": "Array",
    "descricao": "desempate do passo do selvagem pelas frequências medidas (A)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → desempate_mob"
@@ -2402,7 +2402,7 @@
    "tipo": "int",
    "descricao": "A (e C: o cliente anima a diagonal com o mesmo custo, dS) Passos (A, ferramentas/gravador/medir_passos.py; gravações antigas + rhydon-1h): espera antes de cada passo = stepMs × (2 se o passo é diagonal), arredondada para cima ao tick. Herói →reto 600 ms (113/121 e 241/247), →diagonal 1000 ou 1200 (40/19 e 110/54); selvagem →reto 1000 ou 1200 (167/93 e 409/226), →diagonal 2000 ou 2200 (89/4 e 138/6).",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "ferramentas/gravador/medir_passos.py, rhydon-1h",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → fator_diagonal_passo"
@@ -2462,7 +2462,7 @@
    "tipo": "int",
    "descricao": "A: field-init.heroStepMs (duração da animação)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → hero_step_ms"
@@ -2477,7 +2477,7 @@
    "tipo": "int",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → hp_selvagem_minimo"
@@ -2492,7 +2492,7 @@
    "tipo": "int",
    "descricao": "A",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → hp_selvagem_por_stat"
@@ -2506,8 +2506,8 @@
    "literal": "true",
    "tipo": "bool",
    "descricao": "Ilhas da grade (2b.6). 103 hunts têm spawns em tile bloqueado e 9 têm o `start` bloqueado (hunt-config × grade). typhlosion (A, 1 caso): start (54,75) bloqueado; o herói real aparece em (53,74), o 1º tile livre do anel 1 em ordem linha → coluna. F: o herói vai para o tile livre mais próximo (anel de Chebyshev, ordem linha → coluna).",
-   "origem": "A",
-   "status": "comprovada contra o original",
+   "origem": "F",
+   "status": "em aberto",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → inicio_bloqueado_anel"
@@ -2567,7 +2567,7 @@
    "tipo": "bool",
    "descricao": "A (ciclo 4, medir_contorno.py): perto do herói o caminho desvia dos outros selvagens",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "medir_contorno.py",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → mob_contorna_bloqueio"
@@ -2612,7 +2612,7 @@
    "tipo": "int",
    "descricao": "A: field-init.mobStepMs",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → mob_step_ms"
@@ -2642,7 +2642,7 @@
    "tipo": "float",
    "descricao": "A: 73/223 esperas de 1000 ms saíram em 1200",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → passo_extra_prob_heroi_diagonal"
@@ -2657,7 +2657,7 @@
    "tipo": "float",
    "descricao": "A: 500 ms não cai num tick exato; 600 em 113/121",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → passo_extra_prob_heroi_reto"
@@ -2672,7 +2672,7 @@
    "tipo": "float",
    "descricao": "A: 10/237 esperas de 2000 ms saíram em 2200",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → passo_extra_prob_mob_diagonal"
@@ -2687,7 +2687,7 @@
    "tipo": "float",
    "descricao": "A: 319/895 esperas de 1000 ms saíram em 1200",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → passo_extra_prob_mob_reto"
@@ -2716,8 +2716,8 @@
    "literal": "60000",
    "tipo": "int",
    "descricao": "Penalidade de entrada = boost \"shinylock\" (C: texto do boost, \"Por 1 minuto: nenhum Pokémon Shiny aparece e você recebe 70% menos EXP e drops\"; o servidor manda {type: boosts, boosts: [{key: shinylock, until, pct: 0}]}). A: until = entrada + 60,0 s em 4 entradas (rhydon-1h, typhlosion, S2, S4) e todo abate antes do until tem xpParts.debuff, nenhum depois (7/601, 9/23, 10/27). XP: floor(total × 0,3) (A: 5772 → 1731, 846 → 253, 12 → 3). Loot: 15 drops em 5 entradas contra 68 esperados (0,22×; ×0,3 dá P = 0,13) → chance × 0,3 (F: chance ou quantidade não se separam com esta amostra). Quando aplica (A, T1 em 10/11/2026, confirma o relato do usuário): hunt diferente da última, vindo da cidade (rattata → cidade 29 s → spearow) ou direto pelo mapa (spearow → vulpix), penaliza; voltar à mesma hunt pela cidade (vulpix → cidade → vulpix) não penaliza (sem boosts, 0/15 abates com debuff). Sessão expirada: B-relatado (não gravado). Início: o minuto conta da ENTRADA (A: until − 1º serverNow da instância = 58,9–59,3 s nas 3 entradas do T1, e 60,0–61,4 s nas 9 anteriores; os 29 s na cidade não contaram). \"Desde a saída\" foi descartado; o S3 segue como exceção sem explicação. ms_desde_saida fica 0 (parâmetro mantido). A sim recebe o fim pronto (cfg.penalidade_ate_ms) ou calcula: inicio_ms − cfg.ms_desde_saida + duração.",
-   "origem": "C",
-   "status": "replicada do cliente sem confirmação no servidor",
+   "origem": "F",
+   "status": "em aberto",
    "evidencia": "rhydon-1h, S2, S4, T1",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasSessao.tres → penalidade_duracao_ms"
@@ -2732,7 +2732,7 @@
    "tipo": "float",
    "descricao": "XP e drops × 0,3 durante o lock de entrada (A: 76/76 abates)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasSessao.tres → penalidade_fator"
@@ -2762,7 +2762,7 @@
    "tipo": "int",
    "descricao": "A: selvagem capturável por 20,0 s depois do abate (fase3 M1/M2)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "M1, M2",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → pendente_vida_ms"
@@ -2777,7 +2777,7 @@
    "tipo": "int",
    "descricao": "A: Gastly × Rattata",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → piso_aliado"
@@ -2807,7 +2807,7 @@
    "tipo": "int",
    "descricao": "A: 880 hits do Rattata no Geodude",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → piso_selvagem"
@@ -2822,7 +2822,7 @@
    "tipo": "float",
    "descricao": "A: HP ≤ 50% dispara no mesmo tick (91/91 cruzamentos; HP exato na cura ≤ 0,50",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → pocao_limiar"
@@ -2836,8 +2836,8 @@
    "literal": "0",
    "tipo": "int",
    "descricao": "A/F: nenhuma cura adiada observada; menor intervalo real 1988 ms em 409 curas); o Auto-Helper da gravação de 1 h mostra \"Heal when HP ≤ 50%\"",
-   "origem": "A",
-   "status": "comprovada contra o original",
+   "origem": "F",
+   "status": "em aberto",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → pocao_recarga_ms"
@@ -2866,8 +2866,8 @@
    "literal": "60000",
    "tipo": "int",
    "descricao": "A: 7 respawns medidos, todos 60 s, no ponto de spawn, mesmo indivíduo aproximam com |dy| até 13 (0,16–0,43 por intervalo em |dy| 8–13, centenas de intervalos na rhydon-1h; M1/M2 iguais) e nunca com 14+. Com 13 na sim, o Kangaskhan (M1, M2) passa a bater e o Rhydon piora (0,58 adjacentes × 0,40; curas/min fora da faixa no diferencial): falta o que limita o acúmulo em luta curta (F). Fica 7 até isso fechar (M3). A sim ainda persegue com |dx| = 14 (0,26–0,41), o real nunca: a checagem real usa a posição de antes do passo (F). C: view = {hc: ceil(25/zoom/2)+2, hr: ceil(13/zoom/2)+2} — só o zoom muda o view",
-   "origem": "A",
-   "status": "comprovada contra o original",
+   "origem": "F",
+   "status": "em aberto",
    "evidencia": "rhydon-1h, M1, M2, M3",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → respawn_ms"
@@ -2882,7 +2882,7 @@
    "tipo": "float",
    "descricao": "Shiny (A, 19/11, todas as gravações): só espécies com forma shiny (C: SHINY_BY_DEX) aparecem shiny — 0 em 3.323 abates das outras; nas com forma, 42 em 10.914 abates fora do lock = 1/260. Nenhum durante o lock de entrada (A, C: shinylock). Por tier a taxa variou (C 11/881, B 26/9.156, D 3/511, E 2/366): amostra pequena fora do B; fica a taxa única.",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCaptura.tres → shiny_chance"
@@ -2897,7 +2897,7 @@
    "tipo": "float",
    "descricao": "B",
    "origem": "B",
-   "status": "replicada do cliente sem confirmação no servidor",
+   "status": "documentada na Pokepedia (não confirma o servidor)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasCombate.tres → stab"
@@ -2957,7 +2957,7 @@
    "tipo": "float",
    "descricao": "Tipo do Dia (A: evento \"type-of-day\", \"+20% de XP e +20% de loot em Pokémon do tipo X\"): parcela typeDay = floor(20% da base) (A, G8: 61/61); loot em `tipo_do_dia_loot` (A: × 1,4, não 1,2). Loot no tipo do dia (A, G8 × G10, 15/11): chance de cada drop × 1,4 (cap 1). Tyranitar no dia Sombrio (G8, 61 abates): 148 drops, esperado 146,3 com ×1,4 (z 0,2) e 125,4 com ×1,2 (z 2,8: rejeitado); a mesma hunt num dia Veneno (G10, 91 abates): 161 × 155,9 pela tabela (controle). ×1,44 (= 1,2²) também cabe: não se separa de 1,4 com uma gravação.",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "G8, G10",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasEventos.tres → tipo_do_dia_loot"
@@ -3002,7 +3002,7 @@
    "tipo": "int",
    "descricao": "A: field-init.trainerStepMs",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → trainer_step_ms"
@@ -3032,7 +3032,7 @@
    "tipo": "float",
    "descricao": "A: parcela vip = 50% da base",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasVIP.tres → vip_fracao"
@@ -3062,7 +3062,7 @@
    "tipo": "int",
    "descricao": "A: o alvo persegue até |dy| 13 (os outros, `visao_meia_altura`)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "comentário em `sim/regras.gd`",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → visao_meia_altura_alvo"
@@ -3077,7 +3077,7 @@
    "tipo": "int",
    "descricao": "A: perseguição até |dx| 13, nunca 14+ (rhydon-1h, M1, M2)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "rhydon-1h, M1, M2",
    "original_jogo": "",
    "controle": "dados/regras/<perfil>/RegrasMovimento.tres → visao_meia_largura"
@@ -3132,7 +3132,7 @@
    "sistema": "começo de jogo",
    "regra": "Cidade inicial Cerulean",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "C/A"
   },
   {
@@ -3167,259 +3167,259 @@
    "sistema": "acesso às hunts e regiões",
    "regra": "As 451 hunts com mapa, hunt-config e colisão reais",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A; grade 7/7; 451/451 jogáveis"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Base por abate = `experience` da espécie",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "XP e níveis",
    "regra": "VIP +50% em parcela própria",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Lock de entrada: floor(total × 0,3) por 60 s desde a entrada",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 76/76"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Tipo do Dia: floor(20% da base); rotação com 5 dias gravados",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (G8, G11)"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Streak: floor(base × 0,1% × pontos)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (G7)"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Curva de XP do treinador = a do Pokémon",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 19 níveis (109–633)"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Só o Pokémon ativo ganha XP",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 807/807"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Curva de XP do Pokémon",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A+B, 27 níveis (1–442)"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Parcelas do Pokémon = as do treinador, sem streak",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "XP e níveis",
    "regra": "Subir de nível não cura",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "O mesmo golpe por indivíduo; maior dano esperado com os stats dele",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 100+ indivíduos"
   },
   {
    "sistema": "combate e dano",
    "regra": "Empate exato → o primeiro da lista",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Aleatório 0,85–1,00",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Efetividade amplificada (×1,75, ×2,5, ×5,5; ÷1,5)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A+B"
   },
   {
    "sistema": "combate e dano",
    "regra": "Piso 2 (aliado) e 1 (selvagem), inclusive com eff 0",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Selvagem ×1,8",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Fórmula na faixa 80–199 (o número que aparece na tela)",
    "origem": "B",
-   "status": "replicada do cliente sem confirmação no servidor",
+   "status": "documentada na Pokepedia (não confirma o servidor)",
    "evidencia": "99,6% dos 4.510 golpes do aliado, 99,2% dos 1.787 do selvagem"
   },
   {
    "sistema": "combate e dano",
    "regra": "Tick 200 ms; field a cada 2 ticks",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "HP do aliado max(24, 12×stat) e do selvagem max(120, 35×stat)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Ritmo: aliado 1600 ms, selvagem ~2000 ms",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Golpes não recebidos vão no próximo field",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Penalidade de entrada (lock de 60 s; a mesma hunt pela cidade não penaliza)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "loot e economia",
    "regra": "Tabela do creatures.json, chance em 1/100.000, quantidade min–max",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "loot e economia",
    "regra": "Uma rolagem por abate, mais as extras do Streak",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A/C"
   },
   {
    "sistema": "loot e economia",
    "regra": "Tipo do Dia ×1,4",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (G10)"
   },
   {
    "sistema": "loot e economia",
    "regra": "Venda ao Mark pelo `npcPrice`; não compra poção, pedra, revive",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A/C"
   },
   {
    "sistema": "loot e economia",
    "regra": "670 itens do snapshot com o id do servidor",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "Dispara no tick em que o HP fica ≤ limite",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 91/91"
   },
   {
    "sistema": "combate e dano",
    "regra": "Sem recarga",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "combate e dano",
    "regra": "A menor que cobre o que falta, senão a maior",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 408/408"
   },
   {
    "sistema": "combate e dano",
    "regra": "Cura até o valor da poção, limitada ao que falta",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "captura e shiny",
    "regra": "Uma bola por abate (a do Auto-Helper)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "captura e shiny",
    "regra": "O capturado chega no nível 1",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A"
   },
   {
    "sistema": "Shiny",
    "regra": "Só espécies com forma shiny (SHINY_BY_DEX) aparecem shiny; 1/260 por abate nelas; nenhum no lock",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (42/10.914 e 0/3.323, livre) + C; `test_shiny` 7/7"
   },
   {
    "sistema": "Shiny",
    "regra": "Auto-Catch Shiny com bola própria; desligado o normal, só shinies recebem bola",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "C + A (M3); `test_shiny`"
   },
   {
    "sistema": "Shiny",
    "regra": "O capturado shiny fica shiny (sprite e cadáver shiny do cliente)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (field marca o selvagem) + C; `test_janelas_ciclo2`"
   },
   {
@@ -3433,28 +3433,28 @@
    "sistema": "loja, Nurse Joy, depot e evolução",
    "regra": "Cura o time inteiro, na hora, grátis, sem recarga; resposta `joy-healed`",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (G4)"
   },
   {
    "sistema": "loja, Nurse Joy, depot e evolução",
    "regra": "Só itens (bolas ficam na BAG); move a pilha inteira; \"guardar tudo\" esvazia a BAG",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (G4)"
   },
   {
    "sistema": "loja, Nurse Joy, depot e evolução",
    "regra": "Resposta `{inventory, depot}` com os campos do original; time de 6",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A/C"
   },
   {
    "sistema": "IV e Quality",
    "regra": "IV de 1 a 32 por stat",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A+C"
   },
   {
@@ -3468,42 +3468,42 @@
    "sistema": "IV e Quality",
    "regra": "Stat = round(L/100 × (base + 2·IV) × Q^exp); Power = round(Σ × Q)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A+B+C"
   },
   {
    "sistema": "IV e Quality",
    "regra": "O capturado é um sorteio novo (não herda o selvagem)",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 12/57 incompatíveis"
   },
   {
    "sistema": "IV e Quality",
    "regra": "Quality e IV do capturado pelo sorteio do cliente",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A, 218 capturas"
   },
   {
    "sistema": "IV e Quality",
    "regra": "Stats exibidos do capturado no nível 1",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A+C, 218/218"
   },
   {
    "sistema": "Evolução",
    "regra": "Nível de evolução, pedras mantêm o nível, sem pedra volta ao Lv.1, só em Cerulean",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "C/A (G3)"
   },
   {
    "sistema": "Preços",
    "regra": "Bolas e poções pelo `priceGold`, venda de Pokémon pelo `sellValue`",
    "origem": "A",
-   "status": "comprovada contra o original",
+   "status": "observada (referência declarada, não auditada pelo catálogo)",
    "evidencia": "A (G1, G2)"
   },
   {

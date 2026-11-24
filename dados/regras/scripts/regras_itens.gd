@@ -7,7 +7,8 @@ extends Resource
 ## user://regras/<perfil>/ guardam só o que muda.
 
 @export_group("Candy")
-## A: items.json "Rare Candy" · origem A (comprovada contra o original) · evidência: items.json
+## A: items.json "Rare Candy" · origem A (observada (referência declarada, não auditada pelo catálogo)) ·
+## evidência: items.json
 @export_range(0, 901240, 1, "or_greater")  var candy_id: int = 90124
 
 ## C · origem C (replicada do cliente sem confirmação no servidor) · evidência: comentário em
@@ -25,7 +26,8 @@ extends Resource
 
 ## Nome do tipo na descrição (A, português) → tipo do jogo, comparado só pelas letras a–z ("Aço" → "ao", "Água" →
 ## "gua"). "Neutro" = golpes neutros dos bosses (C, talentos do Botânico: "Berry that protects from Neutral-type
-## moves"). · origem A (comprovada contra o original) · evidência: comentário em `sim/servico_itens.gd`
+## moves"). · origem A (observada (referência declarada, não auditada pelo catálogo)) · evidência: comentário em
+## `sim/servico_itens.gd`
 @export var tipos_berry: Dictionary = {
 "ao": "STEEL",
 "drago": "DRAGON",

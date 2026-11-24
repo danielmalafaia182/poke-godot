@@ -19,12 +19,12 @@ extends Resource
 ## serverNow da instância = 58,9–59,3 s nas 3 entradas do T1, e 60,0–61,4 s nas 9 anteriores; os 29 s na cidade
 ## não contaram). "Desde a saída" foi descartado; o S3 segue como exceção sem explicação. ms_desde_saida fica 0
 ## (parâmetro mantido). A sim recebe o fim pronto (cfg.penalidade_ate_ms) ou calcula: inicio_ms −
-## cfg.ms_desde_saida + duração. · unidade: milissegundos · origem C (replicada do cliente sem confirmação no
-## servidor) · evidência: rhydon-1h, S2, S4, T1
+## cfg.ms_desde_saida + duração. · unidade: milissegundos · origem F (em aberto) · evidência: rhydon-1h, S2, S4,
+## T1
 @export_range(0, 600000, 1, "or_greater")  var penalidade_duracao_ms: int = 60000
 
-## XP e drops × 0,3 durante o lock de entrada (A: 76/76 abates) · unidade: multiplicador · origem A (comprovada
-## contra o original) · evidência: comentário em `sim/regras.gd`
+## XP e drops × 0,3 durante o lock de entrada (A: 76/76 abates) · unidade: multiplicador · origem A (observada
+## (referência declarada, não auditada pelo catálogo)) · evidência: comentário em `sim/regras.gd`
 @export_range(0.0, 1.0, 0.0001)  var penalidade_fator: float = 0.3
 
 ## "chance" (× fator na chance de cada item) | "quantidade" | "nenhuma" · origem E (desenhada por nós) ·

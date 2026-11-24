@@ -29,8 +29,8 @@ extends Resource
 ## por nós) · evidência: comentário em `sim/metas.gd`
 @export_range(0.0, 1.0, 0.0001, "or_greater")  var metas_ganho_min: float = 0.05
 
-## IV médio do sorteio 1..32 (A: uniforme) para estimar o selvagem típico · unidade: segundos · origem A
-## (comprovada contra o original) · evidência: comentário em `sim/metas.gd`
+## IV médio do sorteio 1..32 (A: uniforme) para estimar o selvagem típico · origem A (observada (referência
+## declarada, não auditada pelo catálogo)) · evidência: comentário em `sim/metas.gd`
 @export_range(0.0, 165.0, 0.0001, "or_greater")  var metas_iv_selvagem: float = 16.5
 
 ## espécies diferentes capturadas; mais a 'Pokédex da região' (espécies das hunts liberadas) · origem E (desenhada

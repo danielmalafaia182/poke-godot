@@ -21,7 +21,7 @@ extends Resource
 ## G10, 15/11): chance de cada drop × 1,4 (cap 1). Tyranitar no dia Sombrio (G8, 61 abates): 148 drops, esperado
 ## 146,3 com ×1,4 (z 0,2) e 125,4 com ×1,2 (z 2,8: rejeitado); a mesma hunt num dia Veneno (G10, 91 abates): 161 ×
 ## 155,9 pela tabela (controle). ×1,44 (= 1,2²) também cabe: não se separa de 1,4 com uma gravação. · origem A
-## (comprovada contra o original) · evidência: G8, G10
+## (observada (referência declarada, não auditada pelo catálogo)) · evidência: G8, G10
 @export_range(0.0, 14.0, 0.0001, "or_greater")  var tipo_do_dia_loot: float = 1.4
 
 ## E: sem shiny na fase 1 · unidade: % · origem E (desenhada por nós) · evidência: comentário em `sim/regras.gd`

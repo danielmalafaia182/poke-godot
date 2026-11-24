@@ -37,8 +37,8 @@ extends Resource
 }
 }
 
-## ritmo de um selvagem (A: ~2000 ms) · unidade: milissegundos · origem A (comprovada contra o original) ·
-## evidência: comentário em `sim/servico_bosses.gd`
+## ritmo de um selvagem (A: ~2000 ms) · unidade: milissegundos · origem A (observada (referência declarada, não
+## auditada pelo catálogo)) · evidência: comentário em `sim/servico_bosses.gd`
 @export_range(0.0, 20000.0, 0.0001, "or_greater")  var cadencia_boss_ms: float = 2000.0
 
 ## o boss bate um pouco mais que um treinador (o selvagem tem ×1,8, A) · unidade: multiplicador · origem E
@@ -55,8 +55,8 @@ extends Resource
 
 ## 87 bosses do snapshot (A: nome, categoria, nível, drops); espécie, entrada, HP e chances desenhados
 ## (ferramentas/balanceamento/gerar_bosses.py); ciclo 6: TM Disk Piece e AoE TM Disk Piece a 2% em todo boss (C:
-## 2% nos dois bosses do catálogo do cliente) · origem A (comprovada contra o original) · evidência:
-## ferramentas/balanceamento/gerar_bosses.py
+## 2% nos dois bosses do catálogo do cliente) · origem A (observada (referência declarada, não auditada pelo
+## catálogo)) · evidência: ferramentas/balanceamento/gerar_bosses.py
 @export var lista: Array = [{
 "categoria": "Especiais",
 "drops": [{

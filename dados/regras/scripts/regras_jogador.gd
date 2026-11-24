@@ -13,8 +13,8 @@ extends Resource
 
 ## Tipo do Dia (A: evento type-of-day, +20% XP e loot no tipo; termina às 03:00 UTC = meia-noite de Brasília). E:
 ## offline, rotação fixa ancorada nos cinco dias observados (A: 09/11/2026 Dragão, 10/11 Inseto, 13/11 Sombrio,
-## 15/11 Veneno, 18/11 Fantasma — G11); as outras posições são E. · unidade: segundos · origem A (comprovada
-## contra o original) · evidência: G11
+## 15/11 Veneno, 18/11 Fantasma — G11); as outras posições são E. · unidade: segundos · origem A (observada
+## (referência declarada, não auditada pelo catálogo)) · evidência: G11
 @export_range(0, 108000, 1, "or_greater")  var dia_virada_utc_s: int = 10800
 
 @export_group("Soneca")
@@ -49,7 +49,8 @@ extends Resource
 ## `sim/servico_jogador.gd`
 @export_range(0, 10000, 1, "or_greater")  var streak_abates_por_ponto: int = 1000
 
-## o n-ésimo ponto custa 25.000 × n (C/A G7) · origem A (comprovada contra o original) · evidência: G7
+## o n-ésimo ponto custa 25.000 × n (C/A G7) · origem A (observada (referência declarada, não auditada pelo
+## catálogo)) · evidência: G7
 @export_range(0, 250000, 1, "or_greater")  var streak_custo_base: int = 25000
 
 ## trilhas EXP, Loot e Shiny (C) · origem C (replicada do cliente sem confirmação no servidor) · evidência:
@@ -61,8 +62,8 @@ extends Resource
 ## · origem E (desenhada por nós) · evidência: comentário em `sim/servico_jogador.gd`
 @export_range(0.0, 9000.0, 0.0001, "or_greater")  var fechado_caca_max_s: float = 900.0
 
-## nomes dos tipos do Tipo do Dia (A: formato gravado) · origem A (comprovada contra o original) · evidência:
-## comentário em `sim/servico_jogador.gd`
+## nomes dos tipos do Tipo do Dia (A: formato gravado) · origem A (observada (referência declarada, não auditada
+## pelo catálogo)) · evidência: comentário em `sim/servico_jogador.gd`
 @export var nomes_tipos: Dictionary = {
 "BUG": ["Inseto", "🐛"],
 "DARK": ["Sombrio", "🌑"],

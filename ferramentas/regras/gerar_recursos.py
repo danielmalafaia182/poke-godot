@@ -23,7 +23,7 @@ def nome_arquivo(rec):
 def unidade(k):
     for suf, u in (("_ms", "milissegundos"), ("_s", "segundos"), ("_pct", "%"), ("_ticks", "ticks de 200 ms"), ("_ouro", "ouro"),
                    ("chance", "fração 0–1"), ("fator", "multiplicador"), ("prob", "probabilidade 0–1"), ("fracao", "fração")):
-        if k.endswith(suf) or suf in k:
+        if k.endswith(suf) or (suf.startswith("_") and suf + "_" in k) or (not suf.startswith("_") and suf in k):
             return u
     return ""
 

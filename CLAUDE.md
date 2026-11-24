@@ -2,6 +2,20 @@
 
 Leia este arquivo inteiro antes de qualquer mudança. Ele é o ponto de entrada do projeto.
 
+## Revisão estrutural — 23/11/2026
+
+Leia também `ARQUITETURA.md`: fronteiras do domínio, perfis do GM, recarga, persistência e verificações.
+O Game Master continua no editor e no build (Configurações → Game Master, F12).
+Use `python ferramentas/qualidade/verificar.py --suite full` para os testes autônomos;
+`verificar_fluxos.py` para compatibilidade e novo jogo com reinício; o build usa
+`python ferramentas/build/montar_build.py <nome-novo>`. Todos isolam os saves.
+O runner reprova erros de execução e vazamentos mesmo se um teste imprimir “passou”.
+Recarga deve passar por `EstadoJogo.recarregar_regras()`, sem zerar caches privados no painel.
+Perfis externos são dados validados, nunca scripts carregados. Restaurar usa defaults explícitos.
+`REGRAS.md` não promove mais origem A a “comprovada” automaticamente; D é teste local, B é Pokepedia.
+Captura c/k permanecem hipótese F calibrada. Os valores de balanceamento foram preservados.
+Resultados desta revisão: `dados/relatorios/revisao_arquitetura_2026-11-23.md`.
+
 > **Estratégia desde 19/11 (`ESTRATEGIA.md`): o melhor poke idle possível, sem esperar gravação.**
 > - **Classe 1, exata:** o que o jogador vê ou compara com a Pokepedia (XP, stats, IV ≤ 32, Quality, preços, loot,
 >   evolução, nível das hunts) é igual ao original.

@@ -8,7 +8,7 @@ extends Resource
 
 @export_group("Geral")
 ## C: Derrote shinies selvagens — eles podem dropar o Card da espécie; 10% por shiny abatido (o Card leva ao Altar
-## dos bosses) · unidade: segundos · origem C (replicada do cliente sem confirmação no servidor) · evidência:
+## dos bosses) · unidade: fração 0–1 · origem C (replicada do cliente sem confirmação no servidor) · evidência:
 ## comentário em `sim/regras.gd`
 @export_range(0.0, 1.0, 0.0001)  var card_chance_shiny: float = 0.1
 

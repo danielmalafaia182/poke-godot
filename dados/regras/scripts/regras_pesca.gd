@@ -43,7 +43,8 @@ extends Resource
 ## em `sim/servico_pesca.gd`
 @export_range(0, 100, 1, "or_greater")  var onda_s: int = 10
 
-## A: skill 4 → 12 · origem A (comprovada contra o original) · evidência: comentário em `sim/servico_pesca.gd`
+## A: skill 4 → 12 · origem A (observada (referência declarada, não auditada pelo catálogo)) · evidência:
+## comentário em `sim/servico_pesca.gd`
 @export_range(0, 30, 1, "or_greater")  var peixes_por_nivel: int = 3
 
 ## recarga entre pescas (classe 3; C: ⏳ Aguarde Ns) · unidade: segundos · origem E (desenhada por nós) ·

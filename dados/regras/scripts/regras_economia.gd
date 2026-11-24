@@ -21,7 +21,8 @@ extends Resource
 @export var evolucao_cidade: String = "cerulean"
 
 ## A: G3 Geodude (hunt < 40) 1 pedra, livre 19/11 Graveler (40+) 4; C: "Species from Lv.40+ hunts require 4 stones
-## total"; até 39: 1 de cada · origem A (comprovada contra o original) · evidência: G3
+## total"; até 39: 1 de cada · origem A (observada (referência declarada, não auditada pelo catálogo)) ·
+## evidência: G3
 @export_range(0, 400, 1, "or_greater")  var evolucao_nivel_alto: int = 40
 
 ## C: sem pedra "goes back to Lv.1" · origem C (replicada do cliente sem confirmação no servidor) · evidência:
@@ -29,8 +30,8 @@ extends Resource
 @export_range(0, 10, 1, "or_greater")  var evolucao_nivel_reset: int = 1
 
 ## A: Graveler → Golem (hunt 40+) = 4 Rock Stones (livre 19/11); C: "4 stones total — split equally across combos"
-## (a divisão entre tipos não foi vista) · origem A (comprovada contra o original) · evidência: comentário em
-## `sim/servico_cidade.gd`
+## (a divisão entre tipos não foi vista) · origem A (observada (referência declarada, não auditada pelo catálogo))
+## · evidência: comentário em `sim/servico_cidade.gd`
 @export_range(0, 40, 1, "or_greater")  var evolucao_pedras_total_alto: int = 4
 
 @export_group("Venda")
@@ -48,7 +49,8 @@ extends Resource
 
 ## A (G1): Pokémon vendido pelo sellValue da espécie (valorVenda), sem depender de nível, Quality ou IV: 2
 ## Blastoise Lv.1 (Q 1,014 / IV 124 e Q 1,273 / IV 61) → 18000 cada; o sellValue que o servidor manda é o da
-## espécie em 399/399 Pokémon da lista (níveis 1 a 425). · origem A (comprovada contra o original) · evidência: G1
+## espécie em 399/399 Pokémon da lista (níveis 1 a 425). · origem A (observada (referência declarada, não auditada
+## pelo catálogo)) · evidência: G1
 @export var venda_pokemon: String = "valorVenda"
 
 ## E (proteção): nunca vender acima do preço de compra. Com a regra acima nenhum item do catálogo chega nele. ·
@@ -57,8 +59,8 @@ extends Resource
 
 @export_group("Geral")
 ## A: mensagem balls.catalog (gravações): priceGold, buyable, catchRate HP depois de evoluir: mantém a fração da
-## vida (E; o original não foi gravado). Loja · origem A (comprovada contra o original) · evidência: comentário em
-## `sim/servico_cidade.gd`
+## vida (E; o original não foi gravado). Loja · origem A (observada (referência declarada, não auditada pelo
+## catálogo)) · evidência: comentário em `sim/servico_cidade.gd`
 @export var bolas_catalogo: Array = [{
 "bound": false,
 "buyable": true,
@@ -160,8 +162,8 @@ extends Resource
 @export_range(0.0, 1000000.0, 0.0001, "or_greater")  var qtd_max_por_compra: float = 100000.0
 
 ## C: "Eevee is a special case (its own stone system)"; os ramos (cada pedra leva a um Pokémon) seguem o canon
-## (B/F). O caminho sem pedra vai para o destino do creatures.json (Vaporeon, A/C). · origem C (replicada do
-## cliente sem confirmação no servidor) · evidência: creatures.json
+## (B/F). O caminho sem pedra vai para o destino do creatures.json (Vaporeon, A/C). · origem F (em aberto) ·
+## evidência: creatures.json
 @export var ramos_eevee: Dictionary = {
 "134": "Water Stone",
 "135": "Thunder Stone",

@@ -7,8 +7,8 @@ extends Resource
 ## user://regras/<perfil>/ guardam só o que muda.
 
 @export_group("Ginasios")
-## ginásios vistos no gym-global (A) · origem A (comprovada contra o original) · evidência: comentário em
-## `sim/servico_ginasios.gd`
+## ginásios vistos no gym-global (A) · origem A (observada (referência declarada, não auditada pelo catálogo)) ·
+## evidência: comentário em `sim/servico_ginasios.gd`
 @export var ginasios_conhecidos: Dictionary = {
 "cerulean": {
 "tipo": "WATER"
@@ -39,7 +39,8 @@ extends Resource
 
 @export_group("Geral")
 ## o líder ataca no ritmo de um selvagem (A: ~2000 ms); o jogador no do aliado (A: 1600 ms) · unidade:
-## milissegundos · origem A (comprovada contra o original) · evidência: comentário em `sim/servico_ginasios.gd`
+## milissegundos · origem A (observada (referência declarada, não auditada pelo catálogo)) · evidência: comentário
+## em `sim/servico_ginasios.gd`
 @export_range(0.0, 20000.0, 0.0001, "or_greater")  var cadencia_lider_ms: float = 2000.0
 
 ## o líder não tem o ×1,8 do selvagem (é um treinador; o ×1,8 é medido só em selvagem) · unidade: multiplicador ·

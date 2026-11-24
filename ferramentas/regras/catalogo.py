@@ -164,6 +164,9 @@ def origem_de(texto, padrao):
     t = texto or ""
     if re.search(r"classe 3", t):
         return "E"
+    # Um bloco pode citar A/C como contexto e F para a fórmula. Não promover a hipótese.
+    if re.search(r"\bF\s*[:,)]|\bhipótese\b|\bfórmula candidata\b", t, re.I):
+        return "F"
     m = re.search(r"(?<![A-Za-zÀ-ú])([ABCDEF])(?=\s*[:(,)/]|\s+[\(\[]|\s*$|\s+\()", t)
     if m:
         return m.group(1)
@@ -173,8 +176,31 @@ def origem_de(texto, padrao):
     return padrao
 
 
-STATUS = {"A": "comprovada contra o original", "B": "replicada do cliente sem confirmação no servidor",
-          "C": "replicada do cliente sem confirmação no servidor", "D": "desenhada por nós", "E": "desenhada por nós", "F": "em aberto"}
+STATUS = {"A": "observada (referência declarada, não auditada pelo catálogo)",
+          "B": "documentada na Pokepedia (não confirma o servidor)",
+          "C": "replicada do cliente sem confirmação no servidor",
+          "D": "verificada localmente (não confirma o original)",
+          "E": "desenhada por nós", "F": "em aberto"}
+
+
+def revisar_metadados(cat):
+    """Origem não é grau de comprovação. Nunca altera literais nem dados de balanceamento."""
+    for entrada in cat["parametros"]:
+        candidata = origem_de(entrada["descricao"], entrada["origem"])
+        # Contexto A/B/C não promove automaticamente uma decisão ou hipótese anterior.
+        if candidata in ("E", "F"):
+            entrada["origem"] = candidata
+        if entrada["fonte"] == "sim" and entrada["chave"] in ("captura_c", "captura_k"):
+            entrada["origem"] = "F"
+            entrada["descricao"] = "F: coeficiente da fórmula candidata de captura, ajustado às sequências observadas (A); não é fórmula revelada pelo servidor."
+            entrada["evidencia"] = "sim/regras.gd: bloco da fórmula de captura; CALIBRACAO_FASE3.md; CALIBRACAO_FASE4.md"
+        entrada["status"] = STATUS[entrada["origem"]]
+    for regra in cat["regras"]:
+        if regra["status"].startswith("comprovada contra o original (no resultado"):
+            regra["status"] = "resultado registrado no placar (não revalidado pelo catálogo)"
+        elif regra["status"] != "em aberto":
+            regra["status"] = STATUS[regra["origem"]]
+    return cat
 
 
 def evidencia_de(texto, arquivo):
@@ -268,6 +294,7 @@ def main():
     os.makedirs(os.path.join(RAIZ, "dados", "regras"), exist_ok=True)
     cat = {"_fonte": "ferramentas/regras/catalogo.py (valores de ferramentas/regras/exportar_valores.gd); não edite à mão",
            "secoes": SECOES, "sistemas": SISTEMA, "parametros": entradas, "regras": regras}
+    revisar_metadados(cat)
     json.dump(cat, open(os.path.join(RAIZ, "dados", "regras", "catalogo.json"), "w", encoding="utf-8", newline="\n"), ensure_ascii=False, indent=1)
     escrever_md(cat)
     print("catálogo: %d parâmetros em %d Resources; %d regras de fórmula" % (len(entradas), len({e["recurso"] for e in entradas}), len(regras)))
@@ -281,6 +308,8 @@ def escrever_md(cat):
          "Gerado por `ferramentas/regras/catalogo.py` a partir do código (valores em execução, comentários de origem), dos motivos",
          "de classe 3 e das tabelas do `PLACAR_ESCOPO.md`. Não edite à mão: mude o código ou os Resources e gere de novo.",
          "Origem: A observado no original · B Pokepedia · C cliente · D teste · E decisão nossa · F hipótese.", "",
+         "O catálogo organiza referências declaradas; não executa o validador nem audita gravações. Uma letra A ou um teste local não comprova uma fórmula do servidor.",
+         "O perfil chamado `original` é a referência local para restauração; inclui decisões E e hipóteses F. A fidelidade deve ser conferida nos relatórios vinculados e no placar.", "",
          "| Status | Parâmetros e regras |", "| --- | --- |"]
     for st, n in sorted(cont.items(), key=lambda x: -x[1]):
         L.append("| %s | %d |" % (st, n))

@@ -52,10 +52,12 @@ extends Resource
 @export_range(0.0, 2.5, 0.0001, "or_greater")  var erva_wild_fora_kanto: float = 0.25
 
 @export_group("Mentor")
-## A · origem A (comprovada contra o original) · evidência: comentário em `sim/servico_profissoes.gd`
+## A · origem A (observada (referência declarada, não auditada pelo catálogo)) · evidência: comentário em
+## `sim/servico_profissoes.gd`
 @export_range(0, 2000, 1, "or_greater")  var mentor_gap: int = 200
 
-## A · unidade: % · origem A (comprovada contra o original) · evidência: comentário em `sim/servico_profissoes.gd`
+## A · unidade: % · origem A (observada (referência declarada, não auditada pelo catálogo)) · evidência:
+## comentário em `sim/servico_profissoes.gd`
 @export_range(0.0, 5.0, 0.0001, "or_greater")  var mentor_pct_nivel: float = 0.5
 
 ## teto do mentor por rank (A: 60% observado na conta B; os outros ranks classe 3) · origem E (desenhada por nós)
@@ -116,6 +118,6 @@ extends Resource
 ## servidor) · evidência: comentário em `sim/servico_profissoes.gd`
 @export_range(0.0, 30.0, 0.0001, "or_greater")  var captura_pct_rank: float = 3.0
 
-## chance da foto do Prestígio num shiny (A: 2 de 5 no c5; classe 3) · unidade: segundos · origem E (desenhada por
-## nós) · evidência: c5
+## chance da foto do Prestígio num shiny (A: 2 de 5 no c5; classe 3) · unidade: fração 0–1 · origem E (desenhada
+## por nós) · evidência: c5
 @export_range(0.0, 1.0, 0.0001)  var foto_chance_shiny: float = 0.4
